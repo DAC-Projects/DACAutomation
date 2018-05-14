@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite" >
+ 
+  <test name="TestFirefox">
+  <parameter name="browser" value="Firefox"></parameter>
+    <classes>
+      <!-- class name="com.dac.testcases.LoginpageTests"/-->
+      <!-- class name="com.dac.testcases.LoginpageValidLogin"/-->
+      <class name="com.dac.testcases.VisibilityTest"/>
+    </classes>
+  </test> <!-- Test -->
+  
+  
+ 
+</suite> <!-- Suite -->
