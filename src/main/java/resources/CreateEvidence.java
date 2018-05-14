@@ -156,7 +156,14 @@ public class CreateEvidence {
 		}
 		String callerClassName = new Exception().getStackTrace()[1].getClassName();
 		String timeStamp = new SimpleDateFormat("yyyyMMdd_HH_mm").format(Calendar.getInstance().getTime());
+		  File file = new File("./testevidence");
 
+		    boolean b = false;
+
+		    if (!file.exists()) {
+		     
+		      b = file.mkdirs();
+		    }
 		FileOutputStream out = new FileOutputStream("testevidence/" + callerClassName + "-" + timeStamp + ".docx");
 		doc.write(out);
 
