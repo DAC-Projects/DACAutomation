@@ -1,6 +1,7 @@
 package com.dac.main;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -11,14 +12,19 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.mysql.jdbc.Driver;
 
+
 public class Navigationpage extends BasePage{
 
 	Actions action;
+	JavascriptExecutor js;
 	WebDriverWait wait;
+	WebDriver driver;
 	
 	public Navigationpage(WebDriver driver) {
+		
+		this.driver=driver;
+		wait=new WebDriverWait(driver, 20);
 		action=new Actions(driver);
-		wait=new WebDriverWait(driver, 60);
 		PageFactory.initElements(driver, this);
 	}
 
@@ -120,16 +126,24 @@ public class Navigationpage extends BasePage{
 		return Visibility;
 	}
 	
-	public void clickCampaigns() {
-		CampaignsLink.click();
+	/** To click on Campaigns link in LHS to navigate to Campaigns page  */
+	public void clickCampaigns() {    
+		
+		scrollByElement(CampaignsLink, driver);
+		action.moveToElement(CampaignsLink).click().perform();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='btn-group']/a")));
 	}
 	
 	public void clickResponses() {
-		ResponsesLink.click();
+		
+		scrollByElement(ResponsesLink, driver);
+		action.moveToElement(ResponsesLink).click().perform();
 	}
 	
 	public void clickReports() {
-		ResponsesLink.click();
+		
+		scrollByElement(ReportsLink, driver);
+		action.moveToElement(ReportsLink).click().perform();
 	}
      
 	public void click_DB_Lang_Link() {

@@ -1,11 +1,16 @@
 package com.dac.main;
 
+import java.io.File;
+
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
+
+import autoitx4java.AutoItX;
 
 public class BasePage {
 	
@@ -31,6 +36,28 @@ public class BasePage {
 		String aText=e.getText();
 		System.out.println(aText);
 		Assert.assertEquals(aText, eText);
+	}
+	
+
+	public void scrollByElement(WebElement element,WebDriver driver) {
+		
+		JavascriptExecutor js=(JavascriptExecutor)driver;
+		int yLoc = element.getLocation().getY();
+		int xLoc = element.getLocation().getX();
+		js=(JavascriptExecutor)driver;
+		js.executeScript("window.scrollTo("+xLoc+", "+yLoc+")");
+	}
+	
+	protected void uploadFile(String fileName, String extension) {
+		
+		File file =new File("./"+fileName+extension);
+		String fileAbsPath=file.getAbsolutePath();
+		
+		AutoItX x=new AutoItX();
+		x.winWaitActive("Open");
+		x.controlFocus("Open", "", "Edit1");
+		x.ControlSetText("Open", "", "Edit1", fileAbsPath);
+		x.controlClick("Open", "", "Button1");
 	}
 	
 

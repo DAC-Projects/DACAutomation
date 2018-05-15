@@ -43,6 +43,7 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import com.aventstack.extentreports.reporter.*;
 import com.beust.jcommander.Parameter;
+import com.dac.main.LoginAC_Beta;
 
 public abstract class BaseTest implements IAutoconst {
 
@@ -171,13 +172,18 @@ public abstract class BaseTest implements IAutoconst {
 	public void loginAuth(WebDriver driver, Properties prop) {
 		// login to auth centre
 		driver.get(prop.getProperty("AuthCenterURL"));
-		WebElement Login = driver.findElement(By.xpath(prop.getProperty("Authlogin")));
+		/*WebElement Login = driver.findElement(By.xpath(prop.getProperty("Authlogin")));
 
 		Login.sendKeys(prop.getProperty("email"));
 		WebElement Password = driver.findElement(By.xpath(prop.getProperty("Authpassword")));
 		Password.sendKeys(prop.getProperty("password"));
 		WebElement Signin = driver.findElement(By.xpath(prop.getProperty("signin")));
-		Signin.submit();
+		Signin.submit();*/
+		
+		LoginAC_Beta lp=new LoginAC_Beta(driver);
+		lp.setUserName("rnair@dacgroup.com");
+		lp.setPassword("DACQA123");
+		lp.clickLogin();
 
 	}
 
