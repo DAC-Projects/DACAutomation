@@ -8,7 +8,7 @@ import java.io.File;
 import org.testng.annotations.Test;
 
 import com.dac.main.CampaignsPage;
-import com.dac.main.CreateCampaignPage;
+import com.dac.main.CreateNewCampaignPage;
 import com.dac.main.Navigationpage;
 
 import autoitx4java.AutoItX;
@@ -32,7 +32,7 @@ public class Verify_CreateCampaign extends BaseTest{
 		CP.click_CreateCampaignBTN();
 		//Thread.sleep(5000);
 	
-		CreateCampaignPage newCampaign=new CreateCampaignPage(driver);
+		CreateNewCampaignPage newCampaign=new CreateNewCampaignPage(driver);
 		
 		newCampaign.selectCampType(1);
 		

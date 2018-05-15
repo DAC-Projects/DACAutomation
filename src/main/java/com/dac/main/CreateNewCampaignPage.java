@@ -17,7 +17,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-public class CreateCampaignPage extends BasePage{
+public class CreateNewCampaignPage extends BasePage{
 
 	WebDriver driver;
 	Select select;
@@ -25,7 +25,7 @@ public class CreateCampaignPage extends BasePage{
 	JavascriptExecutor js;
 	WebDriverWait wait;
 	
-	public CreateCampaignPage(WebDriver driver) throws AWTException {
+	public CreateNewCampaignPage(WebDriver driver) throws AWTException {
 		
 		wait=new WebDriverWait(driver, 20);
 		this.driver = driver;
@@ -43,7 +43,7 @@ public class CreateCampaignPage extends BasePage{
 	private WebElement campaignName;
 	
 	@FindBy(xpath="//input[@ng-model='BrandName']")
-	private WebElement campaignBrandName;
+	private WebElement campaignBrandNameTB;
 	
 	@FindBy(id="CampaignLocationAddress")
 	private WebElement campaignLocTB;
@@ -52,22 +52,25 @@ public class CreateCampaignPage extends BasePage{
 	private List<WebElement> campaignLocListBox;
 	
 	@FindBy(name="description")
-	private WebElement campaignDescription;
-	
-	@FindBy(xpath="//div[@title='upload']")
-	private WebElement uploadCampaignLogo;
+	private WebElement campaignDescriptionTB;
 	
 	@FindBy(name="sendername")
 	private WebElement campaignSenderName;
+
+	@FindBy(xpath="//div[@title='upload']")
+	private WebElement uploadCampaignLogo;
+	
+	@FindBy(xpath="//a[@ng-show='removeIcon']")
+	private WebElement removeLogoBTN;
 	
 	@FindBy(name="subject")
 	private WebElement campaignSubject;
 	
 	@FindBy(name="introbanner")
-	private WebElement campaignIntroBanner;
+	private WebElement campaignIntroBannerTB;
 	
 	@FindBy(name="body")
-	private WebElement campaignBodyCopy;
+	private WebElement campaignBodyCopyTB;
 	
 	@FindBy(name="signature")
 	private WebElement campaignSignature;
@@ -152,20 +155,88 @@ public class CreateCampaignPage extends BasePage{
 	@FindBy(xpath="//div[@ng-show='campaignValidation']//span")
 	private WebElement campValidationErrMsg;
 	
+	@FindBy(xpath="//div[contains(@ng-show,'campaigntype')]/div")
+	private WebElement campTypeErrMsg;
+	
+	@FindBy(xpath="//div[contains(@ng-show,'CampaignLanguage')]/div")
+	private WebElement campLangErrMsg;
+	
 	@FindBy(xpath="//div[contains(@ng-show,'Campaign exists')]/div")
 	private WebElement campNameExistErrMsg;
 	
 	@FindBy(xpath="//div[contains(@ng-show,'campaignName')]/div")
 	private WebElement campNameRequiredErrMsg;
 	
+	@FindBy(xpath="//div[@ng-show='locationNameRequire']/div")
+	private WebElement locationNameReqErrMsg;
+	
 	@FindBy(xpath="//div[@ng-show='brandNameRequire']/div")
 	private WebElement brandNameReqErrMsg;
 	
 	@FindBy(xpath="//div[contains(@ng-show,'sendername')]/div")
-	private WebElement campSenderName;
+	private WebElement campSenderNameErrMsg;
 	
-
+	@FindBy(xpath="//div[contains(@ng-show,'EmailAddresses')]/div")
+	private WebElement campEmailIdReqErrMsg;
 	
+	@FindBy(xpath="//div[@ng-show='errorUploadEmail']/div")
+	private WebElement invalidEmailTempUploadedErrMsg;
+	
+	@FindBy(xpath="//div[@ng-show='errorEmailList']/div")
+	private WebElement multiEmailsErrMsg;
+	
+	@FindBy(xpath="//div[contains(@ng-show,'subject')]/div")
+	private WebElement subjectErrMsg;
+	
+	@FindBy(xpath="//div[contains(@ng-show,'introbanner')]/div")
+	private WebElement introBannerErrMsg;
+	
+	@FindBy(xpath="(//div[contains(@ng-show,'body')]/div)[1]")
+	private WebElement bodyCopyErrMsg;
+	
+	//Body Copy Text Box character limit up to 8000 characters
+	@FindBy(xpath="(//div[contains(@ng-show,'body')]/div)[2]")
+	private WebElement bodyCopyCharLimitErrMsg;
+	
+	@FindBy(xpath="(//div[contains(@ng-show,'signature')]/div)[1]")
+	private WebElement signatureReqErrMsg;
+	
+	//Signature Text Box line limit up to 4 lines
+	@FindBy(xpath="(//div[contains(@ng-show,'signature')]/div)[2]")
+	private WebElement signatureLineLimitErrMsg;
+	
+	@FindBy(xpath="//div[contains(@ng-show,'AddressLine1')]/div")
+	private WebElement addressL1ErrMsg;
+	
+	@FindBy(xpath="//div[contains(@ng-show,'brandCity')]/div")
+	private WebElement cityErrMsg;
+	
+	@FindBy(xpath="//div[contains(@ng-show,'brandStPr')]/div")
+	private WebElement STPR_ErrMsg;
+	
+	@FindBy(xpath="//div[contains(@ng-show,'brandZip')]/div")
+	private WebElement zipPostalCodeErrMsg;
+	
+	@FindBy(xpath="//div[contains(@ng-show,'brandPhoneNum')]/div")
+	private WebElement phoneNumErrMsg;
+	
+	@FindBy(xpath="//div[contains(@ng-show,'startdate')]/div")
+	private WebElement startDateErrMsg;
+	
+	@FindBy(xpath="//div[contains(@ng-show,'time')]/div")
+	private WebElement timeReqErrMsg;
+	
+	@FindBy(xpath="//div[contains(@ng-show,'enddate')]/div")
+	private WebElement endDateErrMsg;
+	
+	@FindBy(xpath="//div[contains(@ng-show,'lowrating')]/div")
+	private WebElement ThankU1_2StarErrMsg;
+	
+	@FindBy(xpath="//div[contains(@ng-show,'midrating')]/div")
+	private WebElement ThankU_3StarErrMsg;
+	
+	@FindBy(xpath="//div[contains(@ng-show,'highrating')]/div")
+	private WebElement ThankU4_5StarErrMsg;
 	
 	/** indexes for 
 	 * 
@@ -197,6 +268,9 @@ public class CreateCampaignPage extends BasePage{
 		select.selectByIndex(CampLangIndex);
 	}
 	
+	/** 
+	 * This method is used to enter the data into the Campaign name Text Field
+	 * @campName : Enter the campaign name 	   */
 	public void setCampaignName(String campName) {
 		
 		scrollByElement(campaignName, driver);
@@ -206,9 +280,7 @@ public class CreateCampaignPage extends BasePage{
 	/** 
 	 * This method used to select the Location for the Campaign Type : Location
 	 * @locIndex : To select particular location from selected location name contains @locName based on Index.
-	 * @locName  : To check the list box of Locations contains this text.	
-	 * 
-	 * if location */
+	 * @locName  : To check the list box of Locations contains this text.		 */
 	public void selectCampaignLoc(int locIndex,String locName) {
 		
 			campaignLocTB.sendKeys(locName);
@@ -227,13 +299,13 @@ public class CreateCampaignPage extends BasePage{
 	
 	public void setCampaignBrandName(String campBrandName) {
 		
-		scrollByElement(campaignBrandName, driver);
-		campaignBrandName.sendKeys(campBrandName);
+		scrollByElement(campaignBrandNameTB, driver);
+		campaignBrandNameTB.sendKeys(campBrandName);
 	}
 	
 	public void setCampDescr(String campDescription) {
-		
-		campaignDescription.sendKeys(campDescription);
+		scrollByElement(campaignDescriptionTB, driver);
+		campaignDescriptionTB.sendKeys(campDescription);
 	}
 	
 	public void setSenderName(String campSenderName) {
@@ -249,11 +321,13 @@ public class CreateCampaignPage extends BasePage{
 	}
 	
 	public void setCampBanner(String campIntroBanner) {
-		campaignIntroBanner.sendKeys(campIntroBanner);
+		scrollByElement(campaignIntroBannerTB, driver);
+		campaignIntroBannerTB.sendKeys(campIntroBanner);
 	}
 	
 	public void setCampBodyCopy(String campBodyCopy) {
-		campaignBodyCopy.sendKeys(campBodyCopy);
+		scrollByElement(campaignBodyCopyTB, driver);
+		campaignBodyCopyTB.sendKeys(campBodyCopy);
 	}
 	
 	/** 
@@ -322,10 +396,27 @@ public class CreateCampaignPage extends BasePage{
 		action.moveToElement(continueEditBTN).click(continueEditBTN).perform();
 	}
 	
-	public void uploadLogo(String fileName, String extension) {
+	public void uploadLogo(String fileName, String extension) throws InterruptedException {
 		scrollByElement(uploadCampaignLogo, driver);
 		uploadCampaignLogo.click();
 		uploadFile(fileName, extension);
+		Thread.sleep(3000);
+			
+	}
+	
+	public void verifyLogoUploaded() throws InterruptedException {
+		Thread.sleep(3000);
+		if(removeLogoBTN.isDisplayed() & removeLogoBTN.isEnabled()) {
+			System.out.println("Uploaded Logo");
+		}
+		else {
+			System.out.println("Logo NOT uploaded");
+		}
+	}
+	
+	public void clickRemoveLogo() {
+		scrollByElement(removeLogoBTN, driver);
+		removeLogoBTN.click();
 	}
 	
 	//---------------------Handling Tool Tip's of Create New Cammpaign Page-----------------
@@ -376,6 +467,7 @@ public class CreateCampaignPage extends BasePage{
 	 * To enter the email id's into To Field for Location and Brand campaign
 	 * @email : e-mail id to send the created campaign and more than 1 email id's seperated with comma(,) */
 	public void setToField(String email) {
+		scrollByElement(toFieldTB, driver);
 		toFieldTB.sendKeys(email);
 	}
 	
