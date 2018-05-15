@@ -8,6 +8,7 @@ import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -22,7 +23,6 @@ import org.testng.annotations.Test;
 import org.w3c.dom.Document;
 
 import com.dac.main.Dashboardpage;
-import com.dac.main.LoginPage;
 import com.dac.main.Navigationpage;
 import com.dac.main.VisibilityPage;
 import com.relevantcodes.extentreports.LogStatus;
@@ -34,19 +34,19 @@ import resources.BaseTest;
 public class VisibilityTest extends BaseTest {
 
 	Navigationpage nav;
-	Dashboardpage Dp;
-	VisibilityPage Vp;
+	Dashboardpage Dp; 
+	VisibilityPage Vp; 
+	JavascriptExecutor js;	
+	Actions action ;
 	String locationNo;
 	String visibilityScore;
+	
 	
 	 @Test(priority=1)
 	 public void veriy_DashboardKPIScore() throws Exception {
 	 try {
-	
-	
-	 Dp= new Dashboardpage(driver);
+		 Dp =new Dashboardpage(driver);
 	 Thread.sleep(20000);
-	
 	 locationNo= Dp.getLocations().getText();
 	 visibilityScore = Dp.getVisibility().getText().replaceAll("%", "");;
 	 logger.log(LogStatus.INFO, "Read visibility score and locations from Dashboard");
@@ -60,34 +60,51 @@ public class VisibilityTest extends BaseTest {
 	 }
 
 	@Test(priority=2)
-	public void veriy_VisibilityReport() throws Exception {
+	public void navigateVisibilityPage() throws Exception {
 		try {
 			
-			Actions action = new Actions(driver);
-			JavascriptExecutor js = (JavascriptExecutor) driver;
-			
-			Vp = new VisibilityPage(driver);
-			nav = new Navigationpage(driver);
+			 nav= new Navigationpage(driver);
 			nav.getVisibility().click();
 			logger.log(LogStatus.INFO, "Navigated to visibility page");
+		} catch(ElementNotVisibleException e)
+		{
+			logger.log(LogStatus.FAIL, "Couldn't navigate to visibility page");
+		}
+			
+	}
+	
+	
+		
+		@Test(priority=3)	
+		public void readGraph() throws Exception {	
+			try {
+			js	 = (JavascriptExecutor)driver;	
+			Vp =  new VisibilityPage(driver);
+			action =  new Actions(driver);
 			Thread.sleep(20000);
-
-			
 			WebElement graph = Vp.getScoreGraph();
-			js.executeScript("arguments[0].scrollIntoView();", graph);// scroll down until graph
-			int width = graph.getSize().getWidth();
+			js.executeScript("arguments[0].scrollIntoView();", graph);
+			action.moveToElement(graph).moveByOffset((graph.getSize().getWidth() / 2) - 2, 0).click().perform();
 			
-			action.moveToElement(graph).moveByOffset((width / 2) - 2, 0).click().perform();
 			// read tooltip
-			String date = Vp.getScoreGraphTooltipDate().getText();
-			String locationsNo = Vp.getScoreGraphTooltiploctns().getText().replaceAll("Number of Locations:", "");
-			String ScoreValue =  Vp.getScoreGraphTooltipScore().getText().replaceAll("Score Value:", "");
-			 System.out.println("graphlocationNo: "+locationsNo+"\n"+"graphvisibility score:"+ScoreValue);
+			String graphTooltip = Vp.getScoreGraphTooltipDate().getText();
+			String[] tooltip = graphTooltip.split("\\r?\\n");
+			String date = tooltip[0];
+			String locationsNo = tooltip[1].replaceAll("Number of Locations:", "");
+			String ScoreValue =  tooltip[2].replaceAll("Score Value:", "");
+			System.out.println("date: "+date+ "graphlocationNo: "+locationsNo+"\n"+"graphvisibility score:"+ScoreValue);
 			 
 			 Assert.assertEquals(locationsNo, locationNo);
 			 Assert.assertEquals(ScoreValue, visibilityScore);
 			 logger.log(LogStatus.INFO, "Asserted graph values to Dashboard values");
-
+			}catch(ElementNotVisibleException e)
+			{
+				logger.log(LogStatus.FAIL, "Asseting Scores graph tooltip and Dashboard tooltip failed ");
+			}
+		}
+		
+		
+		
 			// Using filter filter to any location and then repeat from scroll down until
 			// screenshot. Verify graph is displayed.
 			// log global filters are loading correctly
@@ -123,7 +140,10 @@ public class VisibilityTest extends BaseTest {
 //			}
 			
 			
-
+		@Test(priority=4)	
+		public void testBars() throws Exception {	
+			js = (JavascriptExecutor)driver;
+			action =  new Actions(driver);
 			int counter=0;
 			for (WebElement bar : Vp.getGlobalBarsNtFound()) {
 				js.executeScript("arguments[0].scrollIntoView(false);", bar);
@@ -149,18 +169,22 @@ public class VisibilityTest extends BaseTest {
 					logger.log(LogStatus.INFO, "not found locations found blank for Global bar:"+counter);
 				}
 				
-				
+			}
 			}
 			
 			
+			
+			@Test(priority=5)	
+			public void applyGlobalFilter() throws Exception {
+			try {
+			action =	 new Actions(driver);
+			js =   (JavascriptExecutor)driver;	
 			js.executeScript("window.scrollTo(0, 0)");
-			action.moveToElement(Vp.getFilterCountry()).doubleClick().build().perform();;
-			//Vp.getOptionCA().click();
-			WebDriverWait wait = new WebDriverWait(driver, 10);
-			 
+
+			action.moveToElement(Vp.getFilterCountry()).doubleClick().build().perform();
+			WebDriverWait wait = new WebDriverWait(driver, 10);			 
 			WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.menu.transition.visible>div:nth-child(2)")));
 			element.click();
-
 			Thread.sleep(1000);
 			action.moveToElement(Vp.getFilterState()).clickAndHold().click(Vp.getStateOption1()).build().perform();;
 			Thread.sleep(1000);
@@ -169,11 +193,11 @@ public class VisibilityTest extends BaseTest {
 			action.moveToElement(Vp.getFilterlocation()).clickAndHold().click(Vp.getLocationoption1()).build().perform();;
 			Thread.sleep(1000);
 			Vp.getApply_filter().click();
-			js.executeScript("arguments[0].scrollIntoView(false);", graph);
-			Assert.assertTrue(graph.isDisplayed());
+			js.executeScript("arguments[0].scrollIntoView(false);",  Vp.getScoreGraph());
+			Assert.assertTrue( Vp.getScoreGraph().isDisplayed());
 			logger.log(LogStatus.INFO, "filtered down visibility report and graph is present");
 
-		} catch (InterruptedException e) {
+			} catch (ElementNotVisibleException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
