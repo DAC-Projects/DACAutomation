@@ -29,9 +29,12 @@ import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -119,12 +122,12 @@ public abstract class BaseTest implements IAutoconst {
 		
 	@BeforeClass
 	@Parameters({"browser"})
-	public void setup(@Optional("Chrome")String browser) throws IOException {
+	public void setup(@Optional("Firefox")String browser) throws IOException {
 		driver = openBrowser(browser);
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
 		loginAuth(driver, prop); //logins to DAC
-		navigateToDashboard(driver, prop); //navigate to dashboard
+		navigateToDashboard(driver, prop, browser); //navigate to dashboard
 		
 		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		//Date date = new Date();
@@ -175,13 +178,16 @@ public abstract class BaseTest implements IAutoconst {
 
 		    FirefoxOptions firefoxOptions = new FirefoxOptions();
 		    firefoxOptions.setCapability(FirefoxDriver.PROFILE, profile);
+		    firefoxOptions.setCapability(FirefoxDriver.MARIONETTE, true);
 		    firefoxOptions.setCapability(CapabilityType.ELEMENT_SCROLL_BEHAVIOR, 1);
 	
 			driver = new FirefoxDriver(firefoxOptions);
 			
 		} else if (browser.equalsIgnoreCase("IE")) {
+			InternetExplorerOptions options = new InternetExplorerOptions();
+			options.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
+			driver = new InternetExplorerDriver(options);
 			
-			driver = new InternetExplorerDriver();
 		}
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -189,7 +195,7 @@ public abstract class BaseTest implements IAutoconst {
 
 	}
 	
-	/**
+	
 	@AfterClass
 	public void closeBrowser() throws Exception {
 		// Create an object of current class
@@ -198,7 +204,7 @@ public abstract class BaseTest implements IAutoconst {
 
 	}
 	
-	*/
+	
 	
 	//**********************for login to auth and then Dashboard
 
@@ -220,17 +226,32 @@ public abstract class BaseTest implements IAutoconst {
 
 	}
 
-	public void navigateToDashboard(WebDriver driver, Properties prop) {
+	public void navigateToDashboard(WebDriver driver, Properties prop, String browser) {
 		String oldTab = driver.getWindowHandle();
 		WebElement email = driver.findElement(By.id(prop.getProperty("emailsearch")));
 		email.clear();
 		email.sendKeys(prop.getProperty("emailID"));
+		driver.findElement(By.xpath("//input[@value='Submit']")).click();
+		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfElementLocated(By.linkText(prop.getProperty("dashboardLink")))).click();
 		WebElement linkToDashboard = driver.findElement(By.linkText(prop.getProperty("dashboardLink")));
 		linkToDashboard.click();
-		ArrayList<String> newTab = new ArrayList<String>(driver.getWindowHandles());
-		newTab.remove(oldTab);
+		
+		
+		
+		if (browser.equalsIgnoreCase("firefox")) {
+			WebDriverWait wait = new WebDriverWait(driver,5);
+			wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+		}
+		
+		ArrayList<String> handles = new ArrayList<String>(driver.getWindowHandles());
+		for (String handle: handles)
+		System.out.println(handle+"*****");
+		
+		handles.remove(oldTab);
 		// change focus to new tab
-		driver.switchTo().window(newTab.get(0));
+		for (String handle: handles)
+			System.out.println(handle+"*****");
+		driver.switchTo().window(handles.get(0));
 
 	}
 	
