@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -22,11 +23,15 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -138,13 +143,41 @@ public abstract class BaseTest implements IAutoconst {
 		parent.appendChild(logger);
 		logger.log(LogStatus.INFO, "Log for Each Step in Test Case");
 		//String browserName = prop.getProperty("browser");
+		 File file = new File("./downloads");
 
+		    boolean b = false;
+
+		    if (!file.exists()) {
+		     
+		      b = file.mkdirs();
+		    }
+		    
+		    FileUtils.cleanDirectory(file);
+		    String downloadFolder = System.getProperty("user.dir")+"/downloads";
+		    
 		if (browser.equalsIgnoreCase("Chrome")) {
-			driver = new ChromeDriver();
+			
+			HashMap<String, Object> chromePref = new HashMap<>();
+			chromePref.put("download.default_directory", downloadFolder);
+			chromePref.put("download.prompt_for_download", "false");
+			ChromeOptions options = new ChromeOptions();
+			options.setExperimentalOption("prefs", chromePref);
+			driver = new ChromeDriver(options);
 
 		} else if (browser.equalsIgnoreCase("Firefox")) {
 			
-			driver = new FirefoxDriver();
+		    FirefoxProfile profile = new FirefoxProfile();
+		    profile.setPreference("browser.download.dir",downloadFolder );  // folder
+		    profile.setPreference("pdfjs.disabled", true);  // disable the built-in viewer
+		    profile.setPreference("browser.download.folderList", 2);
+		    profile.setPreference("browser.download.panel.shown", false);
+		    profile.setPreference("browser.helperApps.neverAsksaveToDisk", "application/x-msexcel,application/excel,application/x-excel,application/excel,application/x-excel,application/excel,application/vnd.ms-excel,application/x-excel,application/x-msexcel");
+
+		    FirefoxOptions firefoxOptions = new FirefoxOptions();
+		    firefoxOptions.setCapability(FirefoxDriver.PROFILE, profile);
+		    firefoxOptions.setCapability(CapabilityType.ELEMENT_SCROLL_BEHAVIOR, 1);
+	
+			driver = new FirefoxDriver(firefoxOptions);
 			
 		} else if (browser.equalsIgnoreCase("IE")) {
 			
