@@ -122,7 +122,7 @@ public abstract class BaseTest implements IAutoconst {
 		
 	@BeforeClass
 	@Parameters({"browser"})
-	public void setup(@Optional("Firefox")String browser) throws IOException {
+	public void setup(@Optional("Chrome")String browser) throws IOException {
 		driver = openBrowser(browser);
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
@@ -179,7 +179,7 @@ public abstract class BaseTest implements IAutoconst {
 		    FirefoxOptions firefoxOptions = new FirefoxOptions();
 		    firefoxOptions.setCapability(FirefoxDriver.PROFILE, profile);
 		    firefoxOptions.setCapability(FirefoxDriver.MARIONETTE, true);
-		    firefoxOptions.setCapability(CapabilityType.ELEMENT_SCROLL_BEHAVIOR, 1);
+		    firefoxOptions.setCapability(CapabilityType.ELEMENT_SCROLL_BEHAVIOR, 0);
 	
 			driver = new FirefoxDriver(firefoxOptions);
 			
@@ -196,13 +196,13 @@ public abstract class BaseTest implements IAutoconst {
 	}
 	
 	
-	@AfterClass
+	/*@AfterClass
 	public void closeBrowser() throws Exception {
 		// Create an object of current class
 		driver.quit();
 		driver = null;
 
-	}
+	}*/
 	
 	
 	
@@ -231,11 +231,8 @@ public abstract class BaseTest implements IAutoconst {
 		WebElement email = driver.findElement(By.id(prop.getProperty("emailsearch")));
 		email.clear();
 		email.sendKeys(prop.getProperty("emailID"));
-		driver.findElement(By.xpath("//input[@value='Submit']")).click();
+		//driver.findElement(By.xpath("//input[@value='Submit']")).click();
 		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfElementLocated(By.linkText(prop.getProperty("dashboardLink")))).click();
-		WebElement linkToDashboard = driver.findElement(By.linkText(prop.getProperty("dashboardLink")));
-		linkToDashboard.click();
-		
 		
 		
 		if (browser.equalsIgnoreCase("firefox")) {

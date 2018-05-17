@@ -33,7 +33,7 @@ public class BasePage {
 	*/
 	
 	public void verifyText(WebElement e,String eText) {
-		String aText=e.getText();
+		String aText=e.getText().trim();
 		System.out.println(aText);
 		Assert.assertEquals(aText, eText);
 	}
@@ -44,8 +44,8 @@ public class BasePage {
 		JavascriptExecutor js=(JavascriptExecutor)driver;
 		int yLoc = element.getLocation().getY();
 		int xLoc = element.getLocation().getX();
-		js=(JavascriptExecutor)driver;
 		js.executeScript("window.scrollTo("+xLoc+", "+yLoc+")");
+		//js.executeScript("arguments[0].scrollIntoView()", element);
 	}
 	
 	protected void uploadFile(String fileName, String extension) {

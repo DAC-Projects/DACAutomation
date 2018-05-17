@@ -3,11 +3,13 @@ package com.dac.main;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -16,12 +18,14 @@ public class CampaignsPage extends BasePage{
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
+	JavascriptExecutor js;
 	
 	public CampaignsPage(WebDriver driver) {
 		
 		this.driver = driver;
 		wait = new WebDriverWait(driver, 35);
 		action=new Actions(driver);
+		js=(JavascriptExecutor)driver;
 		PageFactory.initElements(driver, this);
 	}
 
@@ -37,6 +41,48 @@ public class CampaignsPage extends BasePage{
 	
 	@FindBy(xpath="//input[contains(@ng-model,'Scheduled')]")
 	private WebElement ScheduledSearchBar;
+	
+	@FindBy(xpath="//span[@ng-bind='scheduledCampaign.Name']")
+	private WebElement scheduledCampName;
+	
+	@FindBy(xpath="//span[contains(@ng-if,'scheduledCampaign.Location')]")
+	private WebElement scheduledCampLocName;
+	
+	@FindBy(xpath="//span[@ng-bind='scheduledCampaign.BrandName']")
+	private WebElement scheduledCampBrnadName;
+	
+	@FindBy(xpath="//span[contains(text(),' Multi-location Campaign ')]")
+	private WebElement scheduledCampMLC;
+	
+	@FindBy(xpath="//span[contains(@ng-bind,'Campaign.CreatedDate')]")
+	private WebElement scheduledCampCreationDate;
+	
+	@FindBy(xpath="//span[contains(@ng-bind,'StartDateTime')]")
+	private WebElement scheduledCampStartDate;
+	
+	@FindBy(xpath="//span[text()='Edit']")
+	private WebElement scheduledCampEditBTN;
+	
+	@FindBy(xpath="//b[text()='Close Preview']")
+	private WebElement closePreviewBTN;
+	
+	@FindBy(xpath="//span[text()='Reschedule']")
+	private WebElement scheduledCampReScheduleBTN;
+	
+	@FindBy(xpath="//button[contains(@class,'LivePreviewBtn')]")
+	private WebElement scheduledCampLivePreviewBTN;
+	
+	@FindBy(xpath="//a[contains(@ng-click,'scheduleRemove')]/span")
+	private WebElement scheduledCampDeleteBTN;
+	
+	@FindBy(xpath="//button[text()='Yes']")
+	private WebElement scheduledCampAcceptDelBTN;
+	
+	@FindBy(xpath="//button[contains(text(),'Cancel')]")
+	private WebElement scheduledCampCancelDelBTN;
+	
+	@FindBy(xpath=" //button[text()='OK']")
+	private WebElement deleteCampConfirmBTN;
 	
 	@FindBy(xpath="//input[contains(@ng-model,'Draft')]")
 	private WebElement DraftSearchBar;
@@ -76,20 +122,73 @@ public class CampaignsPage extends BasePage{
 	@FindBy(xpath="(//td[contains(@ng-if,'activeCampaign.MLC')]/a)[4]")
 	private WebElement procCampCustActReportLink;
 	
+	@FindBy(xpath="//span[text()='Archive']")
+	private WebElement processedCampArchive;
 
+	@FindBy(xpath="//span[text()='Unarchive']")
+	private WebElement processedCampUnArchive;
 	
-	/** Use Thread.sleep atleast for 5000 millisec before invoking this method 
-	 * @throws InterruptedException */
+
 	public void click_CreateCampaignBTN() throws InterruptedException {
 
-		Thread.sleep(5000);
-		CreateCampaignBTN.click();
-		//action.moveToElement(CreateCampaignBTN).click(CreateCampaignBTN).perform();
+		 wait.until(ExpectedConditions.visibilityOf(CreateCampaignBTN));
+		//Thread.sleep(5000);
+		//CreateCampaignBTN.click();
+		action.moveToElement(CreateCampaignBTN).click(CreateCampaignBTN).perform();
 	}
 	
 	public void click_ScheduledTab() {
 		scrollByElement(ScheduledTab, driver);
-		ScheduledTab.click();
+		try {
+			wait.until(ExpectedConditions.elementToBeClickable(ScheduledTab));
+			ScheduledTab.click();
+		}
+		catch(Exception e) {
+			
+		}
+	}
+	
+	public void clickEditBTN() throws InterruptedException {
+		if(scheduledCampEditBTN.isEnabled() & scheduledCampEditBTN.isDisplayed()) {
+			scheduledCampEditBTN.click();
+			Thread.sleep(6000);
+		}
+		else {
+			System.out.println();
+		}
+	}
+	
+	public void clickDeleteBTN() throws InterruptedException {
+		action.moveToElement(scheduledCampDeleteBTN).click(scheduledCampDeleteBTN).perform();
+		Thread.sleep(2000);
+	}
+	
+	public void clickDeleteAcceptBTN() throws InterruptedException {
+		scheduledCampAcceptDelBTN.click();
+		Thread.sleep(6000);
+		deleteCampConfirmBTN.click();
+		Thread.sleep(5000);
+	}
+	
+	public void clickDeleteCancelBTN() throws InterruptedException {
+		scheduledCampCancelDelBTN.click();
+		Thread.sleep(4000);
+	}
+	
+	public void clickReScheduleBTN() throws InterruptedException {
+		scheduledCampReScheduleBTN.click();
+		
+	}
+	
+	public void clickLivePreviewBTN() {
+		if(scheduledCampLivePreviewBTN.isEnabled()) {
+			scheduledCampLivePreviewBTN.click();
+			wait.until(ExpectedConditions.visibilityOf(closePreviewBTN));
+			//Thread.sleep(6000);			
+		}
+		else {
+			System.out.println("Live preview Button is Disabled");
+		}
 	}
 	
 	public void click_DraftTab() {
@@ -97,40 +196,45 @@ public class CampaignsPage extends BasePage{
 		DraftTab.click();
 	}
 	
-	public void search_ScheduledCampaign(String CampName) {
+	public void search_ScheduledCampaign(String CampName) throws InterruptedException {
 		
 		scrollByElement(ScheduledSearchBar, driver);
-		click_ScheduledTab();
+		//click_ScheduledTab();
+		ScheduledSearchBar.clear();
 		ScheduledSearchBar.sendKeys(CampName);
-		//Thread.sleep(1000);	
+		Thread.sleep(2000);	
 	}
 	
 	/** 
-	 * Tis method should use after invoking of click_DraftTab()*/
-	public void search_DraftCampaign(String CampName) {
+	 * This method should use after invoking of click_DraftTab()
+	 * @throws InterruptedException */
+	public void search_DraftCampaign(String CampName) throws InterruptedException {
+		click_DraftTab();
 		if(DraftSearchBar.isDisplayed()) {
 			scrollByElement(DraftSearchBar, driver);
-			click_DraftTab();
+			DraftSearchBar.clear();
 			DraftSearchBar.sendKeys(CampName);
-			//Thread.sleep(1000);
+			Thread.sleep(3000);
 		}
 		else {
 			System.out.println("Please Navigate to Draft tab before serching for \"Drafted Campaign\" ");
 		}
 	}
 	
-	public void search_ProcessedCampaign(String CampName) {
+	public void search_ProcessedCampaign(String CampName) throws InterruptedException {
 		
 		scrollByElement(ProcessedCampaign_SearchBar, driver);
+		ProcessedCampaign_SearchBar.clear();
 		ProcessedCampaign_SearchBar.sendKeys(CampName);
-		//Thread.sleep(1000);
+		Thread.sleep(2000);
 	}
 	
 	/**
 	 * To validate the Searched Campaign displayed in respective Section or not
+	 * @throws InterruptedException 
 	 * @TabName  : Scheduled/Draft/Processed
 	 * @CampName : Campaign Name to search		*/
-	public void verifyCampName(String TabName, String CampName) {
+	public void verifyCampName(String TabName, String CampName) throws InterruptedException {
 		if(TabName.equalsIgnoreCase("Scheduled")) {
 			search_ScheduledCampaign(CampName);
 		}
@@ -157,7 +261,7 @@ public class CampaignsPage extends BasePage{
 	 * This method used to click Details link of Particular Processed campaign
 	 * note:  Before calling this method you should invoke search_ProcessedCampaign method */
 	public void clickResponsesLink() {
-		scrollByElement(processedCampResponsesLink, driver);
+		//scrollByElement(processedCampResponsesLink, driver);
 		processedCampResponsesLink.click();
 	}
 	
@@ -165,7 +269,7 @@ public class CampaignsPage extends BasePage{
 	 * This method used to click Details link of Particular Processed campaign
 	 * note:  Before calling this method you should invoke search_ProcessedCampaign method */
 	public void clickReportsLink() {
-		scrollByElement(processedCampReportsLink, driver);
+		//scrollByElement(processedCampReportsLink, driver);
 		processedCampReportsLink.click();
 	}
 	
@@ -173,7 +277,7 @@ public class CampaignsPage extends BasePage{
 	 * This method used to click Details link of Particular Processed campaign
 	 * note:  Before calling this method you should invoke search_ProcessedCampaign method */
 	public void clickCustActReportLink() {
-		scrollByElement(procCampCustActReportLink, driver);
+		//scrollByElement(procCampCustActReportLink, driver);
 		procCampCustActReportLink.click();
 	}
 }

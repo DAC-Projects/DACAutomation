@@ -130,8 +130,10 @@ public class Navigationpage extends BasePage{
 	public void clickCampaigns() {    
 		
 		scrollByElement(CampaignsLink, driver);
-		action.moveToElement(CampaignsLink).click().perform();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='btn-group']/a")));
+		CampaignsLink.click();
+		
+		/*action.moveToElement(CampaignsLink).click().perform();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='btn-group']/a")));*/
 	}
 	
 	public void clickResponses() {

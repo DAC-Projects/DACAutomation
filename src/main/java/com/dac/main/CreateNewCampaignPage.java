@@ -389,18 +389,20 @@ public class CreateNewCampaignPage extends BasePage{
 	public void clickViewAllCampaignBTN() throws InterruptedException {
 		Thread.sleep(5000);
 		action.moveToElement(viewAllCampaignBTN).click(viewAllCampaignBTN).perform();
+		Thread.sleep(5000);
 	}
 	
 	public void clickContinueEditBTN() throws InterruptedException {
 		Thread.sleep(5000);
 		action.moveToElement(continueEditBTN).click(continueEditBTN).perform();
+		Thread.sleep(5000);
 	}
 	
 	public void uploadLogo(String fileName, String extension) throws InterruptedException {
 		scrollByElement(uploadCampaignLogo, driver);
 		uploadCampaignLogo.click();
 		uploadFile(fileName, extension);
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 			
 	}
 	
@@ -471,7 +473,5 @@ public class CreateNewCampaignPage extends BasePage{
 		toFieldTB.sendKeys(email);
 	}
 	
-	public void verifyErrMsg() {
-		
-	}
+
 }
