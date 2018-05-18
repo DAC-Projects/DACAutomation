@@ -10,7 +10,9 @@ import org.testng.annotations.Test;
 import com.dac.main.CampaignLivePreviewPage;
 import com.dac.main.CampaignsPage;
 import com.dac.main.CreateNewCampaignPage;
+import com.dac.main.CustomerActivityReportPage_RS;
 import com.dac.main.Navigationpage;
+import com.dac.main.ReportsPage_RS;
 
 import autoitx4java.AutoItX;
 import resources.BaseTest;
@@ -30,9 +32,10 @@ public class Verify_CreateCampaign extends BaseTest{
 		NP.clickCampaigns();
 		
 		CampaignsPage CP=new CampaignsPage(driver);
-		CP.search_ScheduledCampaign("Test MLC Spanish LA 1");
-		
-		CP.clickReScheduleBTN();
-		CP.clickLivePreviewBTN();
+		CP.search_ProcessedCampaign("Test MLC Spanish (Mexico)");
+		CP.clickCustActReportLink();
+		CustomerActivityReportPage_RS custReport=new CustomerActivityReportPage_RS(driver);
+		custReport.clickDownloadReport();
+		custReport.custAvtivityRepoTableData();
 	}
 }

@@ -128,24 +128,40 @@ public class Navigationpage extends BasePage{
 	
 	/** To click on Campaigns link in LHS to navigate to Campaigns page  */
 	public void clickCampaigns() {    
-		
+		wait.until(ExpectedConditions.visibilityOf(CampaignsLink));
 		scrollByElement(CampaignsLink, driver);
-		CampaignsLink.click();
-		
-		/*action.moveToElement(CampaignsLink).click().perform();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='btn-group']/a")));*/
+		try {
+			CampaignsLink.click();
+		}
+		catch(Exception e) {
+			action.moveToElement(CampaignsLink).click().perform();
+		}
+		finally {
+			String xp="(//td[contains(@ng-if,'activeCampaign.MLC')]/a)[4]";
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xp)));
+		}
 	}
 	
 	public void clickResponses() {
-		
+		wait.until(ExpectedConditions.visibilityOf(ResponsesLink));
 		scrollByElement(ResponsesLink, driver);
-		action.moveToElement(ResponsesLink).click().perform();
+		try {
+			ResponsesLink.click();
+		}
+		catch(Exception e) {			
+			action.moveToElement(ResponsesLink).click().perform();
+		}
 	}
 	
 	public void clickReports() {
-		
+		wait.until(ExpectedConditions.visibilityOf(ReportsLink));
 		scrollByElement(ReportsLink, driver);
-		action.moveToElement(ReportsLink).click().perform();
+		try {
+			ReportsLink.click();
+		}
+		catch(Exception e) {
+			action.moveToElement(ReportsLink).click().perform();
+		}
 	}
      
 	public void click_DB_Lang_Link() {

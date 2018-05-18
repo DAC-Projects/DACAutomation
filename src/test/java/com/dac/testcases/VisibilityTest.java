@@ -29,6 +29,8 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import resources.Writetoexcel;
 import resources.BaseTest;
+import resources.ReadExcel;
+import resources.Utilities;
 
 
 public class VisibilityTest extends BaseTest {
@@ -41,16 +43,20 @@ public class VisibilityTest extends BaseTest {
 	String locationNo;
 	String visibilityScore;
 	
+	ReadExcel excel; 
+	
 	
 	 @Test(priority=1)
 	 public void veriy_DashboardKPIScore() throws Exception {
 	 try {
+		 
 		 Dp =new Dashboardpage(driver);
 	 Thread.sleep(20000);
 	 locationNo= Dp.getLocations().getText();
 	 visibilityScore = Dp.getVisibility().getText().replaceAll("%", "");;
 	 logger.log(LogStatus.INFO, "Read visibility score and locations from Dashboard");
 	 System.out.println("locationNo: "+locationNo+"\n"+"visibility score:"+visibilityScore);
+
 	 
 	 } catch (InterruptedException e) {
 	 // TODO Auto-generated catch block

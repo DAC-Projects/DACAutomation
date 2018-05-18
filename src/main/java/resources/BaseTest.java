@@ -122,13 +122,12 @@ public abstract class BaseTest implements IAutoconst {
 		
 	@BeforeClass
 	@Parameters({"browser"})
-	public void setup(@Optional("Chrome")String browser) throws IOException {
+	public void setup(@Optional("Chrome")String browser) throws Exception {
 		driver = openBrowser(browser);
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
 		loginAuth(driver, prop); //logins to DAC
 		navigateToDashboard(driver, prop, browser); //navigate to dashboard
-		
 		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		//Date date = new Date();
 		//String time = sdf.format(date);

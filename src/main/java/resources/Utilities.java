@@ -29,7 +29,7 @@ public class Utilities {
 	public static void addScreenshot(WebDriver driver, String message) throws IOException {
 		System.out.println("reached screenshot block");
 		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(src, new File("screenshots/"+message+".png"));
+		FileUtils.copyFile(src, new File("Screenshot/"+message+".png"));
 
 	}
 	

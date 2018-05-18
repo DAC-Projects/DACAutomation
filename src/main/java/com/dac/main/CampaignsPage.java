@@ -98,6 +98,9 @@ public class CampaignsPage extends BasePage{
 	
 	//------------------Processed campaign Table Data----------------------
 	
+	@FindBy(xpath="//h4[@class='text-primary']")
+	private WebElement processedCampSection;
+	
 	@FindBy(xpath="//span[@ng-bind='activeCampaign.Name']")
 	private WebElement processedCampName;
 
@@ -202,7 +205,7 @@ public class CampaignsPage extends BasePage{
 		//click_ScheduledTab();
 		ScheduledSearchBar.clear();
 		ScheduledSearchBar.sendKeys(CampName);
-		Thread.sleep(2000);	
+		Thread.sleep(3000);	
 	}
 	
 	/** 
@@ -214,7 +217,7 @@ public class CampaignsPage extends BasePage{
 			scrollByElement(DraftSearchBar, driver);
 			DraftSearchBar.clear();
 			DraftSearchBar.sendKeys(CampName);
-			Thread.sleep(3000);
+			Thread.sleep(4000);
 		}
 		else {
 			System.out.println("Please Navigate to Draft tab before serching for \"Drafted Campaign\" ");
@@ -222,11 +225,11 @@ public class CampaignsPage extends BasePage{
 	}
 	
 	public void search_ProcessedCampaign(String CampName) throws InterruptedException {
-		
-		scrollByElement(ProcessedCampaign_SearchBar, driver);
+		//Thread.sleep(4000);
+		scrollByElement(processedCampSection, driver);
 		ProcessedCampaign_SearchBar.clear();
 		ProcessedCampaign_SearchBar.sendKeys(CampName);
-		Thread.sleep(2000);
+		Thread.sleep(4000);
 	}
 	
 	/**
@@ -253,7 +256,7 @@ public class CampaignsPage extends BasePage{
 	 * This method used to click Details link of Particular Processed campaign
 	 * note:  Before calling this method you should invoke search_ProcessedCampaign method */
 	public void clickDetailsLink() {
-		scrollByElement(processedCampDetailsLink, driver);
+		scrollByElement(processedCampSection, driver);
 		processedCampDetailsLink.click();
 	}
 	
@@ -261,23 +264,42 @@ public class CampaignsPage extends BasePage{
 	 * This method used to click Details link of Particular Processed campaign
 	 * note:  Before calling this method you should invoke search_ProcessedCampaign method */
 	public void clickResponsesLink() {
-		//scrollByElement(processedCampResponsesLink, driver);
-		processedCampResponsesLink.click();
+		scrollByElement(processedCampSection, driver);
+		try {
+			processedCampResponsesLink.click();
+		}
+		catch(Exception e) {
+			action.moveToElement(processedCampResponsesLink).click().perform();
+		}
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("btnReviewsExport")));
 	}
 	
 	/** 
 	 * This method used to click Details link of Particular Processed campaign
 	 * note:  Before calling this method you should invoke search_ProcessedCampaign method */
 	public void clickReportsLink() {
-		//scrollByElement(processedCampReportsLink, driver);
-		processedCampReportsLink.click();
+		scrollByElement(processedCampSection, driver);
+		try {
+			processedCampReportsLink.click();
+		}
+		catch(Exception e) {
+			action.moveToElement(processedCampReportsLink).click().perform();
+		}
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("btnApply")));
 	}
 	
 	/** 
 	 * This method used to click Details link of Particular Processed campaign
-	 * note:  Before calling this method you should invoke search_ProcessedCampaign method */
+	 * note:  Before calling this method you should invoke search_ProcessedCampaign method 	 */
 	public void clickCustActReportLink() {
-		//scrollByElement(procCampCustActReportLink, driver);
-		procCampCustActReportLink.click();
+		scrollByElement(processedCampSection, driver);
+		wait.until(ExpectedConditions.visibilityOf(procCampCustActReportLink));
+		try {
+			procCampCustActReportLink.click();
+		}
+		catch(Exception e) {
+			action.moveToElement(procCampCustActReportLink).click().perform();
+		}
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("customerActivityTable_info")));
 	}
 }

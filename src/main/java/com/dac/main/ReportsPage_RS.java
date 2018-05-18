@@ -1,5 +1,8 @@
 package com.dac.main;
 
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,6 +18,7 @@ public class ReportsPage_RS {
 	Actions action;
 	Select select;
 	WebDriverWait wait;
+	Robot robot;
 	JavascriptExecutor js;
 	
 	public ReportsPage_RS(WebDriver driver) {
@@ -49,6 +53,9 @@ public class ReportsPage_RS {
 	@FindBy(id="divReviewsSubmitted")
 	private WebElement reviewSubmittedCount;
 	
+	@FindBy(id="dateFrom")
+	private WebElement dateFrom;
+	
 	public void clickApplyFilterBTN() {
 		applyFilterBTN.click();
 	}
@@ -65,5 +72,10 @@ public class ReportsPage_RS {
 	public void selectCampaignName(String campName) {
 		select = new Select(campNameDropDown);
 		select.selectByVisibleText(campName);
+	}
+	
+	public void fromDateCampaign() {
+		
+		System.out.println("From Date : "+dateFrom.getText());
 	}
 }
