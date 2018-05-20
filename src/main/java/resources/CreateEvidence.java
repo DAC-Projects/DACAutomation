@@ -16,11 +16,13 @@ import javax.imageio.ImageIO;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.BreakType;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFAbstractNum;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFNumbering;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFStyles;
 import org.apache.xmlbeans.XmlException;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTAbstractNum;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTLvl;
@@ -50,10 +52,18 @@ public class CreateEvidence {
 			.format(Calendar.getInstance().getTime());
 	
 	XWPFDocument doc = new XWPFDocument();
+	XWPFStyles styles = doc.createStyles();
+	String testcaseName;
+
+
+	public CreateEvidence(String testcase) {
+		// TODO Auto-generated constructor stub
+		this.testcaseName = testcase;
+	}
 
 	// To DO write a method to read image file names from excel and call the method
 	// from function below to get Image names
-	public void creatDoc(ArrayList<String[]> arraySteps) throws IOException, InvalidFormatException, XmlException {
+	public  void  creatDoc(ArrayList<String[]> arraySteps) throws IOException, InvalidFormatException, XmlException {
 
 		
 
@@ -62,6 +72,19 @@ public class CreateEvidence {
 		ArrayList<String> imgnames = new ArrayList<String>();
 		int counter=0;
 		int counter2= -1;
+		
+		
+		//styling different headers
+		String heading1 = "My Heading 1";
+	    String heading2 = "My Heading 2";
+	    String heading3 = "My Heading 3";   
+	    String heading4 = "My Heading 4";
+	    HeaderFormats.addCustomHeadingStyle(doc, styles, heading1, 1, 36, "4288BC");
+	    HeaderFormats.addCustomHeadingStyle(doc, styles, heading2, 2, 28, "4288BC");
+	    HeaderFormats.addCustomHeadingStyle(doc, styles, heading3, 3, 24, "4288BC");
+	    HeaderFormats.addCustomHeadingStyle(doc, styles, heading4, 4, 20, "000000");
+
+	    
 		
 		// create an array with screenshot names
 		for (String[] step: arraySteps)
@@ -75,6 +98,12 @@ public class CreateEvidence {
 		}
 		
 		
+		XWPFParagraph paragraph = doc.createParagraph();
+	    paragraph.setStyle(heading1);
+	    paragraph.setAlignment(ParagraphAlignment.CENTER);
+	    XWPFRun run = paragraph.createRun();
+	    run.setText(testcaseName);
+	    run.addBreak();
 		
 		for (String[] step: arraySteps)
 		{
@@ -82,25 +111,17 @@ public class CreateEvidence {
 			 String ExpctdRsult = step[1].toString();
 			 String ScrnshtRequird = step[2].toString();
 			 
-			 
-				
-			
 			 XWPFParagraph p = doc.createParagraph();
 				p.setNumID(orderBy("No"));
-				
-				
 				XWPFRun r = p.createRun();
 		
 			if (TestStep.trim().matches(".*\\w.*"))
 			{	
-				
 				r.setText(TestStep.trim());
 			}
 			p.setSpacingAfter(0);
 			
-			
-			
-		
+
 			if (ExpctdRsult.trim().matches(".*\\w.*") )
 				
 			{	XWPFParagraph p2 = doc.createParagraph();
@@ -109,9 +130,11 @@ public class CreateEvidence {
 				p2.setWordWrapped(true);
 				XWPFRun r2= p2.createRun();
 				r2.setText(ExpctdRsult.trim());
+				r2.addBreak();
 			}
 		
 			p.setSpacingAfter(0);
+			
 		if (ScrnshtRequird.equalsIgnoreCase("yes"))
 		{	counter2 +=1;
 			String screenshotName=imgnames.get(counter2).toString(); 
@@ -132,6 +155,7 @@ public class CreateEvidence {
 	    	r.setText("*******"+"Error encountered. Please refer report for details"+"*******" );
 			r.addBreak(BreakType.TEXT_WRAPPING);
 	    }
+			run.addBreak();
 		}
 		
 		

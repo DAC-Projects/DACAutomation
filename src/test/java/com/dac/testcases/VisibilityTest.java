@@ -99,7 +99,7 @@ public class VisibilityTest extends BaseTest {
 			String locationsNo = tooltip[1].replaceAll("Number of Locations:", "");
 			String ScoreValue =  tooltip[2].replaceAll("Score Value:", "");
 			System.out.println("date: "+date+ "graphlocationNo: "+locationsNo+"\n"+"graphvisibility score:"+ScoreValue);
-			 
+			Utilities.addScreenshot(driver, imgnames.get(0).toString());
 			 Assert.assertEquals(locationsNo, locationNo);
 			 Assert.assertEquals(ScoreValue, visibilityScore);
 			 logger.log(LogStatus.INFO, "Asserted graph values to Dashboard values");

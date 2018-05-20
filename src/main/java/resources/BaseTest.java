@@ -60,13 +60,16 @@ public abstract class BaseTest implements IAutoconst {
 		System.setProperty(GECKO_KEY, GECKO_VALUE);
 		System.setProperty(CHROME_KEY, CHROME_VALUE);
 	}
-
+	
 	public static WebDriver driver;
 	public Properties prop;
 	public static ExtentReports report;
 	public static ExtentTest logger;
 	public static ExtentTest parent;
-
+	protected ArrayList<String> imgnames = new ArrayList<String>();
+	protected ArrayList<String[]> arraySteps = new ArrayList<>();
+	private ReadExcel re;
+	private CreateEvidence ce;
 	//****************************Extent report
 	
 	@BeforeSuite(alwaysRun = true)
@@ -121,8 +124,8 @@ public abstract class BaseTest implements IAutoconst {
 	//***************** intialising  browser
 		
 	@BeforeClass
-	@Parameters({"browser"})
-	public void setup(@Optional("Chrome")String browser) throws Exception {
+	@Parameters({"browser", "testcasePath", "Sheet", "ID"})
+	public void setup(@Optional("Chrome")String browser, String testcasePath,String Sheet, String ID) throws Exception {
 		driver = openBrowser(browser);
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
@@ -131,6 +134,9 @@ public abstract class BaseTest implements IAutoconst {
 		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		//Date date = new Date();
 		//String time = sdf.format(date);
+		re = new ReadExcel(testcasePath);
+		imgnames = re.getScreenshotNames(Sheet, ID);
+		arraySteps = re.getTestcases(Sheet, ID);
 	}
 
 	
@@ -195,13 +201,18 @@ public abstract class BaseTest implements IAutoconst {
 	}
 	
 	
-	/*@AfterClass
+	@AfterClass
 	public void closeBrowser() throws Exception {
 		// Create an object of current class
+		//CreateEvidence ce = new CreateEvidence();
+		//ReadExcel eat = new ReadExcel("./Testcase-TransparenSee.xlsx");
+		ce =new CreateEvidence(ReadExcel.Testcase);
+		ce.creatDoc(arraySteps);
+		
 		driver.quit();
 		driver = null;
 
-	}*/
+	}
 	
 	
 	

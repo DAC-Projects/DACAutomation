@@ -1,6 +1,7 @@
 package resources;
 
 import java.io.FileInputStream;
+import java.sql.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,12 +19,13 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ReadExcel {
-	public FileInputStream fis = null;
-	public XSSFWorkbook workbook = null;
-	public XSSFSheet sheet = null;
-	public XSSFRow row = null;
-	public XSSFCell cell = null;
-	ArrayList<String[]> arrayofSteps;
+	public static FileInputStream fis = null;
+	public static XSSFWorkbook workbook = null;
+	public static XSSFSheet sheet = null;
+	public static XSSFRow row = null;
+	public static XSSFCell cell = null;
+	private static ArrayList<String[]> arrayofSteps;
+	public static String Testcase;
 	
 
 	public ReadExcel(String xlFilePath) throws Exception {
@@ -33,7 +35,7 @@ public class ReadExcel {
 		
 	}
 
-	public ArrayList<String[]> getTestcases(String sheetName, String colName, int rowNum, String searchKey) {
+	public  ArrayList<String[]> getTestcases(String sheetName, String searchKey) {
 		try {
 			int col_Num = -1;
 			int row_Num = -1;
@@ -47,7 +49,8 @@ public class ReadExcel {
 			row = sheet.getRow(0);
 			for (int i = 0; i < row.getLastCellNum(); i++) 
 			{
-				if (row.getCell(i).getStringCellValue().trim().equals(colName.trim()))
+				//if (row.getCell(i).getStringCellValue().trim().equals(colName.trim()))
+				if (row.getCell(i).getStringCellValue().trim().equals("ID"))
 					col_Num = i;
 			}
 
@@ -72,7 +75,7 @@ public class ReadExcel {
 
 			/* Then read data from the next cell(Testcase name ) return a s a string */
 			int testcaseName_col = col_Num+1 ;
-			String Testcase = row.getCell(testcaseName_col).getStringCellValue().trim();
+			Testcase = row.getCell(testcaseName_col).getStringCellValue().trim();
 			int testStep_col = testcaseName_col + 1;
 			int expctedRsult_col = testStep_col + 1;
 			int scrnCaptrNeed_col = expctedRsult_col + 1;
@@ -115,7 +118,7 @@ public class ReadExcel {
 			}
 		
 			
-			return arrayofSteps;
+			//return arrayofSteps;
 			
 			
 		        
@@ -158,6 +161,26 @@ public class ReadExcel {
 			//return "row " + rowNum + " or column " + colName + " does not exist  in Excel";
 		}
 		return arrayofSteps;
+	}
+	
+	
+	public  ArrayList<String> getScreenshotNames(String sheetName, String searchKey)
+	{
+		int counter =0;
+		ArrayList<String> imgnames =new ArrayList<String>();
+	arrayofSteps = getTestcases(sheetName,  searchKey)	;
+			for (String[] step: arrayofSteps)
+			{	if (step[2].equalsIgnoreCase("yes"))
+				{
+				counter += 1;
+				imgnames.add("Test evidence_"+counter);
+				System.out.println("image array: "+imgnames.toString());
+				
+				}
+			}
+			
+		
+	return imgnames;
 	}
 
 	
