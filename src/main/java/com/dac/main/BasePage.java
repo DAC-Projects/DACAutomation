@@ -14,7 +14,7 @@ import autoitx4java.AutoItX;
 
 public class BasePage {
 	
-	/**
+	/*
 	public void verifyPageIsDisplayed(WebDriver driver,String eResult) {
 		String sETO=AutoUtil.getProperty(IAutoConst.CONFIG_PATH, "ETO");
 		long ETO=Long.parseLong(sETO);
