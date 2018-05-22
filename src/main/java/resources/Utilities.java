@@ -32,8 +32,4 @@ public class Utilities {
 		FileUtils.copyFile(src, new File("Screenshot/"+message+".png"));
 
 	}
-	
-	
-
-
 }

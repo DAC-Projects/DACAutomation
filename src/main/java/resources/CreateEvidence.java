@@ -91,7 +91,8 @@ public class CreateEvidence {
 		{	if (step[2].equalsIgnoreCase("yes"))
 			{
 			counter += 1;
-			imgnames.add("Test evidence_"+counter);
+			imgnames.add(ReadExcel.Testcase+"_"+counter);
+			
 			System.out.println("image array: "+imgnames.toString());
 			
 			}
@@ -152,10 +153,10 @@ public class CreateEvidence {
 		}else
 	    {
 	    	System.out.println("image not found.");
-	    	r.setText("*******"+"Error encountered. Please refer report for details"+"*******" );
+	    	r.setText("\n"+"*******"+"Error encountered. Please refer report for details"+"*******" );
 			r.addBreak(BreakType.TEXT_WRAPPING);
 	    }
-			run.addBreak();
+			//run.addBreak();
 		}
 		
 		

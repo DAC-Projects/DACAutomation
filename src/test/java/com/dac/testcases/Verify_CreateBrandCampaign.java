@@ -29,19 +29,9 @@ public class Verify_CreateBrandCampaign extends BaseTest{
 		np.clickCampaigns();
 		
 		CampaignsPage cp=new CampaignsPage(driver);
+		cp.click_CreateCampaignBTN();
 		
-		cp.search_ProcessedCampaign("Test MLC Spanish (Mexico)");
-		
-		cp.clickResponsesLink();
-		
-		ResponsesPage_RS rprs=new ResponsesPage_RS(driver);
-		rprs.avgStarRatingData();
-		
-		
-		
-		//cp.click_CreateCampaignBTN();
-		
-		/*CreateNewCampaignPage newCampaign=new CreateNewCampaignPage(driver);
+		CreateNewCampaignPage newCampaign=new CreateNewCampaignPage(driver);
 		
 		newCampaign.selectCampType(2);
 		
@@ -120,7 +110,7 @@ public class Verify_CreateBrandCampaign extends BaseTest{
 		Utilities.addScreenshot(driver, imgnames.get(11).toString());
 		
 		cp.clickDeleteAcceptBTN();
-		Utilities.addScreenshot(driver, imgnames.get(12).toString());*/
+		Utilities.addScreenshot(driver, imgnames.get(12).toString());
 		
 		
 	}

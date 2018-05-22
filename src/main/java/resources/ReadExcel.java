@@ -173,7 +173,10 @@ public class ReadExcel {
 			{	if (step[2].equalsIgnoreCase("yes"))
 				{
 				counter += 1;
-				imgnames.add("Test evidence_"+counter);
+				//imgnames.add("_"+counter);
+				
+				
+				imgnames.add(ReadExcel.Testcase+"_"+counter);
 				System.out.println("image array: "+imgnames.toString());
 				
 				}
@@ -183,5 +186,13 @@ public class ReadExcel {
 	return imgnames;
 	}
 
-	
+	public void getImagesIntoArray(String testcasePath, String Sheet, String ID) throws Exception {
+		
+		 ReadExcel re = new ReadExcel(testcasePath);
+		
+		ArrayList<String> imgnames = new ArrayList<String>();
+		ArrayList<String[]> arraySteps = new ArrayList<>();
+		imgnames = re.getScreenshotNames(Sheet, ID);
+		arraySteps = re.getTestcases(Sheet, ID);
+	}
 }
