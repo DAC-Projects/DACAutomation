@@ -9,10 +9,9 @@
     <classes>
  
       <class name="com.dac.testcases.Verify_CreateBrandCampaign"/>
-      <class name="com.dac.testcases.Verify_CreateBrandCampaign"/>
-      <class name="com.dac.testcases.Verify_CreateBrandCampaign"/>
-      <class name="com.dac.testcases.Verify_CreateBrandCampaign"/>
-      <class name="com.dac.testcases.Verify_CreateBrandCampaign"/>
+      <class name="com.dac.testcases.VerifyCampResponsesData"/>
+      <class name="com.dac.testcases.VerifyCampReportsData"/>
+      <class name="com.dac.testcases.VerifyCampCustomerActReport"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

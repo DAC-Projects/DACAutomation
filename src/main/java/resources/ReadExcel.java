@@ -100,7 +100,6 @@ public class ReadExcel {
 				}
 				cell = row.getCell(testStep_col, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 				if (null!=cell) {
-					
 				
 					
 					testStep = row.getCell(testStep_col, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue();
