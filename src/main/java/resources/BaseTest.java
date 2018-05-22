@@ -135,6 +135,7 @@ public abstract class BaseTest implements IAutoconst {
 		//Date date = new Date();
 		//String time = sdf.format(date);
 		re = new ReadExcel(testcasePath);
+		
 		imgnames = re.getScreenshotNames(Sheet, ID);
 		arraySteps = re.getTestcases(Sheet, ID);
 	}
@@ -147,6 +148,7 @@ public abstract class BaseTest implements IAutoconst {
 		prop.load(fis);
 		
 		String className= this.getClass().getSimpleName();
+		//String Name = ReadExcel.Testcase;
 		logger = report.startTest(className).assignCategory("Regression Testcases for "+ browser);
 		parent.appendChild(logger);
 		logger.log(LogStatus.INFO, "Log for Each Step in Test Case");

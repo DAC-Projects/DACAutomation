@@ -10,11 +10,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
 
+import com.jacob.com.LibraryLoader;
+
 import autoitx4java.AutoItX;
 
 public class BasePage {
 	
-	/**
+	/*
 	public void verifyPageIsDisplayed(WebDriver driver,String eResult) {
 		String sETO=AutoUtil.getProperty(IAutoConst.CONFIG_PATH, "ETO");
 		long ETO=Long.parseLong(sETO);
@@ -50,8 +52,8 @@ public class BasePage {
 	
 	protected void uploadFile(String fileName, String extension) {
 		
-		File file =new File("./"+fileName+extension);
-		String fileAbsPath=file.getAbsolutePath();
+		File uploadingFilePath =new File("./"+fileName+extension);
+		String fileAbsPath=uploadingFilePath.getAbsolutePath();
 		
 		AutoItX x=new AutoItX();
 		x.winWaitActive("Open");

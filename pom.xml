@@ -116,6 +116,21 @@
    		<version>5.1.6</version>
 	</dependency>
 	
+	<!-- https://mvnrepository.com/artifact/net.sf.jacob-project/jacob -->
+<dependency>
+    <groupId>net.sf.jacob-project</groupId>
+    <artifactId>jacob</artifactId>
+    <version>1.14.3</version>
+</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/de.openkeyword/autoit -->
+	<dependency>
+ 	   <groupId>de.openkeyword</groupId>
+ 	   <artifactId>autoit</artifactId>
+ 	   <version>LATEST</version>
+	</dependency>
+	
+	
 	
   </dependencies>
   
