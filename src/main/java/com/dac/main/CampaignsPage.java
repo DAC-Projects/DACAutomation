@@ -135,7 +135,7 @@ public class CampaignsPage extends BasePage{
 	public void click_CreateCampaignBTN() throws InterruptedException {
 
 		 wait.until(ExpectedConditions.visibilityOf(CreateCampaignBTN));
-		Thread.sleep(5000);
+		Thread.sleep(4000);
 		//CreateCampaignBTN.click();
 		action.moveToElement(CreateCampaignBTN).click(CreateCampaignBTN).perform();
 	}

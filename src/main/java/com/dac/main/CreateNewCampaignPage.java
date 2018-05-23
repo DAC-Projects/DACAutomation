@@ -238,6 +238,15 @@ public class CreateNewCampaignPage extends BasePage{
 	@FindBy(xpath="//div[contains(@ng-show,'highrating')]/div")
 	private WebElement ThankU4_5StarErrMsg;
 	
+	@FindBy(xpath="//span[@ng-bind='headerMessage']")
+	private WebElement campNewCreateText;
+	
+	@FindBy(xpath="(//div[@id=\"breadcrumbs\"]//li/a)[2]")
+	private WebElement customerFeedbackBreadCrumb;
+	
+	@FindBy(xpath="(//h3[@class='text-primary'])[1]")
+	private WebElement campaignInfoSection;
+	
 	/** indexes for 
 	 * 
 	 * @param campTypeIndex 
@@ -247,8 +256,7 @@ public class CreateNewCampaignPage extends BasePage{
 	 * @throws InterruptedException */
 	public void selectCampType(int campTypeIndex) throws InterruptedException {
 		Thread.sleep(5000);
-		WebElement newCampText=driver.findElement(By.xpath("//span[@ng-bind='headerMessage']"));
-		scrollByElement(newCampText, driver);
+		scrollByElement(customerFeedbackBreadCrumb, driver);
 		while(true) {
 			if(campaignType.isDisplayed()) {
 				select = new Select(campaignType);
@@ -265,8 +273,7 @@ public class CreateNewCampaignPage extends BasePage{
 	 * German         : 4	   Italian		   : 5	  Spanish (Mexico): 6
 	 * Spanish(Spain) : 7      Swedish         : 7							*/
 	public void selectCampLang(int CampLangIndex) {
-		WebElement newCampText=driver.findElement(By.xpath("//span[@ng-bind='headerMessage']"));
-		scrollByElement(newCampText, driver);
+		scrollByElement(customerFeedbackBreadCrumb, driver);
 		select = new Select(campaignLang);
 		select.selectByIndex(CampLangIndex);
 	}
@@ -275,8 +282,7 @@ public class CreateNewCampaignPage extends BasePage{
 	 * This method is used to enter the data into the Campaign name Text Field
 	 * @campName : Enter the campaign name 	   */
 	public void setCampaignName(String campName) {
-		WebElement newCampText=driver.findElement(By.xpath("(//h3[@class='text-primary'])[1]"));
-		scrollByElement(newCampText, driver);
+		scrollByElement(campaignInfoSection, driver);
 		scrollByElement(campaignName, driver);
 		campaignName.sendKeys(campName);
 	}
@@ -286,8 +292,7 @@ public class CreateNewCampaignPage extends BasePage{
 	 * @locIndex : To select particular location from selected location name contains @locName based on Index.
 	 * @locName  : To check the list box of Locations contains this text.		 */
 	public void selectCampaignLoc(int locIndex,String locName) {
-		WebElement newCampText=driver.findElement(By.xpath("(//h3[@class='text-primary'])[1]"));
-		scrollByElement(newCampText, driver);
+		scrollByElement(campaignInfoSection, driver);
 		campaignLocTB.sendKeys(locName);
 		int index=0;
 		for(index=0;index<campaignLocListBox.size();index++) {
@@ -303,14 +308,12 @@ public class CreateNewCampaignPage extends BasePage{
 	}
 	
 	public void setCampaignBrandName(String campBrandName) {
-		WebElement newCampText=driver.findElement(By.xpath("(//h3[@class='text-primary'])[1]"));
-		scrollByElement(newCampText, driver);
+		scrollByElement(campaignInfoSection, driver);
 		campaignBrandNameTB.sendKeys(campBrandName);
 	}
 	
 	public void setCampDescr(String campDescription) {
-		WebElement newCampText=driver.findElement(By.xpath("(//h3[@class='text-primary'])[1]"));
-		scrollByElement(newCampText, driver);
+		scrollByElement(campaignInfoSection, driver);
 		campaignDescriptionTB.sendKeys(campDescription);
 	}
 	
@@ -320,8 +323,8 @@ public class CreateNewCampaignPage extends BasePage{
 		campaignSenderName.sendKeys(campSenderName);
 	}
 	
-	public void setCampSubject(String campSubject) {
-		
+	public void setCampSubject(String campSubject) throws InterruptedException {
+		Thread.sleep(2000);
 		scrollByElement(campaignSubject, driver);
 		campaignSubject.sendKeys(campSubject);
 	}
@@ -377,12 +380,24 @@ public class CreateNewCampaignPage extends BasePage{
 
 	}
 	
-	public void uploadCampEmailTemplate(String fileName, String extension) {
+	
+	//Email template can be upload by using send keys.
+	public void uploadCampEmailTemplate(String fileName, String extension) throws InterruptedException {
 		
 		scrollByElement(toFieldTB, driver);
-		uploadEmailTemplate.click();	
-		uploadFile(fileName, extension);
+		File uploadingFilePath =new File("./"+fileName+extension);
+		String fileAbsPath=uploadingFilePath.getAbsolutePath();
+		uploadEmailTemplate.sendKeys(fileAbsPath);	
+		Thread.sleep(2000);
+		//uploadFile(fileName, extension);
 	}
+	
+	/*public void clickUploadEmailTemplate() throws InterruptedException {
+		scrollByElement(toFieldTB, driver);
+		Thread.sleep(2000);
+		uploadEmailTemplate.click();
+		Thread.sleep(6000);
+	}*/
 	
 	public void clickSaveDraft() {
 		scrollByElement(saveDraftBTN, driver);
@@ -406,12 +421,16 @@ public class CreateNewCampaignPage extends BasePage{
 		Thread.sleep(5000);
 	}
 	
-	public void uploadLogo(String fileName, String extension) throws InterruptedException {
+	public void uploadLogo() throws InterruptedException {
 		WebElement newEmailSetupText=driver.findElement(By.xpath("(//h3[@class='text-primary'])[2]"));
 		scrollByElement(newEmailSetupText, driver);
+		/*File uploadingFilePath =new File("./"+fileName+extension);
+		String fileAbsPath=uploadingFilePath.getAbsolutePath();*/
 		uploadCampaignLogo.click();
-		uploadFile(fileName, extension);
-		Thread.sleep(5000);
+		//uploadCampaignLogo.sendKeys(fileAbsPath);
+		//uploadFile(fileName, extension);
+		//Thread.sleep(6000);
+		//String fileName, String extension
 			
 	}
 	
@@ -443,7 +462,7 @@ public class CreateNewCampaignPage extends BasePage{
 	 * 						*/
 	public void verifyExistCampToolTipText(String eText) {
 		
-		scrollByElement(existCampTT, driver);
+		scrollByElement(customerFeedbackBreadCrumb, driver);
 		action.moveToElement(existCampTT).perform();
 		verifyText(toolTipText, eText);
 	}

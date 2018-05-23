@@ -20,7 +20,7 @@ import resources.BaseTest;
 import resources.CreateEvidence;
 import resources.Utilities;
 
-public class Verify_CreateBrandCampaign extends BaseTest{
+public class Verify_CreateCampaign extends BaseTest{
 	
 	@Test
 	public void createBrandCamp_Test() throws Exception {
@@ -49,13 +49,20 @@ public class Verify_CreateBrandCampaign extends BaseTest{
 		
 		newCampaign.setSenderName("Sender: Test Auto Brand Campaign");
 	
-		newCampaign.uploadLogo("logo", ".jpeg");
+		newCampaign.uploadLogo();
 		
+		String filepath="C:\\Users\\wasim\\git\\DACAutomation\\logo.jpeg";
+		String filepathexe="C:/Users/wasim/git/DACAutomation/Logo.exe";
+		Runtime.getRuntime().exec(filepathexe+" "+filepath);
+		
+		//Below Thread.sleep method for wait to finish the uploading of Logo through AutoIt. 
+		//Other waiting condition can't give because selenium not able to handle window based apps
+		Thread.sleep(5000);
 		newCampaign.verifyUploadLogoToolTipText("Recommended size is 160 x 70 pixels");
 		
 		Utilities.addScreenshot(driver, imgnames.get(2).toString());
-	
-		newCampaign.downloadCampEmailTemplate();
+		
+		//newCampaign.downloadCampEmailTemplate();
 		
 		newCampaign.uploadCampEmailTemplate("EmailTemplate", ".xlsx");
 		
@@ -75,42 +82,45 @@ public class Verify_CreateBrandCampaign extends BaseTest{
 		
 		Utilities.addScreenshot(driver, imgnames.get(5).toString());
 		
-		newCampaign.setScheduledStartDate("05", "21", "2018");
+		newCampaign.setScheduledStartDate("05", "23", "2018");
 		
 		Robot robot = new Robot();
 		robot.keyPress(KeyEvent.VK_ENTER);
 		
 		newCampaign.clickEndDatePicker();
 				
+		Utilities.addScreenshot(driver, imgnames.get(6).toString());
 		newCampaign.clickCreateCampBTN();
 		
-		Utilities.addScreenshot(driver, imgnames.get(6).toString());
+		Utilities.addScreenshot(driver, imgnames.get(7).toString());
 		
 		newCampaign.clickViewAllCampaignBTN();
 		
 		cp.search_ScheduledCampaign("Test Auto Brand Campaign");
 		
-		Utilities.addScreenshot(driver, imgnames.get(7).toString());
+		Utilities.addScreenshot(driver, imgnames.get(8).toString());
 		
 		cp.clickLivePreviewBTN();
 		
-		Utilities.addScreenshot(driver, imgnames.get(8).toString());
+		Utilities.addScreenshot(driver, imgnames.get(9).toString());
 		
 		CampaignLivePreviewPage LP=new CampaignLivePreviewPage(driver);
 		LP.clickfeedBackBTN();
 		
-		Utilities.addScreenshot(driver, imgnames.get(9).toString());
+		Utilities.addScreenshot(driver, imgnames.get(10).toString());
 		LP.clickthankYouBTN();
 		
-		Utilities.addScreenshot(driver, imgnames.get(10).toString());
+		Utilities.addScreenshot(driver, imgnames.get(11).toString());
 		
 		LP.clickClosePreviewBTN();
 				
 		cp.clickDeleteBTN();
-		Utilities.addScreenshot(driver, imgnames.get(11).toString());
+		Utilities.addScreenshot(driver, imgnames.get(12).toString());
 		
 		cp.clickDeleteAcceptBTN();
-		Utilities.addScreenshot(driver, imgnames.get(12).toString());
+		Utilities.addScreenshot(driver, imgnames.get(13).toString());
+		
+		
 		
 		
 	}

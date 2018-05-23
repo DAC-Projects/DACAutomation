@@ -2,18 +2,14 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" >
  
-
-    <test name="TestFirefox">
-  <parameter name="browser" value="Firefox"/>
-  <parameter name="testcasePath" value="./Testcase-TransparenSee.xlsx"/>
-  <parameter name="Sheet" value="Sheet1"/>
-  <parameter name="ID" value="id:36580"/>
+<test name="TestChrome1">
+  <parameter name="browser" value="Chrome"/>
+  <parameter name="testcasePath" value="./TC-RS.xlsx"/>
+  <parameter name="Sheet" value="CampCreation"/>
+  <parameter name="ID" value="id:48167"/>
     <classes>
-      <!-- class name="com.dac.testcases.LoginpageTests"/-->
-      <!-- class name="com.dac.testcases.LoginpageValidLogin"/-->
-      <class name="com.dac.testcases.VisibilityTest"/>
+      <class name="com.dac.testcases.Verify_CreateCampaign"/>
     </classes>
   </test> <!-- Test -->
-  
  
 </suite> <!-- Suite -->
