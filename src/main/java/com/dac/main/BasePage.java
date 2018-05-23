@@ -1,20 +1,13 @@
 package com.dac.main;
 
-import java.io.File;
-
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.Reporter;
-
-import com.jacob.com.LibraryLoader;
-
-import autoitx4java.AutoItX;
 
 public class BasePage {
+	
+
 	
 	/*
 	public void verifyPageIsDisplayed(WebDriver driver,String eResult) {
@@ -50,7 +43,7 @@ public class BasePage {
 		//js.executeScript("arguments[0].scrollIntoView()", element);
 	}
 	
-	protected void uploadFile(String fileName, String extension) {
+/*	protected void uploadFile(String fileName, String extension) {
 		
 		File uploadingFilePath =new File("./"+fileName+extension);
 		String fileAbsPath=uploadingFilePath.getAbsolutePath();
@@ -60,7 +53,7 @@ public class BasePage {
 		x.controlFocus("Open", "", "Edit1");
 		x.ControlSetText("Open", "", "Edit1", fileAbsPath);
 		x.controlClick("Open", "", "Button1");
-	}
+	}*/
 	
 
 }
