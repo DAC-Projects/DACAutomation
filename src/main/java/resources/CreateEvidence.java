@@ -30,17 +30,15 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTNumbering;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STNumberFormat;
 
 public class CreateEvidence {
-	
-	 static String cTAbstractNumBulletXML = 
-			  "<w:abstractNum xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:abstractNumId=\"0\">"
+
+	static String cTAbstractNumBulletXML = "<w:abstractNum xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:abstractNumId=\"0\">"
 			+ "<w:multiLevelType w:val=\"hybridMultilevel\"/>"
 			+ "<w:lvl w:ilvl=\"0\"><w:start w:val=\"1\"/><w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr></w:lvl>"
 			+ "<w:lvl w:ilvl=\"1\" w:tentative=\"1\"><w:start w:val=\"1\"/><w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"-\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr></w:lvl>"
 			+ "<w:lvl w:ilvl=\"2\" w:tentative=\"1\"><w:start w:val=\"1\"/><w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Symbol\" w:hAnsi=\"Symbol\" w:hint=\"default\"/></w:rPr></w:lvl>"
 			+ "</w:abstractNum>";
 
-	static String cTAbstractNumDecimalXML = 
-			  "<w:abstractNum xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:abstractNumId=\"1\">"
+	static String cTAbstractNumDecimalXML = "<w:abstractNum xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:abstractNumId=\"1\">"
 			+ "<w:multiLevelType w:val=\"hybridMultilevel\"/>"
 			+ "<w:lvl w:ilvl=\"0\"><w:start w:val=\"1\"/><w:numFmt w:val=\"decimal\"/><w:lvlText w:val=\"%1\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr></w:lvl>"
 			+ "<w:lvl w:ilvl=\"1\" w:tentative=\"1\"><w:start w:val=\"1\"/><w:numFmt w:val=\"decimal\"/><w:lvlText w:val=\"%1.%2\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr></w:lvl>"
@@ -50,146 +48,116 @@ public class CreateEvidence {
 	private static final String callerClassName = new Exception().getStackTrace()[1].getClassName();
 	private static final String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH_mm")
 			.format(Calendar.getInstance().getTime());
-	
+
 	XWPFDocument doc = new XWPFDocument();
 	XWPFStyles styles = doc.createStyles();
 	String testcaseName;
 
-
 	public CreateEvidence(String testcase) {
-		// TODO Auto-generated constructor stub
 		this.testcaseName = testcase;
 	}
 
-	// To DO write a method to read image file names from excel and call the method
-	// from function below to get Image names
-	public  void  creatDoc(ArrayList<String[]> arraySteps) throws IOException, InvalidFormatException, XmlException {
+	
+	public void creatDoc(ArrayList<String[]> arraySteps) throws IOException, InvalidFormatException, XmlException {
 
-		
-
-		
-		
 		ArrayList<String> imgnames = new ArrayList<String>();
-		int counter=0;
-		int counter2= -1;
-		
-		
-		//styling different headers
-		String heading1 = "My Heading 1";
-	    String heading2 = "My Heading 2";
-	    String heading3 = "My Heading 3";   
-	    String heading4 = "My Heading 4";
-	    HeaderFormats.addCustomHeadingStyle(doc, styles, heading1, 1, 36, "4288BC");
-	    HeaderFormats.addCustomHeadingStyle(doc, styles, heading2, 2, 28, "4288BC");
-	    HeaderFormats.addCustomHeadingStyle(doc, styles, heading3, 3, 24, "4288BC");
-	    HeaderFormats.addCustomHeadingStyle(doc, styles, heading4, 4, 20, "000000");
+		int counter = 0;
+		int counter2 = -1;
 
-	    
-		
+		// styling different headers
+		String heading1 = "My Heading 1";
+		String heading2 = "My Heading 2";
+		String heading3 = "My Heading 3";
+		String heading4 = "My Heading 4";
+		HeaderFormats.addCustomHeadingStyle(doc, styles, heading1, 1, 36, "4288BC");
+		HeaderFormats.addCustomHeadingStyle(doc, styles, heading2, 2, 28, "4288BC");
+		HeaderFormats.addCustomHeadingStyle(doc, styles, heading3, 3, 24, "4288BC");
+		HeaderFormats.addCustomHeadingStyle(doc, styles, heading4, 4, 20, "000000");
+
 		// create an array with screenshot names
-		for (String[] step: arraySteps)
-		{	if (step[2].equalsIgnoreCase("yes"))
-			{
-			counter += 1;
-			imgnames.add(ReadExcel.Testcase+"_"+counter);
-			
-			System.out.println("image array: "+imgnames.toString());
-			
+		for (String[] step : arraySteps) {
+			if (step[2].equalsIgnoreCase("yes")) {
+				counter += 1;
+				imgnames.add(ReadExcel.Testcase + "_" + counter);
+
+				System.out.println("image array: " + imgnames.toString());
+
 			}
 		}
-		
-		
+
 		XWPFParagraph paragraph = doc.createParagraph();
-	    paragraph.setStyle(heading1);
-	    paragraph.setAlignment(ParagraphAlignment.CENTER);
-	    XWPFRun run = paragraph.createRun();
-	    run.setText(testcaseName);
-	    run.addBreak();
-		
-		for (String[] step: arraySteps)
-		{
-			 String TestStep =  step[0].toString();
-			 String ExpctdRsult = step[1].toString();
-			 String ScrnshtRequird = step[2].toString();
-			 
-			 XWPFParagraph p = doc.createParagraph();
+		paragraph.setStyle(heading1);
+		paragraph.setAlignment(ParagraphAlignment.CENTER);
+		XWPFRun run = paragraph.createRun();
+		run.setText(testcaseName);
+		run.addBreak();
+
+		for (String[] step : arraySteps) {
+			String TestStep = step[0].toString();
+			String ExpctdRsult = step[1].toString();
+			String ScrnshtRequird = step[2].toString();
+
+			if (TestStep.trim().matches(".*\\w.*")) {
+				XWPFParagraph p = doc.createParagraph();
 				p.setNumID(orderBy("No"));
 				XWPFRun r = p.createRun();
-		
-			if (TestStep.trim().matches(".*\\w.*"))
-			{	
 				r.setText(TestStep.trim());
 			}
-			p.setSpacingAfter(0);
 			
 
-			if (ExpctdRsult.trim().matches(".*\\w.*") )
-				
-			{	XWPFParagraph p2 = doc.createParagraph();
-				p2.setNumID(orderBy("No"));
+			if (ExpctdRsult.trim().matches(".*\\w.*"))
+
+			{
+				XWPFParagraph p2 = doc.createParagraph();
+				p2.setNumID(orderBy("bullet"));
 				p2.getCTP().getPPr().getNumPr().addNewIlvl().setVal(BigInteger.valueOf(1));
 				p2.setWordWrapped(true);
-				XWPFRun r2= p2.createRun();
-				r2.setText(ExpctdRsult.trim());
+				XWPFRun r2 = p2.createRun();
+				r2.setText("Expected Result:   " + ExpctdRsult.trim());
 				r2.addBreak();
+
+				if (ScrnshtRequird.equalsIgnoreCase("yes"))
+
+				{
+					counter2 += 1;
+					String screenshotName = imgnames.get(counter2).toString();
+					System.out.println(screenshotName);
+					File img1 = new File("Screenshot/" + screenshotName + ".png");
+					if (img1.exists()) {
+						System.out.println("image found");
+						BufferedImage bimg1 = ImageIO.read(img1);
+						int height1 = bimg1.getHeight();
+						String imgFile1 = img1.getName();
+						int imgFormat1 = getImageFormat(imgFile1);
+						r2.addBreak();
+						r2.addPicture(new FileInputStream(img1), imgFormat1, imgFile1, Units.toEMU(420),
+								Units.toEMU(200));
+						
+					} else {
+						System.out.println("image not found.");
+						r2.addBreak(BreakType.TEXT_WRAPPING);
+						r2.setText("\n" + "*******" + "Error encountered. Please refer report for details" + "*******");
+						
+					}
+					
+					r2.addBreak(BreakType.TEXT_WRAPPING);
+				}
+
+				
 			}
-		
-			p.setSpacingAfter(0);
-			
-		if (ScrnshtRequird.equalsIgnoreCase("yes"))
-		{	counter2 +=1;
-			String screenshotName=imgnames.get(counter2).toString(); 
-			System.out.println(screenshotName);
-			File img1 = new File("Screenshot/" + screenshotName + ".png");
-			if(img1.exists()){
-		        System.out.println("image found");
-		        BufferedImage bimg1 = ImageIO.read(img1);
-				int height1 = bimg1.getHeight();
-				String imgFile1 = img1.getName();
-				int imgFormat1 = getImageFormat(imgFile1);
-				r.addBreak();
-				r.addPicture(new FileInputStream(img1), imgFormat1, imgFile1, Units.toEMU(500), Units.toEMU(200));
-				r.addBreak(BreakType.TEXT_WRAPPING);
-		}else
-	    {
-	    	System.out.println("image not found.");
-	    	r.setText("\n"+"*******"+"Error encountered. Please refer report for details"+"*******" );
-			r.addBreak(BreakType.TEXT_WRAPPING);
-	    }
-			//run.addBreak();
-		}
-		
-		
-
-			// BufferedImage bimg2 = ImageIO.read(img2);
-			// int width2 = bimg2.getWidth();
-			// int height2 = bimg2.getHeight();
-
-			
-			// String imgFile2 = img2.getName();
-
-			
-			// int imgFormat2 = getImageFormat(imgFile2);
-
-			
-
-			// r.setText(imgFile2);
-			// r.addBreak();
-			// r.addPicture(new FileInputStream(img2), imgFormat2, imgFile2,
-			// Units.toEMU(500), Units.toEMU(200));
 
 		}
 		String callerClassName = new Exception().getStackTrace()[1].getClassName();
 		String timeStamp = new SimpleDateFormat("yyyyMMdd_HH_mm").format(Calendar.getInstance().getTime());
-		  File file = new File("./testevidence");
+		File file = new File("./testevidence");
 
-		    boolean b = false;
+		boolean b = false;
 
-		    if (!file.exists()) {
-		     
-		      b = file.mkdirs();
-		    }
-		FileOutputStream out = new FileOutputStream("testevidence/" + callerClassName + "-" + timeStamp + ".docx");
+		if (!file.exists()) {
+
+			b = file.mkdirs();
+		}
+		FileOutputStream out = new FileOutputStream("testevidence/" + ReadExcel.Testcase + "-" + timeStamp + ".docx");
 		doc.write(out);
 
 		out.close();
@@ -227,34 +195,29 @@ public class CreateEvidence {
 		return format;
 	}
 
-	
-	public BigInteger orderBy(String s) throws XmlException
-	{
+	public BigInteger orderBy(String s) throws XmlException {
 
-		 CTNumbering cTNumbering = CTNumbering.Factory.parse(cTAbstractNumBulletXML);
-		  CTAbstractNum cTAbstractNum = cTNumbering.getAbstractNumArray(0);
-		  XWPFAbstractNum abstractNum1 = new XWPFAbstractNum(cTAbstractNum);
+		CTNumbering cTNumbering = CTNumbering.Factory.parse(cTAbstractNumBulletXML);
+		CTAbstractNum cTAbstractNum = cTNumbering.getAbstractNumArray(0);
+		XWPFAbstractNum abstractNum1 = new XWPFAbstractNum(cTAbstractNum);
 
+		cTNumbering = CTNumbering.Factory.parse(cTAbstractNumDecimalXML);
+		cTAbstractNum = cTNumbering.getAbstractNumArray(0);
+		XWPFAbstractNum abstractNum2 = new XWPFAbstractNum(cTAbstractNum);
 
-		  cTNumbering = CTNumbering.Factory.parse(cTAbstractNumDecimalXML);
-		  cTAbstractNum = cTNumbering.getAbstractNumArray(0);
-		  XWPFAbstractNum abstractNum2 = new XWPFAbstractNum(cTAbstractNum);
+		XWPFNumbering numbering = doc.createNumbering();
 
-		  XWPFNumbering numbering = doc.createNumbering();
+		BigInteger abstractNumID1 = numbering.addAbstractNum(abstractNum1);
+		BigInteger numID1 = numbering.addNum(abstractNumID1);
 
-		  BigInteger abstractNumID1 = numbering.addAbstractNum(abstractNum1);
-		  BigInteger numID1 = numbering.addNum(abstractNumID1);
+		BigInteger abstractNumID2 = numbering.addAbstractNum(abstractNum2);
+		BigInteger numID2 = numbering.addNum(abstractNumID2);
 
-		  BigInteger abstractNumID2 = numbering.addAbstractNum(abstractNum2);
-		  BigInteger numID2 = numbering.addNum(abstractNumID2);
-		  
-		  if(s.equals("No")) return numID2;
-		  else return numID2;
-		 
-		 
+		if (s.equals("No"))
+			return numID2;
+		else
+			return numID1;
 
-		 
 	}
-	
-	
+
 }

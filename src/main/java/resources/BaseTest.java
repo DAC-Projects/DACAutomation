@@ -77,7 +77,27 @@ public abstract class BaseTest implements IAutoconst {
 
 		report = new ExtentReports("target/surefire-reports/TestReport.html");
 		report.loadConfig(new File("Extent-Config.xml"));
+		
+		//creating new folders
+		
+		String[] folderCreate= {"./downloads", "./Screenshot", "./testevidence"};
+		
+		for (String folder: folderCreate)
+		{
+		 File file = new File(folder);
+
+		    boolean b = false;
+
+		    if (!file.exists()) {
+		     
+		      b = file.mkdirs();
+		    }
+		    
+		    FileUtils.cleanDirectory(file);
+		}
 	}
+	
+	
 	
 	@Parameters({"browser"})
 	@BeforeTest
@@ -99,11 +119,11 @@ public abstract class BaseTest implements IAutoconst {
 		System.out.println("@After Method");
 		try {
 			if (result.getStatus() == ITestResult.FAILURE) {
-				String res = Utilities.captureScreenshot(driver, result.getName(), true);
+				String image = Utilities.captureScreenshot(driver, this.getClass().getSimpleName()+"_"+result.getName(), true);
 				String TestCaseName = this.getClass().getSimpleName() + " Failed";
 				String methodname = result.getMethod().getMethodName();
 				logger.log(LogStatus.FAIL, methodname);
-				logger.log(LogStatus.FAIL, TestCaseName + logger.addScreenCapture(result.getName() + "screenshot.png"));
+				logger.log(LogStatus.FAIL, TestCaseName + logger.addScreenCapture(image));
 				logger.log(LogStatus.FAIL, result.getThrowable());
 			} else if (result.getStatus() == ITestResult.SUCCESS) {
 				logger.log(LogStatus.PASS, this.getClass().getSimpleName() + " Test Case Success and Verified");
@@ -124,6 +144,10 @@ public abstract class BaseTest implements IAutoconst {
 	@BeforeClass
 	@Parameters({"browser", "testcasePath", "Sheet", "ID"})
 	public void setup(@Optional("Chrome")String browser, String testcasePath,String Sheet, String ID) throws Exception {
+		
+		re = new ReadExcel(testcasePath);
+		imgnames = re.getScreenshotNames(Sheet, ID);
+		arraySteps = re.getTestcases(Sheet, ID);
 		driver = openBrowser(browser);
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
@@ -132,10 +156,7 @@ public abstract class BaseTest implements IAutoconst {
 		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		//Date date = new Date();
 		//String time = sdf.format(date);
-		re = new ReadExcel(testcasePath);
 		
-		imgnames = re.getScreenshotNames(Sheet, ID);
-		arraySteps = re.getTestcases(Sheet, ID);
 	}
 
 	
@@ -146,8 +167,8 @@ public abstract class BaseTest implements IAutoconst {
 		prop.load(fis);
 		
 		String className= this.getClass().getSimpleName();
-		//String Name = ReadExcel.Testcase;
-		logger = report.startTest(className).assignCategory("Regression Testcases for "+ browser);
+		String Name = ReadExcel.Testcase;
+		logger = report.startTest(Name).assignCategory("Regression Testcases for "+ browser);
 		parent.appendChild(logger);
 		logger.log(LogStatus.INFO, "Log for Each Step in Test Case");
 		//String browserName = prop.getProperty("browser");

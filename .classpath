@@ -22,10 +22,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/AutoItX4Java.jar"/>
-	<classpathentry kind="lib" path="lib/jacob.jar"/>
 	<classpathentry kind="con" path="org.testng.TESTNG_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/wasim/Downloads/jacob-1.18/jacob-1.18/jacob.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JACOB Library"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

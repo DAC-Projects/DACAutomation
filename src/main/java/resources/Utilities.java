@@ -13,15 +13,16 @@ public class Utilities {
 	
 	public static String captureScreenshot(WebDriver driver, String resultName, boolean b) throws IOException {
 		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		String Imglocation = "./Screenshot/" + resultName + "screenshot.png";
+		String Imglocation = "./Screenshot/" + resultName + ".png";
 		File screenshot= new File(Imglocation);
 		FileUtils.copyFile(src, screenshot);			
 		if (b=true)
 		{
-			File dest= new File("target/surefire-reports/" + resultName + "screenshot.png");
+			File dest= new File("target/surefire-reports/" + resultName + ".png");
 			FileUtils.copyFile(screenshot , dest);
 		}
-		return Imglocation;
+		String image = resultName + ".png";
+		return image;
 	}
 	
 	
