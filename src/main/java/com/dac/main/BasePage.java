@@ -1,5 +1,8 @@
 package com.dac.main;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -54,6 +57,13 @@ public class BasePage {
 		x.ControlSetText("Open", "", "Edit1", fileAbsPath);
 		x.controlClick("Open", "", "Button1");
 	}*/
+	
+	public static String getDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		Date date = new Date();
+		String dateFormat = sdf.format(date);
+		return dateFormat.toString();
+	}
 	
 
 }
