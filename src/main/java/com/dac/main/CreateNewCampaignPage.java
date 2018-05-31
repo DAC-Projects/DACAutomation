@@ -4,6 +4,8 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -303,8 +305,9 @@ public class CreateNewCampaignPage extends BasePage{
 	public String setCampaignName(String sheet, int row, int column) {
 		scrollByElement(campaignInfoSection, driver);
 		String xlCampName = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
-		String campName= xlCampName+" - "+getDate();
+		String campName= xlCampName+" - "+getDateNTime();
 		campaignName.sendKeys(campName);
+		Assert.assertTrue(true, "Entered data in Campaign Name Text Field");
 		return campName;
 		
 	}
@@ -391,11 +394,16 @@ public class CreateNewCampaignPage extends BasePage{
 		contactInfoPhoneNumber.sendKeys(phoneNum);
 	}
 	
-	public void setScheduledStartDate(String sheet, int row, int column) throws AWTException {
+	public void setScheduledStartDate() throws AWTException {
 		
 		scrollByElement(scheduledSection, driver);
-		String campStartDate = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
-		scheduledStartDate.sendKeys(campStartDate);
+		//String campStartDate = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date date = new Date();
+		String dateFormat = sdf.format(date);
+		
+		scheduledStartDate.sendKeys(dateFormat);
 		
 		Robot robot = new Robot();
 		robot.keyPress(KeyEvent.VK_ENTER);
@@ -496,7 +504,7 @@ public class CreateNewCampaignPage extends BasePage{
 		
 		scrollByElement(customerFeedbackBreadCrumb, driver);
 		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
-		action.moveToElement(existCampTT).perform();
+		action.moveToElement(existCampTT).click(existCampTT).perform();
 		verifyText(toolTipText, eText);
 	}
 	
@@ -508,23 +516,23 @@ public class CreateNewCampaignPage extends BasePage{
 		
 		scrollByElement(eMailSetupSection, driver);
 		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
-		action.moveToElement(uploadLogoTT).perform();
+		action.moveToElement(uploadLogoTT).click(uploadLogoTT).perform();
 		verifyText(toolTipText, eText);
 	}
 	
 	public void verifyPersonalizationToolTipText(String sheet,int row, int column) {
 		
-		scrollByElement(personalizationTT, driver);
+		scrollByElement(subjectText, driver);
 		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
-		action.moveToElement(personalizationTT).perform();
+		action.moveToElement(personalizationTT).click(personalizationTT).perform();
 		verifyText(toolTipText, eText);
 	}
 
-	public void verifyContactInfoToolTipText(String sheet,int row, int column) {
+	public void verifyContactInfoToolTipText(int column) {
 	
-		scrollByElement(contactInfoTT, driver);
-		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
-		action.moveToElement(contactInfoTT).perform();
+		scrollByElement(signatureHeading, driver);
+		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, "Brand", 19, column);
+		action.moveToElement(contactInfoTT).click(contactInfoTT).perform();
 		verifyText(toolTipText, eText);
 	}
 
@@ -532,12 +540,12 @@ public class CreateNewCampaignPage extends BasePage{
 	 * Time tool tip for different languages
 	 * English 		:	Email processing will commence at the selected time. The deployment of the first email might be delayed with large distribution lists.
 	 * Deutsch		:	Die E-Mail-Bearbeitung beginnt ab dem ausgewählten Zeitpunkt. Der Versand der ersten E-Mail könnte verspätet stattfinden, falls es sich um eine große Verteilerliste handelt.
-	 * 		 */
+	 *			*/
 	public void verifyTimeToolTipText(String sheet, int row,  int column) {
 	
 		scrollByElement(scheduledSection, driver);
 		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
-		action.moveToElement(timeTT).perform();
+		action.moveToElement(timeTT).click(timeTT).perform();
 		verifyText(toolTipText, eText);
 	}
 
@@ -545,12 +553,15 @@ public class CreateNewCampaignPage extends BasePage{
 	 * End date Tool tip for different languages
 	 * English		:
 	 * Deutsch		:	Das Kundenfeedback endet an diesem Datum für diese Kampagne. Das Sammelformular wird durch eine Kopie ersetzt, die den Benutzer darüber informiert, dass diese Kampagne nun geschlossen ist.
+	 * @throws InterruptedException 
 	 * 			*/
-	public void verifyCampEndDateToolTipText(String sheet, int row, int column) {
+	public void verifyCampEndDateToolTipText(String sheet, int row, int column) throws InterruptedException {
 	
 		scrollByElement(scheduledSection, driver);
 		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
-		action.moveToElement(campEndDateTT).perform();
+		action.moveToElement(campEndDateTT).click(campEndDateTT).perform();
+		wait.until(ExpectedConditions.visibilityOf(toolTipText));
+		Thread.sleep(1000);
 		verifyText(toolTipText, eText);
 	}
 	

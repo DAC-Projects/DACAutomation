@@ -65,5 +65,11 @@ public class BasePage {
 		return dateFormat.toString();
 	}
 	
+	public static String getDateNTime() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		Date date = new Date();
+		String dateFormat = sdf.format(date);
+		return dateFormat.toString();
+	}
 
 }

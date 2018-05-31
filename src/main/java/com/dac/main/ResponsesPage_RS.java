@@ -46,13 +46,15 @@ public class ResponsesPage_RS extends BasePage{
 	@FindBy(xpath="//*[@id='stardiv']/div")
 	private List<WebElement> AverageStarRatingText;
 	
-	public void avgStarRatingData() throws InterruptedException {
-		Thread.sleep(6000);
+	public String avgStarRatingData() throws InterruptedException {
+		//Thread.sleep(6000);
+		String avgRating = "";
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 		for(int i=0;i<AverageStarRatingText.size();i++) {
-			System.out.println(AverageStarRatingText.get(i).getText());
+			avgRating = avgRating +" "+ AverageStarRatingText.get(i).getText();
 		}
-		
+		System.out.println(avgRating);
+		return avgRating;
 	}
 	
 	public void clickExportBTN() {

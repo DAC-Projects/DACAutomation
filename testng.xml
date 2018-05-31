@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" >
- 
+
 <test name="TestChrome1">
   <parameter name="browser" value="Chrome"/>
   <parameter name="testcasePath" value="./TC-RS.xlsx"/>
@@ -11,5 +11,16 @@
       <class name="com.dac.testcases.Verify_CreateCampaign"/>
     </classes>
   </test> <!-- Test -->
+
+<test name="TestChrome2">
+  <parameter name="browser" value="Chrome"/>
+  <parameter name="testcasePath" value="./TC-RS.xlsx"/>
+  <parameter name="Sheet" value="CampCreation"/>
+  <parameter name="ID" value="id:48066"/>
+    <classes>
+      <class name="com.dac.testcases.Verify_CreateCampaign"/>
+    </classes>
+  </test> <!-- Test -->
+
  
 </suite> <!-- Suite -->

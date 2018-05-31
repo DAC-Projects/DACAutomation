@@ -81,7 +81,7 @@ public class ReadExcel {
 			arrayofSteps = new ArrayList<String[]>();
 			arrayofSteps.clear();
 
-			for (int i = testcase_row_Num + 1; i < sheet.getLastRowNum(); i++)
+			for (int i = testcase_row_Num + 1; i <= sheet.getLastRowNum(); i++)
 
 			{ // getting values of teststep , expected result and scrn capture nedded clumns
 				// from excel and adding to array list

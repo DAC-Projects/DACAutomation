@@ -75,6 +75,10 @@ public class Navigationpage extends BasePage{
 	@FindBy(xpath="//li[@id='campaign']//span")
 	private WebElement CampaignsLink;
 	
+	//campaign table one of the column for wait the loading of page till this table visible
+	@FindBy(xpath="(//td[contains(@ng-if,'activeCampaign.MLC')]/a)[4]")
+	private WebElement campaignTable;
+
 	@FindBy(xpath="//li[@id='review']//span")
 	private WebElement ResponsesLink; 
 	
@@ -126,8 +130,9 @@ public class Navigationpage extends BasePage{
 		return Visibility;
 	}
 	
-	/** To click on Campaigns link in LHS to navigate to Campaigns page  */
-	public void clickCampaigns() {    
+	/** To click on Campaigns link in LHS to navigate to Campaigns page  
+	 * @throws InterruptedException */
+	public void clickCampaigns() throws InterruptedException {    
 		wait.until(ExpectedConditions.visibilityOf(CampaignsLink));
 		scrollByElement(CampaignsLink, driver);
 		try {
@@ -137,8 +142,8 @@ public class Navigationpage extends BasePage{
 			action.moveToElement(CampaignsLink).click().perform();
 		}
 		finally {
-			String xp="(//td[contains(@ng-if,'activeCampaign.MLC')]/a)[4]";
-			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xp)));
+			wait.until(ExpectedConditions.visibilityOf(campaignTable));
+			Thread.sleep(2000);
 		}
 	}
 	

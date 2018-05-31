@@ -98,6 +98,12 @@ public class CampaignsPage extends BasePage{
 	
 	//------------------Processed campaign Table Data----------------------
 	
+	@FindBy(className="dataTables_empty")
+	private WebElement emptyTable;
+	
+	@FindBy(id="reviewTable_info")
+	private WebElement tableResult;
+	
 	@FindBy(xpath="//h4[@class='text-primary']")
 	private WebElement processedCampSection;
 	
@@ -271,7 +277,14 @@ public class CampaignsPage extends BasePage{
 		catch(Exception e) {
 			action.moveToElement(processedCampResponsesLink).click().perform();
 		}
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("btnReviewsExport")));
+		finally {
+			try {
+				wait.until(ExpectedConditions.visibilityOf(tableResult));
+			}
+			catch(Exception e) {
+				wait.until(ExpectedConditions.visibilityOf(emptyTable));
+			}
+		}
 	}
 	
 	/** 
