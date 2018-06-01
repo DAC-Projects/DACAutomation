@@ -25,22 +25,19 @@ public class VerifyCampResponsesData extends BaseTest{
 		
 		CampaignsPage cp=new CampaignsPage(driver);
 		
-		cp.search_ProcessedCampaign(CampName);
-		
 		cp.verifyCampName("Processed", CampName);
 		Utilities.addScreenshot(driver, imgnames.get(1).toString());
 		logger.log(LogStatus.INFO, "Verifying the Processed Campaign whether displayed in Processed campaign Section");
 		
 		cp.clickResponsesLink();
-		Utilities.addScreenshot(driver, imgnames.get(2).toString());
-		logger.log(LogStatus.INFO, "Responses Page is displayed of Processed Campaign");
-		
+
 		ResponsesPage_RS rprs=new ResponsesPage_RS(driver);
 		String avgRating = rprs.avgStarRatingData();
-		Utilities.addScreenshot(driver, imgnames.get(3).toString());
+		Utilities.addScreenshot(driver, imgnames.get(2).toString());
 		logger.log(LogStatus.INFO, "Overall Star Ratings : "+avgRating);
 		
 		rprs.getReviewTableData();
-		
+		Utilities.addScreenshot(driver, imgnames.get(3).toString());
+		logger.log(LogStatus.INFO, "Verifying the UI Table Data of Responses Page");
 	}
 }

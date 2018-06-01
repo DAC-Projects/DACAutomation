@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -87,8 +88,9 @@ public class ReadExcel {
 				// from excel and adding to array list
 
 				row = sheet.getRow(i);
-
-				if (row == null) {
+				
+				
+				if (checkIfRowIsEmpty(row)) {
 					// check whether its an empty row
 					break;
 				}
@@ -145,4 +147,21 @@ public class ReadExcel {
 		imgnames = re.getScreenshotNames(Sheet, ID);
 		arraySteps = re.getTestcases(Sheet, ID);
 	}
+	
+	 public boolean checkIfRowIsEmpty(Row row) {
+		    if (row == null) {
+		        return true;
+		    }
+		    if (row.getLastCellNum() <= 0) {
+		        return true;
+		    }
+		    for (int cellNum = row.getFirstCellNum(); cellNum < row.getLastCellNum(); cellNum++) {
+		        Cell cell = row.getCell(cellNum);
+		        if (cell != null && cell.getCellTypeEnum() != CellType.BLANK && StringUtils.isNotBlank(cell.toString())) {
+		            return false;
+		        }
+		    }
+		    return true;
+		}
+
 }
