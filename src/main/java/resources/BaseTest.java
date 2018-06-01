@@ -35,6 +35,7 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -70,6 +71,8 @@ public abstract class BaseTest implements IAutoconst {
 	protected ArrayList<String[]> arraySteps = new ArrayList<>();
 	private ReadExcel re;
 	private CreateEvidence ce;
+	String testcasefile;
+	public String className;
 	//****************************Extent report
 	
 	@BeforeSuite(alwaysRun = true)
@@ -97,13 +100,12 @@ public abstract class BaseTest implements IAutoconst {
 		}
 	}
 	
-	
-	
-	@Parameters({"browser"})
+	@Parameters({"testcasesfile"})
 	@BeforeTest
-	public void generateNode(@Optional("Chrome")String browser) {
-		  
-			parent = report.startTest("Testcases for browser:"+ browser);	 
+	public void generateNode(final ITestContext testContext, @Optional("ReviewSolicitation.json")String testcasesfile) {
+		  	
+			parent = report.startTest("Testcases for :"+ testContext.getName());	
+			this.testcasefile= testcasesfile;
 
 	}
 	
@@ -142,12 +144,20 @@ public abstract class BaseTest implements IAutoconst {
 	//***************** intialising  browser
 		
 	@BeforeClass
-	@Parameters({"browser", "testcasePath", "Sheet", "ID"})
-	public void setup(@Optional("Chrome")String browser, String testcasePath,String Sheet, String ID) throws Exception {
+	@Parameters({"browser"})
+	public void setup(@Optional("Chrome")String browser) throws Exception {
 		
-		re = new ReadExcel(testcasePath);
-		imgnames = re.getScreenshotNames(Sheet, ID);
-		arraySteps = re.getTestcases(Sheet, ID);
+
+		
+		 String className =this.getClass().getName();
+		 System.out.println(className + "***********");
+		 JsonParse Ja = new JsonParse(testcasefile, className);
+		System.out.println(Ja.getSheet());
+		System.out.println(Ja.getID());
+		
+		re = new ReadExcel(Ja.getIterationPath());
+		imgnames = re.getScreenshotNames(Ja.getSheet(), Ja.getID());
+		arraySteps = re.getTestcases(Ja.getSheet(), Ja.getID());
 		driver = openBrowser(browser);
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
@@ -156,6 +166,7 @@ public abstract class BaseTest implements IAutoconst {
 		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		//Date date = new Date();
 		//String time = sdf.format(date);
+		
 		
 	}
 

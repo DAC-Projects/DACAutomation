@@ -1,26 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" >
-
-<test name="TestChrome1">
-  <parameter name="browser" value="Chrome"/>
-  <parameter name="testcasePath" value="./TC-RS.xlsx"/>
-  <parameter name="Sheet" value="CampCreation"/>
-  <parameter name="ID" value="id:48167"/>
-    <classes>
-      <class name="com.dac.testcases.Verify_CreateCampaign"/>
+	  
+  <parameter name="testcasesfile" value="Review_Solicitation.json"></parameter>
+<test name="Review_Solicitation">
+	<parameter name="browser" value="Chrome"/>
+ 	 <classes>
+    	<class name= "com.dac.testcases.Verify_CreateCampaign" />
     </classes>
-  </test> <!-- Test -->
+</test>
+    
 
-<test name="TestChrome2">
-  <parameter name="browser" value="Chrome"/>
-  <parameter name="testcasePath" value="./TC-RS.xlsx"/>
-  <parameter name="Sheet" value="CampCreation"/>
-  <parameter name="ID" value="id:48066"/>
-    <classes>
-      <class name="com.dac.testcases.Verify_CreateCampaign"/>
-    </classes>
-  </test> <!-- Test -->
+    
 
  
 </suite> <!-- Suite -->
