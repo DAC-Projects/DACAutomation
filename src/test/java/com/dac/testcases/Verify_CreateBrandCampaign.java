@@ -1,9 +1,12 @@
 package com.dac.testcases;
 
 import java.io.File;
+import java.io.IOException;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.dac.main.CampaignLivePreviewPage;
 import com.dac.main.CampaignsPage;
 import com.dac.main.CreateNewCampaignPage;
 import com.dac.main.Navigationpage;
@@ -15,10 +18,21 @@ import resources.IAutoconst;
 import resources.Utilities;
 
 public class Verify_CreateBrandCampaign extends BaseTest{
-
-	@Test(enabled=true)
-	public void createBrandCamp_Test() throws Exception {
 	
+	@DataProvider
+	public String[][] createBrandCampData() {
+		String[][] data= new String[1][3];
+		data[0][0] = "./TC-RS.xlsx";
+		data[0][1] = "CampCreation";
+		data[0][2] = "id:48167";
+		return data;
+	}
+	
+	@Test(dataProvider="createBrandCampData", enabled=true)
+	public void createBrandCamp_Test(String testcasePath, String Sheet, String ID) throws Exception {
+	
+		HandleScenariosInxlSheet(testcasePath, Sheet, ID);
+		
 		int langColumn = 9;
 		
 		Navigationpage np=new Navigationpage(driver);
@@ -34,14 +48,14 @@ public class Verify_CreateBrandCampaign extends BaseTest{
 		
 		
 		newCampaign.selectCampLang(1);
-		String campLang = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, "Location", 3, langColumn);
+		String campLang = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, "Brand", 3, langColumn);
 		logger.log(LogStatus.INFO, "Selecting campaign Language as "+campLang);
 		
 		newCampaign.verifyExistCampToolTipText("Brand", 5, langColumn);
 		Utilities.addScreenshot(driver, imgnames.get(0).toString());
 		logger.log(LogStatus.INFO, "verifying the tool tip lang and text of it");
 		
-		String CampName = newCampaign.setCampaignName("Brand",6, langColumn);
+		CampName = newCampaign.setCampaignName("Brand",6, langColumn);
 		
 		newCampaign.setCampaignBrandName(langColumn);
 		
@@ -70,7 +84,7 @@ public class Verify_CreateBrandCampaign extends BaseTest{
 		
 		Utilities.addScreenshot(driver, imgnames.get(2).toString());
 		
-		//newCampaign.downloadCampEmailTemplate();
+		newCampaign.downloadCampEmailTemplate();
 		
 		newCampaign.uploadCampEmailTemplate("Brand", 13, langColumn);
 		logger.log(LogStatus.INFO, "Uploading Email Template");
@@ -115,4 +129,5 @@ public class Verify_CreateBrandCampaign extends BaseTest{
 		logger.log(LogStatus.INFO, "Verifying the Created Campaign whether displayed in Sceduled campaign Section");
 		
 	}
+
 }

@@ -2,6 +2,7 @@ package com.dac.testcases;
 
 import java.io.IOException;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.dac.main.CampaignLivePreviewPage;
@@ -12,17 +13,29 @@ import com.relevantcodes.extentreports.LogStatus;
 import resources.BaseTest;
 import resources.Utilities;
 
-public class Verify_LivePreviewN_DeleteCamp extends BaseTest{
+public class Verify_BrandLivePreviewN_DeleteCamp extends BaseTest{
 
-	@Test
-	public void livePreviewNDeleteTest() throws IOException, InterruptedException {
+	@DataProvider
+	public String[][] LivePreviewBrandNDeleteCampData() {
+		String[][] data= new String[1][3];
+		data[0][0] = "./TC-RS.xlsx";
+		data[0][1] = "LivePreview&Delete";
+		data[0][2] = "id:54211";
+		return data;
+	}
+	
+	
+	@Test(dataProvider="LivePreviewBrandNDeleteCampData", dependsOnMethods= {"com.dac.testcases.Verify_CreateBrandCampaign.createBrandCamp_Test"})
+	public void livePreviewNDeleteTest(String testcasePath, String Sheet, String ID) throws Exception {
+		
+		HandleScenariosInxlSheet(testcasePath, Sheet, ID);
 		
 		Navigationpage np=new Navigationpage(driver);
 		np.clickCampaigns();
 		
 		CampaignsPage cp=new CampaignsPage(driver);
 		
-		cp.search_ScheduledCampaign("Test Brand Regression DEU - 05/18");
+		cp.search_ScheduledCampaign(CampName);
 		Utilities.addScreenshot(driver, imgnames.get(0).toString());
 		logger.log(LogStatus.INFO, "Checking the Created campaign displaying in Scheduled section");
 		

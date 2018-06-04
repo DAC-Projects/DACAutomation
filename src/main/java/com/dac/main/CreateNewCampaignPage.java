@@ -35,6 +35,7 @@ public class CreateNewCampaignPage extends BasePage{
 		
 		wait=new WebDriverWait(driver, 20);
 		this.driver = driver;
+		js=(JavascriptExecutor)driver;
 		action = new Actions(driver);
 		PageFactory.initElements(driver, this);
 	}
@@ -56,6 +57,24 @@ public class CreateNewCampaignPage extends BasePage{
 	
 	@FindBy(xpath="//ul[@role='listbox']/li/a")
 	private List<WebElement> campaignLocListBox;
+	
+	@FindBy(id="selectableTable")
+	private WebElement mlc1st;
+	
+	@FindBy(className="tooltip-inner")
+	private WebElement mlctooltips;
+	
+	@FindBy(xpath="(//*[contains(@class,'btn-move-right')])[1]")
+	private WebElement mlcAddBTN;
+	
+	@FindBy(xpath="(//*[contains(@class,'btn-move-left')])[1]")
+	private WebElement mlcRemoveBTN;
+	
+	@FindBy(xpath="//*[contains(@class,'btn-move-right-all')]")
+	private WebElement mlcAddAllBTN;
+	
+	@FindBy(xpath="//*[contains(@class,'btn-move-left-all')]")
+	private WebElement mlcRemoveAllBTN;
 	
 	@FindBy(name="description")
 	private WebElement campaignDescriptionTB;
@@ -339,6 +358,30 @@ public class CreateNewCampaignPage extends BasePage{
 		campaignBrandNameTB.sendKeys(campBrandName+" - "+getDate());
 	}
 	
+	public void selectMLCs(String locationName) {
+		scrollByElement(campaignInfoSection, driver);
+		String locNamexp="//input[contains(@name,'"+locationName+"')]";
+		WebElement selectLoc = mlc1st.findElement(By.xpath(locNamexp));
+		//selectLoc.click();
+		//WebElement locationNum = mlc1st.findElement(By.xpath(locNamexp+"/../span[contains(@class,'text-status')]"));
+		String a= "(//input[contains(@name,'BN')]/../span[contains(@class,'text-status')])[1]";
+		WebElement locationNum = driver.findElement(By.xpath(a));
+		
+		Object b = js.executeScript("document.getElementById(\"selectableTable\").getElementsByTagName(\"div\")[1].getElementsByTagName(\"label\")[0].getElementsByTagName(\"span\")[0].innerText");
+		
+		System.out.println(b.toString());
+		String ccs= "div#selectableTable>div:nth-child(3)>label:nth-child(2)>strong";
+		System.out.println(driver.findElement(By.cssSelector(ccs)).getText());
+		System.out.println(locationNum.getText());
+		//System.out.println(selectLoc.getText());
+		action.moveToElement(selectLoc).click(selectLoc).perform();
+		
+	}
+	
+	public void clickAddAllBTN() {
+		scrollByElement(campaignInfoSection, driver);
+		mlcAddBTN.click();
+	}
 	public void setCampDescr(String sheet, int row, int column) {
 		scrollByElement(campaignInfoSection, driver);
 		String campDescription = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);

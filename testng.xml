@@ -4,22 +4,9 @@
 
 <test name="TestChrome1">
   <parameter name="browser" value="Chrome"/>
-  <parameter name="testcasePath" value="./TC-RS.xlsx"/>
-  <parameter name="Sheet" value="CampCreation"/>
-  <parameter name="ID" value="id:48167"/>
     <classes>
-      <class name="com.dac.testcases.Verify_CreateBrandCampaign"/>
+      	<class name="com.dac.testcases.Verify_CreateMLCCampaign"/>
     </classes>
   </test> <!-- Test -->
 
-<test name="TestChrome2">
-  <parameter name="browser" value="Chrome"/>
-  <parameter name="testcasePath" value="./TC-RS.xlsx"/>
-  <parameter name="Sheet" value="CampCreation"/>
-  <parameter name="ID" value="id:48066"/>
-    <classes>
-      <class name="com.dac.testcases.Verify_CreateLocCampaign"/>
-    </classes>
-  </test> <!-- Test -->
-  
 </suite> <!-- Suite -->

@@ -36,9 +36,6 @@ public class CampaignsPage extends BasePage{
 	@FindBy(xpath="(//li[@ng-repeat='pane in panes']//a)[1]")
 	private WebElement ScheduledTab;
 	
-	@FindBy(xpath="(//li[@ng-repeat='pane in panes']//a)[2]")
-	private WebElement DraftTab;
-	
 	@FindBy(xpath="//input[contains(@ng-model,'Scheduled')]")
 	private WebElement ScheduledSearchBar;
 	
@@ -75,17 +72,14 @@ public class CampaignsPage extends BasePage{
 	@FindBy(xpath="//a[contains(@ng-click,'scheduleRemove')]/span")
 	private WebElement scheduledCampDeleteBTN;
 	
-	@FindBy(xpath="//button[text()='Yes']")
-	private WebElement scheduledCampAcceptDelBTN;
+	@FindBy(className="editDraft")
+	private WebElement acceptDelBTN;
 	
-	@FindBy(xpath="//button[contains(text(),'Cancel')]")
-	private WebElement scheduledCampCancelDelBTN;
+	@FindBy(className="editDraft1")
+	private WebElement cancelDelBTN;
 	
 	@FindBy(xpath=" //button[text()='OK']")
 	private WebElement deleteCampConfirmBTN;
-	
-	@FindBy(xpath="//input[contains(@ng-model,'Draft')]")
-	private WebElement DraftSearchBar;
 	
 	@FindBy(xpath="//input[contains(@ng-model,'Active')]")
 	private WebElement ProcessedCampaign_SearchBar;
@@ -96,7 +90,19 @@ public class CampaignsPage extends BasePage{
 	@FindBy(xpath="(//select[contains(@ng-model,'Active')])[2]")
 	private WebElement Select_ProcessedCampaignStatus;
 	
+	// ----------------------------------Draft Section ---------------------------------------
+	
+	@FindBy(xpath="(//li[@ng-repeat='pane in panes']//a)[2]")
+	private WebElement DraftTab;
+	
+	@FindBy(xpath="//input[contains(@ng-model,'Draft')]")
+	private WebElement DraftSearchBar;
+	
+	@FindBy(xpath="//*[contains(@ng-click,'draftRemove')]")
+	private WebElement deleteDraftCamp;
+	
 	//------------------Processed campaign Table Data----------------------
+	
 	
 	@FindBy(className="dataTables_empty")
 	private WebElement emptyTable;
@@ -141,7 +147,7 @@ public class CampaignsPage extends BasePage{
 	public void click_CreateCampaignBTN() throws InterruptedException {
 
 		 wait.until(ExpectedConditions.visibilityOf(CreateCampaignBTN));
-		Thread.sleep(4000);
+		Thread.sleep(3000);
 		//CreateCampaignBTN.click();
 		action.moveToElement(CreateCampaignBTN).click(CreateCampaignBTN).perform();
 	}
@@ -173,14 +179,14 @@ public class CampaignsPage extends BasePage{
 	}
 	
 	public void clickDeleteAcceptBTN() throws InterruptedException {
-		scheduledCampAcceptDelBTN.click();
+		acceptDelBTN.click();
 		Thread.sleep(6000);
 		deleteCampConfirmBTN.click();
 		Thread.sleep(5000);
 	}
 	
 	public void clickDeleteCancelBTN() throws InterruptedException {
-		scheduledCampCancelDelBTN.click();
+		cancelDelBTN.click();
 		Thread.sleep(4000);
 	}
 	
@@ -200,9 +206,16 @@ public class CampaignsPage extends BasePage{
 		}
 	}
 	
-	public void click_DraftTab() {
-		scrollByElement(DraftTab, driver);
-		DraftTab.click();
+	public void click_DraftTab() throws InterruptedException {
+		wait.until(ExpectedConditions.visibilityOf(procCampCustActReportLink));
+		Thread.sleep(2000);
+		//scrollByElement(DraftTab, driver);
+		try {
+			action.moveToElement(DraftTab).click().perform();
+		}
+		catch(Exception e) {
+			DraftTab.click();
+		}
 	}
 	
 	public void search_ScheduledCampaign(String CampName) throws InterruptedException {
@@ -218,9 +231,10 @@ public class CampaignsPage extends BasePage{
 	 * This method should use after invoking of click_DraftTab()
 	 * @throws InterruptedException */
 	public void search_DraftCampaign(String CampName) throws InterruptedException {
+		
 		click_DraftTab();
 		if(DraftSearchBar.isDisplayed()) {
-			scrollByElement(DraftSearchBar, driver);
+			//scrollByElement(DraftSearchBar, driver);
 			DraftSearchBar.clear();
 			DraftSearchBar.sendKeys(CampName);
 			Thread.sleep(4000);
@@ -229,6 +243,13 @@ public class CampaignsPage extends BasePage{
 			System.out.println("Please Navigate to Draft tab before serching for \"Drafted Campaign\" ");
 		}
 	}
+	
+	public void clickDeleteDraftCamp() {
+		deleteDraftCamp.click();
+		wait.until(ExpectedConditions.visibilityOf(acceptDelBTN));
+		acceptDelBTN.click();
+	}
+	
 	
 	public void search_ProcessedCampaign(String CampName) throws InterruptedException {
 		//Thread.sleep(4000);

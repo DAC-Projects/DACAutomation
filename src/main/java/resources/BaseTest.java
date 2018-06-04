@@ -68,8 +68,9 @@ public abstract class BaseTest implements IAutoconst {
 	public static ExtentTest parent;
 	protected ArrayList<String> imgnames = new ArrayList<String>();
 	protected ArrayList<String[]> arraySteps = new ArrayList<>();
-	private ReadExcel re;
+	//private ReadExcel re;
 	private CreateEvidence ce;
+	public static String CampName = "";
 	//****************************Extent report
 	
 	@BeforeSuite(alwaysRun = true)
@@ -109,9 +110,10 @@ public abstract class BaseTest implements IAutoconst {
 	
 	
 	@AfterTest
-	public void closenode() {
+	public void closenode() throws Exception{
 		report.endTest(parent);
 		report.flush();
+		
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -142,12 +144,12 @@ public abstract class BaseTest implements IAutoconst {
 	//***************** intialising  browser
 		
 	@BeforeClass
-	@Parameters({"browser", "testcasePath", "Sheet", "ID"})
-	public void setup(@Optional("Chrome")String browser, String testcasePath,String Sheet, String ID) throws Exception {
+	@Parameters({"browser"})
+	public void setup(@Optional("Chrome")String browser) throws Exception {
 		
-		re = new ReadExcel(testcasePath);
+		/*re = new ReadExcel(testcasePath);
 		imgnames = re.getScreenshotNames(Sheet, ID);
-		arraySteps = re.getTestcases(Sheet, ID);
+		arraySteps = re.getTestcases(Sheet, ID);*/
 		driver = openBrowser(browser);
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
@@ -276,6 +278,11 @@ public abstract class BaseTest implements IAutoconst {
 
 	}
 	
-
+	public void HandleScenariosInxlSheet(String testcasePath, String Sheet, String ID)  throws Exception {
+		
+		ReadExcel re = new ReadExcel(testcasePath);
+		imgnames = re.getScreenshotNames(Sheet, ID);
+		arraySteps = re.getTestcases(Sheet, ID);
+	}
 
 }

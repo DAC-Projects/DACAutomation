@@ -2,8 +2,10 @@ package com.dac.testcases;
 
 import java.io.File;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.dac.main.CampaignLivePreviewPage;
 import com.dac.main.CampaignsPage;
 import com.dac.main.CreateNewCampaignPage;
 import com.dac.main.Navigationpage;
@@ -16,8 +18,19 @@ import resources.Utilities;
 
 public class Verify_CreateLocCampaign extends BaseTest{
 	
-	@Test(enabled=true)
-	public void createLocCamp_Test() throws Exception {
+	@DataProvider
+	public String[][] createLocCampData() {
+		String[][] data= new String[1][3];
+		data[0][0] = "./TC-RS.xlsx";
+		data[0][1] = "CampCreation";
+		data[0][2] = "id:48066";
+		return data;
+	}
+	
+	@Test(dataProvider="createLocCampData", enabled=true)
+	public void createLocCamp_Test(String testcasePath, String Sheet, String ID) throws Exception {
+		
+		HandleScenariosInxlSheet(testcasePath, Sheet, ID);
 		
 		int langColumn = 9;
 	
@@ -40,7 +53,7 @@ public class Verify_CreateLocCampaign extends BaseTest{
 		Utilities.addScreenshot(driver, imgnames.get(0).toString());
 		logger.log(LogStatus.INFO, "verifying the tool tip lang and text of it");
 		
-		String CampName = newCampaign.setCampaignName("Location", 6, langColumn);
+		CampName = newCampaign.setCampaignName("Location", 6, langColumn);
 		
 		newCampaign.selectCampaignLoc(0, langColumn);
 		
@@ -103,5 +116,5 @@ public class Verify_CreateLocCampaign extends BaseTest{
 		Utilities.addScreenshot(driver, imgnames.get(7).toString());
 		logger.log(LogStatus.INFO, "Verifying the Created Campaign whether displayed in Sceduled campaign Section");
 		
-	}
+	}	
 }
