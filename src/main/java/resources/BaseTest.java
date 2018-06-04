@@ -52,6 +52,7 @@ import com.relevantcodes.extentreports.LogStatus;
 import com.aventstack.extentreports.reporter.*;
 import com.beust.jcommander.Parameter;
 import com.dac.main.LoginAC_Beta;
+import org.testng.ITestContext;
 
 public abstract class BaseTest implements IAutoconst {
 
@@ -68,9 +69,11 @@ public abstract class BaseTest implements IAutoconst {
 	public static ExtentTest parent;
 	protected ArrayList<String> imgnames = new ArrayList<String>();
 	protected ArrayList<String[]> arraySteps = new ArrayList<>();
-	//private ReadExcel re;
+	private ReadExcel re;
 	private CreateEvidence ce;
 	public static String CampName = "";
+	String testcasefile;
+	public String className;
 	//****************************Extent report
 	
 	@BeforeSuite(alwaysRun = true)
@@ -100,11 +103,12 @@ public abstract class BaseTest implements IAutoconst {
 	
 	
 	
-	@Parameters({"browser"})
+@Parameters({"testcasesfile"})
 	@BeforeTest
-	public void generateNode(@Optional("Chrome")String browser) {
-		  
-			parent = report.startTest("Testcases for browser:"+ browser);	 
+	public void generateNode(final ITestContext testContext, @Optional("ReviewSolicitation.json")String testcasesfile) {
+		  	
+			parent = report.startTest("Testcases for :"+ testContext.getName());	
+			this.testcasefile= testcasesfile;
 
 	}
 	
@@ -147,9 +151,16 @@ public abstract class BaseTest implements IAutoconst {
 	@Parameters({"browser"})
 	public void setup(@Optional("Chrome")String browser) throws Exception {
 		
-		/*re = new ReadExcel(testcasePath);
-		imgnames = re.getScreenshotNames(Sheet, ID);
-		arraySteps = re.getTestcases(Sheet, ID);*/
+		 String className =this.getClass().getName();
+		 System.out.println(className + "***********");
+		 JsonParse Ja = new JsonParse(testcasefile, className);
+		System.out.println(Ja.getSheet());
+		System.out.println(Ja.getID());
+		
+		re = new ReadExcel(Ja.getIterationPath());
+		imgnames = re.getScreenshotNames(Ja.getSheet(), Ja.getID());
+		arraySteps = re.getTestcases(Ja.getSheet(), Ja.getID());
+		
 		driver = openBrowser(browser);
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
