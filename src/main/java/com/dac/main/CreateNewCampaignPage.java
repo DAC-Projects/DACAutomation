@@ -169,6 +169,9 @@ public class CreateNewCampaignPage extends BasePage{
 	
 	//-----------------Tool Tip's ----------------
 	
+	@FindBy(className="tooltip-inner")
+	private WebElement mlcLocToolTips;
+	
 	@FindBy(xpath="(//i[@class='fa fa-info-circle'])[1]")
 	private WebElement existCampTT;
 	
@@ -188,7 +191,7 @@ public class CreateNewCampaignPage extends BasePage{
 	private WebElement campEndDateTT;
 	
 	@FindBy(className="popover-content")
-	private WebElement toolTipText;
+	private WebElement iCircleToolTipText;
 	
 	//-------------------------Mandatory Field Error Messages------------------------
 	
@@ -326,9 +329,7 @@ public class CreateNewCampaignPage extends BasePage{
 		String xlCampName = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
 		String campName= xlCampName+" - "+getDateNTime();
 		campaignName.sendKeys(campName);
-		Assert.assertTrue(true, "Entered data in Campaign Name Text Field");
-		return campName;
-		
+		return campName;	
 	}
 	
 	/** 
@@ -352,10 +353,12 @@ public class CreateNewCampaignPage extends BasePage{
 		}
 	}
 	
-	public void setCampaignBrandName(int column) {
+	public String setCampaignBrandName(int column) {
 		scrollByElement(campaignInfoSection, driver);
 		String campBrandName = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, "Brand", 7, column);
-		campaignBrandNameTB.sendKeys(campBrandName+" - "+getDate());
+		String BrandName= campBrandName+" - "+getDate();
+		campaignBrandNameTB.sendKeys(BrandName);
+		return BrandName;
 	}
 	
 	public void selectMLCs(String locationName) {
@@ -364,7 +367,7 @@ public class CreateNewCampaignPage extends BasePage{
 		WebElement selectLoc = mlc1st.findElement(By.xpath(locNamexp));
 		//selectLoc.click();
 		//WebElement locationNum = mlc1st.findElement(By.xpath(locNamexp+"/../span[contains(@class,'text-status')]"));
-		String a= "(//input[contains(@name,'BN')]/../span[contains(@class,'text-status')])[1]";
+		/*String a= "(//input[contains(@name,'BN')]/../span[contains(@class,'text-status')])[1]";
 		WebElement locationNum = driver.findElement(By.xpath(a));
 		
 		Object b = js.executeScript("document.getElementById(\"selectableTable\").getElementsByTagName(\"div\")[1].getElementsByTagName(\"label\")[0].getElementsByTagName(\"span\")[0].innerText");
@@ -372,16 +375,32 @@ public class CreateNewCampaignPage extends BasePage{
 		System.out.println(b.toString());
 		String ccs= "div#selectableTable>div:nth-child(3)>label:nth-child(2)>strong";
 		System.out.println(driver.findElement(By.cssSelector(ccs)).getText());
-		System.out.println(locationNum.getText());
+		System.out.println(locationNum.getText());*/
 		//System.out.println(selectLoc.getText());
 		action.moveToElement(selectLoc).click(selectLoc).perform();
 		
 	}
 	
-	public void clickAddAllBTN() {
+	public void clickAddBTN() {
 		scrollByElement(campaignInfoSection, driver);
 		mlcAddBTN.click();
 	}
+	
+	public void clickRemoveBTN() {
+		scrollByElement(campaignInfoSection, driver);
+		mlcRemoveBTN.click();
+	}
+	
+	public void clickAddAllBTN() {
+		scrollByElement(campaignInfoSection, driver);
+		mlcAddAllBTN.click();
+	}
+	
+	public void clickRemoveAllBTN() {
+		scrollByElement(campaignInfoSection, driver);
+		mlcRemoveAllBTN.click();
+	}
+	
 	public void setCampDescr(String sheet, int row, int column) {
 		scrollByElement(campaignInfoSection, driver);
 		String campDescription = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
@@ -499,12 +518,14 @@ public class CreateNewCampaignPage extends BasePage{
 	}
 	
 	public void clickViewAllCampaignBTN() throws InterruptedException {
-		Thread.sleep(5000);
+		wait.until(ExpectedConditions.visibilityOf(viewAllCampaignBTN));
+		Thread.sleep(2000);
 		action.moveToElement(viewAllCampaignBTN).click(viewAllCampaignBTN).perform();
 		Thread.sleep(5000);
 	}
 	
 	public void clickContinueEditBTN() throws InterruptedException {
+		wait.until(ExpectedConditions.visibilityOf(viewAllCampaignBTN));
 		Thread.sleep(5000);
 		action.moveToElement(continueEditBTN).click(continueEditBTN).perform();
 		Thread.sleep(5000);
@@ -548,7 +569,40 @@ public class CreateNewCampaignPage extends BasePage{
 		scrollByElement(customerFeedbackBreadCrumb, driver);
 		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
 		action.moveToElement(existCampTT).click(existCampTT).perform();
-		verifyText(toolTipText, eText);
+		verifyText(iCircleToolTipText, eText);
+	}
+	
+	public void verifyAddToolTipText(String sheet, int row, int column) throws InterruptedException {
+		scrollByElement(campaignInfoSection, driver);
+		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		action.moveToElement(mlcAddBTN).perform();
+		Thread.sleep(2000);
+		verifyText(mlcLocToolTips, eText);
+		
+	}
+	
+	public void verifyRemoveToolTipText(String sheet, int row, int column) throws InterruptedException {
+		scrollByElement(campaignInfoSection, driver);
+		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		action.moveToElement(mlcRemoveBTN).perform();
+		Thread.sleep(2000);
+		verifyText(mlcLocToolTips, eText);
+	}
+	
+	public void verifyAddAllToolTipText(String sheet, int row, int column) throws InterruptedException {
+		scrollByElement(campaignInfoSection, driver);
+		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		action.moveToElement(mlcAddAllBTN).perform();
+		Thread.sleep(2000);
+		verifyText(mlcLocToolTips, eText);
+	}
+	
+	public void verifyRemoveAllToolTipText(String sheet, int row, int column) throws InterruptedException {
+		scrollByElement(campaignInfoSection, driver);
+		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		action.moveToElement(mlcRemoveAllBTN).perform();
+		Thread.sleep(2000);
+		verifyText(mlcLocToolTips, eText);
 	}
 	
 	/**Upload Logo Tool tip for Different Languages
@@ -560,7 +614,7 @@ public class CreateNewCampaignPage extends BasePage{
 		scrollByElement(eMailSetupSection, driver);
 		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
 		action.moveToElement(uploadLogoTT).click(uploadLogoTT).perform();
-		verifyText(toolTipText, eText);
+		verifyText(iCircleToolTipText, eText);
 	}
 	
 	public void verifyPersonalizationToolTipText(String sheet,int row, int column) {
@@ -568,7 +622,7 @@ public class CreateNewCampaignPage extends BasePage{
 		scrollByElement(subjectText, driver);
 		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
 		action.moveToElement(personalizationTT).click(personalizationTT).perform();
-		verifyText(toolTipText, eText);
+		verifyText(iCircleToolTipText, eText);
 	}
 
 	public void verifyContactInfoToolTipText(int column) {
@@ -576,7 +630,7 @@ public class CreateNewCampaignPage extends BasePage{
 		scrollByElement(signatureHeading, driver);
 		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, "Brand", 19, column);
 		action.moveToElement(contactInfoTT).click(contactInfoTT).perform();
-		verifyText(toolTipText, eText);
+		verifyText(iCircleToolTipText, eText);
 	}
 
 	/**
@@ -588,8 +642,9 @@ public class CreateNewCampaignPage extends BasePage{
 	
 		scrollByElement(scheduledSection, driver);
 		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
-		action.moveToElement(timeTT).click(timeTT).perform();
-		verifyText(toolTipText, eText);
+		action.moveToElement(timeTT).perform();
+		wait.until(ExpectedConditions.visibilityOf(iCircleToolTipText));
+		verifyText(iCircleToolTipText, eText);
 	}
 
 	/**
@@ -602,10 +657,10 @@ public class CreateNewCampaignPage extends BasePage{
 	
 		scrollByElement(scheduledSection, driver);
 		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
-		action.moveToElement(campEndDateTT).click(campEndDateTT).perform();
-		wait.until(ExpectedConditions.visibilityOf(toolTipText));
+		action.moveToElement(campEndDateTT).perform();
+		wait.until(ExpectedConditions.visibilityOf(iCircleToolTipText));
 		Thread.sleep(1000);
-		verifyText(toolTipText, eText);
+		verifyText(iCircleToolTipText, eText);
 	}
 	
 	/** 

@@ -27,6 +27,7 @@ public class ReadExcel {
 	public static XSSFCell cell = null;
 	private static ArrayList<String[]> arrayofSteps;
 	public static String Testcase;
+	
 
 	public ReadExcel(String xlFilePath) throws Exception {
 		fis = new FileInputStream(xlFilePath);
@@ -59,13 +60,17 @@ public class ReadExcel {
 			 * it gets column no of ID Search for particular testcaseID in ID column
 			 */
 
-			for (int i = 0; i < sheet.getLastRowNum(); i++) {
+			for (int i = 0; i <= sheet.getLastRowNum(); i++) {
 				row = sheet.getRow(i);
-
-				if (row.getCell(col_Num).getStringCellValue().trim().equalsIgnoreCase(searchKey)) {
+				if (!(checkIfRowIsEmpty(row))&& row.getCell(col_Num)!= null  && StringUtils.isNotBlank(row.getCell(col_Num).toString() )) {
+				String cellValue = row.getCell(col_Num).toString();
+					if (cellValue.trim().equalsIgnoreCase(searchKey))
+					{
 					testcase_row_Num = i;
-					System.out.println("search key found");
+					System.out.println("search key found"+searchKey);
 					break;
+				}else System.out.println("Search key not found"+searchKey);
+				
 				}
 
 			}
@@ -73,6 +78,7 @@ public class ReadExcel {
 			/* Then read data from the next cell(Testcase name ) return a s a string */
 			int testcaseName_col = col_Num + 1;
 			Testcase = row.getCell(testcaseName_col).getStringCellValue().trim();
+			System.out.println(Testcase);
 			int testStep_col = testcaseName_col + 1;
 			int expctedRsult_col = testStep_col + 1;
 			int scrnCaptrNeed_col = expctedRsult_col + 1;

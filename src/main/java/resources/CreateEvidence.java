@@ -161,7 +161,7 @@ public class CreateEvidence {
 		doc.write(out);
 
 		out.close();
-		// doc.close();
+		doc.close();
 
 	}
 

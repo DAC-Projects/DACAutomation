@@ -5,7 +5,6 @@ import java.io.File;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.dac.main.CampaignLivePreviewPage;
 import com.dac.main.CampaignsPage;
 import com.dac.main.CreateNewCampaignPage;
 import com.dac.main.Navigationpage;
@@ -16,11 +15,11 @@ import resources.ExcelTestDataHandler;
 import resources.IAutoconst;
 import resources.Utilities;
 
-public class Verify_CreateLocCampaign extends BaseTest{
+public class VerifyCreate_DraftLocCamp extends BaseTest{
 	
 	@Test(enabled=true)
 	public void createLocCamp_Test() throws Exception {
-				
+		
 		int englishLangColumn = 9;
 	
 		Navigationpage np=new Navigationpage(driver);
@@ -89,25 +88,21 @@ public class Verify_CreateLocCampaign extends BaseTest{
 		
 		newCampaign.setScheduledStartDate();
 		
-		newCampaign.clickStartDatePicker();
-		
-		newCampaign.verifyTimeToolTipText("Location", 20, englishLangColumn);
-		
 		newCampaign.clickEndDatePicker();
 		
 		newCampaign.verifyCampEndDateToolTipText("Location", 22, englishLangColumn);
 		Utilities.addScreenshot(driver, imgnames.get(5).toString());
 		logger.log(LogStatus.INFO, "Verifying the Scheduling campaign Date controls");
 		
-		newCampaign.clickCreateCampBTN();
+		newCampaign.clickSaveDraft();
 		Utilities.addScreenshot(driver, imgnames.get(6).toString());
-		logger.log(LogStatus.INFO, "Verifying the Campaign creation Pop up");
+		logger.log(LogStatus.INFO, "Verifying the Draft Location Campaign creation Pop up");
 		
 		newCampaign.clickViewAllCampaignBTN();	
 		
-		cp.verifyCampName("Scheduled", CampName);
+		cp.verifyCampName("Draft", CampName);
 		Utilities.addScreenshot(driver, imgnames.get(7).toString());
 		logger.log(LogStatus.INFO, "Verifying the Created Campaign whether displayed in Sceduled campaign Section");
 		
-	}	
+	}
 }

@@ -26,6 +26,7 @@ public class JsonParse {
 	}
 	
 	public static   void getTestcaseID(String className) throws FileNotFoundException, IOException, ParseException {
+		System.out.println(fileName);
 		Object obj = new JSONParser().parse(new FileReader(fileName));
         
         // typecasting obj to JSONObject
@@ -33,8 +34,7 @@ public class JsonParse {
          
         Iterationpath=   jo.get("iterationPath").toString();
         System.out.println("The iteration path is: "+ Iterationpath);
-     
-         
+              
         // getting sheets
         Map Sheets = ((Map)jo.get(className));
          
@@ -43,36 +43,24 @@ public class JsonParse {
         while (itr1.hasNext()) {
             Map.Entry pair = itr1.next();
             System.out.println(pair.getKey() + " : " + pair.getValue());
-            
-        
-            
+ 
             if (pair.getValue()!=null) {
             	sheet= pair.getKey().toString();
             	ID =pair.getValue().toString();
             	break;
             }
         }
-           
-      
-     
 	}
-	
 
 	public static String getSheet() throws FileNotFoundException, IOException, ParseException {
-   	  
-   	  return sheet;
-   	  
+		return sheet;
      }
      
      public static String getID() throws FileNotFoundException, IOException, ParseException {
-   	
-   	  return ID;
-   	  
+    	 return ID;
      }
      
-     public static String getIterationPath() throws FileNotFoundException, IOException, ParseException {
-    	   	
-      	  return Iterationpath;
-      	  
-        }
+     public static String getIterationPath() throws FileNotFoundException, IOException, ParseException {  	
+      	  return Iterationpath; 
+     }
 }

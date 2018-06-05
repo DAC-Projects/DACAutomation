@@ -1,5 +1,6 @@
 package com.dac.testcases;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.dac.main.CampaignLivePreviewPage;
@@ -10,9 +11,9 @@ import com.relevantcodes.extentreports.LogStatus;
 import resources.BaseTest;
 import resources.Utilities;
 
-public class Verify_BrandLivePreviewN_DeleteCamp extends BaseTest{
+public class Verify_LocLivePreviewN_DeleteCamp extends BaseTest{
 	
-	@Test(dependsOnMethods= {"com.dac.testcases.Verify_CreateBrandCampaign.createBrandCamp_Test"})
+	@Test(dependsOnMethods= {"com.dac.testcases.Verify_CreateLocCampaign.createLocCamp_Test"})
 	public void livePreviewNDeleteTest() throws Exception {
 		
 		Navigationpage np=new Navigationpage(driver);
@@ -47,5 +48,4 @@ public class Verify_BrandLivePreviewN_DeleteCamp extends BaseTest{
 		Utilities.addScreenshot(driver, imgnames.get(5).toString());
 		logger.log(LogStatus.INFO, "clicking on confirmation to delete Sceduled campaign");
 	}
-	
 }

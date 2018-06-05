@@ -275,8 +275,47 @@ public class CampaignsPage extends BasePage{
 			search_ProcessedCampaign(CampName);
 		}
 		
-		WebElement e = driver.findElement(By.xpath("//span[contains(.,'"+CampName+"')]"));
-		verifyText(e, CampName);
+		WebElement td1 = driver.findElement(By.xpath("//td[1]//span[contains(.,'"+CampName+"')]"));
+		verifyText(td1, CampName);
+		
+	}
+	
+	public void verifyCampTableData(String TabName, String CampName, String LocOrBrandName) throws InterruptedException {
+		if(TabName.equalsIgnoreCase("Scheduled")) {
+			search_ScheduledCampaign(CampName);
+		}
+		else if(TabName.equalsIgnoreCase("Draft")) {
+			search_DraftCampaign(CampName);
+		}
+		else if(TabName.equalsIgnoreCase("Processed")) {
+			search_ProcessedCampaign(CampName);
+		}
+		
+		WebElement td1 = driver.findElement(By.xpath("//td[1]//span[contains(.,'"+CampName+"')]"));
+		verifyText(td1, CampName);
+		
+		WebElement td2 = driver.findElement(By.xpath("//td[2]//span[contains(.,'"+LocOrBrandName+"')]"));
+		verifyText(td2, LocOrBrandName);
+	}
+	
+	public String getReleaseDateTime() {
+		WebElement dateNtime = driver.findElement(By.xpath("//td[4]//span[@class='ng-binding']"));
+		return dateNtime.getText();
+	}
+	
+	public void verifyLocOrBrandName(String TabName, String CampName, String LocOrBrandName) throws InterruptedException {
+		if(TabName.equalsIgnoreCase("Scheduled")) {
+			search_ScheduledCampaign(CampName);
+		}
+		else if(TabName.equalsIgnoreCase("Draft")) {
+			search_DraftCampaign(CampName);
+		}
+		else if(TabName.equalsIgnoreCase("Processed")) {
+			search_ProcessedCampaign(CampName);
+		}
+		
+		WebElement td2 = driver.findElement(By.xpath("(//td//span[contains(.,'"+LocOrBrandName+"')])[2]"));
+		verifyText(td2, CampName);
 	}
 	
 	/** 

@@ -72,8 +72,9 @@ public abstract class BaseTest implements IAutoconst {
 	private ReadExcel re;
 	private CreateEvidence ce;
 	public static String CampName = "";
-	String testcasefile;
-	public String className;
+	public static String testcasefile;
+	public static String className;
+	public static String id;
 	//****************************Extent report
 	
 	@BeforeSuite(alwaysRun = true)
@@ -103,7 +104,7 @@ public abstract class BaseTest implements IAutoconst {
 	
 	
 	
-@Parameters({"testcasesfile"})
+	@Parameters({"testcasesfile"})
 	@BeforeTest
 	public void generateNode(final ITestContext testContext, @Optional("ReviewSolicitation.json")String testcasesfile) {
 		  	
@@ -114,7 +115,7 @@ public abstract class BaseTest implements IAutoconst {
 	
 	
 	@AfterTest
-	public void closenode() throws Exception{
+	public void closenode() {
 		report.endTest(parent);
 		report.flush();
 		
@@ -154,12 +155,14 @@ public abstract class BaseTest implements IAutoconst {
 		 String className =this.getClass().getName();
 		 System.out.println(className + "***********");
 		 JsonParse Ja = new JsonParse(testcasefile, className);
+		 id =Ja.getID();
 		System.out.println(Ja.getSheet());
 		System.out.println(Ja.getID());
 		
 		re = new ReadExcel(Ja.getIterationPath());
-		imgnames = re.getScreenshotNames(Ja.getSheet(), Ja.getID());
 		arraySteps = re.getTestcases(Ja.getSheet(), Ja.getID());
+		imgnames = re.getScreenshotNames(Ja.getSheet(), Ja.getID());
+		
 		
 		driver = openBrowser(browser);
 		driver.manage().window().maximize();
@@ -180,7 +183,8 @@ public abstract class BaseTest implements IAutoconst {
 		prop.load(fis);
 		
 		String className= this.getClass().getSimpleName();
-		String Name = ReadExcel.Testcase;
+		String Name = ReadExcel.Testcase +"-" +id; 
+		System.out.println(Name);
 		logger = report.startTest(Name).assignCategory("Regression Testcases for "+ browser);
 		parent.appendChild(logger);
 		logger.log(LogStatus.INFO, "Log for Each Step in Test Case");
@@ -287,13 +291,6 @@ public abstract class BaseTest implements IAutoconst {
 			System.out.println(handle+"*****");
 		driver.switchTo().window(handles.get(0));
 
-	}
-	
-	public void HandleScenariosInxlSheet(String testcasePath, String Sheet, String ID)  throws Exception {
-		
-		ReadExcel re = new ReadExcel(testcasePath);
-		imgnames = re.getScreenshotNames(Sheet, ID);
-		arraySteps = re.getTestcases(Sheet, ID);
 	}
 
 }
