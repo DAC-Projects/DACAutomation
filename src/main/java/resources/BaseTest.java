@@ -16,6 +16,8 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.xmlbeans.XmlException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -106,7 +108,7 @@ public abstract class BaseTest implements IAutoconst {
 	
 	@Parameters({"testcasesfile"})
 	@BeforeTest
-	public void generateNode(final ITestContext testContext, @Optional("ReviewSolicitation.json")String testcasesfile) {
+	public void generateNode(final ITestContext testContext, @Optional("Customer_FeedBack.json")String testcasesfile) {
 		  	
 			parent = report.startTest("Testcases for :"+ testContext.getName());	
 			this.testcasefile= testcasesfile;
@@ -122,8 +124,10 @@ public abstract class BaseTest implements IAutoconst {
 	}
 
 	@AfterMethod(alwaysRun = true)
-	public void generateReport(ITestResult result) throws IOException {
+	public void generateReport(ITestResult result) throws IOException, InvalidFormatException, XmlException {
 		System.out.println("@After Method");
+		int status = result.getStatus();
+		
 		try {
 			if (result.getStatus() == ITestResult.FAILURE) {
 				String image = Utilities.captureScreenshot(driver, this.getClass().getSimpleName()+"_"+result.getName(), true);
@@ -134,15 +138,15 @@ public abstract class BaseTest implements IAutoconst {
 				logger.log(LogStatus.FAIL, result.getThrowable());
 			} else if (result.getStatus() == ITestResult.SUCCESS) {
 				logger.log(LogStatus.PASS, this.getClass().getSimpleName() + " Test Case Success and Verified");
-			} else if (result.getStatus() == ITestResult.SKIP) {
+			} /*else if (status!=ITestResult.SUCCESS||status!=ITestResult.FAILURE) {
 				logger.log(LogStatus.SKIP, this.getClass().getSimpleName() + " Test Case Skipped");
-			}
+			}*/
 //			report.endTest(logger);
 //			report.flush();
 		} catch (Throwable t) {
 			logger.log(LogStatus.ERROR, t.fillInStackTrace());
 		}
-
+		
 	}
 
 

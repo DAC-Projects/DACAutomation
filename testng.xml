@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" >
-<parameter name="testcasesfile" value="Review_Solicitation.json"></parameter>
+<parameter name="testcasesfile" value="Customer_FeedBack.json"></parameter>
+<listeners>
+<listener class-name="resources.IntegrationTestListener"></listener>
+</listeners>
 <test name="Review_Solicitation">
   <parameter name="browser" value="Chrome"/>
     <classes>
