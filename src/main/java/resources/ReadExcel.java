@@ -154,7 +154,7 @@ public class ReadExcel {
 		arraySteps = re.getTestcases(Sheet, ID);
 	}
 	
-	 public boolean checkIfRowIsEmpty(Row row) {
+	 public static boolean checkIfRowIsEmpty(Row row) {
 		    if (row == null) {
 		        return true;
 		    }

@@ -1,15 +1,20 @@
-package com.dac.main;
+package com.dac.main.POM_CF;
 
 import java.awt.AWTException;
+
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -20,6 +25,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import com.dac.main.BasePage;
+
+import resources.DateFormats;
 import resources.ExcelTestDataHandler;
 import resources.IAutoconst;
 
@@ -30,6 +38,9 @@ public class CreateNewCampaignPage extends BasePage{
 	Actions action;
 	JavascriptExecutor js;
 	WebDriverWait wait;
+	public static Date startDate, targetDate;
+	public static String startDateFormat, endDateFormat;
+	static SimpleDateFormat engDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	
 	public CreateNewCampaignPage(WebDriver driver) throws AWTException {
 		
@@ -39,6 +50,9 @@ public class CreateNewCampaignPage extends BasePage{
 		action = new Actions(driver);
 		PageFactory.initElements(driver, this);
 	}
+	
+	@FindBy(xpath="//*[@ng-bind='headerMessage']")
+	private WebElement subTittle_CampaignPage;
 	
 	@FindBy(name="campaigntype")
 	private WebElement campaignType;
@@ -167,6 +181,15 @@ public class CreateNewCampaignPage extends BasePage{
 	@FindBy(className="editDraft1")
 	private WebElement continueEditBTN;
 	
+	@FindBy(xpath="cancelBtn ng-scope")
+	private WebElement cancelBTN;
+	
+	@FindBy(xpath="//*[@ng-bind='buttonMessage']")
+	private WebElement UpdateCampaignBTN;
+	
+	@FindBy(xpath="//*[@class='livePreviewBtn']/b")
+	private WebElement LivePreviewBTN;
+	
 	//-----------------Tool Tip's ----------------
 	
 	@FindBy(className="tooltip-inner")
@@ -284,7 +307,7 @@ public class CreateNewCampaignPage extends BasePage{
 	@FindBy(xpath="//span[@ng-bind='headerMessage']")
 	private WebElement campNewCreateText;
 	
-	@FindBy(xpath="(//div[@id=\"breadcrumbs\"]//li/a)[2]")
+	@FindBy(xpath="(//div[@id='breadcrumbs']//li/a)[2]")
 	private WebElement customerFeedbackBreadCrumb;
 	
 	@FindBy(xpath="(//h3[@class='text-primary'])[1]")
@@ -299,6 +322,7 @@ public class CreateNewCampaignPage extends BasePage{
 	 * @throws InterruptedException */
 	public void selectCampType(int campTypeIndex) throws InterruptedException {
 		Thread.sleep(5000);
+		wait.until(ExpectedConditions.visibilityOf(campaignType));
 		scrollByElement(customerFeedbackBreadCrumb, driver);
 		while(true) {
 			if(campaignType.isDisplayed()) {
@@ -309,6 +333,11 @@ public class CreateNewCampaignPage extends BasePage{
 		}
 	}
 	
+	public String getSelectedCampaignType() {
+		String xp="//select[@name='campaigntype']/*[@selected='selected'][2]";
+		String SelectedCampaignType = driver.findElement(By.xpath(xp)).getText();
+		return SelectedCampaignType;
+	}
 	
 	/** indexes of campaign languages 
 	 * 
@@ -323,10 +352,11 @@ public class CreateNewCampaignPage extends BasePage{
 	
 	/** 
 	 * This method is used to enter the data into the Campaign name Text Field
+	 * @throws Exception 
 	 * @column : Enter the column number of campaign name 	   */
-	public String setCampaignName(String sheet, int row, int column) {
+	public String setCampaignName(String sheet, int row, int column) throws Exception {
 		scrollByElement(campaignInfoSection, driver);
-		String xlCampName = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		String xlCampName = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		String campName= xlCampName+" - "+getDateNTime();
 		campaignName.sendKeys(campName);
 		return campName;	
@@ -334,11 +364,12 @@ public class CreateNewCampaignPage extends BasePage{
 	
 	/** 
 	 * This method used to select the Location for the Campaign Type : Location
+	 * @throws Exception 
 	 * @locIndex : To select particular location from selected location name contains @locName based on Index.
 	 * @column   : column number of excel sheet to get the location name		 */
-	public void selectCampaignLoc(int locIndex, int column) {
+	public void selectCampaignLoc(int locIndex, int column) throws Exception {
 		scrollByElement(campaignInfoSection, driver);
-		String locName = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, "Location", 7, column);
+		String locName = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Location").getCellValue(7, column);
 		campaignLocTB.sendKeys(locName);
 		int index=0;
 		for(index=0;index<campaignLocListBox.size();index++) {
@@ -353,9 +384,9 @@ public class CreateNewCampaignPage extends BasePage{
 		}
 	}
 	
-	public String setCampaignBrandName(int column) {
+	public String setCampaignBrandName(int column) throws Exception {
 		scrollByElement(campaignInfoSection, driver);
-		String campBrandName = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, "Brand", 7, column);
+		String campBrandName = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(7, column);
 		String BrandName= campBrandName+" - "+getDate();
 		campaignBrandNameTB.sendKeys(BrandName);
 		return BrandName;
@@ -401,53 +432,54 @@ public class CreateNewCampaignPage extends BasePage{
 		mlcRemoveAllBTN.click();
 	}
 	
-	public void setCampDescr(String sheet, int row, int column) {
+	public void setCampDescr(String sheet, int row, int column) throws Exception {
 		scrollByElement(campaignInfoSection, driver);
-		String campDescription = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		String campDescription = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		campaignDescriptionTB.sendKeys(campDescription+" - "+getDate());
 	}
 	
-	public void setSenderName(String sheet, int row, int column) {
+	public void setSenderName(String sheet, int row, int column) throws Exception {
 		scrollByElement(eMailSetupSection, driver);
-		String campSenderName = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		String campSenderName = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		campaignSenderName.sendKeys(campSenderName+" - "+getDate());
 	}
 	
-	public void setCampSubject(String sheet, int row, int column) {
+	public void setCampSubject(String sheet, int row, int column) throws Exception {
 		scrollByElement(subjectText, driver);
-		String campSubject = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		String campSubject = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		campaignSubject.sendKeys(campSubject+" - "+getDate());
 	}
 	
-	public void setCampBanner(String sheet, int row, int column) {
+	public void setCampBanner(String sheet, int row, int column) throws Exception {
 		scrollByElement(subjectText, driver);
-		String campIntroBanner = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		String campIntroBanner = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		campaignIntroBannerTB.sendKeys(campIntroBanner+" - "+getDate());
 	}
 	
-	public void setCampBodyCopy(String sheet, int row, int column) {
+	public void setCampBodyCopy(String sheet, int row, int column) throws Exception {
 		scrollByElement(subjectText, driver);
-		String campBodyCopy = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		String campBodyCopy = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		campaignBodyCopyTB.sendKeys(campBodyCopy);
 	}
 	
 	/** 
+	 * @throws Exception 
 	 * @campSignature : To enter the campaign Signature data into Signature Text Field   */
-	public void setCampSignature(String sheet, int row, int column) {
+	public void setCampSignature(String sheet, int row, int column) throws Exception {
 		scrollByElement(signatureHeading, driver);
-		String campSignature = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		String campSignature = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		campaignSignature.sendKeys(campSignature);
 	}
 	
-	public void setContactInfo(int column) {
+	public void setContactInfo(int column) throws Exception {
 		
 		scrollByElement(signatureHeading, driver);
-		String addressL1 = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, "Brand", 20, column);
-		String addressL2 = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, "Brand", 21, column);
-		String city = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, "Brand", 22, column);
-		String contactInfoSTProv = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, "Brand", 23, column);
-		String zipCode = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, "Brand", 24, column);
-		String phoneNum = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, "Brand", 25, column);
+		String addressL1 = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(20, column);
+		String addressL2 = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(21, column);
+		String city = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(22, column);
+		String contactInfoSTProv = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(23, column);
+		String zipCode = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(24, column);
+		String phoneNum = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(25, column);
 		contactAddressLine1.sendKeys(addressL1);
 		contactAddressLine2.sendKeys(addressL2);
 		contactInfoBrandCity.sendKeys(city);
@@ -456,26 +488,109 @@ public class CreateNewCampaignPage extends BasePage{
 		contactInfoPhoneNumber.sendKeys(phoneNum);
 	}
 	
+	
+	//works for English DashBoard Language
 	public void setScheduledStartDate() throws AWTException {
 		
 		scrollByElement(scheduledSection, driver);
 		//String campStartDate = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-		Date date = new Date();
-		String dateFormat = sdf.format(date);
+		startDate = new Date();
+		targetDate = DateUtils.addDays(startDate, 30);
 		
-		scheduledStartDate.sendKeys(dateFormat);
+		startDateFormat = engDateFormat.format(startDate);
+		endDateFormat = engDateFormat.format(targetDate);
+		System.out.println("StartDate : "+ startDateFormat + "\n"+ "End Date : "+endDateFormat);
+		
+		scheduledStartDate.sendKeys(startDateFormat);
 		
 		Robot robot = new Robot();
 		robot.keyPress(KeyEvent.VK_ENTER);
 	}
 	
-	/** TimeValue_AM_PM could be in the format of "hh:mm AM/PM" */
-	public void setCampaignTime(String sheet, int row, int column) {
+	
+	
+	/**
+	 * engLongDateFormat = Day, Month dd, YYYY	
+	 * englangCode = "en" , engcontryCode = "US"	*/
+	public void verifyLongDateFormat(String langCode, String contryCode) {
+				
+		String calenderlDatexp = "";
+		try {
+			calenderlDatexp = "(//*[@class='k-footer']/a)[1]";
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(calenderlDatexp)));
+		}
+		catch(Exception e) {
+			calenderlDatexp = "(//*[@class='k-footer']/a)[2]";
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(calenderlDatexp)));
+		}
+		
+		String lDate = driver.findElement(By.xpath(calenderlDatexp)).getAttribute("title");
+		
+		String selStartDateLFormat = driver.findElement(By.xpath("//*[contains(@ng-bind,'StartDateInfoLocale')]")).getText();
+		
+		String date = "";
+		
+		String langConCode = langCode+"_"+contryCode;
+		
+		switch(langConCode) {
+		
+		case "de_DE" : date = DateFormats.longDate_de_DE();
+					   break;
+					   
+		case "en_US" : date = DateFormats.longDate_en_US();
+		   			   break;
+		   			   
+		case "es_ES" : date = DateFormats.longDate_es_ES();
+		   			   break;
+		   			   
+		case "es_MX" : date = DateFormats.longDate_es_MX();
+		   			   break;
+		   			   
+		case "fr_CA" : date = DateFormats.longDate_fr_CA();
+		   			   break;
+		   			   
+		case "fr_FR" : date = DateFormats.longDate_fr_FR();
+		   			   break;
+		   			   
+		case "it_IT" : date = DateFormats.longDate_it_IT();
+		   			   break;
+		   			   
+		case "sv_SE" : date = DateFormats.longDate_sv_SE();
+					   break;
+					 
+		default		 : System.out.println("Selected wrong Language Code or Contry Code please check and Execute once again");
+		}
+		
+		System.out.println(date);
+		
+		if(selStartDateLFormat.equals(date) & lDate.equals(date)) {
+			Assert.assertTrue(true, "Long Dates are displaying in there Locale Format and in Respective Language");
+		}else Assert.assertTrue(false, "Long Dates are either Not displaying in there Locale Format or in Respective Language");
+	}
+	
+	public void verifyEndDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String endDateFormat = sdf.format(targetDate);
+		System.out.println("selected Default Campaign End Date is : " + endDateFormat);
+	}
+	
+	public void clickStartDatePicker() throws InterruptedException {
+		scrollByElement(scheduledSection, driver);
+		driver.findElement(By.xpath("(//span[@class='k-select']/span)[1]")).click();
+	}
+	
+	public void clickEndDatePicker() {
+		scrollByElement(scheduledSection, driver);
+		driver.findElement(By.xpath("(//span[@class='k-select']/span)[2]")).click();
+	}
+	
+	/** TimeValue_AM_PM could be in the format of "hh:mm AM/PM" 
+	 * @throws Exception */
+	public void setCampaignTime(String sheet, int row, int column) throws Exception {
 		
 		scrollByElement(scheduledSection, driver);
-		String TimeValue_AM_PM = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		String TimeValue_AM_PM = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		select = new Select(scheduledTime);
 		select.selectByVisibleText(TimeValue_AM_PM);
 	}
@@ -487,12 +602,19 @@ public class CreateNewCampaignPage extends BasePage{
 
 	}
 	
+	public void uploadEmailTemplate(String fileName) throws InterruptedException {
+		scrollByElement(toText, driver);
+		File uploadingFilePath =new File("./downloads/"+fileName);
+		String fileAbsPath=uploadingFilePath.getAbsolutePath();
+		uploadEmailTemplate.sendKeys(fileAbsPath);	
+		Thread.sleep(2000);
+	}
 	
 	//Email template can be upload by using send keys.
-	public void uploadCampEmailTemplate(String sheet, int row, int column) throws InterruptedException {
+	public void uploadCampEmailTemplate(String sheet, int row, int column) throws Exception {
 		
 		scrollByElement(toText, driver);
-		String fileName = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		String fileName = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		File uploadingFilePath =new File("./filesToUpload/"+fileName);
 		String fileAbsPath=uploadingFilePath.getAbsolutePath();
 		uploadEmailTemplate.sendKeys(fileAbsPath);	
@@ -563,43 +685,44 @@ public class CreateNewCampaignPage extends BasePage{
 	 * Existing campaign tool tip text for different languages
 	 * English		:	Copy an existing campaign to quickly create a new one.
 	 * Deutsch		:	Kopieren Sie eine bestehende Kampagne, um schnell eine neue zu erstellen.
+	 * @throws Exception 
 	 * 						*/
-	public void verifyExistCampToolTipText(String sheet,int row, int column) {
+	public void verifyExistCampToolTipText(String sheet,int row, int column) throws Exception {
 		
 		scrollByElement(customerFeedbackBreadCrumb, driver);
-		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		action.moveToElement(existCampTT).click(existCampTT).perform();
 		verifyText(iCircleToolTipText, eText);
 	}
 	
-	public void verifyAddToolTipText(String sheet, int row, int column) throws InterruptedException {
+	public void verifyAddToolTipText(String sheet, int row, int column) throws Exception {
 		scrollByElement(campaignInfoSection, driver);
-		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		action.moveToElement(mlcAddBTN).perform();
 		Thread.sleep(2000);
 		verifyText(mlcLocToolTips, eText);
 		
 	}
 	
-	public void verifyRemoveToolTipText(String sheet, int row, int column) throws InterruptedException {
+	public void verifyRemoveToolTipText(String sheet, int row, int column) throws Exception {
 		scrollByElement(campaignInfoSection, driver);
-		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		action.moveToElement(mlcRemoveBTN).perform();
 		Thread.sleep(2000);
 		verifyText(mlcLocToolTips, eText);
 	}
 	
-	public void verifyAddAllToolTipText(String sheet, int row, int column) throws InterruptedException {
+	public void verifyAddAllToolTipText(String sheet, int row, int column) throws Exception {
 		scrollByElement(campaignInfoSection, driver);
-		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		action.moveToElement(mlcAddAllBTN).perform();
 		Thread.sleep(2000);
 		verifyText(mlcLocToolTips, eText);
 	}
 	
-	public void verifyRemoveAllToolTipText(String sheet, int row, int column) throws InterruptedException {
+	public void verifyRemoveAllToolTipText(String sheet, int row, int column) throws Exception {
 		scrollByElement(campaignInfoSection, driver);
-		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		action.moveToElement(mlcRemoveAllBTN).perform();
 		Thread.sleep(2000);
 		verifyText(mlcLocToolTips, eText);
@@ -608,27 +731,28 @@ public class CreateNewCampaignPage extends BasePage{
 	/**Upload Logo Tool tip for Different Languages
 	 * English		:	Recommended size is 160 x 70 pixels
 	 * Deutsch		:	Empfohlene Größe ist 160 x 70 Pixel
+	 * @throws Exception 
 	 * 			*/
-	public void verifyUploadLogoToolTipText(String sheet, int row, int column) {
+	public void verifyUploadLogoToolTipText(String sheet, int row, int column) throws Exception {
 		
 		scrollByElement(eMailSetupSection, driver);
-		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		action.moveToElement(uploadLogoTT).click(uploadLogoTT).perform();
 		verifyText(iCircleToolTipText, eText);
 	}
 	
-	public void verifyPersonalizationToolTipText(String sheet,int row, int column) {
+	public void verifyPersonalizationToolTipText(String sheet,int row, int column) throws Exception {
 		
 		scrollByElement(subjectText, driver);
-		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		action.moveToElement(personalizationTT).click(personalizationTT).perform();
 		verifyText(iCircleToolTipText, eText);
 	}
 
-	public void verifyContactInfoToolTipText(int column) {
+	public void verifyContactInfoToolTipText(int column) throws Exception {
 	
 		scrollByElement(signatureHeading, driver);
-		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, "Brand", 19, column);
+		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(19, column);
 		action.moveToElement(contactInfoTT).click(contactInfoTT).perform();
 		verifyText(iCircleToolTipText, eText);
 	}
@@ -637,11 +761,12 @@ public class CreateNewCampaignPage extends BasePage{
 	 * Time tool tip for different languages
 	 * English 		:	Email processing will commence at the selected time. The deployment of the first email might be delayed with large distribution lists.
 	 * Deutsch		:	Die E-Mail-Bearbeitung beginnt ab dem ausgewählten Zeitpunkt. Der Versand der ersten E-Mail könnte verspätet stattfinden, falls es sich um eine große Verteilerliste handelt.
+	 * @throws Exception 
 	 *			*/
-	public void verifyTimeToolTipText(String sheet, int row,  int column) {
+	public void verifyTimeToolTipText(String sheet, int row,  int column) throws Exception {
 	
 		scrollByElement(scheduledSection, driver);
-		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		action.moveToElement(timeTT).perform();
 		wait.until(ExpectedConditions.visibilityOf(iCircleToolTipText));
 		verifyText(iCircleToolTipText, eText);
@@ -651,12 +776,12 @@ public class CreateNewCampaignPage extends BasePage{
 	 * End date Tool tip for different languages
 	 * English		:
 	 * Deutsch		:	Das Kundenfeedback endet an diesem Datum für diese Kampagne. Das Sammelformular wird durch eine Kopie ersetzt, die den Benutzer darüber informiert, dass diese Kampagne nun geschlossen ist.
-	 * @throws InterruptedException 
+	 * @throws Exception 
 	 * 			*/
-	public void verifyCampEndDateToolTipText(String sheet, int row, int column) throws InterruptedException {
+	public void verifyCampEndDateToolTipText(String sheet, int row, int column) throws Exception {
 	
 		scrollByElement(scheduledSection, driver);
-		String eText = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		action.moveToElement(campEndDateTT).perform();
 		wait.until(ExpectedConditions.visibilityOf(iCircleToolTipText));
 		Thread.sleep(1000);
@@ -665,21 +790,27 @@ public class CreateNewCampaignPage extends BasePage{
 	
 	/** 
 	 * To enter the email id's into To Field for Location and Brand campaign
+	 * @throws Exception 
 	 * @email : e-mail id to send the created campaign and more than 1 email id's seperated with comma(,) */
-	public void setToField(String sheet, int row, int column) {
+	public void setToField(String sheet, int row, int column) throws Exception {
 		scrollByElement(toFieldTB, driver);
-		String email = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
+		String email = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		toFieldTB.sendKeys(email);
 	}
 	
-	public void clickStartDatePicker() {
-		scrollByElement(scheduledSection, driver);
-		driver.findElement(By.xpath("(//span[@class='k-select']/span)[1]")).click();
-	}
-	
-	public void clickEndDatePicker() {
-		scrollByElement(scheduledSection, driver);
-		driver.findElement(By.xpath("(//span[@class='k-select']/span)[2]")).click();
+	public void clickUpdateCampaignBTN() {
+		if(UpdateCampaignBTN.isEnabled()) {
+			Assert.assertTrue(true, "edited Scheduled Campaign");
+			UpdateCampaignBTN.click();
+		}
+		else  Assert.assertTrue(false, "Didn't edited the Scheduled Campaign");
 	}
 
+	public void clickLivePreviewBTN() {
+		LivePreviewBTN.click();
+	}
+	
+	public void clickCancelBTN() {
+		cancelBTN.click();
+	}
 }

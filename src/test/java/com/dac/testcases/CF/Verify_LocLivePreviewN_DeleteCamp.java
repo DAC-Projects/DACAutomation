@@ -1,11 +1,11 @@
-package com.dac.testcases;
+package com.dac.testcases.CF;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.dac.main.CampaignLivePreviewPage;
-import com.dac.main.CampaignsPage;
 import com.dac.main.Navigationpage;
+import com.dac.main.POM_CF.CampaignLivePreviewPage;
+import com.dac.main.POM_CF.CampaignsPage;
 import com.relevantcodes.extentreports.LogStatus;
 
 import resources.BaseTest;
@@ -13,7 +13,7 @@ import resources.Utilities;
 
 public class Verify_LocLivePreviewN_DeleteCamp extends BaseTest{
 	
-	@Test(dependsOnMethods= {"com.dac.testcases.Verify_CreateLocCampaign.createLocCamp_Test"})
+	@Test(alwaysRun=true, dependsOnMethods= {"com.dac.testcases.CF.Verify_CreateLocCampaign.createLocCamp_Test"})
 	public void livePreviewNDeleteTest() throws Exception {
 		
 		Navigationpage np=new Navigationpage(driver);
