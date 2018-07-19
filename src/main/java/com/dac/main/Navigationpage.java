@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -85,6 +86,78 @@ public class Navigationpage extends BasePage{
 	@FindBy(xpath="//li[@id='report']//span")
 	private WebElement ReportsLink;
 	
+	
+	//---------------------- CA-------------------------------
+	
+	@FindBy(xpath="//a[@href='/CompetitiveAnalysis/Accuracy']")
+	private WebElement CA_Accuracy;
+	
+	@FindBy(xpath="//a[@href='/CompetitiveAnalysis/Visibility']")
+	private WebElement CA_Visibility;
+	
+	public void  navigateCA_Visibility() {
+		wait.until(ExpectedConditions.visibilityOf(CA_Visibility));
+		scrollByElement(CA_Visibility, driver);
+		try {
+			CA_Visibility.click();
+		}
+		catch(Exception e) {
+			action.moveToElement(CA_Visibility).click().perform();
+		}
+		finally {
+			waitUntilLoad(driver);
+			
+		}
+	}
+
+	public void navigateCA_Accuracy() {
+		
+		wait.until(ExpectedConditions.visibilityOf(CA_Accuracy));
+		scrollByElement(CA_Accuracy, driver);
+		try {
+			CA_Accuracy.click();
+		}
+		catch(Exception e) {
+			action.moveToElement(CA_Accuracy).click().perform();
+		}
+		finally {
+			waitUntilLoad(driver);
+			
+		}
+		
+	}
+	
+	
+	
+	void waitUntilLoad(WebDriver driver) {
+
+		    WebDriverWait wait = new WebDriverWait(driver, 30);
+
+		    // wait for jQuery to load
+		    ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
+		      @Override
+		      public Boolean apply(WebDriver driver) {
+		        try {
+		          return ((Long)((JavascriptExecutor)driver).executeScript("return jQuery.active") == 0);
+		        }
+		        catch (Exception e) {
+		          // no jQuery present
+		          return true;
+		        }
+		      }
+		    };
+
+		    // wait for Javascript to load
+		    ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
+		      @Override
+		      public Boolean apply(WebDriver driver) {
+		        return ((JavascriptExecutor)driver).executeScript("return document.readyState")
+		        .toString().equals("complete");
+		      }
+		    };
+
+		  wait.until(jQueryLoad);wait.until(jsLoad);
+		}
 	
 	public WebElement getGoogleRanking() {
 		return GoogleRanking;
