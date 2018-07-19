@@ -1,14 +1,13 @@
-package com.dac.testcases;
+package com.dac.testcases.CF;
 
 import java.io.File;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.dac.main.CampaignLivePreviewPage;
-import com.dac.main.CampaignsPage;
-import com.dac.main.CreateNewCampaignPage;
 import com.dac.main.Navigationpage;
+import com.dac.main.POM_CF.CampaignsPage;
+import com.dac.main.POM_CF.CreateNewCampaignPage;
 import com.relevantcodes.extentreports.LogStatus;
 
 import resources.BaseTest;
@@ -16,12 +15,12 @@ import resources.ExcelTestDataHandler;
 import resources.IAutoconst;
 import resources.Utilities;
 
-public class Verify_CreateLocCampaign extends BaseTest{
+public class Verify_CreateMLCCampaign extends BaseTest{
 	
 	@Test(enabled=true)
-	public void createLocCamp_Test() throws Exception {
-				
-		int englishLangColumn = 9;
+	public void createMLCCamp_Test() throws Exception {
+		
+		int langColumn = 9;
 	
 		Navigationpage np=new Navigationpage(driver);
 		np.clickCampaigns();
@@ -31,31 +30,45 @@ public class Verify_CreateLocCampaign extends BaseTest{
 				
 		CreateNewCampaignPage newCampaign=new CreateNewCampaignPage(driver);
 		
-		newCampaign.selectCampType(1);
-		logger.log(LogStatus.INFO, "Selecting campaign Type as Location");
+		newCampaign.selectCampType(3);
+		logger.log(LogStatus.INFO, "Selecting campaign Type as MLC");
 		
 		newCampaign.selectCampLang(1);
-		String campLang = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, "Location", 3, englishLangColumn);
+		String campLang = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "MLC").getCellValue(3, langColumn);
 		logger.log(LogStatus.INFO, "Selecting campaign Language as "+campLang);
 		
-		newCampaign.verifyExistCampToolTipText("Location", 5, englishLangColumn);
+		newCampaign.verifyExistCampToolTipText("MLC", 5, langColumn);
 		Utilities.addScreenshot(driver, imgnames.get(0).toString());
+		logger.log(LogStatus.INFO, "verifying the Existing Campaign tool tip is it in "+campLang+" lang and text of it");
+		
+		CampName = newCampaign.setCampaignName("MLC", 6, langColumn);
+		
+		newCampaign.selectMLCs("BN- Business");
+		newCampaign.selectMLCs("DF - Germany");
+		newCampaign.clickAddBTN();
+		
+		newCampaign.verifyAddToolTipText("MLC", 28, langColumn);
 		logger.log(LogStatus.INFO, "verifying the tool tip lang and text of it");
 		
-		CampName = newCampaign.setCampaignName("Location", 6, englishLangColumn);
+		newCampaign.verifyRemoveToolTipText("MLC", 30, langColumn);
+		logger.log(LogStatus.INFO, "verifying the tool tip lang and text of it");
 		
-		newCampaign.selectCampaignLoc(0, englishLangColumn);
+		newCampaign.verifyAddAllToolTipText("MLC", 29, langColumn);
+		logger.log(LogStatus.INFO, "verifying the tool tip lang and text of it");
 		
-		newCampaign.setCampDescr("Location", 8, englishLangColumn);
+		newCampaign.verifyRemoveAllToolTipText("MLC", 31, langColumn);
+		logger.log(LogStatus.INFO, "verifying the tool tip lang and text of it");
+		
+		newCampaign.setCampDescr("MLC", 8, langColumn);
 		Utilities.addScreenshot(driver, imgnames.get(1).toString());
 		logger.log(LogStatus.INFO, "Entered the Campaign Name, Brand Name and Description");
 		
-		newCampaign.setSenderName("Location", 9, englishLangColumn);
+		newCampaign.setSenderName("MLC", 9, langColumn);
 	
 		newCampaign.uploadLogo();
 		logger.log(LogStatus.INFO, "Adding the Logo of the Campaign");
 		
-		String logoName = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, "Location", 11, englishLangColumn);
+		String logoName = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "MLC").getCellValue(11, langColumn);
 		
 		File logoPath=new File(".\\filesToUpload\\"+logoName);
 		String filepath=logoPath.getAbsolutePath();
@@ -65,37 +78,37 @@ public class Verify_CreateLocCampaign extends BaseTest{
 		//Below Thread.sleep method for wait to finish the uploading of Logo through AutoIt. 
 		//Other waiting condition can't give because selenium not able to handle window based apps
 		Thread.sleep(5000);
-		newCampaign.verifyUploadLogoToolTipText("Location", 10, englishLangColumn);
+		newCampaign.verifyUploadLogoToolTipText("MLC", 10, langColumn);
 		
 		Utilities.addScreenshot(driver, imgnames.get(2).toString());
 		
 		//newCampaign.downloadCampEmailTemplate();
 		
-		newCampaign.uploadCampEmailTemplate("Location", 13, englishLangColumn);
+		newCampaign.uploadCampEmailTemplate("MLC", 13, langColumn);
 		logger.log(LogStatus.INFO, "Uploading Email Template");
 		Utilities.addScreenshot(driver, imgnames.get(3).toString());
 		
-		newCampaign.setCampSubject("Location", 14, englishLangColumn);
+		newCampaign.setCampSubject("MLC", 14, langColumn);
 		
-		newCampaign.setCampBanner("Location", 15, englishLangColumn);
+		newCampaign.setCampBanner("MLC", 15, langColumn);
 		
-		newCampaign.verifyPersonalizationToolTipText("Brand", 16, englishLangColumn);
+		newCampaign.verifyPersonalizationToolTipText("Brand", 16, langColumn);
 		
-		newCampaign.setCampBodyCopy("Location", 17, englishLangColumn);
+		newCampaign.setCampBodyCopy("MLC", 17, langColumn);
 		Utilities.addScreenshot(driver, imgnames.get(4).toString());
 		logger.log(LogStatus.INFO, "Entered Subject, Banner Info and Body Copy data and verifying the Tokens");
 		
-		newCampaign.setCampSignature("Location",18 , englishLangColumn);
+		newCampaign.setCampSignature("MLC",18 , langColumn);
 		
 		newCampaign.setScheduledStartDate();
 		
 		newCampaign.clickStartDatePicker();
 		
-		newCampaign.verifyTimeToolTipText("Location", 20, englishLangColumn);
+		newCampaign.verifyTimeToolTipText("MLC", 20, langColumn);
 		
 		newCampaign.clickEndDatePicker();
 		
-		newCampaign.verifyCampEndDateToolTipText("Location", 22, englishLangColumn);
+		newCampaign.verifyCampEndDateToolTipText("MLC", 22, langColumn);
 		Utilities.addScreenshot(driver, imgnames.get(5).toString());
 		logger.log(LogStatus.INFO, "Verifying the Scheduling campaign Date controls");
 		
@@ -108,6 +121,5 @@ public class Verify_CreateLocCampaign extends BaseTest{
 		cp.verifyCampName("Scheduled", CampName);
 		Utilities.addScreenshot(driver, imgnames.get(7).toString());
 		logger.log(LogStatus.INFO, "Verifying the Created Campaign whether displayed in Sceduled campaign Section");
-		
-	}	
+	}
 }

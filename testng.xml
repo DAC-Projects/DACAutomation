@@ -8,12 +8,13 @@
 <test name="Review_Solicitation">
   <parameter name="browser" value="Chrome"/>
     <classes>
-    	<class name= "com.dac.testcases.Verify_CreateBrandCampaign" />
-    	<class name= "com.dac.testcases.Verify_BrandLivePreviewN_DeleteCamp" />
-    	<class name= "com.dac.testcases.Verify_CreateLocCampaign" />
-    	<class name= "com.dac.testcases.Verify_LocLivePreviewN_DeleteCamp" />
-    	<class name= "com.dac.testcases.VerifyCreate_DraftBrandCamp" />
-    	<class name= "com.dac.testcases.VerifyCreate_DraftLocCamp" />
+    	<class name= "com.dac.testcases.CF.VerifyCampReportsData" />
+    	<!-- class name= "com.dac.testcases.CF.Verify_CreateBrandCampaign" / -->
+    	<!-- class name= "com.dac.testcases.CF.Verify_BrandLivePreviewN_DeleteCamp"/-->
+    	<!-- class name= "com.dac.testcases.CF.Verify_CreateLocCampaign" /> -->
+    	<!-- class name= "com.dac.testcases.CF.Verify_LocLivePreviewN_DeleteCamp" /> -->
+    	<!-- class name= "com.dac.testcases.CF.VerifyCreate_DraftBrandCamp" /> -->
+    	<!-- class name= "com.dac.testcases.CF.VerifyCreate_DraftLocCamp" /> -->
     </classes>
   </test> <!-- Test -->
 

@@ -1,5 +1,6 @@
-package com.dac.main;
+package com.dac.main.POM_CF;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -12,6 +13,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.dac.main.BasePage;
+
+import junit.framework.Assert;
 
 public class CampaignsPage extends BasePage{
 
@@ -142,6 +147,9 @@ public class CampaignsPage extends BasePage{
 
 	@FindBy(xpath="//span[text()='Unarchive']")
 	private WebElement processedCampUnArchive;
+	
+	@FindBy(xpath="//*[@ng-bind='headerMessage']")
+	private WebElement subTittle_CampaignPage;
 	
 
 	public void click_CreateCampaignBTN() throws InterruptedException {
@@ -280,6 +288,15 @@ public class CampaignsPage extends BasePage{
 		
 	}
 	
+	public void verifyProcessedCampTableData(String CampName) {
+		WebElement td1 = driver.findElement(By.xpath("//td[1]//span[contains(.,'"+CampName+"')]"));
+		verifyText(td1, CampName);
+		
+		String procCampEndDate = driver.findElement(By.xpath("//td[3]//span[contains(@ng-bind,'EndDateTime')]")).getText();
+		verifyText(td1, CampName);
+		
+	}
+	
 	public void verifyCampTableData(String TabName, String CampName, String LocOrBrandName) throws InterruptedException {
 		if(TabName.equalsIgnoreCase("Scheduled")) {
 			search_ScheduledCampaign(CampName);
@@ -298,9 +315,17 @@ public class CampaignsPage extends BasePage{
 		verifyText(td2, LocOrBrandName);
 	}
 	
+	//Release Date should be Start date
 	public String getReleaseDateTime() {
 		WebElement dateNtime = driver.findElement(By.xpath("//td[4]//span[@class='ng-binding']"));
-		return dateNtime.getText();
+		Date startDate = new Date();
+		String startDateFormat = engDateFormat.format(startDate);
+		String tableReleaseDateNtime= dateNtime.getText();
+		if(tableReleaseDateNtime.contains(startDateFormat)) {
+			Assert.assertTrue("Release date is same as Campaign Start Date", true);
+		}
+		else	Assert.fail();
+		return tableReleaseDateNtime;
 	}
 	
 	public void verifyLocOrBrandName(String TabName, String CampName, String LocOrBrandName) throws InterruptedException {

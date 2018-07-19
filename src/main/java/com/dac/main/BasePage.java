@@ -1,7 +1,21 @@
 package com.dac.main;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardWatchEventKinds;
+import java.nio.file.WatchEvent;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -10,7 +24,7 @@ import org.testng.Assert;
 
 public class BasePage {
 	
-
+	public static SimpleDateFormat engDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	
 	/*
 	public void verifyPageIsDisplayed(WebDriver driver,String eResult) {
@@ -29,6 +43,43 @@ public class BasePage {
 	}
 	
 	*/
+	
+	public static String getLastModifiedFile(String dirPath) throws InterruptedException{
+		Thread.sleep(4000);
+	    File dir = new File(dirPath);
+	    File[] files = dir.listFiles();
+	    if (files == null || files.length == 0) {
+	        return null;
+	    }
+
+	    File lastModifiedFile = files[0];
+	    for (int i = 1; i < files.length; i++) {
+	       if (lastModifiedFile.lastModified() < files[i].lastModified()) {
+	           lastModifiedFile = files[i];
+	       }
+	    }
+	    return lastModifiedFile.getName();
+	}
+	
+
+	
+	public static String getFileNames_Dir(String folderPath) {
+		File folder = new File(folderPath);
+		File[] listOfFiles = folder.listFiles();
+		String fileName = "";
+		Long a = 0L;	
+		
+		    for (int i = 0; i < listOfFiles.length; i++) {
+		      if (listOfFiles[i].isFile()) {
+		    	 fileName = listOfFiles[i].getName();
+		    	 System.out.println("File " + listOfFiles[i].getName());
+		      } else if (listOfFiles[i].isDirectory()) {
+		        System.out.println("Directory " + listOfFiles[i].getName());
+		      }
+		    }
+		return fileName;
+	}
+	
 	
 	public void verifyText(WebElement e,String eText) {
 		String aText=e.getText().trim();
@@ -59,9 +110,9 @@ public class BasePage {
 	}*/
 	
 	public static String getDate() {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		//SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		Date date = new Date();
-		String dateFormat = sdf.format(date);
+		String dateFormat = engDateFormat.format(date);
 		return dateFormat.toString();
 	}
 	

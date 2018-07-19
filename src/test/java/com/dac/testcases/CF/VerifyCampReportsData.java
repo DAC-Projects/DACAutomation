@@ -1,11 +1,11 @@
-package com.dac.testcases;
+package com.dac.testcases.CF;
 
 import org.testng.annotations.Test;
 
-import com.dac.main.CampaignsPage;
-import com.dac.main.CustomerActivityReportPage_RS;
 import com.dac.main.Navigationpage;
-import com.dac.main.ReportsPage_RS;
+import com.dac.main.POM_CF.CampaignsPage;
+import com.dac.main.POM_CF.CustomerActivityReportPage_RS;
+import com.dac.main.POM_CF.ReportsPage_RS;
 
 import resources.BaseTest;
 
@@ -24,9 +24,11 @@ public class VerifyCampReportsData extends BaseTest {
 		cp.clickReportsLink();
 		
 		ReportsPage_RS rp=new ReportsPage_RS(driver);
-		rp.overviewSectionCountData();
 		
-
+		rp.getClipboardContents();
+		/*rp.overviewSectionCountData();
+		
+		rp.getReviewSubmittedGraphText();*/
 		
 	}
 }

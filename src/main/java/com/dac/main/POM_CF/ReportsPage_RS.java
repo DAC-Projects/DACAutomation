@@ -1,9 +1,16 @@
-package com.dac.main;
+package com.dac.main.POM_CF;
 
 import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -35,6 +42,12 @@ public class ReportsPage_RS {
 	@FindBy(id="btnApply")
 	private WebElement applyFilterBTN;
 	
+	@FindBy(xpath="(//*[@class='highcharts-plot-background'])[1]")
+	private WebElement reviewSubmittedGraph;
+	
+	@FindBy(css="g.highcharts-label>text :nth-child(1)")
+	private WebElement reviewSubmittedGraphTT;
+	
 	@FindBy(xpath="(//*[@class='widget-title'])[1]")
 	private WebElement emailsentTittleText;
 	
@@ -55,6 +68,32 @@ public class ReportsPage_RS {
 	
 	@FindBy(id="dateFrom")
 	private WebElement dateFrom;
+	
+	public void getClipboardContents() throws UnsupportedFlavorException, IOException {
+
+			String copy = Keys.chord(Keys.CONTROL,Keys.chord("c"));
+
+			dateFrom.sendKeys(Keys.CONTROL+"a");
+			dateFrom.sendKeys(copy);
+
+			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+			Transferable contents = clipboard.getContents(null);
+			String x = (String) contents.getTransferData(DataFlavor.stringFlavor);
+			System.out.println(x);
+			//int a= result.length();
+			int b = x.length();
+			//System.out.println(a);
+			System.out.println(b);
+			/*if(a<=b) 
+			{
+			System.out.println("Matched Character length")
+			}else 
+			{
+			 System.out.println("Issue In Character length");
+			}
+			 }*/
+
+	}
 	
 	public void clickApplyFilterBTN() {
 		applyFilterBTN.click();
@@ -77,5 +116,10 @@ public class ReportsPage_RS {
 	public void fromDateCampaign() {
 		
 		System.out.println("From Date : "+dateFrom.getText());
+	}
+	
+	public void getReviewSubmittedGraphText() {
+		action.moveToElement(reviewSubmittedGraph).moveByOffset((reviewSubmittedGraph.getSize().getWidth()/2)-2, 0).perform();
+		System.out.println(reviewSubmittedGraphTT.getText());
 	}
 }
