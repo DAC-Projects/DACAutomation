@@ -14,7 +14,6 @@
     	<class name= "com.dac.testcases.Verify_LocLivePreviewN_DeleteCamp" />
     	<class name= "com.dac.testcases.VerifyCreate_DraftBrandCamp" />
     	<class name= "com.dac.testcases.VerifyCreate_DraftLocCamp" />
-    	<class name= "com.dac.testcases.CA_test" />
     </classes>
   </test> <!-- Test -->
 

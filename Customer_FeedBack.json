@@ -13,5 +13,4 @@
 "com.dac.testcases.VerifyCampCustomerActReport" : {"CustActReport":"id:54705"}
 
 "com.dac.testcases.Verify_CreateMLCCampaign" : {"CampCreation":"id:54917"}
-"com.dac.testcases.CA_test" : {"CampCreation":"id:54917"}
 }
