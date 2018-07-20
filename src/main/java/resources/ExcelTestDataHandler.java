@@ -5,7 +5,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -20,14 +25,15 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelTestDataHandler {
 
-	private static FileInputStream fis = null;
-	private static XSSFWorkbook workbook = null;
-	private static XSSFSheet sheet = null;
-	private static XSSFRow row = null;
-	private static XSSFCell cell = null;
+	private  FileInputStream fis = null;
+	private  XSSFWorkbook workbook = null;
+	private  XSSFSheet sheet = null;
+	private  XSSFRow row = null;
+	private  XSSFCell cell = null;
 	
 	public String filePath="";
 	public String sheetName = "";
+	public int sheetIndex;
 	
 	public ExcelTestDataHandler(String filePath, String sheetName) throws Exception {
 		this.filePath = filePath;
@@ -38,6 +44,14 @@ public class ExcelTestDataHandler {
 		fis.close();
 	}
 	
+	public ExcelTestDataHandler(String file, int index) throws IOException {
+		// TODO Auto-generated constructor stub
+		fis = new FileInputStream(file);
+		workbook = new XSSFWorkbook(fis);
+		this.sheetIndex=index;
+		sheet = workbook.getSheetAt(this.sheetIndex);
+		fis.close();
+	}
 	
 	public void replaceCellValue(String searchValue, String newValue) throws Exception {
 		int row = new ExcelTestDataHandler(filePath, sheetName).getRowCount();
@@ -245,5 +259,98 @@ public class ExcelTestDataHandler {
 	    }
 	    return false;
 	}
+//--------------------------------------------------------R-code
+	/**
+	 * @param column
+	 * @param row
+	 * Used to get values of a cell given row and column
+	 * @throws Exception 
+	 */
+	public  String getValue(int column_no, int row_no) throws Exception {
+		
+		row = sheet.getRow(row_no);
+		
+		if (row.getCell(column_no)!= null  && StringUtils.isNotBlank(row.getCell(column_no).toString())){
+			return row.getCell(column_no).toString();
+		}else return null;
+	}
+	
+	
+	/**
+	 * @param name
+	 * used to search for a text in a column and return its row nos
+	 */
+	public  List<Integer> find_Row_no(String text, int column_no){
+		
+		
+		
+		List<Integer> matchingRows = new ArrayList<Integer>();
+		for (int i=0; i<= sheet.getLastRowNum();i++) {
+			row = sheet.getRow(i);
+			if (row.getCell(column_no)!= null  && StringUtils.isNotBlank(row.getCell(column_no).toString())){
+					
+					if(text.trim().equalsIgnoreCase(row.getCell(column_no).toString())) {
+						
+						matchingRows.add(i);
+					}
+			}
+		}
+		return matchingRows;
+	}
+	
+	
+	/**
+	 * @param name
+	 * used to search for a pattern in a column and return its row nos
+	 */
+	public  List<Integer> seacrh_pattern(String text, int row_no){
+		
+		
+		row = sheet.getRow(row_no);
+		List<Integer> matchingColumns = new ArrayList<Integer>();
+		Pattern pattern = Pattern.compile(text);
+		for (int i=0; i<= row.getLastCellNum();i++)
+		{
+		if (row.getCell(i)!=null) {
+			Matcher matcher =pattern.matcher((row.getCell(i).toString()));
+			if(matcher.find()) {
+				
+				matchingColumns.add(i);
+			}		
+		}
+		}
+		return matchingColumns;
+				
+		
+	}
+	
+	
+	/**
+	 * @param Column_Name
+	 * Finds the column numbers using column name
+	 */
+	public  List<Integer>  find_column_no(String Column_Name, int row_no) {
+		
+		row = sheet.getRow(row_no);
+		List<Integer> matchingColumns = new ArrayList<Integer>();
+		for (int i=0; i<= row.getLastCellNum();i++)
+		{
+		if (row.getCell(i)!=null&& row.getCell(i).toString().equalsIgnoreCase(Column_Name)) { 
+			matchingColumns.add(i);			
+		}
+		}
+		return matchingColumns;
+	}
+	
+	public  int getrowno() {
+		return sheet.getLastRowNum();
+	}
+	
+	
 
+	
+
+	
+	
+	
 }

@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" >
-<parameter name="testcasesfile" value="Customer_FeedBack.json"></parameter>
+ 
 <listeners>
 <listener class-name="resources.IntegrationTestListener"></listener>
 </listeners>
+
 <test name="Review_Solicitation">
+<parameter name="testcasesfile" value="Customer_FeedBack.json"></parameter>
   <parameter name="browser" value="Chrome"/>
     <classes>
-    	<class name= "com.dac.testcases.CF.VerifyCampReportsData" />
-    	<!-- class name= "com.dac.testcases.CF.Verify_CreateBrandCampaign" / -->
-    	<!-- class name= "com.dac.testcases.CF.Verify_BrandLivePreviewN_DeleteCamp"/-->
-    	<!-- class name= "com.dac.testcases.CF.Verify_CreateLocCampaign" /> -->
-    	<!-- class name= "com.dac.testcases.CF.Verify_LocLivePreviewN_DeleteCamp" /> -->
-    	<!-- class name= "com.dac.testcases.CF.VerifyCreate_DraftBrandCamp" /> -->
-    	<!-- class name= "com.dac.testcases.CF.VerifyCreate_DraftLocCamp" /> -->
+    	<class name= "com.dac.testcases.CF.Verify_CreateBrandCampaign" />
+    	<class name= "com.dac.testcases.CF.Verify_BrandLivePreviewN_DeleteCamp" />
+    	<!--  <class name= "com.dac.testcases.CF.Verify_CreateLocCampaign" />
+    	<class name= "com.dac.testcases.CF.Verify_LocLivePreviewN_DeleteCamp" />
+    	<class name= "com.dac.testcases.CF.VerifyCreate_DraftBrandCamp" />
+    	<class name= "com.dac.testcases.CF.VerifyCreate_DraftLocCamp" />  -->
     </classes>
   </test> <!-- Test -->
 
+  
+ 
+  <test name="Competitive Analysis">
+  <parameter name="browser" value="Chrome"/>
+  <parameter name="testcasesfile" value="CompetitiveAnalysis.json"></parameter>
+    <classes>
+    	<class name= "com.dac.testcases.CA.CA_test" />
+ 	</classes>
+  </test> <!-- Test -->
+  
 </suite> <!-- Suite -->
