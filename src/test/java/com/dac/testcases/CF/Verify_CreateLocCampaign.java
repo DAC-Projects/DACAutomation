@@ -16,7 +16,7 @@ import resources.ExcelTestDataHandler;
 import resources.IAutoconst;
 import resources.Utilities;
 
-public class Verify_CreateLocCampaign extends BaseTest{
+public class Verify_CreateLocCampaign extends BaseTest_CF{
 	
 	@Test(enabled=true)
 	public void createLocCamp_Test() throws Exception {
@@ -42,7 +42,7 @@ public class Verify_CreateLocCampaign extends BaseTest{
 		Utilities.addScreenshot(driver, imgnames.get(0).toString());
 		logger.log(LogStatus.INFO, "verifying the tool tip lang and text of it");
 		
-		CampName = newCampaign.setCampaignName("Location", 6, englishLangColumn);
+		campName = newCampaign.setCampaignName("Location", 6, englishLangColumn);
 		
 		newCampaign.selectCampaignLoc(0, englishLangColumn);
 		
@@ -87,7 +87,7 @@ public class Verify_CreateLocCampaign extends BaseTest{
 		
 		newCampaign.setCampSignature("Location",18 , englishLangColumn);
 		
-		newCampaign.setScheduledStartDate();
+		newCampaign.setScheduledStartDate("en", "US");
 		
 		newCampaign.clickStartDatePicker();
 		
@@ -105,7 +105,7 @@ public class Verify_CreateLocCampaign extends BaseTest{
 		
 		newCampaign.clickViewAllCampaignBTN();	
 		
-		cp.verifyCampName("Scheduled", CampName);
+		cp.verifyCampName("Scheduled", campName);
 		Utilities.addScreenshot(driver, imgnames.get(7).toString());
 		logger.log(LogStatus.INFO, "Verifying the Created Campaign whether displayed in Sceduled campaign Section");
 		

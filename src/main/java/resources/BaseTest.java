@@ -73,7 +73,6 @@ public abstract class BaseTest implements IAutoconst {
 	protected ArrayList<String[]> arraySteps = new ArrayList<>();
 	private ReadExcel re;
 	private CreateEvidence ce;
-	public static String CampName = "";
 	public static String testcasefile;
 	public static String className;
 	public static String id;

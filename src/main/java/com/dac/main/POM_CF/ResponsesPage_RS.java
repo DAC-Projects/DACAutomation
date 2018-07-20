@@ -1,5 +1,7 @@
 package com.dac.main.POM_CF;
 
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ import org.testng.asserts.SoftAssert;
 
 import com.dac.main.BasePage;
 
+import resources.DateFormats;
 import resources.ExcelTestDataHandler;
 import resources.formatConvert;
 
@@ -58,6 +61,9 @@ public class ResponsesPage_RS extends BasePage{
 	
 	@FindBy(id="dateFrom")
 	private WebElement fromDate;
+	
+	@FindBy(id="dateTo")
+	private WebElement toDate;
 	
 	@FindBy(id="btnApply")
 	private WebElement applyFilter;
@@ -129,6 +135,19 @@ public class ResponsesPage_RS extends BasePage{
 	private WebElement paginationNext;
 	
 	static private int numOfReviews = 0;	
+	
+	public void getToDate(String langCode, String contryCode) throws UnsupportedFlavorException, IOException  {
+		String fromDateUI = getClipboardContents(toDate);
+		String todayDate = DateFormats.shortDate(langCode, contryCode);
+		if (fromDateUI.equals(todayDate)) {
+			Assert.assertEquals(fromDateUI, todayDate);
+		}
+		else {
+			Assert.fail();
+		}
+	}
+	
+	
 	
 	/**
 	 * In this method we are verifying number of reviews in Average Star Rating with Number of Reveiws of Table data available
@@ -263,7 +282,6 @@ public class ResponsesPage_RS extends BasePage{
 		else {
 			System.out.println("No Data Available in Review Table");
 		}
-		
 	}
 	
 	public void verifyOrderOfTableHeader(String[] tableHeaderData) {

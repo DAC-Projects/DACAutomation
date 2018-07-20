@@ -15,7 +15,7 @@ import resources.ExcelTestDataHandler;
 import resources.IAutoconst;
 import resources.Utilities;
 
-public class VerifyCreate_DraftBrandCamp extends BaseTest{
+public class VerifyCreate_DraftBrandCamp extends BaseTest_CF{
 		
 	@Test(enabled=true)
 	public void createDraftBrandCamp_Test() throws Exception {
@@ -41,7 +41,7 @@ public class VerifyCreate_DraftBrandCamp extends BaseTest{
 		Utilities.addScreenshot(driver, imgnames.get(0).toString());
 		logger.log(LogStatus.INFO, "verifying the tool tip lang and text of it");
 		
-		CampName = newCampaign.setCampaignName("Brand",6, englishLangColumn);
+		campName = newCampaign.setCampaignName("Brand",6, englishLangColumn);
 		
 		newCampaign.setCampaignBrandName(englishLangColumn);
 		
@@ -94,7 +94,7 @@ public class VerifyCreate_DraftBrandCamp extends BaseTest{
 		Utilities.addScreenshot(driver, imgnames.get(5).toString());
 		logger.log(LogStatus.INFO, "Verifying the Contact info section tool tip and could able to data into it");
 		
-		newCampaign.setScheduledStartDate();
+		newCampaign.setScheduledStartDate(filepathexe, filepathexe);
 		
 		newCampaign.verifyTimeToolTipText("Brand", 27, englishLangColumn);
 		
@@ -112,7 +112,7 @@ public class VerifyCreate_DraftBrandCamp extends BaseTest{
 		
 		cp.click_DraftTab();
 		
-		cp.verifyCampName("Draft", CampName);
+		cp.verifyCampName("Draft", campName);
 		Utilities.addScreenshot(driver, imgnames.get(8).toString());
 		logger.log(LogStatus.INFO, "Verifying the Created Campaign whether displayed in Sceduled campaign Section");
 		

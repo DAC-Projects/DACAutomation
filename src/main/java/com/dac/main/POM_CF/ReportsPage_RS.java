@@ -19,7 +19,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class ReportsPage_RS {
+import com.dac.main.BasePage;
+
+public class ReportsPage_RS extends BasePage{
 
 	WebDriver driver;
 	Actions action;
@@ -67,32 +69,10 @@ public class ReportsPage_RS {
 	private WebElement reviewSubmittedCount;
 	
 	@FindBy(id="dateFrom")
-	private WebElement dateFrom;
+	private WebElement fromDate;
 	
-	public void getClipboardContents() throws UnsupportedFlavorException, IOException {
-
-			String copy = Keys.chord(Keys.CONTROL,Keys.chord("c"));
-
-			dateFrom.sendKeys(Keys.CONTROL+"a");
-			dateFrom.sendKeys(copy);
-
-			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-			Transferable contents = clipboard.getContents(null);
-			String x = (String) contents.getTransferData(DataFlavor.stringFlavor);
-			System.out.println(x);
-			//int a= result.length();
-			int b = x.length();
-			//System.out.println(a);
-			System.out.println(b);
-			/*if(a<=b) 
-			{
-			System.out.println("Matched Character length")
-			}else 
-			{
-			 System.out.println("Issue In Character length");
-			}
-			 }*/
-
+	public void getFromDate() throws UnsupportedFlavorException, IOException  {
+		getClipboardContents(fromDate);
 	}
 	
 	public void clickApplyFilterBTN() {
@@ -113,10 +93,10 @@ public class ReportsPage_RS {
 		select.selectByVisibleText(campName);
 	}
 	
-	public void fromDateCampaign() {
+/*	public void fromDateCampaign() {
 		
-		System.out.println("From Date : "+dateFrom.getText());
-	}
+		System.out.println("From Date : "+fromDate.getText());
+	}*/
 	
 	public void getReviewSubmittedGraphText() {
 		action.moveToElement(reviewSubmittedGraph).moveByOffset((reviewSubmittedGraph.getSize().getWidth()/2)-2, 0).perform();
