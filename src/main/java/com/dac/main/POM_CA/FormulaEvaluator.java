@@ -26,7 +26,7 @@ public class FormulaEvaluator {
 	}
 
 	public FormulaEvaluator visibilityScore() {
-		
+		visibility.add(new Object[] { "-", "-","-","-","-","-","-","-","-","-","-","-" });
 		visibility.add(new Object[] { "visibility  score calculation" });
 		visibility.add(new Object[] { "SiteName", "visibilityScore" });
 		int counter = 0;
@@ -47,6 +47,7 @@ public class FormulaEvaluator {
 	}
 
 	public FormulaEvaluator accuracyScore() {
+		accuracy.add(new Object[] { "-", "-","-","-","-","-","-","-","-","-","-","-" });
 		accuracy.add(new Object[] { "accuracy  score calculation" });
 		accuracy.add(new Object[] { "SiteName", "accuracyScore", "SiteCount", "accuracyScore*SiteCount" });
 		int counter = 2;
@@ -86,6 +87,7 @@ public class FormulaEvaluator {
 	}
 
 	public FormulaEvaluator reviewScore() {
+		reviews.add(new Object[] { "-", "-","-","-","-","-","-","-","-","-","-","-" });
 		reviews.add(new Object[] { "review  score calculation" });
 		reviews.add(new Object[] { "SiteName", "ReviewScore", "ReviewCount", "ReviewScore*RewviewCount" });
 		int counter = 2;
@@ -113,6 +115,9 @@ public class FormulaEvaluator {
 	public Map execute() {
 
 		compltness.addAll(reviews);
+		compltness.addAll(visibility);
+		compltness.addAll(accuracy);
+		
 
 		for (int i = 0; i <= compltness.size() - 1; i++) {
 

@@ -45,17 +45,7 @@ public class CA_gatherData implements CARepository {
 
 		for (int col : Sites_col)
 			System.out.println(CellReference.convertNumToColString(col));
-		
-
-		
-			
-		
 	
-				
-			
-
-		
-
 		for (int row = 1, a = 0; row <= row_count; row++, a++) {
 			
 			if (company_level.getValue(usrID_col_no.get(0), row).equals(UserID)){
@@ -91,7 +81,7 @@ public class CA_gatherData implements CARepository {
 		for (Competitor comps : competitors ) {
 			System.out.println(i);
 			new ExcelWrite().wirte(createMap(comps), comps.competitorName, "./Results_"+level+"_"+UserID+".xlsx");
-			new ExcelWrite().wirte(new FormulaEvaluator(comps).reviewScore().contentAnalysis().accuracyScore().execute(),
+			new ExcelWrite().wirte(new FormulaEvaluator(comps).reviewScore().contentAnalysis().accuracyScore().visibilityScore().execute(),
 					"Results-"+comps.competitorName.substring(0,4)+"..."+i, "./Results_"+level+"_"+UserID+".xlsx");
 		i= i+1;
 		}
@@ -111,18 +101,6 @@ public class CA_gatherData implements CARepository {
 			String rCount = getvalue(x, Review_count, row, company_level);
 			String rScore = getvalue(x, Review_score, row, company_level);
 			String complScore = getvalue(x, completeness_Score, row, company_level);
-
-//			site.count = ((count != null) ? Float.parseFloat(count) : 0.0);
-//			site.ReviewCount = ((rCount != null) ? Float.parseFloat(rCount) : 0.0);
-//			site.ReviewScore = ((rScore != null) ? Float.parseFloat(rScore) : 0.0);
-//			site.completnessScore = ((complScore != null) ? Float.parseFloat(complScore) : 0.0);
-//
-//			String visibilityScore = getSiteDataFromExport(site.name, Exportpath + VisibilityExport, competitors);
-//			site.visibilityScore = ((visibilityScore != null) ? Float.parseFloat(visibilityScore) : 0.0);
-//			
-//			String AccuracyScore = getSiteDataFromExport(site.name, Exportpath + AccuracyExport, competitors);
-//			site.AccuracyScore = ((AccuracyScore != null) ? Float.parseFloat(AccuracyScore) : 0.0);
-			
 			site.count = ((count != null) ? convertPercentFloat(count) : 0.0);
 			site.ReviewCount = ((rCount != null) ? convertPercentFloat(rCount) : 0.0);
 			site.ReviewScore = ((rScore != null) ? convertPercentFloat(rScore) : 0.0);
@@ -163,6 +141,8 @@ public class CA_gatherData implements CARepository {
 
 	public static String getvalue(int x, String value, int row, ExcelTestDataHandler company_level) throws Exception {
 		String col = StringUtils.replace(value, "*", Integer.toString(x));
+		System.out.println(col+"***********");
+		System.out.println(company_level.find_column_no(col, 0).size());
 		String name = company_level.getValue(company_level.find_column_no(col, 0).get(0), row);
 		return name;
 
