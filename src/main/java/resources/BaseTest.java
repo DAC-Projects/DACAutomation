@@ -20,6 +20,7 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.xmlbeans.XmlException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -73,6 +74,7 @@ public abstract class BaseTest implements IAutoconst {
 	protected ArrayList<String[]> arraySteps = new ArrayList<>();
 	private ReadExcel re;
 	private CreateEvidence ce;
+	private String testName;
 	public static String testcasefile;
 	public static String className;
 	public static String id;
@@ -111,7 +113,7 @@ public abstract class BaseTest implements IAutoconst {
 		  	
 			parent = report.startTest("Testcases for :"+ testContext.getName());	
 			this.testcasefile= testcasesfile;
-
+			this.testName = testContext.getName();
 	}
 	
 	
@@ -170,8 +172,9 @@ public abstract class BaseTest implements IAutoconst {
 		driver = openBrowser(browser);
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
-		loginAuth(driver, prop); //logins to DAC
-		navigateToDashboard(driver, prop, browser); //navigate to dashboard
+		LoginAC_Beta lp= new LoginAC_Beta(driver);
+		loginAuth(driver, lp); //logins to DAC
+		navigateToDashboard(driver, lp, browser); //navigate to dashboard
 		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		//Date date = new Date();
 		//String time = sdf.format(date);
@@ -244,9 +247,7 @@ public abstract class BaseTest implements IAutoconst {
 	
 	@AfterClass
 	public void closeBrowser() throws Exception {
-		// Create an object of current class
-		//CreateEvidence ce = new CreateEvidence();
-		//ReadExcel eat = new ReadExcel("./Testcase-TransparenSee.xlsx");
+	
 		ce =new CreateEvidence(ReadExcel.Testcase);
 		ce.creatDoc(arraySteps);
 		
@@ -259,26 +260,24 @@ public abstract class BaseTest implements IAutoconst {
 	
 	//**********************for login to auth and then Dashboard
 
-	public void loginAuth(WebDriver driver, Properties prop) {
+	public void loginAuth(WebDriver driver, LoginAC_Beta lp) {
 		// login to auth centre
-		driver.get(prop.getProperty("AuthCenterURL"));
+		String [] account = getAccount();
+		driver.get(account[0]);	
 		
-		LoginAC_Beta lp=new LoginAC_Beta(driver);
-		lp.setUserName("rnair@dacgroup.com");
-		lp.setPassword("DACQA123");
+		lp.setUserName(email);
+		lp.setPassword(password);
 		lp.clickLogin();
+
 
 	}
 
-	public void navigateToDashboard(WebDriver driver, Properties prop, String browser) {
+	public void navigateToDashboard(WebDriver driver, LoginAC_Beta lp, String browser) {
 		String oldTab = driver.getWindowHandle();
-		WebElement email = driver.findElement(By.id(prop.getProperty("emailsearch")));
-		email.clear();
-		email.sendKeys(prop.getProperty("emailID"));
-		//driver.findElement(By.xpath("//input[@value='Submit']")).click();
-		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfElementLocated(By.linkText(prop.getProperty("dashboardLink")))).click();
-		
-		
+		String [] account = getAccount();
+		lp.findUser(account[1]);
+		lp.clickDashboardLink();
+			
 		if (browser.equalsIgnoreCase("firefox")) {
 			WebDriverWait wait = new WebDriverWait(driver,5);
 			wait.until(ExpectedConditions.numberOfWindowsToBe(2));
@@ -294,6 +293,21 @@ public abstract class BaseTest implements IAutoconst {
 			System.out.println(handle+"*****");
 		driver.switchTo().window(handles.get(0));
 
+	}
+	
+	public String[] getAccount() {
+		
+		switch(testName) {
+		
+		case "Competitive Analysis" :
+			return competitiveAnalysis;	
+		case "Customer_FeedBack" :
+			return deepfieldAccount;
+		default:
+			return deepfieldAccount;
+		}
+		
+		
 	}
 
 }
