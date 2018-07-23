@@ -31,7 +31,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import com.dac.testcases.CF.BaseTest_CF;
+import com.dac.main.POM_CF.BaseTest_CF;
 
 import resources.DateFormats;
 
@@ -54,6 +54,13 @@ public class BasePage {
 	}
 	
 	*/
+	
+	public static String minusDays(String langCode, String countryCode, int days_Amount) {
+		Calendar c = Calendar.getInstance();    
+		c.add(Calendar.DATE, -days_Amount);
+		String finalDate = DateFormats.dateFormat(langCode, countryCode).format(c.getTime());
+		return finalDate;
+	}
 	
 	public static String addDays(String langCode, String countryCode, int days_Amount) {
 		Calendar c = Calendar.getInstance();    

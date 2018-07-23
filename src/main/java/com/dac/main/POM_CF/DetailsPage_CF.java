@@ -14,10 +14,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import com.dac.main.BasePage;
 
-import junit.framework.Assert;
+
 import resources.ExcelTestDataHandler;
 import resources.IAutoconst;
 
@@ -316,7 +317,7 @@ public class DetailsPage_CF extends BasePage{
 				break;
 			}	
 			else if(!campaignType.isEnabled()){
-				Assert.assertTrue("Campaign type is NOT enabled", true);
+				Assert.assertTrue(true, "Campaign type is NOT enabled");
 				break;
 			}
 		}
@@ -330,7 +331,7 @@ public class DetailsPage_CF extends BasePage{
 			Assert.fail("campaign Language should not be enabled");
 		}	
 		else if(!campaignLang.isEnabled()){
-			Assert.assertTrue("Campaign Language is NOT enabled", true);
+			Assert.assertTrue(true, "Campaign Language is NOT enabled");
 		}
 	}
 	
@@ -344,7 +345,7 @@ public class DetailsPage_CF extends BasePage{
 			Assert.fail("campaign Name field should not be enabled");
 		}	
 		else if(!campaignName.isEnabled()){
-			Assert.assertTrue("Campaign Name field is NOT enabled", true);
+			Assert.assertTrue(true, "Campaign Name field is NOT enabled");
 		}	
 	}
 	
@@ -359,7 +360,7 @@ public class DetailsPage_CF extends BasePage{
 			Assert.fail("campaign Name field should not be enabled");
 		}	
 		else if(!campaignLocTB.isEnabled()){
-			Assert.assertTrue("Campaign Name field is NOT enabled", true);
+			Assert.assertTrue(true, "Campaign Name field is NOT enabled");
 		}	
 	}
 	
@@ -369,7 +370,7 @@ public class DetailsPage_CF extends BasePage{
 			Assert.fail("campaign Name field should not be enabled");
 		}	
 		else if(!campaignBrandNameTB.isEnabled()){
-			Assert.assertTrue("Campaign Name field is NOT enabled", true);
+			Assert.assertTrue(true, "Campaign Name field is NOT enabled");
 		}
 		String campBrandName = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(7, column);
 		String BrandName= campBrandName+" - "+getDate();

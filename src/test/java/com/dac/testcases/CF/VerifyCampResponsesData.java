@@ -33,7 +33,7 @@ public class VerifyCampResponsesData extends BaseTest{
 
 		ResponsesPage_RS rprs=new ResponsesPage_RS(driver);
 		
-		rprs.getToDate("en", "US");
+		rprs.verifyToDate("en", "US");
 		
 		/*rprs.selectCamp("All Unarchived Campaigns");
 		rprs.clickApplyFilterBTN();

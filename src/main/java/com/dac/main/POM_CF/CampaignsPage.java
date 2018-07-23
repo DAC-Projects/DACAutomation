@@ -14,10 +14,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import com.dac.main.BasePage;
 
-import junit.framework.Assert;
 import resources.DateFormats;
 
 public class CampaignsPage extends BasePage{
@@ -324,7 +324,7 @@ public class CampaignsPage extends BasePage{
 		String startDateFormat = DateFormats.dateFormat(langCode, contryCode).format(startDate);
 		String tableReleaseDateNtime= dateNtime.getText();
 		if(tableReleaseDateNtime.contains(startDateFormat)) {
-			Assert.assertTrue("Release date is same as Campaign Start Date", true);
+			Assert.assertTrue(true, "Release date is same as Campaign Start Date");
 		}
 		else	Assert.fail();
 		return tableReleaseDateNtime;

@@ -3,6 +3,7 @@ package com.dac.testcases.CF;
 import org.testng.annotations.Test;
 
 import com.dac.main.Navigationpage;
+import com.dac.main.POM_CF.BaseTest_CF;
 import com.dac.main.POM_CF.CampaignsPage;
 import com.dac.main.POM_CF.CustomerActivityReportPage_RS;
 import com.relevantcodes.extentreports.LogStatus;

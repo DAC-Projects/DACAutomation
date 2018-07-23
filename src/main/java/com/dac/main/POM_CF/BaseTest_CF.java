@@ -1,4 +1,4 @@
-package com.dac.testcases.CF;
+package com.dac.main.POM_CF;
 
 import resources.BaseTest;
 
