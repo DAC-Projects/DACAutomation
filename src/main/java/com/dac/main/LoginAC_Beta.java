@@ -1,11 +1,17 @@
 package com.dac.main;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginAC_Beta {
+	
+	WebDriver driver;
 
 	@FindBy(id="user_username")
 	private WebElement UserNameTB;
@@ -16,8 +22,16 @@ public class LoginAC_Beta {
 	@FindBy(xpath="//*[@type='submit']")
 	private WebElement loginBTN;
 	
+	@FindBy(id="search_email")
+	private WebElement search_email;
+	
+	@FindBy(linkText="Phoenix Dashboard")
+	private WebElement Dashboard;
+	
+	
 	public LoginAC_Beta(WebDriver driver) {
 		PageFactory.initElements(driver, this);
+		this.driver = driver;
 	}
 	
 	public void setUserName(String un) {
@@ -31,4 +45,16 @@ public class LoginAC_Beta {
 	public void clickLogin() {
 		loginBTN.submit();
 	}
+	
+	public void clickDashboardLink() {
+		
+		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(Dashboard));
+		Dashboard.click();
+	}
+	
+	public void findUser(String data) {
+		search_email.sendKeys(data);
+		search_email.sendKeys(Keys.ENTER);
+	}
 }
+

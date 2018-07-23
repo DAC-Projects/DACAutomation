@@ -70,9 +70,8 @@ public class ReadExcel {
 					System.out.println("search key found"+searchKey);
 					break;
 				}else System.out.println("Search key not found"+searchKey);
-				
-				}
 
+				}
 			}
 
 			/* Then read data from the next cell(Testcase name ) return a s a string */

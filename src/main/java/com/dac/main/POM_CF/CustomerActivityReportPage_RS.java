@@ -148,7 +148,7 @@ public class CustomerActivityReportPage_RS extends BasePage{
 		//System.out.println("col_count : "+col_count);
 		String fileName = BasePage.getLastModifiedFile("./downloads");
 		System.out.println("file name : "+fileName);
-		String newfilename = new formatConvert("./downloads/"+fileName).convertFile("./downloads/"+fileName, "xlsx");
+		String newfilename = new formatConvert("./downloads/"+fileName).convertFile("xlsx");
 		new ExcelTestDataHandler("./downloads/"+newfilename, "Sheet0").deleteRows();
 		int xlRowCount=new ExcelTestDataHandler("./downloads/"+newfilename, "Sheet0").getRowCount();
 		//System.out.println("xlRowCount : "+xlRowCount);

@@ -77,7 +77,7 @@ public class BasePage {
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		Transferable contents = clipboard.getContents(null);
 		String eleText = (String) contents.getTransferData(DataFlavor.stringFlavor);
-		System.out.println(eleText);
+		//System.out.println(eleText);
 		return eleText;
 }
 	

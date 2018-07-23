@@ -29,10 +29,8 @@ public class Verify_CreateBrandCampaign extends BaseTest_CF{
 		
 		Navigationpage np=new Navigationpage(driver);
 		np.select_DB_Lang_Link("en", "US");
-		np.select_DB_Lang_Link("de", "DE");
-		np.select_DB_Lang_Link("en", "US");
-		np.select_DB_Lang_Link("en", "US");
-		/*np.clickCampaigns();
+
+		np.clickCampaigns();
 		
 		CampaignsPage cp=new CampaignsPage(driver);		
 		cp.click_CreateCampaignBTN();
@@ -105,7 +103,8 @@ public class Verify_CreateBrandCampaign extends BaseTest_CF{
 		Thread.sleep(3000);
 		newCampaign.uploadEmailTemplate(fileName);
 		
-		newCampaign.uploadCampEmailTemplate("Brand", 13, englishLangColumn);
+		//newCampaign.uploadCampEmailTemplate("Brand", 13, englishLangColumn);
+		newCampaign.getTofieldData();
 		logger.log(LogStatus.INFO, "Uploading Email Template");
 		Utilities.addScreenshot(driver, imgnames.get(3).toString());
 		
@@ -131,13 +130,14 @@ public class Verify_CreateBrandCampaign extends BaseTest_CF{
 		
 		newCampaign.clickStartDatePicker();
 		
-		//newCampaign.verifyLongDateFormat("en", "US");
+		newCampaign.verifyLongDateFormat("en", "US");
 		
 		newCampaign.verifyTimeToolTipText("Brand", 27, englishLangColumn);
 		
 		newCampaign.clickEndDatePicker();
 		
-		//newCampaign.verifyLongDateFormat("en", "US");
+		newCampaign.verifyCampEndDate("en", "US");
+		newCampaign.verifyLongDateFormat("en", "US");
 
 		newCampaign.verifyCampEndDateToolTipText("Brand", 29, englishLangColumn);
 		Utilities.addScreenshot(driver, imgnames.get(6).toString());
@@ -154,7 +154,7 @@ public class Verify_CreateBrandCampaign extends BaseTest_CF{
 		cp.verifyCampTableData("Scheduled", campName, brandName);
 		//System.out.println(cp.getReleaseDateTime());
 		Utilities.addScreenshot(driver, imgnames.get(8).toString());
-		logger.log(LogStatus.INFO, "Verifying the Created Campaign whether displayed in Scheduled campaign Section");*/
+		logger.log(LogStatus.INFO, "Verifying the Created Campaign whether displayed in Scheduled campaign Section");
 		
 		
 	}

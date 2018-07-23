@@ -326,7 +326,7 @@ public class CreateNewCampaignPage extends BasePage{
 	 * @throws InterruptedException */
 	public void selectCampType(int campTypeIndex) throws InterruptedException {
 		Thread.sleep(5000);
-		wait.until(ExpectedConditions.visibilityOf(campaignType));
+		//wait.until(ExpectedConditions.visibilityOf(campaignType));
 		scrollByElement(customerFeedbackBreadCrumb, driver);
 		while(true) {
 			if(campaignType.isDisplayed()) {
@@ -516,10 +516,12 @@ public class CreateNewCampaignPage extends BasePage{
 	
 	public void verifyCampEndDate(String langCode, String countryCode) throws UnsupportedFlavorException, IOException {
 		BaseTest_CF.campEndDate = BasePage.addDays(langCode, countryCode, 30);
-		System.out.println(BaseTest_CF.campEndDate);
+		System.out.println("EndDate : "+BaseTest_CF.campEndDate);
+		String endDatetext = getClipboardContents(scheduledEndDate);
+		System.out.println("copiedEndDate : "+endDatetext);
 		
-		if(BaseTest_CF.campEndDate.equals(getClipboardContents(scheduledEndDate))) {
-			Assert.assertEquals(BaseTest_CF.campEndDate, getClipboardContents(scheduledEndDate));
+		if(BaseTest_CF.campEndDate.equals(endDatetext)) {
+			Assert.assertEquals(BaseTest_CF.campEndDate, endDatetext);
 		}
 		else {
 			Assert.fail();
@@ -616,6 +618,7 @@ public class CreateNewCampaignPage extends BasePage{
 	public void clickCreateCampBTN() {
 		scrollByElement(createCampaignBTN, driver);
 		createCampaignBTN.click();
+		//action.moveToElement(createCampaignBTN).click(createCampaignBTN).perform();
 	}
 	
 	public void clickViewAllCampaignBTN() throws InterruptedException {
@@ -778,6 +781,7 @@ public class CreateNewCampaignPage extends BasePage{
 	}
 	
 	public void getTofieldData() throws UnsupportedFlavorException, IOException {
+		scrollByElement(toFieldTB, driver);
 		BaseTest_CF.campTofield = getClipboardContents(toFieldTB);
 	}
 	

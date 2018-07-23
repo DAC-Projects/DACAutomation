@@ -16,6 +16,18 @@ public interface IAutoconst {
 	
 	String CONFIG_PATH="./data.properties";
 	
+	// Auth centre variables
+	String url ="http://dac-map-beta.azurewebsites.net/#",
+	 email="rnair@dacgroup.com",
+	 password="DACQA123";
+
+	//account credentials
+	String baseUrl="http://staging.manage.dacgroup.com:82/accounts/";
+	String[] competitiveAnalysis = {baseUrl+"competitive-analysis-test-account-beta-1", "mobittah98@yahoo.ca"};
+	String[] deepfieldAccount = {baseUrl+"deepfield-software-incorporated-beta", "bmobit@dacgroup.com"};
+			
+			
+	
 	
 	
 
