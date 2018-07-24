@@ -25,7 +25,7 @@ public class VerifyCampReportsData extends BaseTest {
 		
 		ReportsPage_RS rp=new ReportsPage_RS(driver);
 		
-		rp.getClipboardContents();
+		rp.getFromDate();
 		/*rp.overviewSectionCountData();
 		
 		rp.getReviewSubmittedGraphText();*/

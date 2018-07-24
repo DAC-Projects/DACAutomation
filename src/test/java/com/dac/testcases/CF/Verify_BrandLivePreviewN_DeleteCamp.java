@@ -3,6 +3,7 @@ package com.dac.testcases.CF;
 import org.testng.annotations.Test;
 
 import com.dac.main.Navigationpage;
+import com.dac.main.POM_CF.BaseTest_CF;
 import com.dac.main.POM_CF.CampaignLivePreviewPage;
 import com.dac.main.POM_CF.CampaignsPage;
 import com.relevantcodes.extentreports.LogStatus;
@@ -10,7 +11,7 @@ import com.relevantcodes.extentreports.LogStatus;
 import resources.BaseTest;
 import resources.Utilities;
 
-public class Verify_BrandLivePreviewN_DeleteCamp extends BaseTest{
+public class Verify_BrandLivePreviewN_DeleteCamp extends BaseTest_CF{
 	
 	@Test(dependsOnMethods= {"com.dac.testcases.CF.Verify_CreateBrandCampaign.createBrandCamp_Test"})
 	public void livePreviewNDeleteTest() throws Exception {
@@ -20,7 +21,7 @@ public class Verify_BrandLivePreviewN_DeleteCamp extends BaseTest{
 		
 		CampaignsPage cp=new CampaignsPage(driver);
 		
-		cp.search_ScheduledCampaign(CampName);
+		cp.search_ScheduledCampaign(campName);
 		Utilities.addScreenshot(driver, imgnames.get(0).toString());
 		logger.log(LogStatus.INFO, "Checking the Created campaign displaying in Scheduled section");
 		

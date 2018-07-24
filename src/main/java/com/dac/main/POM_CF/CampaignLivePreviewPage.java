@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import com.dac.main.BasePage;
 
@@ -23,6 +24,18 @@ public class CampaignLivePreviewPage extends BasePage{
 		action=new Actions(driver);
 		PageFactory.initElements(driver, this);
 	}
+	
+	/*@FindBy(xpath="//span[contains(@ng-bind,'IntroBanner')]")
+	private WebElement emailViewBannerText;*/
+	
+	@FindBy(xpath="//span[contains(@ng-bind,'IntroBanner')]")
+	private WebElement emailViewBannerText;
+	
+	@FindBy(xpath="//div[contains(@ng-bind-html,'Body')]")
+	private WebElement emailViewBodyText;
+	
+	@FindBy(xpath="//span[contains(@ng-bind-html,'Signature')]")
+	private WebElement emailViewSignatureText;
 	
 	@FindBy(xpath="//button[text()='1']")
 	private WebElement emailViewPageBTN;
@@ -41,6 +54,20 @@ public class CampaignLivePreviewPage extends BasePage{
 	
 	@FindBy(xpath="//b[text()='Close Preview']")
 	private WebElement closePreviewBTN;
+	
+	public void verifyemailViewData() {
+		clickemailViewBTN();
+		String[] emailviewdata = {emailViewBannerText.getText(), emailViewBodyText.getText(), emailViewSignatureText.getText() };
+		String[] storedpreviewData = {BaseTest_CF.campBanner, BaseTest_CF.campBodyCopy, BaseTest_CF.campSignature};
+		for(int i=0; i<3;i++) {
+			if(emailviewdata[i].equals(storedpreviewData[i])) {
+				Assert.assertEquals(emailviewdata[i], storedpreviewData[i]);
+			}
+			else {
+				Assert.fail();
+			}
+		}
+	}
 	
 	public void clickemailViewBTN() {
 		scrollByElement(emailViewPageBTN, driver);

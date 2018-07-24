@@ -2,91 +2,201 @@ package resources;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 public class DateFormats {
+	
+	public static String shortDate(String langCode, String contryCode) {
+		String shortDateFromat = "";
+		
+		String langConCode = langCode+"_"+contryCode;
+		
+		switch(langConCode) {
+		
+		case "de_DE" : shortDateFromat = DateFormats.shortDate_de_DE();
+					   break;
+					   
+		case "en_US" : shortDateFromat = DateFormats.shortDate_en_US();
+		   			   break;
+		   			   
+		case "es_ES" : shortDateFromat = DateFormats.shortDate_es_ES();
+		   			   break;
+		   			   
+		case "es_MX" : shortDateFromat = DateFormats.shortDate_es_MX();
+		   			   break;
+		   			   
+		case "fr_CA" : shortDateFromat = DateFormats.shortDate_fr_CA();
+		   			   break;
+		   			   
+		case "fr_FR" : shortDateFromat = DateFormats.shortDate_fr_FR();
+		   			   break;
+		   			   
+		case "it_IT" : shortDateFromat = DateFormats.shortDate_it_IT();
+		   			   break;
+		   			   
+		case "sv_SE" : shortDateFromat = DateFormats.shortDate_sv_SE();
+					   break;
+					 
+		default		 : System.out.println("Selected wrong Language Code or Contry Code please check and Execute once again");
+		}
+		
+		System.out.println(shortDateFromat);
+		
+		return shortDateFromat;
+	}
+	
+	public static String longDate(String langCode, String contryCode) {
+		String longDateFromat = "";
+		
+		String langConCode = langCode+"_"+contryCode;
+		
+		switch(langConCode) {
+		
+		case "de_DE" : longDateFromat = DateFormats.longDate_de_DE();
+					   break;
+					   
+		case "en_US" : longDateFromat = DateFormats.longDate_en_US();
+		   			   break;
+		   			   
+		case "es_ES" : longDateFromat = DateFormats.longDate_es_ES();
+		   			   break;
+		   			   
+		case "es_MX" : longDateFromat = DateFormats.longDate_es_MX();
+		   			   break;
+		   			   
+		case "fr_CA" : longDateFromat = DateFormats.longDate_fr_CA();
+		   			   break;
+		   			   
+		case "fr_FR" : longDateFromat = DateFormats.longDate_fr_FR();
+		   			   break;
+		   			   
+		case "it_IT" : longDateFromat = DateFormats.longDate_it_IT();
+		   			   break;
+		   			   
+		case "sv_SE" : longDateFromat = DateFormats.longDate_sv_SE();
+					   break;
+					 
+		default		 : System.out.println("Selected wrong Language Code or Contry Code please check and Execute once again");
+		}
+		
+		System.out.println(longDateFromat);
+		
+		return longDateFromat;
+	}
 
-	public static String shortDate_en_US(){
+	private static String shortDate_en_US(){
 		String engDateFormat = new SimpleDateFormat("MM/dd/yyyy").format(new Date());
 		return engDateFormat;
 	}
 	
-	public static String shortDate_de_DE(){
+	private static String shortDate_de_DE(){
 		String germanDateFormat = DateFormat.getDateInstance(DateFormat.SHORT, new Locale("de","DE")).format(new Date());
 		return germanDateFormat;
 	}
 	
-	public static String shortDate_es_ES(){
+	private static String shortDate_es_ES(){
 		String spanish_SpainFormat = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 		return spanish_SpainFormat;
 	}
 	
-	public static String shortDate_es_MX(){
+	private static String shortDate_es_MX(){
 		return shortDate_es_ES();
 	}
 	
-	public static String shortDate_fr_CA(){
+	private static String shortDate_fr_CA(){
 		String french_CanadaFormat = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		return french_CanadaFormat;
 	}
 	
-	public static String shortDate_fr_FR(){
+	private static String shortDate_fr_FR(){
 		String french_FranceFormat = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 		return french_FranceFormat;
 	}
 	
-	public static String shortDate_it_IT(){
+	private static String shortDate_it_IT(){
 		String italianFormat = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 		return italianFormat;
 	}
 	
-	public static String shortDate_sv_SE(){
+	private static String shortDate_sv_SE(){
 		String swedishDateFormat = DateFormat.getDateInstance(DateFormat.SHORT, new Locale("sv","SE")).format(new Date());
 		return swedishDateFormat;
 	}	
 	
 	//----------------------------------- Long Date Formats ---------------------------------------------------
 	
-	public static String longDate_de_DE(){
+	private static String longDate_de_DE(){
 		String germanDateFormat = DateFormat.getDateInstance(DateFormat.FULL, new Locale("de","DE")).format(new Date());
 		return germanDateFormat;
 	}
 	
-	public static String longDate_en_US(){
+	private static String longDate_en_US(){
 		String englishFormat = DateFormat.getDateInstance(DateFormat.FULL, new Locale("en","US")).format(new Date());
 		return englishFormat;
 	}
 	
-	public static String longDate_es_ES(){
+	private static String longDate_es_ES(){
 		String engCF_LDatepattern = "EEEE, MMMM d yyyy";
 		String spanish_SpainDate =new SimpleDateFormat(engCF_LDatepattern, new Locale("es", "ES")).format(new Date());
 		return spanish_SpainDate;
 	}
 	
-	public static String longDate_es_MX(){
+	private static String longDate_es_MX(){
 		return longDate_es_ES();
 	}
 	
-	public static String longDate_fr_CA(){
+	private static String longDate_fr_CA(){
 		String french_CanadaFormat = DateFormat.getDateInstance(DateFormat.FULL, new Locale("fr","CA")).format(new Date());
 		return french_CanadaFormat;
 	}
 	
-	public static String longDate_fr_FR() {
+	private static String longDate_fr_FR() {
 		return longDate_fr_CA();
 	}
 	
-	public static String longDate_it_IT(){
+	private static String longDate_it_IT(){
 		String italianFormat = DateFormat.getDateInstance(DateFormat.FULL, new Locale("it","IT")).format(new Date());
 		return italianFormat;
 	}
 	
-	public static String longDate_sv_SE(){
+	private static String longDate_sv_SE(){
 		String engCF_LDatepattern = "EEEE d MMMM yyyy";
 		String swedishDate =new SimpleDateFormat(engCF_LDatepattern, new Locale("sv", "SE")).format(new Date());
 		return swedishDate;
 	}	
+	
+	public static DateFormat dateFormat(String langCode, String contryCode) {
+		
+		DateFormat dateFormat;
+		
+		String langConCode = langCode+"_"+contryCode;
+		
+		switch(langConCode) {
+		
+		case "de_DE" : dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, new Locale("de","DE"));
+					   break;
+					   
+		case "es_MX" : 
+		case "fr_FR" : 
+		case "it_IT" : 
+		case "es_ES" : dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+		   			   break;
+		   			   
+		case "fr_CA" : dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		   			   break;
+		   			   
+		case "sv_SE" : dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, new Locale("sv","SE"));
+					   break;
+					 
+		default		 : //System.out.println("Selected wrong Language Code or Contry Code please check and Execute once again");
+		case "en_US" : dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		   			   break;  
+		}
+		
+		return dateFormat;
+	}
 	
 	/*public static void main(String[] args) {
 		System.out.println(longDate_en_US());

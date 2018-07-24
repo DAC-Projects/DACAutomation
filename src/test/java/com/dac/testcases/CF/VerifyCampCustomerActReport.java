@@ -3,6 +3,7 @@ package com.dac.testcases.CF;
 import org.testng.annotations.Test;
 
 import com.dac.main.Navigationpage;
+import com.dac.main.POM_CF.BaseTest_CF;
 import com.dac.main.POM_CF.CampaignsPage;
 import com.dac.main.POM_CF.CustomerActivityReportPage_RS;
 import com.relevantcodes.extentreports.LogStatus;
@@ -10,7 +11,7 @@ import com.relevantcodes.extentreports.LogStatus;
 import resources.BaseTest;
 import resources.Utilities;
 
-public class VerifyCampCustomerActReport extends BaseTest{
+public class VerifyCampCustomerActReport extends BaseTest_CF{
 
 	@Test
 	public void campCustomerActReport_Test() throws Exception {
@@ -19,8 +20,6 @@ public class VerifyCampCustomerActReport extends BaseTest{
 		np.clickCampaigns();
 		
 		CampaignsPage cp=new CampaignsPage(driver);
-		
-		String campName = CampName;
 		
 		cp.search_ProcessedCampaign("Test MLC Campaign Beta");
 		Utilities.addScreenshot(driver, imgnames.get(0).toString());

@@ -3,10 +3,13 @@ package com.dac.main.POM_CF;
 import java.awt.AWTException;
 
 import java.awt.Robot;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -38,9 +41,6 @@ public class CreateNewCampaignPage extends BasePage{
 	Actions action;
 	JavascriptExecutor js;
 	WebDriverWait wait;
-	public static Date startDate, targetDate;
-	public static String startDateFormat, endDateFormat;
-	static SimpleDateFormat engDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	
 	public CreateNewCampaignPage(WebDriver driver) throws AWTException {
 		
@@ -150,6 +150,9 @@ public class CreateNewCampaignPage extends BasePage{
 	
 	@FindBy(name="startdate")
 	private WebElement scheduledStartDate;
+	
+	@FindBy(name="enddate")
+	private WebElement scheduledEndDate;
 	
 	@FindBy(name="time")
 	private WebElement scheduledTime;
@@ -322,7 +325,7 @@ public class CreateNewCampaignPage extends BasePage{
 	 * @throws InterruptedException */
 	public void selectCampType(int campTypeIndex) throws InterruptedException {
 		Thread.sleep(5000);
-		wait.until(ExpectedConditions.visibilityOf(campaignType));
+		//wait.until(ExpectedConditions.visibilityOf(campaignType));
 		scrollByElement(customerFeedbackBreadCrumb, driver);
 		while(true) {
 			if(campaignType.isDisplayed()) {
@@ -444,68 +447,84 @@ public class CreateNewCampaignPage extends BasePage{
 		campaignSenderName.sendKeys(campSenderName+" - "+getDate());
 	}
 	
-	public void setCampSubject(String sheet, int row, int column) throws Exception {
+	public String setCampSubject(String sheet, int row, int column) throws Exception {
 		scrollByElement(subjectText, driver);
-		String campSubject = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
-		campaignSubject.sendKeys(campSubject+" - "+getDate());
+		String campSubject = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column)+" - "+getDate();
+		campaignSubject.sendKeys(campSubject);
+		return campSubject;
 	}
 	
-	public void setCampBanner(String sheet, int row, int column) throws Exception {
+	public String setCampBanner(String sheet, int row, int column) throws Exception {
 		scrollByElement(subjectText, driver);
-		String campIntroBanner = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
-		campaignIntroBannerTB.sendKeys(campIntroBanner+" - "+getDate());
+		String campIntroBanner = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column)+" - "+getDate();
+		campaignIntroBannerTB.sendKeys(campIntroBanner);
+		return campIntroBanner;
 	}
 	
-	public void setCampBodyCopy(String sheet, int row, int column) throws Exception {
+	public String setCampBodyCopy(String sheet, int row, int column) throws Exception {
 		scrollByElement(subjectText, driver);
 		String campBodyCopy = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		campaignBodyCopyTB.sendKeys(campBodyCopy);
+		return campBodyCopy;
 	}
 	
 	/** 
 	 * @throws Exception 
 	 * @campSignature : To enter the campaign Signature data into Signature Text Field   */
-	public void setCampSignature(String sheet, int row, int column) throws Exception {
+	public String setCampSignature(String sheet, int row, int column) throws Exception {
 		scrollByElement(signatureHeading, driver);
 		String campSignature = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		campaignSignature.sendKeys(campSignature);
+		return campSignature;
 	}
 	
 	public void setContactInfo(int column) throws Exception {
 		
 		scrollByElement(signatureHeading, driver);
-		String addressL1 = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(20, column);
-		String addressL2 = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(21, column);
-		String city = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(22, column);
-		String contactInfoSTProv = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(23, column);
-		String zipCode = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(24, column);
-		String phoneNum = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(25, column);
-		contactAddressLine1.sendKeys(addressL1);
-		contactAddressLine2.sendKeys(addressL2);
-		contactInfoBrandCity.sendKeys(city);
-		contactInfoBrandStProv.sendKeys(contactInfoSTProv);
-		contactInfoZipCode.sendKeys(zipCode);
-		contactInfoPhoneNumber.sendKeys(phoneNum);
+		BaseTest_CF.campAddressL1 = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(20, column);
+		BaseTest_CF.campAddressL2 = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(21, column);
+		BaseTest_CF.city = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(22, column);
+		BaseTest_CF.STorPR = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(23, column);
+		BaseTest_CF.postalCode = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(24, column);
+		BaseTest_CF.phoneNo = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(25, column);
+		contactAddressLine1.sendKeys(BaseTest_CF.campAddressL1);
+		contactAddressLine2.sendKeys(BaseTest_CF.campAddressL2);
+		contactInfoBrandCity.sendKeys(BaseTest_CF.city);
+		contactInfoBrandStProv.sendKeys(BaseTest_CF.STorPR);
+		contactInfoZipCode.sendKeys(BaseTest_CF.postalCode);
+		contactInfoPhoneNumber.sendKeys(BaseTest_CF.phoneNo);
 	}
 	
 	
 	//works for English DashBoard Language
-	public void setScheduledStartDate() throws AWTException {
-		
+	public void setScheduledStartDate(String langCode, String countryCode) throws AWTException {
 		scrollByElement(scheduledSection, driver);
-		//String campStartDate = ExcelTestDataHandler.getData(IAutoconst.RS_XL_PATH, sheet, row, column);
-		
-		startDate = new Date();
-		targetDate = DateUtils.addDays(startDate, 30);
-		
-		startDateFormat = engDateFormat.format(startDate);
-		endDateFormat = engDateFormat.format(targetDate);
-		System.out.println("StartDate : "+ startDateFormat + "\n"+ "End Date : "+endDateFormat);
-		
-		scheduledStartDate.sendKeys(startDateFormat);
+		BaseTest_CF.campStartDate = DateFormats.dateFormat(langCode, countryCode).format(new Date());
+
+		System.out.println("StartDate : "+ BaseTest_CF.campStartDate);
+		scheduledStartDate.sendKeys(BaseTest_CF.campStartDate);
 		
 		Robot robot = new Robot();
 		robot.keyPress(KeyEvent.VK_ENTER);
+	}
+	
+/*	public void scheduledCampDates() throws UnsupportedFlavorException, IOException {
+		getClipboardContents(scheduledStartDate);
+		getClipboardContents(scheduledEndDate);
+	}*/
+	
+	public void verifyCampEndDate(String langCode, String countryCode) throws UnsupportedFlavorException, IOException {
+		BaseTest_CF.campEndDate = BasePage.addDays(langCode, countryCode, 30);
+		System.out.println("EndDate : "+BaseTest_CF.campEndDate);
+		String endDatetext = getClipboardContents(scheduledEndDate);
+		System.out.println("copiedEndDate : "+endDatetext);
+		
+		if(BaseTest_CF.campEndDate.equals(endDatetext)) {
+			Assert.assertEquals(BaseTest_CF.campEndDate, endDatetext);
+		}
+		else {
+			Assert.fail();
+		}
 	}
 	
 	
@@ -529,50 +548,11 @@ public class CreateNewCampaignPage extends BasePage{
 		
 		String selStartDateLFormat = driver.findElement(By.xpath("//*[contains(@ng-bind,'StartDateInfoLocale')]")).getText();
 		
-		String date = "";
-		
-		String langConCode = langCode+"_"+contryCode;
-		
-		switch(langConCode) {
-		
-		case "de_DE" : date = DateFormats.longDate_de_DE();
-					   break;
-					   
-		case "en_US" : date = DateFormats.longDate_en_US();
-		   			   break;
-		   			   
-		case "es_ES" : date = DateFormats.longDate_es_ES();
-		   			   break;
-		   			   
-		case "es_MX" : date = DateFormats.longDate_es_MX();
-		   			   break;
-		   			   
-		case "fr_CA" : date = DateFormats.longDate_fr_CA();
-		   			   break;
-		   			   
-		case "fr_FR" : date = DateFormats.longDate_fr_FR();
-		   			   break;
-		   			   
-		case "it_IT" : date = DateFormats.longDate_it_IT();
-		   			   break;
-		   			   
-		case "sv_SE" : date = DateFormats.longDate_sv_SE();
-					   break;
-					 
-		default		 : System.out.println("Selected wrong Language Code or Contry Code please check and Execute once again");
-		}
-		
-		System.out.println(date);
+		String date = DateFormats.longDate(langCode, contryCode);
 		
 		if(selStartDateLFormat.equals(date) & lDate.equals(date)) {
 			Assert.assertTrue(true, "Long Dates are displaying in there Locale Format and in Respective Language");
 		}else Assert.assertTrue(false, "Long Dates are either Not displaying in there Locale Format or in Respective Language");
-	}
-	
-	public void verifyEndDate() {
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-		String endDateFormat = sdf.format(targetDate);
-		System.out.println("selected Default Campaign End Date is : " + endDateFormat);
 	}
 	
 	public void clickStartDatePicker() throws InterruptedException {
@@ -637,6 +617,7 @@ public class CreateNewCampaignPage extends BasePage{
 	public void clickCreateCampBTN() {
 		scrollByElement(createCampaignBTN, driver);
 		createCampaignBTN.click();
+		//action.moveToElement(createCampaignBTN).click(createCampaignBTN).perform();
 	}
 	
 	public void clickViewAllCampaignBTN() throws InterruptedException {
@@ -796,6 +777,11 @@ public class CreateNewCampaignPage extends BasePage{
 		scrollByElement(toFieldTB, driver);
 		String email = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		toFieldTB.sendKeys(email);
+	}
+	
+	public void getTofieldData() throws UnsupportedFlavorException, IOException {
+		scrollByElement(toFieldTB, driver);
+		BaseTest_CF.campTofield = getClipboardContents(toFieldTB);
 	}
 	
 	public void clickUpdateCampaignBTN() {

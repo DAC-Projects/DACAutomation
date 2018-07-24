@@ -45,7 +45,6 @@ public class VisibilityTest extends BaseTest {
 	
 	ReadExcel excel; 
 	
-	
 	 @Test(priority=1)
 	 public void veriy_DashboardKPIScore() throws Exception {
 	 try {

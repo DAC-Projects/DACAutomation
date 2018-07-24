@@ -6,18 +6,20 @@
 <listener class-name="resources.IntegrationTestListener"></listener>
 </listeners>
 
-  	<!-- 	<test name="Customer_FeedBack">
-	<parameter name="testcasesfile" value="Customer_FeedBack.json"></parameter>
-	  <parameter name="browser" value="Chrome"/>
-	    <classes>
-	    	<class name= "com.dac.testcases.CF.Verify_CreateBrandCampaign" />  
-	  	<class name= "com.dac.testcases.CF.Verify_BrandLivePreviewN_DeleteCamp" />
-		    	 <class name= "com.dac.testcases.CF.Verify_CreateLocCampaign" />
-		    	<class name= "com.dac.testcases.CF.Verify_LocLivePreviewN_DeleteCamp" /> 
-		    	<class name= "com.dac.testcases.CF.VerifyCreate_DraftBrandCamp" />
-		    	<class name= "com.dac.testcases.CF.VerifyCreate_DraftLocCamp" />  
-	    </classes> 
-	  </test> -->
+
+<test name="Customer_FeedBack">
+<parameter name="testcasesfile" value="Customer_FeedBack.json"></parameter>
+  <parameter name="browser" value="Chrome"/>
+    <classes>
+    	<class name= "com.dac.testcases.CF.Verify_CreateBrandCampaign" />
+    	<!--  <class name= "com.dac.testcases.CF.Verify_BrandLivePreviewN_DeleteCamp" />
+    	<class name= "com.dac.testcases.CF.Verify_CreateLocCampaign" />
+    	<class name= "com.dac.testcases.CF.Verify_LocLivePreviewN_DeleteCamp" />
+    	<class name= "com.dac.testcases.CF.VerifyCreate_DraftBrandCamp" />
+    	<class name= "com.dac.testcases.CF.VerifyCreate_DraftLocCamp" />  -->
+    </classes>
+  </test>
+
 
   
  
@@ -27,6 +29,6 @@
     <classes>
     	<class name= "com.dac.testcases.CA.CA_test" />
  	</classes>
-  </test> <!-- Test -->
+  </test> 
   
-</suite> <!-- Suite -->
+</suite>

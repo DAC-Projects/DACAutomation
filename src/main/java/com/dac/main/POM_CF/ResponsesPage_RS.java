@@ -1,5 +1,7 @@
 package com.dac.main.POM_CF;
 
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ import org.testng.asserts.SoftAssert;
 
 import com.dac.main.BasePage;
 
+import resources.DateFormats;
 import resources.ExcelTestDataHandler;
 import resources.formatConvert;
 
@@ -58,6 +61,9 @@ public class ResponsesPage_RS extends BasePage{
 	
 	@FindBy(id="dateFrom")
 	private WebElement fromDate;
+	
+	@FindBy(id="dateTo")
+	private WebElement toDate;
 	
 	@FindBy(id="btnApply")
 	private WebElement applyFilter;
@@ -129,6 +135,52 @@ public class ResponsesPage_RS extends BasePage{
 	private WebElement paginationNext;
 	
 	static private int numOfReviews = 0;	
+	
+	public void verifyToDate(String langCode, String contryCode) throws UnsupportedFlavorException, IOException  {
+		String toDateUI = getClipboardContents(toDate);
+		String todayDate = DateFormats.shortDate(langCode, contryCode);
+		if (toDateUI.equals(todayDate)) {
+			Assert.assertEquals(toDateUI, todayDate);
+		}
+		else if(toDateUI.equals(BaseTest_CF.campEndDate)){
+			Assert.assertEquals(toDateUI, BaseTest_CF.campEndDate);
+		}
+		else {
+			Assert.fail();
+		}
+	}
+	
+	public void verifyUnarchivedToDate(String langCode, String contryCode) throws UnsupportedFlavorException, IOException {
+		String toDateUI = getClipboardContents(toDate);
+		String todayDate = DateFormats.shortDate(langCode, contryCode);
+		if (toDateUI.equals(todayDate)) {
+			Assert.assertEquals(toDateUI, todayDate);
+		}
+		else {
+			Assert.fail();
+		}
+	}
+	
+	public void verifyUnarchivedFromDate(String langCode, String countryCode) throws UnsupportedFlavorException, IOException {
+		String fromDateUI = getClipboardContents(fromDate);
+		String minus30Date = BasePage.minusDays(langCode, countryCode, 30);
+		if (fromDateUI.equals(minus30Date)) {
+			Assert.assertEquals(fromDateUI, minus30Date);
+		}
+		else {
+			Assert.fail();
+		}
+	}
+	
+	public void verifyFromDate(String langCode, String contryCode) throws UnsupportedFlavorException, IOException  {
+		String fromDateUI = getClipboardContents(fromDate);
+		if (fromDateUI.equals(BaseTest_CF.campStartDate)) {
+			Assert.assertEquals(fromDateUI, BaseTest_CF.campEndDate);
+		}
+		else {
+			Assert.fail();
+		}
+	}
 	
 	/**
 	 * In this method we are verifying number of reviews in Average Star Rating with Number of Reveiws of Table data available
@@ -263,7 +315,6 @@ public class ResponsesPage_RS extends BasePage{
 		else {
 			System.out.println("No Data Available in Review Table");
 		}
-		
 	}
 	
 	public void verifyOrderOfTableHeader(String[] tableHeaderData) {
@@ -282,6 +333,7 @@ public class ResponsesPage_RS extends BasePage{
     			Assert.assertTrue(false, "Table Header Data is NOT in Order");
     		}
 		}
+
 	}
 	
 	public void compareXlData_UIdata() throws Exception {
@@ -291,7 +343,7 @@ public class ResponsesPage_RS extends BasePage{
 		//System.out.println("col_count : "+col_count);
 		String fileName = BasePage.getLastModifiedFile("./downloads");
 		System.out.println("file name : "+fileName);
-		String newfilename = new formatConvert("./downloads/"+fileName).convertFile("./downloads/"+fileName, "xlsx");
+		String newfilename = new formatConvert("./downloads/"+fileName).convertFile("xlsx");
 		new ExcelTestDataHandler("./downloads/"+newfilename, "Sheet0").deleteRows();
 		int xlRowCount=new ExcelTestDataHandler("./downloads/"+newfilename, "Sheet0").getRowCount();
 		//System.out.println("xlRowCount : "+xlRowCount);
@@ -417,4 +469,5 @@ public class ResponsesPage_RS extends BasePage{
 	    System.out.println("sumOfAllStars : "+ sumOfAllStars);
 	    System.out.println("totalStarCount : "+totalStarCount);
 	}
+	
 }

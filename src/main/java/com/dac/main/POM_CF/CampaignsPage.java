@@ -1,5 +1,6 @@
 package com.dac.main.POM_CF;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -13,10 +14,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import com.dac.main.BasePage;
 
-import junit.framework.Assert;
+import resources.DateFormats;
 
 public class CampaignsPage extends BasePage{
 
@@ -155,7 +157,7 @@ public class CampaignsPage extends BasePage{
 	public void click_CreateCampaignBTN() throws InterruptedException {
 
 		 wait.until(ExpectedConditions.visibilityOf(CreateCampaignBTN));
-		Thread.sleep(3000);
+		Thread.sleep(4000);
 		//CreateCampaignBTN.click();
 		action.moveToElement(CreateCampaignBTN).click(CreateCampaignBTN).perform();
 	}
@@ -316,13 +318,13 @@ public class CampaignsPage extends BasePage{
 	}
 	
 	//Release Date should be Start date
-	public String getReleaseDateTime() {
+	public String getReleaseDateTime(String langCode, String contryCode) {
 		WebElement dateNtime = driver.findElement(By.xpath("//td[4]//span[@class='ng-binding']"));
 		Date startDate = new Date();
-		String startDateFormat = engDateFormat.format(startDate);
+		String startDateFormat = DateFormats.dateFormat(langCode, contryCode).format(startDate);
 		String tableReleaseDateNtime= dateNtime.getText();
 		if(tableReleaseDateNtime.contains(startDateFormat)) {
-			Assert.assertTrue("Release date is same as Campaign Start Date", true);
+			Assert.assertTrue(true, "Release date is same as Campaign Start Date");
 		}
 		else	Assert.fail();
 		return tableReleaseDateNtime;
@@ -353,9 +355,12 @@ public class CampaignsPage extends BasePage{
 	
 	/** 
 	 * This method used to click Details link of Particular Processed campaign
-	 * note:  Before calling this method you should invoke search_ProcessedCampaign method */
-	public void clickResponsesLink() {
+	 * note:  Before calling this method you should invoke search_ProcessedCampaign method 
+	 * @throws InterruptedException */
+	public void clickResponsesLink() throws InterruptedException {
 		scrollByElement(processedCampSection, driver);
+		wait.until(ExpectedConditions.visibilityOf(processedCampResponsesLink));
+		Thread.sleep(30000);
 		try {
 			processedCampResponsesLink.click();
 		}

@@ -6,6 +6,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.dac.main.Navigationpage;
+import com.dac.main.POM_CF.BaseTest_CF;
 import com.dac.main.POM_CF.CampaignsPage;
 import com.dac.main.POM_CF.CreateNewCampaignPage;
 import com.relevantcodes.extentreports.LogStatus;
@@ -15,7 +16,7 @@ import resources.ExcelTestDataHandler;
 import resources.IAutoconst;
 import resources.Utilities;
 
-public class Verify_CreateMLCCampaign extends BaseTest{
+public class Verify_CreateMLCCampaign extends BaseTest_CF{
 	
 	@Test(enabled=true)
 	public void createMLCCamp_Test() throws Exception {
@@ -41,7 +42,7 @@ public class Verify_CreateMLCCampaign extends BaseTest{
 		Utilities.addScreenshot(driver, imgnames.get(0).toString());
 		logger.log(LogStatus.INFO, "verifying the Existing Campaign tool tip is it in "+campLang+" lang and text of it");
 		
-		CampName = newCampaign.setCampaignName("MLC", 6, langColumn);
+		campName = newCampaign.setCampaignName("MLC", 6, langColumn);
 		
 		newCampaign.selectMLCs("BN- Business");
 		newCampaign.selectMLCs("DF - Germany");
@@ -100,7 +101,7 @@ public class Verify_CreateMLCCampaign extends BaseTest{
 		
 		newCampaign.setCampSignature("MLC",18 , langColumn);
 		
-		newCampaign.setScheduledStartDate();
+		newCampaign.setScheduledStartDate("en", "US");
 		
 		newCampaign.clickStartDatePicker();
 		
@@ -118,7 +119,7 @@ public class Verify_CreateMLCCampaign extends BaseTest{
 		
 		newCampaign.clickViewAllCampaignBTN();	
 		
-		cp.verifyCampName("Scheduled", CampName);
+		cp.verifyCampName("Scheduled", campName);
 		Utilities.addScreenshot(driver, imgnames.get(7).toString());
 		logger.log(LogStatus.INFO, "Verifying the Created Campaign whether displayed in Sceduled campaign Section");
 	}

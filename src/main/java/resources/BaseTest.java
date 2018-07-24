@@ -75,7 +75,6 @@ public abstract class BaseTest implements IAutoconst {
 	private ReadExcel re;
 	private CreateEvidence ce;
 	private String testName;
-	public static String CampName = "";
 	public static String testcasefile;
 	public static String className;
 	public static String id;
@@ -115,11 +114,6 @@ public abstract class BaseTest implements IAutoconst {
 			parent = report.startTest("Testcases for :"+ testContext.getName());	
 			this.testcasefile= testcasesfile;
 			this.testName = testContext.getName();
-			
-			
-			
-
-
 	}
 	
 	

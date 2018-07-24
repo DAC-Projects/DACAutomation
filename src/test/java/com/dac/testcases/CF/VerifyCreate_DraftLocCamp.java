@@ -6,6 +6,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.dac.main.Navigationpage;
+import com.dac.main.POM_CF.BaseTest_CF;
 import com.dac.main.POM_CF.CampaignsPage;
 import com.dac.main.POM_CF.CreateNewCampaignPage;
 import com.relevantcodes.extentreports.LogStatus;
@@ -15,7 +16,7 @@ import resources.ExcelTestDataHandler;
 import resources.IAutoconst;
 import resources.Utilities;
 
-public class VerifyCreate_DraftLocCamp extends BaseTest{
+public class VerifyCreate_DraftLocCamp extends BaseTest_CF{
 	
 	@Test(enabled=true)
 	public void createLocCamp_Test() throws Exception {
@@ -41,7 +42,7 @@ public class VerifyCreate_DraftLocCamp extends BaseTest{
 		Utilities.addScreenshot(driver, imgnames.get(0).toString());
 		logger.log(LogStatus.INFO, "verifying the tool tip lang and text of it");
 		
-		CampName = newCampaign.setCampaignName("Location", 6, englishLangColumn);
+		campName = newCampaign.setCampaignName("Location", 6, englishLangColumn);
 		
 		newCampaign.selectCampaignLoc(0, englishLangColumn);
 		
@@ -86,7 +87,7 @@ public class VerifyCreate_DraftLocCamp extends BaseTest{
 		
 		newCampaign.setCampSignature("Location",18 , englishLangColumn);
 		
-		newCampaign.setScheduledStartDate();
+		newCampaign.setScheduledStartDate("en", "US");
 		
 		newCampaign.clickEndDatePicker();
 		
@@ -100,7 +101,7 @@ public class VerifyCreate_DraftLocCamp extends BaseTest{
 		
 		newCampaign.clickViewAllCampaignBTN();	
 		
-		cp.verifyCampName("Draft", CampName);
+		cp.verifyCampName("Draft", campName);
 		Utilities.addScreenshot(driver, imgnames.get(7).toString());
 		logger.log(LogStatus.INFO, "Verifying the Created Campaign whether displayed in Sceduled campaign Section");
 		

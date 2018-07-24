@@ -16,7 +16,7 @@ public class VerifyCampResponsesData extends BaseTest{
 	@Test
 	public void campResponsesData_Test() throws Exception {
 	
-		String CampName = "Test MLC Spanish (Mexico)";
+		String CampName = "Test MLC unsubscribe functionality";
 		
 		Navigationpage np=new Navigationpage(driver);
 		np.clickCampaigns();
@@ -33,9 +33,9 @@ public class VerifyCampResponsesData extends BaseTest{
 
 		ResponsesPage_RS rprs=new ResponsesPage_RS(driver);
 		
-/*		rprs.getFromDate();*/
+		rprs.verifyToDate("en", "US");
 		
-		rprs.selectCamp("All Unarchived Campaigns");
+		/*rprs.selectCamp("All Unarchived Campaigns");
 		rprs.clickApplyFilterBTN();
 		rprs.VerifyNumOfReviews();
 		
@@ -48,7 +48,7 @@ public class VerifyCampResponsesData extends BaseTest{
 		
 		rprs.verifyOrderOfTableHeader(tableHeaderData);
 		
-		rprs.clickExportBTN();*/
+		rprs.clickExportBTN();
 
 		rprs.getReviewTableData();
 		rprs.getReviewTableData();
@@ -58,7 +58,7 @@ public class VerifyCampResponsesData extends BaseTest{
 		//rprs.compareXlData_UIdata();
 		
 		//rprs.verifyOverallRatingWidget("Overall Star Ratings");
-		rprs.avgStarRatingData("Average Star Rating");
+		rprs.avgStarRatingData("Average Star Rating"); */
 		
 		
 	}
