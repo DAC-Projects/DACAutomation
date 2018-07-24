@@ -35,30 +35,31 @@ public class VerifyCampResponsesData extends BaseTest{
 		
 		rprs.verifyToDate("en", "US");
 		
+		rprs.verifyFromDate("en", "US");
 		/*rprs.selectCamp("All Unarchived Campaigns");
-		rprs.clickApplyFilterBTN();
+		rprs.clickApplyFilterBTN();*/
 		rprs.VerifyNumOfReviews();
 		
 		//String avgRating = rprs.avgStarRatingData();
 		/*Utilities.addScreenshot(driver, imgnames.get(2).toString());
-		logger.log(LogStatus.INFO, "Overall Star Ratings : "+avgRating);
+		logger.log(LogStatus.INFO, "Overall Star Ratings : "+avgRating);*/
 		
 		String[] tableHeaderData = {"Mark for Inclusion", "Campaign Name", "Location Name", "Location Number",
-									"Customer", "Date/Time Submitted", "Star Rating", "Review" };
+									"Email", "Date/Time Submitted", "Star Rating", "Review" };
 		
 		rprs.verifyOrderOfTableHeader(tableHeaderData);
 		
 		rprs.clickExportBTN();
 
-		rprs.getReviewTableData();
+
 		rprs.getReviewTableData();
 		Utilities.addScreenshot(driver, imgnames.get(3).toString());
 		logger.log(LogStatus.INFO, "Verifying the UI Table Data of Responses Page");
 
-		//rprs.compareXlData_UIdata();
+		rprs.compareXlData_UIdata();
 		
-		//rprs.verifyOverallRatingWidget("Overall Star Ratings");
-		rprs.avgStarRatingData("Average Star Rating"); */
+		rprs.verifyOverallRatingWidget("Overall Star Ratings");
+		String avgRating = rprs.avgStarRatingData("Average Star Rating"); 
 		
 		
 	}

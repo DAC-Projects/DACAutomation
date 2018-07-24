@@ -10,6 +10,8 @@
 "com.dac.testcases.CF.Verify_BrandLivePreviewN_DeleteCamp" : {"LivePreview&Delete":"id:54211"}
 "com.dac.testcases.CF.VerifyCreate_DraftBrandCamp" : {"DraftCamp":"id:54202"}
 
+"com.dac.testcases.CF.VerifyCampResponsesData" : {"Responses":"id:54703"}
+"com.dac.testcases.CF.VerifyCampReportsData" : {"Reports":"id:54704"}
 "com.dac.testcases.CF.VerifyCampCustomerActReport" : {"CustActReport":"id:54705"}
 
 "com.dac.testcases.CF.Verify_CreateMLCCampaign" : {"CampCreation":"id:54917"}

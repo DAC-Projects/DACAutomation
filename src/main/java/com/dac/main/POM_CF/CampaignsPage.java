@@ -360,7 +360,7 @@ public class CampaignsPage extends BasePage{
 	public void clickResponsesLink() throws InterruptedException {
 		scrollByElement(processedCampSection, driver);
 		wait.until(ExpectedConditions.visibilityOf(processedCampResponsesLink));
-		Thread.sleep(30000);
+		//Thread.sleep(3000);
 		try {
 			processedCampResponsesLink.click();
 		}
