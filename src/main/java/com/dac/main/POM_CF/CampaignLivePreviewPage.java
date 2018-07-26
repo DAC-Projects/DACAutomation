@@ -58,9 +58,11 @@ public class CampaignLivePreviewPage extends BasePage{
 	public void verifyemailViewData() {
 		clickemailViewBTN();
 		String[] emailviewdata = {emailViewBannerText.getText(), emailViewBodyText.getText(), emailViewSignatureText.getText() };
-		String[] storedpreviewData = {BaseTest_CF.campBanner, BaseTest_CF.campBodyCopy, BaseTest_CF.campSignature};
+		String[] storedpreviewData = {BaseTest_CF.campBannerNew, BaseTest_CF.campBodyCopyNew, BaseTest_CF.campSignatureNew};
 		for(int i=0; i<3;i++) {
-			if(emailviewdata[i].equals(storedpreviewData[i])) {
+			System.out.println(emailviewdata[i]);
+			System.out.println(storedpreviewData[i]);
+			if(emailviewdata[i].equalsIgnoreCase(storedpreviewData[i])) {
 				Assert.assertEquals(emailviewdata[i], storedpreviewData[i]);
 			}
 			else {

@@ -1,13 +1,22 @@
 package com.dac.main.POM_CF;
 
+import java.awt.AWTException;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -137,6 +146,7 @@ public class ResponsesPage_RS extends BasePage{
 	static private int numOfReviews = 0;	
 	
 	public void verifyToDate(String langCode, String contryCode) throws UnsupportedFlavorException, IOException  {
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 		String toDateUI = getClipboardContents(toDate);
 		String todayDate = DateFormats.shortDate(langCode, contryCode);
 		if (toDateUI.equals(todayDate)) {
@@ -151,6 +161,7 @@ public class ResponsesPage_RS extends BasePage{
 	}
 	
 	public void verifyUnarchivedToDate(String langCode, String contryCode) throws UnsupportedFlavorException, IOException {
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 		String toDateUI = getClipboardContents(toDate);
 		String todayDate = DateFormats.shortDate(langCode, contryCode);
 		if (toDateUI.equals(todayDate)) {
@@ -162,6 +173,7 @@ public class ResponsesPage_RS extends BasePage{
 	}
 	
 	public void verifyUnarchivedFromDate(String langCode, String countryCode) throws UnsupportedFlavorException, IOException {
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 		String fromDateUI = getClipboardContents(fromDate);
 		String minus30Date = BasePage.minusDays(langCode, countryCode, 30);
 		if (fromDateUI.equals(minus30Date)) {
@@ -173,6 +185,7 @@ public class ResponsesPage_RS extends BasePage{
 	}
 	
 	public void verifyFromDate(String langCode, String contryCode) throws UnsupportedFlavorException, IOException  {
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 		String fromDateUI = getClipboardContents(fromDate);
 		if (fromDateUI.equals("07/16/2018")) { //BaseTest_CF.campStartDate
 			Assert.assertEquals(fromDateUI, "07/16/2018");
@@ -186,12 +199,13 @@ public class ResponsesPage_RS extends BasePage{
 	 * In this method we are verifying number of reviews in Average Star Rating with Number of Reveiws of Table data available
 	 * @throws InterruptedException */
 	public void VerifyNumOfReviews() throws InterruptedException {
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 		List < WebElement > rows_table = reviewTableRow.findElements(By.tagName("tr"));
 		String numReviews_String=numReviewSubmitted_AverageSR.getText();
 		numOfReviews = Integer.parseInt(numReviews_String);
 		int count = rows_table.size(); 
-		if(paginationNext.isDisplayed() & paginationNext.isEnabled()) {
-			for(int i=1;i<pagination.size()-2;i++) {
+		if(paginationNext.isEnabled() & paginationNext.isDisplayed()) {
+			for(int i=1;i<=pagination.size()-2;i++) {
 				if(paginationNext.isEnabled()) {
 					paginationNext.click();
 					Thread.sleep(4000);
@@ -266,10 +280,6 @@ public class ResponsesPage_RS extends BasePage{
 		}
 	}
 	
-/*	public void getFromDate() {
-		System.out.println(fromDate.getText());
-	}*/
-	
 	/**
 	 * This method is depends on methods : "VerifyNumOfReviews", "getReviewTableData"
 	 * 
@@ -307,7 +317,8 @@ public class ResponsesPage_RS extends BasePage{
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 		if(exportBTN.isEnabled() & exportBTN.isDisplayed()) {
 			wait.until(ExpectedConditions.visibilityOf(exportBTN));
-			exportBTN.click();
+			//exportBTN.click();
+			action.moveToElement(exportBTN).click(exportBTN).perform();
 			Thread.sleep(5000);
 			//String filename = getLastModifiedFile("./downloads");
 			System.out.println("downloaded file name: "+getLastModifiedFile("./downloads"));
@@ -317,23 +328,28 @@ public class ResponsesPage_RS extends BasePage{
 		}
 	}
 	
-	public void verifyOrderOfTableHeader(String[] tableHeaderData) {
-		
+	public void verifyOrderOfTableHeader(String[] tableHeaderData, String... xlHeaderValues) {
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 		List < WebElement > Columns_row = tableBodyLocate.findElements(By.tagName("td"));
 		int columns_count = Columns_row.size();
 		List<WebElement> headerTableRow=ReportTableHeaders.findElements(By.tagName("th"));
 		for (int column = 0; column < columns_count & column < tableHeaderData.length; column++) {
     		String headerText = headerTableRow.get(column).getText().trim();
-    		System.out.println(headerText);
-    		if(headerText.equals(tableHeaderData[column])) {
-    			tableCellValues.add(headerText);
-    			Assert.assertTrue(true, "Table Header Data is in Order");
-    		}
-    		else {
-    			Assert.assertTrue(false, "Table Header Data is NOT in Order");
+    		if(headerText.length()!=0) {
+    			System.out.println(headerText);
+    			if(headerText.equals(tableHeaderData[column])) {
+    				tableCellValues.add(headerText);    				
+    				Assert.assertTrue(true, headerText+" Table Header Data is in Order "+tableHeaderData[column]);
+    			}
+    			else {
+    				Assert.assertTrue(false, headerText+" Table Header Data is NOT in Expected Order "+tableHeaderData[column]);
+    			}
     		}
 		}
-
+		if(tableCellValues.size()<8 & xlHeaderValues.length>0) {
+			tableCellValues.add(2, xlHeaderValues[0]);
+			tableCellValues.add(3, xlHeaderValues[1]);
+		}
 	}
 	
 	public void compareXlData_UIdata() throws Exception {
@@ -350,8 +366,8 @@ public class ResponsesPage_RS extends BasePage{
 		int count = 0;
 		for(int i=0;i<xlRowCount;i++) {
 			for(int j=0;j<col_count;j++) {
-				String cellValue = new ExcelTestDataHandler("./downloads/"+newfilename, "Sheet0").getCellValue(i, j);
-				String uiTableCellValue = tableCellValues.get(count);
+				String cellValue = new ExcelTestDataHandler("./downloads/"+newfilename, "Sheet0").getCellValue(i, j).trim();
+				String uiTableCellValue = tableCellValues.get(count).trim();
 				if(uiTableCellValue.equals(cellValue)) {
 					
 					//assertValue.assertTrue(true, uiTableCellValue+" is matches with Downloaded Excel value : "+cellValue);
@@ -434,7 +450,7 @@ public class ResponsesPage_RS extends BasePage{
         		}
         		else {
         			// To retrieve text from that specific cell.
-        			celtext = Columns_row.get(column).getText();
+        			celtext = Columns_row.get(column).getText().trim();
         		}
         		
         		if(column==0) {

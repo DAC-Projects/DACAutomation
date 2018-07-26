@@ -11,19 +11,18 @@
 <parameter name="testcasesfile" value="Customer_FeedBack.json"></parameter>
   <parameter name="browser" value="Chrome"/>
     <classes>
-    	<class name= "com.dac.testcases.CF.Verify_CreateBrandCampaign" />
-    	<!--  <class name= "com.dac.testcases.CF.Verify_BrandLivePreviewN_DeleteCamp" />
-    	<class name= "com.dac.testcases.CF.Verify_CreateLocCampaign" />
+  		<class name= "com.dac.testcases.CF.Verify_CreateBrandCampaign" />
+	    <class name= "com.dac.testcases.CF.VerifyCampResponsesData" />
+    	<!-- <class name= "com.dac.testcases.CF.Verify_CreateLocCampaign" />
+    	<class name= "com.dac.testcases.CF.Verify_BrandLivePreviewN_DeleteCamp" />
     	<class name= "com.dac.testcases.CF.Verify_LocLivePreviewN_DeleteCamp" />
     	<class name= "com.dac.testcases.CF.VerifyCreate_DraftBrandCamp" />
-    	<class name= "com.dac.testcases.CF.VerifyCreate_DraftLocCamp" />  -->
+    	<class name= "com.dac.testcases.CF.VerifyCreate_DraftLocCamp" /> --> 
     </classes>
   </test>
 
-
-  
  
-  <test name="Competitive Analysis">
+<test name="Competitive Analysis">
   <parameter name="browser" value="Chrome"/>
   <parameter name="testcasesfile" value="CompetitiveAnalysis.json"></parameter>
     <classes>

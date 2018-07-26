@@ -28,7 +28,7 @@ public class Navigationpage extends BasePage{
 	public Navigationpage(WebDriver driver) {
 		
 		this.driver=driver;
-		wait=new WebDriverWait(driver, 20);
+		wait=new WebDriverWait(driver, 50);
 		action=new Actions(driver);
 		PageFactory.initElements(driver, this);
 	}
@@ -157,7 +157,7 @@ public class Navigationpage extends BasePage{
 	
 	public void waitUntilLoad(WebDriver driver) {
 
-		    WebDriverWait wait = new WebDriverWait(driver, 30);
+		    //WebDriverWait wait = new WebDriverWait(driver, 30);
 
 		    // wait for jQuery to load
 		    ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
@@ -242,7 +242,7 @@ public class Navigationpage extends BasePage{
 		}
 		finally {
 			wait.until(ExpectedConditions.visibilityOf(campaignTable));
-			Thread.sleep(2000);
+			Thread.sleep(45000);
 		}
 	}
 	

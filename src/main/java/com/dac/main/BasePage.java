@@ -25,17 +25,39 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import com.dac.main.POM_CF.BaseTest_CF;
+import com.relevantcodes.extentreports.LogStatus;
 
+import resources.BaseTest;
 import resources.DateFormats;
 
 public class BasePage {
+	
+	public WebDriver driver;
+	public Actions action;
+	public Select select;
+	public WebDriverWait wait;
+	public JavascriptExecutor js;
+	
+	public BasePage(WebDriver driver) {
+		this.driver = driver;
+		wait = new WebDriverWait(driver, 35);
+		action=new Actions(driver);
+		js=(JavascriptExecutor)driver;
+	}
+	
+	public BasePage() {}
 	
 	/*
 	public void verifyPageIsDisplayed(WebDriver driver,String eResult) {
@@ -54,6 +76,38 @@ public class BasePage {
 	}
 	
 	*/
+	
+	public void clickelement(WebElement element, WebDriver driver) {
+		wait = new WebDriverWait(driver, 35);
+		wait.until(ExpectedConditions.visibilityOf(element));
+		try {
+			if(element.isDisplayed() & element.isEnabled()) {
+				try {
+					element.click();					
+				}
+				catch(WebDriverException e) {
+					action = new Actions(driver);
+					action.moveToElement(element).click(element).perform();
+				}
+			}
+		}
+		catch(NoSuchElementException e) {
+			BaseTest.logger.log(LogStatus.INFO, "element "+ element+" NOT found");
+			printexcep(e);
+		}
+		catch(NullPointerException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void printexcep(Exception e) {
+		try {
+			throw new Exception(e);			
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 	
 	public static String minusDays(String langCode, String countryCode, int days_Amount) {
 		Calendar c = Calendar.getInstance();    

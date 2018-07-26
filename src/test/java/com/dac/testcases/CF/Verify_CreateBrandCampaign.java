@@ -110,16 +110,26 @@ public class Verify_CreateBrandCampaign extends BaseTest_CF{
 		Utilities.addScreenshot(driver, imgnames.get(3).toString());
 		
 		campSubject = newCampaign.setCampSubject("Brand", 14, englishLangColumn);
+		//System.out.println("campSubject :"+campSubject);
+		campSubjectNew = campSubject.replace("(FirstName)", cellValues[1]);
+		campSubjectNew = campSubjectNew.replace("(LastName)", cellValues[2]);
+		//System.out.println("campSubjectNew :"+campSubjectNew);
 		
 		campBanner = newCampaign.setCampBanner("Brand", 15, englishLangColumn);
+		campBannerNew = campBanner.replace("(FirstName)", cellValues[1]);
+		campBannerNew = campBannerNew.replace("(LastName)", cellValues[2]);
 		
 		newCampaign.verifyPersonalizationToolTipText("Brand", 16, englishLangColumn);
 		
 		campBodyCopy = newCampaign.setCampBodyCopy("Brand", 17, englishLangColumn);
 		Utilities.addScreenshot(driver, imgnames.get(4).toString());
 		logger.log(LogStatus.INFO, "Entered Subject, Banner Info and Body Copy data and verifying the Tokens");
+		campBodyCopyNew = campBodyCopy.replace("(FirstName)", cellValues[1]);
+		campBodyCopyNew = campBodyCopyNew.replace("(LastName)", cellValues[2]);
 		
 		campSignature = newCampaign.setCampSignature("Brand",18 , englishLangColumn);
+		campSignatureNew = campSignature.replace("(FirstName)", cellValues[1]);
+		campSignatureNew = campSignatureNew.replace("(LastName)", cellValues[2]);
 		
 		newCampaign.verifyContactInfoToolTipText(englishLangColumn);
 		
@@ -138,7 +148,7 @@ public class Verify_CreateBrandCampaign extends BaseTest_CF{
 		newCampaign.clickEndDatePicker();
 		
 		newCampaign.verifyCampEndDate("en", "US");
-		newCampaign.verifyLongDateFormat("en", "US");
+		//newCampaign.verifyLongDateFormat("en", "US");
 
 		newCampaign.verifyCampEndDateToolTipText("Brand", 29, englishLangColumn);
 		Utilities.addScreenshot(driver, imgnames.get(6).toString());

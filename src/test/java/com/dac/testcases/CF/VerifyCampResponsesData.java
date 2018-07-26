@@ -16,7 +16,7 @@ public class VerifyCampResponsesData extends BaseTest{
 	@Test
 	public void campResponsesData_Test() throws Exception {
 	
-		String CampName = "Test MLC unsubscribe functionality";
+		String CampName = "Test Brand Unsubscribe functionality";
 		
 		Navigationpage np=new Navigationpage(driver);
 		np.clickCampaigns();
@@ -41,26 +41,27 @@ public class VerifyCampResponsesData extends BaseTest{
 		rprs.VerifyNumOfReviews();
 		
 		//String avgRating = rprs.avgStarRatingData();
-		/*Utilities.addScreenshot(driver, imgnames.get(2).toString());
-		logger.log(LogStatus.INFO, "Overall Star Ratings : "+avgRating);*/
+		
 		
 		String[] tableHeaderData = {"Mark for Inclusion", "Campaign Name", "Location Name", "Location Number",
 									"Email", "Date/Time Submitted", "Star Rating", "Review" };
 		
-		rprs.verifyOrderOfTableHeader(tableHeaderData);
+		String[] xlvalues = {"Location Name", "Location Number"};
+		
+		rprs.verifyOrderOfTableHeader(tableHeaderData, xlvalues);
 		
 		rprs.clickExportBTN();
-
-
+		
 		rprs.getReviewTableData();
 		Utilities.addScreenshot(driver, imgnames.get(3).toString());
 		logger.log(LogStatus.INFO, "Verifying the UI Table Data of Responses Page");
 
-		rprs.compareXlData_UIdata();
-		
 		rprs.verifyOverallRatingWidget("Overall Star Ratings");
 		String avgRating = rprs.avgStarRatingData("Average Star Rating"); 
+		Utilities.addScreenshot(driver, imgnames.get(2).toString());
+		logger.log(LogStatus.INFO, "Overall Star Ratings : "+avgRating);
 		
+		rprs.compareXlData_UIdata();
 		
 	}
 }

@@ -28,8 +28,11 @@ public class Verify_BrandLivePreviewN_DeleteCamp extends BaseTest_CF{
 		cp.clickLivePreviewBTN();
 		Utilities.addScreenshot(driver, imgnames.get(1).toString());
 		logger.log(LogStatus.INFO, "Checking the Email view section of Scheduled campaign Live Preview");
-		
+				
 		CampaignLivePreviewPage LP=new CampaignLivePreviewPage(driver);
+		
+		LP.verifyemailViewData();
+		
 		LP.clickfeedBackBTN();
 		Utilities.addScreenshot(driver, imgnames.get(2).toString());
 		logger.log(LogStatus.INFO, "Checking the Feed Back section of Scheduled campaign Live Preview");
@@ -47,6 +50,8 @@ public class Verify_BrandLivePreviewN_DeleteCamp extends BaseTest_CF{
 		cp.clickDeleteAcceptBTN();
 		Utilities.addScreenshot(driver, imgnames.get(5).toString());
 		logger.log(LogStatus.INFO, "clicking on confirmation to delete Sceduled campaign");
+		
+		np.waitUntilLoad(driver);
 	}
 	
 }

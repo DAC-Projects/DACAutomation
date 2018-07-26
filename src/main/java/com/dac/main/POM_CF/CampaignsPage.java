@@ -30,10 +30,12 @@ public class CampaignsPage extends BasePage{
 	public CampaignsPage(WebDriver driver) {
 		
 		this.driver = driver;
-		wait = new WebDriverWait(driver, 35);
+		wait = new WebDriverWait(driver, 55);
 		action=new Actions(driver);
 		js=(JavascriptExecutor)driver;
 		PageFactory.initElements(driver, this);
+		wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
+		wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));
 	}
 
 	
@@ -155,15 +157,19 @@ public class CampaignsPage extends BasePage{
 	
 
 	public void click_CreateCampaignBTN() throws InterruptedException {
-
-		 wait.until(ExpectedConditions.visibilityOf(CreateCampaignBTN));
-		Thread.sleep(4000);
+		
+		wait.until(ExpectedConditions.visibilityOf(CreateCampaignBTN));
+		/*wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
+		wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));*/
+		//Thread.sleep(4000);
 		//CreateCampaignBTN.click();
 		action.moveToElement(CreateCampaignBTN).click(CreateCampaignBTN).perform();
 	}
 	
 	public void click_ScheduledTab() {
 		scrollByElement(ScheduledTab, driver);
+		/*wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
+		wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));*/
 		try {
 			wait.until(ExpectedConditions.elementToBeClickable(ScheduledTab));
 			ScheduledTab.click();
@@ -174,6 +180,8 @@ public class CampaignsPage extends BasePage{
 	}
 	
 	public void clickEditBTN() throws InterruptedException {
+		/*wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
+		wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));*/
 		if(scheduledCampEditBTN.isEnabled() & scheduledCampEditBTN.isDisplayed()) {
 			scheduledCampEditBTN.click();
 			Thread.sleep(6000);
@@ -191,8 +199,10 @@ public class CampaignsPage extends BasePage{
 	public void clickDeleteAcceptBTN() throws InterruptedException {
 		acceptDelBTN.click();
 		Thread.sleep(6000);
+		wait.until(ExpectedConditions.visibilityOf(deleteCampConfirmBTN));
 		deleteCampConfirmBTN.click();
 		Thread.sleep(5000);
+		
 	}
 	
 	public void clickDeleteCancelBTN() throws InterruptedException {
@@ -206,6 +216,7 @@ public class CampaignsPage extends BasePage{
 	}
 	
 	public void clickLivePreviewBTN() {
+		wait.until(ExpectedConditions.visibilityOf(scheduledCampLivePreviewBTN));
 		if(scheduledCampLivePreviewBTN.isEnabled()) {
 			scheduledCampLivePreviewBTN.click();
 			wait.until(ExpectedConditions.visibilityOf(closePreviewBTN));
@@ -276,12 +287,16 @@ public class CampaignsPage extends BasePage{
 	 * @CampName : Campaign Name to search		*/
 	public void verifyCampName(String TabName, String CampName) throws InterruptedException {
 		if(TabName.equalsIgnoreCase("Scheduled")) {
+			wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
+			wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));
 			search_ScheduledCampaign(CampName);
 		}
 		else if(TabName.equalsIgnoreCase("Draft")) {
 			search_DraftCampaign(CampName);
 		}
 		else if(TabName.equalsIgnoreCase("Processed")) {
+			wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
+			wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));
 			search_ProcessedCampaign(CampName);
 		}
 		
@@ -301,12 +316,16 @@ public class CampaignsPage extends BasePage{
 	
 	public void verifyCampTableData(String TabName, String CampName, String LocOrBrandName) throws InterruptedException {
 		if(TabName.equalsIgnoreCase("Scheduled")) {
+			wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
+			wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));
 			search_ScheduledCampaign(CampName);
 		}
 		else if(TabName.equalsIgnoreCase("Draft")) {
 			search_DraftCampaign(CampName);
 		}
 		else if(TabName.equalsIgnoreCase("Processed")) {
+			wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
+			wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));
 			search_ProcessedCampaign(CampName);
 		}
 		
@@ -359,7 +378,8 @@ public class CampaignsPage extends BasePage{
 	 * @throws InterruptedException */
 	public void clickResponsesLink() throws InterruptedException {
 		scrollByElement(processedCampSection, driver);
-		wait.until(ExpectedConditions.visibilityOf(processedCampResponsesLink));
+		clickelement(processedCampResponsesLink, driver);
+		/*wait.until(ExpectedConditions.visibilityOf(processedCampResponsesLink));
 		//Thread.sleep(3000);
 		try {
 			processedCampResponsesLink.click();
@@ -374,7 +394,7 @@ public class CampaignsPage extends BasePage{
 			catch(Exception e) {
 				wait.until(ExpectedConditions.visibilityOf(emptyTable));
 			}
-		}
+		}*/
 	}
 	
 	/** 

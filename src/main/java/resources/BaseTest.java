@@ -19,10 +19,15 @@ import org.apache.commons.io.FileUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.xmlbeans.XmlException;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotSelectableException;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -74,7 +79,7 @@ public abstract class BaseTest implements IAutoconst {
 	protected ArrayList<String[]> arraySteps = new ArrayList<>();
 	private ReadExcel re;
 	private CreateEvidence ce;
-	private String testName;
+	private static String testName;
 	public static String testcasefile;
 	public static String className;
 	public static String id;
@@ -136,7 +141,38 @@ public abstract class BaseTest implements IAutoconst {
 				String methodname = result.getMethod().getMethodName();
 				logger.log(LogStatus.FAIL, methodname);
 				logger.log(LogStatus.FAIL, TestCaseName + logger.addScreenCapture(image));
-				logger.log(LogStatus.FAIL, result.getThrowable());
+				
+				if (result.getThrowable() instanceof ElementNotVisibleException) {
+					logger.log(LogStatus.FAIL, "function "+methodname+ " failed beacuse :");
+					logger.log(LogStatus.FAIL, "Although an element is present on the DOM, it is not visible");
+					//logger.log(LogStatus.FAIL, result.getThrowable().getCause());
+				}else if(result.getThrowable() instanceof ElementNotSelectableException) {
+					logger.log(LogStatus.FAIL, "function "+methodname+ " failed beacuse :");
+					logger.log(LogStatus.FAIL, "Element cannot be selected. Element could be disabled");
+					//logger.log(LogStatus.FAIL, result.getThrowable().getCause());
+				}else if(result.getThrowable() instanceof TimeoutException) {
+					logger.log(LogStatus.FAIL, "function "+methodname+ " failed beacuse :");
+					logger.log(LogStatus.FAIL, "Execution failed because the command did not complete in enough time.");
+					//logger.log(LogStatus.FAIL, result.getThrowable().getCause());
+				}else if(result.getThrowable() instanceof NoSuchElementException) {
+					logger.log(LogStatus.FAIL, "function "+methodname+ " failed beacuse :");
+					logger.log(LogStatus.FAIL, "Cannot find Element on the page");	
+					
+				}else if(result.getThrowable() instanceof StaleElementReferenceException) {
+					logger.log(LogStatus.FAIL, "function "+methodname+ " failed beacuse :");
+					logger.log(LogStatus.FAIL, "Element is no longer appearing on the DOM page.");
+					
+					//logger.log(LogStatus.FAIL, result.getThrowable().getCause());
+				}
+				
+				Throwable th = result.getThrowable();
+		        if (th != null) {
+		            System.out.println(th.getMessage());
+		            
+		            String error = th.getMessage().split("Session info")[0];
+		            logger.log(LogStatus.FAIL, error);
+		            result.setThrowable(null);
+		        }
 			} else if (result.getStatus() == ITestResult.SUCCESS) {
 				logger.log(LogStatus.PASS, this.getClass().getSimpleName() + " Test Case Success and Verified");
 			} /*else if (status!=ITestResult.SUCCESS||status!=ITestResult.FAILURE) {
