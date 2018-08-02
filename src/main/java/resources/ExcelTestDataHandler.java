@@ -140,13 +140,14 @@ public class ExcelTestDataHandler {
 		
 		/*FileInputStream fsIP= new FileInputStream(new File(path));
 		Workbook wb=WorkbookFactory.create(new FileInputStream(path));*/
+		int arrVal = 0;
 		int rows = getRowCount();
 		int totalRows = rows+numberOfRows;
 		for(int i=rows;i<totalRows;i++) {
 			int temp=i+1;
 			Row newRow = sheet.createRow(temp); 
 			for(int j=0;j<numberOfCellsInRow;j++) {
-				newRow.createCell(j).setCellValue(cellValues[j]);
+				newRow.createCell(j).setCellValue(cellValues[arrVal++]);
 			}
 		}
 	
