@@ -32,6 +32,7 @@ import com.dac.main.BasePage;
 
 import resources.DateFormats;
 import resources.ExcelTestDataHandler;
+import resources.FileDownloader;
 import resources.IAutoconst;
 
 public class CreateNewCampaignPage extends BasePage{
@@ -325,7 +326,7 @@ public class CreateNewCampaignPage extends BasePage{
 	 * @throws InterruptedException */
 	public void selectCampType(int campTypeIndex) throws InterruptedException {
 		Thread.sleep(5000);
-		//wait.until(ExpectedConditions.visibilityOf(campaignType));
+		wait.until(ExpectedConditions.visibilityOf(campaignType));
 		scrollByElement(customerFeedbackBreadCrumb, driver);
 		while(true) {
 			if(campaignType.isDisplayed()) {
@@ -411,28 +412,33 @@ public class CreateNewCampaignPage extends BasePage{
 		System.out.println(driver.findElement(By.cssSelector(ccs)).getText());
 		System.out.println(locationNum.getText());*/
 		//System.out.println(selectLoc.getText());
-		action.moveToElement(selectLoc).click(selectLoc).perform();
+		//action.moveToElement(selectLoc).click(selectLoc).perform();
+		clickelement(selectLoc, driver);
 		
 	}
 	
 	public void clickAddBTN() {
 		scrollByElement(campaignInfoSection, driver);
-		mlcAddBTN.click();
+		//mlcAddBTN.click();
+		clickelement(mlcAddBTN, driver);
 	}
 	
 	public void clickRemoveBTN() {
 		scrollByElement(campaignInfoSection, driver);
-		mlcRemoveBTN.click();
+		//mlcRemoveBTN.click();
+		clickelement(mlcRemoveBTN, driver);
 	}
 	
 	public void clickAddAllBTN() {
 		scrollByElement(campaignInfoSection, driver);
-		mlcAddAllBTN.click();
+		//mlcAddAllBTN.click();
+		clickelement(mlcAddAllBTN, driver);
 	}
 	
 	public void clickRemoveAllBTN() {
 		scrollByElement(campaignInfoSection, driver);
-		mlcRemoveAllBTN.click();
+		//mlcRemoveAllBTN.click();
+		clickelement(mlcRemoveAllBTN, driver);
 	}
 	
 	public void setCampDescr(String sheet, int row, int column) throws Exception {
@@ -557,12 +563,14 @@ public class CreateNewCampaignPage extends BasePage{
 	
 	public void clickStartDatePicker() throws InterruptedException {
 		scrollByElement(scheduledSection, driver);
-		driver.findElement(By.xpath("(//span[@class='k-select']/span)[1]")).click();
+		WebElement startdateBTN = driver.findElement(By.xpath("(//span[@class='k-select']/span)[1]"));
+		clickelement(startdateBTN, driver);
 	}
 	
 	public void clickEndDatePicker() {
 		scrollByElement(scheduledSection, driver);
-		driver.findElement(By.xpath("(//span[@class='k-select']/span)[2]")).click();
+		WebElement endDateBTN = driver.findElement(By.xpath("(//span[@class='k-select']/span)[2]"));
+		clickelement(endDateBTN, driver);
 	}
 	
 	/** TimeValue_AM_PM could be in the format of "hh:mm AM/PM" 
@@ -575,11 +583,25 @@ public class CreateNewCampaignPage extends BasePage{
 		select.selectByVisibleText(TimeValue_AM_PM);
 	}
 	
-	public void downloadCampEmailTemplate() {
+	public void downloadCampEmailTemplate() throws InterruptedException, IOException {
 		
 		scrollByElement(toFieldTB, driver);
-		downloadEmailTemplate.click();
+		System.out.println("clicking download email template");
+		clickelement(downloadEmailTemplate, driver);
+		Thread.sleep(2000);
+		try
+		{
+		     Robot robot = new Robot();
+		     robot.setAutoDelay(250);
+		     robot.keyPress(KeyEvent.VK_ALT);
 
+		     robot.keyPress(KeyEvent.VK_S);
+		     robot.keyRelease(KeyEvent.VK_ALT);
+		}
+		catch (AWTException e)
+		{
+		    e.printStackTrace();
+		}
 	}
 	
 	public void uploadEmailTemplate(String fileName) throws InterruptedException {
@@ -611,33 +633,33 @@ public class CreateNewCampaignPage extends BasePage{
 	
 	public void clickSaveDraft() {
 		scrollByElement(saveDraftBTN, driver);
-		saveDraftBTN.click();
+		clickelement(saveDraftBTN, driver);
 	}
 	
 	public void clickCreateCampBTN() {
 		scrollByElement(createCampaignBTN, driver);
-		createCampaignBTN.click();
-		//action.moveToElement(createCampaignBTN).click(createCampaignBTN).perform();
+		clickelement(createCampaignBTN, driver);
 	}
 	
 	public void clickViewAllCampaignBTN() throws InterruptedException {
 		wait.until(ExpectedConditions.visibilityOf(viewAllCampaignBTN));
-		Thread.sleep(2000);
-		action.moveToElement(viewAllCampaignBTN).click(viewAllCampaignBTN).perform();
+		//Thread.sleep(2000);
+		clickelement(viewAllCampaignBTN, driver);
 		Thread.sleep(5000);
 	}
 	
 	public void clickContinueEditBTN() throws InterruptedException {
 		wait.until(ExpectedConditions.visibilityOf(viewAllCampaignBTN));
-		Thread.sleep(5000);
-		action.moveToElement(continueEditBTN).click(continueEditBTN).perform();
+		//Thread.sleep(5000);
+		clickelement(continueEditBTN, driver);
 		Thread.sleep(5000);
 	}
 	
-	public void uploadLogo() throws InterruptedException {
+	public void uploadLogo(String fileNameWithExtension) throws IOException {
 		scrollByElement(eMailSetupSection, driver);
-		uploadCampaignLogo.click();
-			
+		clickelement(uploadCampaignLogo, driver);
+		upload(fileNameWithExtension);
+		wait.until(ExpectedConditions.visibilityOf(removeLogoBTN));
 	}
 	
 	public void verifyLogoUploaded() throws InterruptedException {
@@ -657,7 +679,7 @@ public class CreateNewCampaignPage extends BasePage{
 	
 	public void clickRemoveLogo() {
 		scrollByElement(removeLogoBTN, driver);
-		removeLogoBTN.click();
+		clickelement(removeLogoBTN, driver);
 	}
 	
 	//---------------------Handling Tool Tip's of Create New Cammpaign Page-----------------
@@ -672,7 +694,7 @@ public class CreateNewCampaignPage extends BasePage{
 		
 		scrollByElement(customerFeedbackBreadCrumb, driver);
 		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
-		action.moveToElement(existCampTT).click(existCampTT).perform();
+		clickelement(existCampTT, driver);
 		verifyText(iCircleToolTipText, eText);
 	}
 	
@@ -718,7 +740,7 @@ public class CreateNewCampaignPage extends BasePage{
 		
 		scrollByElement(eMailSetupSection, driver);
 		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
-		action.moveToElement(uploadLogoTT).click(uploadLogoTT).perform();
+		clickelement(uploadLogoTT, driver);
 		verifyText(iCircleToolTipText, eText);
 	}
 	
@@ -726,7 +748,7 @@ public class CreateNewCampaignPage extends BasePage{
 		
 		scrollByElement(subjectText, driver);
 		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
-		action.moveToElement(personalizationTT).click(personalizationTT).perform();
+		clickelement(personalizationTT, driver);
 		verifyText(iCircleToolTipText, eText);
 	}
 
@@ -734,7 +756,7 @@ public class CreateNewCampaignPage extends BasePage{
 	
 		scrollByElement(signatureHeading, driver);
 		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(19, column);
-		action.moveToElement(contactInfoTT).click(contactInfoTT).perform();
+		clickelement(contactInfoTT, driver);
 		verifyText(iCircleToolTipText, eText);
 	}
 
@@ -788,15 +810,16 @@ public class CreateNewCampaignPage extends BasePage{
 		if(UpdateCampaignBTN.isEnabled()) {
 			Assert.assertTrue(true, "edited Scheduled Campaign");
 			UpdateCampaignBTN.click();
+			clickelement(UpdateCampaignBTN, driver);
 		}
 		else  Assert.assertTrue(false, "Didn't edited the Scheduled Campaign");
 	}
 
 	public void clickLivePreviewBTN() {
-		LivePreviewBTN.click();
+		clickelement(LivePreviewBTN, driver);
 	}
 	
 	public void clickCancelBTN() {
-		cancelBTN.click();
+		clickelement(cancelBTN, driver);
 	}
 }

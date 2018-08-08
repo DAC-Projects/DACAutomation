@@ -19,13 +19,15 @@ public class JsonParse {
 	static String className;
 	static String Iterationpath;
 	
-	public JsonParse(String fileName, String className) throws FileNotFoundException, IOException, ParseException {
+	public JsonParse(String fileName, String className, String method) throws FileNotFoundException, IOException, ParseException {
 		// TODO Auto-generated constructor stub
 		this.fileName = fileName;
-		getTestcaseID(className);
+		getTestcaseID(className, method);
 	}
 	
-	public static   void getTestcaseID(String className) throws FileNotFoundException, IOException, ParseException {
+	
+	//ORIGINAL METHOD
+	/*public static   void getTestcaseID(String className) throws FileNotFoundException, IOException, ParseException {
 		System.out.println(fileName);
 		Object obj = new JSONParser().parse(new FileReader(fileName));
         
@@ -50,6 +52,38 @@ public class JsonParse {
             	break;
             }
         }
+	}*/
+	
+	//MY CHANGES
+	public static   void getTestcaseID(String className, String method) throws FileNotFoundException, IOException, ParseException {
+		System.out.println(fileName);
+		Object obj = new JSONParser().parse(new FileReader(fileName));
+        
+        // typecasting obj to JSONObject
+        JSONObject js = (JSONObject) obj;
+         
+        Iterationpath=   js.get("iterationPath").toString();
+        System.out.println("The iteration path is: "+ Iterationpath);
+              
+        JSONObject jo = (JSONObject) js.get(className);
+        sheet = (String) jo.get("sheet");
+        ID = (String) jo.get(method);
+        
+     /*   // getting sheets
+        Map Sheets = ((Map)jo.get(className));
+         
+        // iterating Sheets Map
+        Iterator<Map.Entry> itr1 = Sheets.entrySet().iterator();
+        while (itr1.hasNext()) {
+            Map.Entry pair = itr1.next();
+            System.out.println(pair.getKey() + " : " + pair.getValue());
+ 
+            if (pair.getValue()!=null) {
+            	sheet= pair.getKey().toString();
+            	ID =pair.getValue().toString();
+            	break;
+            }*/
+//        }
 	}
 
 	public static String getSheet() throws FileNotFoundException, IOException, ParseException {

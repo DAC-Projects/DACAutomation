@@ -34,8 +34,8 @@ public class CampaignsPage extends BasePage{
 		action=new Actions(driver);
 		js=(JavascriptExecutor)driver;
 		PageFactory.initElements(driver, this);
-		wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
 		wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));
+		wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
 	}
 
 	
@@ -66,7 +66,7 @@ public class CampaignsPage extends BasePage{
 	@FindBy(xpath="//span[contains(@ng-bind,'StartDateTime')]")
 	private WebElement scheduledCampStartDate;
 	
-	@FindBy(xpath="//span[text()='Edit']")
+	@FindBy(xpath="//a[contains(@class,'btnEdit')]/span")
 	private WebElement scheduledCampEditBTN;
 	
 	@FindBy(xpath="//b[text()='Close Preview']")
@@ -155,15 +155,22 @@ public class CampaignsPage extends BasePage{
 	@FindBy(xpath="//*[@ng-bind='headerMessage']")
 	private WebElement subTittle_CampaignPage;
 	
+	//-----------------------------------------------------------
+	
+	@FindBy(name="campaigntype")
+	private WebElement campaignType;
+	
+	private void waitTillLinksLoad() {
+		wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
+		wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));
+	}
 
-	public void click_CreateCampaignBTN() throws InterruptedException {
+	public void click_CreateCampaignBTN() {
 		
 		wait.until(ExpectedConditions.visibilityOf(CreateCampaignBTN));
-		/*wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
-		wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));*/
-		//Thread.sleep(4000);
-		//CreateCampaignBTN.click();
-		action.moveToElement(CreateCampaignBTN).click(CreateCampaignBTN).perform();
+		waitTillLinksLoad();
+		clickelement(CreateCampaignBTN, driver);
+		wait.until(ExpectedConditions.visibilityOf(campaignType));
 	}
 	
 	public void click_ScheduledTab() {
@@ -192,13 +199,16 @@ public class CampaignsPage extends BasePage{
 	}
 	
 	public void clickDeleteBTN() throws InterruptedException {
-		action.moveToElement(scheduledCampDeleteBTN).click(scheduledCampDeleteBTN).perform();
-		Thread.sleep(2000);
+		clickelement(scheduledCampDeleteBTN, driver);
+		//action.moveToElement(scheduledCampDeleteBTN).click(scheduledCampDeleteBTN).perform();
+		wait.until(ExpectedConditions.visibilityOf(acceptDelBTN));
+		//Thread.sleep(2000);
+		
 	}
 	
 	public void clickDeleteAcceptBTN() throws InterruptedException {
 		acceptDelBTN.click();
-		Thread.sleep(6000);
+		//Thread.sleep(6000);
 		wait.until(ExpectedConditions.visibilityOf(deleteCampConfirmBTN));
 		deleteCampConfirmBTN.click();
 		Thread.sleep(5000);

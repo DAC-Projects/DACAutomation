@@ -1,6 +1,7 @@
 package com.dac.main;
 
 import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -28,7 +29,7 @@ public class Navigationpage extends BasePage{
 	public Navigationpage(WebDriver driver) {
 		
 		this.driver=driver;
-		wait=new WebDriverWait(driver, 50);
+		wait=new WebDriverWait(driver, 55);
 		action=new Actions(driver);
 		PageFactory.initElements(driver, this);
 	}
@@ -102,6 +103,12 @@ public class Navigationpage extends BasePage{
 	
 	@FindBy(xpath="//li[@id='campaign']//span")
 	private WebElement CampaignsLink;
+	
+	@FindBy(xpath="(//td[contains(@ng-if,'activeCampaign.MLC')]/a)[1]")
+	private WebElement processedCampDetailsLink;
+	
+	@FindBy(xpath="//a[contains(@class,'btnEdit')]/span")
+	private WebElement scheduledCampEditBTN;
 	
 	//campaign table one of the column for wait the loading of page till this table visible
 	@FindBy(xpath="(//td[contains(@ng-if,'activeCampaign.MLC')]/a)[4]")
@@ -231,20 +238,16 @@ public class Navigationpage extends BasePage{
 	
 	/** To click on Campaigns link in LHS to navigate to Campaigns page  
 	 * @throws InterruptedException */
-	public void clickCampaigns() throws InterruptedException {    
+	public void clickCampaigns() {    
 		wait.until(ExpectedConditions.visibilityOf(CampaignsLink));
 		scrollByElement(CampaignsLink, driver);
-		try {
-			CampaignsLink.click();
-		}
-		catch(Exception e) {
-			action.moveToElement(CampaignsLink).click().perform();
-		}
-		finally {
-			wait.until(ExpectedConditions.visibilityOf(campaignTable));
-			Thread.sleep(45000);
-		}
-	}
+		clickelement(CampaignsLink, driver);
+		wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
+		wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));
+
+/*			wait.until(ExpectedConditions.visibilityOf(campaignTable));
+			//Thread.sleep(45000);
+*/	}
 	
 	public void clickResponses() {
 		wait.until(ExpectedConditions.visibilityOf(ResponsesLink));
@@ -277,14 +280,14 @@ public class Navigationpage extends BasePage{
 	}
      
 	public void select_DB_Lang_Link(String langCode, String contryCode) {
-		
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		String langConCode = langCode+"_"+contryCode;
 		wait.until(ExpectedConditions.visibilityOf(DBLangLink));
 		if(DBLangLink.isDisplayed()) {
 			DB_LangList();
 				switch(langConCode) {
 				
-				case "de_DE" : //Thread.sleep(2000);
+				case "de_DE" :
 							   try {
 								   selectDB_langDeutsch.click();   
 							   }
@@ -295,18 +298,19 @@ public class Navigationpage extends BasePage{
 							   }
 							   break;
 							   
-				case "en_US" : //Thread.sleep(2000);
+				case "en_US" :
 							   try {
 								   selectDB_langEnglish.click();
 							   }
 							   catch(Exception e){
 								   if(driver.findElement(By.xpath("//i/following::span[contains(text(),'English')]")).isDisplayed()) {
+									   System.out.println("clicked selectDB_langEnglish's span");
 									   break;
 								   }
 							   }
 				   			   break;
 				   			   
-				case "es_ES" : //Thread.sleep(2000);
+				case "es_ES" :
 				 				try {
 				 					selectDB_langSpanish_Spain.click();   
 				 				}
@@ -317,7 +321,7 @@ public class Navigationpage extends BasePage{
 				 				}
 				 				break;
 				   			   
-				case "es_MX" : //Thread.sleep(2000);
+				case "es_MX" : 
 							   try {
 								   selectDB_langSpanish_Mexico.click();   
 							   }
@@ -328,7 +332,7 @@ public class Navigationpage extends BasePage{
 							   }
 				   			   break;
 				   			   
-				case "fr_CA" : //Thread.sleep(2000);
+				case "fr_CA" : 
 							   try {
 								   selectDB_langFrench_Canada.click();   
 							   }
@@ -339,7 +343,7 @@ public class Navigationpage extends BasePage{
 							   }
 				   			   break;
 				   			   
-				case "fr_FR" : //Thread.sleep(2000);
+				case "fr_FR" :
 				 			   try {
 				 				   selectDB_langFrench_France.click();   
 				 			   }
@@ -350,7 +354,7 @@ public class Navigationpage extends BasePage{
 				 			   }
 				   			   break;
 				   			   
-				case "it_IT" : //Thread.sleep(2000);
+				case "it_IT" :
 							   try {
 								   selectDB_langItalian.click();   
 							   }
@@ -361,7 +365,7 @@ public class Navigationpage extends BasePage{
 							   }
 				   			   break;
 				   			   
-				case "sv_SE" : //Thread.sleep(2000);
+				case "sv_SE" :
 							   try {
 								   selectDB_langSwedish.click();   
 							   }
