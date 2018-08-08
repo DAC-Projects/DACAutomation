@@ -93,17 +93,18 @@ public class BasePage {
 	 */
 	public void download(String browser, WebElement downloadBTN) throws InterruptedException {
 		if("chrome".equalsIgnoreCase(BaseTest.browser)) {
-			clickelement(downloadBTN, driver);
+			clickelement(downloadBTN);
 		}
 		else {
 			try
 			{
-				 clickelement(downloadBTN, driver);
+				 clickelement(downloadBTN);
 				 Thread.sleep(2000);
 			     Robot robot = new Robot();
 			     robot.setAutoDelay(250);
 			     robot.keyPress(KeyEvent.VK_ALT);
 			     robot.keyPress(KeyEvent.VK_S);
+			     Thread.sleep(1000);
 			     robot.keyRelease(KeyEvent.VK_ALT);
 			     robot.keyPress(KeyEvent.VK_ENTER);
 			}
@@ -129,7 +130,7 @@ public class BasePage {
 		Runtime.getRuntime().exec(filepathexe+" "+filepath);
 	}
 	
-	public void clickelement(WebElement element, WebDriver driver) {
+	public void clickelement(WebElement element) {
 		wait = new WebDriverWait(driver, 35);
 		wait.until(ExpectedConditions.visibilityOf(element));
 		try {
