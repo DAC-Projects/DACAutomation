@@ -43,13 +43,14 @@ public class LoginAC_Beta {
 	}
 	
 	public void clickLogin() {
-		loginBTN.submit();
+		//loginBTN.submit();
+		loginBTN.sendKeys(Keys.ENTER);
 	}
 	
 	public void clickDashboardLink() {
 		
 		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(Dashboard));
-		Dashboard.click();
+		Dashboard.sendKeys(Keys.ENTER);;
 	}
 	
 	public void findUser(String data) {
