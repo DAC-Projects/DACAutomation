@@ -32,7 +32,6 @@ import com.dac.main.BasePage;
 
 import resources.DateFormats;
 import resources.ExcelTestDataHandler;
-import resources.FileDownloader;
 import resources.IAutoconst;
 
 public class CreateNewCampaignPage extends BasePage{
