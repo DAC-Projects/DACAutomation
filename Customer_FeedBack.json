@@ -6,7 +6,7 @@
 "com.dac.testcases.CF.Verify_LocLivePreviewN_DeleteCamp" : {"LivePreview&Delete":"id:54717"}
 "com.dac.testcases.CF.VerifyCreate_DraftLocCamp" : {"DraftCamp":"id:54712"}
 
-"com.dac.testcases.CF.Verify_CreateBrandCampaign" : {"CampCreation":"id:48167"}
+"com.dac.testcases.CF.Verify_CreateBrandCampaign" : {"sheet":"Smoke", "navigateToCF":"id:48167", "createBrandCamp_Test":"id:48168"}
 "com.dac.testcases.CF.Verify_BrandLivePreviewN_DeleteCamp" : {"LivePreview&Delete":"id:54211"}
 "com.dac.testcases.CF.VerifyCreate_DraftBrandCamp" : {"DraftCamp":"id:54202"}
 

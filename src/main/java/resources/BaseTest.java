@@ -2,7 +2,9 @@ package resources;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -18,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.xmlbeans.XmlException;
+import org.json.simple.parser.ParseException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotSelectableException;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -48,6 +51,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -83,6 +87,7 @@ public abstract class BaseTest implements IAutoconst {
 	public static String testcasefile;
 	public static String className;
 	public static String id;
+	public static String browser;
 	//****************************Extent report
 	
 	@BeforeSuite(alwaysRun = true)
@@ -189,7 +194,9 @@ public abstract class BaseTest implements IAutoconst {
 
 	//***************** intialising  browser
 		
-	@BeforeClass
+	
+	// OLD Class
+/*	@BeforeClass
 	@Parameters({"browser"})
 	public void setup(@Optional("Chrome")String browser) throws Exception {
 		
@@ -216,6 +223,45 @@ public abstract class BaseTest implements IAutoconst {
 		//String time = sdf.format(date);
 		
 	}
+	*/
+	
+	// My CHANGES
+	@BeforeClass
+	@Parameters({"browser"})
+	public void setup(@Optional("Chrome")String browser) throws Exception {
+		
+		 
+		BaseTest.browser = browser;
+		
+		driver = openBrowser(browser);
+		driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
+		LoginAC_Beta lp= new LoginAC_Beta(driver);
+		loginAuth(driver, lp); //logins to DAC
+		navigateToDashboard(driver, lp, browser); //navigate to dashboard
+		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		//Date date = new Date();
+		//String time = sdf.format(date);
+		
+	}
+	
+	@BeforeMethod
+	public void setup(Method m) throws Exception {
+		String className =this.getClass().getName();
+		String methodName = m.getName();
+		 System.out.println(className + "***********\n"+ methodName);
+		 JsonParse Ja = new JsonParse(testcasefile, className, methodName);
+		 id =Ja.getID();
+		System.out.println(Ja.getSheet());
+		System.out.println(Ja.getID());
+		
+		re = new ReadExcel(Ja.getIterationPath());
+		arraySteps.addAll( re.getTestcases(Ja.getSheet(), Ja.getID()));
+		imgnames.addAll(re.getScreenshotNames(Ja.getSheet(), Ja.getID()));
+	}
+	
+	
+	
 
 	
 	public WebDriver openBrowser(String browser) throws IOException {
@@ -270,12 +316,30 @@ public abstract class BaseTest implements IAutoconst {
 			
 		} else if (browser.equalsIgnoreCase("IE")) {
 			InternetExplorerOptions options = new InternetExplorerOptions();
-			options.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
+			options.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true); 
+			options.setCapability(InternetExplorerDriver.INITIAL_BROWSER_URL, ""); 
+			options.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
+			options.setCapability(InternetExplorerDriver.NATIVE_EVENTS, true);
+			//options.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true); 
+			//IEDesiredCapabilities.setCapability("requireWindowFocus", true);
+			options.setCapability("enablePersistentHover", false);
+			
+			options.setCapability("ignoreProtectedModeSettings",1);
+			options.setCapability("IntroduceInstabilityByIgnoringProtectedModeSettings",true);
+			String path = System.getProperty("user.dir")+"/downloads";
+			String cmd1 = "REG ADD \"HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\Main\" /F /V \"Default Download Directory\" /T REG_SZ /D "+ path;
+
+			try {
+			    Runtime.getRuntime().exec(cmd1);
+			} catch (Exception e) {
+			    System.out.println("Coulnd't change the registry for default directory for IE");
+			}
 			driver = new InternetExplorerDriver(options);
+
 			
 		}
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
 		return driver;
 
 	}
@@ -328,6 +392,7 @@ public abstract class BaseTest implements IAutoconst {
 		for (String handle: handles)
 			System.out.println(handle+"*****");
 		driver.switchTo().window(handles.get(0));
+		driver.manage().window().maximize();
 
 	}
 	

@@ -1,10 +1,13 @@
 package com.dac.main;
 
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -25,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -42,6 +46,10 @@ import com.relevantcodes.extentreports.LogStatus;
 import resources.BaseTest;
 import resources.DateFormats;
 
+/**
+ * @author wasim
+ *
+ */
 public class BasePage {
 	
 	public WebDriver driver;
@@ -77,26 +85,67 @@ public class BasePage {
 	
 	*/
 	
+	
+	/**
+	 * @param browser
+	 * @param downloadBTN
+	 * @throws InterruptedException 
+	 */
+	public void download(String browser, WebElement downloadBTN) throws InterruptedException {
+		if("chrome".equalsIgnoreCase(BaseTest.browser)) {
+			clickelement(downloadBTN, driver);
+		}
+		else {
+			try
+			{
+				 clickelement(downloadBTN, driver);
+				 Thread.sleep(2000);
+			     Robot robot = new Robot();
+			     robot.setAutoDelay(250);
+			     robot.keyPress(KeyEvent.VK_ALT);
+			     robot.keyPress(KeyEvent.VK_S);
+			     robot.keyRelease(KeyEvent.VK_ALT);
+			     robot.keyPress(KeyEvent.VK_ENTER);
+			}
+			catch (AWTException e)
+			{
+			    e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	/**
+	 * files(pdf, Excel, word, image etc) to upload and that file should present in "FilesToUpload" folder.
+	 * Before using this method we have to use "clickElement" of BasePage
+	 * 
+	 * @param fileNameWithExtension
+	 * @throws IOException
+	 */
+	public void upload(String fileNameWithExtension) throws IOException {
+		File logoPath=new File(".\\filesToUpload\\"+fileNameWithExtension);
+		String filepath=logoPath.getAbsolutePath();
+		String filepathexe = "./UploadFile.exe";
+		Runtime.getRuntime().exec(filepathexe+" "+filepath);
+	}
+	
 	public void clickelement(WebElement element, WebDriver driver) {
 		wait = new WebDriverWait(driver, 35);
 		wait.until(ExpectedConditions.visibilityOf(element));
 		try {
 			if(element.isDisplayed() & element.isEnabled()) {
 				try {
-					element.click();					
-				}
-				catch(WebDriverException e) {
 					action = new Actions(driver);
 					action.moveToElement(element).click(element).perform();
+				}
+				catch(WebDriverException e) {
+					element.click();					
 				}
 			}
 		}
 		catch(NoSuchElementException e) {
 			BaseTest.logger.log(LogStatus.INFO, "element "+ element+" NOT found");
 			printexcep(e);
-		}
-		catch(NullPointerException e) {
-			e.printStackTrace();
 		}
 	}
 	
@@ -165,8 +214,6 @@ public class BasePage {
 		File folder = new File(folderPath);
 		File[] listOfFiles = folder.listFiles();
 		String fileName = "";
-		Long a = 0L;	
-		
 		    for (int i = 0; i < listOfFiles.length; i++) {
 		      if (listOfFiles[i].isFile()) {
 		    	 fileName = listOfFiles[i].getName();
@@ -220,4 +267,16 @@ public class BasePage {
 		return dateFormat.toString();
 	}
 
+	public boolean isAlertPresent() 
+	{ 
+	    try 
+	    { 
+	        driver.switchTo().alert(); 
+	        return true; 
+	    }   // try 
+	    catch (NoAlertPresentException Ex) 
+	    { 
+	        return false; 
+	    }   // catch 
+	}   // isAlertPresent()
 }

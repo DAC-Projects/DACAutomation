@@ -1,5 +1,6 @@
 package com.dac.testcases.CF;
 
+import java.awt.AWTException;
 import java.io.File;
 import java.io.IOException;
 
@@ -22,12 +23,26 @@ import resources.Utilities;
 
 public class Verify_CreateBrandCampaign extends BaseTest_CF{
 	
+	static int englishLangColumn = 9;
 	
-	@Test(enabled=true)
-	public void createBrandCamp_Test() throws Exception {
+	@Test(enabled = true, priority = 1, groups = {"Smoke"})
+	public void navigateToCF() throws Exception {
 		
-		int englishLangColumn = 9;
+		Navigationpage np=new Navigationpage(driver);
+		np.select_DB_Lang_Link("en", "US");
+
+		np.clickCampaigns();	
+	}
+	
+	@Test(enabled = true, priority = 2, groups = {"Smoke"})
+	public void navigateToCreateNewCamp() throws Exception {
 		
+		CampaignsPage cp=new CampaignsPage(driver);		
+		cp.click_CreateCampaignBTN();	
+	}
+	
+	@Test(enabled = false, groups = {"Smoke"})
+	public void verifySceduledCamp() throws InterruptedException {
 		Navigationpage np=new Navigationpage(driver);
 		np.select_DB_Lang_Link("en", "US");
 
@@ -35,7 +50,14 @@ public class Verify_CreateBrandCampaign extends BaseTest_CF{
 		
 		CampaignsPage cp=new CampaignsPage(driver);		
 		cp.click_CreateCampaignBTN();
-				
+		
+		cp.verifyCampTableData("Scheduled", campName, brandName);
+	}
+	
+	
+	@Test(enabled=true, dependsOnMethods = {"navigateToCF"})
+	public void createBrandCamp_Test() throws Exception {
+			
 		CreateNewCampaignPage newCampaign=new CreateNewCampaignPage(driver);
 		
 		newCampaign.selectCampType(2);
@@ -60,26 +82,23 @@ public class Verify_CreateBrandCampaign extends BaseTest_CF{
 		
 		newCampaign.setSenderName("Brand",9,englishLangColumn);
 	
-		newCampaign.uploadLogo();
-		logger.log(LogStatus.INFO, "Adding the Logo of the Campaign");
-		
 		String logoName = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(11, englishLangColumn);
-		
-		File logoPath=new File(".\\filesToUpload\\"+logoName);
-		String filepath=logoPath.getAbsolutePath();
-		String filepathexe="./Logo.exe";
-		//String filepathexe = "./UploadFile.exe";
-		Runtime.getRuntime().exec(filepathexe+" "+filepath);
+
+		newCampaign.uploadLogo(logoName);
+		logger.log(LogStatus.INFO, "Adding the Logo of the Campaign");
 		
 		//Below Thread.sleep method for wait to finish the uploading of Logo through AutoIt. 
 		//Other waiting condition can't give because selenium not able to handle window based apps
 		Thread.sleep(5000);
-		newCampaign.verifyLogoUploaded();
+		/*newCampaign.verifyLogoUploaded();
 		newCampaign.verifyUploadLogoToolTipText("Brand", 10, englishLangColumn);
 		
 		Utilities.addScreenshot(driver, imgnames.get(2).toString());
 		
+		
 		newCampaign.downloadCampEmailTemplate();
+		
+		
 		
 		Thread.sleep(4000);
 		
@@ -88,14 +107,14 @@ public class Verify_CreateBrandCampaign extends BaseTest_CF{
 		
 		new ExcelTestDataHandler("./downloads/"+fileName, "Email Template").getAllCellsData();
 		
-		String[] cellValues = {"wasimakramb325@gmail.com", "wasim","akram"};
+		String[] cellValues = {"akram.1wasi@gmail.com", "wasim","akram", "wakram@dacgroup.com", "B", "Wasim"};
 		
 		Thread.sleep(3000);
 		
 		new ExcelTestDataHandler("./downloads/"+fileName, "Email Template").deleteEmptyRows();
 		
 		Thread.sleep(3000);
-		new ExcelTestDataHandler("./downloads/"+fileName, "Email Template").createRowInExcel(1, 3, cellValues);
+		new ExcelTestDataHandler("./downloads/"+fileName, "Email Template").createRowInExcel(2, 3, cellValues);
 		
 		Thread.sleep(3000);
 		
@@ -141,7 +160,7 @@ public class Verify_CreateBrandCampaign extends BaseTest_CF{
 		
 		newCampaign.clickStartDatePicker();
 		
-		newCampaign.verifyLongDateFormat("en", "US");
+		//newCampaign.verifyLongDateFormat("en", "US");
 		
 		newCampaign.verifyTimeToolTipText("Brand", 27, englishLangColumn);
 		
@@ -165,7 +184,7 @@ public class Verify_CreateBrandCampaign extends BaseTest_CF{
 		cp.verifyCampTableData("Scheduled", campName, brandName);
 		//System.out.println(cp.getReleaseDateTime());
 		Utilities.addScreenshot(driver, imgnames.get(8).toString());
-		logger.log(LogStatus.INFO, "Verifying the Created Campaign whether displayed in Scheduled campaign Section");
+		logger.log(LogStatus.INFO, "Verifying the Created Campaign whether displayed in Scheduled campaign Section");*/
 		
 		
 	}
