@@ -28,10 +28,12 @@ public class Navigationpage extends BasePage{
 	
 	public Navigationpage(WebDriver driver) {
 		
+		super(driver);
 		this.driver=driver;
 		wait=new WebDriverWait(driver, 55);
 		action=new Actions(driver);
 		PageFactory.initElements(driver, this);
+		
 	}
 
 	@FindBy(id = "//a[@href='/Dashboard/AllLocations/']")
@@ -130,7 +132,7 @@ public class Navigationpage extends BasePage{
 	
 	public void  navigateCA_Visibility() {
 		wait.until(ExpectedConditions.visibilityOf(CA_Visibility));
-		scrollByElement(CA_Visibility, driver);
+		scrollByElement(CA_Visibility);
 		try {
 			CA_Visibility.click();
 		}
@@ -146,7 +148,7 @@ public class Navigationpage extends BasePage{
 	public void navigateCA_Accuracy() {
 		
 		wait.until(ExpectedConditions.visibilityOf(CA_Accuracy));
-		scrollByElement(CA_Accuracy, driver);
+		scrollByElement(CA_Accuracy);
 		try {
 			CA_Accuracy.click();
 		}
@@ -240,8 +242,8 @@ public class Navigationpage extends BasePage{
 	 * @throws InterruptedException */
 	public void clickCampaigns() {    
 		wait.until(ExpectedConditions.visibilityOf(CampaignsLink));
-		scrollByElement(CampaignsLink, driver);
-		clickelement(CampaignsLink, driver);
+		scrollByElement(CampaignsLink);
+		clickelement(CampaignsLink);
 		wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
 		wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));
 
@@ -251,7 +253,7 @@ public class Navigationpage extends BasePage{
 	
 	public void clickResponses() {
 		wait.until(ExpectedConditions.visibilityOf(ResponsesLink));
-		scrollByElement(ResponsesLink, driver);
+		scrollByElement(ResponsesLink);
 		try {
 			ResponsesLink.click();
 		}
@@ -262,7 +264,7 @@ public class Navigationpage extends BasePage{
 	
 	public void clickReports() {
 		wait.until(ExpectedConditions.visibilityOf(ReportsLink));
-		scrollByElement(ReportsLink, driver);
+		scrollByElement(ReportsLink);
 		try {
 			ReportsLink.click();
 		}

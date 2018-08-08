@@ -174,7 +174,7 @@ public class BasePage {
 		return finalDate;
 	}
 	
-	public void waitUntilLoad(WebDriver driver) {
+	public void waitUntilLoad() {
 	    new WebDriverWait(driver, 30).until((ExpectedCondition<Boolean>) wd ->
 	            ((JavascriptExecutor) wd).executeScript("return document.readyState").equals("complete"));
 	} 
@@ -234,7 +234,7 @@ public class BasePage {
 	}
 	
 
-	public void scrollByElement(WebElement element,WebDriver driver) {
+	public void scrollByElement(WebElement element) {
 		
 		JavascriptExecutor js=(JavascriptExecutor)driver;
 		int yLoc = element.getLocation().getY();
