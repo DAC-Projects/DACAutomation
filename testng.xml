@@ -25,12 +25,12 @@
   </test>
 
  
-<!-- <test name="Competitive Analysis">
+<test name="Competitive Analysis">
   <parameter name="browser" value="Chrome"/>
   <parameter name="testcasesfile" value="CompetitiveAnalysis.json"></parameter>
     <classes>
     	<class name= "com.dac.testcases.CA.CA_test" />
  	</classes>
-  </test>  -->
+  </test> 
   
 </suite>
