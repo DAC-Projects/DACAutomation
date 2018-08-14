@@ -16,6 +16,7 @@ public class CampaignLivePreviewPage extends BasePage{
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
+	 BaseTest_CF bt = new BaseTest_CF();
 	
 	public CampaignLivePreviewPage(WebDriver driver) {
 		
@@ -52,13 +53,13 @@ public class CampaignLivePreviewPage extends BasePage{
 	@FindBy(xpath="//span[text()='3']")
 	private WebElement thankYouPageBTN;
 	
-	@FindBy(xpath="//b[text()='Close Preview']")
+	@FindBy(xpath="//*[@class='btn btn-default']//b")
 	private WebElement closePreviewBTN;
 	
 	public void verifyemailViewData() {
 		clickemailViewBTN();
 		String[] emailviewdata = {emailViewBannerText.getText(), emailViewBodyText.getText(), emailViewSignatureText.getText() };
-		String[] storedpreviewData = {BaseTest_CF.campBannerNew, BaseTest_CF.campBodyCopyNew, BaseTest_CF.campSignatureNew};
+		String[] storedpreviewData = {bt.campBannerNew, bt.campBodyCopyNew, bt.campSignatureNew};
 		for(int i=0; i<3;i++) {
 			System.out.println(emailviewdata[i]);
 			System.out.println(storedpreviewData[i]);

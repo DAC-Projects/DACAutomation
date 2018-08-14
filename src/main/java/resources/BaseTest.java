@@ -124,13 +124,15 @@ public abstract class BaseTest implements IAutoconst {
 			parent = report.startTest("Testcases for :"+ testContext.getName());	
 			this.testcasefile= testcasesfile;
 			this.testName = testContext.getName();
+			System.out.println("node generated");
 	}
 	
 	
-	@AfterTest
+	@AfterTest(alwaysRun = true)
 	public void closenode() {
 		report.endTest(parent);
 		report.flush();
+		System.out.println("node closed");
 		
 	}
 
@@ -188,7 +190,7 @@ public abstract class BaseTest implements IAutoconst {
 		} catch (Throwable t) {
 			logger.log(LogStatus.ERROR, t.fillInStackTrace());
 		}
-		
+		System.out.println("genetare report");
 	}
 
 
@@ -226,7 +228,7 @@ public abstract class BaseTest implements IAutoconst {
 	*/
 	
 	// My CHANGES
-	@BeforeClass
+	@BeforeClass(alwaysRun = true)
 	@Parameters({"browser"})
 	public void setup(@Optional("Chrome")String browser) throws Exception {
 		
@@ -242,22 +244,35 @@ public abstract class BaseTest implements IAutoconst {
 		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		//Date date = new Date();
 		//String time = sdf.format(date);
+		System.out.println("setup dashboard");
 		
 	}
 	
 	@BeforeMethod
 	public void setup(Method m) throws Exception {
+		System.out.println("entered before method");
 		String className =this.getClass().getName();
 		String methodName = m.getName();
 		 System.out.println(className + "***********\n"+ methodName);
+		 System.out.println("jason object creating");
+		 System.out.println(testcasefile);
 		 JsonParse Ja = new JsonParse(testcasefile, className, methodName);
 		 id =Ja.getID();
+		 System.out.println("id :"+id);
 		System.out.println(Ja.getSheet());
 		System.out.println(Ja.getID());
 		
 		re = new ReadExcel(Ja.getIterationPath());
 		arraySteps.addAll( re.getTestcases(Ja.getSheet(), Ja.getID()));
 		imgnames.addAll(re.getScreenshotNames(Ja.getSheet(), Ja.getID()));
+		
+		/*String class= this.getClass().getSimpleName();*/
+		String Name = ReadExcel.Testcase +"-" +id; 
+		System.out.println(Name);
+		logger = report.startTest(Name).assignCategory("Regression Testcases for "+ browser);
+		parent.appendChild(logger);
+		logger.log(LogStatus.INFO, "Log for Each Step in Test Case");
+		System.out.println("setup before method");
 	}
 	
 	
@@ -270,12 +285,7 @@ public abstract class BaseTest implements IAutoconst {
 		FileInputStream fis = new FileInputStream(CONFIG_PATH);
 		prop.load(fis);
 		
-		String className= this.getClass().getSimpleName();
-		String Name = ReadExcel.Testcase +"-" +id; 
-		System.out.println(Name);
-		logger = report.startTest(Name).assignCategory("Regression Testcases for "+ browser);
-		parent.appendChild(logger);
-		logger.log(LogStatus.INFO, "Log for Each Step in Test Case");
+		
 		//String browserName = prop.getProperty("browser");
 		 File file = new File("./downloads");
 
@@ -340,12 +350,13 @@ public abstract class BaseTest implements IAutoconst {
 		}
 
 		driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
+		System.out.println("opened browser");
 		return driver;
 
 	}
 	
 	
-	@AfterClass
+	@AfterClass(alwaysRun = true)
 	public void closeBrowser() throws Exception {
 	
 		ce =new CreateEvidence(ReadExcel.Testcase);
@@ -368,11 +379,12 @@ public abstract class BaseTest implements IAutoconst {
 		lp.setUserName(email);
 		lp.setPassword(password);
 		lp.clickLogin();
-
+		System.out.println("logged to Auth center");
 
 	}
 
 	public void navigateToDashboard(WebDriver driver, LoginAC_Beta lp, String browser) {
+		System.out.println("navigating to dashboard");
 		String oldTab = driver.getWindowHandle();
 		String [] account = getAccount();
 		lp.findUser(account[1]);
@@ -393,6 +405,7 @@ public abstract class BaseTest implements IAutoconst {
 			System.out.println(handle+"*****");
 		driver.switchTo().window(handles.get(0));
 		driver.manage().window().maximize();
+		System.out.println("navigted to Dashboard");
 
 	}
 	

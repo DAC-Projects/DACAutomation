@@ -1,5 +1,7 @@
 package com.dac.testcases.CF;
 
+import java.io.IOException;
+
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -14,8 +16,8 @@ import resources.Utilities;
 
 public class Verify_LocLivePreviewN_DeleteCamp extends BaseTest_CF{
 	
-	@Test(alwaysRun=true, dependsOnMethods= {"com.dac.testcases.CF.Verify_CreateLocCampaign.createLocCamp_Test"})
-	public void livePreviewNDeleteTest() throws Exception {
+	@Test(alwaysRun=true, priority = 1, dependsOnMethods= {"com.dac.testcases.CF.Verify_CreateLocCampaign.createLocCamp_Test"})
+	public void livePreviewLocTest() throws Exception {
 		
 		Navigationpage np=new Navigationpage(driver);
 		np.clickCampaigns();
@@ -29,8 +31,11 @@ public class Verify_LocLivePreviewN_DeleteCamp extends BaseTest_CF{
 		cp.clickLivePreviewBTN();
 		Utilities.addScreenshot(driver, imgnames.get(1).toString());
 		logger.log(LogStatus.INFO, "Checking the Email view section of Scheduled campaign Live Preview");
-		
+				
 		CampaignLivePreviewPage LP=new CampaignLivePreviewPage(driver);
+		
+		LP.verifyemailViewData();
+		
 		LP.clickfeedBackBTN();
 		Utilities.addScreenshot(driver, imgnames.get(2).toString());
 		logger.log(LogStatus.INFO, "Checking the Feed Back section of Scheduled campaign Live Preview");
@@ -41,6 +46,17 @@ public class Verify_LocLivePreviewN_DeleteCamp extends BaseTest_CF{
 		
 		LP.clickClosePreviewBTN();
 		
+		np.waitUntilLoad(driver);
+		
+	}
+	
+	@Test(enabled = true, priority = 2)
+	public void deleteCampTest() throws InterruptedException, IOException {
+		
+		CampaignsPage cp=new CampaignsPage(driver);
+		
+		cp.search_ScheduledCampaign(campName);
+		
 		cp.clickDeleteBTN();
 		Utilities.addScreenshot(driver, imgnames.get(4).toString());
 		logger.log(LogStatus.INFO, "Clicking delete button of Scheduled campaign and checking the delete pop up displying or not");
@@ -48,5 +64,9 @@ public class Verify_LocLivePreviewN_DeleteCamp extends BaseTest_CF{
 		cp.clickDeleteAcceptBTN();
 		Utilities.addScreenshot(driver, imgnames.get(5).toString());
 		logger.log(LogStatus.INFO, "clicking on confirmation to delete Sceduled campaign");
+		
+		Navigationpage np=new Navigationpage(driver);
+
+		np.waitUntilLoad(driver);
 	}
 }

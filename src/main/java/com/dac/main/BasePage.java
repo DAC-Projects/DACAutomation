@@ -67,6 +67,36 @@ public class BasePage {
 	
 	public BasePage() {}
 	
+	public void waitUntilLoad(WebDriver driver) {
+
+	    //WebDriverWait wait = new WebDriverWait(driver, 30);
+
+	    // wait for jQuery to load
+	    ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
+	      @Override
+	      public Boolean apply(WebDriver driver) {
+	        try {
+	          return ((Long)((JavascriptExecutor)driver).executeScript("return jQuery.active") == 0);
+	        }
+	        catch (Exception e) {
+	          // no jQuery present
+	          return true;
+	        }
+	      }
+	    };
+
+	    // wait for Javascript to load
+	    ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
+	      @Override
+	      public Boolean apply(WebDriver driver) {
+	        return ((JavascriptExecutor)driver).executeScript("return document.readyState")
+	        .toString().equals("complete");
+	      }
+	    };
+
+	  wait.until(jQueryLoad);wait.until(jsLoad);
+	}
+	
 	/*
 	public void verifyPageIsDisplayed(WebDriver driver,String eResult) {
 		String sETO=AutoUtil.getProperty(IAutoConst.CONFIG_PATH, "ETO");
@@ -172,11 +202,6 @@ public class BasePage {
 		String finalDate = DateFormats.dateFormat(langCode, countryCode).format(c.getTime());
 		return finalDate;
 	}
-	
-	public void waitUntilLoad(WebDriver driver) {
-	    new WebDriverWait(driver, 30).until((ExpectedCondition<Boolean>) wd ->
-	            ((JavascriptExecutor) wd).executeScript("return document.readyState").equals("complete"));
-	} 
 	
 	/**
 	 * To get and store the value/text of a field 	*/

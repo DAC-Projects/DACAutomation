@@ -1,6 +1,5 @@
 package com.dac.main;
 
-import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -13,11 +12,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import com.mysql.jdbc.Driver;
-
-import resources.DateFormats;
-
 
 public class Navigationpage extends BasePage{
 
@@ -160,38 +154,6 @@ public class Navigationpage extends BasePage{
 		
 	}
 	
-	
-	
-	public void waitUntilLoad(WebDriver driver) {
-
-		    //WebDriverWait wait = new WebDriverWait(driver, 30);
-
-		    // wait for jQuery to load
-		    ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
-		      @Override
-		      public Boolean apply(WebDriver driver) {
-		        try {
-		          return ((Long)((JavascriptExecutor)driver).executeScript("return jQuery.active") == 0);
-		        }
-		        catch (Exception e) {
-		          // no jQuery present
-		          return true;
-		        }
-		      }
-		    };
-
-		    // wait for Javascript to load
-		    ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
-		      @Override
-		      public Boolean apply(WebDriver driver) {
-		        return ((JavascriptExecutor)driver).executeScript("return document.readyState")
-		        .toString().equals("complete");
-		      }
-		    };
-
-		  wait.until(jQueryLoad);wait.until(jsLoad);
-		}
-	
 	public WebElement getGoogleRanking() {
 		return GoogleRanking;
 	}
@@ -236,47 +198,30 @@ public class Navigationpage extends BasePage{
 		return Visibility;
 	}
 	
-	/** To click on Campaigns link in LHS to navigate to Campaigns page  
-	 * @throws InterruptedException */
+	/** To click on Campaigns link in LHS to navigate to Campaigns page   */
 	public void clickCampaigns() {    
 		wait.until(ExpectedConditions.visibilityOf(CampaignsLink));
 		scrollByElement(CampaignsLink, driver);
 		clickelement(CampaignsLink, driver);
 		wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
 		wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));
-
-/*			wait.until(ExpectedConditions.visibilityOf(campaignTable));
-			//Thread.sleep(45000);
-*/	}
+	}
 	
 	public void clickResponses() {
 		wait.until(ExpectedConditions.visibilityOf(ResponsesLink));
 		scrollByElement(ResponsesLink, driver);
-		try {
-			ResponsesLink.click();
-		}
-		catch(Exception e) {			
-			action.moveToElement(ResponsesLink).click().perform();
-		}
+		clickelement(ResponsesLink, driver);
 	}
 	
 	public void clickReports() {
 		wait.until(ExpectedConditions.visibilityOf(ReportsLink));
 		scrollByElement(ReportsLink, driver);
-		try {
-			ReportsLink.click();
-		}
-		catch(Exception e) {
-			action.moveToElement(ReportsLink).click().perform();
-		}
+		clickelement(ReportsLink, driver);
 	}
 	
 	private void DB_LangList() {
-		//Thread.sleep(2000);
-		action.moveToElement(DBLangLink).click(DBLangLink).perform();
-		action.moveToElement(DBLangPopUp).click(DBLangPopUp).perform();
-		//DBLangLink.click();
-		//DBLangPopUp.click();
+		clickelement(DBLangLink, driver);
+		clickelement(DBLangPopUp, driver);
 	}
      
 	public void select_DB_Lang_Link(String langCode, String contryCode) {
@@ -285,11 +230,11 @@ public class Navigationpage extends BasePage{
 		wait.until(ExpectedConditions.visibilityOf(DBLangLink));
 		if(DBLangLink.isDisplayed()) {
 			DB_LangList();
-				switch(langConCode) {
+			switch(langConCode) {
 				
 				case "de_DE" :
 							   try {
-								   selectDB_langDeutsch.click();   
+								   selectDB_langDeutsch.click();
 							   }
 							   catch(Exception e){
 								   if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Deutsch')]")).isDisplayed()) {
@@ -311,8 +256,8 @@ public class Navigationpage extends BasePage{
 				   			   break;
 				   			   
 				case "es_ES" :
-				 				try {
-				 					selectDB_langSpanish_Spain.click();   
+				 				try {  
+				 					selectDB_langSpanish_Spain.click();
 				 				}
 				 				catch(Exception e){
 				 					if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Español')]")).isDisplayed()) {
@@ -323,7 +268,7 @@ public class Navigationpage extends BasePage{
 				   			   
 				case "es_MX" : 
 							   try {
-								   selectDB_langSpanish_Mexico.click();   
+								   selectDB_langSpanish_Mexico.click();
 							   }
 							   catch(Exception e){
 								   if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Español')]")).isDisplayed()) {
@@ -334,7 +279,7 @@ public class Navigationpage extends BasePage{
 				   			   
 				case "fr_CA" : 
 							   try {
-								   selectDB_langFrench_Canada.click();   
+								   selectDB_langFrench_Canada.click();
 							   }
 							   catch(Exception e){
 								   if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Français')]")).isDisplayed()) {
@@ -345,7 +290,7 @@ public class Navigationpage extends BasePage{
 				   			   
 				case "fr_FR" :
 				 			   try {
-				 				   selectDB_langFrench_France.click();   
+				 				   selectDB_langFrench_France.click();
 				 			   }
 				 			   catch(Exception e){
 				 				  if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Français')]")).isDisplayed()) {
@@ -356,7 +301,8 @@ public class Navigationpage extends BasePage{
 				   			   
 				case "it_IT" :
 							   try {
-								   selectDB_langItalian.click();   
+								   selectDB_langItalian.click();
+								   
 							   }
 							   catch(Exception e){
 								   if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Italiano')]")).isDisplayed()) {
@@ -367,7 +313,7 @@ public class Navigationpage extends BasePage{
 				   			   
 				case "sv_SE" :
 							   try {
-								   selectDB_langSwedish.click();   
+								   selectDB_langSwedish.click();
 							   }
 							   catch(Exception e){
 								   if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Svenska')]")).isDisplayed()) {

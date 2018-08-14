@@ -1,28 +1,19 @@
 package com.dac.main.POM_CF;
 
-import java.awt.AWTException;
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.Toolkit;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.imageio.ImageIO;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -30,7 +21,6 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import com.dac.main.BasePage;
-
 import resources.DateFormats;
 import resources.ExcelTestDataHandler;
 import resources.formatConvert;
@@ -45,6 +35,7 @@ public class ResponsesPage_RS extends BasePage{
 	WebDriverWait wait;
 	JavascriptExecutor js;
 	SoftAssert assertValue;
+	BaseTest_CF bt = new BaseTest_CF();
 	
 	static int totalStarCount = 0, star1_Count=0, star2_Count=0, star3_Count=0, star4_Count=0, star5_Count=0;
 	static int sumOfAllStars = 0, star1_Sum = 0, star2_Sum = 0, star3_Sum = 0, star4_Sum = 0, star5_Sum = 0;
@@ -152,8 +143,8 @@ public class ResponsesPage_RS extends BasePage{
 		if (toDateUI.equals(todayDate)) {
 			Assert.assertEquals(toDateUI, todayDate);
 		}
-		else if(toDateUI.equals(BaseTest_CF.campEndDate)){
-			Assert.assertEquals(toDateUI, BaseTest_CF.campEndDate);
+		else if(toDateUI.equals(bt.campEndDate)){
+			Assert.assertEquals(toDateUI, bt.campEndDate);
 		}
 		else {
 			Assert.fail();

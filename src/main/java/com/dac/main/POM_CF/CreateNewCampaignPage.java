@@ -52,6 +52,8 @@ public class CreateNewCampaignPage extends BasePage{
 		PageFactory.initElements(driver, this);
 	}
 	
+	BaseTest_CF bt = new BaseTest_CF();
+	
 	@FindBy(xpath="//*[@ng-bind='headerMessage']")
 	private WebElement subTittle_CampaignPage;
 	
@@ -145,6 +147,10 @@ public class CreateNewCampaignPage extends BasePage{
 	private WebElement contactInfoPhoneNumber;
 	
 	//---------------------------------------------------------------
+	
+	//*[@ng-bind="EmailAddressCount"]
+	@FindBy(xpath="//*[@ng-bind='EmailAddressCount']")
+	private WebElement totalMailCount;
 	
 	@FindBy(xpath="(//h3[@class='text-primary'])[3]")
 	private WebElement scheduledSection;
@@ -388,6 +394,15 @@ public class CreateNewCampaignPage extends BasePage{
 		}
 	}
 	
+	/**
+	 * To get the selected location/Client name where to compare location name in live preview	*/
+	public String getSelectedLocName() throws UnsupportedFlavorException, IOException {
+		String selectedLoc = getClipboardContents(campaignLocTB);
+		String[] a = selectedLoc.split(",");
+		bt.locName =a[0];
+		return a[0];
+	}
+	
 	public String setCampaignBrandName(int column) throws Exception {
 		scrollByElement(campaignInfoSection, driver);
 		String campBrandName = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(7, column);
@@ -400,44 +415,27 @@ public class CreateNewCampaignPage extends BasePage{
 		scrollByElement(campaignInfoSection, driver);
 		String locNamexp="//input[contains(@name,'"+locationName+"')]";
 		WebElement selectLoc = mlc1st.findElement(By.xpath(locNamexp));
-		//selectLoc.click();
-		//WebElement locationNum = mlc1st.findElement(By.xpath(locNamexp+"/../span[contains(@class,'text-status')]"));
-		/*String a= "(//input[contains(@name,'BN')]/../span[contains(@class,'text-status')])[1]";
-		WebElement locationNum = driver.findElement(By.xpath(a));
-		
-		Object b = js.executeScript("document.getElementById(\"selectableTable\").getElementsByTagName(\"div\")[1].getElementsByTagName(\"label\")[0].getElementsByTagName(\"span\")[0].innerText");
-		
-		System.out.println(b.toString());
-		String ccs= "div#selectableTable>div:nth-child(3)>label:nth-child(2)>strong";
-		System.out.println(driver.findElement(By.cssSelector(ccs)).getText());
-		System.out.println(locationNum.getText());*/
-		//System.out.println(selectLoc.getText());
-		//action.moveToElement(selectLoc).click(selectLoc).perform();
 		clickelement(selectLoc, driver);
 		
 	}
 	
 	public void clickAddBTN() {
 		scrollByElement(campaignInfoSection, driver);
-		//mlcAddBTN.click();
 		clickelement(mlcAddBTN, driver);
 	}
 	
 	public void clickRemoveBTN() {
 		scrollByElement(campaignInfoSection, driver);
-		//mlcRemoveBTN.click();
 		clickelement(mlcRemoveBTN, driver);
 	}
 	
 	public void clickAddAllBTN() {
 		scrollByElement(campaignInfoSection, driver);
-		//mlcAddAllBTN.click();
 		clickelement(mlcAddAllBTN, driver);
 	}
 	
 	public void clickRemoveAllBTN() {
 		scrollByElement(campaignInfoSection, driver);
-		//mlcRemoveAllBTN.click();
 		clickelement(mlcRemoveAllBTN, driver);
 	}
 	
@@ -486,29 +484,30 @@ public class CreateNewCampaignPage extends BasePage{
 	
 	public void setContactInfo(int column) throws Exception {
 		
+				
 		scrollByElement(signatureHeading, driver);
-		BaseTest_CF.campAddressL1 = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(20, column);
-		BaseTest_CF.campAddressL2 = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(21, column);
-		BaseTest_CF.city = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(22, column);
-		BaseTest_CF.STorPR = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(23, column);
-		BaseTest_CF.postalCode = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(24, column);
-		BaseTest_CF.phoneNo = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(25, column);
-		contactAddressLine1.sendKeys(BaseTest_CF.campAddressL1);
-		contactAddressLine2.sendKeys(BaseTest_CF.campAddressL2);
-		contactInfoBrandCity.sendKeys(BaseTest_CF.city);
-		contactInfoBrandStProv.sendKeys(BaseTest_CF.STorPR);
-		contactInfoZipCode.sendKeys(BaseTest_CF.postalCode);
-		contactInfoPhoneNumber.sendKeys(BaseTest_CF.phoneNo);
+		bt.campAddressL1 = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(20, column);
+		bt.campAddressL2 = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(21, column);
+		bt.city = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(22, column);
+		bt.STorPR = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(23, column);
+		bt.postalCode = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(24, column);
+		bt.phoneNo = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(25, column);
+		contactAddressLine1.sendKeys(bt.campAddressL1);
+		contactAddressLine2.sendKeys(bt.campAddressL2);
+		contactInfoBrandCity.sendKeys(bt.city);
+		contactInfoBrandStProv.sendKeys(bt.STorPR);
+		contactInfoZipCode.sendKeys(bt.postalCode);
+		contactInfoPhoneNumber.sendKeys(bt.phoneNo);
 	}
 	
 	
 	//works for English DashBoard Language
 	public void setScheduledStartDate(String langCode, String countryCode) throws AWTException {
 		scrollByElement(scheduledSection, driver);
-		BaseTest_CF.campStartDate = DateFormats.dateFormat(langCode, countryCode).format(new Date());
+		bt.campStartDate = DateFormats.dateFormat(langCode, countryCode).format(new Date());
 
-		System.out.println("StartDate : "+ BaseTest_CF.campStartDate);
-		scheduledStartDate.sendKeys(BaseTest_CF.campStartDate);
+		System.out.println("StartDate : "+ bt.campStartDate);
+		scheduledStartDate.sendKeys(bt.campStartDate);
 		
 		Robot robot = new Robot();
 		robot.keyPress(KeyEvent.VK_ENTER);
@@ -520,13 +519,13 @@ public class CreateNewCampaignPage extends BasePage{
 	}*/
 	
 	public void verifyCampEndDate(String langCode, String countryCode) throws UnsupportedFlavorException, IOException {
-		BaseTest_CF.campEndDate = BasePage.addDays(langCode, countryCode, 30);
-		System.out.println("EndDate : "+BaseTest_CF.campEndDate);
+		bt.campEndDate = BasePage.addDays(langCode, countryCode, 30);
+		System.out.println("EndDate : "+bt.campEndDate);
 		String endDatetext = getClipboardContents(scheduledEndDate);
 		System.out.println("copiedEndDate : "+endDatetext);
 		
-		if(BaseTest_CF.campEndDate.equals(endDatetext)) {
-			Assert.assertEquals(BaseTest_CF.campEndDate, endDatetext);
+		if(bt.campEndDate.equals(endDatetext)) {
+			Assert.assertEquals(bt.campEndDate, endDatetext);
 		}
 		else {
 			Assert.fail();
@@ -643,7 +642,6 @@ public class CreateNewCampaignPage extends BasePage{
 	
 	public void clickViewAllCampaignBTN() throws InterruptedException {
 		wait.until(ExpectedConditions.visibilityOf(viewAllCampaignBTN));
-		//Thread.sleep(2000);
 		clickelement(viewAllCampaignBTN, driver);
 		Thread.sleep(5000);
 	}
@@ -801,9 +799,10 @@ public class CreateNewCampaignPage extends BasePage{
 		toFieldTB.sendKeys(email);
 	}
 	
-	public void getTofieldData() throws UnsupportedFlavorException, IOException {
+	public String getTofieldData() throws UnsupportedFlavorException, IOException {
 		scrollByElement(toFieldTB, driver);
-		BaseTest_CF.campTofield = getClipboardContents(toFieldTB);
+		bt.campTofield = getClipboardContents(toFieldTB);
+		return bt.campTofield;
 	}
 	
 	public void clickUpdateCampaignBTN() {

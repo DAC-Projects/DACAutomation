@@ -1,9 +1,6 @@
 package com.dac.main.POM_CF;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -11,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -34,8 +31,6 @@ public class CampaignsPage extends BasePage{
 		action=new Actions(driver);
 		js=(JavascriptExecutor)driver;
 		PageFactory.initElements(driver, this);
-		wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));
-		wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
 	}
 
 	
@@ -175,62 +170,49 @@ public class CampaignsPage extends BasePage{
 	
 	public void click_ScheduledTab() {
 		scrollByElement(ScheduledTab, driver);
-		/*wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
-		wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));*/
-		try {
-			wait.until(ExpectedConditions.elementToBeClickable(ScheduledTab));
-			ScheduledTab.click();
-		}
-		catch(Exception e) {
-			
-		}
+		waitTillLinksLoad();
+		wait.until(ExpectedConditions.elementToBeClickable(ScheduledTab));
+		clickelement(ScheduledTab, driver);
 	}
 	
 	public void clickEditBTN() throws InterruptedException {
-		/*wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
-		wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));*/
-		if(scheduledCampEditBTN.isEnabled() & scheduledCampEditBTN.isDisplayed()) {
-			scheduledCampEditBTN.click();
-			Thread.sleep(6000);
-		}
-		else {
-			System.out.println();
-		}
+		waitTillLinksLoad();
+		clickelement(scheduledCampEditBTN, driver);
+		Thread.sleep(6000);
 	}
 	
-	public void clickDeleteBTN() throws InterruptedException {
+	public void clickDeleteBTN() {
+		waitTillLinksLoad();
 		clickelement(scheduledCampDeleteBTN, driver);
-		//action.moveToElement(scheduledCampDeleteBTN).click(scheduledCampDeleteBTN).perform();
 		wait.until(ExpectedConditions.visibilityOf(acceptDelBTN));
-		//Thread.sleep(2000);
 		
 	}
 	
 	public void clickDeleteAcceptBTN() throws InterruptedException {
-		acceptDelBTN.click();
-		//Thread.sleep(6000);
+		clickelement(acceptDelBTN, driver);
 		wait.until(ExpectedConditions.visibilityOf(deleteCampConfirmBTN));
-		deleteCampConfirmBTN.click();
+		clickelement(deleteCampConfirmBTN, driver);
 		Thread.sleep(5000);
 		
 	}
 	
 	public void clickDeleteCancelBTN() throws InterruptedException {
-		cancelDelBTN.click();
+		clickelement(cancelDelBTN, driver);
 		Thread.sleep(4000);
 	}
 	
 	public void clickReScheduleBTN() throws InterruptedException {
-		scheduledCampReScheduleBTN.click();
+		waitTillLinksLoad();
+		clickelement(scheduledCampReScheduleBTN, driver);
 		
 	}
 	
 	public void clickLivePreviewBTN() {
+		waitTillLinksLoad();
 		wait.until(ExpectedConditions.visibilityOf(scheduledCampLivePreviewBTN));
 		if(scheduledCampLivePreviewBTN.isEnabled()) {
-			scheduledCampLivePreviewBTN.click();
+			clickelement(scheduledCampLivePreviewBTN, driver);
 			wait.until(ExpectedConditions.visibilityOf(closePreviewBTN));
-			//Thread.sleep(6000);			
 		}
 		else {
 			System.out.println("Live preview Button is Disabled");
@@ -240,19 +222,12 @@ public class CampaignsPage extends BasePage{
 	public void click_DraftTab() throws InterruptedException {
 		wait.until(ExpectedConditions.visibilityOf(procCampCustActReportLink));
 		Thread.sleep(2000);
-		//scrollByElement(DraftTab, driver);
-		try {
-			action.moveToElement(DraftTab).click().perform();
-		}
-		catch(Exception e) {
-			DraftTab.click();
-		}
+		clickelement(DraftTab, driver);
 	}
 	
 	public void search_ScheduledCampaign(String CampName) throws InterruptedException {
-		
+		waitTillLinksLoad();
 		scrollByElement(ScheduledSearchBar, driver);
-		//click_ScheduledTab();
 		ScheduledSearchBar.clear();
 		ScheduledSearchBar.sendKeys(CampName);
 		Thread.sleep(3000);	
@@ -276,14 +251,14 @@ public class CampaignsPage extends BasePage{
 	}
 	
 	public void clickDeleteDraftCamp() {
-		deleteDraftCamp.click();
+		clickelement(deleteDraftCamp, driver);
 		wait.until(ExpectedConditions.visibilityOf(acceptDelBTN));
-		acceptDelBTN.click();
+		clickelement(acceptDelBTN, driver);
 	}
 	
 	
 	public void search_ProcessedCampaign(String CampName) throws InterruptedException {
-		//Thread.sleep(4000);
+		waitTillLinksLoad();
 		scrollByElement(processedCampSection, driver);
 		ProcessedCampaign_SearchBar.clear();
 		ProcessedCampaign_SearchBar.sendKeys(CampName);
@@ -297,16 +272,14 @@ public class CampaignsPage extends BasePage{
 	 * @CampName : Campaign Name to search		*/
 	public void verifyCampName(String TabName, String CampName) throws InterruptedException {
 		if(TabName.equalsIgnoreCase("Scheduled")) {
-			wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
-			wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));
+			waitTillLinksLoad();
 			search_ScheduledCampaign(CampName);
 		}
 		else if(TabName.equalsIgnoreCase("Draft")) {
 			search_DraftCampaign(CampName);
 		}
 		else if(TabName.equalsIgnoreCase("Processed")) {
-			wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
-			wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));
+			waitTillLinksLoad();
 			search_ProcessedCampaign(CampName);
 		}
 		
@@ -316,6 +289,7 @@ public class CampaignsPage extends BasePage{
 	}
 	
 	public void verifyProcessedCampTableData(String CampName) {
+		waitTillLinksLoad();
 		WebElement td1 = driver.findElement(By.xpath("//td[1]//span[contains(.,'"+CampName+"')]"));
 		verifyText(td1, CampName);
 		
@@ -326,16 +300,14 @@ public class CampaignsPage extends BasePage{
 	
 	public void verifyCampTableData(String TabName, String CampName, String LocOrBrandName) throws InterruptedException {
 		if(TabName.equalsIgnoreCase("Scheduled")) {
-			wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
-			wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));
+			waitTillLinksLoad();
 			search_ScheduledCampaign(CampName);
 		}
 		else if(TabName.equalsIgnoreCase("Draft")) {
 			search_DraftCampaign(CampName);
 		}
 		else if(TabName.equalsIgnoreCase("Processed")) {
-			wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
-			wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));
+			waitTillLinksLoad();
 			search_ProcessedCampaign(CampName);
 		}
 		
@@ -361,12 +333,14 @@ public class CampaignsPage extends BasePage{
 	
 	public void verifyLocOrBrandName(String TabName, String CampName, String LocOrBrandName) throws InterruptedException {
 		if(TabName.equalsIgnoreCase("Scheduled")) {
+			waitTillLinksLoad();
 			search_ScheduledCampaign(CampName);
 		}
 		else if(TabName.equalsIgnoreCase("Draft")) {
 			search_DraftCampaign(CampName);
 		}
 		else if(TabName.equalsIgnoreCase("Processed")) {
+			waitTillLinksLoad();
 			search_ProcessedCampaign(CampName);
 		}
 		
@@ -378,8 +352,9 @@ public class CampaignsPage extends BasePage{
 	 * This method used to click Details link of Particular Processed campaign
 	 * note:  Before calling this method you should invoke search_ProcessedCampaign method */
 	public void clickDetailsLink() {
+		waitTillLinksLoad();
 		scrollByElement(processedCampSection, driver);
-		processedCampDetailsLink.click();
+		clickelement(processedCampDetailsLink, driver);
 	}
 	
 	/** 
@@ -387,37 +362,24 @@ public class CampaignsPage extends BasePage{
 	 * note:  Before calling this method you should invoke search_ProcessedCampaign method 
 	 * @throws InterruptedException */
 	public void clickResponsesLink() throws InterruptedException {
+		waitTillLinksLoad();
 		scrollByElement(processedCampSection, driver);
 		clickelement(processedCampResponsesLink, driver);
-		/*wait.until(ExpectedConditions.visibilityOf(processedCampResponsesLink));
-		//Thread.sleep(3000);
 		try {
-			processedCampResponsesLink.click();
+			wait.until(ExpectedConditions.visibilityOf(tableResult));
 		}
 		catch(Exception e) {
-			action.moveToElement(processedCampResponsesLink).click().perform();
+			wait.until(ExpectedConditions.visibilityOf(emptyTable));
 		}
-		finally {
-			try {
-				wait.until(ExpectedConditions.visibilityOf(tableResult));
-			}
-			catch(Exception e) {
-				wait.until(ExpectedConditions.visibilityOf(emptyTable));
-			}
-		}*/
 	}
 	
 	/** 
 	 * This method used to click Details link of Particular Processed campaign
 	 * note:  Before calling this method you should invoke search_ProcessedCampaign method */
 	public void clickReportsLink() {
+		waitTillLinksLoad();
 		scrollByElement(processedCampSection, driver);
-		try {
-			processedCampReportsLink.click();
-		}
-		catch(Exception e) {
-			action.moveToElement(processedCampReportsLink).click().perform();
-		}
+		clickelement(processedCampReportsLink, driver);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("btnApply")));
 	}
 	
@@ -425,14 +387,10 @@ public class CampaignsPage extends BasePage{
 	 * This method used to click Details link of Particular Processed campaign
 	 * note:  Before calling this method you should invoke search_ProcessedCampaign method 	 */
 	public void clickCustActReportLink() {
+		waitTillLinksLoad();
 		scrollByElement(processedCampSection, driver);
 		wait.until(ExpectedConditions.visibilityOf(procCampCustActReportLink));
-		try {
-			procCampCustActReportLink.click();
-		}
-		catch(Exception e) {
-			action.moveToElement(procCampCustActReportLink).click().perform();
-		}
+		clickelement(procCampCustActReportLink, driver);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("customerActivityTable_info")));
 	}
 }

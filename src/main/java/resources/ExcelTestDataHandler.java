@@ -108,7 +108,7 @@ public class ExcelTestDataHandler {
 			int col = new ExcelTestDataHandler(filePath, sheetName).getColCount(i);
 			System.out.println("Cell Values in Row Number : "+i);
 			for(int j=0;j<col;j++) {		
-				System.out.print(new ExcelTestDataHandler(filePath, sheetName).getCellValue(i, j)+"   ");
+				System.out.print(new ExcelTestDataHandler(filePath, sheetName).getValue(i, j)+"   ");
 			}
 			System.out.println("\n");
 		}
@@ -262,9 +262,9 @@ public class ExcelTestDataHandler {
 	}
 //--------------------------------------------------------R-code
 	/**
-	 * @param column
-	 * @param row
 	 * Used to get values of a cell given row and column
+	 * @param column_no : column number of a excel sheet
+	 * @param row_no : Row number of a excel sheet
 	 * @throws Exception 
 	 */
 	public  String getValue(int column_no, int row_no) throws Exception {
@@ -273,7 +273,7 @@ public class ExcelTestDataHandler {
 		
 		if (row.getCell(column_no)!= null  && StringUtils.isNotBlank(row.getCell(column_no).toString())){
 			return row.getCell(column_no).toString();
-		}else return null;
+		}else return "";
 	}
 	
 	
@@ -282,9 +282,7 @@ public class ExcelTestDataHandler {
 	 * used to search for a text in a column and return its row nos
 	 */
 	public  List<Integer> find_Row_no(String text, int column_no){
-		
-		
-		
+
 		List<Integer> matchingRows = new ArrayList<Integer>();
 		for (int i=0; i<= sheet.getLastRowNum();i++) {
 			row = sheet.getRow(i);
@@ -301,8 +299,8 @@ public class ExcelTestDataHandler {
 	
 	
 	/**
-	 * @param name
 	 * used to search for a pattern in a column and return its row nos
+	 * @param name
 	 */
 	public  List<Integer> seacrh_pattern(String text, int row_no){
 		
@@ -327,8 +325,8 @@ public class ExcelTestDataHandler {
 	
 	
 	/**
-	 * @param Column_Name
 	 * Finds the column numbers using column name
+	 * @param Column_Name
 	 */
 	public  List<Integer>  find_column_no(String Column_Name, int row_no) {
 		
@@ -346,12 +344,5 @@ public class ExcelTestDataHandler {
 	public  int getrowno() {
 		return sheet.getLastRowNum();
 	}
-	
-	
-
-	
-
-	
-	
 	
 }

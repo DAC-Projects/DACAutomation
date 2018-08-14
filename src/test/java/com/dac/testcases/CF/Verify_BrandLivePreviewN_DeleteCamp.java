@@ -1,5 +1,7 @@
 package com.dac.testcases.CF;
 
+import java.io.IOException;
+
 import org.testng.annotations.Test;
 
 import com.dac.main.Navigationpage;
@@ -13,8 +15,8 @@ import resources.Utilities;
 
 public class Verify_BrandLivePreviewN_DeleteCamp extends BaseTest_CF{
 	
-	@Test(dependsOnMethods= {"com.dac.testcases.CF.Verify_CreateBrandCampaign.createBrandCamp_Test"})
-	public void livePreviewNDeleteTest() throws Exception {
+	@Test(priority = 0,dependsOnMethods= {"com.dac.testcases.CF.Verify_CreateBrandCampaign.createBrandCamp_Test"})
+	public void livePreviewBrandTest() throws Exception {
 		
 		Navigationpage np=new Navigationpage(driver);
 		np.clickCampaigns();
@@ -43,6 +45,17 @@ public class Verify_BrandLivePreviewN_DeleteCamp extends BaseTest_CF{
 		
 		LP.clickClosePreviewBTN();
 		
+		np.waitUntilLoad(driver);
+		
+	}
+	
+	@Test(enabled = true)
+	public void deleteBrandCampTest() throws InterruptedException, IOException {
+		
+		CampaignsPage cp=new CampaignsPage(driver);
+		
+		cp.search_ScheduledCampaign(campName);
+		
 		cp.clickDeleteBTN();
 		Utilities.addScreenshot(driver, imgnames.get(4).toString());
 		logger.log(LogStatus.INFO, "Clicking delete button of Scheduled campaign and checking the delete pop up displying or not");
@@ -51,6 +64,8 @@ public class Verify_BrandLivePreviewN_DeleteCamp extends BaseTest_CF{
 		Utilities.addScreenshot(driver, imgnames.get(5).toString());
 		logger.log(LogStatus.INFO, "clicking on confirmation to delete Sceduled campaign");
 		
+		Navigationpage np=new Navigationpage(driver);
+
 		np.waitUntilLoad(driver);
 	}
 	
