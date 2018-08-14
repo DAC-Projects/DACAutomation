@@ -19,7 +19,7 @@ public class CampaignLivePreviewPage extends BasePage{
 	 BaseTest_CF bt = new BaseTest_CF();
 	
 	public CampaignLivePreviewPage(WebDriver driver) {
-		
+		super(driver);
 		this.driver = driver;
 		wait = new WebDriverWait(driver, 35);
 		action=new Actions(driver);
@@ -73,25 +73,25 @@ public class CampaignLivePreviewPage extends BasePage{
 	}
 	
 	public void clickemailViewBTN() {
-		scrollByElement(emailViewPageBTN, driver);
+		scrollByElement(emailViewPageBTN);
 		emailViewPageBTN.click();
 		wait.until(ExpectedConditions.visibilityOf(giveAReviewBTN));
 	}
 	
 	public void clickfeedBackBTN() {
-		scrollByElement(feedBackPageBTN, driver);
+		scrollByElement(feedBackPageBTN);
 		action.moveToElement(feedBackPageBTN).click(feedBackPageBTN).perform();
 		//feedBackPageBTN.click();
 		wait.until(ExpectedConditions.visibilityOf(sendFeedBackBTN));
 	}
 	
 	public void clickthankYouBTN() {
-		scrollByElement(thankYouPageBTN, driver);
+		scrollByElement(thankYouPageBTN);
 		thankYouPageBTN.click();
 	}
 	
 	public void clickClosePreviewBTN() {
-		scrollByElement(closePreviewBTN, driver);
+		scrollByElement(closePreviewBTN);
 		action.moveToElement(closePreviewBTN).click(closePreviewBTN).perform();
 		//closePreviewBTN.click();	
 	}

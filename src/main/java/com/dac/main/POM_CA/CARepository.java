@@ -15,6 +15,9 @@ public interface CARepository {
 	String AccuracyExport = "AccuracyExport.xlsx";
 	String VisibilityExport = "VisibilityExport.xlsx";
 	String Exportpath ="./downloads/";
-			//"(?s)(?<=Competitors.Sites.).*?(?=.Name)";
+	
+	
 
+	
+	
 }

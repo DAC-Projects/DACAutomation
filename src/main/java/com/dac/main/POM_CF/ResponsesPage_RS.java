@@ -42,6 +42,7 @@ public class ResponsesPage_RS extends BasePage{
 	
 	
 	public ResponsesPage_RS(WebDriver driver) {
+		super(driver);
 		this.driver = driver;
 		wait = new WebDriverWait(driver, 35);
 		action=new Actions(driver);
@@ -217,7 +218,7 @@ public class ResponsesPage_RS extends BasePage{
 	 * @overallSR_WidgetTitle in English :  "Overall Star Ratings"	, @overallSR_WidgetTitle in Deutsch : "Gesamt-Sternebewertungen"
 	 * @overallSR_WidgetTitle in es_ES   :	*/
 	public void verifyOverallRatingWidget(String overallSR_WidgetTitle) {
-		scrollByElement(overviewSection, driver);
+		scrollByElement(overviewSection);
 		verifyText(overallRatingWidgetTitle, overallSR_WidgetTitle);
 		for(int i=0; i<5; i++) {
 			String y = overallRatingStars.get(i).getAttribute("style");
@@ -277,10 +278,9 @@ public class ResponsesPage_RS extends BasePage{
 	 * @avgSR_WidgetTitle in English :  "Average Star Rating"	, @avgSR_WidgetTitle in Deutsch : "Durchschnittliche Sternebewertung"
 	 * @avgSR_WidgetTitle in es_ES   :	*/
 	public String avgStarRatingData(String avgSR_WidgetTitle) throws InterruptedException {
-		//Thread.sleep(6000);
 		String avgRating = "";
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
-		scrollByElement(overviewSection, driver);
+		scrollByElement(overviewSection);
 		verifyText(avgRatingWidgetTitle, avgSR_WidgetTitle);
 		System.out.println("AverageStarRatingText.size() : "+AverageStarRatingText.size());
 		for(int i=0;i<AverageStarRatingText.size();i++) {
@@ -376,7 +376,7 @@ public class ResponsesPage_RS extends BasePage{
 	public void getReviewTableData() throws InterruptedException {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 		WebElement reviewText = driver.findElement(By.xpath("//*[@class='col-sm-12']/h3"));
-		scrollByElement(reviewText, driver);
+		scrollByElement(reviewText);
 		
 		//To locate rows of table. 
     	List < WebElement > rows_table = reviewTableRow.findElements(By.tagName("tr"));

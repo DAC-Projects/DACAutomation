@@ -56,8 +56,8 @@ public class CA_exports  extends CA_Visibility_Page implements CARepository {
 	public void getVisibilityExport() throws InterruptedException, FileNotFoundException, IOException {
 		Thread.sleep(5000);
 		new CA_Visibility_Page(driver).exportvisibilityReport();
-		Thread.sleep(2000);
-		convertExports(getLastModifiedFile(Exportpath), VisibilityExport);
+		Thread.sleep(10000);
+//		convertExports(getLastModifiedFile(Exportpath), VisibilityExport);
 	}
 	
 	public static void convertExports(String filename, String export) throws FileNotFoundException, IOException {

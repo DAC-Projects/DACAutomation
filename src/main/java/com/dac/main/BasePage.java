@@ -10,26 +10,18 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardWatchEventKinds;
-import java.nio.file.WatchEvent;
-import java.nio.file.WatchKey;
-import java.nio.file.WatchService;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -40,16 +32,10 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import com.dac.main.POM_CF.BaseTest_CF;
-import com.relevantcodes.extentreports.LogStatus;
-
 import resources.BaseTest;
 import resources.DateFormats;
 
-/**
- * @author wasim
- *
- */
+
 public class BasePage {
 	
 	public WebDriver driver;
@@ -65,8 +51,8 @@ public class BasePage {
 		js=(JavascriptExecutor)driver;
 	}
 	
-	public BasePage() {}
 	
+
 	public void waitUntilLoad(WebDriver driver) {
 
 	    //WebDriverWait wait = new WebDriverWait(driver, 30);
@@ -111,37 +97,68 @@ public class BasePage {
 			Reporter.log("FAIL: Expected Page is NOT Displayed",true);
 			Assert.fail();
 		}
+	} */
+	
+	public boolean checkFileSizeIncrsd(long initialSize, int timeout, File dir) {
+		
+		WebDriverWait dwnldwait = new WebDriverWait(driver, timeout);
+			   
+			   ExpectedCondition<Boolean> chkFileDownld = new ExpectedCondition<Boolean>() {
+				      public Boolean apply(WebDriver driver) {
+				        
+				          return (initialSize < dir.listFiles().length);
+				      }
+				    };
+				    System.out.println("directory size is "+ dir.listFiles().length);
+				    return dwnldwait.until(chkFileDownld);
 	}
-	
-	*/
-	
 	
 	/**
 	 * @param browser
 	 * @param downloadBTN
 	 * @throws InterruptedException 
+	 * clicks the webelement, wait for timeout specified in browser specified
 	 */
-	public void download(String browser, WebElement downloadBTN) throws InterruptedException {
+	public void download(String browser, WebElement downloadBTN, int timeout) throws InterruptedException {
+	
+	
+		File dwnldDir = new File("./downloads");
+		long initialSize = dwnldDir.listFiles().length;  
+		System.out.println("directory size is "+ initialSize);// check file size
+			  		
+  
+						   
 		if("chrome".equalsIgnoreCase(BaseTest.browser)) {
-			clickelement(downloadBTN, driver);
+			clickelement(downloadBTN);
+			 Thread.sleep(1000);
 		}
-		else {
+		else  {
 			try
 			{
-				 clickelement(downloadBTN, driver);
-				 Thread.sleep(2000);
+				 clickelement(downloadBTN);
+				 Thread.sleep(4000);
 			     Robot robot = new Robot();
 			     robot.setAutoDelay(250);
 			     robot.keyPress(KeyEvent.VK_ALT);
 			     robot.keyPress(KeyEvent.VK_S);
+			     Thread.sleep(1000);
 			     robot.keyRelease(KeyEvent.VK_ALT);
+			     if("firefox".equalsIgnoreCase(BaseTest.browser))
 			     robot.keyPress(KeyEvent.VK_ENTER);
+			     
 			}
 			catch (AWTException e)
 			{
 			    e.printStackTrace();
 			}
 		}
+		
+	if(checkFileSizeIncrsd(initialSize, timeout, dwnldDir))
+		System.out.println("File Successfully Downloaded");
+	 else 
+		Assert.fail("File not downloaded in "+ timeout +"seconds");
+	
+			
 	}
 	
 	
@@ -159,8 +176,7 @@ public class BasePage {
 		Runtime.getRuntime().exec(filepathexe+" "+filepath);
 	}
 	
-	public void clickelement(WebElement element, WebDriver driver) {
-		wait = new WebDriverWait(driver, 35);
+	public void clickelement(WebElement element) {
 		wait.until(ExpectedConditions.visibilityOf(element));
 		try {
 			if(element.isDisplayed() & element.isEnabled()) {
@@ -174,17 +190,7 @@ public class BasePage {
 			}
 		}
 		catch(NoSuchElementException e) {
-			BaseTest.logger.log(LogStatus.INFO, "element "+ element+" NOT found");
-			printexcep(e);
-		}
-	}
-	
-	public void printexcep(Exception e) {
-		try {
-			throw new Exception(e);			
-		}
-		catch(Exception ex) {
-			ex.printStackTrace();
+			Assert.fail("element "+ element+" NOT found");
 		}
 	}
 	
@@ -258,32 +264,23 @@ public class BasePage {
 	}
 	
 
-	public void scrollByElement(WebElement element,WebDriver driver) {
+	public void scrollByElement(WebElement element) {
 		
 		JavascriptExecutor js=(JavascriptExecutor)driver;
-		int yLoc = element.getLocation().getY();
+		int yLoc = element.getLocation().getY()-10;
 		int xLoc = element.getLocation().getX();
 		js.executeScript("window.scrollTo("+xLoc+", "+yLoc+")");
-		//js.executeScript("arguments[0].scrollIntoView()", element);
 	}
 	
-/*	protected void uploadFile(String fileName, String extension) {
-		
-		File uploadingFilePath =new File("./"+fileName+extension);
-		String fileAbsPath=uploadingFilePath.getAbsolutePath();
-		
-		AutoItX x=new AutoItX();
-		x.winWaitActive("Open");
-		x.controlFocus("Open", "", "Edit1");
-		x.ControlSetText("Open", "", "Edit1", fileAbsPath);
-		x.controlClick("Open", "", "Button1");
-	}*/
 	
 	public static String getDate() {
 		Date date = new Date();
 		String dateFormat = new SimpleDateFormat("dd-MM-yyyy").format(date);
 		return dateFormat.toString();
 	}
+	
+	
+	
 	
 	public static String getDateNTime() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
@@ -292,6 +289,11 @@ public class BasePage {
 		return dateFormat.toString();
 	}
 
+	
+	
+	/**retrun true if alert is present 
+	 * @return
+	 */
 	public boolean isAlertPresent() 
 	{ 
 	    try 
@@ -302,6 +304,62 @@ public class BasePage {
 	    catch (NoAlertPresentException Ex) 
 	    { 
 	        return false; 
-	    }   // catch 
-	}   // isAlertPresent()
+	    }   
+	}   
+	
+	
+	
+	/**waits for an element for specified timeout
+	 * @param elemnt
+	 * @param timeSec
+	 */
+	public boolean waitForElement(WebElement elemnt,int timeSec) {
+		try {
+		WebDriverWait wait = new WebDriverWait(driver, timeSec);
+		if(wait.until(ExpectedConditions.visibilityOf(elemnt)) != null|| false) {
+			scrollByElement(elemnt);
+			return true;
+		}else return false;
+		
+	}catch (TimeoutException e) {
+		Assert.fail("Element did not load in the specified timeout");
+		return false;
+	}
+	}
+	
+	/**
+	 * This method to print the UI table data in Console*/
+	public String[][] readTable(WebElement table) {
+
+		List<WebElement> allRows = table.findElements(By.tagName("tr")); 
+		String[][] rowResults = new String[allRows.size()][];
+		int i=0;
+		String[] cellValues;
+		for (WebElement row : allRows) { 
+			
+		    List<WebElement> cells = row.findElements(By.tagName("td")); 
+		    if (cells.size()==0)
+		    	cells = row.findElements(By.tagName("th"));
+		    
+		    cellValues = new String[cells.size()];
+		    int j=0;
+		    for (WebElement cell : cells) { 
+		    	
+		    	if(cell.getText()!=null)
+		    	{
+		    		cellValues[j]= cell.getText().replaceAll("[^\\p{Print}]", "").toString();
+		    		
+		    	}else cellValues[j] = "";
+		    	
+		    	j++;
+		    }
+		    rowResults[i] = cellValues;
+		    
+		    System.out.println(Arrays.toString(rowResults[i]));
+		    
+		    i++;
+		}
+		System.out.println("\n");
+		return rowResults;
+	}
 }

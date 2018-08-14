@@ -78,8 +78,7 @@ public class Verify_CreateBrandCampaign extends BaseTest_CF {
 		
 		Utilities.addScreenshot(driver, imgnames.get(2).toString());
 		
-		
-		newCampaign.downloadCampEmailTemplate();
+		newCampaign.downloadCampEmailTemplate(browser);
 		
 		Thread.sleep(4000);
 		

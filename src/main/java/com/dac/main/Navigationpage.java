@@ -22,10 +22,12 @@ public class Navigationpage extends BasePage{
 	
 	public Navigationpage(WebDriver driver) {
 		
+		super(driver);
 		this.driver=driver;
 		wait=new WebDriverWait(driver, 55);
 		action=new Actions(driver);
 		PageFactory.initElements(driver, this);
+		
 	}
 
 	@FindBy(id = "//a[@href='/Dashboard/AllLocations/']")
@@ -124,7 +126,7 @@ public class Navigationpage extends BasePage{
 	
 	public void  navigateCA_Visibility() {
 		wait.until(ExpectedConditions.visibilityOf(CA_Visibility));
-		scrollByElement(CA_Visibility, driver);
+		scrollByElement(CA_Visibility);
 		try {
 			CA_Visibility.click();
 		}
@@ -140,7 +142,7 @@ public class Navigationpage extends BasePage{
 	public void navigateCA_Accuracy() {
 		
 		wait.until(ExpectedConditions.visibilityOf(CA_Accuracy));
-		scrollByElement(CA_Accuracy, driver);
+		scrollByElement(CA_Accuracy);
 		try {
 			CA_Accuracy.click();
 		}
@@ -148,6 +150,7 @@ public class Navigationpage extends BasePage{
 			action.moveToElement(CA_Accuracy).click().perform();
 		}
 		finally {
+			System.out.println("Waiting for page to load**********");
 			waitUntilLoad(driver);
 			
 		}
@@ -201,27 +204,28 @@ public class Navigationpage extends BasePage{
 	/** To click on Campaigns link in LHS to navigate to Campaigns page   */
 	public void clickCampaigns() {    
 		wait.until(ExpectedConditions.visibilityOf(CampaignsLink));
-		scrollByElement(CampaignsLink, driver);
-		clickelement(CampaignsLink, driver);
+		scrollByElement(CampaignsLink);
+		clickelement(CampaignsLink);
 		wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
 		wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));
 	}
 	
 	public void clickResponses() {
 		wait.until(ExpectedConditions.visibilityOf(ResponsesLink));
-		scrollByElement(ResponsesLink, driver);
-		clickelement(ResponsesLink, driver);
+		scrollByElement(ResponsesLink);
+		clickelement(ResponsesLink);
 	}
 	
 	public void clickReports() {
 		wait.until(ExpectedConditions.visibilityOf(ReportsLink));
-		scrollByElement(ReportsLink, driver);
-		clickelement(ReportsLink, driver);
+		scrollByElement(ReportsLink);
+		clickelement(ReportsLink);
+
 	}
 	
 	private void DB_LangList() {
-		clickelement(DBLangLink, driver);
-		clickelement(DBLangPopUp, driver);
+		clickelement(DBLangLink);
+		clickelement(DBLangPopUp);
 	}
      
 	public void select_DB_Lang_Link(String langCode, String contryCode) {
