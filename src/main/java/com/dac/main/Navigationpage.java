@@ -156,6 +156,7 @@ public class Navigationpage extends BasePage{
 			action.moveToElement(CA_Accuracy).click().perform();
 		}
 		finally {
+			System.out.println("Waiting for page to load**********");
 			waitUntilLoad(driver);
 			
 		}

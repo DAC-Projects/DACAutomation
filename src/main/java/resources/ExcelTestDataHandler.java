@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,6 +51,7 @@ public class ExcelTestDataHandler {
 		workbook = new XSSFWorkbook(fis);
 		this.sheetIndex=index;
 		sheet = workbook.getSheetAt(this.sheetIndex);
+		this.sheetName = sheet.getSheetName();
 		fis.close();
 	}
 	
@@ -85,7 +87,7 @@ public class ExcelTestDataHandler {
 			//System.out.println("row num: "+rowNum+"\n cellNum :"+column);
 			cell=sheet.getRow(rowNum).getCell(column);
 			if(cell!=null) {
-				value=cell.toString();
+				value=cell.toString().replaceAll("[^\\p{Print}]", "");
 			}
 			fis.close(); //Close the InputStream
             FileOutputStream output_file =new FileOutputStream(new File(filePath));  //Open FileOutputStream to write updates
@@ -108,10 +110,37 @@ public class ExcelTestDataHandler {
 			int col = new ExcelTestDataHandler(filePath, sheetName).getColCount(i);
 			System.out.println("Cell Values in Row Number : "+i);
 			for(int j=0;j<col;j++) {		
-				System.out.print(new ExcelTestDataHandler(filePath, sheetName).getCellValue(i, j)+"   ");
+				
+				System.out.print(new ExcelTestDataHandler(filePath, sheetName).getCellValue(i, j)+"  ");
 			}
 			System.out.println("\n");
 		}
+	}
+	
+	//My Change@Rahul
+	/**Returns excel as a 2d array
+	 * @return 
+	 * @throws Exception
+	 */
+	public String[][] getExcelTable() throws Exception {
+		ExcelTestDataHandler excel	= new ExcelTestDataHandler(this.filePath, this.sheetName);
+		int row = excel.getRowCount();
+		String[][] rows = new String[row+1][];
+		System.out.println("total no of rows is"+ row);
+		String[] cellValues ;
+		for(int i=0;i<=row;i++) {
+			Row currentrow = sheet.getRow(i);
+			System.out.println("current row is"+i);
+			int col = currentrow.getLastCellNum();
+			cellValues = new String[col];
+			System.out.println("total no of columns is"+ col);
+			for(int j=0;j<col;j++) {	
+				cellValues[j] = new ExcelTestDataHandler(filePath, sheetName).getCellValue(i, j);
+			}
+					
+			rows[i] = cellValues;
+			System.out.println(Arrays.toString(rows[i]));
+		}return rows;
 	}
 	
 	public int getRowCount() {

@@ -1,6 +1,12 @@
 
 {
-"iterationPath" : "./CompetitiveAnalysis.xlsx",
-
-"com.dac.testcases.CA.CA_test" : {"Calculation Verification":"id:5000"}
+	"iterationPath": "./CompetitiveAnalysis.xlsx",
+	"com.dac.testcases.CA.CA_test": {
+		"sheet": "Calculation Verification",
+		"verifyCACalculation": "id:1",
+		"verifyFilteringReports": "id:2",
+		"verifyOverviewReportnExport": "id:3",
+		"verifyOverviewReportnTooltip": "id:4",
+		"verifySiteTablenExport": "id:5"
+	}
 }
