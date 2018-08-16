@@ -52,15 +52,10 @@ public class VerifyCreate_DraftLocCamp extends BaseTest_CF{
 		
 		newCampaign.setSenderName("Location", 9, englishLangColumn);
 	
-		newCampaign.uploadLogo();
-		logger.log(LogStatus.INFO, "Adding the Logo of the Campaign");
-		
 		String logoName = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Location").getCellValue(11, englishLangColumn);
-		
-		File logoPath=new File(".\\filesToUpload\\"+logoName);
-		String filepath=logoPath.getAbsolutePath();
-		String filepathexe="./Logo.exe";
-		Runtime.getRuntime().exec(filepathexe+" "+filepath);
+
+		newCampaign.uploadLogo(logoName);
+		logger.log(LogStatus.INFO, "Adding the Logo of the Campaign");
 		
 		//Below Thread.sleep method for wait to finish the uploading of Logo through AutoIt. 
 		//Other waiting condition can't give because selenium not able to handle window based apps

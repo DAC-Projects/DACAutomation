@@ -21,11 +21,12 @@ import resources.ExcelTestDataHandler;
 import resources.IAutoconst;
 import resources.Utilities;
 
-public class Verify_CreateBrandCampaign extends BaseTest_CF{
+public class Verify_CreateBrandCampaign extends BaseTest_CF {
+	
 	
 	static int englishLangColumn = 9;
 	
-	@Test(enabled = true, priority = 1, groups = {"Smoke"})
+	@Test(enabled = true, priority = 0)
 	public void navigateToCF() throws Exception {
 		
 		Navigationpage np=new Navigationpage(driver);
@@ -34,31 +35,13 @@ public class Verify_CreateBrandCampaign extends BaseTest_CF{
 		np.clickCampaigns();	
 	}
 	
-	@Test(enabled = true, priority = 2, groups = {"Smoke"})
-	public void navigateToCreateNewCamp() throws Exception {
-		
-		CampaignsPage cp=new CampaignsPage(driver);		
-		cp.click_CreateCampaignBTN();	
-	}
-	
-	@Test(enabled = false, groups = {"Smoke"})
-	public void verifySceduledCamp() throws InterruptedException {
-		Navigationpage np=new Navigationpage(driver);
-		np.select_DB_Lang_Link("en", "US");
-
-		np.clickCampaigns();
-		
-		CampaignsPage cp=new CampaignsPage(driver);		
-		cp.click_CreateCampaignBTN();
-		
-		cp.verifyCampTableData("Scheduled", campName, brandName);
-	}
-	
-	
 	@Test(enabled=true, dependsOnMethods = {"navigateToCF"})
 	public void createBrandCamp_Test() throws Exception {
 			
 		CreateNewCampaignPage newCampaign=new CreateNewCampaignPage(driver);
+		
+		CampaignsPage cp=new CampaignsPage(driver);		
+		cp.click_CreateCampaignBTN();	
 		
 		newCampaign.selectCampType(2);
 		logger.log(LogStatus.INFO, "Selecting campaign Type as Brand");
@@ -90,15 +73,12 @@ public class Verify_CreateBrandCampaign extends BaseTest_CF{
 		//Below Thread.sleep method for wait to finish the uploading of Logo through AutoIt. 
 		//Other waiting condition can't give because selenium not able to handle window based apps
 		Thread.sleep(5000);
-		/*newCampaign.verifyLogoUploaded();
+		newCampaign.verifyLogoUploaded();
 		newCampaign.verifyUploadLogoToolTipText("Brand", 10, englishLangColumn);
 		
 		Utilities.addScreenshot(driver, imgnames.get(2).toString());
 		
-		
-		newCampaign.downloadCampEmailTemplate();
-		
-		
+		newCampaign.downloadCampEmailTemplate(browser);
 		
 		Thread.sleep(4000);
 		
@@ -116,9 +96,9 @@ public class Verify_CreateBrandCampaign extends BaseTest_CF{
 		Thread.sleep(3000);
 		new ExcelTestDataHandler("./downloads/"+fileName, "Email Template").createRowInExcel(2, 3, cellValues);
 		
-		Thread.sleep(3000);
+		/*Thread.sleep(3000);
 		
-		new ExcelTestDataHandler("./downloads/"+fileName, "Email Template").getAllCellsData();
+		new ExcelTestDataHandler("./downloads/"+fileName, "Email Template").getAllCellsData();*/
 		
 		Thread.sleep(3000);
 		newCampaign.uploadEmailTemplate(fileName);
@@ -181,10 +161,12 @@ public class Verify_CreateBrandCampaign extends BaseTest_CF{
 		
 		//cp.getReleaseDateTime();
 		
+		//CampaignsPage cp=new CampaignsPage(driver);
+		
 		cp.verifyCampTableData("Scheduled", campName, brandName);
 		//System.out.println(cp.getReleaseDateTime());
 		Utilities.addScreenshot(driver, imgnames.get(8).toString());
-		logger.log(LogStatus.INFO, "Verifying the Created Campaign whether displayed in Scheduled campaign Section");*/
+		logger.log(LogStatus.INFO, "Verifying the Created Campaign whether displayed in Scheduled campaign Section");
 		
 		
 	}

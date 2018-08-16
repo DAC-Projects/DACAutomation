@@ -52,7 +52,52 @@ public class BasePage {
 	}
 	
 	
+
+	public void waitUntilLoad(WebDriver driver) {
+
+	    //WebDriverWait wait = new WebDriverWait(driver, 30);
+
+	    // wait for jQuery to load
+	    ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
+	      @Override
+	      public Boolean apply(WebDriver driver) {
+	        try {
+	          return ((Long)((JavascriptExecutor)driver).executeScript("return jQuery.active") == 0);
+	        }
+	        catch (Exception e) {
+	          // no jQuery present
+	          return true;
+	        }
+	      }
+	    };
+
+	    // wait for Javascript to load
+	    ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
+	      @Override
+	      public Boolean apply(WebDriver driver) {
+	        return ((JavascriptExecutor)driver).executeScript("return document.readyState")
+	        .toString().equals("complete");
+	      }
+	    };
+
+	  wait.until(jQueryLoad);wait.until(jsLoad);
+	}
 	
+	/*
+	public void verifyPageIsDisplayed(WebDriver driver,String eResult) {
+		String sETO=AutoUtil.getProperty(IAutoConst.CONFIG_PATH, "ETO");
+		long ETO=Long.parseLong(sETO);
+		WebDriverWait wait=new WebDriverWait(driver,ETO);
+		try {
+			Reporter.log(eResult,true);
+			wait.until(ExpectedConditions.titleIs(eResult));
+			Reporter.log("PASS: Expected Page is Displayed",true);
+		}
+		catch(Exception e) {
+			Reporter.log("FAIL: Expected Page is NOT Displayed",true);
+			Assert.fail();
+		}
+	} */
 	
 	public boolean checkFileSizeIncrsd(long initialSize, int timeout, File dir) {
 		
@@ -163,15 +208,6 @@ public class BasePage {
 		String finalDate = DateFormats.dateFormat(langCode, countryCode).format(c.getTime());
 		return finalDate;
 	}
-	
-	public void waitUntilLoad(int timeSec) {
-		try {
-	    new WebDriverWait(driver, timeSec).until((ExpectedCondition<Boolean>) wd ->
-	            ((JavascriptExecutor) wd).executeScript("return document.readyState").equals("complete"));
-		}catch (Exception e) {
-			Assert.fail("Page failed to load in " +timeSec+" seconds");
-		}
-	} 
 	
 	/**
 	 * To get and store the value/text of a field 	*/
@@ -291,6 +327,8 @@ public class BasePage {
 	}
 	}
 	
+	/**
+	 * This method to print the UI table data in Console*/
 	public String[][] readTable(WebElement table) {
 
 		List<WebElement> allRows = table.findElements(By.tagName("tr")); 

@@ -52,16 +52,10 @@ public class VerifyCreate_DraftBrandCamp extends BaseTest_CF{
 		
 		newCampaign.setSenderName("Brand",9,englishLangColumn);
 	
-		newCampaign.uploadLogo();
-		logger.log(LogStatus.INFO, "Adding the Logo of the Campaign");
-		
 		String logoName = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(11, englishLangColumn);
-		
-		File logoPath=new File(".\\filesToUpload\\"+logoName);
-		String filepath=logoPath.getAbsolutePath();
-		String filepathexe="./Logo.exe";
-		//String filepathexe = "./UploadFile.exe";
-		Runtime.getRuntime().exec(filepathexe+" "+filepath);
+
+		newCampaign.uploadLogo(logoName);
+		logger.log(LogStatus.INFO, "Adding the Logo of the Campaign");
 		
 		//Below Thread.sleep method for wait to finish the uploading of Logo through AutoIt. 
 		//Other waiting condition can't give because selenium not able to handle window based apps
@@ -95,7 +89,7 @@ public class VerifyCreate_DraftBrandCamp extends BaseTest_CF{
 		Utilities.addScreenshot(driver, imgnames.get(5).toString());
 		logger.log(LogStatus.INFO, "Verifying the Contact info section tool tip and could able to data into it");
 		
-		newCampaign.setScheduledStartDate(filepathexe, filepathexe);
+		newCampaign.setScheduledStartDate("en", "US");
 		
 		newCampaign.verifyTimeToolTipText("Brand", 27, englishLangColumn);
 		

@@ -175,13 +175,14 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 				if (m1.get("compName").equals(m2.get("compName"))) {
 					Assert.assertEquals(m1.size() - 1, m2.size());
 					for (String name : m1.keySet()) {
-	
+
 						if(!name.equalsIgnoreCase("Overall")&&!name.contains("Yellowpages")) {
 						Assert.assertEquals(formatFloat(m1.get(name)),  formatFloat(m2.get(name)), 0.05, "Verifying score for " + name + "for" + m1.get("compName"));
 						} else if(name.equalsIgnoreCase("YellowpagesCom")) {
 							Assert.assertEquals(formatFloat(m1.get(name)),  formatFloat(m2.get("Yellowpages.com")), 0.05, "Verifying score for " + name + "for" + m1.get("compName"));
 						}else if(name.equalsIgnoreCase("Yellowpages")) {
 							Assert.assertEquals(formatFloat(m1.get(name)),  formatFloat(m2.get("Yellowpages.ca")), 0.05, "Verifying score for " + name + "for" + m1.get("compName"));
+
 						}
 					}
 				}

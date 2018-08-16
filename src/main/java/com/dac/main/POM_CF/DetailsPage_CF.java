@@ -34,7 +34,7 @@ public class DetailsPage_CF extends BasePage{
 	static SimpleDateFormat engDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	
 	public DetailsPage_CF(WebDriver driver) throws AWTException {
-		
+		super(driver);
 		wait=new WebDriverWait(driver, 20);
 		this.driver = driver;
 		js=(JavascriptExecutor)driver;
@@ -310,7 +310,7 @@ public class DetailsPage_CF extends BasePage{
 	public void verifyCampTypeStatus() throws InterruptedException {
 		Thread.sleep(5000);
 		wait.until(ExpectedConditions.visibilityOf(campaignType));
-		scrollByElement(customerFeedbackBreadCrumb, driver);
+		scrollByElement(customerFeedbackBreadCrumb);
 		while(true) {
 			if(campaignType.isEnabled()) {
 				Assert.fail("campaign Type should not be enabled");
@@ -326,7 +326,7 @@ public class DetailsPage_CF extends BasePage{
 	/** 
 	 * Verifying whether Campaign Language field is disabled or not	*/
 	public void verifyCampLangStatus() {
-		scrollByElement(customerFeedbackBreadCrumb, driver);
+		scrollByElement(customerFeedbackBreadCrumb);
 		if(campaignLang.isEnabled()) {
 			Assert.fail("campaign Language should not be enabled");
 		}	
@@ -340,7 +340,7 @@ public class DetailsPage_CF extends BasePage{
 	 * @throws Exception 
 	 * @column : Enter the column number of campaign name 	   */
 	public void verifyCampNameFieldstatus(String sheet, int row, int column) throws Exception {
-		scrollByElement(campaignInfoSection, driver);
+		scrollByElement(campaignInfoSection);
 		if(campaignName.isEnabled()) {
 			Assert.fail("campaign Name field should not be enabled");
 		}	
@@ -355,7 +355,7 @@ public class DetailsPage_CF extends BasePage{
 	 * @locIndex : To select particular location from selected location name contains @locName based on Index.
 	 * @column   : column number of excel sheet to get the location name		 */
 	public void selectCampaignLoc(int locIndex, int column) throws Exception {
-		scrollByElement(campaignInfoSection, driver);
+		scrollByElement(campaignInfoSection);
 		if(campaignLocTB.isEnabled()) {
 			Assert.fail("campaign Name field should not be enabled");
 		}	
@@ -365,7 +365,7 @@ public class DetailsPage_CF extends BasePage{
 	}
 	
 	public String setCampaignBrandName(int column) throws Exception {
-		scrollByElement(campaignInfoSection, driver);
+		scrollByElement(campaignInfoSection);
 		if(campaignBrandNameTB.isEnabled()) {
 			Assert.fail("campaign Name field should not be enabled");
 		}	

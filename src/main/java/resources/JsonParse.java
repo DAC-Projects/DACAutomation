@@ -3,9 +3,6 @@ package resources;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -57,8 +54,10 @@ public class JsonParse {
 	//MY CHANGES
 	public static   void getTestcaseID(String className, String method) throws FileNotFoundException, IOException, ParseException {
 		System.out.println(fileName);
+		System.out.println(new JSONParser().parse(new FileReader(fileName)));
 		Object obj = new JSONParser().parse(new FileReader(fileName));
         
+		System.out.println("creating jason object: js");
         // typecasting obj to JSONObject
         JSONObject js = (JSONObject) obj;
          

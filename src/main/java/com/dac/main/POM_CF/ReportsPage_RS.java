@@ -1,16 +1,10 @@
 package com.dac.main.POM_CF;
 
 import java.awt.Robot;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -31,6 +25,7 @@ public class ReportsPage_RS extends BasePage{
 	JavascriptExecutor js;
 	
 	public ReportsPage_RS(WebDriver driver) {
+		super(driver);
 		this.driver = driver;
 		wait = new WebDriverWait(driver, 35);
 		action=new Actions(driver);

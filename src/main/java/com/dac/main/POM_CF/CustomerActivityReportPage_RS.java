@@ -45,6 +45,7 @@ public class CustomerActivityReportPage_RS extends BasePage{
 	SoftAssert assertValue;
 	
 	public CustomerActivityReportPage_RS(WebDriver driver) {
+		super(driver);
 		this.driver = driver;
 		wait = new WebDriverWait(driver, 35);
 		action=new Actions(driver);

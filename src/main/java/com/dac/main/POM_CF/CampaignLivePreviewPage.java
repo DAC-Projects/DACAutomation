@@ -16,9 +16,10 @@ public class CampaignLivePreviewPage extends BasePage{
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
+	 BaseTest_CF bt = new BaseTest_CF();
 	
 	public CampaignLivePreviewPage(WebDriver driver) {
-		
+		super(driver);
 		this.driver = driver;
 		wait = new WebDriverWait(driver, 35);
 		action=new Actions(driver);
@@ -52,13 +53,13 @@ public class CampaignLivePreviewPage extends BasePage{
 	@FindBy(xpath="//span[text()='3']")
 	private WebElement thankYouPageBTN;
 	
-	@FindBy(xpath="//b[text()='Close Preview']")
+	@FindBy(xpath="//*[@class='btn btn-default']//b")
 	private WebElement closePreviewBTN;
 	
 	public void verifyemailViewData() {
 		clickemailViewBTN();
 		String[] emailviewdata = {emailViewBannerText.getText(), emailViewBodyText.getText(), emailViewSignatureText.getText() };
-		String[] storedpreviewData = {BaseTest_CF.campBannerNew, BaseTest_CF.campBodyCopyNew, BaseTest_CF.campSignatureNew};
+		String[] storedpreviewData = {bt.campBannerNew, bt.campBodyCopyNew, bt.campSignatureNew};
 		for(int i=0; i<3;i++) {
 			System.out.println(emailviewdata[i]);
 			System.out.println(storedpreviewData[i]);
@@ -72,25 +73,25 @@ public class CampaignLivePreviewPage extends BasePage{
 	}
 	
 	public void clickemailViewBTN() {
-		scrollByElement(emailViewPageBTN, driver);
+		scrollByElement(emailViewPageBTN);
 		emailViewPageBTN.click();
 		wait.until(ExpectedConditions.visibilityOf(giveAReviewBTN));
 	}
 	
 	public void clickfeedBackBTN() {
-		scrollByElement(feedBackPageBTN, driver);
+		scrollByElement(feedBackPageBTN);
 		action.moveToElement(feedBackPageBTN).click(feedBackPageBTN).perform();
 		//feedBackPageBTN.click();
 		wait.until(ExpectedConditions.visibilityOf(sendFeedBackBTN));
 	}
 	
 	public void clickthankYouBTN() {
-		scrollByElement(thankYouPageBTN, driver);
+		scrollByElement(thankYouPageBTN);
 		thankYouPageBTN.click();
 	}
 	
 	public void clickClosePreviewBTN() {
-		scrollByElement(closePreviewBTN, driver);
+		scrollByElement(closePreviewBTN);
 		action.moveToElement(closePreviewBTN).click(closePreviewBTN).perform();
 		//closePreviewBTN.click();	
 	}
