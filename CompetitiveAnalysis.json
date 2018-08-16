@@ -1,9 +1,17 @@
 
 {
 	"iterationPath": "./CompetitiveAnalysis.xlsx",
-	"com.dac.testcases.CA.CA_test": {
+	"com.dac.testcases.CA.CA_Visibility_Test": {
 		"sheet": "Calculation Verification",
 		"verifyCACalculation": "id:1",
+		"verifyFilteringReports": "id:2",
+		"verifyOverviewReportnExport": "id:3",
+		"verifyOverviewReportnTooltip": "id:4",
+		"verifySiteTablenExport": "id:5"
+	},
+	"com.dac.testcases.CA.CA_Review_Test":{
+	"sheet": "Review testcases",
+	"verifyCACalculation": "id:1",
 		"verifyFilteringReports": "id:2",
 		"verifyOverviewReportnExport": "id:3",
 		"verifyOverviewReportnTooltip": "id:4",

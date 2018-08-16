@@ -75,6 +75,7 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	public void applyFilter(String Country, String State, String City, String Location) {
 
 		waitForElement(filter_Panel, 10);
+		scrollByElement(filter_Panel);
 		clickelement(FilterCountry);
 		WebElement country = driver.findElement(By.xpath("//div[@value='" + Country + "']"));
 		clickelement(country);
@@ -113,6 +114,7 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	 */
 	public List<Map<String, String>> verifyHistoryGraph() {
 		waitForElement(hstryGrph, 10);
+		scrollByElement(hstryGrph);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth() / 2) - 2, 0).click().perform();
 		rows = grphTable.findElements(By.tagName("tr"));
 		String[][] table = readTable(grphTable);

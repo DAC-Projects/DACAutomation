@@ -14,6 +14,7 @@ public interface CARepository {
 	String Site_Name_pattern = "Sites(.*)\\.Name$";
 	String AccuracyExport = "AccuracyExport.xlsx";
 	String VisibilityExport = "VisibilityExport.xlsx";
+	String ReviewExport = "ReviewExport.xlsx";
 	String Exportpath ="./downloads/";
 	
 	

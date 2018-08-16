@@ -22,13 +22,13 @@ import org.testng.Assert;
 import resources.BaseTest;
 import resources.ExcelTestDataHandler;
 
-public class CA_Visibility_Page extends CA_abstractMethods {
+public class CA_Review_Page extends CA_abstractMethods {
 
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
 
-	public CA_Visibility_Page(WebDriver driver) {
+	public CA_Review_Page(WebDriver driver) {
 
 		super(driver);
 		this.driver = driver;
@@ -56,12 +56,12 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 	List<WebElement> columns;
 	List<WebElement> rows;
 
-	public void exportvisibilityReport() throws InterruptedException, FileNotFoundException, IOException {
+	public void exportReviewReport() throws InterruptedException, FileNotFoundException, IOException {
 		waitForElement(overviewReport, 10);
 		waitForElement(exportBtn, 10);
 		scrollByElement(exportBtn);
 		download(BaseTest.browser, exportBtn, 20);
-		convertExports(getLastModifiedFile(Exportpath), VisibilityExport);
+		convertExports(getLastModifiedFile(Exportpath), ReviewExport);
 	}
 
 	@Override
@@ -126,9 +126,9 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 	}
 
 	public List<Map<String, String>> getExportData() throws Exception {
-		exportvisibilityReport();
+		exportReviewReport();
 
-		String[][] table = new ExcelTestDataHandler(Exportpath + VisibilityExport, "Sheet0").getExcelTable();
+		String[][] table = new ExcelTestDataHandler(Exportpath + ReviewExport, "Sheet0").getExcelTable();
 		List<Map<String, String>> exportData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
 		for (int col = 1; col < colSize; col++) {
@@ -175,13 +175,8 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 				if (m1.get("compName").equals(m2.get("compName"))) {
 					Assert.assertEquals(m1.size() - 1, m2.size());
 					for (String name : m1.keySet()) {
-	
-						if(!name.equalsIgnoreCase("Overall")&&!name.contains("Yellowpages")) {
-						Assert.assertEquals(formatFloat(m1.get(name)),  formatFloat(m2.get(name)), 0.05, "Verifying score for " + name + "for" + m1.get("compName"));
-						} else if(name.equalsIgnoreCase("YellowpagesCom")) {
-							Assert.assertEquals(formatFloat(m1.get(name)),  formatFloat(m2.get("Yellowpages.com")), 0.05, "Verifying score for " + name + "for" + m1.get("compName"));
-						}else if(name.equalsIgnoreCase("Yellowpages")) {
-							Assert.assertEquals(formatFloat(m1.get(name)),  formatFloat(m2.get("Yellowpages.ca")), 0.05, "Verifying score for " + name + "for" + m1.get("compName"));
+						if(!name.equalsIgnoreCase("Overall")) {
+						Assert.assertEquals(formatFloat(m1.get(name)),  formatFloat(m2.get(name)), 0.05f, "Verifying score for " + name + "for" + m1.get("compName"));
 						}
 					}
 				}

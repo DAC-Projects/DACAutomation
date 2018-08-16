@@ -281,7 +281,7 @@ public class BasePage {
 		try {
 		WebDriverWait wait = new WebDriverWait(driver, timeSec);
 		if(wait.until(ExpectedConditions.visibilityOf(elemnt)) != null|| false) {
-			scrollByElement(elemnt);
+			
 			return true;
 		}else return false;
 		

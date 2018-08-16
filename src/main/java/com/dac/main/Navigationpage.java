@@ -14,6 +14,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.dac.main.POM_CA.CA_Review_Page;
 import com.mysql.jdbc.Driver;
 
 import resources.DateFormats;
@@ -69,6 +70,8 @@ public class Navigationpage extends BasePage{
 	@FindBy(xpath = "//a[@href='/Review/FrequentKeywords/']")
 	private WebElement FrequentKeywords;
 	
+	@FindBy(xpath="//a[@href='/CompetitiveAnalysis/Review']")
+	private WebElement CA_Reviewpage;
 	//----------DashBoard Language--------------------
 	
 	@FindBy(id="lang-icon")
@@ -160,6 +163,23 @@ public class Navigationpage extends BasePage{
 			waitUntilLoad(driver);
 			
 		}
+	}
+		
+		public void navigateCA_Reviewpage() {
+			
+			wait.until(ExpectedConditions.visibilityOf(CA_Reviewpage));
+			scrollByElement(CA_Reviewpage);
+			try {
+				CA_Reviewpage.click();
+			}
+			catch(Exception e) {
+				action.moveToElement(CA_Reviewpage).click().perform();
+			}
+			finally {
+				System.out.println("Waiting for page to load**********");
+				waitUntilLoad(driver);
+				
+			}
 		
 	}
 	
