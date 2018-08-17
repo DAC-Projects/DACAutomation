@@ -1,11 +1,5 @@
 package com.dac.testcases;
 
-import java.io.IOException;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -15,19 +9,13 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import org.w3c.dom.Document;
-
 import com.dac.main.Dashboardpage;
 import com.dac.main.Navigationpage;
 import com.dac.main.VisibilityPage;
 import com.relevantcodes.extentreports.LogStatus;
 
-import resources.Writetoexcel;
+
 import resources.BaseTest;
 import resources.ReadExcel;
 import resources.Utilities;

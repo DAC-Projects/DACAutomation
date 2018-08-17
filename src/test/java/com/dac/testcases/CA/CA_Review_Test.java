@@ -8,15 +8,11 @@ import org.testng.annotations.Test;
 
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_CA.CA_Review_Page;
-import com.dac.main.POM_CA.CA_Visibility_Page;
-import com.dac.main.POM_CA.CA_exports;
-
-
 import resources.BaseTest;
 
 public class CA_Review_Test extends BaseTest {
 
-	CA_exports exports;
+
 	static List<Map<String, String>> export;
 	Navigationpage np;
 	CA_Review_Page data;
