@@ -123,6 +123,7 @@ public class ExcelTestDataHandler {
 	 * @throws Exception
 	 */
 	public String[][] getExcelTable() throws Exception {
+		System.out.println("Reading excel------");
 		ExcelTestDataHandler excel	= new ExcelTestDataHandler(this.filePath, this.sheetName);
 		int row = excel.getRowCount();
 		String[][] rows = new String[row+1][];
@@ -130,10 +131,8 @@ public class ExcelTestDataHandler {
 		String[] cellValues ;
 		for(int i=0;i<=row;i++) {
 			Row currentrow = sheet.getRow(i);
-			System.out.println("current row is"+i);
 			int col = currentrow.getLastCellNum();
 			cellValues = new String[col];
-			System.out.println("total no of columns is"+ col);
 			for(int j=0;j<col;j++) {	
 				cellValues[j] = new ExcelTestDataHandler(filePath, sheetName).getCellValue(i, j);
 			}

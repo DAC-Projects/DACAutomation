@@ -1,8 +1,6 @@
 package com.dac.main.POM_CA;
 
 import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -85,44 +83,14 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 		return ovrwRprtData;
 
 	}
-	
+
 	public void verify_pageloadCompletely(int timeout) {
-		if(waitForElement(overviewReport, timeout)&&waitForElement(siteTable, timeout)&&waitForElement(hstryGrph, timeout)&&waitForElement(hstryGrph, timeout)&
-				waitForElement(filter_Panel, timeout))
+		if (waitForElement(overviewReport, timeout) && waitForElement(siteTable, timeout)
+				&& waitForElement(hstryGrph, timeout)
+				&& waitForElement(hstryGrph, timeout) & waitForElement(filter_Panel, timeout))
 			assertTrue(true, "All sections filter, overview report, site table and graph is loaded");
 		else
 			assertTrue(false, "Page not loaded completely");
-	}
-
-	public List<Map<String, String>> verifySitetable() {
-		waitForElement(siteTable, 10);
-		scrollByElement(siteTable);
-		String[][] table = readTable(siteTable);
-		List<Map<String, String>> siteTableData = new ArrayList<Map<String, String>>();
-
-		for (int j = 0; j < table[0].length - 1; j++) {
-			Map<String, String> kMap = new HashMap<String, String>();
-
-			for (int i = 1; i < table.length; i++) {
-				kMap.put("compName", table[0][j + 1]);
-				kMap.put(table[i][0], table[i][j + 1]);
-			}
-			siteTableData.add(kMap);
-		}
-		System.out.println("google :" + siteTableData.get(0).get("Google"));
-		System.out.println(siteTableData.get(0).get("Bing"));
-		System.out.println("Superpages :" + siteTableData.get(0).get("Superpages"));
-
-		System.out.println("MAP******************MAP");
-		for (String name : siteTableData.get(1).keySet()) {
-
-			String key = name.toString();
-			String value = siteTableData.get(1).get(name).toString();
-			System.out.println(key + " " + value);
-		}
-
-		return siteTableData;
-
 	}
 
 	public List<Map<String, String>> getExportData() throws Exception {
@@ -133,38 +101,15 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 		int colSize = table[0].length;
 		for (int col = 1; col < colSize; col++) {
 			Map<String, String> kMap = new HashMap<String, String>();
-			
+
 			for (int i = 1; i < table.length; i++) {
-				kMap.put("compName", table[0][col]);	
+				kMap.put("compName", table[0][col]);
 				kMap.put(table[i][0], table[i][col]);
 			}
 			exportData.add(kMap);
 		}
 
 		return exportData;
-
-	}
-
-	public void compareExprttoOvervw(List<Map<String, String>> exportData, List<Map<String, String>> ovrwRprtData) {
-
-		for (Map<String, String> m1 : ovrwRprtData) {
-			for (Map<String, String> m2 : exportData) {
-				if (m1.get("compName").equals(m2.get("compName"))) {
-					Assert.assertEquals(formatFloat(m1.get("score")),  formatFloat(m2.get("Overall")), 0.05f, "Verifying score for" + m1.get("compName"));
-				}
-			}
-		}
-	}
-
-	public void compareReportnGraph(List<Map<String, String>> tooltipdata, List<Map<String, String>> ovrwRprtData) {
-
-		for (Map<String, String> m1 : ovrwRprtData) {
-			for (Map<String, String> m2 : tooltipdata) {
-				if (m1.get("compName").equals(m2.get("compName"))) {
-					Assert.assertEquals(formatFloat(m1.get("score")),  formatFloat(m2.get("Overall")), 0.05f, "Verifying score for" + m1.get("compName"));
-				}
-			}
-		}
 
 	}
 
@@ -175,13 +120,18 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 				if (m1.get("compName").equals(m2.get("compName"))) {
 					Assert.assertEquals(m1.size() - 1, m2.size());
 					for (String name : m1.keySet()) {
-
-						if(!name.equalsIgnoreCase("Overall")&&!name.contains("Yellowpages")) {
-						Assert.assertEquals(formatFloat(m1.get(name)),  formatFloat(m2.get(name)), 0.05, "Verifying score for " + name + "for" + m1.get("compName"));
-						} else if(name.equalsIgnoreCase("YellowpagesCom")) {
-							Assert.assertEquals(formatFloat(m1.get(name)),  formatFloat(m2.get("Yellowpages.com")), 0.05, "Verifying score for " + name + "for" + m1.get("compName"));
-						}else if(name.equalsIgnoreCase("Yellowpages")) {
-							Assert.assertEquals(formatFloat(m1.get(name)),  formatFloat(m2.get("Yellowpages.ca")), 0.05, "Verifying score for " + name + "for" + m1.get("compName"));
+						System.out.println("for name " + name + " score from export " + m1.get(name)
+								+ "and score from site table" + m2.get(name));
+						if (!name.equalsIgnoreCase("Overall") && !name.contains("Yellowpages")
+								&& !name.equals("compName")) {
+							Assert.assertEquals(formatFloat(m1.get(name)), formatFloat(m2.get(name)), 0.05,
+									"Verifying score for " + name + "for" + m1.get("compName"));
+						} else if (name.equalsIgnoreCase("YellowpagesCom")) {
+							Assert.assertEquals(formatFloat(m1.get(name)), formatFloat(m2.get("Yellowpages.com")), 0.05,
+									"Verifying score for " + name + "for" + m1.get("compName"));
+						} else if (name.equalsIgnoreCase("Yellowpages")) {
+							Assert.assertEquals(formatFloat(m1.get(name)), formatFloat(m2.get("Yellowpages.ca")), 0.05,
+									"Verifying score for " + name + "for" + m1.get("compName"));
 
 						}
 					}

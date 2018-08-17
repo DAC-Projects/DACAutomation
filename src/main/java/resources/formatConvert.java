@@ -52,17 +52,17 @@ public class formatConvert {
 		Workbook wb = new XSSFWorkbook();
 		Sheet sheet = wb.createSheet();
 		// read from file
-		String line = br.readLine().replace("﻿", "");
+		String line = br.readLine().trim().replace("﻿", "");
 		System.out.println(line);
-		for (int rows = 0; line != null; rows++) {
-			// create one row per line
-			Row row = sheet.createRow(rows);
+		for (int rows = 0; line != null&& !StringUtils.isBlank(line); rows++) {
+			
 			// split by semicolon
 			line=line.trim();
 			String[] items = line.split(",");
-					
+			if(!StringUtils.containsOnly(line, "[^\\p{Print}]")) {
 			//for (String str:StringUtils.split(line, ","))
-			
+			// create one row per line
+			Row row = sheet.createRow(rows);
 			// ignore first item
 			
 			for (int i = 0, col = 0; i <= items.length-1; i++) {
@@ -75,9 +75,11 @@ public class formatConvert {
 				cell.setCellValue(item);
 				
 			}
+			System.out.println(line+"***********");
 			// read next line
+			}
 		line = br.readLine();
-		System.out.println(line);
+		
 		}
 		// write to xlsx
 		String path = FilenameUtils.getPath(filepath);

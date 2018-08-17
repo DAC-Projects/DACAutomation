@@ -6,9 +6,12 @@ import static org.testng.Assert.fail;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -50,9 +53,6 @@ public class CA_Review_Page extends CA_abstractMethods {
 	String compName = ".//div[starts-with(@class, 'competitorName')]";
 	String compScore = ".//div[starts-with(@class, 'competitorScore')]";
 
-	@FindBy(css = "table#compIntVisibilitySitesTable")
-	private WebElement siteTable;
-
 	List<WebElement> columns;
 	List<WebElement> rows;
 
@@ -85,44 +85,53 @@ public class CA_Review_Page extends CA_abstractMethods {
 		return ovrwRprtData;
 
 	}
-	
+
 	public void verify_pageloadCompletely(int timeout) {
-		if(waitForElement(overviewReport, timeout)&&waitForElement(siteTable, timeout)&&waitForElement(hstryGrph, timeout)&&waitForElement(hstryGrph, timeout)&
-				waitForElement(filter_Panel, timeout))
+		if (waitForElement(overviewReport, timeout) && waitForElement(siteTable, timeout)
+				&& waitForElement(hstryGrph, timeout)
+				&& waitForElement(hstryGrph, timeout) & waitForElement(filter_Panel, timeout))
 			assertTrue(true, "All sections filter, overview report, site table and graph is loaded");
 		else
 			assertTrue(false, "Page not loaded completely");
 	}
 
-	public List<Map<String, String>> verifySitetable() {
-		waitForElement(siteTable, 10);
-		scrollByElement(siteTable);
-		String[][] table = readTable(siteTable);
-		List<Map<String, String>> siteTableData = new ArrayList<Map<String, String>>();
+	@Override
+	public String[][] readTable(WebElement table) {
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+		action.moveToElement(table);
+		List<WebElement> allRows = table.findElements(By.tagName("tr"));
+		String[][] rowResults = new String[allRows.size()][];
+		int i = 0;
+		String[] cellValues;
+		for (WebElement row : allRows) {
+			List<WebElement> cells = row.findElements(By.tagName("td"));
+			if (cells.size() == 0)
+				cells = row.findElements(By.tagName("th"));
 
-		for (int j = 0; j < table[0].length - 1; j++) {
-			Map<String, String> kMap = new HashMap<String, String>();
+			cellValues = new String[cells.size()];
+			int j = 0;
 
-			for (int i = 1; i < table.length; i++) {
-				kMap.put("compName", table[0][j + 1]);
-				kMap.put(table[i][0], table[i][j + 1]);
+			for (WebElement cell : cells) {
+				if (cell.getText() != null) {
+
+					if (cell.findElements(By.cssSelector("span.fivestars")).size() > 0) {
+						cellValues[j] = cell.findElement(By.cssSelector("span.fivestars>span")).getAttribute("style")
+								.toString();
+					} else
+						cellValues[j] = cell.getText().replaceAll("[^\\p{Print}]", "").toString();
+				} else
+					cellValues[j] = null;
+
+				j++;
 			}
-			siteTableData.add(kMap);
+			rowResults[i] = cellValues;
+
+			System.out.println(Arrays.toString(rowResults[i]));
+
+			i++;
 		}
-		System.out.println("google :" + siteTableData.get(0).get("Google"));
-		System.out.println(siteTableData.get(0).get("Bing"));
-		System.out.println("Superpages :" + siteTableData.get(0).get("Superpages"));
-
-		System.out.println("MAP******************MAP");
-		for (String name : siteTableData.get(1).keySet()) {
-
-			String key = name.toString();
-			String value = siteTableData.get(1).get(name).toString();
-			System.out.println(key + " " + value);
-		}
-
-		return siteTableData;
-
+		System.out.println("\n");
+		return rowResults;
 	}
 
 	public List<Map<String, String>> getExportData() throws Exception {
@@ -133,38 +142,16 @@ public class CA_Review_Page extends CA_abstractMethods {
 		int colSize = table[0].length;
 		for (int col = 1; col < colSize; col++) {
 			Map<String, String> kMap = new HashMap<String, String>();
-			
+
 			for (int i = 1; i < table.length; i++) {
-				kMap.put("compName", table[0][col]);	
+				System.out.println("i value" + i);
+				kMap.put("compName", table[0][col]);
 				kMap.put(table[i][0], table[i][col]);
 			}
 			exportData.add(kMap);
 		}
 
 		return exportData;
-
-	}
-
-	public void compareExprttoOvervw(List<Map<String, String>> exportData, List<Map<String, String>> ovrwRprtData) {
-
-		for (Map<String, String> m1 : ovrwRprtData) {
-			for (Map<String, String> m2 : exportData) {
-				if (m1.get("compName").equals(m2.get("compName"))) {
-					Assert.assertEquals(formatFloat(m1.get("score")),  formatFloat(m2.get("Overall")), 0.05f, "Verifying score for" + m1.get("compName"));
-				}
-			}
-		}
-	}
-
-	public void compareReportnGraph(List<Map<String, String>> tooltipdata, List<Map<String, String>> ovrwRprtData) {
-
-		for (Map<String, String> m1 : ovrwRprtData) {
-			for (Map<String, String> m2 : tooltipdata) {
-				if (m1.get("compName").equals(m2.get("compName"))) {
-					Assert.assertEquals(formatFloat(m1.get("score")),  formatFloat(m2.get("Overall")), 0.05f, "Verifying score for" + m1.get("compName"));
-				}
-			}
-		}
 
 	}
 
@@ -175,8 +162,18 @@ public class CA_Review_Page extends CA_abstractMethods {
 				if (m1.get("compName").equals(m2.get("compName"))) {
 					Assert.assertEquals(m1.size() - 1, m2.size());
 					for (String name : m1.keySet()) {
-						if(!name.equalsIgnoreCase("Overall")) {
-						Assert.assertEquals(formatFloat(m1.get(name)),  formatFloat(m2.get(name)), 0.05f, "Verifying score for " + name + "for" + m1.get("compName"));
+						System.out.println("for name " + name + " score from export " + m1.get(name)
+								+ "and score from site table" + m2.get(name));
+						if (!name.equalsIgnoreCase("Overall") && !name.contains("Yellowpages")
+								&& !name.equals("compName")) {
+							Assert.assertEquals(formatFloat(m1.get(name)), formatFloat(m2.get(name)) / 16, 0.05,
+									"Verifying score for " + name + "for" + m1.get("compName"));
+						} else if (name.equalsIgnoreCase("YellowpagesCom")) {
+							Assert.assertEquals(formatFloat(m1.get(name)), formatFloat(m2.get("Yellowpages.com")) / 16,
+									0.05, "Verifying score for " + name + "for" + m1.get("compName"));
+						} else if (name.equalsIgnoreCase("Yellowpages")) {
+							Assert.assertEquals(formatFloat(m1.get(name)), formatFloat(m2.get("Yellowpages.ca")) / 16,
+									0.05, "Verifying score for " + name + "for" + m1.get("compName"));
 						}
 					}
 				}

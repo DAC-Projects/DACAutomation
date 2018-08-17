@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -270,6 +271,7 @@ public class BasePage {
 		int yLoc = element.getLocation().getY()-10;
 		int xLoc = element.getLocation().getX();
 		js.executeScript("window.scrollTo("+xLoc+", "+yLoc+")");
+	
 	}
 	
 	
@@ -330,7 +332,7 @@ public class BasePage {
 	/**
 	 * This method to print the UI table data in Console*/
 	public String[][] readTable(WebElement table) {
-
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		List<WebElement> allRows = table.findElements(By.tagName("tr")); 
 		String[][] rowResults = new String[allRows.size()][];
 		int i=0;

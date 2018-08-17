@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +17,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import com.dac.main.BasePage;
 
@@ -63,14 +66,16 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	@FindBy(css = "div.highcharts-label.highcharts-tooltip.highcharts-color-0>span>table")
 	private WebElement grphTable;
 
-	
-	
+	// site table
+	@FindBy(css = "table#compIntVisibilitySitesTable")
+	public WebElement siteTable;
+
 	/**
 	 * @param Country
 	 * @param State
 	 * @param City
 	 * @param Location
-	 * for Global filtering reports
+	 *            for Global filtering reports
 	 */
 	public void applyFilter(String Country, String State, String City, String Location) {
 
@@ -91,26 +96,23 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 		WebElement location = driver.findElement(By.xpath("//div[contains(text(),'" + Location + "')]"));
 		waitForElement(location, 10);
 		clickelement(location);
+		scrollByElement(location);
 		clickelement(Apply_filter);
 
 	}
 
 	/**
-	 * @return
-	 * must implement overview report for all pages
+	 * @return must implement overview report for all pages
 	 */
 	public abstract List<Map<String, String>> getOverviewReport();
 
 	public void convertExports(String filename, String export) throws FileNotFoundException, IOException {
-		String visibility_export = new formatConvert(Exportpath + filename).convertFile("xlsx");
-		FileHandler.renameTo(new File(Exportpath + visibility_export), Exportpath + export);
+		String report_export = new formatConvert(Exportpath + filename).convertFile("xlsx");
+		FileHandler.renameTo(new File(Exportpath + report_export), Exportpath + export);
 	}
 
-	
-	
 	/**
-	 * @return
-	 * History graph value read
+	 * @return History graph value read
 	 */
 	public List<Map<String, String>> verifyHistoryGraph() {
 		waitForElement(hstryGrph, 10);
@@ -136,16 +138,73 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 		return tooltipdata;
 
 	}
-	
+
+	/**
+	 * @param s
+	 * @return Finds no within a string and returns as float
+	 */
 	public float formatFloat(String s) {
-		
-		if(s.contains("%"))
-		 return Float.parseFloat(s.replace("%", ""));
-		else if(s.equals("-")|s.isEmpty())
-			return 0f;
+
+		Pattern regex = Pattern.compile("(\\d+(?:\\.\\d+)?)");
+		Matcher matcher = regex.matcher(s);
+		if (matcher.find())
+			return Float.parseFloat(matcher.group(1));
 		else
-			return Float.parseFloat(s);
-		
+			return 0f;
+
+	}
+
+	public List<Map<String, String>> verifySitetable() {
+		waitForElement(siteTable, 10);
+		scrollByElement(siteTable);
+		System.out.println("Reading site table**********");
+		String[][] table = readTable(siteTable);
+		List<Map<String, String>> siteTableData = new ArrayList<Map<String, String>>();
+		Map<String, String> kMap = new HashMap<String, String>();
+		for (int j = 0; j < table[0].length - 1; j++) {
+
+			kMap.put("compName", table[0][j + 1]);
+			for (int i = 1; i < table.length; i++) {
+				kMap.put(table[i][0], table[i][j + 1]);
+			}
+			siteTableData.add(kMap);
+		}
+
+		System.out.println("MAP******************MAP");
+		for (String name : siteTableData.get(1).keySet()) {
+
+			String key = name.toString();
+			String value = siteTableData.get(1).get(name).toString();
+			System.out.println(key + " " + value);
+		}
+
+		return siteTableData;
+
+	}
+
+	public void compareExprttoOvervw(List<Map<String, String>> exportData, List<Map<String, String>> ovrwRprtData) {
+
+		for (Map<String, String> m1 : ovrwRprtData) {
+			for (Map<String, String> m2 : exportData) {
+				if (m1.get("compName").equals(m2.get("compName"))) {
+					Assert.assertEquals(formatFloat(m1.get("score")), formatFloat(m2.get("Overall")), 0.05f,
+							"Verifying score for" + m1.get("compName"));
+				}
+			}
+		}
+	}
+
+	public void compareReportnGraph(List<Map<String, String>> tooltipdata, List<Map<String, String>> ovrwRprtData) {
+
+		for (Map<String, String> m1 : ovrwRprtData) {
+			for (Map<String, String> m2 : tooltipdata) {
+				if (m1.get("compName").equals(m2.get("compName"))) {
+					Assert.assertEquals(formatFloat(m1.get("score")), formatFloat(m2.get("Overall")), 0.05f,
+							"Verifying score for" + m1.get("compName"));
+				}
+			}
+		}
+
 	}
 
 }
