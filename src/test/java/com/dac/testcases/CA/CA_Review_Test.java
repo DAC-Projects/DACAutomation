@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_CA.CA_Review_Page;
 import resources.BaseTest;
+import resources.Utilities;
 
 public class CA_Review_Test extends BaseTest {
 
@@ -22,6 +23,7 @@ public class CA_Review_Test extends BaseTest {
 		np = new Navigationpage(driver);
 		np.navigateCA_Reviewpage();
 		 new CA_Review_Page(driver).verify_pageloadCompletely(10);
+		 Utilities.addScreenshot(driver, imgnames.get(0));
 	}
 
 	@Parameters({ "Filter" })
@@ -31,6 +33,7 @@ public class CA_Review_Test extends BaseTest {
 		String[] filter = Filter.split(",");
 		data.applyFilter(filter[0], filter[1], filter[2], filter[3]);
 		data.verify_pageloadCompletely(10);
+		 Utilities.addScreenshot(driver, imgnames.get(1));
 	}
 
 	@Test(dependsOnMethods = { "verifyCACalculation"}, groups= {"smoke"})
@@ -38,18 +41,21 @@ public class CA_Review_Test extends BaseTest {
 		data = new CA_Review_Page(driver);
 		export = data.getExportData();
 		data.compareExprttoOvervw(export, data.getOverviewReport());
+		 Utilities.addScreenshot(driver, imgnames.get(2));
 	}
 
 	@Test( dependsOnMethods = { "verifyCACalculation" }, groups= {"smoke"})
 	public void verifyOverviewReportnTooltip() throws Exception {
 		data = new CA_Review_Page(driver);
 		data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
+		Utilities.addScreenshot(driver, imgnames.get(3));
 	}
 
 	@Test(dependsOnMethods = { "verifyCACalculation", "verifyOverviewReportnExport" }, groups= {"smoke"})
 	public void verifySiteTablenExport() throws Exception {
 		data = new CA_Review_Page(driver);
 		data.compareExportnTable(export, data.verifySitetable());
+		Utilities.addScreenshot(driver, imgnames.get(4));
 	
 	}
 

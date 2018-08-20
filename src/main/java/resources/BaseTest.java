@@ -88,6 +88,7 @@ public abstract class BaseTest implements IAutoconst {
 	public static String className;
 	public static String id;
 	public static String browser;
+	public static String title;
 	//****************************Extent report
 	
 	@BeforeSuite(alwaysRun = true)
@@ -139,7 +140,6 @@ public abstract class BaseTest implements IAutoconst {
 	@AfterMethod(alwaysRun = true)
 	public void generateReport(ITestResult result) throws IOException, InvalidFormatException, XmlException {
 		System.out.println("@After Method");
-		int status = result.getStatus();
 		
 		try {
 			if (result.getStatus() == ITestResult.FAILURE) {
@@ -248,7 +248,7 @@ public abstract class BaseTest implements IAutoconst {
 		
 	}
 	
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void setup(Method m) throws Exception {
 		System.out.println("entered before method");
 		String className =this.getClass().getName();
@@ -258,6 +258,7 @@ public abstract class BaseTest implements IAutoconst {
 		 System.out.println(testcasefile);
 		 JsonParse Ja = new JsonParse(testcasefile, className, methodName);
 		 id =Ja.getID();
+		 title = Ja.getSheet();
 		 System.out.println("id :"+id);
 		System.out.println(Ja.getSheet());
 		System.out.println(Ja.getID());
@@ -289,12 +290,10 @@ public abstract class BaseTest implements IAutoconst {
 		//String browserName = prop.getProperty("browser");
 		 File file = new File("./downloads");
 
-		    boolean b = false;
 
-		    if (!file.exists()) {
-		     
-		      b = file.mkdirs();
-		    }
+		    if (!file.exists()) 		     
+		      file.mkdirs();
+
 		    
 		    FileUtils.cleanDirectory(file);
 		    String downloadFolder = System.getProperty("user.dir")+"/downloads";
@@ -359,8 +358,9 @@ public abstract class BaseTest implements IAutoconst {
 	@AfterClass(alwaysRun = true)
 	public void closeBrowser() throws Exception {
 	
-		ce =new CreateEvidence(ReadExcel.Testcase);
-		ce.creatDoc(arraySteps);
+		//ce =new CreateEvidence(ReadExcel.Testcase);
+		ce =new CreateEvidence(title);
+		ce.creatDoc(arraySteps, imgnames);
 		
 		driver.quit();
 		driver = null;

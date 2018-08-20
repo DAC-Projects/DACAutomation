@@ -58,9 +58,9 @@ public class CreateEvidence {
 	}
 
 	
-	public void creatDoc(ArrayList<String[]> arraySteps) throws IOException, InvalidFormatException, XmlException {
+	public void creatDoc(ArrayList<String[]> arraySteps, ArrayList<String> imgnames) throws IOException, InvalidFormatException, XmlException {
 
-		ArrayList<String> imgnames = new ArrayList<String>();
+		//ArrayList<String> imgnames = new ArrayList<String>();
 		int counter = 0;
 		int counter2 = -1;
 
@@ -75,7 +75,7 @@ public class CreateEvidence {
 		HeaderFormats.addCustomHeadingStyle(doc, styles, heading4, 4, 20, "000000");
 
 		// create an array with screenshot names
-		for (String[] step : arraySteps) {
+	/*	for (String[] step : arraySteps) {
 			if (step[2].equalsIgnoreCase("yes")) {
 				counter += 1;
 				imgnames.add(ReadExcel.Testcase + "_" + counter);
@@ -83,7 +83,7 @@ public class CreateEvidence {
 				System.out.println("image array: " + imgnames.toString());
 
 			}
-		}
+		}*/
 
 		XWPFParagraph paragraph = doc.createParagraph();
 		paragraph.setStyle(heading1);

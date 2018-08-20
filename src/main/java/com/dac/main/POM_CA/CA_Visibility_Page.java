@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -81,7 +83,6 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 			ovrwRprtData.add(kMap);
 		}
 		return ovrwRprtData;
-
 	}
 
 	public void verify_pageloadCompletely(int timeout) {
@@ -106,35 +107,40 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 				kMap.put("compName", table[0][col]);
 				kMap.put(table[i][0], table[i][col]);
 			}
-			exportData.add(kMap);
+			
 		}
+		
 
 		return exportData;
 
 	}
 
 	public void compareExportnTable(List<Map<String, String>> exportData, List<Map<String, String>> siteTableData) {
-
+	
 		for (Map<String, String> m1 : exportData) {
 			for (Map<String, String> m2 : siteTableData) {
+				
 				if (m1.get("compName").equals(m2.get("compName"))) {
+					
 					Assert.assertEquals(m1.size() - 1, m2.size());
-					for (String name : m1.keySet()) {
-						System.out.println("for name " + name + " score from export " + m1.get(name)
-								+ "and score from site table" + m2.get(name));
-						if (!name.equalsIgnoreCase("Overall") && !name.contains("Yellowpages")
-								&& !name.equals("compName")) {
-							Assert.assertEquals(formatFloat(m1.get(name)), formatFloat(m2.get(name)), 0.05,
-									"Verifying score for " + name + "for" + m1.get("compName"));
-						} else if (name.equalsIgnoreCase("YellowpagesCom")) {
-							Assert.assertEquals(formatFloat(m1.get(name)), formatFloat(m2.get("Yellowpages.com")), 0.05,
-									"Verifying score for " + name + "for" + m1.get("compName"));
-						} else if (name.equalsIgnoreCase("Yellowpages")) {
-							Assert.assertEquals(formatFloat(m1.get(name)), formatFloat(m2.get("Yellowpages.ca")), 0.05,
-									"Verifying score for " + name + "for" + m1.get("compName"));
-
+					m1.forEach((k,v)->{
+						System.out.println("for name " + k + " score from export " + v
+						+ "and score from site table" + m2.get(k));
+						if (!k.equalsIgnoreCase("Overall") && !k.contains("Yellowpages")
+								&& !k.equals("compName")) {
+							Assert.assertEquals(formatFloat(v), formatFloat(m2.get(k)), 0.05,
+									"Verifying score for " + k + "for" + m1.get("compName"));
+						} else if (k.equalsIgnoreCase("YellowpagesCom")) {
+							Assert.assertEquals(formatFloat(v), formatFloat(m2.get("Yellowpages.com")), 0.05,
+									"Verifying score for " + k + "for" + m1.get("compName"));
+						} else if (k.equalsIgnoreCase("Yellowpages")) {
+							Assert.assertEquals(formatFloat(v), formatFloat(m2.get("Yellowpages.ca")), 0.05,
+									"Verifying score for " + k + "for" + m1.get("compName"));
+	
 						}
-					}
+					
+				});
+					
 				}
 			}
 

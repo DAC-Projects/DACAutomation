@@ -144,6 +144,7 @@ public class BasePage {
 			     robot.keyPress(KeyEvent.VK_S);
 			     Thread.sleep(1000);
 			     robot.keyRelease(KeyEvent.VK_ALT);
+			     robot.keyRelease(KeyEvent.VK_S);
 			     if("firefox".equalsIgnoreCase(BaseTest.browser))
 			     robot.keyPress(KeyEvent.VK_ENTER);
 			     

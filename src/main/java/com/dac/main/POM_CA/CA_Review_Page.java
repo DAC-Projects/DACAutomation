@@ -161,21 +161,21 @@ public class CA_Review_Page extends CA_abstractMethods {
 			for (Map<String, String> m2 : siteTableData) {
 				if (m1.get("compName").equals(m2.get("compName"))) {
 					Assert.assertEquals(m1.size() - 1, m2.size());
-					for (String name : m1.keySet()) {
-						System.out.println("for name " + name + " score from export " + m1.get(name)
-								+ "and score from site table" + m2.get(name));
-						if (!name.equalsIgnoreCase("Overall") && !name.contains("Yellowpages")
-								&& !name.equals("compName")) {
-							Assert.assertEquals(formatFloat(m1.get(name)), formatFloat(m2.get(name)) / 16, 0.05,
-									"Verifying score for " + name + "for" + m1.get("compName"));
-						} else if (name.equalsIgnoreCase("YellowpagesCom")) {
-							Assert.assertEquals(formatFloat(m1.get(name)), formatFloat(m2.get("Yellowpages.com")) / 16,
-									0.05, "Verifying score for " + name + "for" + m1.get("compName"));
-						} else if (name.equalsIgnoreCase("Yellowpages")) {
-							Assert.assertEquals(formatFloat(m1.get(name)), formatFloat(m2.get("Yellowpages.ca")) / 16,
-									0.05, "Verifying score for " + name + "for" + m1.get("compName"));
+					m1.forEach((k,v)->{
+						System.out.println("for name " + k + " score from export " + v
+								+ "and score from site table" + m2.get(k));
+						if (!k.equalsIgnoreCase("Overall") && !k.contains("Yellowpages")
+								&& !k.equals("compName")) {
+							Assert.assertEquals(formatFloat(v), formatFloat(m2.get(k)) / 16, 0.05,
+									"Verifying score for " + k + "for" + m1.get("compName"));
+						} else if (k.equalsIgnoreCase("YellowpagesCom")) {
+							Assert.assertEquals(formatFloat(v), formatFloat(m2.get("Yellowpages.com")) / 16,
+									0.05, "Verifying score for " + k + "for" + m1.get("compName"));
+						} else if (k.equalsIgnoreCase("Yellowpages")) {
+							Assert.assertEquals(formatFloat(v), formatFloat(m2.get("Yellowpages.ca")) / 16,
+									0.05, "Verifying score for " + k + "for" + m1.get("compName"));
 						}
-					}
+					});
 				}
 			}
 
