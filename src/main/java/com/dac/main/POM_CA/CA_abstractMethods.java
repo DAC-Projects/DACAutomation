@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -117,6 +118,7 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	public List<Map<String, String>> verifyHistoryGraph() {
 		waitForElement(hstryGrph, 10);
 		scrollByElement(hstryGrph);
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth() / 2) - 2, 0).click().perform();
 		rows = grphTable.findElements(By.tagName("tr"));
 		String[][] table = readTable(grphTable);

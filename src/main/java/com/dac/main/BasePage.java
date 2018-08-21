@@ -319,8 +319,7 @@ public class BasePage {
 	public boolean waitForElement(WebElement elemnt,int timeSec) {
 		try {
 		WebDriverWait wait = new WebDriverWait(driver, timeSec);
-		if(wait.until(ExpectedConditions.visibilityOf(elemnt)) != null|| false) {
-			
+		if(wait.until(ExpectedConditions.visibilityOf(elemnt)) != null|| false) {		
 			return true;
 		}else return false;
 		

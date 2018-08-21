@@ -42,6 +42,7 @@ public class CA_Review_Test extends BaseTest {
 		export = data.getExportData();
 		data.compareExprttoOvervw(export, data.getOverviewReport());
 		 Utilities.addScreenshot(driver, imgnames.get(2));
+		
 	}
 
 	@Test( dependsOnMethods = { "verifyCACalculation" }, groups= {"smoke"})
@@ -49,6 +50,7 @@ public class CA_Review_Test extends BaseTest {
 		data = new CA_Review_Page(driver);
 		data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
 		Utilities.addScreenshot(driver, imgnames.get(3));
+		
 	}
 
 	@Test(dependsOnMethods = { "verifyCACalculation", "verifyOverviewReportnExport" }, groups= {"smoke"})
@@ -56,6 +58,7 @@ public class CA_Review_Test extends BaseTest {
 		data = new CA_Review_Page(driver);
 		data.compareExportnTable(export, data.verifySitetable());
 		Utilities.addScreenshot(driver, imgnames.get(4));
+	
 	
 	}
 

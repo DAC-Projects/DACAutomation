@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Properties;
@@ -266,6 +267,7 @@ public abstract class BaseTest implements IAutoconst {
 		re = new ReadExcel(Ja.getIterationPath());
 		arraySteps.addAll( re.getTestcases(Ja.getSheet(), Ja.getID()));
 		imgnames.addAll(re.getScreenshotNames(Ja.getSheet(), Ja.getID()));
+		imgnames.forEach(System.out::println);
 		
 		/*String class= this.getClass().getSimpleName();*/
 		String Name = ReadExcel.Testcase +"-" +id; 
@@ -360,6 +362,10 @@ public abstract class BaseTest implements IAutoconst {
 	
 		//ce =new CreateEvidence(ReadExcel.Testcase);
 		ce =new CreateEvidence(title);
+		System.out.println("test steps");
+		arraySteps.forEach(e->System.out.println(Arrays.toString(e)));
+		System.out.println("image names");
+		System.out.println(imgnames.toString());;
 		ce.creatDoc(arraySteps, imgnames);
 		
 		driver.quit();

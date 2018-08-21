@@ -27,6 +27,7 @@ public class ReadExcel {
 	public static XSSFCell cell = null;
 	private static ArrayList<String[]> arrayofSteps;
 	public static String Testcase;
+	 
 	
 
 	public ReadExcel(String xlFilePath) throws Exception {
@@ -122,19 +123,22 @@ public class ReadExcel {
 			// return "row " + rowNum + " or column " + colName + " does not exist in
 			// Excel";
 		}
+		
+		String endOfTestMethod[] = {"EOT", "EOT", "EOT"};
+		arrayofSteps.add(endOfTestMethod);
 		return arrayofSteps;
 	}
 
 	public ArrayList<String> getScreenshotNames(String sheetName, String searchKey) {
-		int counter = 0;
+		int imageindex = 0;
 		ArrayList<String> imgnames = new ArrayList<String>();
 		arrayofSteps = getTestcases(sheetName, searchKey);
 		for (String[] step : arrayofSteps) {
 			if (step[2].equalsIgnoreCase("yes")) {
-				counter += 1;
+				imageindex += 1;
 				// imgnames.add("_"+counter);
 
-				imgnames.add(ReadExcel.Testcase + "_" + counter);
+				imgnames.add(ReadExcel.Testcase + "_" + imageindex);
 				System.out.println("image array: " + imgnames.toString());
 
 			}

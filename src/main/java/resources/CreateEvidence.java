@@ -9,10 +9,13 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.function.Predicate;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.BreakType;
@@ -51,17 +54,15 @@ public class CreateEvidence {
 
 	XWPFDocument doc = new XWPFDocument();
 	XWPFStyles styles = doc.createStyles();
-	String testcaseName;
+	String docTitle;
 
 	public CreateEvidence(String testcase) {
-		this.testcaseName = testcase;
+		this.docTitle = testcase;
 	}
 
 	
 	public void creatDoc(ArrayList<String[]> arraySteps, ArrayList<String> imgnames) throws IOException, InvalidFormatException, XmlException {
 
-		//ArrayList<String> imgnames = new ArrayList<String>();
-		int counter = 0;
 		int counter2 = -1;
 
 		// styling different headers
@@ -89,10 +90,15 @@ public class CreateEvidence {
 		paragraph.setStyle(heading1);
 		paragraph.setAlignment(ParagraphAlignment.CENTER);
 		XWPFRun run = paragraph.createRun();
-		run.setText(testcaseName);
+		run.setText(docTitle);
 		run.addBreak();
-
+		
 		for (String[] step : arraySteps) {
+			if(Arrays.stream(step).allMatch(e -> e.equals("EOT"))) {
+				continue;
+			}
+				
+			
 			String TestStep = step[0].toString();
 			String ExpctdRsult = step[1].toString();
 			String ScrnshtRequird = step[2].toString();
@@ -115,6 +121,7 @@ public class CreateEvidence {
 				XWPFRun r2 = p2.createRun();
 				r2.setText("Expected Result:   " + ExpctdRsult.trim());
 				r2.addBreak();
+			
 
 				if (ScrnshtRequird.equalsIgnoreCase("yes"))
 
@@ -126,13 +133,15 @@ public class CreateEvidence {
 					if (img1.exists()) {
 						System.out.println("image found");
 						BufferedImage bimg1 = ImageIO.read(img1);
-						int height1 = bimg1.getHeight();
-						String imgFile1 = img1.getName();
-						int imgFormat1 = getImageFormat(imgFile1);
+						bimg1.getHeight();
+						String imgtitle = img1.getName();
+						int imgFormat = getImageFormat(imgtitle);
 						r2.addBreak();
-						r2.addPicture(new FileInputStream(img1), imgFormat1, imgFile1, Units.toEMU(420),
+						FileInputStream image =new FileInputStream(img1);
+						r2.addPicture(image, imgFormat, imgtitle, Units.toEMU(420),
 								Units.toEMU(200));
-						
+						image.close();
+						img1.delete();
 					} else {
 						System.out.println("image not found.");
 						r2.addBreak(BreakType.TEXT_WRAPPING);
@@ -147,17 +156,15 @@ public class CreateEvidence {
 			}
 
 		}
-		String callerClassName = new Exception().getStackTrace()[1].getClassName();
+		new Exception().getStackTrace()[1].getClassName();
 		String timeStamp = new SimpleDateFormat("yyyyMMdd_HH_mm").format(Calendar.getInstance().getTime());
 		File file = new File("./testevidence");
 
-		boolean b = false;
-
 		if (!file.exists()) {
 
-			b = file.mkdirs();
+			file.mkdirs();
 		}
-		FileOutputStream out = new FileOutputStream("testevidence/" + ReadExcel.Testcase + "-" + timeStamp + ".docx");
+		FileOutputStream out = new FileOutputStream("testevidence/" + docTitle + "-" + timeStamp + ".docx");
 		doc.write(out);
 
 		out.close();

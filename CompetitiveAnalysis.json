@@ -2,7 +2,7 @@
 {
 	"iterationPath": "./CompetitiveAnalysis.xlsx",
 	"com.dac.testcases.CA.CA_Visibility_Test": {
-		"sheet": "Calculation Verification",
+		"sheet": "Visibility testcases",
 		"verifyCACalculation": "id:1",
 		"verifyFilteringReports": "id:2",
 		"verifyOverviewReportnExport": "id:3",
