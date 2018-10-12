@@ -221,7 +221,7 @@ public class CampaignsPage extends BasePage{
 	
 	public void click_DraftTab() throws InterruptedException {
 		wait.until(ExpectedConditions.visibilityOf(procCampCustActReportLink));
-		Thread.sleep(2000);
+		Thread.sleep(4000);
 		clickelement(DraftTab);
 	}
 	

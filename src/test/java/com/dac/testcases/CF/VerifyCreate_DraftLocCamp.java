@@ -12,6 +12,7 @@ import com.dac.main.POM_CF.CreateNewCampaignPage;
 import com.relevantcodes.extentreports.LogStatus;
 
 import resources.BaseTest;
+import resources.CurrentState;
 import resources.ExcelTestDataHandler;
 import resources.IAutoconst;
 import resources.Utilities;
@@ -23,31 +24,31 @@ public class VerifyCreate_DraftLocCamp extends BaseTest_CF{
 		
 		int englishLangColumn = 9;
 	
-		Navigationpage np=new Navigationpage(driver);
+		Navigationpage np=new Navigationpage(CurrentState.getDriver());
 		np.clickCampaigns();
 		
-		CampaignsPage cp=new CampaignsPage(driver);
+		CampaignsPage cp=new CampaignsPage(CurrentState.getDriver());
 		cp.click_CreateCampaignBTN();
 				
-		CreateNewCampaignPage newCampaign=new CreateNewCampaignPage(driver);
+		CreateNewCampaignPage newCampaign=new CreateNewCampaignPage(CurrentState.getDriver());
 		
 		newCampaign.selectCampType(1);
-		logger.log(LogStatus.INFO, "Selecting campaign Type as Location");
+		//logger.log(LogStatus.INFO, "Selecting campaign Type as Location");
 		
 		newCampaign.selectCampLang(1);
 		String campLang = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Location").getCellValue(3, englishLangColumn);
-		logger.log(LogStatus.INFO, "Selecting campaign Language as "+campLang);
+		//logger.log(LogStatus.INFO, "Selecting campaign Language as "+campLang);
 		
 		newCampaign.verifyExistCampToolTipText("Location", 5, englishLangColumn);
-		Utilities.addScreenshot(driver, imgnames.get(0).toString());
-		logger.log(LogStatus.INFO, "verifying the tool tip lang and text of it");
+		Utilities.addScreenshot(CurrentState.getDriver(), CurrentState.getImgnames().get(0).toString());
+		//logger.log(LogStatus.INFO, "verifying the tool tip lang and text of it");
 		
 		campName = newCampaign.setCampaignName("Location", 6, englishLangColumn);
 		
 		newCampaign.selectCampaignLoc(0, englishLangColumn);
 		
-		newCampaign.setCampDescr("Location", 8, englishLangColumn);
-		Utilities.addScreenshot(driver, imgnames.get(1).toString());
+		/*newCampaign.setCampDescr("Location", 8, englishLangColumn);
+		Utilities.addScreenshot(CurrentState.getDriver(), imgnames.get(1).toString());
 		logger.log(LogStatus.INFO, "Entered the Campaign Name, Brand Name and Description");
 		
 		newCampaign.setSenderName("Location", 9, englishLangColumn);
@@ -62,13 +63,13 @@ public class VerifyCreate_DraftLocCamp extends BaseTest_CF{
 		Thread.sleep(5000);
 		newCampaign.verifyUploadLogoToolTipText("Location", 10, englishLangColumn);
 		
-		Utilities.addScreenshot(driver, imgnames.get(2).toString());
+		Utilities.addScreenshot(CurrentState.getDriver(), imgnames.get(2).toString());
 		
 		//newCampaign.downloadCampEmailTemplate();
 		
 		newCampaign.uploadCampEmailTemplate("Location", 13, englishLangColumn);
 		logger.log(LogStatus.INFO, "Uploading Email Template");
-		Utilities.addScreenshot(driver, imgnames.get(3).toString());
+		Utilities.addScreenshot(CurrentState.getDriver(), imgnames.get(3).toString());
 		
 		newCampaign.setCampSubject("Location", 14, englishLangColumn);
 		
@@ -77,7 +78,7 @@ public class VerifyCreate_DraftLocCamp extends BaseTest_CF{
 		newCampaign.verifyPersonalizationToolTipText("Brand", 16, englishLangColumn);
 		
 		newCampaign.setCampBodyCopy("Location", 17, englishLangColumn);
-		Utilities.addScreenshot(driver, imgnames.get(4).toString());
+		Utilities.addScreenshot(CurrentState.getDriver(), imgnames.get(4).toString());
 		logger.log(LogStatus.INFO, "Entered Subject, Banner Info and Body Copy data and verifying the Tokens");
 		
 		newCampaign.setCampSignature("Location",18 , englishLangColumn);
@@ -87,18 +88,18 @@ public class VerifyCreate_DraftLocCamp extends BaseTest_CF{
 		newCampaign.clickEndDatePicker();
 		
 		newCampaign.verifyCampEndDateToolTipText("Location", 22, englishLangColumn);
-		Utilities.addScreenshot(driver, imgnames.get(5).toString());
-		logger.log(LogStatus.INFO, "Verifying the Scheduling campaign Date controls");
+		Utilities.addScreenshot(CurrentState.getDriver(), imgnames.get(5).toString());
+		logger.log(LogStatus.INFO, "Verifying the Scheduling campaign Date controls");*/
 		
 		newCampaign.clickSaveDraft();
-		Utilities.addScreenshot(driver, imgnames.get(6).toString());
-		logger.log(LogStatus.INFO, "Verifying the Draft Location Campaign creation Pop up");
+		Utilities.addScreenshot(CurrentState.getDriver(), CurrentState.getImgnames().get(6).toString());
+		//logger.log(LogStatus.INFO, "Verifying the Draft Location Campaign creation Pop up");
 		
 		newCampaign.clickViewAllCampaignBTN();	
 		
 		cp.verifyCampName("Draft", campName);
-		Utilities.addScreenshot(driver, imgnames.get(7).toString());
-		logger.log(LogStatus.INFO, "Verifying the Created Campaign whether displayed in Sceduled campaign Section");
+		Utilities.addScreenshot(CurrentState.getDriver(), CurrentState.getImgnames().get(7).toString());
+		//logger.log(LogStatus.INFO, "Verifying the Created Campaign whether displayed in Sceduled campaign Section");
 		
 	}
 }

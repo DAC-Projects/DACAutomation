@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
@@ -20,13 +21,15 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ReadExcel {
-	public static FileInputStream fis = null;
-	public static XSSFWorkbook workbook = null;
-	public static XSSFSheet sheet = null;
-	public static XSSFRow row = null;
-	public static XSSFCell cell = null;
-	private static ArrayList<String[]> arrayofSteps;
-	public static String Testcase;
+	public  FileInputStream fis = null;
+	public  XSSFWorkbook workbook = null;
+	public  XSSFSheet sheet = null;
+	public  XSSFRow row = null;
+	public  XSSFCell cell = null;
+	private  ArrayList<String[]> arrayofSteps;
+	public   String testcase;
+	
+	
 	 
 	
 
@@ -36,6 +39,8 @@ public class ReadExcel {
 		fis.close();
 
 	}
+	
+
 
 	public ArrayList<String[]> getTestcases(String sheetName, String searchKey) {
 		try {
@@ -68,17 +73,18 @@ public class ReadExcel {
 					if (cellValue.trim().equalsIgnoreCase(searchKey))
 					{
 					testcase_row_Num = i;
-					System.out.println("search key found"+searchKey);
 					break;
-				}else System.out.println("Search key not found"+searchKey);
+				}
 
 				}
 			}
-
+			
+		
 			/* Then read data from the next cell(Testcase name ) return a s a string */
 			int testcaseName_col = col_Num + 1;
-			Testcase = row.getCell(testcaseName_col).getStringCellValue().trim();
-			System.out.println(Testcase);
+			testcase = row.getCell(testcaseName_col).getStringCellValue().trim();
+			CurrentState.setCurrentTestcase(testcase);
+			//currentTestcase.set(testcase);
 			int testStep_col = testcaseName_col + 1;
 			int expctedRsult_col = testStep_col + 1;
 			int scrnCaptrNeed_col = expctedRsult_col + 1;
@@ -117,6 +123,7 @@ public class ReadExcel {
 					arrayofSteps.add(Step);
 				}
 			}
+		
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -126,6 +133,8 @@ public class ReadExcel {
 		
 		String endOfTestMethod[] = {"EOT", "EOT", "EOT"};
 		arrayofSteps.add(endOfTestMethod);
+		Stream.generate(()->"*").limit(10).forEach(System.out::print);
+		System.out.println("Testcase ID-"+searchKey + ":" +testcase);
 		return arrayofSteps;
 	}
 
@@ -133,13 +142,11 @@ public class ReadExcel {
 		int imageindex = 0;
 		ArrayList<String> imgnames = new ArrayList<String>();
 		arrayofSteps = getTestcases(sheetName, searchKey);
+		
 		for (String[] step : arrayofSteps) {
 			if (step[2].equalsIgnoreCase("yes")) {
 				imageindex += 1;
-				// imgnames.add("_"+counter);
-
-				imgnames.add(ReadExcel.Testcase + "_" + imageindex);
-				System.out.println("image array: " + imgnames.toString());
+				imgnames.add(CurrentState.getCurrentTestcase() + "_" + Math.random());
 
 			}
 		}

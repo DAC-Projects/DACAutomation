@@ -6,8 +6,9 @@ import java.util.List;
 import com.dac.main.POM_CA.Sites;
 
 import resources.BaseTest;
+import resources.BaseTest2;
 
-public class BaseTest_CF extends BaseTest{
+public class BaseTest_CF extends BaseTest2{
 
 	public  String campName = "", locName = "", brandName = "", campSubject = "", campBodyCopy = "", campBanner = "",
 						 campSignature = "", campSubjectNew = "", campBodyCopyNew = "", campBannerNew = "",

@@ -1,17 +1,17 @@
 
 {
 "iterationPath" : "./TC-RS.xlsx",
-"com.dac.testcases.CF.Verify_CreateLocCampaign" : {"sheet":"CampCreation", "navigateToCF":"id:48166", "createLocCamp_Test":"id:48066"},
-"com.dac.testcases.CF.Verify_LocLivePreviewN_DeleteCamp" : {"sheet":"LivePreview&Delete","livePreviewLocTest":"id:54717"},
-"com.dac.testcases.CF.VerifyCreate_DraftLocCamp" : {"DraftCamp":"id:54712"},
+"Verify_CreateLocCampaign" : {"sheet":"CampCreation", "navigateToCF":"id:48166", "createLocCamp_Test":"id:48066"},
+"Verify_LocLivePreviewN_DeleteCamp" : {"sheet":"LivePreview&Delete","livePreviewLocTest":"id:54717"},
+"VerifyCreate_DraftLocCamp" : {"sheet":"DraftLoc","createLocCamp_Test":"id:54712"},
 
-"com.dac.testcases.CF.Verify_CreateBrandCampaign" : {"sheet":"CampCreation", "navigateToCF":"id:48166", "createBrandCamp_Test":"id:48167"},
-"com.dac.testcases.CF.Verify_BrandLivePreviewN_DeleteCamp" : {"sheet":"LivePreview&Delete","livePreviewBrandTest":"id:54211"},
-"com.dac.testcases.CF.VerifyCreate_DraftBrandCamp" : {"DraftCamp":"id:54202"},
+"Verify_CreateBrandCampaign" : {"sheet":"CampCreation", "navigateToCF":"id:48166", "createBrandCamp_Test":"id:48167"},
+"Verify_BrandLivePreviewN_DeleteCamp" : {"sheet":"LivePreview&Delete","livePreviewBrandTest":"id:54211"},
+"VerifyCreate_DraftBrandCamp" : {"sheet":"DraftBrand","createDraftBrandCamp_Test":"id:54202"},
 
-"com.dac.testcases.CF.VerifyCampResponsesData" : {"Responses":"id:54703"},
-"com.dac.testcases.CF.VerifyCampReportsData" : {"Reports":"id:54704"},
-"com.dac.testcases.CF.VerifyCampCustomerActReport" : {"CustActReport":"id:54705"},
+"VerifyCampResponsesData" : {"Responses":"id:54703"},
+"VerifyCampReportsData" : {"Reports":"id:54704"},
+"VerifyCampCustomerActReport" : {"CustActReport":"id:54705"},
 
-"com.dac.testcases.CF.Verify_CreateMLCCampaign" : {"sheet":"CampCreation", "navigateToCF":"id:48166", "createMLCCamp_Test":"id:54917"}
+"Verify_CreateMLCCampaign" : {"sheet":"CampCreation", "navigateToCF":"id:48166", "createMLCCamp_Test":"id:54917"}
 }

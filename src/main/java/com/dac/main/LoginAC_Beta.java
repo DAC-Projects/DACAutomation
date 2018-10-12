@@ -9,6 +9,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import resources.CurrentState;
+
 public class LoginAC_Beta {
 	
 	WebDriver driver;
@@ -29,9 +31,10 @@ public class LoginAC_Beta {
 	private WebElement Dashboard;
 	
 	
-	public LoginAC_Beta(WebDriver driver) {
+	public LoginAC_Beta() {
+		this.driver = CurrentState.getDriver();
 		PageFactory.initElements(driver, this);
-		this.driver = driver;
+		
 	}
 	
 	public void setUserName(String un) {
