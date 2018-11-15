@@ -1,16 +1,28 @@
 package resources;
 
-import static org.testng.Assert.assertFalse;
-
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.xmlbeans.XmlException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.ElementNotSelectableException;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.ie.InternetExplorerOptions;
+import org.openqa.selenium.remote.CapabilityType;
 import org.testng.IClassListener;
 import org.testng.ITestClass;
 import org.testng.ITestContext;
@@ -19,215 +31,312 @@ import org.testng.ITestResult;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
+import com.selenium.testevidence.EvidenceReport;
+import com.selenium.testevidence.EvidenceType;
+import com.selenium.testevidence.GenerateEvidenceReport;
+import com.selenium.testevidence.SeleniumEvidence;
 
-public class ExtentTestNGITestListener implements ITestListener, IClassListener, IAutoconst {
+import io.github.bonigarcia.wdm.Architecture;
+import io.github.bonigarcia.wdm.DriverManagerType;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
-	private static ExtentReports extent = ExtentManager.createInstance("target/surefire-reports/extent.html");
-	private static ThreadLocal parentTest = new ThreadLocal();
-	private static ThreadLocal test = new ThreadLocal();
-	private static ThreadLocal<String> sheet = new ThreadLocal<String>();
-	JsonParse jsonread;
+public class ExtentTestNGITestListener
+    implements ITestListener, IClassListener, IAutoconst {
 
-	@Override
-	public synchronized void onStart(ITestContext context) {
+  private static ExtentReports extent = ExtentManager
+      .createInstance("target/surefire-reports/extent.html");
+  private static ThreadLocal parentTest = new ThreadLocal();
+  private static ThreadLocal test = new ThreadLocal();
+  List printList = new ArrayList();
+  /*
+   * Set parent node for extent reports store browser and testname from
+   * testng.xml
+   * 
+   * @see org.testng.ITestListener#onStart(org.testng.ITestContext)
+   */
+  @Override
+  public synchronized void onStart(ITestContext context) {
 
-		CurrentState.setTestcasefile(context.getCurrentXmlTest().getParameter("testcasesfile"));
-		CurrentState.setBrowser(context.getCurrentXmlTest().getParameter("browser"));
-		CurrentState.setTestName(context.getName());
-		Thread.currentThread().getId();
+    CurrentState
+        .setBrowser(context.getCurrentXmlTest().getParameter("browser"));
+    CurrentState.setTestName(context.getName());
+    ExtentTest parent = extent.createTest(CurrentState.getTestName());
+    parentTest.set(parent);
 
-		ExtentTest parent = extent.createTest(CurrentState.getTestName());
-		parentTest.set(parent);
+  }
 
-		System.setProperty(IE_KEY, IE_VALUE);
-		System.setProperty(GECKO_KEY, GECKO_VALUE);
-		System.setProperty(CHROME_KEY, CHROME_VALUE);
+  /*
+   * open browser, clear cookies and open maximized
+   * 
+   * @see org.testng.IClassListener#onBeforeClass(org.testng.ITestClass)
+   */
+  @Override
+  public synchronized void onBeforeClass(ITestClass testClass) {
+    try {
+      CurrentState.setDriver(openBrowser(CurrentState.getBrowser()));
+      CurrentState.getDriver().manage().window().maximize();
+      CurrentState.getDriver().manage().deleteAllCookies();
+      BaseClass.navigateToBasePage();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.testng.ITestListener#onTestStart(org.testng.ITestResult)
+   * Initialize Child nodes in report
+   */
+  @Override
+  public synchronized void onTestStart(ITestResult result) {
+    ExtentTest child = ((ExtentTest) parentTest.get()).createNode(getTestname(result));
+    child.assignCategory(
+        "Tests_executed_in_" + CurrentState.getBrowser() + "_browser");
+    test.set(child);
+    CurrentState.setLogger(child);
+    ((ExtentTest) test.get()).log(Status.INFO, "Testlogs");
+    
+   CurrentState.setEvidenceList(new ArrayList<SeleniumEvidence>());
+ 
+  }
+  
+  private String getTestname(ITestResult result){
+    String description = (result.getMethod().getDescription() != null)
+        ? result.getMethod().getDescription()
+        : result.getMethod().getMethodName();
+    return description;
+    
+  }
 
-	@Override
-	public synchronized void onBeforeClass(ITestClass testClass) {
-		// TODO Auto-generated method stub
-		try {
-			CurrentState.setDriver(BaseTest2.openBrowser(CurrentState.getBrowser()));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		CurrentState.getDriver().manage().window().maximize();
-		CurrentState.getDriver().manage().deleteAllCookies();
-		/*
-		 * LoginAC_Beta lp= new LoginAC_Beta(); BaseTest2.loginAuth(lp);
-		 * BaseTest2.navigateToDashboard(lp);
-		 */
+  @SuppressWarnings("unchecked")
+  @Override
+  public synchronized void onTestSuccess(ITestResult result) {
+    try {
+    ((ExtentTest) test.get()).pass("Test Case Success and Verified");
+    List evidence =CurrentState.getEvidenceList();
+    if(!evidence.isEmpty()) {
+      
+    EvidenceReport report = new EvidenceReport(evidence, "MyReportOK", getTestname(result), result.getTestContext().getName(), null);
+      printList.add(GenerateEvidenceReport.generareEvidenceReport(report, EvidenceType.PDF));}else {
+        CurrentState.getEvidenceList().add(new SeleniumEvidence("Test Passed. No Steps were added to this method", BaseClass.takeScreenshot(CurrentState.getDriver())));
+        EvidenceReport report = new EvidenceReport(CurrentState.getEvidenceList(), "MyReportOK", getTestname(result), result.getTestContext().getName(), null);
+        printList.add(GenerateEvidenceReport.generareEvidenceReport(report, EvidenceType.PDF));}
+      
+    }catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 
-	}
+  @SuppressWarnings("unchecked")
+  @Override
+  public synchronized void onTestFailure(ITestResult result) {
 
-	@Override
-	public synchronized void onTestStart(ITestResult result) {
+    generateErrorLog(result);
+
+    try {
+      CurrentState.getEvidenceList().add(new SeleniumEvidence("Error", BaseClass.takeScreenshot(CurrentState.getDriver())));
+    String errorMessage = result.getThrowable().getMessage();
+    List evidence =CurrentState.getEvidenceList();
+      
+    EvidenceReport report = new EvidenceReport(evidence, "MyReportNOK", getTestname(result), result.getTestContext().getName(), errorMessage);
+      printList.add(GenerateEvidenceReport.generareEvidenceReport(report, EvidenceType.PDF));
+
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+  }
+
+  @Override
+  public synchronized void onTestSkipped(ITestResult result) {
+    String description = (result.getMethod().getDescription() != null)
+        ? result.getMethod().getDescription()
+        : result.getMethod().getMethodName();
+    ExtentTest child = ((ExtentTest) parentTest.get()).createNode(description);
+    child.assignCategory(CurrentState.getBrowser());
+    test.set(child);
+
+    ((ExtentTest) test.get()).skip(result.getThrowable());
+    
+  }
+
+  @Override
+  public synchronized void onTestFailedButWithinSuccessPercentage(
+      ITestResult result) {
+
+  }
+
+  /* (non-Javadoc)
+   * @see org.testng.IClassListener#onAfterClass(org.testng.ITestClass)
+   * close browser
+   */
+  @Override
+  public synchronized void onAfterClass(ITestClass testClass) {
+   
+    CurrentState.getDriver().quit();
+    CurrentState.setDriver(null);
+  }
 
 
-		try {
+  
+  @Override
+  public synchronized void onFinish(ITestContext context) {
+    extent.flush();
+    if (CurrentState.getDriver() != null) {
+      CurrentState.getDriver().quit();
+    }
+    
+    if(!printList.isEmpty()) {
+      GenerateEvidenceReport.exportReport(EvidenceType.PDF, printList, "Report for "+context.getName());
+      printList.clear();}
 
-			jsonread = new JsonParse(CurrentState.getTestcasefile(), result.getInstance().getClass().getSimpleName(),
-					result.getName());
-			/*
-			 * re = new ReadExcel(jsonread.getIterationPath()); String Name =
-			 * CurrentState.getCurrentTestcase() +"-" + jsonread.getID();
-			 * 
-			 * if(CurrentState.getTestSteps()!=null) {
-			 * CurrentState.getTestSteps().addAll(re.getTestcases(jsonread.getSheet(),
-			 * jsonread.getID())); }else
-			 * CurrentState.setTestSteps(re.getTestcases(jsonread.getSheet(),
-			 * jsonread.getID()));
-			 * 
-			 * 
-			 * if(CurrentState.getImgnames()!=null) {
-			 * CurrentState.getImgnames().addAll(re.getScreenshotNames(jsonread.getSheet(),
-			 * jsonread.getID())); }else
-			 * CurrentState.setImgnames(re.getScreenshotNames(jsonread.getSheet(),
-			 * jsonread.getID()));
-			 */
+  }
 
-			sheet.set(jsonread.getSheet());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			assertFalse(true, "json object creation failed");
-		}
+  /**
+   * @param result
+   * Code to generate error log
+   */
+  public void generateErrorLog(ITestResult result) {
+    try {
+      String methodname = result.getMethod().getMethodName();
+      ((ExtentTest) test.get()).log(Status.FAIL, methodname);
+      String image;
 
-		ExtentTest child = ((ExtentTest) parentTest.get()).createNode(result.getMethod().getDescription());
-		child.assignCategory("Tests_executed_in_" + CurrentState.getBrowser() + "_browser");
-		test.set(child);
-		CurrentState.setLogger(child);
-		((ExtentTest) test.get()).log(Status.INFO, "Testlogs");
-	}
+      image = Utilities.captureScreenshot(CurrentState.getDriver(),
+          this.getClass().getSimpleName() + "_" + result.getName(), true);
 
-	@Override
-	public synchronized void onTestSuccess(ITestResult result) {
-		((ExtentTest) test.get()).pass("Test Case Success and Verified");
-		ReadExcel re;
-		try {
-			re = new ReadExcel(jsonread.getIterationPath());
+      ((ExtentTest) test.get()).addScreenCaptureFromPath(image, "Error");
 
-			String Name = CurrentState.getCurrentTestcase() + "-" + jsonread.getID();
+      if (result.getThrowable() instanceof ElementNotVisibleException) {
+        ((ExtentTest) test.get()).log(Status.FAIL,
+            "function " + methodname + " failed beacuse :");
+        ((ExtentTest) test.get()).log(Status.FAIL,
+            "Although an element is present on the DOM, it is not visible");
 
-			if (CurrentState.getTestSteps() != null) {
-				CurrentState.getTestSteps().addAll(re.getTestcases(jsonread.getSheet(), jsonread.getID()));
-			} else
-				CurrentState.setTestSteps(re.getTestcases(jsonread.getSheet(), jsonread.getID()));
+      } else if (result
+          .getThrowable() instanceof ElementNotSelectableException) {
+        ((ExtentTest) test.get()).log(Status.FAIL,
+            "function " + methodname + " failed beacuse :");
+        ((ExtentTest) test.get()).log(Status.FAIL,
+            "Element cannot be selected. Element could be disabled");
 
-			if (CurrentState.getImgnames() != null) {
-				CurrentState.getImgnames().addAll(re.getScreenshotNames(jsonread.getSheet(), jsonread.getID()));
-			} else
-				CurrentState.setImgnames(re.getScreenshotNames(jsonread.getSheet(), jsonread.getID()));
-		} catch (Exception e) {
-			assertFalse(true, "json reading failed");
-			e.printStackTrace();
-		}
+      } else if (result.getThrowable() instanceof TimeoutException) {
+        ((ExtentTest) test.get()).log(Status.FAIL,
+            "function " + methodname + " failed beacuse :");
+        ((ExtentTest) test.get()).log(Status.FAIL,
+            "Execution failed because the command did not complete in enough time.");
 
-	}
+      } else if (result.getThrowable() instanceof NoSuchElementException) {
+        ((ExtentTest) test.get()).log(Status.FAIL,
+            "function " + methodname + " failed beacuse :");
+        ((ExtentTest) test.get()).log(Status.FAIL,
+            "Cannot find Element on the page");
 
-	@Override
-	public synchronized void onTestFailure(ITestResult result) {
-		// ((ExtentTest) test.get()).fail(result.getThrowable());
-		try {
-			generateErrorLog(result);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+      } else if (result
+          .getThrowable() instanceof StaleElementReferenceException) {
+        ((ExtentTest) test.get()).log(Status.FAIL,
+            "function " + methodname + " failed beacuse :");
+        ((ExtentTest) test.get()).log(Status.FAIL,
+            "Element is no longer appearing on the DOM page.");
 
-	@Override
-	public synchronized void onTestSkipped(ITestResult result) {
-		ExtentTest child = ((ExtentTest) parentTest.get()).createNode(result.getMethod().getMethodName());
-		child.assignCategory(CurrentState.getBrowser());
-		test.set(child);
+      }
 
-		((ExtentTest) test.get()).skip(result.getThrowable());
-	}
+      Throwable th = result.getThrowable();
+      if (th != null) {
+        System.out.println(th.getMessage());
 
-	@Override
-	public synchronized void onTestFailedButWithinSuccessPercentage(ITestResult result) {
+        String error = th.getMessage().split("Session info")[0];
+        ((ExtentTest) test.get()).log(Status.FAIL, error);
+        //result.setThrowable(null);
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
-	}
+  /**
+   * @param browser
+   * @return
+   * @throws IOException
+   * code to open browser
+   */
+  public WebDriver openBrowser(String browser) throws IOException {
 
-	@Override
-	public synchronized void onAfterClass(ITestClass testClass) {
-		double roundOff = Math.round(Math.random() * 100.0) / 100.0;
-		;
+    WebDriver driver = null;
 
-		try {
-			if (CurrentState.getTestSteps() != null && CurrentState.getImgnames() != null)
-				new CreateEvidence(sheet.get() + roundOff).creatDoc(CurrentState.getTestSteps(),
-						CurrentState.getImgnames());
-		} catch (InvalidFormatException | IOException | XmlException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		CurrentState.getDriver().quit();
-		CurrentState.setDriver(null);
+    File file = new File("./downloads");
+    if (!file.exists())
+      file.mkdirs();
 
-		if (CurrentState.getTestSteps() != null) {
-			CurrentState.getTestSteps().clear();
-		}
+    String downloadFolder = System.getProperty("user.dir") + "/downloads";
 
-		if (CurrentState.getImgnames() != null) {
-			CurrentState.getImgnames().clear();
-		}
+    if (browser.equalsIgnoreCase("Chrome")) {
 
-	}
+      WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
+      HashMap<String, Object> chromePref = new HashMap<>();
+      chromePref.put("download.default_directory", downloadFolder);
+      chromePref.put("download.prompt_for_download", "false");
+      ChromeOptions options = new ChromeOptions();
+      options.setExperimentalOption("prefs", chromePref);
+      driver = new ChromeDriver(options);
 
-	@Override
-	public synchronized void onFinish(ITestContext context) {
-		extent.flush();
-		if (CurrentState.getDriver() != null) {
-			CurrentState.getDriver().quit();
-		}
+    } else if (browser.equalsIgnoreCase("Firefox")) {
+      WebDriverManager.firefoxdriver().setup();
+      FirefoxProfile profile = new FirefoxProfile();
+      profile.setPreference("browser.download.dir", downloadFolder); // folder
+      profile.setPreference("pdfjs.disabled", true); // disable the built-in
+                                                     // viewer
+      profile.setPreference("browser.download.folderList", 2);
+      profile.setPreference("browser.download.panel.shown", false);
+      profile.setPreference("browser.helperApps.neverAsksaveToDisk",
+          "application/x-msexcel,application/excel,application/x-excel,application/excel,application/x-excel,application/excel,application/vnd.ms-excel,application/x-excel,application/x-msexcel");
 
-		System.out.println("******************************");
-		System.out.println("Thread -" + Thread.currentThread().getId() + " " + "imagearray below \n");
-		CurrentState.getImgnames().stream().forEach(System.out::println);
-		System.out.println("******************************");
-	}
+      FirefoxOptions firefoxOptions = new FirefoxOptions();
+      firefoxOptions.setCapability(FirefoxDriver.PROFILE, profile);
+      firefoxOptions.setCapability(FirefoxDriver.MARIONETTE, true);
+      firefoxOptions.setCapability(CapabilityType.ELEMENT_SCROLL_BEHAVIOR, 0);
 
-	public void generateErrorLog(ITestResult result) throws IOException {
-		String methodname = result.getMethod().getMethodName();
-		((ExtentTest) test.get()).log(Status.FAIL, methodname);
-		String image = Utilities.captureScreenshot(CurrentState.getDriver(),
-				this.getClass().getSimpleName() + "_" + result.getName(), true);
-		((ExtentTest) test.get()).addScreenCaptureFromPath(image, "Error");
+      driver = new FirefoxDriver(firefoxOptions);
 
-		if (result.getThrowable() instanceof ElementNotVisibleException) {
-			((ExtentTest) test.get()).log(Status.FAIL, "function " + methodname + " failed beacuse :");
-			((ExtentTest) test.get()).log(Status.FAIL, "Although an element is present on the DOM, it is not visible");
+    } else if (browser.equalsIgnoreCase("IE")) {
+      WebDriverManager.iedriver().architecture(Architecture.X32).setup();
+      InternetExplorerOptions options = new InternetExplorerOptions();
+      options.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
+      options.setCapability(InternetExplorerDriver.INITIAL_BROWSER_URL, "");
+      options.setCapability(
+          InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
+          true);
+      options.setCapability(InternetExplorerDriver.NATIVE_EVENTS, true);
+      options.setCapability("enablePersistentHover", false);
 
-		} else if (result.getThrowable() instanceof ElementNotSelectableException) {
-			((ExtentTest) test.get()).log(Status.FAIL, "function " + methodname + " failed beacuse :");
-			((ExtentTest) test.get()).log(Status.FAIL, "Element cannot be selected. Element could be disabled");
+      options.setCapability("ignoreProtectedModeSettings", 1);
+      options.setCapability(
+          "IntroduceInstabilityByIgnoringProtectedModeSettings", true);
+      String path = System.getProperty("user.dir") + "/downloads";
+      String cmd1 = "REG ADD \"HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\Main\" /F /V \"Default Download Directory\" /T REG_SZ /D "
+          + path;
 
-		} else if (result.getThrowable() instanceof TimeoutException) {
-			((ExtentTest) test.get()).log(Status.FAIL, "function " + methodname + " failed beacuse :");
-			((ExtentTest) test.get()).log(Status.FAIL,
-					"Execution failed because the command did not complete in enough time.");
+      try {
+        Runtime.getRuntime().exec(cmd1);
+      } catch (Exception e) {
+        System.out.println(
+            "Coulnd't change the registry for default directory for IE");
+      }
+      driver = new InternetExplorerDriver(options);
 
-		} else if (result.getThrowable() instanceof NoSuchElementException) {
-			((ExtentTest) test.get()).log(Status.FAIL, "function " + methodname + " failed beacuse :");
-			((ExtentTest) test.get()).log(Status.FAIL, "Cannot find Element on the page");
+    }
 
-		} else if (result.getThrowable() instanceof StaleElementReferenceException) {
-			((ExtentTest) test.get()).log(Status.FAIL, "function " + methodname + " failed beacuse :");
-			((ExtentTest) test.get()).log(Status.FAIL, "Element is no longer appearing on the DOM page.");
+    driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
+    System.out.println("opened browser");
+    return driver;
 
-		}
+  }
+  
 
-		Throwable th = result.getThrowable();
-		if (th != null) {
-			System.out.println(th.getMessage());
-
-			String error = th.getMessage().split("Session info")[0];
-			((ExtentTest) test.get()).log(Status.FAIL, error);
-			result.setThrowable(null);
-		}
-	}
 
 }

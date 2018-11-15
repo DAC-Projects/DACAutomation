@@ -125,56 +125,42 @@ public class Navigationpage extends BasePage{
 	
 	@FindBy(xpath="//a[@href='/CompetitiveAnalysis/Visibility']")
 	private WebElement CA_Visibility;
+  
+  @FindBy(xpath="//a[@href='/CompetitiveAnalysis/Analysis']")
+  private WebElement CA_ContentAnalysis;
 	
 	public void  navigateCA_Visibility() {
-		wait.until(ExpectedConditions.visibilityOf(CA_Visibility));
-		scrollByElement(CA_Visibility);
-		try {
-			CA_Visibility.click();
-		}
-		catch(Exception e) {
-			action.moveToElement(CA_Visibility).click().perform();
-		}
-		finally {
-			waitUntilLoad(driver);
-			
-		}
+	  
+	  clickelement(CA_Visibility);   
+    System.out.println("Waiting for page to load**********");
+    waitUntilLoad(driver);
 	}
 
 	public void navigateCA_Accuracy() {
-		
-		wait.until(ExpectedConditions.visibilityOf(CA_Accuracy));
-		scrollByElement(CA_Accuracy);
-		try {
-			CA_Accuracy.click();
-		}
-		catch(Exception e) {
-			action.moveToElement(CA_Accuracy).click().perform();
-		}
-		finally {
-			System.out.println("Waiting for page to load**********");
-			waitUntilLoad(driver);
-			
-		}
+	  
+	  clickelement(CA_Accuracy);   
+    System.out.println("Waiting for page to load**********");
+    waitUntilLoad(driver);
+  
 	}
 		
 		public void navigateCA_Reviewpage() {
+		  
 			
-			wait.until(ExpectedConditions.visibilityOf(CA_Reviewpage));
-			scrollByElement(CA_Reviewpage);
-			try {
-				CA_Reviewpage.click();
-			}
-			catch(Exception e) {
-				action.moveToElement(CA_Reviewpage).click().perform();
-			}
-			finally {
-				System.out.println("Waiting for page to load**********");
-				waitUntilLoad(driver);
-				
-			}
+		  clickelement(CA_Reviewpage);   
+      System.out.println("Waiting for page to load**********");
+      waitUntilLoad(driver);
 		
 	}
+		
+    public void navigateCA_ContentAnalysispage() {
+      clickelement(CA_ContentAnalysis);   
+        System.out.println("Waiting for page to load**********");
+        waitUntilLoad(driver);
+        
+    
+    
+  }
 	
 	public WebElement getGoogleRanking() {
 		return GoogleRanking;

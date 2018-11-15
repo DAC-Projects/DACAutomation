@@ -53,7 +53,7 @@ public class LoginAC_Beta {
 	public void clickDashboardLink() {
 		
 		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(Dashboard));
-		Dashboard.sendKeys(Keys.ENTER);;
+		Dashboard.sendKeys(Keys.CONTROL, Keys.ENTER);;
 	}
 	
 	public void findUser(String data) {
