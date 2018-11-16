@@ -24,6 +24,7 @@
 	<parameter name="SEL_LABEL_PAGE" class="java.lang.String"/>
 	<parameter name="SEL_LABEL_EVIDENCE_REPORT" class="java.lang.String"/>
 	<parameter name="SEL_LABEL_COMPANY_NAME" class="java.lang.String"/>
+	<parameter name="SEL_BROWSER" class="java.lang.String"/>
 	<field name="message" class="java.lang.String"/>
 	<field name="image" class="java.lang.Object"/>
 	<background>
@@ -150,7 +151,7 @@
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="50">
+		<band height="55">
 			<line>
 				<reportElement x="1" y="10" width="554" height="1" uuid="183e9a6d-d558-4ffe-828e-590b26ad02bf"/>
 			</line>
@@ -172,6 +173,10 @@
 				<reportElement x="431" y="8" width="126" height="39" uuid="5dd7968b-31e6-448e-9369-295f873ec096"/>
 				<imageExpression><![CDATA[$P{SEL_COMPANY_LOGO}]]></imageExpression>
 			</image>
+			<textField>
+				<reportElement x="0" y="25" width="100" height="30" uuid="26557e37-f776-4566-86ac-a665fe0c1e71"/>
+				<textFieldExpression><![CDATA["Run in "+$P{SEL_BROWSER}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 	<summary>

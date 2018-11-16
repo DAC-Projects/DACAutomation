@@ -1,5 +1,4 @@
 package com.selenium.testevidence;
-
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -30,6 +29,7 @@ import net.sf.jasperreports.engine.export.ooxml.JRDocxExporterParameter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
+import resources.CurrentState;
 
 /**
  * Generate the test evidence in PDF file
@@ -105,7 +105,7 @@ public class GenerateEvidenceReport {
 			parameters.put("SEL_CUSTOMER_LOGO", imageClient);
 			parameters.put("SEL_PROJECT", project);
 			parameters.put("SEL_TESTER", tester);
-
+			
 			parameters.put("SEL_LABEL_EVINDENCE_TITLE", properties.getProperty("label.evidenceReport"));
 			parameters.put("SEL_LABEL_PROJECT", properties.getProperty("label.projetc"));
 			parameters.put("SEL_LABEL_TESTER", properties.getProperty("label.tester"));
@@ -203,7 +203,7 @@ public class GenerateEvidenceReport {
 			parameters.put("SEL_CUSTOMER_LOGO", imageClient);
 			parameters.put("SEL_PROJECT", project);
 			parameters.put("SEL_TESTER", tester);
-
+			parameters.put("SEL_BROWSER", CurrentState.getBrowser());
 			parameters.put("SEL_LABEL_EVINDENCE_TITLE", properties.getProperty("label.evidenceReport"));
 			parameters.put("SEL_LABEL_PROJECT", properties.getProperty("label.projetc"));
 			parameters.put("SEL_LABEL_TESTER", properties.getProperty("label.tester"));
