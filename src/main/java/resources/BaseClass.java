@@ -13,8 +13,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeSuite;
 
-import com.dac.main.BasePage;
 import com.dac.main.LoginAC_Beta;
+import com.selenium.testevidence.SeleniumEvidence;
 
 public abstract class BaseClass {
 
@@ -111,8 +111,26 @@ public abstract class BaseClass {
     }
 
   }
-  public static String takeScreenshot(WebDriver driver) {
+  
+  private static String takeScreenshot(WebDriver driver) {
     return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BASE64);
+  }
+  
+  /**
+   * This message is used to add the steps and images in test evidence 
+   * @throws Exception 
+   * @testStep: pass the step description to add in test evidence
+   * @isImageNeeded: while execution of test case, to create the test evidence
+   * 				 if user wants to take a screen shot then, he/she can give as "yes" 
+   * 				 otherwise "no"			*/
+  public void addEvidence(WebDriver driver, String testStep, String isImageNeeded) throws Exception {
+	  
+	  if(isImageNeeded.equals("yes")) {
+		  CurrentState.getEvidenceList().add(new SeleniumEvidence(testStep, takeScreenshot(driver)));
+	  }
+	  else {
+		  CurrentState.getEvidenceList().add(new SeleniumEvidence(testStep, null));
+	  }	  
   }
 
 }

@@ -44,7 +44,7 @@ public class CA_Review_Test extends BaseClass {
           "Navigated successfully to CA Review page");
       CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
       CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));    
-      CurrentState.getEvidenceList().add(new SeleniumEvidence("Click in Download link", takeScreenshot(CurrentState.getDriver())));   
+      addEvidence(CurrentState.getDriver(), "Click in Download link", "yes"); 
 
   }
 
