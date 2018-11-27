@@ -72,14 +72,17 @@ public class ExtentTestNGITestListener
    */
   @Override
   public synchronized void onBeforeClass(ITestClass testClass) {
-    try {
-      CurrentState.setDriver(openBrowser(CurrentState.getBrowser()));
+ 
+      try {
+        CurrentState.setDriver(openBrowser(CurrentState.getBrowser()));
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
       CurrentState.getDriver().manage().window().maximize();
       CurrentState.getDriver().manage().deleteAllCookies();
       BaseClass.navigateToBasePage();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+   
   }
 
   /*
@@ -112,9 +115,10 @@ public class ExtentTestNGITestListener
   @SuppressWarnings("unchecked")
   @Override
   public synchronized void onTestSuccess(ITestResult result) {
-    try {
     ((ExtentTest) test.get()).pass("Test Case Success and Verified");
     List evidence =CurrentState.getEvidenceList();
+    try {
+    
     if(!evidence.isEmpty()) {
       
     EvidenceReport report = new EvidenceReport(evidence, "MyReportOK", getTestname(result), result.getTestContext().getName(), null);
@@ -192,7 +196,7 @@ public class ExtentTestNGITestListener
     }
     
     if(!printList.isEmpty()) {
-      GenerateEvidenceReport.exportReport(EvidenceType.PDF, printList, "Report for "+context.getName());
+      GenerateEvidenceReport.exportReport(printList, "Report for "+context.getName());
       printList.clear();}
 
   }

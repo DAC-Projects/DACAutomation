@@ -16,6 +16,16 @@
 	    
     </classes>
   </test>     -->
+  
+    <test name="Sample Class Test" parallel="false" group-by-instances="true">
+   <parameter name="Filter" value= "US,Illinois,Chicago,53 W Jackson Blvd Ste 1264"/>
+<parameter name="testcasesfile" value="CompetitiveAnalysis.json"></parameter>
+  <parameter name="browser" value="chrome"/>
+    <classes>
+	 	<class name= "com.dac.testcases.CA.SampleClass2" /> 
+	    <class name= "com.dac.testcases.CA.SampleClass3" /> 
+    </classes>
+  </test>
 
   <test name="Competitive Analysis" parallel="false" group-by-instances="true">
    <parameter name="Filter" value= "US,Illinois,Chicago,53 W Jackson Blvd Ste 1264"/>

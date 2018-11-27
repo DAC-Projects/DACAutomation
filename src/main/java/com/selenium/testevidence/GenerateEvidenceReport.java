@@ -256,7 +256,7 @@ public class GenerateEvidenceReport {
 	}
 
 	@SuppressWarnings("deprecation")
-	public static void exportReport(EvidenceType reportType, List<JasperPrint> printList, String reportName) {
+	public static void exportReport(List<JasperPrint> printList, String reportName) {
 
 		Properties properties = null;
 		try {
@@ -271,7 +271,10 @@ public class GenerateEvidenceReport {
 		createEvidenceDir(evidenceDir);
 		FileOutputStream os = null;
 		File archivo = null;
-
+		
+		EvidenceType reportType =( properties.getProperty("report.format").trim().equalsIgnoreCase("doc"))?
+		    EvidenceType.DOC:EvidenceType.PDF;
+		
 		switch (reportType) {
 		case PDF:
 			try {

@@ -22,7 +22,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import resources.BaseTest;
+import resources.CurrentState;
 import resources.ExcelTestDataHandler;
 
 public class CA_Review_Page extends CA_abstractMethods {
@@ -60,7 +60,7 @@ public class CA_Review_Page extends CA_abstractMethods {
 		waitForElement(overviewReport, 10);
 		waitForElement(exportBtn, 10);
 		scrollByElement(exportBtn);
-		download(BaseTest.browser, exportBtn, 20);
+		download(CurrentState.getBrowser(), exportBtn, 20);
 		convertExports(getLastModifiedFile(Exportpath), ReviewExport);
 	}
 

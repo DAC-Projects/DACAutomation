@@ -12,6 +12,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeSuite;
+
+import com.dac.main.BasePage;
 import com.dac.main.LoginAC_Beta;
 
 public abstract class BaseClass {
@@ -83,8 +85,6 @@ public abstract class BaseClass {
 
     ArrayList<String> handles = new ArrayList<String>(
         CurrentState.getDriver().getWindowHandles());
-    for (String handle : handles)
-      System.out.println(handle + "*****");
 
    
     // change focus to new tab

@@ -5,10 +5,10 @@ import java.util.List;
 
 import com.dac.main.POM_CA.Sites;
 
-import resources.BaseTest;
-import resources.BaseTest2;
 
-public class BaseTest_CF extends BaseTest2{
+import resources.BaseClass;
+
+public class BaseTest_CF extends BaseClass{
 
 	public  String campName = "", locName = "", brandName = "", campSubject = "", campBodyCopy = "", campBanner = "",
 						 campSignature = "", campSubjectNew = "", campBodyCopyNew = "", campBannerNew = "",

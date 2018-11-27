@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -202,7 +203,7 @@ public class ExcelTestDataHandler {
 			 
 			 Row rowN = workbook.getSheet(sheetName).getRow(i);
 			 //row=sheet.getRow(i);
-		        boolean isRowEmpty=ReadExcel.checkIfRowIsEmpty(rowN);
+		        boolean isRowEmpty=checkIfRowIsEmpty(rowN);
 				if(sheet.getRow(i)==null){
 		            isRowEmpty=true;
 		            sheet.shiftRows(i + 1, sheet.getLastRowNum(), -1);
@@ -252,7 +253,7 @@ public class ExcelTestDataHandler {
 		        int i = 0;
 				while(i<=lastRowNum) {
 					XSSFRow row = workbook.getSheet(sheetName).getRow(i);
-					if(ReadExcel.checkIfRowIsEmpty(row)) {
+					if(checkIfRowIsEmpty(row)) {
 						 lastRowNum = sheet.getLastRowNum();
 						 System.out.println("lastRowNum : "+ lastRowNum);
 					        if (i >= 0 && i < lastRowNum) {
@@ -373,4 +374,24 @@ public class ExcelTestDataHandler {
 		return sheet.getLastRowNum();
 	}
 	
+	
+  /**
+   * @param row Accepts row as parameter
+   * @return True if row is empty Else return False
+   */
+  public boolean checkIfRowIsEmpty(Row row) {
+    if (row == null) {
+        return true;
+    }
+    if (row.getLastCellNum() <= 0) {
+        return true;
+    }
+    for (int cellNum = row.getFirstCellNum(); cellNum < row.getLastCellNum(); cellNum++) {
+        Cell cell = row.getCell(cellNum);
+        if (cell != null && cell.getCellTypeEnum() != CellType.BLANK && StringUtils.isNotBlank(cell.toString())) {
+            return false;
+        }
+    }
+    return true;
+}
 }
