@@ -1,13 +1,13 @@
 package com.dac.testcases.CF;
 
 import org.testng.annotations.Test;
-
 import com.dac.main.Navigationpage;
+import com.dac.main.POM_CF.BaseTest_CF;
 import com.dac.main.POM_CF.CampaignsPage;
 
-import resources.BaseTest;
+import resources.CurrentState;
 
-public class VerifyProcessedCamp extends BaseTest{
+public class VerifyProcessedCamp extends BaseTest_CF{
 
 	public static String BrandName;
 	
@@ -16,30 +16,30 @@ public class VerifyProcessedCamp extends BaseTest{
 		
 		int englishLangColumn = 9;
 		
-		Navigationpage np=new Navigationpage(driver);
+		Navigationpage np=new Navigationpage(CurrentState.getDriver());
 		np.clickCampaigns();
 		
-		CampaignsPage cp=new CampaignsPage(driver);
-		cp.search_ProcessedCampaign("Test ENG_US Date Format");
+		CampaignsPage cp=new CampaignsPage(CurrentState.getDriver());
+		cp.search_ProcessedCampaign(campName);
 		
 		cp.clickDetailsLink();
 
-		driver.navigate().back();
+		CurrentState.getDriver().navigate().back();
 
-		cp.search_ProcessedCampaign("Test ENG_US Date Format");
+		cp.search_ProcessedCampaign(campName);
 		cp.clickResponsesLink();
 		
-		driver.navigate().back();
+		CurrentState.getDriver().navigate().back();
 		
-		cp.search_ProcessedCampaign("Test ENG_US Date Format");
+		cp.search_ProcessedCampaign(campName);
 		cp.clickReportsLink();
 		
-		driver.navigate().back();
+		CurrentState.getDriver().navigate().back();
 		
-		cp.search_ProcessedCampaign("Test ENG_US Date Format");
+		cp.search_ProcessedCampaign(campName);
 		cp.clickCustActReportLink();
 		
-		driver.navigate().back();
+		CurrentState.getDriver().navigate().back();
 			
 	}
 }

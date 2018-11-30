@@ -52,7 +52,7 @@ public class Verify_CreateBrandCampaign extends BaseTest_CF {
 		brandName = newCampaign.setCampaignBrandName(englishLangColumn);
 		
 		newCampaign.setCampDescr("Brand", 8, englishLangColumn);
-		addEvidence(CurrentState.getDriver(), "Verifying the selected campaign type and existing campaign tool tip", "yes");
+		addEvidence(CurrentState.getDriver(), "Verifying that user is able to enter the details into Campaign name, Brand name and description", "yes");
 		CurrentState.getLogger().log(Status.INFO, "Entered the Campaign Name, Brand Name and Description");
 		
 		newCampaign.setSenderName("Brand",9,englishLangColumn);

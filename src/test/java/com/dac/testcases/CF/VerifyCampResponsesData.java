@@ -1,37 +1,33 @@
 package com.dac.testcases.CF;
 
 import org.testng.annotations.Test;
-
+import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
+import com.dac.main.POM_CF.BaseTest_CF;
 import com.dac.main.POM_CF.CampaignsPage;
 import com.dac.main.POM_CF.ResponsesPage_RS;
-import com.relevantcodes.extentreports.LogStatus;
+import resources.CurrentState;
 
-import resources.BaseTest;
-import resources.Utilities;
-
-
-public class VerifyCampResponsesData extends BaseTest{
+public class VerifyCampResponsesData extends BaseTest_CF {
 
 	@Test
 	public void campResponsesData_Test() throws Exception {
 	
-		String CampName = "Test Brand Unsubscribe functionality";
 		
-		Navigationpage np=new Navigationpage(driver);
+		Navigationpage np=new Navigationpage(CurrentState.getDriver());
 		np.clickCampaigns();
-		Utilities.addScreenshot(driver, imgnames.get(0).toString());
-		logger.log(LogStatus.INFO, "Campaign Page is displayed");
 		
-		CampaignsPage cp=new CampaignsPage(driver);
+		CurrentState.getLogger().log(Status.INFO, "Campaign Page is displayed");
+		addEvidence(CurrentState.getDriver(), "User should be able to navigate to Campaign's page", "yes");
+		CampaignsPage cp=new CampaignsPage(CurrentState.getDriver());
 		
-		cp.verifyCampName("Processed", CampName);
-		Utilities.addScreenshot(driver, imgnames.get(1).toString());
-		logger.log(LogStatus.INFO, "Verifying the Processed Campaign whether displayed in Processed campaign Section");
+		cp.verifyCampName("Processed", campName);
+		addEvidence(CurrentState.getDriver(), "Verifying that scheduled campaign should display in scheduled section", "yes");
+		CurrentState.getLogger().log(Status.INFO, "Verifying the Processed Campaign whether displayed in Processed campaign Section");
 		
 		cp.clickResponsesLink();
 
-		ResponsesPage_RS rprs=new ResponsesPage_RS(driver);
+		ResponsesPage_RS rprs=new ResponsesPage_RS(CurrentState.getDriver());
 		
 		rprs.verifyToDate("en", "US");
 		
@@ -53,15 +49,16 @@ public class VerifyCampResponsesData extends BaseTest{
 		rprs.clickExportBTN();
 		
 		rprs.getReviewTableData();
-		Utilities.addScreenshot(driver, imgnames.get(3).toString());
-		logger.log(LogStatus.INFO, "Verifying the UI Table Data of Responses Page");
+		addEvidence(CurrentState.getDriver(), "Verifying the UI Table Data of Responses Page", "no");
+		CurrentState.getLogger().log(Status.INFO, "Verifying the UI Table Data of Responses Page");
 
 		rprs.verifyOverallRatingWidget("Overall Star Ratings");
 		String avgRating = rprs.avgStarRatingData("Average Star Rating"); 
-		Utilities.addScreenshot(driver, imgnames.get(2).toString());
-		logger.log(LogStatus.INFO, "Overall Star Ratings : "+avgRating);
+		addEvidence(CurrentState.getDriver(), "Verifying that displaying of average star rating is corretly calculated or not", "yes");
+		CurrentState.getLogger().log(Status.INFO, "Overall Star Ratings : "+avgRating);
 		
 		rprs.compareXlData_UIdata();
+		addEvidence(CurrentState.getDriver(), "Verifying that downloaded responses data is matches with UI Responses data", "no");
 		
 	}
 }

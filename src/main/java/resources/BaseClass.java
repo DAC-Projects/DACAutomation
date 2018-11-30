@@ -35,6 +35,7 @@ public abstract class BaseClass {
   public static List getValue() {
     return b.test;
   }
+  
   @BeforeSuite(alwaysRun = true)
   public void reportSetup() throws IOException {
 
@@ -123,7 +124,7 @@ public abstract class BaseClass {
    * @isImageNeeded: while execution of test case, to create the test evidence
    * 				 if user wants to take a screen shot then, he/she can give as "yes" 
    * 				 otherwise "no"			*/
-  public void addEvidence(WebDriver driver, String testStep, String isImageNeeded) throws Exception {
+  public static void addEvidence(WebDriver driver, String testStep, String isImageNeeded) throws Exception {
 	  
 	  if(isImageNeeded.equals("yes")) {
 		  CurrentState.getEvidenceList().add(new SeleniumEvidence(testStep, takeScreenshot(driver)));

@@ -39,6 +39,7 @@ import com.selenium.testevidence.SeleniumEvidence;
 import io.github.bonigarcia.wdm.Architecture;
 import io.github.bonigarcia.wdm.DriverManagerType;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import net.sf.jasperreports.engine.JasperPrint;
 
 public class ExtentTestNGITestListener
     implements ITestListener, IClassListener, IAutoconst {
@@ -47,7 +48,7 @@ public class ExtentTestNGITestListener
       .createInstance("target/surefire-reports/extent.html");
   private static ThreadLocal parentTest = new ThreadLocal();
   private static ThreadLocal test = new ThreadLocal();
-  List printList = new ArrayList();
+  private ThreadLocal<ArrayList<JasperPrint>> printList =new ThreadLocal();
   /*
    * Set parent node for extent reports store browser and testname from
    * testng.xml
@@ -62,6 +63,7 @@ public class ExtentTestNGITestListener
     CurrentState.setTestName(context.getName());
     ExtentTest parent = extent.createTest(CurrentState.getTestName());
     parentTest.set(parent);
+    printList = new ThreadLocal<ArrayList<JasperPrint>>();
 
   }
 
@@ -122,10 +124,10 @@ public class ExtentTestNGITestListener
     if(!evidence.isEmpty()) {
       
     EvidenceReport report = new EvidenceReport(evidence, "MyReportOK", getTestname(result), result.getTestContext().getName(), null);
-      printList.add(GenerateEvidenceReport.generareEvidenceReport(report, EvidenceType.PDF));}else {
-        CurrentState.getEvidenceList().add(new SeleniumEvidence("Test Passed. No Steps were added to this method", BaseClass.takeScreenshot(CurrentState.getDriver())));
+      printList.get().add(GenerateEvidenceReport.generareEvidenceReport(report, EvidenceType.PDF));}else {
+      BaseClass.addEvidence(CurrentState.getDriver(), "Test Passed. No Steps were added to this method", "yes");
         EvidenceReport report = new EvidenceReport(CurrentState.getEvidenceList(), "MyReportOK", getTestname(result), result.getTestContext().getName(), null);
-        printList.add(GenerateEvidenceReport.generareEvidenceReport(report, EvidenceType.PDF));}
+        printList.get().add(GenerateEvidenceReport.generareEvidenceReport(report, EvidenceType.PDF));}
       
     }catch (Exception e) {
       e.printStackTrace();
@@ -139,12 +141,12 @@ public class ExtentTestNGITestListener
     generateErrorLog(result);
 
     try {
-      CurrentState.getEvidenceList().add(new SeleniumEvidence("Error", BaseClass.takeScreenshot(CurrentState.getDriver())));
+    	BaseClass.addEvidence(CurrentState.getDriver(), "Error", "yes");
     String errorMessage = result.getThrowable().getMessage();
     List evidence =CurrentState.getEvidenceList();
       
     EvidenceReport report = new EvidenceReport(evidence, "MyReportNOK", getTestname(result), result.getTestContext().getName(), errorMessage);
-      printList.add(GenerateEvidenceReport.generareEvidenceReport(report, EvidenceType.PDF));
+      printList.get().add(GenerateEvidenceReport.generareEvidenceReport(report, EvidenceType.PDF));
 
     } catch (IOException e) {
       // TODO Auto-generated catch block
@@ -195,9 +197,9 @@ public class ExtentTestNGITestListener
       CurrentState.getDriver().quit();
     }
     
-    if(!printList.isEmpty()) {
-      GenerateEvidenceReport.exportReport(printList, "Report for "+context.getName());
-      printList.clear();}
+    if(!printList.get().isEmpty()) {
+      GenerateEvidenceReport.exportReport(printList.get(), "Report for "+context.getName());
+      printList.get().clear();}
 
   }
 

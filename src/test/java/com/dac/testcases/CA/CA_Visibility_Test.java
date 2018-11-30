@@ -30,7 +30,7 @@ public class CA_Visibility_Test extends BaseClass {
 		System.out.println("Test");
 		 CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
      CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));    
-     CurrentState.getEvidenceList().add(new SeleniumEvidence("Click in Download link", takeScreenshot(CurrentState.getDriver())));   
+     addEvidence(CurrentState.getDriver(), "Click in Download link", "yes");
      Assert.assertFalse( "sample error", true);
 	}
 	/*
