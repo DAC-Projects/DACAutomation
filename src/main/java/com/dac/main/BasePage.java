@@ -1,7 +1,5 @@
 package com.dac.main;
 
-import static org.testng.Assert.assertThrows;
-
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.Toolkit;
@@ -111,8 +109,9 @@ public class BasePage {
     };
     System.out.println("directory size is " + dir.listFiles().length);
 
-    dwnldwait.until(chkFileDownld);
-
+    if(!dwnldwait.until(chkFileDownld)) {
+    	throw new TimeoutException("File not downloaded within "+timeout+" seconds.");
+    }
   }
 
   /**
@@ -122,22 +121,19 @@ public class BasePage {
    *           clicks the webelement, wait for timeout specified in browser
    *           specified
    */
-  public void download(String browser, WebElement downloadBTN, int timeout)
+  public synchronized void download(String browser, WebElement downloadBTN, int timeout)
       throws InterruptedException {
 
     File dwnldDir = new File("./downloads");
     long initialSize = dwnldDir.listFiles().length;
     System.out.println("directory size is " + initialSize);// check file size
 
-    if ("chrome".equalsIgnoreCase(CurrentState.getBrowser())) {
-      clickelement(downloadBTN);
-      Thread.sleep(1000);
-    } else {
       try {
         clickelement(downloadBTN);
         Thread.sleep(4000);
         Robot robot = new Robot();
-        robot.setAutoDelay(250);
+        robot.setAutoDelay(5000);
+        Thread.sleep(3000);
         robot.keyPress(KeyEvent.VK_ALT);
         robot.keyPress(KeyEvent.VK_S);
         Thread.sleep(1000);
@@ -149,7 +145,6 @@ public class BasePage {
       } catch (AWTException e) {
         e.printStackTrace();
       }
-    }
 
     checkFileSizeIncrsd(initialSize, timeout, dwnldDir);
 
@@ -172,18 +167,20 @@ public class BasePage {
 
   public void clickelement(WebElement element) {
     wait.until(ExpectedConditions.visibilityOf(element));
-    try {
-      if (element.isDisplayed() & element.isEnabled()) {
-        try {
-          action = new Actions(driver);
-          action.moveToElement(element).click(element).perform();
-        } catch (WebDriverException e) {
-          element.click();
-        }
-      }
-    } catch (NoSuchElementException e) {
-      Assert.fail("element " + element + " NOT found");
-    }
+     	try {
+    	      if (element.isDisplayed() & element.isEnabled()) {
+    	        try {
+    	          action = new Actions(driver);
+    	          action.moveToElement(element).perform();
+    	          action.moveToElement(element).click(element).perform();
+    	        } catch (WebDriverException e) {
+    	          element.click();
+    	        }
+    	      }
+    	    } catch (NoSuchElementException e) {
+    	      Assert.fail("element " + element + " NOT found");
+    	    }
+    
   }
 
   public static String minusDays(String langCode, String countryCode,
@@ -305,12 +302,13 @@ public class BasePage {
   public boolean waitForElement(WebElement elemnt, int timeSec) {
     try {
       WebDriverWait wait = new WebDriverWait(driver, timeSec);
-      if (wait.until(ExpectedConditions.visibilityOf(elemnt)) != null
-          || false) {
+    /*  if ((wait.until(ExpectedConditions.visibilityOf(elemnt)) != null)
+          || (wait.until(ExpectedConditions.visibilityOf(elemnt)) != false) {
         return true;
       } else
-        return false;
+        return false;*/
 
+       return wait.until(ExpectedConditions.visibilityOf(elemnt)) == elemnt ? true : false;
     } catch (TimeoutException e) {
       Assert.fail("Element did not load in the specified timeout");
       return false;

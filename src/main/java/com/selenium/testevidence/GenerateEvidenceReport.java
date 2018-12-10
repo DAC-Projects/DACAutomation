@@ -226,6 +226,9 @@ public class GenerateEvidenceReport {
 			ex.printStackTrace();
 		} catch (JRException jre) {
 			jre.printStackTrace();
+		} catch (NullPointerException e)
+		{
+			e.printStackTrace();
 		}
 		return jasperPrint;
 	}

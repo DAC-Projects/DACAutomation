@@ -18,7 +18,7 @@ public class Verify_CreateBrandCampaign extends BaseTest_CF {
 	
 	static int englishLangColumn = 9;
 	
-	@Test(enabled = true, priority = 0)
+	@Test(enabled = true)
 	public void navigateToCF() throws Exception {
 		
 		Navigationpage np=new Navigationpage(CurrentState.getDriver());

@@ -89,7 +89,7 @@ public class CA_Review_Page extends CA_abstractMethods {
 	public void verify_pageloadCompletely(int timeout) {
 		if (waitForElement(overviewReport, timeout) && waitForElement(siteTable, timeout)
 				&& waitForElement(hstryGrph, timeout)
-				&& waitForElement(hstryGrph, timeout) & waitForElement(filter_Panel, timeout))
+				&& waitForElement(filter_Panel, timeout))
 			assertTrue(true, "All sections filter, overview report, site table and graph is loaded");
 		else
 			assertTrue(false, "Page not loaded completely");

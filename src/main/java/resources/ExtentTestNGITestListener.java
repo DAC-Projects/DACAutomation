@@ -10,9 +10,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.ElementNotSelectableException;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.OutputType;
 import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -21,13 +19,14 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.IClassListener;
 import org.testng.ITestClass;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
@@ -48,7 +47,7 @@ public class ExtentTestNGITestListener
       .createInstance("target/surefire-reports/extent.html");
   private static ThreadLocal parentTest = new ThreadLocal();
   private static ThreadLocal test = new ThreadLocal();
-  private ThreadLocal<ArrayList<JasperPrint>> printList =new ThreadLocal();
+  private static ThreadLocal<ArrayList<JasperPrint>> printList =new ThreadLocal();
   /*
    * Set parent node for extent reports store browser and testname from
    * testng.xml
@@ -63,7 +62,7 @@ public class ExtentTestNGITestListener
     CurrentState.setTestName(context.getName());
     ExtentTest parent = extent.createTest(CurrentState.getTestName());
     parentTest.set(parent);
-    printList = new ThreadLocal<ArrayList<JasperPrint>>();
+    printList.set(new ArrayList<JasperPrint>()); 
 
   }
 
@@ -134,7 +133,7 @@ public class ExtentTestNGITestListener
     }
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public synchronized void onTestFailure(ITestResult result) {
 
@@ -311,7 +310,18 @@ public class ExtentTestNGITestListener
 
     } else if (browser.equalsIgnoreCase("IE")) {
       WebDriverManager.iedriver().architecture(Architecture.X32).setup();
-      InternetExplorerOptions options = new InternetExplorerOptions();
+      DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
+      capabilities.setCapability(InternetExplorerDriver.NATIVE_EVENTS, true);
+      capabilities.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
+      capabilities.setCapability(InternetExplorerDriver.INITIAL_BROWSER_URL,"");
+      capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,true);
+      capabilities.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, false);
+      capabilities.setCapability("ignoreProtectedModeSettings", 1);
+      capabilities.setCapability("IntroduceInstabilityByIgnoringProtectedModeSettings", true);
+    
+      /*InternetExplorerOptions options = new InternetExplorerOptions();
+      options.enablePersistentHovering();
+      options.introduceFlakinessByIgnoringSecurityDomains();
       options.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
       options.setCapability(InternetExplorerDriver.INITIAL_BROWSER_URL, "");
       options.setCapability(
@@ -322,7 +332,8 @@ public class ExtentTestNGITestListener
 
       options.setCapability("ignoreProtectedModeSettings", 1);
       options.setCapability(
-          "IntroduceInstabilityByIgnoringProtectedModeSettings", true);
+          "IntroduceInstabilityByIgnoringProtectedModeSettings", true);*/
+      //options.requireWindowFocus();
       String path = System.getProperty("user.dir") + "/downloads";
       String cmd1 = "REG ADD \"HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\Main\" /F /V \"Default Download Directory\" /T REG_SZ /D "
           + path;
@@ -333,7 +344,7 @@ public class ExtentTestNGITestListener
         System.out.println(
             "Coulnd't change the registry for default directory for IE");
       }
-      driver = new InternetExplorerDriver(options);
+      driver = new InternetExplorerDriver(capabilities);
 
     }
 

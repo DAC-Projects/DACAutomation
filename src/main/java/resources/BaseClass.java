@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -59,6 +60,11 @@ public abstract class BaseClass {
     LoginAC_Beta lp = new LoginAC_Beta();
     BaseClass.loginAuth(lp);
     BaseClass.navigateToDashboard(lp);
+    WebDriverWait wait = new WebDriverWait(CurrentState.getDriver(), 10);
+    if(!CurrentState.getBrowser().contains("ie")) {
+    	wait.until(ExpectedConditions.visibilityOf(CurrentState.getDriver().findElement(By.xpath("//div[contains(@class,'close-button walkme-x-button')]"))));
+    	CurrentState.getDriver().findElement(By.xpath("//div[contains(@class,'close-button walkme-x-button')]")).click();    	
+    }
   }
 
   public static void loginAuth(LoginAC_Beta lp) {
@@ -69,7 +75,7 @@ public abstract class BaseClass {
     lp.setPassword(IAutoconst.password);
     lp.clickLogin();
     System.out.println("logged to Auth center");
-
+    
   }
 
   public static void navigateToDashboard(LoginAC_Beta lp) {

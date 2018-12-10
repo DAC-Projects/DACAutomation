@@ -211,6 +211,7 @@ public class Navigationpage extends BasePage{
 		wait.until(ExpectedConditions.visibilityOf(CampaignsLink));
 		scrollByElement(CampaignsLink);
 		clickelement(CampaignsLink);
+		waitUntilLoad(driver);
 		wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
 		wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));
 	}
@@ -219,13 +220,14 @@ public class Navigationpage extends BasePage{
 		wait.until(ExpectedConditions.visibilityOf(ResponsesLink));
 		scrollByElement(ResponsesLink);
 		clickelement(ResponsesLink);
+		waitUntilLoad(driver);
 	}
 	
 	public void clickReports() {
 		wait.until(ExpectedConditions.visibilityOf(ReportsLink));
 		scrollByElement(ReportsLink);
 		clickelement(ReportsLink);
-
+		waitUntilLoad(driver);
 	}
 	
 	private void DB_LangList() {

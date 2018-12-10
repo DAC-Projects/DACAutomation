@@ -589,12 +589,17 @@ public class CreateNewCampaignPage extends BasePage{
 		Thread.sleep(2000);
 	}
 	
-	public void uploadEmailTemplate(String fileName) throws InterruptedException {
+	public void uploadEmailTemplate(String fileName) throws InterruptedException, UnsupportedFlavorException, IOException {
 		scrollByElement(toText);
 		File uploadingFilePath =new File("./downloads/"+fileName);
 		String fileAbsPath=uploadingFilePath.getAbsolutePath();
 		uploadEmailTemplate.sendKeys(fileAbsPath);	
 		Thread.sleep(2000);
+		while(true) {
+			if(getTofieldData().isEmpty()) {
+				Thread.sleep(50);
+			}else break;
+		}
 	}
 	
 	//Email template can be upload by using send keys.

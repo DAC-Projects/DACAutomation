@@ -19,6 +19,7 @@ public class VerifyCreate_DraftBrandCamp extends BaseTest_CF{
 		int englishLangColumn = 9;
 		
 		Navigationpage np=new Navigationpage(CurrentState.getDriver());
+		np.select_DB_Lang_Link("en", "US");
 		np.clickCampaigns();
 		
 		CampaignsPage cp=new CampaignsPage(CurrentState.getDriver());
@@ -78,9 +79,9 @@ public class VerifyCreate_DraftBrandCamp extends BaseTest_CF{
 		Thread.sleep(3000);
 		new ExcelTestDataHandler("./downloads/"+fileName, "Email Template").createRowInExcel(2, 3, cellValues);
 		
-		/*Thread.sleep(3000);
+		Thread.sleep(3000);
 		
-		new ExcelTestDataHandler("./downloads/"+fileName, "Email Template").getAllCellsData();*/
+		new ExcelTestDataHandler("./downloads/"+fileName, "Email Template").getAllCellsData();
 		
 		Thread.sleep(3000);
 		newCampaign.uploadEmailTemplate(fileName);

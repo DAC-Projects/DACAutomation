@@ -1,8 +1,5 @@
 package com.dac.testcases.CF;
 
-import java.io.File;
-
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.Status;
@@ -10,11 +7,10 @@ import com.dac.main.Navigationpage;
 import com.dac.main.POM_CF.BaseTest_CF;
 import com.dac.main.POM_CF.CampaignsPage;
 import com.dac.main.POM_CF.CreateNewCampaignPage;
-import com.relevantcodes.extentreports.LogStatus;
+
 import resources.CurrentState;
 import resources.ExcelTestDataHandler;
 import resources.IAutoconst;
-import resources.Utilities;
 
 public class VerifyCreate_DraftLocCamp extends BaseTest_CF{
 	
@@ -24,6 +20,7 @@ public class VerifyCreate_DraftLocCamp extends BaseTest_CF{
 		int englishLangColumn = 9;
 	
 		Navigationpage np=new Navigationpage(CurrentState.getDriver());
+		np.select_DB_Lang_Link("en", "US");
 		np.clickCampaigns();
 		
 		CampaignsPage cp=new CampaignsPage(CurrentState.getDriver());
