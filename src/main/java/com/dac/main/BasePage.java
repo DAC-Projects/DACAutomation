@@ -242,13 +242,16 @@ public class BasePage {
   }
 
   /**
-   * To get and store the value/text of a field
-   * For disabled elements it will throw InvalidElementStateException.
+   * To get and store the value/text of a field even the field is in disabled state.
+   * This method will work even the text value is not present in DOM
+   * 
+   * @param element : pass the WebElement to get the text of it.
    */
   public String getClipboardContents(WebElement element)
       throws UnsupportedFlavorException, IOException {
 	  String eleText = "";
 	  if(element.isEnabled()) {
+		  System.out.println("if block starts");
 		  String copy = Keys.chord(Keys.CONTROL, Keys.chord("c"));
 		  element.sendKeys(Keys.CONTROL + "a");
 		  element.sendKeys(copy);
@@ -258,7 +261,7 @@ public class BasePage {
 		  // System.out.println(eleText);
 	  }
 	  else {
-		  //code to add in future to resolve the issue with copy text from disabled elements
+		  eleText = element.getAttribute("value");
 	  }
     return eleText;
   }
