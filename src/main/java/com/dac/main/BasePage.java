@@ -36,6 +36,7 @@ import org.testng.Assert;
 import resources.CurrentState;
 import resources.DateFormats;
 
+/***/
 public class BasePage {
 
   public WebDriver driver;
