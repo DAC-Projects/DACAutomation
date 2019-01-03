@@ -51,6 +51,12 @@ public class BasePage {
     js = (JavascriptExecutor) driver;
   }
 
+  
+  /**
+   * This method is used to wait the execution till web page gets completely loaded but  
+   * in few cases where java script waiting code cannot be work as expected		
+   * 
+   * @param driver : for which driver need to wait till page's script get loaded		*/
   public void waitUntilLoad(WebDriver driver) {
 
     // WebDriverWait wait = new WebDriverWait(driver, 30);
@@ -86,17 +92,12 @@ public class BasePage {
     }
   }
 
-  /*
-   * public void verifyPageIsDisplayed(WebDriver driver,String eResult) { String
-   * sETO=AutoUtil.getProperty(IAutoConst.CONFIG_PATH, "ETO"); long
-   * ETO=Long.parseLong(sETO); WebDriverWait wait=new WebDriverWait(driver,ETO);
-   * try { Reporter.log(eResult,true);
-   * wait.until(ExpectedConditions.titleIs(eResult));
-   * Reporter.log("PASS: Expected Page is Displayed",true); } catch(Exception e)
-   * { Reporter.log("FAIL: Expected Page is NOT Displayed",true); Assert.fail();
-   * } }
-   */
-
+  /**
+   * This method is used to check whether downloaded file is saved completely in specific directory
+   * 
+   * @param	initialSize : current size of the directory before downloading a file
+   * @param timeout : waiting time to download the file
+   * @param dir : directory where the file will download			 */
   public void checkFileSizeIncrsd(long initialSize, int timeout, File dir) {
 
     WebDriverWait dwnldwait = new WebDriverWait(driver, timeout);
@@ -115,11 +116,12 @@ public class BasePage {
   }
 
   /**
-   * @param browser
-   * @param downloadBTN
+   * This method used to download the file in any browser.
+   * 
+   * @param browser : On which browser downloading the file
+   * @param downloadBTN : webelement to download the file
+   * @param timeout : waiting time to download the file
    * @throws InterruptedException
-   *           clicks the webelement, wait for timeout specified in browser
-   *           specified
    */
   public synchronized void download(String browser, WebElement downloadBTN, int timeout)
       throws InterruptedException {
@@ -155,7 +157,7 @@ public class BasePage {
    * in "FilesToUpload" folder. Before using this method we have to use
    * "clickElement" of BasePage
    * 
-   * @param fileNameWithExtension
+   * @param fileNameWithExtension : pass the file name with extension to upload from the project's "FilesToUpload" directory (ex: logo.jpeg)
    * @throws IOException
    */
   public void upload(String fileNameWithExtension) throws IOException {
@@ -165,6 +167,10 @@ public class BasePage {
     Runtime.getRuntime().exec(filepathexe + " " + filepath);
   }
 
+  /**
+   * To click on a button using actions class or click() method based on support by the browsers and elements	
+   * 
+   * @param element : element/button to click		*/
   public void clickelement(WebElement element) {
     wait.until(ExpectedConditions.visibilityOf(element));
      	try {
@@ -183,6 +189,22 @@ public class BasePage {
     
   }
 
+  /**
+   * To get the specific reduced date from today's date in specific format based on the country and language code
+   * 
+   * @return the date in specific date format based on passed contry code and language code
+   * @param langCode : Language code, date format to be in specific format for
+   * 				   English : en , 	 german  : de , 	spanish : es
+   * 				   french  : fr , 	 italian : it ,		swedish : sv
+   * 
+   * @param countryCode : Country code could be case sensitive, date format to be in specific format for
+   * 				      unitedStates    : US ,   german          : DE , 	spanish(Spain) : ES
+   * 				      spanish(Mexico) : MX ,   french(France)  : FR ,   french(Canada) : CA
+   * 				      italian         : IT ,   swedish : SE
+   * 
+   * @param days_Amount : number of days to reduce from today's date 
+   * 				
+   * */
   public static String minusDays(String langCode, String countryCode,
       int days_Amount) {
     Calendar c = Calendar.getInstance();
@@ -192,6 +214,22 @@ public class BasePage {
     return finalDate;
   }
 
+  /**
+   * To get the specific add days from today's date in specific format based on the country and language code
+   * 
+   * @return the date in specific date format based on passed contry code and language code
+   * @param langCode : Language code, date format to be in specific format for
+   * 				   English : en , 	 german  : de , 	spanish : es
+   * 				   french  : fr , 	 italian : it ,		swedish : sv
+   * 
+   * @param countryCode : Country code could be case sensitive, date format to be in specific format for
+   * 				      unitedStates    : US ,   german          : DE , 	spanish(Spain) : ES
+   * 				      spanish(Mexico) : MX ,   french(France)  : FR ,   french(Canada) : CA
+   * 				      italian         : IT ,   swedish : SE
+   * 
+   * @param days_Amount : number of days to add to the today's date 
+   * 				
+   * */
   public static String addDays(String langCode, String countryCode,
       int days_Amount) {
     Calendar c = Calendar.getInstance();
@@ -204,19 +242,30 @@ public class BasePage {
 
   /**
    * To get and store the value/text of a field
+   * For disabled elements it will throw InvalidElementStateException.
    */
   public String getClipboardContents(WebElement element)
       throws UnsupportedFlavorException, IOException {
-    String copy = Keys.chord(Keys.CONTROL, Keys.chord("c"));
-    element.sendKeys(Keys.CONTROL + "a");
-    element.sendKeys(copy);
-    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-    Transferable contents = clipboard.getContents(null);
-    String eleText = (String) contents.getTransferData(DataFlavor.stringFlavor);
-    // System.out.println(eleText);
+	  String eleText = "";
+	  if(element.isEnabled()) {
+		  String copy = Keys.chord(Keys.CONTROL, Keys.chord("c"));
+		  element.sendKeys(Keys.CONTROL + "a");
+		  element.sendKeys(copy);
+		  Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		  Transferable contents = clipboard.getContents(null);
+		  eleText = (String) contents.getTransferData(DataFlavor.stringFlavor);
+		  // System.out.println(eleText);
+	  }
+	  else {
+		  //code to add in future to resolve the issue with copy text from disabled elements
+	  }
     return eleText;
   }
 
+  /**
+   * This method used to get the last modified file name in a specific folder
+   * 
+   * @param dirPath : pass the directory path in which folder to get the last modified file name	*/
   public static String getLastModifiedFile(String dirPath)
       throws InterruptedException {
     Thread.sleep(4000);
@@ -235,6 +284,11 @@ public class BasePage {
     return lastModifiedFile.getName();
   }
 
+  /**
+   * This method is used to print all the files and directory names present in a specific folder path
+   * and return the last entry file name
+   * 
+   * @param folderPath : pass a folder path(string format) in which to print the files and directory names 		*/
   public static String getFileNames_Dir(String folderPath) {
     File folder = new File(folderPath);
     File[] listOfFiles = folder.listFiles();
@@ -250,12 +304,21 @@ public class BasePage {
     return fileName;
   }
 
+  /**
+   * This method is used to verify the text in web page whether it matches with the expected text or not
+   * including the verification of case sensitive
+   * 
+   * Used for weblet testing, tool tip text verification etc. 		*/
   public void verifyText(WebElement e, String eText) {
     String aText = e.getText().trim();
     System.out.println(aText);
     Assert.assertEquals(aText, eText);
   }
 
+  /**
+   * This method will helps to scroll the web page till the element
+   * 
+   * @param element : to scroll the web page till the specific web element		*/
   public void scrollByElement(WebElement element) {
 
     JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -265,12 +328,16 @@ public class BasePage {
 
   }
 
+  /**
+   * This method is used to get the today's date in IST format ie. dd-mm-yyyy 		*/
   public static String getDate() {
     Date date = new Date();
     String dateFormat = new SimpleDateFormat("dd-MM-yyyy").format(date);
     return dateFormat.toString();
   }
 
+  /**
+   * This method is used to get the today's date and current execution state time in IST format ie. dd-mm-yyyy HH:mm 		*/
   public static String getDateNTime() {
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
     Date date = new Date();
@@ -296,8 +363,8 @@ public class BasePage {
   /**
    * waits for an element for specified timeout
    * 
-   * @param elemnt
-   * @param timeSec
+   * @param elemnt  : element to check whether is it displayed or not in DOM
+   * @param timeSec : pass the waiting time to check whether element is displayed or not up to certain seconds
    */
   public boolean waitForElement(WebElement elemnt, int timeSec) {
     try {
@@ -317,6 +384,8 @@ public class BasePage {
 
   /**
    * This method to print the UI table data in Console
+   * 
+   * @param table : webelement of UI table for reading the table
    */
   public String[][] readTable(WebElement table) {
     driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
