@@ -116,10 +116,12 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	 * @return History graph value read
 	 */
 	public List<Map<String, String>> verifyHistoryGraph() {
+		//display tool tip
 		waitForElement(hstryGrph, 10);
 		scrollByElement(hstryGrph);
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth() / 2) - 2, 0).click().perform();
+		//read the tooltip variables
 		rows = grphTable.findElements(By.tagName("tr"));
 		String[][] table = readTable(grphTable);
 
