@@ -25,24 +25,36 @@ public class ExcelWrite {
 	private  XSSFRow row = null;
 	private  XSSFCell cell = null;
 	int rowno=0;
-		
 	
-	
-	
+	/**
+	 * create a new excel based on parameter passed as excel file name to create
+	 * 
+	 * @param name
+	 */
 	public void createExcel(String name) {
 		workbook =  new XSSFWorkbook();
 		try {
 			FileOutputStream out = 
 					new FileOutputStream(new File(name));
 			workbook.write(out);
-			out.close();}
+			out.close();
+		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
 			
 	}
 
-	public void wirte(Map<String, Object[]> data, String sheetName, String excelName) throws IOException {
+	
+	/**
+	 * Accepts a map(consist of rowno as string and values as Obj array), sheet name to create, excel name
+	 * writes the map into the excel by creating a new sheet
+	 * 
+	 * @param data
+	 * @param sheetName
+	 * @param excelName
+	 * @throws IOException		 */
+	public void write(Map<String, Object[]> data, String sheetName, String excelName) throws IOException {
 		FileInputStream fis = new FileInputStream(new File(excelName));
 		workbook =  new XSSFWorkbook(fis);
 		sheet = workbook.createSheet(sheetName);

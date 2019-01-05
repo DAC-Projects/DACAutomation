@@ -8,6 +8,21 @@ import java.util.Locale;
 
 public class DateFormats {
 	
+	/**
+	 * This method is used to return the "short date" in string format according to the country code and language code.
+	 * if we pass any wrong country code or/and language code then it will print the message to check the country code and language code 
+	 * 
+	 * 
+     * @param langCode : Language code, date format to be in specific format for
+     * 				   English : en , 	 german  : de , 	spanish : es
+     * 				   french  : fr , 	 italian : it ,		swedish : sv
+     * 
+     * @param countryCode : Country code could be case sensitive, date format to be in specific format for
+     * 				      unitedStates    : US ,   german          : DE , 	spanish(Spain) : ES
+     * 				      spanish(Mexico) : MX ,   french(France)  : FR ,   french(Canada) : CA
+     * 				      italian         : IT ,   swedish : SE
+     * 
+     * @return the date in specific date format based on passed country code and language code	*/
 	public static String shortDate(String langCode, String contryCode) {
 		String shortDateFromat = "";
 		
@@ -47,6 +62,21 @@ public class DateFormats {
 		return shortDateFromat;
 	}
 	
+	/**
+	 * This method is used to return the "long date" in string format according to the country code and language code.
+	 * if we pass any wrong country code or/and language code then it will print the message to check the country code and language code 
+	 * 
+	 * 
+     * @param langCode : Language code, date format to be in specific format for
+     * 				   English : en , 	 german  : de , 	spanish : es
+     * 				   french  : fr , 	 italian : it ,		swedish : sv
+     * 
+     * @param countryCode : Country code could be case sensitive, date format to be in specific format for
+     * 				      unitedStates    : US ,   german          : DE , 	spanish(Spain) : ES
+     * 				      spanish(Mexico) : MX ,   french(France)  : FR ,   french(Canada) : CA
+     * 				      italian         : IT ,   swedish : SE
+     * 
+     * @return the date in specific date format based on passed country code and language code	*/
 	public static String longDate(String langCode, String contryCode) {
 		String longDateFromat = "";
 		
@@ -167,6 +197,21 @@ public class DateFormats {
 		return swedishDate;
 	}	
 	
+	/**
+	 * This method is used to return the date format according to the country code and language code.
+	 * if we pass any wrong country code or/and language code then by default it will return en_US date format
+	 * 
+	 * 
+     * @param langCode : Language code, date format to be in specific format for
+     * 				   English : en , 	 german  : de , 	spanish : es
+     * 				   french  : fr , 	 italian : it ,		swedish : sv
+     * 
+     * @param countryCode : Country code could be case sensitive, date format to be in specific format for
+     * 				      unitedStates    : US ,   german          : DE , 	spanish(Spain) : ES
+     * 				      spanish(Mexico) : MX ,   french(France)  : FR ,   french(Canada) : CA
+     * 				      italian         : IT ,   swedish : SE
+     * 
+     * @return the date in specific date format based on passed country code and language code	*/
 	public static DateFormat dateFormat(String langCode, String contryCode) {
 		
 		DateFormat dateFormat;
@@ -198,8 +243,4 @@ public class DateFormats {
 		return dateFormat;
 	}
 	
-	/*public static void main(String[] args) {
-		System.out.println(longDate_en_US());
-		
-	}*/
 }

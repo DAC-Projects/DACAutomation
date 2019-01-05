@@ -25,7 +25,9 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class ExcelTestDataHandler {
+/**
+ * This class is used to handle the actions to perform on the excel sheet	*/
+public class ExcelHandler {
 
 	private  FileInputStream fis = null;
 	private  XSSFWorkbook workbook = null;
@@ -37,7 +39,7 @@ public class ExcelTestDataHandler {
 	public String sheetName = "";
 	public int sheetIndex;
 	
-	public ExcelTestDataHandler(String filePath, String sheetName) throws Exception {
+	public ExcelHandler(String filePath, String sheetName) throws Exception {
 		this.filePath = filePath;
 		this.sheetName=sheetName;
 		fis = new FileInputStream(this.filePath);
@@ -46,8 +48,7 @@ public class ExcelTestDataHandler {
 		fis.close();
 	}
 	
-	public ExcelTestDataHandler(String file, int index) throws IOException {
-		// TODO Auto-generated constructor stub
+	public ExcelHandler(String file, int index) throws IOException {
 		fis = new FileInputStream(file);
 		workbook = new XSSFWorkbook(fis);
 		this.sheetIndex=index;
@@ -57,11 +58,11 @@ public class ExcelTestDataHandler {
 	}
 	
 	public void replaceCellValue(String searchValue, String newValue) throws Exception {
-		int row = new ExcelTestDataHandler(filePath, sheetName).getRowCount();
+		int row = new ExcelHandler(filePath, sheetName).getRowCount();
 		for(int i=0;i<=row;i++) {
-			int col = new ExcelTestDataHandler(filePath, sheetName).getColCount(i);
+			int col = new ExcelHandler(filePath, sheetName).getColCount(i);
 			for(int j=0;j<col;j++) {
-				String cellData = new ExcelTestDataHandler(filePath, sheetName).getCellValue(i, j).trim();
+				String cellData = new ExcelHandler(filePath, sheetName).getCellValue(i, j).trim();
 				if(cellData.equals(searchValue)) {
 					setCellValue(i, j, newValue);
 					System.out.println("value changed");
@@ -105,14 +106,14 @@ public class ExcelTestDataHandler {
 	}
 	
 	public void getAllCellsData() throws Exception {
-		int row = new ExcelTestDataHandler(filePath, sheetName).getRowCount();
+		int row = new ExcelHandler(filePath, sheetName).getRowCount();
 		System.out.println("number of rows : "+row+"\n");
 		for(int i=0;i<=row;i++) {
-			int col = new ExcelTestDataHandler(filePath, sheetName).getColCount(i);
+			int col = new ExcelHandler(filePath, sheetName).getColCount(i);
 			System.out.println("Cell Values in Row Number : "+i);
 			for(int j=0;j<col;j++) {		
 				//System.out.print(new ExcelTestDataHandler(filePath, sheetName).getValue(i, j)+"   ");
-				System.out.print(new ExcelTestDataHandler(filePath, sheetName).getCellValue(i, j)+"  ");
+				System.out.print(new ExcelHandler(filePath, sheetName).getCellValue(i, j)+"  ");
 			}
 			System.out.println("\n");
 		}
@@ -125,7 +126,7 @@ public class ExcelTestDataHandler {
 	 */
 	public String[][] getExcelTable() throws Exception {
 		System.out.println("Reading excel------");
-		ExcelTestDataHandler excel	= new ExcelTestDataHandler(this.filePath, this.sheetName);
+		ExcelHandler excel	= new ExcelHandler(this.filePath, this.sheetName);
 		int row = excel.getRowCount();
 		String[][] rows = new String[row+1][];
 		System.out.println("total no of rows is"+ row);
@@ -135,7 +136,7 @@ public class ExcelTestDataHandler {
 			int col = currentrow.getLastCellNum();
 			cellValues = new String[col];
 			for(int j=0;j<col;j++) {	
-				cellValues[j] = new ExcelTestDataHandler(filePath, sheetName).getCellValue(i, j);
+				cellValues[j] = new ExcelHandler(filePath, sheetName).getCellValue(i, j);
 			}
 					
 			rows[i] = cellValues;

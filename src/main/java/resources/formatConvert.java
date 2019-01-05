@@ -20,12 +20,16 @@ public class formatConvert {
 	String filepath;
 	BufferedReader br;
 
+	/**
+	 * file path need to be convert to a specific format	*/
 	public formatConvert(String filepath) throws FileNotFoundException {
 
 		this.filepath = filepath;
 		this.br = new BufferedReader(new FileReader(filepath));
 	}
 
+	/**
+	 * This method is used to convert the .csv file into .xlsx file format only. 	*/
 	public String convertFile(String newFormat) throws IOException {
 
 		String fileExtension = getFileFormat(filepath);
