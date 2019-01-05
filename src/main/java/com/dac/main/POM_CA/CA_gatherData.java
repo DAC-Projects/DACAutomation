@@ -5,12 +5,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.util.CellReference;
-
 import resources.ExcelHandler;
-import resources.ExcelWrite;
 
 public class CA_gatherData implements CARepository {
 
@@ -66,7 +63,7 @@ public class CA_gatherData implements CARepository {
 		}
 		}
 
-		new ExcelWrite().createExcel("./Results_"+level+"_"+UserID+".xlsx");
+		new ExcelHandler().createExcel("./Results_"+level+"_"+UserID+".xlsx");
 		Thread.sleep(1000);
 		int i=0;
 		
@@ -76,8 +73,8 @@ public class CA_gatherData implements CARepository {
 		
 		for (Competitor comps : competitors ) {
 			System.out.println(i);
-			new ExcelWrite().write(createMap(comps), comps.competitorName, "./Results_"+level+"_"+UserID+".xlsx");
-			new ExcelWrite().write(new FormulaEvaluator(comps).reviewScore().contentAnalysis().accuracyScore().visibilityScore().execute(),
+			new ExcelHandler().write(createMap(comps), comps.competitorName, "./Results_"+level+"_"+UserID+".xlsx");
+			new ExcelHandler().write(new FormulaEvaluator(comps).reviewScore().contentAnalysis().accuracyScore().visibilityScore().execute(),
 					"Results-"+comps.competitorName.substring(0,4)+"..."+i, "./Results_"+level+"_"+UserID+".xlsx");
 		i= i+1;
 		}

@@ -150,7 +150,7 @@ public class CustomerActivityReportPage_RS extends BasePage{
 		String fileName = BasePage.getLastModifiedFile("./downloads");
 		System.out.println("file name : "+fileName);
 		String newfilename = new formatConvert("./downloads/"+fileName).convertFile("xlsx");
-		new ExcelHandler("./downloads/"+newfilename, "Sheet0").deleteRows();
+		new ExcelHandler("./downloads/"+newfilename, "Sheet0").deleteEmptyRows();
 		int xlRowCount=new ExcelHandler("./downloads/"+newfilename, "Sheet0").getRowCount();
 		//System.out.println("xlRowCount : "+xlRowCount);
 		int count = 0;

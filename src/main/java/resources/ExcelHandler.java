@@ -7,7 +7,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,6 +42,8 @@ public class ExcelHandler {
 	public String sheetName = "";
 	public int sheetIndex;
 	
+	public ExcelHandler() {}
+	
 	public ExcelHandler(String filePath, String sheetName) throws Exception {
 		this.filePath = filePath;
 		this.sheetName=sheetName;
@@ -55,6 +60,71 @@ public class ExcelHandler {
 		sheet = workbook.getSheetAt(this.sheetIndex);
 		this.sheetName = sheet.getSheetName();
 		fis.close();
+	}
+	
+	/**
+	 * create a new excel based on parameter passed as excel file name to create
+	 * 
+	 * @param excelFileName : name of an excel file to create
+	 */
+	public void createExcel(String excelFileName) {
+		workbook =  new XSSFWorkbook();
+		try {
+			FileOutputStream out = 
+					new FileOutputStream(new File(excelFileName));
+			workbook.write(out);
+			out.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+			
+	}
+	
+	/**
+	 * Accepts a map(consist of rowno as string and values as Obj array), sheet name to create, excel name
+	 * writes the map into the excel by creating a new sheet
+	 * 
+	 * @param data
+	 * @param sheetName
+	 * @param excelName : path of a including Excel file name with extension ie. .xls or .xlsx
+	 * @throws IOException		 */
+	public void write(Map<String, Object[]> data, String sheetName, String excelName) throws IOException {
+		FileInputStream fis = new FileInputStream(new File(excelName));
+		workbook =  new XSSFWorkbook(fis);
+		sheet = workbook.createSheet(sheetName);
+		Set<String> keyset = data.keySet();
+		
+		int rownum = 0;
+		for (String key : keyset) {
+			Row row = sheet.createRow(rownum++);
+			Object [] objArr = data.get(key);
+			int cellnum = 0;
+			for (Object obj : objArr) {
+				Cell cell = row.createCell(cellnum++);
+				if(obj instanceof Date) 
+					cell.setCellValue((Date)obj);
+				else if(obj instanceof Boolean)
+					cell.setCellValue((Boolean)obj);
+				else if(obj instanceof String)
+					cell.setCellValue((String)obj);
+				else if(obj instanceof Double)
+					cell.setCellValue((Double)obj);
+			}
+		}
+		
+		try {
+			FileOutputStream out = 
+					new FileOutputStream(new File(excelName));
+			workbook.write(out);
+			out.close();
+			System.out.println("Excel written successfully..");
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void replaceCellValue(String searchValue, String newValue) throws Exception {
@@ -188,7 +258,7 @@ public class ExcelHandler {
         
 	}
 	
-	public void deleteRows() throws IOException, EncryptedDocumentException, InvalidFormatException {
+	public void deleteRows() throws IOException {
 		//XSSFWorkbook workbook = null;
 	   // XSSFSheet sheet = null;
 		
