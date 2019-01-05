@@ -31,7 +31,7 @@ import org.testng.Assert;
 import com.dac.main.BasePage;
 
 import resources.DateFormats;
-import resources.ExcelTestDataHandler;
+import resources.ExcelHandler;
 import resources.IAutoconst;
 
 public class CreateNewCampaignPage extends BasePage{
@@ -365,7 +365,7 @@ public class CreateNewCampaignPage extends BasePage{
 	 * @column : Enter the column number of campaign name 	   */
 	public String setCampaignName(String sheet, int row, int column) throws Exception {
 		scrollByElement(campaignInfoSection);
-		String xlCampName = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
+		String xlCampName = new ExcelHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		String campName= xlCampName+" - "+getDateNTime();
 		campaignName.sendKeys(campName);
 		return campName;	
@@ -378,7 +378,7 @@ public class CreateNewCampaignPage extends BasePage{
 	 * @column   : column number of excel sheet to get the location name		 */
 	public void selectCampaignLoc(int locIndex, int column) throws Exception {
 		scrollByElement(campaignInfoSection);
-		String locName = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Location").getCellValue(7, column);
+		String locName = new ExcelHandler(IAutoconst.RS_XL_PATH, "Location").getCellValue(7, column);
 		campaignLocTB.sendKeys(locName);
 		int index=0;
 		for(index=0;index<campaignLocListBox.size();index++) {
@@ -404,7 +404,7 @@ public class CreateNewCampaignPage extends BasePage{
 	
 	public String setCampaignBrandName(int column) throws Exception {
 		scrollByElement(campaignInfoSection);
-		String campBrandName = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(7, column);
+		String campBrandName = new ExcelHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(7, column);
 		String BrandName= campBrandName+" - "+getDate();
 		campaignBrandNameTB.sendKeys(BrandName);
 		return BrandName;
@@ -440,33 +440,34 @@ public class CreateNewCampaignPage extends BasePage{
 	
 	public void setCampDescr(String sheet, int row, int column) throws Exception {
 		scrollByElement(campaignInfoSection);
-		String campDescription = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
+		String campDescription = new ExcelHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		campaignDescriptionTB.sendKeys(campDescription+" - "+getDate());
+		System.out.println(getClipboardContents(campaignDescriptionTB));
 	}
 	
 	public void setSenderName(String sheet, int row, int column) throws Exception {
 		scrollByElement(eMailSetupSection);
-		String campSenderName = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
+		String campSenderName = new ExcelHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		campaignSenderName.sendKeys(campSenderName+" - "+getDate());
 	}
 	
 	public String setCampSubject(String sheet, int row, int column) throws Exception {
 		scrollByElement(subjectText);
-		String campSubject = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column)+" - "+getDate();
+		String campSubject = new ExcelHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column)+" - "+getDate();
 		campaignSubject.sendKeys(campSubject);
 		return campSubject;
 	}
 	
 	public String setCampBanner(String sheet, int row, int column) throws Exception {
 		scrollByElement(subjectText);
-		String campIntroBanner = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column)+" - "+getDate();
+		String campIntroBanner = new ExcelHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column)+" - "+getDate();
 		campaignIntroBannerTB.sendKeys(campIntroBanner);
 		return campIntroBanner;
 	}
 	
 	public String setCampBodyCopy(String sheet, int row, int column) throws Exception {
 		scrollByElement(subjectText);
-		String campBodyCopy = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
+		String campBodyCopy = new ExcelHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		campaignBodyCopyTB.sendKeys(campBodyCopy);
 		return campBodyCopy;
 	}
@@ -476,7 +477,7 @@ public class CreateNewCampaignPage extends BasePage{
 	 * @campSignature : To enter the campaign Signature data into Signature Text Field   */
 	public String setCampSignature(String sheet, int row, int column) throws Exception {
 		scrollByElement(signatureHeading);
-		String campSignature = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
+		String campSignature = new ExcelHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		campaignSignature.sendKeys(campSignature);
 		return campSignature;
 	}
@@ -485,12 +486,12 @@ public class CreateNewCampaignPage extends BasePage{
 		
 				
 		scrollByElement(signatureHeading);
-		bt.campAddressL1 = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(20, column);
-		bt.campAddressL2 = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(21, column);
-		bt.city = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(22, column);
-		bt.STorPR = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(23, column);
-		bt.postalCode = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(24, column);
-		bt.phoneNo = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(25, column);
+		bt.campAddressL1 = new ExcelHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(20, column);
+		bt.campAddressL2 = new ExcelHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(21, column);
+		bt.city = new ExcelHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(22, column);
+		bt.STorPR = new ExcelHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(23, column);
+		bt.postalCode = new ExcelHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(24, column);
+		bt.phoneNo = new ExcelHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(25, column);
 		contactAddressLine1.sendKeys(bt.campAddressL1);
 		contactAddressLine2.sendKeys(bt.campAddressL2);
 		contactInfoBrandCity.sendKeys(bt.city);
@@ -576,7 +577,7 @@ public class CreateNewCampaignPage extends BasePage{
 	public void setCampaignTime(String sheet, int row, int column) throws Exception {
 		
 		scrollByElement(scheduledSection);
-		String TimeValue_AM_PM = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
+		String TimeValue_AM_PM = new ExcelHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		select = new Select(scheduledTime);
 		select.selectByVisibleText(TimeValue_AM_PM);
 	}
@@ -606,11 +607,16 @@ public class CreateNewCampaignPage extends BasePage{
 	public void uploadCampEmailTemplate(String sheet, int row, int column) throws Exception {
 		
 		scrollByElement(toText);
-		String fileName = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
+		String fileName = new ExcelHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		File uploadingFilePath =new File("./filesToUpload/"+fileName);
 		String fileAbsPath=uploadingFilePath.getAbsolutePath();
 		uploadEmailTemplate.sendKeys(fileAbsPath);	
 		Thread.sleep(2000);
+		while(true) {
+			if(getTofieldData().isEmpty()) {
+				Thread.sleep(50);
+			}else break;
+		}
 		//uploadFile(fileName, extension);
 	}
 	
@@ -681,14 +687,14 @@ public class CreateNewCampaignPage extends BasePage{
 	public void verifyExistCampToolTipText(String sheet,int row, int column) throws Exception {
 		
 		scrollByElement(customerFeedbackBreadCrumb);
-		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
+		String eText = new ExcelHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		clickelement(existCampTT);
 		verifyText(iCircleToolTipText, eText);
 	}
 	
 	public void verifyAddToolTipText(String sheet, int row, int column) throws Exception {
 		scrollByElement(campaignInfoSection);
-		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
+		String eText = new ExcelHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		action.moveToElement(mlcAddBTN).perform();
 		Thread.sleep(2000);
 		verifyText(mlcLocToolTips, eText);
@@ -697,7 +703,7 @@ public class CreateNewCampaignPage extends BasePage{
 	
 	public void verifyRemoveToolTipText(String sheet, int row, int column) throws Exception {
 		scrollByElement(campaignInfoSection);
-		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
+		String eText = new ExcelHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		action.moveToElement(mlcRemoveBTN).perform();
 		Thread.sleep(2000);
 		verifyText(mlcLocToolTips, eText);
@@ -705,7 +711,7 @@ public class CreateNewCampaignPage extends BasePage{
 	
 	public void verifyAddAllToolTipText(String sheet, int row, int column) throws Exception {
 		scrollByElement(campaignInfoSection);
-		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
+		String eText = new ExcelHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		action.moveToElement(mlcAddAllBTN).perform();
 		Thread.sleep(2000);
 		verifyText(mlcLocToolTips, eText);
@@ -713,7 +719,7 @@ public class CreateNewCampaignPage extends BasePage{
 	
 	public void verifyRemoveAllToolTipText(String sheet, int row, int column) throws Exception {
 		scrollByElement(campaignInfoSection);
-		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
+		String eText = new ExcelHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		action.moveToElement(mlcRemoveAllBTN).perform();
 		Thread.sleep(2000);
 		verifyText(mlcLocToolTips, eText);
@@ -727,7 +733,7 @@ public class CreateNewCampaignPage extends BasePage{
 	public void verifyUploadLogoToolTipText(String sheet, int row, int column) throws Exception {
 		
 		scrollByElement(eMailSetupSection);
-		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
+		String eText = new ExcelHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		clickelement(uploadLogoTT);
 		verifyText(iCircleToolTipText, eText);
 	}
@@ -735,7 +741,7 @@ public class CreateNewCampaignPage extends BasePage{
 	public void verifyPersonalizationToolTipText(String sheet,int row, int column) throws Exception {
 		
 		scrollByElement(subjectText);
-		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
+		String eText = new ExcelHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		System.out.println("eText :"+eText);
 		clickelement(personalizationTT);
 		System.out.println("iCircleToolTipText :"+iCircleToolTipText.getText());
@@ -745,7 +751,7 @@ public class CreateNewCampaignPage extends BasePage{
 	public void verifyContactInfoToolTipText(int column) throws Exception {
 	
 		scrollByElement(signatureHeading);
-		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(19, column);
+		String eText = new ExcelHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(19, column);
 		clickelement(contactInfoTT);
 		verifyText(iCircleToolTipText, eText);
 	}
@@ -759,7 +765,7 @@ public class CreateNewCampaignPage extends BasePage{
 	public void verifyTimeToolTipText(String sheet, int row,  int column) throws Exception {
 	
 		scrollByElement(scheduledSection);
-		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
+		String eText = new ExcelHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		action.moveToElement(timeTT).perform();
 		wait.until(ExpectedConditions.visibilityOf(iCircleToolTipText));
 		verifyText(iCircleToolTipText, eText);
@@ -774,7 +780,7 @@ public class CreateNewCampaignPage extends BasePage{
 	public void verifyCampEndDateToolTipText(String sheet, int row, int column) throws Exception {
 	
 		scrollByElement(scheduledSection);
-		String eText = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
+		String eText = new ExcelHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		action.moveToElement(campEndDateTT).perform();
 		wait.until(ExpectedConditions.visibilityOf(iCircleToolTipText));
 		Thread.sleep(1000);
@@ -787,13 +793,14 @@ public class CreateNewCampaignPage extends BasePage{
 	 * @email : e-mail id to send the created campaign and more than 1 email id's seperated with comma(,) */
 	public void setToField(String sheet, int row, int column) throws Exception {
 		scrollByElement(toFieldTB);
-		String email = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
+		String email = new ExcelHandler(IAutoconst.RS_XL_PATH, sheet).getCellValue(row, column);
 		toFieldTB.sendKeys(email);
 	}
 	
 	public String getTofieldData() throws UnsupportedFlavorException, IOException {
 		scrollByElement(toFieldTB);
 		bt.campTofield = getClipboardContents(toFieldTB);
+		System.out.println("bt.campTofield = "+ bt.campTofield);
 		return bt.campTofield;
 	}
 	
