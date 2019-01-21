@@ -113,6 +113,8 @@ public abstract class BaseClass {
       return IAutoconst.competitiveAnalysis;
     case "Customer_FeedBack":
       return IAutoconst.deepfieldAccount;
+    case "TransparenSEE":
+    	return IAutoconst.transparenSEE;
     default:
       return IAutoconst.deepfieldAccount;
     }

@@ -126,9 +126,21 @@ public class Navigationpage extends BasePage{
 	@FindBy(xpath="//a[@href='/CompetitiveAnalysis/Visibility']")
 	private WebElement CA_Visibility;
   
-  @FindBy(xpath="//a[@href='/CompetitiveAnalysis/Analysis']")
-  private WebElement CA_ContentAnalysis;
+    @FindBy(xpath="//a[@href='/CompetitiveAnalysis/Analysis']")
+    private WebElement CA_ContentAnalysis;
 	
+  //---------------------- TransparenSEE-------------------------------
+    @FindBy(id="VA")
+	private WebElement TPSEE_Visibility;
+    
+    public void  navigateTPSEE_Visibility() {
+  	  
+  	  clickelement(TPSEE_Visibility);   
+      System.out.println("Waiting for page to load**********");
+      waitUntilLoad(driver);
+  	}
+    
+    //-----CA
 	public void  navigateCA_Visibility() {
 	  
 	  clickelement(CA_Visibility);   
@@ -235,9 +247,9 @@ public class Navigationpage extends BasePage{
 		clickelement(DBLangPopUp);
 	}
      
-	public void select_DB_Lang_Link(String langCode, String contryCode) {
+	public void select_DB_Lang_Link(String langCode, String countryCode) {
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-		String langConCode = langCode+"_"+contryCode;
+		String langConCode = langCode+"_"+countryCode;
 		wait.until(ExpectedConditions.visibilityOf(DBLangLink));
 		if(DBLangLink.isDisplayed()) {
 			DB_LangList();
