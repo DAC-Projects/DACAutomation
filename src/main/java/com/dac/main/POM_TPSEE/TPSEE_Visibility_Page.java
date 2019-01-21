@@ -20,7 +20,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import resources.CurrentState;
-import resources.ExcelTestDataHandler;
+import resources.ExcelHandler;
+
 
 public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 
@@ -97,7 +98,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	public List<Map<String, String>> getExportData() throws Exception {
 		exportvisibilityReport();
 
-		String[][] table = new ExcelTestDataHandler(Exportpath + VisibilityExport, "Sheet0").getExcelTable();
+		String[][] table = new ExcelHandler(Exportpath + VisibilityExport, "Sheet0").getExcelTable();
 		List<Map<String, String>> exportData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
 		for (int col = 1; col < colSize; col++) {

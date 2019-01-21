@@ -130,14 +130,11 @@ public class Navigationpage extends BasePage{
   
     @FindBy(xpath="//a[@href='/CompetitiveAnalysis/Analysis']")
     private WebElement CA_ContentAnalysis;
-<<<<<<< HEAD
-=======
+
     
 	@FindBy(xpath="//a[@href='/CompetitiveAnalysis/Review']/span")
 	private WebElement CA_Reviewpage;
->>>>>>> refs/heads/parallel-Code_Implementation
-	
-<<<<<<< HEAD
+
   //---------------------- TransparenSEE-------------------------------
     @FindBy(id="VA")
 	private WebElement TPSEE_Visibility;
@@ -150,9 +147,9 @@ public class Navigationpage extends BasePage{
   	}
     
     //-----CA
-=======
+
 	/** To click on CA_Visibility link in LHS to navigate to CA_Visibility page   */
->>>>>>> refs/heads/parallel-Code_Implementation
+
 	public void  navigateCA_Visibility() {
 	  clickelement(CA_Visibility);   
       System.out.println("Waiting for page to load**********");
@@ -287,9 +284,7 @@ public class Navigationpage extends BasePage{
 		clickelement(DBLangPopUp);
 	}
      
-<<<<<<< HEAD
-	public void select_DB_Lang_Link(String langCode, String countryCode) {
-=======
+
 	/**
 	   * For selecting/changing dashboard language in TSEE to specific language based on the country and language code
 	   * 
@@ -304,9 +299,8 @@ public class Navigationpage extends BasePage{
 	   *  				
 	   * */
 	public void select_DB_Lang_Link(String langCode, String contryCode) {
->>>>>>> refs/heads/parallel-Code_Implementation
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-		String langConCode = langCode+"_"+countryCode;
+		String langConCode = langCode+"_"+contryCode;
 		wait.until(ExpectedConditions.visibilityOf(DBLangLink));
 		if(DBLangLink.isDisplayed()) {
 			DB_LangList();
