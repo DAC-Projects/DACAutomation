@@ -8,7 +8,7 @@ import com.dac.main.POM_CF.BaseTest_CF;
 import com.dac.main.POM_CF.CampaignsPage;
 import com.dac.main.POM_CF.CreateNewCampaignPage;
 import resources.CurrentState;
-import resources.ExcelTestDataHandler;
+import resources.ExcelHandler;
 import resources.IAutoconst;
 
 public class VerifyCreate_DraftBrandCamp extends BaseTest_CF{
@@ -31,7 +31,7 @@ public class VerifyCreate_DraftBrandCamp extends BaseTest_CF{
 		CurrentState.getLogger().log(Status.INFO, "Selecting campaign Type as Brand");
 		
 		newCampaign.selectCampLang(1);
-		String campLang = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(3, englishLangColumn);
+		String campLang = new ExcelHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(3, englishLangColumn);
 		CurrentState.getLogger().log(Status.INFO, "Selecting campaign Language as "+campLang);
 		
 		newCampaign.verifyExistCampToolTipText("Brand", 5, englishLangColumn);
@@ -48,7 +48,7 @@ public class VerifyCreate_DraftBrandCamp extends BaseTest_CF{
 		
 		newCampaign.setSenderName("Brand",9,englishLangColumn);
 	
-		String logoName = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(11, englishLangColumn);
+		String logoName = new ExcelHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(11, englishLangColumn);
 
 		newCampaign.uploadLogo(logoName);
 		CurrentState.getLogger().log(Status.INFO, "Adding the Logo of the Campaign");
@@ -68,20 +68,20 @@ public class VerifyCreate_DraftBrandCamp extends BaseTest_CF{
 		System.out.println("---------file downloaded-------");
 		String fileName = BasePage.getFileNames_Dir("./downloads");
 		
-		new ExcelTestDataHandler("./downloads/"+fileName, "Email Template").getAllCellsData();
+		new ExcelHandler("./downloads/"+fileName, "Email Template").getAllCellsData();
 		
 		String[] cellValues = {"akram.1wasi@gmail.com", "wasim","akram", "wakram@dacgroup.com", "B", "Wasim"};
 		
 		Thread.sleep(3000);
 		
-		new ExcelTestDataHandler("./downloads/"+fileName, "Email Template").deleteEmptyRows();
+		new ExcelHandler("./downloads/"+fileName, "Email Template").deleteEmptyRows();
 		
 		Thread.sleep(3000);
-		new ExcelTestDataHandler("./downloads/"+fileName, "Email Template").createRowInExcel(2, 3, cellValues);
+		new ExcelHandler("./downloads/"+fileName, "Email Template").createRowInExcel(2, 3, cellValues);
 		
 		Thread.sleep(3000);
 		
-		new ExcelTestDataHandler("./downloads/"+fileName, "Email Template").getAllCellsData();
+		new ExcelHandler("./downloads/"+fileName, "Email Template").getAllCellsData();
 		
 		Thread.sleep(3000);
 		newCampaign.uploadEmailTemplate(fileName);

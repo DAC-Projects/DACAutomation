@@ -7,10 +7,17 @@ import org.apache.commons.io.FileUtils;
 
 public class FileHandler {
 
-	public static File renameTo(File file, String name) throws IOException {
-		File file2 = new File(name);
+	/**
+	 * This method is used to rename the current existing file.
+	 * 
+	 * @param fileToRename : pass the file which need to be rename. If file name doesn't exist 
+	 * 						 will throw IOException		
+	 * 
+	 * @param newFileName  : pass the new name to change the name of the existing file		*/
+	public static File renameTo(File fileToRename, String newFileName) throws IOException {
+		File file2 = new File(newFileName);
 	 
-		FileUtils.moveFile(file, file2);
+		FileUtils.moveFile(fileToRename, file2);
 		if (file2.exists()) 
 			return file2;
 		else

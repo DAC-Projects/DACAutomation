@@ -43,17 +43,15 @@ import net.sf.jasperreports.engine.JasperPrint;
 public class ExtentTestNGITestListener
     implements ITestListener, IClassListener, IAutoconst {
 
-  private static ExtentReports extent = ExtentManager
-      .createInstance("target/surefire-reports/extent.html");
+  private static ExtentReports extent = ExtentManager.getInstance();
   private static ThreadLocal parentTest = new ThreadLocal();
   private static ThreadLocal test = new ThreadLocal();
   private static ThreadLocal<ArrayList<JasperPrint>> printList =new ThreadLocal();
-  /*
-   * Set parent node for extent reports store browser and testname from
-   * testng.xml
+    
+  /**
+   * Set parent "node" for extent reports store "browser" and "test name" from testng.xml
    * 
-   * @see org.testng.ITestListener#onStart(org.testng.ITestContext)
-   */
+   * @see org.testng.ITestListener#onStart(org.testng.ITestContext)		*/
   @Override
   public synchronized void onStart(ITestContext context) {
 
@@ -66,7 +64,7 @@ public class ExtentTestNGITestListener
 
   }
 
-  /*
+  /**
    * open browser, clear cookies and open maximized
    * 
    * @see org.testng.IClassListener#onBeforeClass(org.testng.ITestClass)
@@ -77,7 +75,6 @@ public class ExtentTestNGITestListener
       try {
         CurrentState.setDriver(openBrowser(CurrentState.getBrowser()));
       } catch (IOException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
       CurrentState.getDriver().manage().window().maximize();
@@ -86,11 +83,11 @@ public class ExtentTestNGITestListener
    
   }
 
-  /*
+  /**
    * (non-Javadoc)
+   * Initialize Child nodes in extent report
    * 
    * @see org.testng.ITestListener#onTestStart(org.testng.ITestResult)
-   * Initialize Child nodes in report
    */
   @Override
   public synchronized void onTestStart(ITestResult result) {
@@ -105,14 +102,20 @@ public class ExtentTestNGITestListener
  
   }
   
+  /**
+   * This method return the description of @Test method if provided 
+   * otherwise will return the test method name 	*/
   private String getTestname(ITestResult result){
     String description = (result.getMethod().getDescription() != null)
         ? result.getMethod().getDescription()
         : result.getMethod().getMethodName();
     return description;
-    
   }
 
+  /**
+   * This method is used to execute when the @Test method is successfully executed		
+   * 
+   * @see org.testng.IClassListener#onTestSuccess(org.testng.ITestResult)		*/
   @SuppressWarnings("unchecked")
   @Override
   public synchronized void onTestSuccess(ITestResult result) {
@@ -133,6 +136,10 @@ public class ExtentTestNGITestListener
     }
   }
 
+  /**
+   * This method is used to execute when the @Test method is failed from execution		
+   * 
+   * @see org.testng.IClassListener#onTestFailure(org.testng.ITestResult)		*/
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public synchronized void onTestFailure(ITestResult result) {
@@ -157,6 +164,11 @@ public class ExtentTestNGITestListener
 
   }
 
+  /**
+   * This method is used to execute when the @Test method is skipped from execution 
+   * as those method may depends on stats of another test method		
+   * 
+   * @see org.testng.IClassListener#onTestSkipped(org.testng.ITestResult)		*/
   @Override
   public synchronized void onTestSkipped(ITestResult result) {
     String description = (result.getMethod().getDescription() != null)
@@ -176,10 +188,11 @@ public class ExtentTestNGITestListener
 
   }
 
-  /* (non-Javadoc)
-   * @see org.testng.IClassListener#onAfterClass(org.testng.ITestClass)
-   * close browser
-   */
+  /**
+   * (non-Javadoc)
+   * Close the browser after the execution of each class in TestNG.xml 
+   * 
+   * @see org.testng.IClassListener#onAfterClass(org.testng.ITestClass)	   */
   @Override
   public synchronized void onAfterClass(ITestClass testClass) {
    
@@ -187,8 +200,11 @@ public class ExtentTestNGITestListener
     CurrentState.setDriver(null);
   }
 
-
-  
+  /**
+   * Quit the browser after the execution of each class in TestNG.xml 
+   * and generate the test evidence after each execution of a class		
+   * 
+   * @see org.testng.ITestListener#onFinish(org.testng.ITestContext)	*/
   @Override
   public synchronized void onFinish(ITestContext context) {
     extent.flush();
@@ -203,10 +219,11 @@ public class ExtentTestNGITestListener
   }
 
   /**
+   * Code to generate error log when the test script got failed.
+   * 
    * @param result
-   * Code to generate error log
    */
-  public void generateErrorLog(ITestResult result) {
+  private void generateErrorLog(ITestResult result) {
     try {
       String methodname = result.getMethod().getMethodName();
       ((ExtentTest) test.get()).log(Status.FAIL, methodname);
@@ -265,11 +282,12 @@ public class ExtentTestNGITestListener
   }
 
   /**
+   * This method is used to open the browser ie. chrome or firefox or ie browser 
+   * while execution and setup the configuration before opening the browser.
+   * 
    * @param browser
-   * @return
-   * @throws IOException
-   * code to open browser
-   */
+   * @return the driver in which user going to execute among chrome/firefox/ie.
+   * @throws IOException	   */
   public WebDriver openBrowser(String browser) throws IOException {
 
     WebDriver driver = null;
@@ -318,21 +336,6 @@ public class ExtentTestNGITestListener
       capabilities.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, false);
       capabilities.setCapability("ignoreProtectedModeSettings", 1);
       capabilities.setCapability("IntroduceInstabilityByIgnoringProtectedModeSettings", true);
-    
-      /*InternetExplorerOptions options = new InternetExplorerOptions();
-      options.enablePersistentHovering();
-      options.introduceFlakinessByIgnoringSecurityDomains();
-      options.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
-      options.setCapability(InternetExplorerDriver.INITIAL_BROWSER_URL, "");
-      options.setCapability(
-          InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
-          true);
-      options.setCapability(InternetExplorerDriver.NATIVE_EVENTS, true);
-      options.setCapability("enablePersistentHover", false);
-
-      options.setCapability("ignoreProtectedModeSettings", 1);
-      options.setCapability(
-          "IntroduceInstabilityByIgnoringProtectedModeSettings", true);*/
       //options.requireWindowFocus();
       String path = System.getProperty("user.dir") + "/downloads";
       String cmd1 = "REG ADD \"HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\Main\" /F /V \"Default Download Directory\" /T REG_SZ /D "
@@ -353,7 +356,4 @@ public class ExtentTestNGITestListener
     return driver;
 
   }
-  
-
-
 }

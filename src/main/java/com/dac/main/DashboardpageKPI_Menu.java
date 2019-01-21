@@ -5,9 +5,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class Dashboardpage {
+public class DashboardpageKPI_Menu {
 
-	public Dashboardpage(WebDriver driver) {
+	public DashboardpageKPI_Menu(WebDriver driver) {
 		
 		PageFactory.initElements(driver, this);
 	}
