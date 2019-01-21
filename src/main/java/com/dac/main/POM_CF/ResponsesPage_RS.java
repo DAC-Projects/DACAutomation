@@ -22,7 +22,7 @@ import org.testng.asserts.SoftAssert;
 
 import com.dac.main.BasePage;
 import resources.DateFormats;
-import resources.ExcelTestDataHandler;
+import resources.ExcelHandler;
 import resources.formatConvert;
 
 public class ResponsesPage_RS extends BasePage{
@@ -351,13 +351,13 @@ public class ResponsesPage_RS extends BasePage{
 		String fileName = BasePage.getLastModifiedFile("./downloads");
 		System.out.println("file name : "+fileName);
 		String newfilename = new formatConvert("./downloads/"+fileName).convertFile("xlsx");
-		new ExcelTestDataHandler("./downloads/"+newfilename, "Sheet0").deleteRows();
-		int xlRowCount=new ExcelTestDataHandler("./downloads/"+newfilename, "Sheet0").getRowCount();
+		new ExcelHandler("./downloads/"+newfilename, "Sheet0").deleteEmptyRows();
+		int xlRowCount=new ExcelHandler("./downloads/"+newfilename, "Sheet0").getRowCount();
 		//System.out.println("xlRowCount : "+xlRowCount);
 		int count = 0;
 		for(int i=0;i<xlRowCount;i++) {
 			for(int j=0;j<col_count;j++) {
-				String cellValue = new ExcelTestDataHandler("./downloads/"+newfilename, "Sheet0").getCellValue(i, j).trim();
+				String cellValue = new ExcelHandler("./downloads/"+newfilename, "Sheet0").getCellValue(i, j).trim();
 				String uiTableCellValue = tableCellValues.get(count).trim();
 				if(uiTableCellValue.equals(cellValue)) {
 					

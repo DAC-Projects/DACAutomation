@@ -3,8 +3,6 @@ package resources;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -25,20 +23,8 @@ public abstract class BaseClass {
    * 
    * @throws IOException
    */
-  
-   List test = new ArrayList();
-   
-   static int i = 10;
-   
-   static BaseClass b = new BaseClass() {
-  };
-  
-  public static List getValue() {
-    return b.test;
-  }
-  
   @BeforeSuite(alwaysRun = true)
-  public void reportSetup() throws IOException {
+  private void reportSetup() throws IOException {
 
     String[] folderCreate = { "./downloads", "./Screenshot", "./testevidence" };
 
@@ -56,6 +42,8 @@ public abstract class BaseClass {
 
   // **********************for login to auth and then Dashboard
 
+  /**
+   * This method is to navigate to TSEE dashboard page from AC1 Beta	*/
   public static void navigateToBasePage() {
     LoginAC_Beta lp = new LoginAC_Beta();
     BaseClass.loginAuth(lp);
@@ -67,18 +55,19 @@ public abstract class BaseClass {
     }
   }
 
-  public static void loginAuth(LoginAC_Beta lp) {
+  /**
+   * This method used to login to AC1 for a specific account which using for respective modules		*/
+  private static void loginAuth(LoginAC_Beta lp) {
     // login to auth centre
     String[] account = getAccount();
     CurrentState.getDriver().get(account[0]);
     lp.setUserName(IAutoconst.email);
     lp.setPassword(IAutoconst.password);
     lp.clickLogin();
-    System.out.println("logged to Auth center");
-    
+    System.out.println("logged to Auth center");  
   }
 
-  public static void navigateToDashboard(LoginAC_Beta lp) {
+  private static void navigateToDashboard(LoginAC_Beta lp) {
     System.out.println("navigating to dashboard");
     String firstWindowHandle = CurrentState.getDriver().getWindowHandle();
     String[] account = getAccount();
@@ -106,7 +95,7 @@ public abstract class BaseClass {
 
   }
 
-  public static String[] getAccount() {
+  private static String[] getAccount() {
     switch (CurrentState.getTestName()) {
 
     case "Competitive Analysis":

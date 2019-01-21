@@ -5,23 +5,20 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.util.CellReference;
-
-import resources.ExcelTestDataHandler;
-import resources.ExcelWrite;
+import resources.ExcelHandler;
 
 public class CA_gatherData implements CARepository {
 
-	private ExcelTestDataHandler company_level;
+	private ExcelHandler company_level;
 	private String level;
 	
 	
 
 	public CA_gatherData(String excel_file, String level) throws IOException {
 		super();
-		this.company_level = new ExcelTestDataHandler(excel_file,
+		this.company_level = new ExcelHandler(excel_file,
 				0);
 		this.level = level;
 	}
@@ -66,7 +63,7 @@ public class CA_gatherData implements CARepository {
 		}
 		}
 
-		new ExcelWrite().createExcel("./Results_"+level+"_"+UserID+".xlsx");
+		new ExcelHandler().createExcel("./Results_"+level+"_"+UserID+".xlsx");
 		Thread.sleep(1000);
 		int i=0;
 		
@@ -76,8 +73,8 @@ public class CA_gatherData implements CARepository {
 		
 		for (Competitor comps : competitors ) {
 			System.out.println(i);
-			new ExcelWrite().wirte(createMap(comps), comps.competitorName, "./Results_"+level+"_"+UserID+".xlsx");
-			new ExcelWrite().wirte(new FormulaEvaluator(comps).reviewScore().contentAnalysis().accuracyScore().visibilityScore().execute(),
+			new ExcelHandler().write(createMap(comps), comps.competitorName, "./Results_"+level+"_"+UserID+".xlsx");
+			new ExcelHandler().write(new FormulaEvaluator(comps).reviewScore().contentAnalysis().accuracyScore().visibilityScore().execute(),
 					"Results-"+comps.competitorName.substring(0,4)+"..."+i, "./Results_"+level+"_"+UserID+".xlsx");
 		i= i+1;
 		}
@@ -85,7 +82,7 @@ public class CA_gatherData implements CARepository {
 	
 	}
 
-	public  Sites getSiteData(int x, int row, ExcelTestDataHandler company_level, Competitor competitors)
+	public  Sites getSiteData(int x, int row, ExcelHandler company_level, Competitor competitors)
 			throws Exception {
 
 		Sites site = new Sites();
@@ -127,7 +124,7 @@ public class CA_gatherData implements CARepository {
 	}
 	
 	private static String getSiteDataFromExport(String name, String path, Competitor competitors) throws Exception {
-		ExcelTestDataHandler read = new ExcelTestDataHandler(path, "Sheet0");
+		ExcelHandler read = new ExcelHandler(path, "Sheet0");
 		int column = read.find_column_no(competitors.competitorName, 0).get(0);
 		System.out.println(name);
 		int row = read.find_Row_no(name, 0).get(0);
@@ -135,7 +132,7 @@ public class CA_gatherData implements CARepository {
 		return read.getValue(column, row);
 	}
 
-	public static String getvalue(int x, String value, int row, ExcelTestDataHandler company_level) throws Exception {
+	public static String getvalue(int x, String value, int row, ExcelHandler company_level) throws Exception {
 		String col = StringUtils.replace(value, "*", Integer.toString(x));
 		System.out.println(col+"***********");
 		System.out.println(company_level.find_column_no(col, 0).size());

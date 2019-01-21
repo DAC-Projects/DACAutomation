@@ -7,7 +7,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +28,9 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class ExcelTestDataHandler {
+/**
+ * This class is used to handle the actions to perform on the excel sheet	*/
+public class ExcelHandler {
 
 	private  FileInputStream fis = null;
 	private  XSSFWorkbook workbook = null;
@@ -37,7 +42,9 @@ public class ExcelTestDataHandler {
 	public String sheetName = "";
 	public int sheetIndex;
 	
-	public ExcelTestDataHandler(String filePath, String sheetName) throws Exception {
+	public ExcelHandler() {}
+	
+	public ExcelHandler(String filePath, String sheetName) throws Exception {
 		this.filePath = filePath;
 		this.sheetName=sheetName;
 		fis = new FileInputStream(this.filePath);
@@ -46,8 +53,7 @@ public class ExcelTestDataHandler {
 		fis.close();
 	}
 	
-	public ExcelTestDataHandler(String file, int index) throws IOException {
-		// TODO Auto-generated constructor stub
+	public ExcelHandler(String file, int index) throws IOException {
 		fis = new FileInputStream(file);
 		workbook = new XSSFWorkbook(fis);
 		this.sheetIndex=index;
@@ -56,12 +62,77 @@ public class ExcelTestDataHandler {
 		fis.close();
 	}
 	
+	/**
+	 * create a new excel based on parameter passed as excel file name to create
+	 * 
+	 * @param excelFileName : name of an excel file to create
+	 */
+	public void createExcel(String excelFileName) {
+		workbook =  new XSSFWorkbook();
+		try {
+			FileOutputStream out = 
+					new FileOutputStream(new File(excelFileName));
+			workbook.write(out);
+			out.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+			
+	}
+	
+	/**
+	 * Accepts a map(consist of rowno as string and values as Obj array), sheet name to create, excel name
+	 * writes the map into the excel by creating a new sheet
+	 * 
+	 * @param data
+	 * @param sheetName
+	 * @param excelName : path of a including Excel file name with extension ie. .xls or .xlsx
+	 * @throws IOException		 */
+	public void write(Map<String, Object[]> data, String sheetName, String excelName) throws IOException {
+		FileInputStream fis = new FileInputStream(new File(excelName));
+		workbook =  new XSSFWorkbook(fis);
+		sheet = workbook.createSheet(sheetName);
+		Set<String> keyset = data.keySet();
+		
+		int rownum = 0;
+		for (String key : keyset) {
+			Row row = sheet.createRow(rownum++);
+			Object [] objArr = data.get(key);
+			int cellnum = 0;
+			for (Object obj : objArr) {
+				Cell cell = row.createCell(cellnum++);
+				if(obj instanceof Date) 
+					cell.setCellValue((Date)obj);
+				else if(obj instanceof Boolean)
+					cell.setCellValue((Boolean)obj);
+				else if(obj instanceof String)
+					cell.setCellValue((String)obj);
+				else if(obj instanceof Double)
+					cell.setCellValue((Double)obj);
+			}
+		}
+		
+		try {
+			FileOutputStream out = 
+					new FileOutputStream(new File(excelName));
+			workbook.write(out);
+			out.close();
+			System.out.println("Excel written successfully..");
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void replaceCellValue(String searchValue, String newValue) throws Exception {
-		int row = new ExcelTestDataHandler(filePath, sheetName).getRowCount();
+		int row = new ExcelHandler(filePath, sheetName).getRowCount();
 		for(int i=0;i<=row;i++) {
-			int col = new ExcelTestDataHandler(filePath, sheetName).getColCount(i);
+			int col = new ExcelHandler(filePath, sheetName).getColCount(i);
 			for(int j=0;j<col;j++) {
-				String cellData = new ExcelTestDataHandler(filePath, sheetName).getCellValue(i, j).trim();
+				String cellData = new ExcelHandler(filePath, sheetName).getCellValue(i, j).trim();
 				if(cellData.equals(searchValue)) {
 					setCellValue(i, j, newValue);
 					System.out.println("value changed");
@@ -105,14 +176,14 @@ public class ExcelTestDataHandler {
 	}
 	
 	public void getAllCellsData() throws Exception {
-		int row = new ExcelTestDataHandler(filePath, sheetName).getRowCount();
+		int row = new ExcelHandler(filePath, sheetName).getRowCount();
 		System.out.println("number of rows : "+row+"\n");
 		for(int i=0;i<=row;i++) {
-			int col = new ExcelTestDataHandler(filePath, sheetName).getColCount(i);
+			int col = new ExcelHandler(filePath, sheetName).getColCount(i);
 			System.out.println("Cell Values in Row Number : "+i);
 			for(int j=0;j<col;j++) {		
 				//System.out.print(new ExcelTestDataHandler(filePath, sheetName).getValue(i, j)+"   ");
-				System.out.print(new ExcelTestDataHandler(filePath, sheetName).getCellValue(i, j)+"  ");
+				System.out.print(new ExcelHandler(filePath, sheetName).getCellValue(i, j)+"  ");
 			}
 			System.out.println("\n");
 		}
@@ -125,7 +196,7 @@ public class ExcelTestDataHandler {
 	 */
 	public String[][] getExcelTable() throws Exception {
 		System.out.println("Reading excel------");
-		ExcelTestDataHandler excel	= new ExcelTestDataHandler(this.filePath, this.sheetName);
+		ExcelHandler excel	= new ExcelHandler(this.filePath, this.sheetName);
 		int row = excel.getRowCount();
 		String[][] rows = new String[row+1][];
 		System.out.println("total no of rows is"+ row);
@@ -135,7 +206,7 @@ public class ExcelTestDataHandler {
 			int col = currentrow.getLastCellNum();
 			cellValues = new String[col];
 			for(int j=0;j<col;j++) {	
-				cellValues[j] = new ExcelTestDataHandler(filePath, sheetName).getCellValue(i, j);
+				cellValues[j] = new ExcelHandler(filePath, sheetName).getCellValue(i, j);
 			}
 					
 			rows[i] = cellValues;
@@ -187,7 +258,7 @@ public class ExcelTestDataHandler {
         
 	}
 	
-	public void deleteRows() throws IOException, EncryptedDocumentException, InvalidFormatException {
+	public void deleteRows() throws IOException {
 		//XSSFWorkbook workbook = null;
 	   // XSSFSheet sheet = null;
 		

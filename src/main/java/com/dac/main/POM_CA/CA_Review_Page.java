@@ -23,7 +23,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import resources.CurrentState;
-import resources.ExcelTestDataHandler;
+import resources.ExcelHandler;
 
 public class CA_Review_Page extends CA_abstractMethods {
 
@@ -137,7 +137,7 @@ public class CA_Review_Page extends CA_abstractMethods {
 	public List<Map<String, String>> getExportData() throws Exception {
 		exportReviewReport();
 
-		String[][] table = new ExcelTestDataHandler(Exportpath + ReviewExport, "Sheet0").getExcelTable();
+		String[][] table = new ExcelHandler(Exportpath + ReviewExport, "Sheet0").getExcelTable();
 		List<Map<String, String>> exportData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
 		for (int col = 1; col < colSize; col++) {

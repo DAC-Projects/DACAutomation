@@ -1,4 +1,4 @@
-package com.dac.main;
+package com.dac.main.POM_TSEE;
 
 import java.util.List;
 
@@ -78,13 +78,7 @@ public class VisibilityPage {
 		@FindBy(css = "button#apply_filter")
 		private WebElement Apply_filter;
 		
-		
-		
-		
-		
-		
-		
-		
+
 		public WebDriver getDriver() {
 			return driver;
 		}
@@ -146,15 +140,5 @@ public class VisibilityPage {
 		public WebElement getLocationoption1() {
 			return locationoption1;
 		}
-
-	
-	
-
-
-	
-	
-	
-	
-	
 
 }

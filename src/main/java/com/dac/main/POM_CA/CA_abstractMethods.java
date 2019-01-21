@@ -107,13 +107,20 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	 */
 	public abstract List<Map<String, String>> getOverviewReport();
 
+	/**
+	 * @param filename
+	 * @param export
+	 * Converts passed file to excel format and renames the file
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	public void convertExports(String filename, String export) throws FileNotFoundException, IOException {
 		String report_export = new formatConvert(Exportpath + filename).convertFile("xlsx");
 		FileHandler.renameTo(new File(Exportpath + report_export), Exportpath + export);
 	}
 
 	/**
-	 * @return History graph value read
+	 * @return Reads the graph and return tooltip data as a list
 	 */
 	public List<Map<String, String>> verifyHistoryGraph() {
 		//display tool tip
@@ -158,6 +165,9 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 
 	}
 
+	/**Read sites table and return values as list
+	 * @return
+	 */
 	public List<Map<String, String>> verifySitetable() {
 		waitForElement(siteTable, 10);
 		scrollByElement(siteTable);
@@ -186,6 +196,11 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 
 	}
 
+	/**
+	 * @param exportData
+	 * @param ovrwRprtData
+	 * Compare overview report and export
+	 */
 	public void compareExprttoOvervw(List<Map<String, String>> exportData, List<Map<String, String>> ovrwRprtData) {
 
 		for (Map<String, String> m1 : ovrwRprtData) {
@@ -198,6 +213,11 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 		}
 	}
 
+	/**
+	 * @param tooltipdata
+	 * @param ovrwRprtData
+	 * Comparing overview report and graph
+	 */
 	public void compareReportnGraph(List<Map<String, String>> tooltipdata, List<Map<String, String>> ovrwRprtData) {
 
 		for (Map<String, String> m1 : ovrwRprtData) {

@@ -14,7 +14,7 @@ import com.dac.main.POM_CF.CreateNewCampaignPage;
 import com.relevantcodes.extentreports.LogStatus;
 
 import resources.CurrentState;
-import resources.ExcelTestDataHandler;
+import resources.ExcelHandler;
 import resources.IAutoconst;
 import resources.Utilities;
 
@@ -43,7 +43,7 @@ public class Verify_CreateMLCCampaign extends BaseTest_CF{
 		CurrentState.getLogger().log(Status.INFO, "Selecting campaign Type as MLC");
 		
 		newCampaign.selectCampLang(1);
-		String campLang = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "MLC").getCellValue(3, englishLangColumn);
+		String campLang = new ExcelHandler(IAutoconst.RS_XL_PATH, "MLC").getCellValue(3, englishLangColumn);
 		CurrentState.getLogger().log(Status.INFO, "Selecting campaign Language as "+campLang);
 		
 		newCampaign.verifyExistCampToolTipText("MLC", 5, englishLangColumn);
@@ -53,7 +53,7 @@ public class Verify_CreateMLCCampaign extends BaseTest_CF{
 		campName = newCampaign.setCampaignName("MLC", 6, englishLangColumn);
 		
 		newCampaign.selectMLCs("BN- Business");
-		newCampaign.selectMLCs("DF - Germany");
+		newCampaign.selectMLCs("DF - Italy");
 		newCampaign.clickAddBTN();
 		
 		newCampaign.verifyAddToolTipText("MLC", 28, englishLangColumn);
@@ -74,7 +74,7 @@ public class Verify_CreateMLCCampaign extends BaseTest_CF{
 		
 		newCampaign.setSenderName("MLC", 9, englishLangColumn);
 	
-		String logoName = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "MLC").getCellValue(11, englishLangColumn);
+		String logoName = new ExcelHandler(IAutoconst.RS_XL_PATH, "MLC").getCellValue(11, englishLangColumn);
 
 		newCampaign.uploadLogo(logoName);
 		CurrentState.getLogger().log(Status.INFO, "Adding the Logo of the Campaign");
@@ -111,6 +111,7 @@ public class Verify_CreateMLCCampaign extends BaseTest_CF{
 				
 		Thread.sleep(3000);
 		newCampaign.uploadCampEmailTemplate("MLC", 13, englishLangColumn);
+		
 		//newCampaign.uploadEmailTemplate(fileName);
 				
 		//newCampaign.uploadCampEmailTemplate("Location", 13, englishLangColumn);
