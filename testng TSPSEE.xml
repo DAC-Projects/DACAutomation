@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="tests">
+ 
+<listeners>
+<!-- <listener class-name="resources.IntegrationTestListener"></listener> -->
+<listener class-name="resources.ExtentTestNGITestListener"></listener>
+</listeners>
+
+
+
+ <test name="TransparenSEE" parallel="false" group-by-instances="true">
+   <parameter name="Filter" value= "US,Alaska,Anchorage,All Locations"/>
+  <parameter name="browser" value="chrome"/>
+    <classes>
+
+		<class name= "com.dac.testcases.TPSEE.TPSEE_Visibility_Test" /> 
+	    
+    </classes>
+  </test>
+  
+</suite>
