@@ -1,20 +1,15 @@
 package com.dac.testcases.CF;
 
-import java.io.File;
-
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
+import com.aventstack.extentreports.Status;
+import com.dac.main.BasePage;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_CF.BaseTest_CF;
 import com.dac.main.POM_CF.CampaignsPage;
 import com.dac.main.POM_CF.CreateNewCampaignPage;
-import com.relevantcodes.extentreports.LogStatus;
-
-import resources.BaseTest;
-import resources.ExcelTestDataHandler;
+import resources.CurrentState;
+import resources.ExcelHandler;
 import resources.IAutoconst;
-import resources.Utilities;
 
 public class VerifyCreate_DraftBrandCamp extends BaseTest_CF{
 		
@@ -23,39 +18,40 @@ public class VerifyCreate_DraftBrandCamp extends BaseTest_CF{
 	
 		int englishLangColumn = 9;
 		
-		Navigationpage np=new Navigationpage(driver);
+		Navigationpage np=new Navigationpage(CurrentState.getDriver());
+		np.select_DB_Lang_Link("en", "US");
 		np.clickCampaigns();
 		
-		CampaignsPage cp=new CampaignsPage(driver);
+		CampaignsPage cp=new CampaignsPage(CurrentState.getDriver());
 		cp.click_CreateCampaignBTN();
 				
-		CreateNewCampaignPage newCampaign=new CreateNewCampaignPage(driver);
+		CreateNewCampaignPage newCampaign=new CreateNewCampaignPage(CurrentState.getDriver());
 		
 		newCampaign.selectCampType(2);
-		logger.log(LogStatus.INFO, "Selecting campaign Type as Brand");
+		CurrentState.getLogger().log(Status.INFO, "Selecting campaign Type as Brand");
 		
 		newCampaign.selectCampLang(1);
-		String campLang = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(3, englishLangColumn);
-		logger.log(LogStatus.INFO, "Selecting campaign Language as "+campLang);
+		String campLang = new ExcelHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(3, englishLangColumn);
+		CurrentState.getLogger().log(Status.INFO, "Selecting campaign Language as "+campLang);
 		
 		newCampaign.verifyExistCampToolTipText("Brand", 5, englishLangColumn);
-		Utilities.addScreenshot(driver, imgnames.get(0).toString());
-		logger.log(LogStatus.INFO, "verifying the tool tip lang and text of it");
+		addEvidence(CurrentState.getDriver(), "Verifying the selected campaign type and existing campaign tool tip", "yes");
+		CurrentState.getLogger().log(Status.INFO, "verifying the tool tip lang and text of it");
 		
 		campName = newCampaign.setCampaignName("Brand",6, englishLangColumn);
 		
 		newCampaign.setCampaignBrandName(englishLangColumn);
 		
 		newCampaign.setCampDescr("Brand", 8, englishLangColumn);
-		Utilities.addScreenshot(driver, imgnames.get(1).toString());
-		logger.log(LogStatus.INFO, "Entered the Campaign Name, Brand Name and Description");
+		addEvidence(CurrentState.getDriver(), "Verifying that user is able to enter the details into Campaign name, Brand name and description", "yes");
+		CurrentState.getLogger().log(Status.INFO, "Entered the Campaign Name, Brand Name and Description");
 		
 		newCampaign.setSenderName("Brand",9,englishLangColumn);
 	
-		String logoName = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(11, englishLangColumn);
+		String logoName = new ExcelHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(11, englishLangColumn);
 
 		newCampaign.uploadLogo(logoName);
-		logger.log(LogStatus.INFO, "Adding the Logo of the Campaign");
+		CurrentState.getLogger().log(Status.INFO, "Adding the Logo of the Campaign");
 		
 		//Below Thread.sleep method for wait to finish the uploading of Logo through AutoIt. 
 		//Other waiting condition can't give because selenium not able to handle window based apps
@@ -63,13 +59,34 @@ public class VerifyCreate_DraftBrandCamp extends BaseTest_CF{
 		newCampaign.verifyLogoUploaded();
 		newCampaign.verifyUploadLogoToolTipText("Brand", 10, englishLangColumn);
 		
-		Utilities.addScreenshot(driver, imgnames.get(2).toString());
+		addEvidence(CurrentState.getDriver(), "Verifying whether logo is uploaded into the creating campaign", "yes");
 		
-		//newCampaign.downloadCampEmailTemplate();
+		newCampaign.downloadCampEmailTemplate(CurrentState.getBrowser());
 		
-		newCampaign.uploadCampEmailTemplate("Brand", 13, englishLangColumn);
-		logger.log(LogStatus.INFO, "Uploading Email Template");
-		Utilities.addScreenshot(driver, imgnames.get(3).toString());
+		Thread.sleep(4000);
+		
+		System.out.println("---------file downloaded-------");
+		String fileName = BasePage.getFileNames_Dir("./downloads");
+		
+		new ExcelHandler("./downloads/"+fileName, "Email Template").getAllCellsData();
+		
+		String[] cellValues = {"akram.1wasi@gmail.com", "wasim","akram", "wakram@dacgroup.com", "B", "Wasim"};
+		
+		Thread.sleep(3000);
+		
+		new ExcelHandler("./downloads/"+fileName, "Email Template").deleteEmptyRows();
+		
+		Thread.sleep(3000);
+		new ExcelHandler("./downloads/"+fileName, "Email Template").createRowInExcel(2, 3, cellValues);
+		
+		Thread.sleep(3000);
+		
+		new ExcelHandler("./downloads/"+fileName, "Email Template").getAllCellsData();
+		
+		Thread.sleep(3000);
+		newCampaign.uploadEmailTemplate(fileName);
+		CurrentState.getLogger().log(Status.INFO, "Uploading Email Template");
+		addEvidence(CurrentState.getDriver(), "Verifying the edited the downloaded email template and uploaded the template", "yes");
 		
 		newCampaign.setCampSubject("Brand", 14, englishLangColumn);
 		
@@ -78,16 +95,16 @@ public class VerifyCreate_DraftBrandCamp extends BaseTest_CF{
 		newCampaign.verifyPersonalizationToolTipText("Brand", 16, englishLangColumn);
 		
 		newCampaign.setCampBodyCopy("Brand", 17, englishLangColumn);
-		Utilities.addScreenshot(driver, imgnames.get(4).toString());
-		logger.log(LogStatus.INFO, "Entered Subject, Banner Info and Body Copy data and verifying the Tokens");
+		addEvidence(CurrentState.getDriver(), "Verifying whether user is able to enter the details about the campaign in body copy etc.", "yes");
+		CurrentState.getLogger().log(Status.INFO, "Entered Subject, Banner Info and Body Copy data and verifying the Tokens");
 		
 		newCampaign.setCampSignature("Brand",18 , englishLangColumn);
 		
 		newCampaign.verifyContactInfoToolTipText(englishLangColumn);
 		
 		newCampaign.setContactInfo(9);
-		Utilities.addScreenshot(driver, imgnames.get(5).toString());
-		logger.log(LogStatus.INFO, "Verifying the Contact info section tool tip and could able to data into it");
+		addEvidence(CurrentState.getDriver(), "Verifying that whether Contact info section is displaying", "yes");
+		CurrentState.getLogger().log(Status.INFO, "Verifying the Contact info section tool tip and could able to data into it");
 		
 		newCampaign.setScheduledStartDate("en", "US");
 		
@@ -96,20 +113,20 @@ public class VerifyCreate_DraftBrandCamp extends BaseTest_CF{
 		newCampaign.clickEndDatePicker();
 
 		newCampaign.verifyCampEndDateToolTipText("Brand", 29, englishLangColumn);
-		Utilities.addScreenshot(driver, imgnames.get(6).toString());
-		logger.log(LogStatus.INFO, "Verifying the Scheduling campaign Date controls");
+		addEvidence(CurrentState.getDriver(), "Verifying that user is able to add the scheduled start date and end date", "yes");
+		CurrentState.getLogger().log(Status.INFO, "Verifying the Scheduling campaign Date controls");
 		
 		newCampaign.clickSaveDraft();
-		Utilities.addScreenshot(driver, imgnames.get(7).toString());
-		logger.log(LogStatus.INFO, "Verifying the Brand Draft Campaign creation Pop up");
+		addEvidence(CurrentState.getDriver(), "Verifying that campaign creation succesful message is displaying", "yes");
+		CurrentState.getLogger().log(Status.INFO, "Verifying the Brand Draft Campaign creation Pop up");
 		
 		newCampaign.clickViewAllCampaignBTN();	
 		
 		cp.click_DraftTab();
 		
 		cp.verifyCampName("Draft", campName);
-		Utilities.addScreenshot(driver, imgnames.get(8).toString());
-		logger.log(LogStatus.INFO, "Verifying the Created Campaign whether displayed in Sceduled campaign Section");
+		addEvidence(CurrentState.getDriver(), "Verifying that scheduled campaign should display in scheduled section", "yes");
+		CurrentState.getLogger().log(Status.INFO, "Verifying the Created Campaign whether displayed in Sceduled campaign Section");
 		
 	}
 }

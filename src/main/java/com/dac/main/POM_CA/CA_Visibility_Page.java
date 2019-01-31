@@ -19,8 +19,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import resources.BaseTest;
-import resources.ExcelTestDataHandler;
+import resources.CurrentState;
+import resources.ExcelHandler;
 
 public class CA_Visibility_Page extends CA_abstractMethods {
 
@@ -60,7 +60,7 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 		waitForElement(overviewReport, 10);
 		waitForElement(exportBtn, 10);
 		scrollByElement(exportBtn);
-		download(BaseTest.browser, exportBtn, 20);
+		download(CurrentState.getBrowser(), exportBtn, 20);
 		convertExports(getLastModifiedFile(Exportpath), VisibilityExport);
 	}
 
@@ -97,7 +97,7 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 	public List<Map<String, String>> getExportData() throws Exception {
 		exportvisibilityReport();
 
-		String[][] table = new ExcelTestDataHandler(Exportpath + VisibilityExport, "Sheet0").getExcelTable();
+		String[][] table = new ExcelHandler(Exportpath + VisibilityExport, "Sheet0").getExcelTable();
 		List<Map<String, String>> exportData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
 		for (int col = 1; col < colSize; col++) {

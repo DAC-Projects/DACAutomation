@@ -80,7 +80,7 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	 */
 	public void applyFilter(String Country, String State, String City, String Location) {
 
-		waitForElement(filter_Panel, 10);
+		waitForElement(filter_Panel, 25);
 		scrollByElement(filter_Panel);
 		clickelement(FilterCountry);
 		WebElement country = driver.findElement(By.xpath("//div[@value='" + Country + "']"));

@@ -12,7 +12,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
+/**
+ * Using this class methods it used to navigate to specific page's of navigation panel in TSEE	*/
 public class Navigationpage extends BasePage{
 
 	Actions action;
@@ -30,41 +31,42 @@ public class Navigationpage extends BasePage{
 		
 	}
 
-	@FindBy(id = "//a[@href='/Dashboard/AllLocations/']")
+	// -------------------------------- TSEE ------------------------------
+	@FindBy(id = "//a[@href='/Dashboard/AllLocations/']/span")
 	private WebElement AllLocations;
 
-	@FindBy(id = "//a[@href='/Dashboard/AllGroups/']")
+	@FindBy(id = "//a[@href='/Dashboard/AllGroups/']/span")
 	private WebElement AllGroups;
 
-	@FindBy(xpath = "//a[@href='/Dashboard/VaReport/']")
+	@FindBy(xpath = "//a[@href='/Dashboard/VaReport/']/span")
 	private WebElement Visibility;
 
-	@FindBy(xpath = "//a[@href='/Dashboard/AccuracyReport/']")
+	@FindBy(xpath = "//a[@href='/Dashboard/AccuracyReport/']/span")
 	private WebElement Accuracy;
 
-	@FindBy(xpath = "//a[@href='/Dashboard/AnalysisReport/']")
+	@FindBy(xpath = "//a[@href='/Dashboard/AnalysisReport/']/span")
 	private WebElement Analysis;
 	
-	@FindBy(xpath = "//a[@href='/Dashboard/GoogleRanking/']")
+	@FindBy(xpath = "//a[@href='/Dashboard/GoogleRanking/']/span")
 	private WebElement GoogleRanking;
 	
-	@FindBy(xpath = "//a[@href='/Dashboard/ReviewStream/']")
+	@FindBy(xpath = "//a[@href='/Dashboard/ReviewStream']/span")
 	private WebElement ReviewStream;
 	
-	@FindBy(xpath = "//a[@href='/Dashboard/Review/ReviewReport/']")
+	//------------------------- SA and RRM -------------------------------------
+	
+	@FindBy(xpath = "//a[@href='/Dashboard/Review/ReviewReport/']/span")
 	private WebElement ReviewReport;
 	
-	@FindBy(xpath = "//a[@href=//a[@href='/ReportCard/Index/']]")
+	@FindBy(xpath = "//a[@href=//a[@href='/ReportCard/Index/']]/span")
 	private WebElement ReportCard;
 	
-	@FindBy(xpath = "//a[@href='/CategorizedSentiment/Index/']")
+	@FindBy(xpath = "//a[@href='/CategorizedSentiment/Index/']/span")
 	private WebElement CategorizedSentiment;
 	
-	@FindBy(xpath = "//a[@href='/Review/FrequentKeywords/']")
+	@FindBy(xpath = "//a[@href='/Review/FrequentKeywords/']/span")
 	private WebElement FrequentKeywords;
 	
-	@FindBy(xpath="//a[@href='/CompetitiveAnalysis/Review']")
-	private WebElement CA_Reviewpage;
 	//----------DashBoard Language--------------------
 	
 	@FindBy(id="lang-icon")
@@ -100,23 +102,23 @@ public class Navigationpage extends BasePage{
 	//----------Review Solicitation or Customer FeedBack ---------
 	
 	@FindBy(xpath="//li[@id='campaign']//span")
-	private WebElement CampaignsLink;
+	private WebElement CF_CampaignsLink;
 	
 	@FindBy(xpath="(//td[contains(@ng-if,'activeCampaign.MLC')]/a)[1]")
-	private WebElement processedCampDetailsLink;
+	private WebElement CF_processedCampDetailsLink;
 	
 	@FindBy(xpath="//a[contains(@class,'btnEdit')]/span")
-	private WebElement scheduledCampEditBTN;
+	private WebElement CF_scheduledCampEditBTN;
 	
 	//campaign table one of the column for wait the loading of page till this table visible
 	@FindBy(xpath="(//td[contains(@ng-if,'activeCampaign.MLC')]/a)[4]")
-	private WebElement campaignTable;
+	private WebElement CF_campaignTable;
 
 	@FindBy(xpath="//li[@id='review']//span")
-	private WebElement ResponsesLink; 
+	private WebElement CF_ResponsesLink; 
 	
 	@FindBy(xpath="//li[@id='report']//span")
-	private WebElement ReportsLink;
+	private WebElement CF_ReportsLink;
 	
 	//---------------------- CA-------------------------------
 	
@@ -125,121 +127,141 @@ public class Navigationpage extends BasePage{
 	
 	@FindBy(xpath="//a[@href='/CompetitiveAnalysis/Visibility']")
 	private WebElement CA_Visibility;
+  
+    @FindBy(xpath="//a[@href='/CompetitiveAnalysis/Analysis']")
+    private WebElement CA_ContentAnalysis;
+    
+	@FindBy(xpath="//a[@href='/CompetitiveAnalysis/Review']/span")
+	private WebElement CA_Reviewpage;
 	
+	/** To click on CA_Visibility link in LHS to navigate to CA_Visibility page   */
 	public void  navigateCA_Visibility() {
-		wait.until(ExpectedConditions.visibilityOf(CA_Visibility));
-		scrollByElement(CA_Visibility);
-		try {
-			CA_Visibility.click();
-		}
-		catch(Exception e) {
-			action.moveToElement(CA_Visibility).click().perform();
-		}
-		finally {
-			waitUntilLoad(driver);
-			
-		}
+	  clickelement(CA_Visibility);   
+      System.out.println("Waiting for page to load**********");
+      waitUntilLoad(driver);
 	}
 
+	/** To click on CA_Accuracy link in LHS to navigate to CA_Accuracy page   */
 	public void navigateCA_Accuracy() {
+	  clickelement(CA_Accuracy);   
+      System.out.println("Waiting for page to load**********");
+      waitUntilLoad(driver);
+  	}
 		
-		wait.until(ExpectedConditions.visibilityOf(CA_Accuracy));
-		scrollByElement(CA_Accuracy);
-		try {
-			CA_Accuracy.click();
-		}
-		catch(Exception e) {
-			action.moveToElement(CA_Accuracy).click().perform();
-		}
-		finally {
-			System.out.println("Waiting for page to load**********");
-			waitUntilLoad(driver);
-			
-		}
+	/** To click on CA_Review link in LHS to navigate to CA_Review page   */
+	public void navigateCA_Reviewpage() {
+	  clickelement(CA_Reviewpage);   
+      System.out.println("Waiting for page to load**********");
+      waitUntilLoad(driver);
 	}
 		
-		public void navigateCA_Reviewpage() {
-			
-			wait.until(ExpectedConditions.visibilityOf(CA_Reviewpage));
-			scrollByElement(CA_Reviewpage);
-			try {
-				CA_Reviewpage.click();
-			}
-			catch(Exception e) {
-				action.moveToElement(CA_Reviewpage).click().perform();
-			}
-			finally {
-				System.out.println("Waiting for page to load**********");
-				waitUntilLoad(driver);
-				
-			}
-		
+	/** To click on CA_ContentAnalysis link in LHS to navigate to CA_ContentAnalysis page   */
+    public void navigateCA_ContentAnalysispage() {  
+       System.out.println("Waiting for page to load**********");
+       waitUntilLoad(driver);  
+    }
+	
+    /** To click on TSEE_GoogleRanking link in LHS to navigate to TSEE_GoogleRanking page   */
+	public void navigateToTSEE_GoogleRanking() {
+		clickelement(GoogleRanking);   
+	      System.out.println("Waiting for page to load**********");
+	      waitUntilLoad(driver);
+	}
+
+	/** To click on TSEE_ReviewStream link in LHS to navigate to TSEE_ReviewStream page   */
+	public void navigateToTSEE_ReviewStream() {
+		clickelement(ReviewStream);   
+	      System.out.println("Waiting for page to load**********");
+	      waitUntilLoad(driver);
+	}
+
+	/** To click on SA_ReviewReport link in LHS to navigate to SA_ReviewReport page   */
+	public void navigateToSA_ReviewReport() {
+		clickelement(ReviewReport);   
+	      System.out.println("Waiting for page to load**********");
+	      waitUntilLoad(driver);
+	}
+
+	/** To click on SA_ReportCard link in LHS to navigate to SA_ReportCard page   */
+	public void navigateToSA_ReportCard() {
+		clickelement(ReportCard);   
+	      System.out.println("Waiting for page to load**********");
+	      waitUntilLoad(driver);
+	}
+
+	/** To click on SA_CategorizedSentiment link in LHS to navigate to SA_CategorizedSentiment page   */
+	public void navigateToSA_CategorizedSentiment() {
+		clickelement(CategorizedSentiment);   
+	      System.out.println("Waiting for page to load**********");
+	      waitUntilLoad(driver);
+	}
+
+	/** To click on SA_FrequentKeywords link in LHS to navigate to SA_FrequentKeywords page   */
+	public void navigateToSA_FrequentKeywords() {
+		clickelement(FrequentKeywords);   
+	      System.out.println("Waiting for page to load**********");
+	      waitUntilLoad(driver);
+	}
+
+	/** To click on TSEE_Accuracy link in LHS to navigate to TSEE_Accuracy page   */
+	public void navigateToTSEE_Accuracy() {
+		clickelement(Accuracy);   
+	      System.out.println("Waiting for page to load**********");
+	      waitUntilLoad(driver);
+	}
+
+	/** To click on TSEE_AllGroups link in LHS to navigate to TSEE_AllGroups page   */
+	public void navigateToTSEE_AllGroups() {
+		clickelement(AllGroups);   
+	      System.out.println("Waiting for page to load**********");
+	      waitUntilLoad(driver);
+	}
+
+	/** To click on TSEE_AllLocations link in LHS to navigate to TSEE_AllLocations page   */
+	public void navigateToTSEE_AllLocations() {
+		clickelement(AllLocations);   
+	      System.out.println("Waiting for page to load**********");
+	      waitUntilLoad(driver);
+	}
+
+	/** To click on TSEE_ContentAnalysis link in LHS to navigate to TSEE_ContentAnalysis page   */
+	public void navigateToTSEE_ContentAnalysis() {
+		clickelement(Analysis);   
+	      System.out.println("Waiting for page to load**********");
+	      waitUntilLoad(driver);
+	}
+
+	/** To click on TSEE_Visibility link in LHS to navigate to TSEE_Visibility page   */
+	public void navigateToTSEE_Visibility() {
+		clickelement(Visibility);   
+	    System.out.println("Waiting for page to load**********");
+	    waitUntilLoad(driver);
 	}
 	
-	public WebElement getGoogleRanking() {
-		return GoogleRanking;
-	}
-
-	public WebElement getReviewStream() {
-		return ReviewStream;
-	}
-
-	public WebElement getReviewReport() {
-		return ReviewReport;
-	}
-
-	public WebElement getReportCard() {
-		return ReportCard;
-	}
-
-	public WebElement getCategorizedSentiment() {
-		return CategorizedSentiment;
-	}
-
-	public WebElement getFrequentKeywords() {
-		return FrequentKeywords;
-	}
-
-	public WebElement getAccuracy() {
-		return Accuracy;
-	}
-
-	public WebElement getAllGroups() {
-		return AllGroups;
-	}
-
-	public WebElement getAllLocations() {
-		return AllLocations;
-	}
-
-	public WebElement getAnalysis() {
-		return Analysis;
-	}
-
-	public WebElement getVisibility() {
-		return Visibility;
-	}
-	
-	/** To click on Campaigns link in LHS to navigate to Campaigns page   */
+	/** To click on Customer Feedback's Campaigns link in LHS to navigate to Customer Feedback's Campaigns page   */
 	public void clickCampaigns() {    
-		wait.until(ExpectedConditions.visibilityOf(CampaignsLink));
-		scrollByElement(CampaignsLink);
-		clickelement(CampaignsLink);
-		wait.until(ExpectedConditions.visibilityOf(processedCampDetailsLink));
-		wait.until(ExpectedConditions.visibilityOf(scheduledCampEditBTN));
+		wait.until(ExpectedConditions.visibilityOf(CF_CampaignsLink));
+		scrollByElement(CF_CampaignsLink);
+		clickelement(CF_CampaignsLink);
+		waitUntilLoad(driver);
+		wait.until(ExpectedConditions.visibilityOf(CF_processedCampDetailsLink));
+		wait.until(ExpectedConditions.visibilityOf(CF_scheduledCampEditBTN));
 	}
 	
+	/** To click on Customer Feedback's Responses link in LHS to navigate to Customer Feedback's Responses page   */
 	public void clickResponses() {
-		wait.until(ExpectedConditions.visibilityOf(ResponsesLink));
-		scrollByElement(ResponsesLink);
-		clickelement(ResponsesLink);
+		wait.until(ExpectedConditions.visibilityOf(CF_ResponsesLink));
+		scrollByElement(CF_ResponsesLink);
+		clickelement(CF_ResponsesLink);
+		waitUntilLoad(driver);
 	}
 	
+	/** To click on Customer Feedback's Report's link in LHS to navigate to Customer Feedback's Report's page   */
 	public void clickReports() {
-		wait.until(ExpectedConditions.visibilityOf(ReportsLink));
-		scrollByElement(ReportsLink);
-		clickelement(ReportsLink);
-
+		wait.until(ExpectedConditions.visibilityOf(CF_ReportsLink));
+		scrollByElement(CF_ReportsLink);
+		clickelement(CF_ReportsLink);
+		waitUntilLoad(driver);
 	}
 	
 	private void DB_LangList() {
@@ -247,6 +269,19 @@ public class Navigationpage extends BasePage{
 		clickelement(DBLangPopUp);
 	}
      
+	/**
+	   * For selecting/changing dashboard language in TSEE to specific language based on the country and language code
+	   * 
+	   * @param langCode : Language code, date format to be in specific format for
+	   * 				   English : en , 	 german  : de , 	spanish : es
+	   * 				   french  : fr , 	 italian : it ,		swedish : sv
+	   * 
+	   * @param countryCode : Country code could be case sensitive, date format to be in specific format for
+	   * 				      unitedStates    : US ,   german          : DE , 	spanish(Spain) : ES
+	   * 				      spanish(Mexico) : MX ,   french(France)  : FR ,   french(Canada) : CA
+	   * 				      italian         : IT ,   swedish : SE
+	   *  				
+	   * */
 	public void select_DB_Lang_Link(String langCode, String contryCode) {
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		String langConCode = langCode+"_"+contryCode;

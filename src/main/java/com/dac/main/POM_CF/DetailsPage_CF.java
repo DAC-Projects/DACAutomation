@@ -19,7 +19,7 @@ import org.testng.Assert;
 import com.dac.main.BasePage;
 
 
-import resources.ExcelTestDataHandler;
+import resources.ExcelHandler;
 import resources.IAutoconst;
 
 public class DetailsPage_CF extends BasePage{
@@ -372,7 +372,7 @@ public class DetailsPage_CF extends BasePage{
 		else if(!campaignBrandNameTB.isEnabled()){
 			Assert.assertTrue(true, "Campaign Name field is NOT enabled");
 		}
-		String campBrandName = new ExcelTestDataHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(7, column);
+		String campBrandName = new ExcelHandler(IAutoconst.RS_XL_PATH, "Brand").getCellValue(7, column);
 		String BrandName= campBrandName+" - "+getDate();
 		campaignBrandNameTB.sendKeys(BrandName);
 		return BrandName;

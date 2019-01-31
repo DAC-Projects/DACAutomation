@@ -75,7 +75,7 @@
 	<dependency>
 	    <groupId>org.seleniumhq.selenium</groupId>
 	    <artifactId>selenium-java</artifactId>
-	    <version>LATEST</version>
+	    <version>3.14.0</version>
 	</dependency>
   <!-- https://mvnrepository.com/artifact/org.testng/testng -->
 	<dependency>
@@ -163,8 +163,66 @@
     <artifactId>mail</artifactId>
     <version>1.4.7</version>
 </dependency>	
+
+	<dependency>
+    <groupId>io.github.bonigarcia</groupId>
+    <artifactId>webdrivermanager</artifactId>
+    <version>3.0.0</version>
+    <scope>test</scope>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-ie-driver -->
+<dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-ie-driver</artifactId>
+    <version>2.53.1</version>
+</dependency>
+
+
+
+<!-- dependencies for test evidence -->
+
+  <dependency> 
+	    <groupId>xml-apis</groupId>
+	    <artifactId>xml-apis</artifactId>
+	    <version>1.4.01</version>
+	    <scope>test</scope>
+	</dependency>
+	<dependency>
+    <groupId>org.codehaus.groovy</groupId>
+    <artifactId>groovy-all</artifactId>
+    <version>1.8.6</version>
+    <scope>test</scope>
+  </dependency>
+  <dependency>
+  		<groupId>commons-codec</groupId>
+  		<artifactId>commons-codec</artifactId>
+  		<version>1.9</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>net.sf.jasperreports</groupId>
+  		<artifactId>jasperreports</artifactId>
+  		<version>6.2.0</version>
+  	</dependency>
+  
+  	<dependency>
+    	<groupId>commons-beanutils</groupId>
+    	<artifactId>commons-beanutils</artifactId>
+    	<version>1.9.3</version>
+	</dependency>
+
+
+	<!-- https://mvnrepository.com/artifact/commons-collections/commons-collections -->
+	<dependency>
+    	<groupId>commons-collections</groupId>
+    	<artifactId>commons-collections</artifactId>
+    	<version>3.2.2</version>
+	</dependency>
+	
 	
   </dependencies>
+  
+  
   
 </project>
 
