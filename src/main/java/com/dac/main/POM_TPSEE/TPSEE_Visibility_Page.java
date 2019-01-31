@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -51,15 +49,20 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	String compName = ".//div[starts-with(@class, 'competitorName')]";
 	String compScore = ".//div[starts-with(@class, 'competitorScore')]";
 
-	@FindBy(css = "table#compIntVisibilitySitesTable")
-	private WebElement siteTable;
+/*	@FindBy(css = "table#compIntVisibilitySitesTable")
+	private WebElement siteTable;*/
 
 	List<WebElement> columns;
 	List<WebElement> rows;
-
+	/*
+	 * Export visibility overview report
+	 * @throws InterruptedException
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	public void exportvisibilityReport() throws InterruptedException, FileNotFoundException, IOException {
-		waitForElement(overviewReport, 10);
-		waitForElement(exportBtn, 10);
+		//waitForElement(overviewReport, 10);
+		waitForElement(exportBtn, 30);
 		scrollByElement(exportBtn);
 		download(CurrentState.getBrowser(), exportBtn, 20);
 		convertExports(getLastModifiedFile(Exportpath), VisibilityExport);
@@ -68,7 +71,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	@Override
 	public List<Map<String, String>> getOverviewReport() {
 		// TODO Auto-generated method stub
-		waitForElement(overviewReport, 10);
+		//waitForElement(overviewReport, 10);
 		scrollByElement(overviewReport);
 		Map<String, String> kMap;
 		List<Map<String, String>> ovrwRprtData = new ArrayList<Map<String, String>>();
@@ -86,14 +89,14 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		return ovrwRprtData;
 	}
 
-	public void verify_pageloadCompletely(int timeout) {
-		if (waitForElement(overviewReport, timeout) && waitForElement(siteTable, timeout)
+	/*public void verify_pageloadCompletely(int timeout) {
+		if (waitForElement(overviewReport, timeout) && waitForElement(, timeout)
 				&& waitForElement(hstryGrph, timeout)
 				&& waitForElement(hstryGrph, timeout) & waitForElement(filter_Panel, timeout))
 			assertTrue(true, "All sections filter, overview report, site table and graph is loaded");
 		else
 			assertTrue(false, "Page not loaded completely");
-	}
+	}*/
 
 	public List<Map<String, String>> getExportData() throws Exception {
 		exportvisibilityReport();

@@ -24,15 +24,7 @@
     </classes>
   </test>
   
- <!-- <test name="TransparenSEE" parallel="false" group-by-instances="true">
-   <parameter name="Filter" value= "US,Alaska,Anchorage,All Locations"/>
-  <parameter name="browser" value="chrome"/>
-    <classes>
-
-		<class name= "com.dac.testcases.TPSEE.TPSEE_Visibility_Test" /> 
-	    
-    </classes>
-  </test> -->
+ 
  
   
 </suite>

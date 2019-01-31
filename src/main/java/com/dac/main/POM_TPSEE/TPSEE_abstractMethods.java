@@ -30,7 +30,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
-	List<WebElement> rows;
+	String tooltipvalue;
 
 	public TPSEE_abstractMethods(WebDriver driver) {
 		super(driver);
@@ -64,11 +64,11 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	@FindBy(css = "rect.highcharts-plot-background")
 	public WebElement hstryGrph;
 
-	@FindBy(css = "div.highcharts-label.highcharts-tooltip.highcharts-color-0>span>table")
-	private WebElement grphTable;
+	@FindBy(xpath = "/html/body/div[5]/div[2]/div[2]/div/div[6]/div[1]/div[2]/div/div[2]/div/div/span")
+	private WebElement grphtooltip;
 
-	// site table
-	@FindBy(css = "table#compIntVisibilitySitesTable")
+	// site tableesTable
+	@FindBy(xpath = "//*[@id=highcharts-4nqnvju-0]/svg/g[10]/g[2]/path[1]")
 	public WebElement siteTable;
 
 	/**
@@ -115,16 +115,19 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	/**
 	 * @return History graph value read
 	 */
-	public List<Map<String, String>> verifyHistoryGraph() {
+	public String verifyHistoryGraph() {
 		//display tool tip
 		waitForElement(hstryGrph, 10);
 		scrollByElement(hstryGrph);
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth() / 2) - 2, 0).click().perform();
 		//read the tooltip variables
-		rows = grphTable.findElements(By.tagName("tr"));
-		String[][] table = readTable(grphTable);
-
+		tooltipvalue = grphtooltip.getText();
+		
+		System.out.println("tooltipvalue is "+ tooltipvalue);
+		
+		//String[][] table = readTable(grphTable);
+/*
 		List<Map<String, String>> tooltipdata = new ArrayList<Map<String, String>>();
 		for (int i = 0; i < table.length / 4; i += 4) {
 			Map<String, String> kMap = new HashMap<String, String>();
@@ -139,7 +142,8 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		System.out.println(tooltipdata.get(0).get("Date"));
 		System.out.println(tooltipdata.get(0).get("Overall"));
 		System.out.println(tooltipdata.get(0).get("Total Locations"));
-		return tooltipdata;
+*/
+		return tooltipvalue;
 
 	}
 
