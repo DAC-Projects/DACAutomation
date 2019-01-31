@@ -64,7 +64,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		//waitForElement(overviewReport, 10);
 		waitForElement(exportBtn, 30);
 		scrollByElement(exportBtn);
-		download(CurrentState.getBrowser(), exportBtn, 20);
+		download(CurrentState.getBrowser(), exportBtn, 10);
 		convertExports(getLastModifiedFile(Exportpath), VisibilityExport);
 	}
 
@@ -118,7 +118,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		return exportData;
 
 	}
-//Compare Export file an graph values
+//Compare Export file and graph values
 	public void compareExportnTable(List<Map<String, String>> exportData, List<Map<String, String>> siteTableData) {
 	
 		for (Map<String, String> m1 : exportData) {
