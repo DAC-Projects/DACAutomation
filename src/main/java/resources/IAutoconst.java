@@ -1,5 +1,5 @@
 package resources;
-// auth centre login properties
+// Auth centre login properties
 public interface IAutoconst {
 	
 	String CHROME_KEY="webdriver.chrome.driver";
@@ -26,10 +26,5 @@ public interface IAutoconst {
 	String[] competitiveAnalysis = {baseUrl+"competitive-analysis-test-account-beta-1", "mobittah98@yahoo.ca"};
 	String[] deepfieldAccount = {baseUrl+"deepfield-software-incorporated-beta", "bmobit@dacgroup.com"};
 	String[] transparenSEE = {baseUrl+"international-account-beta-beta", "stebinvarghese@gmail.com"};
-
-
-	
-	
-	
 
 }

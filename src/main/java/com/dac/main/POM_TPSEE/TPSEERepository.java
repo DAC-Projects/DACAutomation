@@ -17,6 +17,7 @@ public interface TPSEERepository {
 	String ReviewExport = "ReviewExport.xlsx";
 	String CAExport = "CAExport.xlsx";
 	String Exportpath ="./downloads/";
+	String VisibilityExporttable = "VisibilityExporttable.xlsx";
 	
 	
 }

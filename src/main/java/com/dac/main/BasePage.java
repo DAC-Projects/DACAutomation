@@ -185,7 +185,7 @@ public class BasePage {
     	        }
     	      }
     	    } catch (NoSuchElementException e) {
-    	      Assert.fail("element " + element + " NOT found");
+    	      Assert.fail("element" + element + " NOT found");
     	    }
     
   }

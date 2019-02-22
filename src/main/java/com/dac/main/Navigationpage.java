@@ -41,7 +41,7 @@ public class Navigationpage extends BasePage{
 	@FindBy(xpath = "//a[@href='/Dashboard/VaReport/']/span")
 	private WebElement Visibility;
 
-	@FindBy(xpath = "//a[@href='/Dashboard/AccuracyReport/']/span")
+	@FindBy(xpath = "//*[@id=\'Accuracy_Index\']")
 	private WebElement Accuracy;
 
 	@FindBy(xpath = "//a[@href='/Dashboard/AnalysisReport/']/span")
@@ -138,10 +138,19 @@ public class Navigationpage extends BasePage{
   //---------------------- TransparenSEE-------------------------------
     @FindBy(id="VA")
 	private WebElement TPSEE_Visibility;
+
     
     public void  navigateTPSEE_Visibility() {
   	  
   	  clickelement(TPSEE_Visibility);   
+      System.out.println("Waiting for page to load**********");
+      waitUntilLoad(driver);
+  	}
+       
+
+    public void  navigateTPSEE_Accuracy() {
+  	  
+  	  clickelement(Accuracy);   
       System.out.println("Waiting for page to load**********");
       waitUntilLoad(driver);
   	}
