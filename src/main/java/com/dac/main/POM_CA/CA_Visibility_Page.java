@@ -37,25 +37,37 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 		PageFactory.initElements(driver, this);
 	}
 
+	// locators
+	
+	// export button
 	@FindBy(css = "button#btnExport>span")
 	private WebElement exportBtn;
-
+	
+	// overview report
 	@FindBy(css = "div#compIntOverviewContainer")
 	private WebElement overviewReport;
-
+	
+	// section of overview report
 	@FindBy(xpath = "//div[@id='compIntOverviewContainer']//div[starts-with(@class,'overviewSubContainer')]")
 	private List<WebElement> competitors;
 
 	String xpathCompetitors = "(//div[@id='compIntOverviewContainer']//div[starts-with(@class,'overviewSubContainer')])";
 	String compName = ".//div[starts-with(@class, 'competitorName')]";
 	String compScore = ".//div[starts-with(@class, 'competitorScore')]";
-
+	
+	// site table
 	@FindBy(css = "table#compIntVisibilitySitesTable")
 	private WebElement siteTable;
 
 	List<WebElement> columns;
 	List<WebElement> rows;
 
+	/**
+	 * Export visibility overview report
+	 * @throws InterruptedException
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	public void exportvisibilityReport() throws InterruptedException, FileNotFoundException, IOException {
 		waitForElement(overviewReport, 10);
 		waitForElement(exportBtn, 10);
@@ -64,6 +76,10 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 		convertExports(getLastModifiedFile(Exportpath), VisibilityExport);
 	}
 
+	/* (non-Javadoc)
+	 * Reads overview report and return values as list
+	 * @see com.dac.main.POM_CA.CA_abstractMethods#getOverviewReport()
+	 */
 	@Override
 	public List<Map<String, String>> getOverviewReport() {
 		// TODO Auto-generated method stub
@@ -85,6 +101,10 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 		return ovrwRprtData;
 	}
 
+	/**
+	 * @param timeout
+	 * Verifies all elements are present till timeout in seconds
+	 */
 	public void verify_pageloadCompletely(int timeout) {
 		if (waitForElement(overviewReport, timeout) && waitForElement(siteTable, timeout)
 				&& waitForElement(hstryGrph, timeout)
@@ -94,6 +114,12 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 			assertTrue(false, "Page not loaded completely");
 	}
 
+	
+	/**
+	 * Reads export data and return as a list
+	 * @return
+	 * @throws Exception
+	 */
 	public List<Map<String, String>> getExportData() throws Exception {
 		exportvisibilityReport();
 
@@ -107,7 +133,7 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 				kMap.put("compName", table[0][col]);
 				kMap.put(table[i][0], table[i][col]);
 			}
-			
+			exportData.add(kMap);//to be reviewed
 		}
 		
 
@@ -115,6 +141,11 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 
 	}
 
+	/**
+	 * Compare export and table
+	 * @param exportData
+	 * @param siteTableData
+	 */
 	public void compareExportnTable(List<Map<String, String>> exportData, List<Map<String, String>> siteTableData) {
 	
 		for (Map<String, String> m1 : exportData) {
