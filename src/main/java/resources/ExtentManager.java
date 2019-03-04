@@ -11,10 +11,11 @@ public class ExtentManager {
     
     /**
      * This method is used to create only 1 instance per execution of a TestNG.xml file
-     * to create an instance of extent report		*/
+     * to create an instance of extent report
+     * target/surefire-reports/extent.html		*/
     public static ExtentReports getInstance() {
     	if (extent == null)
-    		createInstance("target/surefire-reports/extent.html");
+    		createInstance("./extent.html");
     	
         return extent;
     }
