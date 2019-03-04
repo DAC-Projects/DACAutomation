@@ -42,9 +42,7 @@ public class CA_Visibility_Test extends BaseClass {
 		data = new CA_Visibility_Page(CurrentState.getDriver());
 		String[] filter = Filter.split(",");
 		data.applyFilter(filter[0], filter[1], filter[2], filter[3]);
-		data.verify_pageloadCompletely(10);
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-    CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));    
+		data.verify_pageloadCompletely(10); 
     addEvidence(CurrentState.getDriver(), "Apply Filter from Visibility page", "yes"); 
 	}
 
@@ -60,22 +58,18 @@ public class CA_Visibility_Test extends BaseClass {
 	}
 
 	@SuppressWarnings("unchecked")
-  @Test(dependsOnMethods = { "navigateToVisibilityPage" }, groups= {"smoke"})
+  @Test(dependsOnMethods = { "navigateToVisibilityPage" }, groups= {"smoke"}, description = "Test for overview report and tooltip")
 	public void verifyOverviewReportnTooltipVisibility() throws Exception {
 		data = new CA_Visibility_Page(CurrentState.getDriver());
-		data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-    CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));    
+		data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());  
     addEvidence(CurrentState.getDriver(), "Tooltip values verified from Overview visibility report", "yes");    
 	}
 
 	@SuppressWarnings("unchecked")
-  @Test(dependsOnMethods = { "navigateToVisibilityPage", "verifyOverviewReportnExportVisibility" }, groups= {"smoke"},description = "Test for verifying tooltips in Visibility page")
+  @Test(dependsOnMethods = { "navigateToVisibilityPage", "verifyOverviewReportnExportVisibility" }, groups= {"smoke"},description = "Test for comparing export and table")
 	public void verifySiteTablenExportVisibility() throws Exception {
 		data = new CA_Visibility_Page(CurrentState.getDriver());
-		data.compareExportnTable(export, data.verifySitetable());
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-    CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));    
+		data.compareExportnTable(export, data.verifySitetable());  
     addEvidence(CurrentState.getDriver(), "Site level scores in Visibility site table  and overview visibility export found matching", "yes");   
 	}
 
