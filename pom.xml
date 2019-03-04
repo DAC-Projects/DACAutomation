@@ -93,7 +93,11 @@
 	    <version>3.17</version>
 	</dependency>
 
-
+	<dependency>
+  		<groupId>org.apache.poi</groupId>
+  		<artifactId>ooxml-schemas</artifactId>
+ 		<version>1.4</version>
+	</dependency>
 
 	<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 	<dependency>
@@ -168,15 +172,15 @@
     <groupId>io.github.bonigarcia</groupId>
     <artifactId>webdrivermanager</artifactId>
     <version>3.0.0</version>
-    <scope>test</scope>
+  <!--   <scope>test</scope> -->
 </dependency>
 
 <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-ie-driver -->
-<dependency>
+<!-- <dependency>
     <groupId>org.seleniumhq.selenium</groupId>
     <artifactId>selenium-ie-driver</artifactId>
     <version>2.53.1</version>
-</dependency>
+</dependency> -->
 
 
 

@@ -3,7 +3,7 @@ package com.dac.main.POM_CA;
 public interface CARepository {
 	
 	String User = "UserId";
-	String UserID = "58f658ece0264678337dc4c1";
+	String[] UserID = {"58f658ece0264678337dc4c1"};
 
 	String competitor_column = "Competitors.CompetitorName";
 	String site_count = "Competitors.Sites.*.Count";
