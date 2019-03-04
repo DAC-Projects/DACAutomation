@@ -27,6 +27,7 @@ public abstract class BaseClass {
   private void reportSetup() throws IOException {
 
     String[] folderCreate = { "./downloads", "./Screenshot", "./testevidence" };
+    System.out.println("folderCreate.toString() : "+folderCreate.toString());
 
     for (String folder : folderCreate) {
       File file = new File(folder);
@@ -43,20 +44,22 @@ public abstract class BaseClass {
   // **********************for login to auth and then Dashboard
 
   /**
-   * This method is to navigate to TSEE dashboard page from AC1 Beta	*/
+   * This method is to navigate to TSEE dashboard page from AC1 Beta	
+ * @throws InterruptedException */
   public static void navigateToBasePage() {
     LoginAC_Beta lp = new LoginAC_Beta();
     BaseClass.loginAuth(lp);
     BaseClass.navigateToDashboard(lp);
-    WebDriverWait wait = new WebDriverWait(CurrentState.getDriver(), 10);
+   /* WebDriverWait wait = new WebDriverWait(CurrentState.getDriver(), 10);
     if(!CurrentState.getBrowser().contains("ie")) {
     	wait.until(ExpectedConditions.visibilityOf(CurrentState.getDriver().findElement(By.xpath("//div[contains(@class,'close-button walkme-x-button')]"))));
     	CurrentState.getDriver().findElement(By.xpath("//div[contains(@class,'close-button walkme-x-button')]")).click();    	
-    }
+    }*/
   }
 
   /**
-   * This method used to login to AC1 for a specific account which using for respective modules		*/
+   * This method used to login to AC1 for a specific account which using for respective modules		
+ * @throws InterruptedException */
   private static void loginAuth(LoginAC_Beta lp) {
     // login to auth centre
     String[] account = getAccount();
