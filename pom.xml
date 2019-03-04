@@ -169,6 +169,8 @@
     <artifactId>webdrivermanager</artifactId>
     <version>3.1.0</version>
     <!--<scope>test</scope>-->
+    <!-- <scope>test</scope> -->
+
 </dependency>
 
 <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-ie-driver -->
