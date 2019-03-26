@@ -128,7 +128,7 @@ public class CA_gatherData implements CARepository {
 		ExcelHandler read = new ExcelHandler(path, "Sheet0");
 		int column = read.find_column_no(competitors.competitorName, 0).get(0);
 		System.out.println(name);
-		String[] name1 = {name};
+		List<String> name1= Arrays.asList(name);
 		int row = read.find_Row_no(name1, 0, 0).get(0);
 		System.out.println("row and column no" + row + "***" + column);
 		return read.getValue(column, row);

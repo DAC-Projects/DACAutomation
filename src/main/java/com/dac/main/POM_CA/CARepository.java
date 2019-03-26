@@ -1,9 +1,12 @@
 package com.dac.main.POM_CA;
 
+import java.util.Arrays;
+import java.util.List;
+
 public interface CARepository {
 	
 	String User = "UserId";
-	String[] UserID = {"58f658ece0264678337dc4c1"};
+	List<String> UserID = Arrays.asList("58f658ece0264678337dc4c1");
 
 	String competitor_column = "Competitors.CompetitorName";
 	String site_count = "Competitors.Sites.*.Count";
