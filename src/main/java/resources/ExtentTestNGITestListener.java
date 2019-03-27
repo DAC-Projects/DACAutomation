@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.ElementNotSelectableException;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.NoSuchElementException;
@@ -22,6 +23,8 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.IClassListener;
+import org.testng.ISuite;
+import org.testng.ISuiteListener;
 import org.testng.ITestClass;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
@@ -41,13 +44,41 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import net.sf.jasperreports.engine.JasperPrint;
 
 public class ExtentTestNGITestListener
-    implements ITestListener, IClassListener, IAutoconst {
+    implements ITestListener, IClassListener, IAutoconst, ISuiteListener {
 
   private static ExtentReports extent = ExtentManager.getInstance();
   private static ThreadLocal parentTest = new ThreadLocal();
   private static ThreadLocal test = new ThreadLocal();
   private static ThreadLocal<ArrayList<JasperPrint>> printList =new ThreadLocal();
     
+  /**
+   * Setting up folders downloads, Screenshot and testevidence And if exist
+   * clear its content
+   * 
+   * @throws IOException
+   */
+  @Override
+  public void onStart(ISuite suite) {
+	  System.out.println("Suite Name : "+ suite.getName());
+	  String[] folderCreate = { "./downloads", "./Screenshot", "./testevidence" };
+
+	    for (String folder : folderCreate) {
+	      File file = new File(folder);
+
+	      if (!file.exists()) {
+
+	       file.mkdirs();
+	      }
+
+	      try {
+			FileUtils.cleanDirectory(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	    }
+  	
+  }
+  
   /**
    * Set parent "node" for extent reports store "browser" and "test name" from testng.xml
    * 
@@ -300,7 +331,7 @@ public class ExtentTestNGITestListener
 
     if (browser.equalsIgnoreCase("Chrome")) {
 
-      WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
+      WebDriverManager.chromedriver().version("73.0.3683.68").setup(); 
       HashMap<String, Object> chromePref = new HashMap<>();
       chromePref.put("download.default_directory", downloadFolder);
       chromePref.put("download.prompt_for_download", "false");
@@ -354,6 +385,14 @@ public class ExtentTestNGITestListener
     driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
     System.out.println("opened browser");
     return driver;
+
+  }
+
+
+
+  @Override
+  public void onFinish(ISuite suite) {
+	  System.out.println("Finish Suite Name : "+ suite.getName());
 
   }
 }

@@ -64,7 +64,7 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	@FindBy(css = "rect.highcharts-plot-background")
 	public WebElement hstryGrph;
 
-	@FindBy(css = "div.highcharts-label.highcharts-tooltip.highcharts-color-0>span>table")
+	@FindBy(css = "div.highcharts-label.highcharts-tooltip.highcharts-color-undefined")
 	private WebElement grphTable;
 
 	// site table
@@ -83,19 +83,19 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 		waitForElement(filter_Panel, 25);
 		scrollByElement(filter_Panel);
 		clickelement(FilterCountry);
-		WebElement country = driver.findElement(By.xpath("//div[@value='" + Country + "']"));
+		WebElement country = driver.findElement(By.xpath("//div[contains(text(),'"+ Country +"')]"));
 		clickelement(country);
 		clickelement(FilterState);
-		WebElement state = driver.findElement(By.xpath("//div[@value='" + State + "']"));
-		waitForElement(state, 10);
+		WebElement state = driver.findElement(By.xpath("//div[contains(text(),'"+ State + "')]"));
+		waitForElement(state, 20);
 		clickelement(state);
 		clickelement(FilterCity);
-		WebElement city = driver.findElement(By.xpath("//div[@value='" + City + "']"));
-		waitForElement(city, 10);
+		WebElement city = driver.findElement(By.xpath("//div[contains(text(),'"+ City + "')]"));
+		waitForElement(city, 20);
 		clickelement(city);
 		clickelement(Filterlocation);
-		WebElement location = driver.findElement(By.xpath("//div[contains(text(),'" + Location + "')]"));
-		waitForElement(location, 10);
+		WebElement location = driver.findElement(By.xpath("//div[contains(text(),'"+ Location + "')]"));
+		waitForElement(location, 20);
 		clickelement(location);
 		scrollByElement(location);
 		clickelement(Apply_filter);

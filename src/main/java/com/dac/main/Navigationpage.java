@@ -181,6 +181,7 @@ public class Navigationpage extends BasePage{
 		
 	/** To click on CA_ContentAnalysis link in LHS to navigate to CA_ContentAnalysis page   */
     public void navigateCA_ContentAnalysispage() {  
+    	clickelement(CA_ContentAnalysis);
        System.out.println("Waiting for page to load**********");
        waitUntilLoad(driver);  
     }

@@ -12,33 +12,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeSuite;
 
+import com.dac.main.DashboardpageKPI_Menu;
 import com.dac.main.LoginAC_Beta;
 import com.selenium.testevidence.SeleniumEvidence;
 
 public abstract class BaseClass {
 
-  /**
-   * Setting up folders downloads, Screenshot and testevidence And if exist
-   * clear its content
-   * 
-   * @throws IOException
-   */
-  @BeforeSuite(alwaysRun = true)
-  private void reportSetup() throws IOException {
-
-    String[] folderCreate = { "./downloads", "./Screenshot", "./testevidence" };
-
-    for (String folder : folderCreate) {
-      File file = new File(folder);
-
-      if (!file.exists()) {
-
-       file.mkdirs();
-      }
-
-      FileUtils.cleanDirectory(file);
-    }
-  }
 
   // **********************for login to auth and then Dashboard
 
@@ -49,10 +28,11 @@ public abstract class BaseClass {
     BaseClass.loginAuth(lp);
     BaseClass.navigateToDashboard(lp);
     WebDriverWait wait = new WebDriverWait(CurrentState.getDriver(), 10);
-    if(!CurrentState.getBrowser().contains("ie")) {
+    
+    /*if(!CurrentState.getBrowser().contains("ie")) {
     	wait.until(ExpectedConditions.visibilityOf(CurrentState.getDriver().findElement(By.xpath("//div[contains(@class,'close-button walkme-x-button')]"))));
     	CurrentState.getDriver().findElement(By.xpath("//div[contains(@class,'close-button walkme-x-button')]")).click();    	
-    }
+    }*/
   }
 
   /**
@@ -96,6 +76,7 @@ public abstract class BaseClass {
   }
 
   private static String[] getAccount() {
+	  System.out.println(CurrentState.getTestName());
     switch (CurrentState.getTestName()) {
 
     case "Competitive Analysis":
@@ -105,7 +86,7 @@ public abstract class BaseClass {
     case "TransparenSEE":
     	return IAutoconst.transparenSEE;
     default:
-      return IAutoconst.deepfieldAccount;
+      return IAutoconst.transparenSEE;
     }
 
   }

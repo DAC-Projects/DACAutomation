@@ -36,7 +36,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	public TPSEE_abstractMethods(WebDriver driver) {
 		super(driver);
 		this.driver = driver;
-		wait = new WebDriverWait(driver, 35);
+		wait = new WebDriverWait(driver, 45);
 		action = new Actions(driver);
 		PageFactory.initElements(driver, this);
 	}
@@ -88,27 +88,29 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	 */
 	public void applyFilter(String Country, String State, String City, String Location) {
 
-		waitForElement(filter_Panel, 25);
+		waitForElement(filter_Panel, 30);
 		scrollByElement(filter_Panel);
 		clickelement(FilterCountry);
-		WebElement country = driver.findElement(By.xpath("//div[@value='" + Country + "']"));
+		WebElement country = driver.findElement(By.xpath("//div[@data-value='" + Country + "']"));
         clickelement(country);
         clickelement(FilterState);
-        WebElement state = driver.findElement(By.xpath("//div[@value='" + State + "']"));
-        waitForElement(state, 10);
+        WebElement state = driver.findElement(By.xpath("//div[contains(text(),'"+ State + "')]"));
+        waitForElement(state, 30);
         clickelement(state);
         clickelement(FilterCity);
-        WebElement city = driver.findElement(By.xpath("//div[@value='" + City + "']"));
-        waitForElement(city, 10);
+        WebElement city = driver.findElement(By.xpath("//div[contains(text(),'"+ City + "')]"));
+        waitForElement(city, 30);
         clickelement(city);
 		clickelement(Filterlocation);
 		WebElement location = driver.findElement(By.xpath("//div[contains(text(),'" + Location + "')]"));
-		waitForElement(location, 20);
+		waitForElement(location, 40);
 		clickelement(location);
 		scrollByElement(location);
+		scrollByElement(Apply_filter);
 		clickelement(Apply_filter);
-		scrollByElement(hstryGrph);
-		waitForElement(grphtooltip,10);
+		waitForElement(filter_Panel, 40);
+		/*scrollByElement(hstryGrph);
+		waitForElement(grphtooltip,50);*/
 	}
 
 	/**
@@ -116,9 +118,11 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	 */
 	public abstract List<Map<String, String>> getOverviewReport();
 
+	//convert exported file from csv to xlsx
 	public void convertExports(String filename, String export) throws FileNotFoundException, IOException {
 		String report_export = new formatConvert(Exportpath + filename).convertFile("xlsx");
 		FileHandler.renameTo(new File(Exportpath + report_export), Exportpath + export);
+		
 	}
 
 	/**
@@ -127,15 +131,15 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	public List<Map<String, String>> verifyHistoryGraph() {
 		
 		//display tool tip
-		waitForElement(hstryGrph, 10);
+		waitForElement(hstryGrph, 30);
 		scrollByElement(hstryGrph);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth() / 2) - 2, 0).click().perform();
 		
 		//read the tooltip variables
 		tooltipvalue = grphtooltip.getText();
-		System.out.println("Reading tooltipdata **********");
-		System.out.println("tooltipvalue is "+ tooltipvalue);
+		System.out.println("\n Reading tooltipdata ********** \n");
+		System.out.println("\n tooltipvalue is \n"+ tooltipvalue);
 		
 		//read the tooltip variables
 		rows = grphtooltip.findElements(By.tagName("span"));
@@ -150,12 +154,8 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			kMap.put(table[i + 2][0], table[i + 2][1]);
 			tooltipdata.add(kMap);
 		}
-		/*System.out.println(tooltipdata.get(0).get("Date"));
-		System.out.println(tooltipdata.get(0).get("NoofLocation"));
-		System.out.println(tooltipdata.get(0).get("score"));*/
 		//returning tooltipdata from list
 		return tooltipdata;
-	
 	}
 
 	/**
@@ -177,7 +177,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	 * @to read site table values
 	 */
 	public List<Map<String, String>> verifySitetable() {
-		waitForElement(siteTable, 10);
+		waitForElement(siteTable, 30);
 		scrollByElement(siteTable);
 		System.out.println("\n Reading site table********** \n");
 		List<Map<String, String>> siteTableData = new ArrayList<Map<String, String>>();
@@ -185,21 +185,20 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		List<WebElement> elements = driver.findElements(By.xpath("//*[@id=\"barContainer\"]//div//div"));
 		    java.util.Iterator<WebElement> program = elements.iterator();
 		    while (program.hasNext()) {
-		        String values = program.next().getText();
-
+		    	String values = program.next().getText();
+		        
 		        if(!values.equals("null"))
 		        {
 		            System.out.println("" +values);
 		        }
 		        else
 		        {
-		            System.out.println("No sites displayed");
+		            System.out.println("\n No sites displayed \n");
 		        }
-
+		        	siteTableData.add(kMap);
 		    }
 		return siteTableData;
 	}
-	
 	
 	//Comparing values of overall visibility score and visibility export data
 	public void compareExprttoOvervw(List<Map<String, String>> exportData, List<Map<String, String>> ovrwRprtData) {
@@ -229,7 +228,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	
 	//getting data of accuracy score table
 	public List<Map<String, String>> verifyaccuracySitetable() {
-		waitForElement(accuracysite, 10);
+		waitForElement(accuracysite, 30);
 		scrollByElement(accuracysite);
 		System.out.println("\n Reading accuracy site table********** \n");
 		List<Map<String, String>> accuracysiteTableData = new ArrayList<Map<String, String>>();
@@ -238,7 +237,6 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		    java.util.Iterator<WebElement> program = elements.iterator();
 		    while (program.hasNext()) {
 		        String values = program.next().getText();
-
 		        if(!values.equals("null"))
 		        {
 		            System.out.println("" +values);
@@ -247,9 +245,8 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		        {
 		            System.out.println("No sites displayed");
 		        }
-
+		        accuracysiteTableData.add(kMap);
 		    }
 		return accuracysiteTableData;
 	}
-
 }

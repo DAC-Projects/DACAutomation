@@ -86,10 +86,10 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 		waitForElement(overviewReport, 10);
 		scrollByElement(overviewReport);
 		Map<String, String> kMap;
+		
 		List<Map<String, String>> ovrwRprtData = new ArrayList<Map<String, String>>();
 		for (int i = 1; i <= competitors.size(); i++) {
 			WebElement s = driver.findElement(By.xpath(xpathCompetitors + "[" + i + "]"));
-			// ovrwRprtData.put("Score", s.findElement(By.xpath(compScore)).getText());
 			kMap = new HashMap<String, String>();
 			kMap.put("compName", s.findElement(By.xpath(compName)).getText());
 			kMap.put("score", s.findElement(By.xpath(compScore)).getText());

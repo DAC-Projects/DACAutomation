@@ -12,13 +12,13 @@ public class DashboardpageKPI_Menu {
 		PageFactory.initElements(driver, this);
 	}
 
-	@FindBy(xpath = "(//div[@class='infobox-data']/span)[1]")
+	@FindBy(xpath = "//*[@id='location']/div[2]/span")
 	private WebElement Locations;
 
-	@FindBy(xpath = "(//div[@class='infobox-data']/span)[2]")
+	@FindBy(xpath = "//*[@id='visibility']/div[2]/span")
 	private WebElement Visibility;
 
-	@FindBy(xpath = "(//div[@class='infobox-data']/span)[3]")
+	@FindBy(xpath = "//*[@id='accuracy']/div[2]/span")
 	private WebElement Accuracy;
 	
 	
