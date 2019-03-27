@@ -63,9 +63,12 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	// History graph
 	@FindBy(css = "rect.highcharts-plot-background")
 	public WebElement hstryGrph;
-
-	@FindBy(css = "div.highcharts-label.highcharts-tooltip.highcharts-color-0>span>table")
+	
+	@FindBy(css = "div.highcharts-label.highcharts-tooltip.highcharts-color-undefined")
 	private WebElement grphTable;
+
+//	@FindBy(css = "div.highcharts-label.highcharts-tooltip.highcharts-color-0>span>table")
+//	private WebElement grphTable;
 
 	// site table
 	@FindBy(css = "table#compIntVisibilitySitesTable")
@@ -83,14 +86,14 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 		waitForElement(filter_Panel, 25);
 		scrollByElement(filter_Panel);
 		clickelement(FilterCountry);
-		WebElement country = driver.findElement(By.xpath("//div[@value='" + Country + "']"));
+		WebElement country = driver.findElement(By.xpath("//div[text()='" + Country + "']"));
 		clickelement(country);
 		clickelement(FilterState);
-		WebElement state = driver.findElement(By.xpath("//div[@value='" + State + "']"));
+		WebElement state = driver.findElement(By.xpath("//div[text()='" + State + "']"));
 		waitForElement(state, 10);
 		clickelement(state);
 		clickelement(FilterCity);
-		WebElement city = driver.findElement(By.xpath("//div[@value='" + City + "']"));
+		WebElement city = driver.findElement(By.xpath("//div[text()='" + City + "']"));
 		waitForElement(city, 10);
 		clickelement(city);
 		clickelement(Filterlocation);
@@ -230,3 +233,11 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	}
 
 }
+
+//Select oselect= new Select(driver.findElement(By.id("b1")));
+//oselect.selectByVisibleText("Manual");
+//Thread.sleep(3000);
+//oselect.selectByVisibleText("Java");
+
+
+
