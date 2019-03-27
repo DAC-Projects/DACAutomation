@@ -3,6 +3,8 @@ package resources;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -17,29 +19,7 @@ import com.selenium.testevidence.SeleniumEvidence;
 
 public abstract class BaseClass {
 
-  /**
-   * Setting up folders downloads, Screenshot and testevidence And if exist
-   * clear its content
-   * 
-   * @throws IOException
-   */
-  @BeforeSuite(alwaysRun = true)
-  private void reportSetup() throws IOException {
-
-    String[] folderCreate = { "./downloads", "./Screenshot", "./testevidence" };
-    System.out.println("folderCreate.toString() : "+folderCreate.toString());
-
-    for (String folder : folderCreate) {
-      File file = new File(folder);
-
-      if (!file.exists()) {
-
-       file.mkdirs();
-      }
-
-      FileUtils.cleanDirectory(file);
-    }
-  }
+  
 
   // **********************for login to auth and then Dashboard
 
@@ -105,6 +85,9 @@ public abstract class BaseClass {
       return IAutoconst.competitiveAnalysis;
     case "Customer_FeedBack":
       return IAutoconst.deepfieldAccount;
+    case "Sentiment Analysis":
+    case "SA":
+        return IAutoconst.Fit4LessAccount;
     default:
       return IAutoconst.deepfieldAccount;
     }
@@ -126,9 +109,11 @@ public abstract class BaseClass {
 	  
 	  if(isImageNeeded.equals("yes")) {
 		  CurrentState.getEvidenceList().add(new SeleniumEvidence(testStep, takeScreenshot(driver)));
+		  CurrentState.getLogger().info(testStep);
 	  }
 	  else {
 		  CurrentState.getEvidenceList().add(new SeleniumEvidence(testStep, null));
+		  CurrentState.getLogger().info(testStep);
 	  }	  
   }
 

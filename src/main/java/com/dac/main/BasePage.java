@@ -59,7 +59,7 @@ public class BasePage {
    * 
    * @param driver : for which driver need to wait till page's script get loaded		*/
   public void waitUntilLoad(WebDriver driver) {
-
+    
     // WebDriverWait wait = new WebDriverWait(driver, 30);
     try {
       // wait for jQuery to load
@@ -387,7 +387,7 @@ public class BasePage {
   }
 
   /**
-   * This method to print the UI table data in Console
+   * This method to print the UI table data in Console of 1st page of pagination only
    * 
    * @param table : webelement of UI table for reading the table
    */
