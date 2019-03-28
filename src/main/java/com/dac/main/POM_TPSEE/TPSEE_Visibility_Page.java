@@ -348,7 +348,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	        }
 	        else
 	        {
-	            System.out.println("\n No sites displayed \n");
+	            System.out.println("\n No sites displayed in application\n");
 	        }
 	    }
 	    return ProgressTableDatafound;
