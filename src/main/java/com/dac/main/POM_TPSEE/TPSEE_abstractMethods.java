@@ -69,14 +69,14 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	private WebElement grphtooltip; 
 	
 	//section of overall report
-	@FindBy(xpath = "//*[@id=\"divOverallScoreHeader\"]//*[@id=\"divOverallScoreHeader\\\"]/div[1]//*[@id=\"divOverallScoreValue\"]")
+	@FindBy(xpath = "//*[@id='divOverallScoreHeader']//*[@id='divOverallScoreHeader']/div[1]//*[@id='divOverallScoreValue']")
 	private WebElement overall;
 
 	//site tableesTable
 	@FindBy(css = "div#barContainer.barContainer") 
 	public WebElement siteTable;
 	
-	@FindBy(xpath = "//*[@id=\"accuracyScoresTable\"]")
+	@FindBy(xpath = "//*[@id='accuracyScoresTable']")
 	public WebElement accuracysite;
 
 	/**

@@ -38,13 +38,13 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 
 	
 	//Exporting into csv 
-	@FindBy(xpath = "//*[@id=\"btnVisibilityExport\"]")
+	@FindBy(xpath = "//*[@id='btnVisibilityExport']")
 	private WebElement exportBtn;
 	
-	@FindBy(xpath = "//*[@id=\"csvData\"]")
+	@FindBy(xpath = "//*[@id='csvData']")
 	private WebElement csvexport;
 	
-	@FindBy(xpath = "//*[@id=\"exportdate\"]")
+	@FindBy(xpath = "//*[@id='exportdate']")
 	private WebElement exportdate;
 	
 	@FindBy(id = "ui-datepicker-div")
@@ -53,23 +53,47 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	@FindBy(css = "td.ui-datepicker-days-cell-over")
 	private WebElement date;
 	
-	@FindBy(xpath = "//*[@id=\"btnLocationExport\"]")
+	@FindBy(xpath = "//*[@id='btnLocationExport']")
 	private WebElement export;
-
+	
+	//Exporting into pdf
+	
+	@FindBy(xpath = "//a[contains(text(),'Export as PDF')]")
+	private WebElement pdfexport;
+	
+	@FindBy(xpath = "//a[@id='currentData']")
+	private WebElement currentpdf;
+	
+	@FindBy(xpath= "//a[contains(text(),'Click here to download your report')]")
+	private WebElement pdfclick;
+	
+	//locators to export pdf of some period of time
+	@FindBy(xpath = "//a[@id='historyData']")
+	private WebElement historypdf;
+	
+	@FindBy(xpath = "//input[@id='exportStartDate']")
+	private WebElement hstrystart;
+	
+	@FindBy(xpath = "//input[@id='exportEndDate']")
+	private WebElement hstryend;
+	
+	@FindBy(xpath = "//*[@id='btnHistoryExport']")
+	private WebElement hstrybtn;
+		
 	//section of overall report
 	@FindBy(xpath = "#divBars")
 	private WebElement overall;
 	
-	@FindBy(xpath = "//*[@id=\"divBars\"]")
+	@FindBy(xpath = "//*[@id='divBars']")
 	private List<WebElement> comp;
 	
 	//tooltipvalue in the graph
 	@FindBy(css = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none")
 	private WebElement grphtooltip; 
 
-	String xpathCompetitors = "//*[@id=\"divBars\"]";
-	String NoofLocation = "//*[@id=\"divNumOfLocations\"]";
-	String overallscore = "//*[@id=\"divOverallScoreValue\"]";
+	String xpathCompetitors = "//*[@id='divBars']";
+	String NoofLocation = "//*[@id='divNumOfLocations']";
+	String overallscore = "//*[@id='divOverallScoreValue']";
 
 	//Site table section
 	@FindBy(css = "div#barContainer.barContainer")
@@ -89,28 +113,28 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//*[@id='visibility_table']")
 	private WebElement progressdata;
 	
-	@FindBy(xpath = "//*[@id=\"visibility_results_wrapper\"]")
+	@FindBy(xpath = "//*[@id='visibility_results_wrapper']")
 	private WebElement progresstable;
 	
-	@FindBy(xpath = "//*[@id=\"visibility_results\"]/tbody")
+	@FindBy(xpath = "//*[@id='visibility_results']/tbody")
 	private WebElement progresstablevalue;
 	
-	@FindBy(xpath = "//*[@id=\"ToolTables_visibility_results_0\"]")
+	@FindBy(xpath = "//*[@id='ToolTables_visibility_results_0']")
 	private WebElement exporttable;
 	
-	@FindBy(xpath = "//*[@id=\"visibility_table_title\"]")
+	@FindBy(xpath = "//*[@id='visibility_table_title']")
 	private WebElement title;
 	
 	@FindBy(xpath = "//*[@id='visibility_table']/div[2]")
 	private WebElement titlehead;
 	
-	String Vendortitle = "//*[@id=\"visibility_table_title\"]";
+	String Vendortitle = "//*[@id='visibility_table_title']";
 	
 	//Displaying no.of entries
-	@FindBy(xpath = "//*[@id=\"visibility_results_wrapper\"]/div[4]/div[1]")
+	@FindBy(xpath = "//*[@id='visibility_results_wrapper']/div[4]/div[1]")
 	private WebElement entries;
 	
-	@FindBy(xpath = "//*[@id=\"visibility_results_info\"]")
+	@FindBy(xpath = "//*[@id='visibility_results_info']")
 	private WebElement totalentries;
 	
 	List<WebElement> columns;
@@ -144,6 +168,28 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	    //download visibility report
 	    download(CurrentState.getBrowser(), export, 30);
 	    convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExport));
+	     
+	}
+	
+	
+	/* Export visibility overview report below filter in pdf for current date*/
+	public void exportvisibilityrptpdf() throws InterruptedException, FileNotFoundException, IOException{
+		//waitForElement(overall, 40);
+		waitForElement(exportBtn, 40);
+		scrollByElement(exportBtn);
+		clickelement(exportBtn);
+		waitForElement(pdfexport, 40);
+		scrollByElement(pdfexport);
+		clickelement(pdfexport);
+		waitForElement(currentpdf,40);
+		scrollByElement(currentpdf);
+		clickelement(currentpdf);
+		waitForElement(pdfclick,60);
+		scrollByElement(pdfclick);
+		clickelement(pdfclick);
+	    //download visibility report
+	    download(CurrentState.getBrowser(), pdfclick, 50);
+	    convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExportPdf));
 	     
 	}
 	
@@ -234,14 +280,15 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		waitForElement(progressdata,40);
 		scrollByElement(progressdata);
 		System.out.println("\n reading progress bar data div ********************* \n");
-		waitForElement(progresstable,40);
+		waitForElement(progresstable,50);
 		scrollByElement(progresstable);
 		System.out.println("\n reading progress bar data table ******************* \n");
-		waitForElement(totalentries,40);
+		waitForElement(totalentries,50);
+		waitForElement(progresstablevalue,50);
 		String[][] table = readTable(progresstablevalue);
 		int n = table.length;
 		System.out.println("\n" +n);
-		System.out.println(driver.findElement(By.xpath("//*[@id=\"visibility_table_title\"]")).getText());
+		System.out.println(driver.findElement(By.xpath("//*[@id='visibility_table_title']")).getText());
 		//adding data into list
 		List<Map<String, String>> ProgressTableDatafound = new ArrayList<Map<String, String>>();
 		List<WebElement> elements = driver.findElements(By.xpath("progresstable"));
@@ -342,13 +389,13 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	//To get total number  of entries at the bottom of the page
 	public  List<Map<String, String>> numberofentries() {
 		
-		waitForElement(progresstable,30);
+		waitForElement(progresstable,50);
 		List<Map<String, String>> totalentries = new ArrayList<Map<String, String>>();
 		//getting the text at the bottom of the table and split the string by space
 		List<WebElement> col = driver.findElements(By.xpath("//*[@id='visibility_results']/tbody"));
 		System.out.println(col.size());
 		rows = progresstablevalue.findElements(By.tagName("tr"));
-		waitForElement(progresstablevalue,30);
+		waitForElement(progresstablevalue,50);
 		int count = rows.size();
 		System.out.println("\n Total number of rows : "+count);
 		return totalentries;
@@ -503,11 +550,26 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 					if (m1.get("Name").equals(m2.get("Name"))) {
 						Assert.assertEquals(m1.get("City"), m2.get("City"), "verifying list for " +m2.get("Name"));
 						//Assert.assertEquals(m1.values(), m2.values(), "verify site vendors");
-						
+						//Assert.assertEquals(m1, m2, "verify for table report");
 					}
 				}
 			}
 			
 		}
+
+	//comparing number of entries for not found locations
+	public void compareexporttableDatannumberofentriesNotFound(List<Map<String, String>> verifyprogresstableNotfound,
+			List<Map<String, String>> numberofentries) {
+		
+		for (Map<String, String> m1 : verifyprogresstableNotfound) {
+			for (Map<String, String> m2 : numberofentries) {
+				if (m1.get("verifyprogresstablefound").equals(m2.get("numberofentries"))) {
+					Assert.assertEquals(formatFloat(m1.get("row")), formatFloat(m2.get("entry")), 0.05f,
+							"Verifying score for" + m1.get("row"));
+				}
+			}
+		}
+		
+	}
 
 }	

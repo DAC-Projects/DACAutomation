@@ -27,18 +27,18 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	WebDriverWait wait;
 
 	
-	String xpathCompetitors = "//*[@id=\"divBars\"]";
-	String NoofLocation = "//*[@id=\"divNumOfLocations\"]";
-	String overallscore = "//*[@id=\"divOverallScoreValue\"]";
+	String xpathCompetitors = "//*[@id='divBars']";
+	String NoofLocation = "//*[@id='divNumOfLocations']";
+	String overallscore = "//*[@id='divOverallScoreValue']";
 	
-	@FindBy(xpath = "//*[@id=\"allSitesScores\"]")
+	@FindBy(xpath = "//*[@id='allSitesScores']")
 	private List<WebElement> Site;
 	
 	//Exporting into csv 
 		@FindBy(xpath = "//button[@id='btnLocationExportPopUp']")
 		private WebElement exportBtn;
 		
-		@FindBy(xpath = "//*[@id=\"exportdate\"]")
+		@FindBy(xpath = "//*[@id='exportdate']")
 		private WebElement exportdate;
 		
 		@FindBy(id = "ui-datepicker-div")
@@ -47,7 +47,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		@FindBy(css = "td.ui-datepicker-days-cell-over")
 		private WebElement date;
 		
-		@FindBy(xpath = "//*[@id=\"btnLocationExport\"]")
+		@FindBy(xpath = "//*[@id='btnLocationExport']")
 		private WebElement export;
 	
 	public TPSEE_Accuracy_Page(WebDriver driver) {
@@ -65,10 +65,10 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	private WebElement grphtooltip;
 	
 	//section of overall report
-		@FindBy(xpath = "//*[@id=\"divBars\"]")
+		@FindBy(xpath = "//*[@id='divBars']")
 		private WebElement overall;
 		
-		@FindBy(xpath = "//*[@id=\"divBars\"]")
+		@FindBy(xpath = "//*[@id='divBars']")
 		private List<WebElement> comp;
 
 	public void verify_pageloadCompletely(int timeout) {

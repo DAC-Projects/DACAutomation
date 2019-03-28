@@ -95,6 +95,19 @@ public class TPSEE_Visibility_Test extends BaseClass {
 					"printing data found and total number of rows", "yes");
 	}
 	
+	//Test for number of rows in Visibility Page for not found locations
+		@SuppressWarnings("unchecked")
+		@Test(dependsOnMethods = { "navigateToVisibilityPage","verifySiteTablenExportVisibility"}, groups = {
+				"smoke" }, description = "Test for verifying progress bar in Visibility page")
+		public void verifySiteProgressNotFoundnExporttableVisibility() throws Exception {
+				data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+				data.compareexporttableDatannumberofentriesNotFound(data.verifyprogresstableNotfound(),data.numberofentries());
+				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
+				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
+				addEvidence(CurrentState.getDriver(),
+						"printing data found and total number of rows", "yes");
+		}
+	
 	//Test for compare number of rows from export table and table data in Visibility Page
 	@SuppressWarnings("unchecked")
 	@Test(dependsOnMethods = { "navigateToVisibilityPage","verifySiteProgressnExporttableVisibility"}, groups = {
