@@ -57,7 +57,7 @@ public class Navigationpage extends BasePage{
 	
 	//------------------------- SA and RRM -------------------------------------
 	
-	@FindBy(xpath = "//a[@href='/Dashboard/Review/ReviewReport/']/span")
+	@FindBy(xpath = "//a[@href='/Review/ReviewReport/']")
 	private WebElement ReviewReport;
 	
 	@FindBy(xpath = "//a[@href='/ReportCard/Index/']/span")
@@ -179,6 +179,9 @@ public class Navigationpage extends BasePage{
 
 	/** To click on SA_ReviewReport link in LHS to navigate to SA_ReviewReport page   */
 	public void navigateToSA_ReviewReport() {
+		JSWaiter.waitJQueryAngular();
+		wait.until(ExpectedConditions.visibilityOf(ReviewReport));
+		scrollByElement(ReportCard);
 		clickelement(ReviewReport);   
 	      System.out.println("Waiting for page to load**********");
 	      waitUntilLoad(driver);
