@@ -185,7 +185,7 @@ public class BasePage {
     	        }
     	      }
     	    } catch (NoSuchElementException e) {
-    	      Assert.fail("element " + element + " NOT found");
+    	      Assert.fail("element" + element + " NOT found");
     	    }
     
   }
@@ -381,7 +381,7 @@ public class BasePage {
 
        return wait.until(ExpectedConditions.visibilityOf(elemnt)) == elemnt ? true : false;
     } catch (TimeoutException e) {
-      Assert.fail("Element did not load in the specified timeout");
+     // Assert.fail("Element did not load in the specified timeout");
       return false;
     }
   }

@@ -86,6 +86,34 @@ public class ExtentTestNGITestListener
   }
   
   /**
+   * Setting up folders downloads, Screenshot and testevidence And if exist
+   * clear its content
+   * 
+   * @throws IOException
+   */
+  @Override
+  public void onStart(ISuite suite) {
+	  System.out.println("Suite Name : "+ suite.getName());
+	  String[] folderCreate = { "./downloads", "./Screenshot", "./testevidence" };
+
+	    for (String folder : folderCreate) {
+	      File file = new File(folder);
+
+	      if (!file.exists()) {
+
+	       file.mkdirs();
+	      }
+
+	      try {
+			FileUtils.cleanDirectory(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	    }
+  	
+  }
+  
+  /**
    * Set parent "node" for extent reports store "browser" and "test name" from testng.xml
    * 
    * @see org.testng.ITestListener#onStart(org.testng.ITestContext)		*/
@@ -339,8 +367,12 @@ public class ExtentTestNGITestListener
     String downloadFolder = System.getProperty("user.dir") + "/downloads";
 
     if (browser.equalsIgnoreCase("Chrome")) {
-      WebDriverManager.chromedriver().version("73.0.3683.68").setup();
+
+
+      WebDriverManager.chromedriver().version("73.0.3683.68").setup(); 
+
       //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
+
       HashMap<String, Object> chromePref = new HashMap<>();
       chromePref.put("download.default_directory", downloadFolder);
       chromePref.put("download.prompt_for_download", "false");
@@ -414,7 +446,6 @@ public class ExtentTestNGITestListener
 
   @Override
   public void onFinish(ISuite suite) {
-	  System.out.println("Suite Name : "+ suite.getName());
-
+	  System.out.println("Finish Suite Name : "+ suite.getName());
   }
 }
