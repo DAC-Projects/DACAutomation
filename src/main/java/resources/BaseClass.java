@@ -3,6 +3,8 @@ package resources;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -22,21 +24,28 @@ public abstract class BaseClass {
   // **********************for login to auth and then Dashboard
 
   /**
-   * This method is to navigate to TSEE dashboard page from AC1 Beta	*/
+   * This method is to navigate to TSEE dashboard page from AC1 Beta	
+ * @throws InterruptedException */
   public static void navigateToBasePage() {
     LoginAC_Beta lp = new LoginAC_Beta();
     BaseClass.loginAuth(lp);
     BaseClass.navigateToDashboard(lp);
+
     WebDriverWait wait = new WebDriverWait(CurrentState.getDriver(), 10);
     
     /*if(!CurrentState.getBrowser().contains("ie")) {
+
+   /* WebDriverWait wait = new WebDriverWait(CurrentState.getDriver(), 10);
+    if(!CurrentState.getBrowser().contains("ie")) {
+
     	wait.until(ExpectedConditions.visibilityOf(CurrentState.getDriver().findElement(By.xpath("//div[contains(@class,'close-button walkme-x-button')]"))));
     	CurrentState.getDriver().findElement(By.xpath("//div[contains(@class,'close-button walkme-x-button')]")).click();    	
     }*/
   }
 
   /**
-   * This method used to login to AC1 for a specific account which using for respective modules		*/
+   * This method used to login to AC1 for a specific account which using for respective modules		
+ * @throws InterruptedException */
   private static void loginAuth(LoginAC_Beta lp) {
     // login to auth centre
     String[] account = getAccount();
@@ -83,8 +92,14 @@ public abstract class BaseClass {
       return IAutoconst.competitiveAnalysis;
     case "Customer_FeedBack":
       return IAutoconst.deepfieldAccount;
+
     case "TransparenSEE":
     	return IAutoconst.transparenSEE;
+
+    case "Sentiment Analysis":
+    case "SA":
+        return IAutoconst.Fit4LessAccount;
+
     default:
       return IAutoconst.transparenSEE;
     }
@@ -106,9 +121,11 @@ public abstract class BaseClass {
 	  
 	  if(isImageNeeded.equals("yes")) {
 		  CurrentState.getEvidenceList().add(new SeleniumEvidence(testStep, takeScreenshot(driver)));
+		  CurrentState.getLogger().info(testStep);
 	  }
 	  else {
 		  CurrentState.getEvidenceList().add(new SeleniumEvidence(testStep, null));
+		  CurrentState.getLogger().info(testStep);
 	  }	  
   }
 

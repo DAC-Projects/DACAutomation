@@ -22,6 +22,7 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.IClassListener;
 import org.testng.ISuite;
 import org.testng.ISuiteListener;
@@ -51,6 +52,39 @@ public class ExtentTestNGITestListener
   private static ThreadLocal test = new ThreadLocal();
   private static ThreadLocal<ArrayList<JasperPrint>> printList =new ThreadLocal();
     
+  
+  /**
+   * Setting up folders downloads, Screenshot and testevidence And if exist
+   * clear its content
+   * 
+   * @throws IOException
+   */
+  @Override
+  public void onStart(ISuite suite) {
+	  System.out.println("Suite Name : "+ suite.getName());
+	  
+	  String[] folderCreate = { "./downloads", "./Screenshot", "./testevidence" };
+	    System.out.println("folderCreate.toString() : "+folderCreate.toString());
+
+	    for (String folder : folderCreate) {
+	      File file = new File(folder);
+
+	      if (!file.exists()) {
+
+	       file.mkdirs();
+	      }
+
+	      try {
+			FileUtils.cleanDirectory(file);
+			 System.out.println("cleaned directory");
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("catch block");
+		}
+	    }
+  	
+  }
+  
   /**
    * Setting up folders downloads, Screenshot and testevidence And if exist
    * clear its content
@@ -110,6 +144,9 @@ public class ExtentTestNGITestListener
       }
       CurrentState.getDriver().manage().window().maximize();
       CurrentState.getDriver().manage().deleteAllCookies();
+      //Send driver object to JSWaiter Class
+      JSWaiter.setDriver(CurrentState.getDriver());
+      
       BaseClass.navigateToBasePage();
    
   }
@@ -320,7 +357,7 @@ public class ExtentTestNGITestListener
    * @return the driver in which user going to execute among chrome/firefox/ie.
    * @throws IOException	   */
   public WebDriver openBrowser(String browser) throws IOException {
-
+	  WebDriverWait wait;
     WebDriver driver = null;
 
     File file = new File("./downloads");
@@ -331,14 +368,23 @@ public class ExtentTestNGITestListener
 
     if (browser.equalsIgnoreCase("Chrome")) {
 
+
       WebDriverManager.chromedriver().version("73.0.3683.68").setup(); 
+
+      //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
+
       HashMap<String, Object> chromePref = new HashMap<>();
       chromePref.put("download.default_directory", downloadFolder);
       chromePref.put("download.prompt_for_download", "false");
       ChromeOptions options = new ChromeOptions();
+      options.addArguments("disable-infobars");
       options.setExperimentalOption("prefs", chromePref);
+      //WebDriverManager.chromedriver().setup();
       driver = new ChromeDriver(options);
-
+    //Send driver object to JSWaiter Class
+      JSWaiter.setDriver(driver);
+      //This is the default wait for Explicit Waits
+      wait = new WebDriverWait(driver,15);
     } else if (browser.equalsIgnoreCase("Firefox")) {
       WebDriverManager.firefoxdriver().setup();
       FirefoxProfile profile = new FirefoxProfile();
@@ -356,6 +402,10 @@ public class ExtentTestNGITestListener
       firefoxOptions.setCapability(CapabilityType.ELEMENT_SCROLL_BEHAVIOR, 0);
 
       driver = new FirefoxDriver(firefoxOptions);
+    //Send driver object to JSWaiter Class
+      JSWaiter.setDriver(driver);
+      //This is the default wait for Explicit Waits
+      wait = new WebDriverWait(driver,15);
 
     } else if (browser.equalsIgnoreCase("IE")) {
       WebDriverManager.iedriver().architecture(Architecture.X32).setup();
@@ -379,6 +429,10 @@ public class ExtentTestNGITestListener
             "Coulnd't change the registry for default directory for IE");
       }
       driver = new InternetExplorerDriver(capabilities);
+    //Send driver object to JSWaiter Class
+      JSWaiter.setDriver(driver);
+      //This is the default wait for Explicit Waits
+      wait = new WebDriverWait(driver,15);
 
     }
 
@@ -393,6 +447,5 @@ public class ExtentTestNGITestListener
   @Override
   public void onFinish(ISuite suite) {
 	  System.out.println("Finish Suite Name : "+ suite.getName());
-
   }
 }

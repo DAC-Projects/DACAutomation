@@ -12,6 +12,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import resources.JSWaiter;
+
 /**
  * Using this class methods it used to navigate to specific page's of navigation panel in TSEE	*/
 public class Navigationpage extends BasePage{
@@ -58,7 +60,7 @@ public class Navigationpage extends BasePage{
 	@FindBy(xpath = "//a[@href='/Dashboard/Review/ReviewReport/']/span")
 	private WebElement ReviewReport;
 	
-	@FindBy(xpath = "//a[@href=//a[@href='/ReportCard/Index/']]/span")
+	@FindBy(xpath = "//a[@href='/ReportCard/Index/']/span")
 	private WebElement ReportCard;
 	
 	@FindBy(xpath = "//a[@href='/CategorizedSentiment/Index/']/span")
@@ -209,9 +211,12 @@ public class Navigationpage extends BasePage{
 
 	/** To click on SA_ReportCard link in LHS to navigate to SA_ReportCard page   */
 	public void navigateToSA_ReportCard() {
+		JSWaiter.waitJQueryAngular();
+		wait.until(ExpectedConditions.visibilityOf(ReportCard));
+		scrollByElement(ReportCard);
 		clickelement(ReportCard);   
-	      System.out.println("Waiting for page to load**********");
-	      waitUntilLoad(driver);
+	    System.out.println("Waiting for page to load**********");
+	    waitUntilLoad(driver);
 	}
 
 	/** To click on SA_CategorizedSentiment link in LHS to navigate to SA_CategorizedSentiment page   */
