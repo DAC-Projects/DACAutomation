@@ -85,33 +85,6 @@ public class ExtentTestNGITestListener
   	
   }
   
-  /**
-   * Setting up folders downloads, Screenshot and testevidence And if exist
-   * clear its content
-   * 
-   * @throws IOException
-   */
-  @Override
-  public void onStart(ISuite suite) {
-	  System.out.println("Suite Name : "+ suite.getName());
-	  String[] folderCreate = { "./downloads", "./Screenshot", "./testevidence" };
-
-	    for (String folder : folderCreate) {
-	      File file = new File(folder);
-
-	      if (!file.exists()) {
-
-	       file.mkdirs();
-	      }
-
-	      try {
-			FileUtils.cleanDirectory(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	    }
-  	
-  }
   
   /**
    * Set parent "node" for extent reports store "browser" and "test name" from testng.xml
