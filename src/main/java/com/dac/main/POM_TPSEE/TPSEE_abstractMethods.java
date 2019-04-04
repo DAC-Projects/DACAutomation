@@ -73,7 +73,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	private WebElement overall;
 
 	//site tableesTable
-	@FindBy(css = "div#barContainer.barContainer") 
+	@FindBy(xpath = "//div[@class='barContainer']") 
 	public WebElement siteTable;
 	
 	@FindBy(xpath = "//*[@id='accuracyScoresTable']")
@@ -91,7 +91,8 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		waitForElement(filter_Panel, 30);
 		scrollByElement(filter_Panel);
 		clickelement(FilterCountry);
-		WebElement country = driver.findElement(By.xpath("//div[@data-value='" + Country + "']"));
+		WebElement country = driver.findElement(By.xpath("//div[contains(@class,'myList')]//div[contains(@value,'"+ Country +"')]"));
+		waitForElement(country, 40);
         clickelement(country);
         clickelement(FilterState);
         WebElement state = driver.findElement(By.xpath("//div[contains(text(),'"+ State + "')]"));
@@ -182,7 +183,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		System.out.println("\n Reading site table********** \n");
 		List<Map<String, String>> siteTableData = new ArrayList<Map<String, String>>();
 		Map<String, String> kMap = new HashMap<String, String>();
-		List<WebElement> elements = driver.findElements(By.xpath("//*[@id=\"barContainer\"]//div//div"));
+		List<WebElement> elements = driver.findElements(By.xpath("//*[@id='barContainer']//div//div"));
 		    java.util.Iterator<WebElement> program = elements.iterator();
 		    while (program.hasNext()) {
 		    	String values = program.next().getText();

@@ -60,7 +60,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 
 	//Test for Tooltip and overview report in Visibility Page
 	@SuppressWarnings("unchecked")
-	@Test(dependsOnMethods = { "navigateToVisibilityPage","verifyFilteringReportsVisibility" }, groups = { "smoke" })
+	@Test(dependsOnMethods = { "verifyOverviewReportnExportVisibility" }, groups = { "smoke" })
 	public void verifyOverviewReportnTooltipVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
@@ -71,7 +71,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 
 	//Test for SiteTable data in Visibility Page
 	@SuppressWarnings("unchecked")
-	@Test(dependsOnMethods = { "navigateToVisibilityPage","verifyFilteringReportsVisibility"}, groups = {
+	@Test(dependsOnMethods = { "verifyOverviewReportnTooltipVisibility"}, groups = {
 			"smoke" }, description = "Test for verifying sitetable in Visibility page")
 	public void verifySiteTablenExportVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -84,7 +84,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	
 	//Test for number of rows in Visibility Page
 	@SuppressWarnings("unchecked")
-	@Test(dependsOnMethods = { "navigateToVisibilityPage","verifySiteTablenExportVisibility"}, groups = {
+	@Test(dependsOnMethods = {"verifySiteTablenExportVisibility"}, groups = {
 			"smoke" }, description = "Test for verifying progress bar in Visibility page")
 	public void verifySiteProgressnExporttableVisibility() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -97,7 +97,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	
 	//Test for number of rows in Visibility Page for not found locations
 		@SuppressWarnings("unchecked")
-		@Test(dependsOnMethods = { "navigateToVisibilityPage","verifySiteTablenExportVisibility"}, groups = {
+		@Test(dependsOnMethods = {  "verifySiteProgressnExporttableVisibility"}, groups = {
 				"smoke" }, description = "Test for verifying progress bar in Visibility page")
 		public void verifySiteProgressNotFoundnExporttableVisibility() throws Exception {
 				data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -110,7 +110,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	
 	//Test for compare number of rows from export table and table data in Visibility Page
 	@SuppressWarnings("unchecked")
-	@Test(dependsOnMethods = { "navigateToVisibilityPage","verifySiteProgressnExporttableVisibility"}, groups = {
+	@Test(dependsOnMethods = { "verifySiteProgressnExporttableVisibility"}, groups = {
 			"smoke" }, description = "Test for verifying progress bar in Visibility page")
 	public void numberofentriesnExporttableVisibility() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -123,7 +123,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	
 	//Test to compare vendors in the application (Country = US) in Visibility Page
 	@SuppressWarnings("unchecked")
-	@Test(dependsOnMethods = {"navigateToVisibilityPage","numberofentriesnExporttableVisibility"},groups = {"smoke"},
+	@Test(dependsOnMethods = {"numberofentriesnExporttableVisibility"},groups = {"smoke"},
 				description ="Verify Site Vendors List")
 	public void comparevendorsListnverifySitevendors() throws Exception{
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());

@@ -17,6 +17,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import resources.CurrentState;
 import resources.ExcelHandler;
+import resources.JSWaiter;
 
 
 public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
@@ -128,6 +129,9 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//*[@id='visibility_table']/div[2]")
 	private WebElement titlehead;
 	
+	@FindBy(xpath = "//li[contains(@class,'paginate')]")
+	private WebElement pagination;
+	
 	String Vendortitle = "//*[@id='visibility_table_title']";
 	
 	//Displaying no.of entries
@@ -150,6 +154,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	
 	/* Export visibility overview report below filter*/
 	public void exportvisibilityrpt() throws InterruptedException, FileNotFoundException, IOException{
+		JSWaiter.waitJQueryAngular();
 		//waitForElement(overall, 40);
 		waitForElement(exportBtn, 40);
 		scrollByElement(exportBtn);
@@ -174,6 +179,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	
 	/* Export visibility overview report below filter in pdf for current date*/
 	public void exportvisibilityrptpdf() throws InterruptedException, FileNotFoundException, IOException{
+		JSWaiter.waitJQueryAngular();
 		//waitForElement(overall, 40);
 		waitForElement(exportBtn, 40);
 		scrollByElement(exportBtn);
@@ -195,7 +201,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	
 	//To get overall score of visibility
 	public List<Map<String, String>> getOverviewReport() {
-		
+		JSWaiter.waitJQueryAngular();
 		waitForElement(overall, 40);
 		//scrollByElement(overall);
 		System.out.println("\n Reading overall ********** \n");
@@ -228,7 +234,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 
 	//printing visibility report data from downloaded excel sheet 
 	public List<Map<String, String>> getExportData() throws Exception {
-		
+		JSWaiter.waitJQueryAngular();
 		exportvisibilityrpt();
 		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+VisibilityExport), "Sheet0").getExcelTable();
 		List<Map<String, String>> exportData = new ArrayList<Map<String, String>>();
@@ -269,7 +275,8 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 
 	//Clicking on progress bar and getting the data from the table for found
 	public List<Map<String, String>> verifyprogresstablefound(){
-		
+		try {
+		JSWaiter.waitJQueryAngular();
 		waitForElement(siteTable, 40);
 		waitForElement(progressfound, 40);
 		//getting into progressbar found listing
@@ -289,6 +296,9 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		int n = table.length;
 		System.out.println("\n" +n);
 		System.out.println(driver.findElement(By.xpath("//*[@id='visibility_table_title']")).getText());
+		}catch(Exception e){
+			System.out.println("\n Exception catched \n");
+		}
 		//adding data into list
 		List<Map<String, String>> ProgressTableDatafound = new ArrayList<Map<String, String>>();
 		List<WebElement> elements = driver.findElements(By.xpath("progresstable"));
@@ -313,7 +323,8 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		
 	//Clicking on progress bar and getting the data from the table for Not Found list
 	public List<Map<String, String>> verifyprogresstableNotfound(){
-		
+		try {
+		JSWaiter.waitJQueryAngular();
 		waitForElement(siteTable, 40);
 		waitForElement(progressNotfound, 40);
 		//getting into progressbar found listing
@@ -333,6 +344,9 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		System.out.println("\n Length of table is :" +len);
 		waitForElement(progresstable,30);
 		System.out.println(driver.findElement(By.xpath("//*[@id=\"visibility_table_title\"]")).getText());
+		}catch(Exception e) {
+			System.out.println("\n Catched Exception \n");
+		}
 		//adding data into list
 		List<Map<String, String>> ProgressTableDatafound = new ArrayList<Map<String, String>>();
 		List<WebElement> elements = driver.findElements(By.xpath("progresstable"));
@@ -360,6 +374,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 			waitForElement(progressdata, 40);
 			waitForElement(exporttable, 40);
 			scrollByElement(exporttable);
+			JSWaiter.waitJQueryAngular();
 			download(CurrentState.getBrowser(), exporttable, 30);
 			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExporttable));
 			
@@ -367,7 +382,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		
 	//printing visibility progress bar table data from downloaded excel sheet
 	public List<Map<String, String>> getExporttableData() throws Exception {
-		
+			JSWaiter.waitJQueryAngular();
 			exporttable();
 			String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+VisibilityExporttable), "Sheet0").getExcelTable();
 			List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
@@ -388,7 +403,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		
 	//To get total number  of entries at the bottom of the page
 	public  List<Map<String, String>> numberofentries() {
-		
+		JSWaiter.waitJQueryAngular();
 		waitForElement(progresstable,50);
 		List<Map<String, String>> totalentries = new ArrayList<Map<String, String>>();
 		//getting the text at the bottom of the table and split the string by space
@@ -417,7 +432,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		
 	//To get Vendors List displaying in the application
 	public List<Map<String, String>> verifySitevendors() {
-			
+			JSWaiter.waitJQueryAngular();
 			waitForElement(vendorslist, 40);
 			scrollByElement(vendorslist);
 			Map<String, String> kMap;
@@ -521,6 +536,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 			Map<String, String> kMap;
 			List<Map<String, String>> foundtable = new ArrayList<Map<String, String>>();
 			List<WebElement> elements = driver.findElements(By.xpath("progresstablevalue"));
+			JSWaiter.waitJQueryAngular();
 		    java.util.Iterator<WebElement> program = elements.iterator();
 		    kMap = new HashMap<String, String>();
 		        
