@@ -10,6 +10,7 @@ import com.dac.main.POM_TPSEE.TPSEE_Visibility_Page;
 import com.selenium.testevidence.SeleniumEvidence;
 import resources.BaseClass;
 import resources.CurrentState;
+import resources.ExcelHandler;
 
 public class TPSEE_Visibility_Test extends BaseClass {
 	
@@ -22,28 +23,40 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	public void navigateToVisibilityPage() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateTPSEE_Visibility();
-		/*
-		 */
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Visibility page");
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
-
-		// Assert.assertFalse( "sample error", true);
 	}
 	
 	//Test for applying filters to Visibilty Page
-	@SuppressWarnings("unchecked")
 	@Parameters({ "Filter" })
 	@Test(dependsOnMethods = { "navigateToVisibilityPage" }, groups = {
 			"smoke" }, description = "Verify Visibility page loads after filter applied")
-	public void verifyFilteringReportsVisibility(String Filter) throws Exception {
+	public void verifyFilteringReportsVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-		String[] filter = Filter.split(",");
-		data.applyFilter(filter[0], filter[1], filter[2], filter[3]);
-		//data.verify_pageloadCompletely(10);
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
-		addEvidence(CurrentState.getDriver(), "Test for applying filters to Visibilty Page", "yes");
+		try {	
+			int count = 1;
+			ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE"); wb.deleteEmptyRows();
+			TPSEE_Visibility_Page s = new TPSEE_Visibility_Page(CurrentState.getDriver());
+			for(int i=1;i<=wb.getRowCount();i++) {
+				System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
+				if(i>1) CurrentState.getDriver().navigate().refresh();
+				s.waitUntilLoad(CurrentState.getDriver());
+				String Group = wb.getCellValue(i, wb.seacrh_pattern("Group", 0).get(0).intValue());
+				String CountryCode = wb.getCellValue(i, wb.seacrh_pattern("Country", 0).get(0).intValue());
+				String State = wb.getCellValue(i, wb.seacrh_pattern("State", 0).get(0).intValue());
+				String City = wb.getCellValue(i, wb.seacrh_pattern("City", 0).get(0).intValue());
+				String Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
+				s.applyGlobalFilter(Group, CountryCode, State, City, Location);
+				System.out.println(Group+", "+CountryCode+", "+State+", "+City+", "+Location);
+				s.clickApplyFilterBTN();
+				BaseClass.addEvidence(CurrentState.getDriver(),
+						"Applied global filter: "+Group+", "+CountryCode+", "+State+", "+City+", "+Location+"", "yes");
+			}
+				}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
+	
 
 	//Test for export and overview report in Visibility Page
 	@SuppressWarnings("unchecked")
@@ -52,7 +65,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	public void verifyOverviewReportnExportVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		export = data.getExportData();
-		data.compareExprttoOvervw(export, data.getOverviewReport());
+		data.compareExprttoOvervw(data.getOverviewReport(),export);
 		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
 		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
@@ -60,7 +73,8 @@ public class TPSEE_Visibility_Test extends BaseClass {
 
 	//Test for Tooltip and overview report in Visibility Page
 	@SuppressWarnings("unchecked")
-	@Test(dependsOnMethods = { "verifyOverviewReportnExportVisibility" }, groups = { "smoke" })
+	@Test(dependsOnMethods = { "verifyOverviewReportnExportVisibility" }, groups = { "smoke" }, 
+							description = "Test to compare ToolTip Value and Overall Visibility Score")
 	public void verifyOverviewReportnTooltipVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
@@ -82,55 +96,42 @@ public class TPSEE_Visibility_Test extends BaseClass {
 				"Data of sitesTable", "yes");
 	}
 	
-	//Test for number of rows in Visibility Page
-	@SuppressWarnings("unchecked")
-	@Test(dependsOnMethods = {"verifySiteTablenExportVisibility"}, groups = {
-			"smoke" }, description = "Test for verifying progress bar in Visibility page")
-	public void verifySiteProgressnExporttableVisibility() throws Exception {
-			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-			data.compareexporttableDatannumberofentries(data.verifyprogresstablefound(),data.numberofentries());
-			CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-			CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
-			addEvidence(CurrentState.getDriver(),
-					"printing data found and total number of rows", "yes");
-	}
-	
-	//Test for number of rows in Visibility Page for not found locations
-		@SuppressWarnings("unchecked")
-		@Test(dependsOnMethods = {  "verifySiteProgressnExporttableVisibility"}, groups = {
-				"smoke" }, description = "Test for verifying progress bar in Visibility page")
-		public void verifySiteProgressNotFoundnExporttableVisibility() throws Exception {
-				data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-				data.compareexporttableDatannumberofentriesNotFound(data.verifyprogresstableNotfound(),data.numberofentries());
-				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
-				addEvidence(CurrentState.getDriver(),
-						"printing data found and total number of rows", "yes");
-		}
-	
 	//Test for compare number of rows from export table and table data in Visibility Page
 	@SuppressWarnings("unchecked")
-	@Test(dependsOnMethods = { "verifySiteProgressnExporttableVisibility"}, groups = {
+	@Test(dependsOnMethods = { "verifySiteTablenExportVisibility"}, groups = {
 			"smoke" }, description = "Test for verifying progress bar in Visibility page")
 	public void numberofentriesnExporttableVisibility() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-			data.compareexporttableDatantable(data.getExporttableData(),data.tabledata());
+			data.compareexporttableDatantable(data.DataTablefound(),data.getExporttableDataFound());
 			CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
 			CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 			addEvidence(CurrentState.getDriver(),
 					"Site level scores in Visibility site table  and overview visibility export found matching", "yes");
 	}
 	
+	//Test for compare number of rows from export table and table data in Visibility Page
+		@SuppressWarnings("unchecked")
+		@Test(dependsOnMethods = { "numberofentriesnExporttableVisibility"}, groups = {
+				"smoke" }, description = "Test for verifying progress bar in Visibility page")
+		public void numberofentriesnExporttableNotFoundVisibility() throws Exception {
+				data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+				data.compareexporttableDatantableNotFound(data.DataTableNotfound(),data.getExporttableDataNotFound());
+				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
+				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
+				addEvidence(CurrentState.getDriver(),
+						"Site level scores in Visibility site table  and overview visibility export found matching", "yes");
+		}
+	
 	//Test to compare vendors in the application (Country = US) in Visibility Page
-	@SuppressWarnings("unchecked")
-	@Test(dependsOnMethods = {"numberofentriesnExporttableVisibility"},groups = {"smoke"},
+		@SuppressWarnings("unchecked")
+		@Test(dependsOnMethods = {"numberofentriesnExporttableVisibility"},groups = {"smoke"},
 				description ="Verify Site Vendors List")
-	public void comparevendorsListnverifySitevendors() throws Exception{
-		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-		data.comparevendorsListnverifySitevendors(data.verifySitevendors(), data.vendorsList());
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
-		addEvidence(CurrentState.getDriver(),
+		public void comparevendorsListnverifySitevendors() throws Exception{
+			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+			data.comparevendorsListnverifySitevendors(data.verifySitevendors(), data.vendorsList());
+			CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
+			CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
+			addEvidence(CurrentState.getDriver(),
 				"Site Vendors in Visibility site vendors ", "yes");
 	}
 
