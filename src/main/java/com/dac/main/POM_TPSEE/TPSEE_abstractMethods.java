@@ -68,8 +68,8 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	@FindBy(css = "div#filter-options")
 	public WebElement filter_Panel;
 	
-	@FindBy(xpath="//*[@id='page-content']/h1")
-	private WebElement VisibilityPageTitle;
+	@FindBy(xpath="//h1[contains(text(),'')]")
+	private WebElement PageTitle;
 
 	// History graph
 	@FindBy(css = "rect.highcharts-plot-background")
@@ -110,7 +110,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		if (CountryCode == null || State == null || City == null | Location == null || Location.equalsIgnoreCase("null")) Location = "All Locations";
 		try {
 			waitForElement(filter_Panel, 25);
-			scrollByElement(VisibilityPageTitle);
+			scrollByElement(PageTitle);
 			waitUntilLoad(driver);
 			if(!Group.equals("None")) {			
 				clickelement(fiterGroup);
@@ -302,6 +302,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		        if(!values.equals("null"))
 		        {
 		            System.out.println("" +values);
+		            kMap.put("sites", values);
 		        }
 		        else
 		        {
