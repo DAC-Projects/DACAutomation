@@ -215,7 +215,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 				//adding data into map
 				Map<String, String> kMap = new HashMap<String, String>();
 				for (int i = 1; i < table.length; i++) {
-					kMap.put("compName", table[0][col]);
+					kMap.put("NoofLocation", table[0][col]);
 					kMap.put(table[i][0], table[i][col]);
 				}
 				exportData.add(kMap);
@@ -243,8 +243,8 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			waitForElement(tableresultset,50);
 			scrollByElement(tableresultset);
 			System.out.println("\n reading progress bar data table ******************* \n");
-			waitForElement(totalentries,50);
 			JSWaiter.waitJQueryAngular();
+			waitForElement(totalentries,50);
 			waitForElement(tableresultset,50);
 			String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
 			int page = Integer.parseInt(n);
@@ -331,9 +331,10 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 				//adding data into map
 				Map<String, String> kMap = new HashMap<String, String>();
 				for (int i = 1; i < table.length; i++) {
-					kMap.put("compName", table[0][col]);
+					kMap.put("rowdata", table[0][col]);
 					kMap.put(table[i][0], table[i][col]);
 				}
+				exporttableData.add(kMap);
 			}
 			return exporttableData;
 		}
@@ -342,10 +343,11 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			List<Map<String, String>> verifysitelinkdata) {
 		for (Map<String, String> m1 : exporttableData) {
 			for (Map<String, String> m2 : verifysitelinkdata) {
-				if (m1.get("Confirmed Info").equals(m2.get("Confirmed Info"))) {
-					Assert.assertEquals(m1.get("Displayed Name"), m2.get("Displayed Name"), "verifying list for " +m2.get("Confirmed Info"));
+				if (m1.get("rowdata").equals(m2.get("rowdata"))) {
+					/*Assert.assertEquals(m1.get("Displayed Name"), m2.get("Displayed Name"), "verifying list for " +m2.get("Confirmed Info"));
 					Assert.assertEquals(m1.get("Displayed Address"), m2.get("Displayed Address"), "verifying list for " +m2.get("Confirmed Info"));
-					Assert.assertEquals(m1.get("Displayed Phone Number"), m2.get("Displayed Phone Number"), "verifying list for " +m2.get("Confirmed Info"));
+					Assert.assertEquals(m1.get("Displayed Phone Number"), m2.get("Displayed Phone Number"), "verifying list for " +m2.get("Confirmed Info"));*/
+					Assert.assertEquals(m1.get("rowdata").contains(m2.get("rowdata")), true);
 				}
 			}
 		}
@@ -366,16 +368,19 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 				waitForElement(tableresult,40);
 				scrollByElement(tableresult);
 				System.out.println("\n reading progress bar data div ********************* \n");
+				JSWaiter.waitJQueryAngular();
 				waitForElement(tableresultset,50);
 				scrollByElement(tableresultset);
 				WebElement inaccuracychkbox = driver.findElement(By.xpath("//input[@id='toggle-inaccuracies']"));
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='toggle-inaccuracies']")));
+				JSWaiter.waitJQueryAngular();
 				inaccuracychkbox.click();
 				System.out.println("\n reading progress bar data table ******************* \n");
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='inaccuracy_results_info']")));
 				JSWaiter.waitJQueryAngular();
 				waitForElement(tableresultset,50);
 				String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
+			//	driver.findElement(By.xpath("(//*[@class='pagination']//a)[2]")).click();
 				int page = Integer.parseInt(n);
 				System.out.println("\n"+page);
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
@@ -448,6 +453,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 					kMap.put("compName", table[0][col]);
 					kMap.put(table[i][0], table[i][col]);
 				}
+				exporttableData.add(kMap);
 			}
 			return exporttableData;
 		}
@@ -456,10 +462,11 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 				List<Map<String, String>> verifyInAccuracysitelinkdata) {
 			for (Map<String, String> m1 : getInAccuracyExporttableData) {
 				for (Map<String, String> m2 : verifyInAccuracysitelinkdata) {
-					if (m1.get("Confirmed Info").equals(m2.get("Confirmed Info"))) {
-						Assert.assertEquals(m1.get("Displayed Name"), m2.get("Displayed Name"), "verifying list for " +m2.get("Confirmed Info"));
+					if (m1.get("rowdata").equals(m2.get("rowdata"))) {
+						/*Assert.assertEquals(m1.get("Displayed Name"), m2.get("Displayed Name"), "verifying list for " +m2.get("Confirmed Info"));
 						Assert.assertEquals(m1.get("Displayed Address"), m2.get("Displayed Address"), "verifying list for " +m2.get("Confirmed Info"));
-						Assert.assertEquals(m1.get("Displayed Phone Number"), m2.get("Displayed Phone Number"), "verifying list for " +m2.get("Confirmed Info"));
+						Assert.assertEquals(m1.get("Displayed Phone Number"), m2.get("Displayed Phone Number"), "verifying list for " +m2.get("Confirmed Info"));*/
+						Assert.assertEquals(m1.get("rowdata").contains(m2.get("rowdata")), true);
 					}
 				}
 			}
@@ -484,6 +491,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			scrollByElement(tableresultset);
 			WebElement ignoredchkbox = driver.findElement(By.xpath("//input[@id='toggle_overridden']"));
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='toggle_overridden']")));
+			JSWaiter.waitJQueryAngular();
 			ignoredchkbox.click();
 			System.out.println("\n reading progress bar data table ******************* \n");
 			waitForElement(totalentries,50);
@@ -548,8 +556,8 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			waitForElement(tableresult, 40);
 			waitForElement(tablebtn, 40);
 			//scrollByElement(tablebtn);
-			download(CurrentState.getBrowser(), tablebtn, 30);
 			JSWaiter.waitUntilJQueryReady();
+			download(CurrentState.getBrowser(), tablebtn, 30);
 			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+AccuracyExporttableIgnored));
 			}
 		
@@ -564,7 +572,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 				//adding data into map
 				Map<String, String> kMap = new HashMap<String, String>();
 				for (int i = 1; i < table.length; i++) {
-					kMap.put("compName", table[0][col]);
+					kMap.put("rowdata", table[0][col]);
 					kMap.put(table[i][0], table[i][col]);
 				}
 			}
@@ -575,11 +583,11 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			List<Map<String, String>> verifyIgnoredsitelinkdata) {
 		for (Map<String, String> m1 : getIgnoredExporttableData) {
 			for (Map<String, String> m2 : verifyIgnoredsitelinkdata) {
-				if (m1.get("Confirmed Info").equals(m2.get("Confirmed Info"))) {
-					Assert.assertEquals(m1.get("Displayed Name"), m2.get("Displayed Name"), "verifying list for " +m2.get("Confirmed Info"));
+				if (m1.get("rowdata").equals(m2.get("rowdata"))) {
+					/*Assert.assertEquals(m1.get("Displayed Name"), m2.get("Displayed Name"), "verifying list for " +m2.get("Confirmed Info"));
 					Assert.assertEquals(m1.get("Displayed Address"), m2.get("Displayed Address"), "verifying list for " +m2.get("Confirmed Info"));
-					Assert.assertEquals(m1.get("Displayed Phone Number"), m2.get("Displayed Phone Number"), "verifying list for " +m2.get("Confirmed Info"));
-			
+					Assert.assertEquals(m1.get("Displayed Phone Number"), m2.get("Displayed Phone Number"), "verifying list for " +m2.get("Confirmed Info"));*/
+					Assert.assertEquals(m1.get("rowdata").contains(m2.get("rowdata")), true);
 				}
 			}
 		}

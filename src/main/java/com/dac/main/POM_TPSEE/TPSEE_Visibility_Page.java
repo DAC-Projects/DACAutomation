@@ -348,7 +348,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	    				String headerText = headerTableRow.get(column).getText(), celtext ="";
 	    				if(column==1 & row < rows_count) {
 	    					celtext = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]")).getText();
-	    					System.out.println("/n"+celtext);
+	    					System.out.println("\n"+celtext);
 	    			}
 	    				kMap.put("rowdata", celtext);
 	    				tableCellValues.add(kMap);
@@ -415,7 +415,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	    				String headerText = headerTableRow.get(column).getText(), celtext ="";
 	    				if(column==1 & row < rows_count) {
 	    					celtext = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]")).getText();
-	    					System.out.println("/n"+celtext);
+	    					System.out.println("\n"+celtext);
 	    			}
 	    				kMap.put("rowdata", celtext);
 	    				tableCellValues.add(kMap);
@@ -466,7 +466,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 			for (int col = 1; col < colSize; col++) {
 				Map<String, String> kMap = new HashMap<String, String>();
 				for (int i = 1; i < table.length; i++) {
-					kMap.put("appvendor", table[0][col]);
+					kMap.put("rowdata", table[0][col]);
 					kMap.put(table[i][0], table[i][col]);
 				}
 				kMap.put("row", size);
@@ -504,7 +504,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 			return Vendors;
 			}
 			
-	//Adding Vendors List to Array of(Country = US) 
+	//Adding Vendors List to Array 
 	public List<Map<String, String>> vendorsList() throws Exception {
 							
 				List<Map<String, String>> Vendorslist = new ArrayList<Map<String, String>>();
@@ -522,10 +522,12 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 				List<Map<String, String>> vendorsList) {
 			for (Map<String, String> m1 : verifySitevendors) {
 				for (Map<String, String> m2 : vendorsList) {
-					Assert.assertEquals(m1.get("Vendors"), m2.get("Vendors"), "verifying list for " +m2.get("Vendors"));
+					
+						//Assert.assertEquals(m1.size(), m2.size());
+						Assert.assertEquals(m1.get("Vendors"), m2.get("Vendors"), "verifying list for " +m2.get("Vendors"));
+						//assertTrue(m1.equals(m2));
 				}
 			}
-			
 		}
 
 	//comparing data from excell sheet with table data of progress bar found
@@ -533,8 +535,10 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 				List<Map<String, String>> paginationfound) {
 			for (Map<String, String> m1 : getExporttableData) {
 				for (Map<String, String> m2 : paginationfound) {
-						Assert.assertEquals(m1.get("appvendor"), m2.get("rowdata"), "verifying list for " +m2.get("tableCellValues"));
-					}				
+					Assert.assertEquals(m1.size(), m2.size());
+					Assert.assertEquals(m1.get("rowdata"), m2.get("rowdata"), "verifying list for " +m2.get("tableCellValues"));
+					//assertTrue(m1.equals(m2));
+				}				
 			}			
 		}
 
@@ -569,7 +573,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		for (int col = 1; col < colSize; col++) {
 			Map<String, String> kMap = new HashMap<String, String>();
 			for (int i = 1; i < table.length; i++) {
-				kMap.put("appvendor", table[0][col]);
+				kMap.put("rowdata", table[0][col]);
 				kMap.put(table[i][0], table[i][col]);
 			}
 			kMap.put("row", size);
@@ -584,8 +588,10 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		
 		for (Map<String, String> m1 : dataTableNotfound) {
 			for (Map<String, String> m2 : exporttableDataNotFound) {
-					Assert.assertEquals(m1.get("appvendor"), m2.get("rowdata"), "verifying list for " +m2.get("tableCellValues"));
-				}				
+				//Assert.assertEquals(m1.size(), m2.size());
+				Assert.assertEquals(m1.get("rowdata"), m2.get("rowdata"), "verifying list for " +m2.get("tableCellValues"));
+				//assertTrue(m1.equals(m2));
+			}				
 		}		
 		
 	}

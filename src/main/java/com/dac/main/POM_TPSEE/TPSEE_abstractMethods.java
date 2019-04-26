@@ -107,7 +107,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		if (CountryCode == null || CountryCode.equalsIgnoreCase("null")) CountryCode = "All Countries";
 		if (CountryCode == null || State == null || State.equalsIgnoreCase("null")) State = "All States";
 		if (CountryCode == null || State == null || City == null || City.equalsIgnoreCase("null")) City = "All Cities"; 
-		if (CountryCode == null || State == null || City == null | Location == null || Location.equalsIgnoreCase("null")) Location = "All Locations";
+		if (CountryCode == null || State == null || City == null || Location == null || Location.equalsIgnoreCase("null")) Location = "All Locations";
 		try {
 			waitForElement(filter_Panel, 25);
 			scrollByElement(PageTitle);
@@ -267,7 +267,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 
 		for (Map<String, String> m1 : ovrwRprtData) {
 			for (Map<String, String> m2 : exportData) {
-				if (m1.get("compName").equals(m2.get("compName"))) {
+				if (m1.get("NoofLocation").equals(m2.get("compName"))) {
 					Assert.assertEquals(formatFloat(m1.get("score")), formatFloat(m2.get("overallscore")), 0.05f,
 							"Verifying score for" + m1.get("compName"));
 				}

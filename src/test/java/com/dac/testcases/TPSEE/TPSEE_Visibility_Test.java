@@ -122,9 +122,9 @@ public class TPSEE_Visibility_Test extends BaseClass {
 						"Site level scores in Visibility site table  and overview visibility export found matching", "yes");
 		}
 	
-	//Test to compare vendors in the application (Country = US) in Visibility Page
+	//Test to compare vendors in the application in Visibility Page
 		@SuppressWarnings("unchecked")
-		@Test(dependsOnMethods = {"numberofentriesnExporttableVisibility"},groups = {"smoke"},
+		@Test(dependsOnMethods = {"numberofentriesnExporttableNotFoundVisibility"},groups = {"smoke"},
 				description ="Verify Site Vendors List")
 		public void comparevendorsListnverifySitevendors() throws Exception{
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
