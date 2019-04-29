@@ -43,7 +43,7 @@ public class Navigationpage extends BasePage{
 	@FindBy(xpath = "//a[@href='/Dashboard/VaReport/']/span")
 	private WebElement Visibility;
 
-	@FindBy(xpath = "//a[@href='/Dashboard/AccuracyReport/']/span")
+	@FindBy(xpath = "//*[@id=\'Accuracy_Index\']")
 	private WebElement Accuracy;
 
 	@FindBy(xpath = "//a[@href='/Dashboard/AnalysisReport/']/span")
@@ -57,7 +57,7 @@ public class Navigationpage extends BasePage{
 	
 	//------------------------- SA and RRM -------------------------------------
 	
-	@FindBy(xpath = "//a[@href='/Dashboard/Review/ReviewReport/']/span")
+	@FindBy(xpath = "//a[@href='/Review/ReviewReport/']")
 	private WebElement ReviewReport;
 	
 	@FindBy(xpath = "//a[@href='/ReportCard/Index/']/span")
@@ -132,11 +132,41 @@ public class Navigationpage extends BasePage{
   
     @FindBy(xpath="//a[@href='/CompetitiveAnalysis/Analysis']")
     private WebElement CA_ContentAnalysis;
+
     
 	@FindBy(xpath="//a[@href='/CompetitiveAnalysis/Review']/span")
 	private WebElement CA_Reviewpage;
-	
+
+  //---------------------- TransparenSEE-------------------------------
+    @FindBy(id="VA")
+	private WebElement TPSEE_Visibility;
+
+    
+    public void  navigateTPSEE_Visibility() {
+  	  
+  	  clickelement(TPSEE_Visibility);   
+      System.out.println("Waiting for page to load**********");
+      waitUntilLoad(driver);
+  	}
+       
+    public void  navigateToVisibility() {
+    	  
+    	  clickelement(Visibility);   
+        System.out.println("Waiting for page to load**********");
+        waitUntilLoad(driver);
+    	}
+
+    public void  navigateTPSEE_Accuracy() {
+  	  
+  	  clickelement(Accuracy);   
+      System.out.println("Waiting for page to load**********");
+      waitUntilLoad(driver);
+  	}
+    
+    //-----CA
+
 	/** To click on CA_Visibility link in LHS to navigate to CA_Visibility page   */
+
 	public void  navigateCA_Visibility() {
 	  clickelement(CA_Visibility);   
       System.out.println("Waiting for page to load**********");
@@ -159,6 +189,7 @@ public class Navigationpage extends BasePage{
 		
 	/** To click on CA_ContentAnalysis link in LHS to navigate to CA_ContentAnalysis page   */
     public void navigateCA_ContentAnalysispage() {  
+    	clickelement(CA_ContentAnalysis);
        System.out.println("Waiting for page to load**********");
        waitUntilLoad(driver);  
     }
@@ -179,6 +210,9 @@ public class Navigationpage extends BasePage{
 
 	/** To click on SA_ReviewReport link in LHS to navigate to SA_ReviewReport page   */
 	public void navigateToSA_ReviewReport() {
+		JSWaiter.waitJQueryAngular();
+		wait.until(ExpectedConditions.visibilityOf(ReviewReport));
+		scrollByElement(ReportCard);
 		clickelement(ReviewReport);   
 	      System.out.println("Waiting for page to load**********");
 	      waitUntilLoad(driver);
@@ -274,6 +308,7 @@ public class Navigationpage extends BasePage{
 		clickelement(DBLangPopUp);
 	}
      
+
 	/**
 	   * For selecting/changing dashboard language in TSEE to specific language based on the country and language code
 	   * 

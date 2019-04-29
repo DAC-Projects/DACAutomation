@@ -85,6 +85,7 @@ public class ExtentTestNGITestListener
   	
   }
   
+  
   /**
    * Set parent "node" for extent reports store "browser" and "test name" from testng.xml
    * 
@@ -339,8 +340,12 @@ public class ExtentTestNGITestListener
     String downloadFolder = System.getProperty("user.dir") + "/downloads";
 
     if (browser.equalsIgnoreCase("Chrome")) {
-      WebDriverManager.chromedriver().version("73.0.3683.68").setup();
-      //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
+
+
+      //WebDriverManager.chromedriver().version("73.0.3683.68").setup(); 
+
+     WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
+
       HashMap<String, Object> chromePref = new HashMap<>();
       chromePref.put("download.default_directory", downloadFolder);
       chromePref.put("download.prompt_for_download", "false");
@@ -414,7 +419,6 @@ public class ExtentTestNGITestListener
 
   @Override
   public void onFinish(ISuite suite) {
-	  System.out.println("Suite Name : "+ suite.getName());
-
+	  System.out.println("Finish Suite Name : "+ suite.getName());
   }
 }
