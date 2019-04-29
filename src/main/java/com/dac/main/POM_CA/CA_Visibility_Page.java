@@ -3,7 +3,9 @@ package com.dac.main.POM_CA;
 import static org.testng.Assert.assertTrue;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,11 +18,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import resources.CurrentState;
 import resources.ExcelHandler;
+import resources.JSWaiter;
 
 public class CA_Visibility_Page extends CA_abstractMethods {
 
@@ -39,6 +43,32 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 
 	// locators
 	
+	@FindBy(id="myGroups")
+	private WebElement filterGroup;
+	
+	@FindBy(xpath="//*[@class='menu transition hidden']")
+	private WebElement filterDropDown;
+	
+	@FindBy(xpath="(//*[@id='divCIVisibility']/h1)")
+	private WebElement CATitleContent;
+	
+	// Global Filter locators
+
+		@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList")
+		private WebElement FilterCountry;
+
+		@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList1")
+		private WebElement FilterState;
+
+		@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList2")
+		private WebElement FilterCity;
+
+		@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList3")
+		private WebElement Filterlocation;
+
+		@FindBy(css = "button#apply_filter")
+		private WebElement Apply_filter;
+		
 	// export button
 	@FindBy(css = "button#btnExport>span")
 	private WebElement exportBtn;
@@ -67,7 +97,15 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 	 * @throws InterruptedException
 	 * @throws FileNotFoundException
 	 * @throws IOException
+	 * 
+	 * 
 	 */
+	
+//	Date date = new Date();
+//	   SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy_hmmss_a");
+//	   String formattedDate = sdf.format(date);
+	   
+	   
 	public void exportvisibilityReport() throws InterruptedException, FileNotFoundException, IOException {
 		waitForElement(overviewReport, 10);
 		waitForElement(exportBtn, 10);
@@ -140,6 +178,8 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 		return exportData;
 
 	}
+	
+	
 
 	/**
 	 * Compare export and table
