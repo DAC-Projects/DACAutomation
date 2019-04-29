@@ -1,22 +1,27 @@
 package com.dac.main.POM_TPSEE;
 
 import static org.testng.Assert.assertTrue;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
 import resources.CurrentState;
 import resources.ExcelHandler;
+import resources.JSWaiter;
 
 
 public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
@@ -25,10 +30,8 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	Actions action;
 	WebDriverWait wait;
 	
-	
 	//Navigating to TPSEE Visibility page
 	public TPSEE_Visibility_Page(WebDriver driver) {
-
 		super(driver);
 		this.driver = driver;
 		wait = new WebDriverWait(driver, 30);
@@ -67,7 +70,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath= "//a[contains(text(),'Click here to download your report')]")
 	private WebElement pdfclick;
 	
-	//locators to export pdf of some period of time
+	//locators to export pdf for period of time
 	@FindBy(xpath = "//a[@id='historyData']")
 	private WebElement historypdf;
 	
@@ -128,6 +131,9 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//*[@id='visibility_table']/div[2]")
 	private WebElement titlehead;
 	
+	@FindBy(xpath = "//*[@id='visibility_results']/tbody/tr")
+	private List<WebElement> reviewTableRow;
+	
 	String Vendortitle = "//*[@id='visibility_table_title']";
 	
 	//Displaying no.of entries
@@ -137,67 +143,107 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//*[@id='visibility_results_info']")
 	private WebElement totalentries;
 	
+	
+	/*-------------------------Pagination-----------------------*/
+	@FindBy(xpath = "(//*[@class='pagination']//a)")
+	private List<WebElement> pagination;
+	
+	@FindBy(xpath = "(//*[@class='pagination']//a)[1]")
+	private WebElement paginationPrev;
+	
+	@FindBy(xpath = "(//*[@class='pagination']//a)[last()]")
+	private WebElement paginationNext;
+	
+	@FindBy(xpath = "(//*[@class='pagination']//a)[last()-1]")
+	private List<WebElement> paginationLast;
+	/*-------------------------Pagination-----------------------*/
+	
 	List<WebElement> columns;
 	List<WebElement> rows;
 	
 	@FindBy(xpath = "//div[@class='container']/div[@class='row']/div[@class='col-lg-2 bar-chart-column']")
-	private List<WebElement> vendors;
-	
-	@FindBy(xpath = "//div[@class='container']/div[@class='row']/div[@class='col-lg-2 bar-chart-column']")
 	private WebElement vendorslist;
 	
-	String vend = "//div[@class='container']/div[@class='row']/div[@class='col-lg-2 bar-chart-column']";
+	public static List<Map<String, String>> tableCellValues = new ArrayList<Map<String, String>>();
+	/*-------------------------------------------------------------------*/
 	
 	/* Export visibility overview report below filter*/
 	public void exportvisibilityrpt() throws InterruptedException, FileNotFoundException, IOException{
-		//waitForElement(overall, 40);
-		waitForElement(exportBtn, 40);
-		scrollByElement(exportBtn);
-		clickelement(exportBtn);
-		waitForElement(csvexport, 40);
-		scrollByElement(csvexport);
-		clickelement(csvexport);
-		waitForElement(exportdate,40);
-		scrollByElement(exportdate);
-		clickelement(exportdate);
-		waitForElement(dtpicker,40);
-		scrollByElement(dtpicker);
-		waitForElement(date, 40);
-		scrollByElement(date);
-		clickelement(date);
-	    //download visibility report
-	    download(CurrentState.getBrowser(), export, 30);
-	    convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExport));
-	     
+		JSWaiter.waitJQueryAngular();
+		if(exportBtn.isEnabled() & exportBtn.isDisplayed()) {
+			wait.until(ExpectedConditions.visibilityOf(exportBtn));
+			//exportBTN.click();
+			action.moveToElement(exportBtn).click(exportBtn).perform();
+			Thread.sleep(5000);
+		}
+		if(csvexport.isEnabled() & csvexport.isDisplayed()) {
+			wait.until(ExpectedConditions.visibilityOf(csvexport));
+			action.moveToElement(csvexport).click(csvexport).perform();
+			Thread.sleep(5000);
+		}
+		if(exportdate.isEnabled() & exportdate.isDisplayed()) {
+			wait.until(ExpectedConditions.visibilityOf(exportdate));
+			action.moveToElement(exportdate).click(exportdate).perform();
+			Thread.sleep(5000);
+		}
+		if(dtpicker.isEnabled() & dtpicker.isDisplayed()) {
+			wait.until(ExpectedConditions.visibilityOf(dtpicker));
+			action.moveToElement(dtpicker).click(dtpicker).perform();
+			Thread.sleep(5000);
+		} 
+		if(date.isEnabled() & date.isDisplayed()) {
+			wait.until(ExpectedConditions.visibilityOf(date));
+			action.moveToElement(date).click(date).perform();
+			Thread.sleep(5000);
+		}
+		if(export.isEnabled() & export.isDisplayed()) {
+			wait.until(ExpectedConditions.visibilityOf(export));
+			action.moveToElement(export).click(export).perform();
+			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExport));
+			Thread.sleep(5000);
+			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
+			}else {
+			System.out.println("No Data Available in Visibility Page");
+		}
 	}
-	
 	
 	/* Export visibility overview report below filter in pdf for current date*/
 	public void exportvisibilityrptpdf() throws InterruptedException, FileNotFoundException, IOException{
-		//waitForElement(overall, 40);
-		waitForElement(exportBtn, 40);
+	    JSWaiter.waitJQueryAngular();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("btn btn-primary dropdown-toggle")));
 		scrollByElement(exportBtn);
-		clickelement(exportBtn);
-		waitForElement(pdfexport, 40);
-		scrollByElement(pdfexport);
-		clickelement(pdfexport);
-		waitForElement(currentpdf,40);
-		scrollByElement(currentpdf);
-		clickelement(currentpdf);
-		waitForElement(pdfclick,60);
-		scrollByElement(pdfclick);
-		clickelement(pdfclick);
-	    //download visibility report
-	    download(CurrentState.getBrowser(), pdfclick, 50);
-	    convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExportPdf));
+		if(exportBtn.isEnabled() & exportBtn.isDisplayed()) {
+			wait.until(ExpectedConditions.visibilityOf(exportBtn));
+			action.moveToElement(exportBtn).click(exportBtn).perform();
+			Thread.sleep(5000);
+		}
+		if(pdfexport.isEnabled() & pdfexport.isDisplayed()) {
+			wait.until(ExpectedConditions.visibilityOf(pdfexport));
+			action.moveToElement(pdfexport).click(pdfexport).perform();
+			Thread.sleep(5000);
+		}
+		if(currentpdf.isEnabled() & currentpdf.isDisplayed()) {
+			wait.until(ExpectedConditions.visibilityOf(currentpdf));
+			action.moveToElement(currentpdf).click(currentpdf).perform();
+			Thread.sleep(5000);
+		}
+		if(pdfclick.isEnabled() & pdfclick.isDisplayed()) {
+			wait.until(ExpectedConditions.visibilityOf(pdfclick));
+			action.moveToElement(pdfclick).click(pdfclick).perform();
+			Thread.sleep(5000);
+			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExportPdf));
+			Thread.sleep(5000);
+			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
+			}else {
+			System.out.println("No Data Available in Visibility Page");
+		}
 	     
 	}
 	
 	//To get overall score of visibility
 	public List<Map<String, String>> getOverviewReport() {
-		
+		JSWaiter.waitJQueryAngular();
 		waitForElement(overall, 40);
-		//scrollByElement(overall);
 		System.out.println("\n Reading overall ********** \n");
 		Map<String, String> kMap;
 		
@@ -216,7 +262,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 			return ovrwRprtData;
 	}
 	
-	
+	//Page Load Method
 	public void verify_pageloadCompletely(int timeout) {
 		if ( waitForElement(grphtooltip, timeout)
 				&& waitForElement(hstryGrph, timeout)
@@ -228,7 +274,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 
 	//printing visibility report data from downloaded excel sheet 
 	public List<Map<String, String>> getExportData() throws Exception {
-		
+		JSWaiter.waitJQueryAngular();
 		exportvisibilityrpt();
 		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+VisibilityExport), "Sheet0").getExcelTable();
 		List<Map<String, String>> exportData = new ArrayList<Map<String, String>>();
@@ -246,18 +292,8 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 
 	}
 	
-	//Compare Export file and graph values
-	/*public void compareExportnTable(List<Map<String, String>> exportData, List<Map<String, String>> siteTableData) {
-		
-		for (Map<String, String> m1 : exportData) {
-			for (Map<String, String> m2 : siteTableData) {
-			}
-		}
-	}*/
-		
 	//comparing values of graph and overall report
 	public void compareReportnGraph(List<Map<String, String>> tooltipdata, List<Map<String, String>> ovrwRprtData) {
-
 		for (Map<String, String> m1 : ovrwRprtData) {
 			for (Map<String, String> m2 : tooltipdata) {
 				Assert.assertEquals(formatFloat(m1.get("score")), 
@@ -266,10 +302,10 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 				}
 			}
 		}
-
-	//Clicking on progress bar and getting the data from the table for found
-	public List<Map<String, String>> verifyprogresstablefound(){
-		
+	
+	// To Get Data from the Progress Bar Table Found
+	public List<Map<String, String>> DataTablefound() throws InterruptedException{
+		JSWaiter.waitJQueryAngular();
 		waitForElement(siteTable, 40);
 		waitForElement(progressfound, 40);
 		//getting into progressbar found listing
@@ -284,140 +320,164 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		scrollByElement(progresstable);
 		System.out.println("\n reading progress bar data table ******************* \n");
 		waitForElement(totalentries,50);
+		JSWaiter.waitJQueryAngular();
 		waitForElement(progresstablevalue,50);
-		String[][] table = readTable(progresstablevalue);
-		int n = table.length;
-		System.out.println("\n" +n);
-		System.out.println(driver.findElement(By.xpath("//*[@id='visibility_table_title']")).getText());
-		//adding data into list
-		List<Map<String, String>> ProgressTableDatafound = new ArrayList<Map<String, String>>();
-		List<WebElement> elements = driver.findElements(By.xpath("progresstable"));
-		waitForElement(progresstable, 40);
-	    java.util.Iterator<WebElement> program = elements.iterator();
-	        //reading site data
-	    while (program.hasNext()) {
-	        String values = program.next().getText();
-	        if(!values.equals("null"))
-	        {
-	            System.out.println("\n" +values);
-	            
-	        }
-	        else
-	        {
-	            System.out.println("\n No sites displayed \n");
-	        }
-	     }
-	    return ProgressTableDatafound;
-
+		String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
+		int page = Integer.parseInt(n);
+		System.out.println("\n"+page);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
+		String entiresText = driver.findElement(By.className("dataTables_info")).getText();
+		entiresText = entiresText.substring(entiresText.indexOf("("));
+		WebElement TableTitle = driver.findElement(By.xpath("//*[@id='visibility_table_title']"));
+		scrollByElement(TableTitle);
+		int count = 0;
+	    if(paginationNext.isDisplayed()) {
+	    	for(int i=1;i<=page;i++) {	//Loop will execute till the all the row of table completes.
+	    		scrollByElement(TableTitle);
+	    		List < WebElement > rows_table = reviewTableRow;	//To locate rows of table. 
+	    		int rows_count = rows_table.size();		//To calculate no of rows In table.
+	    		count = count + rows_count;
+	    		Map<String, String> kMap = new HashMap<String, String>();
+	    		for (int row = 0; row < rows_count; row++) { 
+	    			List < WebElement > Columns_row = rows_table.get(row).findElements(By.tagName("td"));	//To locate columns(cells) of that specific row.
+	    			int columns_count = Columns_row.size();		//To calculate no of columns (cells). In that specific row.
+	    			int noOfRows=row+1;
+	    			//System.out.println("Number of cells In Row " + noOfRows + " are " + columns_count);
+	    			for (int column = 0; column < columns_count; column++) {	//Loop will execute till the last cell of that specific row.
+	    				List<WebElement> headerTableRow=titlehead.findElements(By.tagName("th"));
+	    				String headerText = headerTableRow.get(column).getText(), celtext ="";
+	    				if(column==1 & row < rows_count) {
+	    					celtext = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]")).getText();
+	    					System.out.println("\n"+celtext);
+	    			}
+	    				kMap.put("rowdata", celtext);
+	    				tableCellValues.add(kMap);
+	    				//System.out.println("Cell Value of row " + noOfRows + " and column " + headerText + " Is : " + celtext);
+	    			}
+	    			//System.out.println("-------------------------------------------------- ");
+	    		}
+	    		if(paginationNext.isEnabled()) {
+	    			scrollByElement(paginationNext);
+	    			paginationNext.click();
+	    			Thread.sleep(4000);
+	    		}
+	    	}
+	    }
+	    System.out.println("Total number of entries in table : "+count);
+	    Assert.assertTrue(entiresText.contains(""+count+""), "Table Data count matches with total enties count");
+	    return tableCellValues;
 	}
 		
 	//Clicking on progress bar and getting the data from the table for Not Found list
-	public List<Map<String, String>> verifyprogresstableNotfound(){
-		
+	public List<Map<String, String>> DataTableNotfound() throws InterruptedException{
+		JSWaiter.waitJQueryAngular();
 		waitForElement(siteTable, 40);
 		waitForElement(progressNotfound, 40);
 		//getting into progressbar found listing
 		scrollByElement(progressNotfound);
 		//clicking on found listing progress bar
 		clickelement(progressNotfound);
+		scrollByElement(progressNotfound);
+		clickelement(progressNotfound);
 		System.out.println("\n progress bar clicked \n");
 		waitForElement(progressdata,40);
 		scrollByElement(progressdata);
-		//System.out.println("\n reading progress bar data div ********************* \n");
-		waitForElement(progresstable,40);
+		System.out.println("\n reading progress bar data div ********************* \n");
+		JSWaiter.waitJQueryAngular();
+		waitForElement(progresstable,50);
 		scrollByElement(progresstable);
 		System.out.println("\n reading progress bar data table ******************* \n");
-		rows = progresstablevalue.findElements(By.tagName("tr"));
-		String[][] table = readTable(progresstable);
-		int len = table[0].length;
-		System.out.println("\n Length of table is :" +len);
-		waitForElement(progresstable,30);
-		System.out.println(driver.findElement(By.xpath("//*[@id=\"visibility_table_title\"]")).getText());
-		//adding data into list
-		List<Map<String, String>> ProgressTableDatafound = new ArrayList<Map<String, String>>();
-		List<WebElement> elements = driver.findElements(By.xpath("progresstable"));
-		waitForElement(progresstable,30);
-		java.util.Iterator<WebElement> program = elements.iterator();
-	        //reading site data
-	    while (program.hasNext()) {
-	        String values = program.next().getText();
-	        if(!values.equals("null"))
-	        {
-	            System.out.println("\n" +values);
-	            
-	        }
-	        else
-	        {
-	            System.out.println("\n No sites displayed in application\n");
-	        }
+		waitForElement(totalentries,50);
+		waitForElement(progresstablevalue,50);
+		String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
+		int page = Integer.parseInt(n);
+		System.out.println("\n"+page);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
+		String entiresText = driver.findElement(By.className("dataTables_info")).getText();
+		entiresText = entiresText.substring(entiresText.indexOf("("));
+		WebElement TableTitle = driver.findElement(By.xpath("//*[@id='visibility_table_title']"));
+		scrollByElement(TableTitle);
+		int count = 0;
+	    if(paginationNext.isDisplayed()) {
+	    	for(int i=1;i<=page;i++) {	//Loop will execute till the all the row of table completes.
+	    		scrollByElement(TableTitle);
+	    		List < WebElement > rows_table = reviewTableRow;	//To locate rows of table. 
+	    		int rows_count = rows_table.size();		//To calculate no of rows In table.
+	    		count = count + rows_count;
+	    		Map<String, String> kMap = new HashMap<String, String>();
+	    		for (int row = 0; row < rows_count; row++) { 
+	    			List < WebElement > Columns_row = rows_table.get(row).findElements(By.tagName("td"));	//To locate columns(cells) of that specific row.
+	    			int columns_count = Columns_row.size();		//To calculate no of columns (cells). In that specific row.
+	    			int noOfRows=row+1;
+	    			//System.out.println("Number of cells In Row " + noOfRows + " are " + columns_count);
+	    			for (int column = 0; column < columns_count; column++) {	//Loop will execute till the last cell of that specific row.
+	    				List<WebElement> headerTableRow=titlehead.findElements(By.tagName("th"));
+	    				String headerText = headerTableRow.get(column).getText(), celtext ="";
+	    				if(column==1 & row < rows_count) {
+	    					celtext = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]")).getText();
+	    					System.out.println("\n"+celtext);
+	    			}
+	    				kMap.put("rowdata", celtext);
+	    				tableCellValues.add(kMap);
+	    			//	System.out.println("Cell Value of row " + noOfRows + " and column " + headerText + " Is : " + celtext);
+	    			}
+	    			//System.out.println("-------------------------------------------------- ");
+	    		}
+	    		if(paginationNext.isEnabled()) {
+	    			scrollByElement(paginationNext);
+	    			paginationNext.click();
+	    			Thread.sleep(4000);
+	    		}
+	    	}
 	    }
-	    return ProgressTableDatafound;
+	    System.out.println("Total number of entries in table : "+count);
+	    Assert.assertTrue(entiresText.contains(""+count+""), "Table Data count matches with total enties count");
+	    return tableCellValues;
 	}
 		
 	//exporting progress bar table data
-	public void exporttable() throws FileNotFoundException, IOException, InterruptedException {
-						
+	public void exporttablefound() throws FileNotFoundException, IOException, InterruptedException {				
+			JSWaiter.waitJQueryAngular();
 			waitForElement(progressdata, 40);
-			waitForElement(exporttable, 40);
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 			scrollByElement(exporttable);
-			download(CurrentState.getBrowser(), exporttable, 30);
-			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExporttable));
-			
+			if(exporttable.isEnabled() & exporttable.isDisplayed()) {
+				wait.until(ExpectedConditions.visibilityOf(exporttable));
+				action.moveToElement(exporttable).click(exporttable).perform();
+				Thread.sleep(5000);
+				convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExporttableFound));
+				Thread.sleep(5000);
+				//System.out.println("downloaded file name: "+getLastModifiedFile("./downloads"));
+				CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
+				
+			}else {
+				System.out.println("No Data Available in Visibility Page");
+			}
 		}
 		
 	//printing visibility progress bar table data from downloaded excel sheet
-	public List<Map<String, String>> getExporttableData() throws Exception {
-		
-			exporttable();
-			String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+VisibilityExporttable), "Sheet0").getExcelTable();
+	public List<Map<String, String>> getExporttableDataFound() throws Exception {
+			JSWaiter.waitJQueryAngular();
+			exporttablefound();
+			String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+VisibilityExporttableFound), "Sheet0").getExcelTable();
 			List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
-			int colSize = table.length;
+			int colSize = table[0].length;
+			String size = Integer.toString(colSize);
 			for (int col = 1; col < colSize; col++) {
 				Map<String, String> kMap = new HashMap<String, String>();
 				for (int i = 1; i < table.length; i++) {
-					kMap.put("appvendor", table[0][col]);
+					kMap.put("rowdata", table[0][col]);
 					kMap.put(table[i][0], table[i][col]);
 				}
-				/*String row = Integer.toString(colSize);
-				kMap.put("count", colsize);*/
-				//System.out.println("\n The total number of rows \n" +colSize );
+				kMap.put("row", size);
 				exporttableData.add(kMap);
 			}
 			return exporttableData;
 		}
-		
-	//To get total number  of entries at the bottom of the page
-	public  List<Map<String, String>> numberofentries() {
-		
-		waitForElement(progresstable,50);
-		List<Map<String, String>> totalentries = new ArrayList<Map<String, String>>();
-		//getting the text at the bottom of the table and split the string by space
-		List<WebElement> col = driver.findElements(By.xpath("//*[@id='visibility_results']/tbody"));
-		System.out.println(col.size());
-		rows = progresstablevalue.findElements(By.tagName("tr"));
-		waitForElement(progresstablevalue,50);
-		int count = rows.size();
-		System.out.println("\n Total number of rows : "+count);
-		return totalentries;
-		}
 	
-	//comparing total entries in excel of visibilityreport table and test from bottom of the table
-	public void compareexporttableDatannumberofentries(List<Map<String, String>> verifyprogresstablefound,
-			List<Map<String, String>> numberofentries) {
-		
-		for (Map<String, String> m1 : verifyprogresstablefound) {
-			for (Map<String, String> m2 : numberofentries) {
-				if (m1.get("verifyprogresstablefound").equals(m2.get("numberofentries"))) {
-					Assert.assertEquals(formatFloat(m1.get("row")), formatFloat(m2.get("entry")), 0.05f,
-							"Verifying score for" + m1.get("row"));
-				}
-			}
-		}
-	}
-		
 	//To get Vendors List displaying in the application
 	public List<Map<String, String>> verifySitevendors() {
-			
+			JSWaiter.waitJQueryAngular();
 			waitForElement(vendorslist, 40);
 			scrollByElement(vendorslist);
 			Map<String, String> kMap;
@@ -431,8 +491,8 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		        String values = program.next().getText();
 		        if(!values.equals("null"))
 		        {
+		        	kMap.put("vendors", values);
 		        	System.out.println("\n" +values);
-		            
 		        }
 		        else
 		        {
@@ -444,55 +504,17 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 			return Vendors;
 			}
 			
-	//Adding Vendors List to Array of(Country = US) 
-	public List<Map<String, String>> vendorsList() {
+	//Adding Vendors List to Array 
+	public List<Map<String, String>> vendorsList() throws Exception {
 							
 				List<Map<String, String>> Vendorslist = new ArrayList<Map<String, String>>();
 				// Creation of HashMap 
 		    	  Map<String, String> kMap = new HashMap<String, String>();
-		       // Adding values to HashMap as ("keys", "values") 
-			        kMap.put("1", "Bing"); 
-			        kMap.put("2", "Citysearch"); 
-			        kMap.put("3", "Facebook"); 
-			        kMap.put("4", "Foursquare"); 
-			        kMap.put("5", "Google"); 
-			        kMap.put("6", "MerchantCircle"); 
-			        kMap.put("7", "Superpages"); 
-			        kMap.put("8", "Yahoo"); 
-			        kMap.put("9", "TripAdvisor"); 
-			        kMap.put("10", "Yelp"); 
-			        kMap.put("11", "YP.com"); 
-			        kMap.put("12", "Zomato"); 
-			        kMap.put("13", "OpenTable"); 
-		  
-			        System.out.println("\n Testing .isEmpty() method"); 
-		        
-		      		        // Checks whether the HashMap is empty or not 
-		        // Not empty so printing the values 
-		        if (!kMap.isEmpty())
-		        { 
-		            System.out.println("\n HashMap Geeks is notempty"); 
-		            
-		            // Accessing the contents of HashMap through Keys 
-		            System.out.println("\n" + kMap.get("1")); 
-		            System.out.println("\n" + kMap.get("2")); 
-		            System.out.println("\n" + kMap.get("3")); 
-		            System.out.println("\n" + kMap.get("4"));
-		            System.out.println("\n" + kMap.get("5"));
-		            System.out.println("\n" + kMap.get("6"));
-		            System.out.println("\n" + kMap.get("7"));
-		            System.out.println("\n" + kMap.get("8"));
-		            System.out.println("\n" + kMap.get("9"));
-		            System.out.println("\n" + kMap.get("10"));
-		            System.out.println("\n" + kMap.get("11"));
-		            System.out.println("\n" + kMap.get("12"));
-		            System.out.println("\n" + kMap.get("13"));
-		  
-		            // size() method prints the size of HashMap. 
-		            System.out.println("\n Size Of HashMap : " + kMap.size()); 
-		          // Vendorslist.add(kMap);
-		        } 			
-			return Vendorslist;	
+		    	  String[][] vendors = new ExcelHandler("./data/VendorList.xlsx","VendorList").getExcelTable();
+		    	  kMap.put("vendors", vendors.toString());
+		    	  System.out.println("\n"+kMap.size());
+		      	  Vendorslist.add(kMap);
+		       	  return Vendorslist;	
 			}
 
 	//Comparing Vendors List from application and Vendors List from Array
@@ -500,76 +522,77 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 				List<Map<String, String>> vendorsList) {
 			for (Map<String, String> m1 : verifySitevendors) {
 				for (Map<String, String> m2 : vendorsList) {
-					if (m1.get("verifySitevendors").equals(m2.get("vendorsList"))) {
-						
-						//Assert.assertArrayEquals(verifySitevendors(), vendorsList());
-						//Assert.assertEquals(m1.get(verifySitevendors), m2.get(vendorsList), "verifying list for " +m2.get(verifySitevendors));
-						Assert.assertEquals(m1.values(), m2.values(), "verify site vendors");
-						//assertEquals(verifySitevendors, vendorsList);
-						
-					}
+					
+						//Assert.assertEquals(m1.size(), m2.size());
+						Assert.assertEquals(m1.get("Vendors"), m2.get("Vendors"), "verifying list for " +m2.get("Vendors"));
+						//assertTrue(m1.equals(m2));
 				}
 			}
-			
-		}
-
-	//Getting the table data of the progress bar
-	public List<Map<String, String>> tabledata() {
-			
-			waitForElement(progresstablevalue, 20);
-			scrollByElement(progresstablevalue);
-			Map<String, String> kMap;
-			List<Map<String, String>> foundtable = new ArrayList<Map<String, String>>();
-			List<WebElement> elements = driver.findElements(By.xpath("progresstablevalue"));
-		    java.util.Iterator<WebElement> program = elements.iterator();
-		    kMap = new HashMap<String, String>();
-		        
-		    //reading found table data
-		    while (program.hasNext()) {
-		        String values = program.next().getText();
-		        if(!values.equals("null"))
-		        {
-		        	System.out.println("\n" +values);
-		            
-		        }
-		        else
-		        {
-		            System.out.println("\n No sites displayed \n");
-		        }
-		        //adding into the map
-		        foundtable.add(kMap);
-		    }
-			return foundtable;
 		}
 
 	//comparing data from excell sheet with table data of progress bar found
 	public void compareexporttableDatantable(List<Map<String, String>> getExporttableData,
-				List<Map<String, String>> tabledata) {
+				List<Map<String, String>> paginationfound) {
 			for (Map<String, String> m1 : getExporttableData) {
-				for (Map<String, String> m2 : tabledata) {
-					if (m1.get("Name").equals(m2.get("Name"))) {
-						Assert.assertEquals(m1.get("City"), m2.get("City"), "verifying list for " +m2.get("Name"));
-						//Assert.assertEquals(m1.values(), m2.values(), "verify site vendors");
-						//Assert.assertEquals(m1, m2, "verify for table report");
-					}
-				}
-			}
-			
+				for (Map<String, String> m2 : paginationfound) {
+					Assert.assertEquals(m1.size(), m2.size());
+					Assert.assertEquals(m1.get("rowdata"), m2.get("rowdata"), "verifying list for " +m2.get("tableCellValues"));
+					//assertTrue(m1.equals(m2));
+				}				
+			}			
 		}
 
-	//comparing number of entries for not found locations
-	public void compareexporttableDatannumberofentriesNotFound(List<Map<String, String>> verifyprogresstableNotfound,
-			List<Map<String, String>> numberofentries) {
-		
-		for (Map<String, String> m1 : verifyprogresstableNotfound) {
-			for (Map<String, String> m2 : numberofentries) {
-				if (m1.get("verifyprogresstablefound").equals(m2.get("numberofentries"))) {
-					Assert.assertEquals(formatFloat(m1.get("row")), formatFloat(m2.get("entry")), 0.05f,
-							"Verifying score for" + m1.get("row"));
-				}
-			}
+	//exporting progress bar Not found table data
+	public void exporttableNotfound() throws FileNotFoundException, IOException, InterruptedException {
+		JSWaiter.waitJQueryAngular();
+		waitForElement(progressdata, 40);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
+		scrollByElement(exporttable);
+		if(exporttable.isEnabled() & exporttable.isDisplayed()) {
+			wait.until(ExpectedConditions.visibilityOf(exporttable));
+			action.moveToElement(exporttable).click(exporttable).perform();
+			Thread.sleep(5000);
+			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExporttableNotFound));
+			Thread.sleep(5000);
+			//System.out.println("downloaded file name: "+getLastModifiedFile("./downloads"));
+			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
+			
+		}else {
+			System.out.println("No Data Available in Visibility Page");
 		}
-		
+	}
+	
+	//printing visibility progress bar Not found table data from downloaded excel sheet
+	public List<Map<String, String>> getExporttableDataNotFound() throws Exception {
+		JSWaiter.waitJQueryAngular();
+		exporttableNotfound();
+		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+VisibilityExporttableNotFound), "Sheet0").getExcelTable();
+		List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
+		int colSize = table[0].length;
+		String size = Integer.toString(colSize);
+		for (int col = 1; col < colSize; col++) {
+			Map<String, String> kMap = new HashMap<String, String>();
+			for (int i = 1; i < table.length; i++) {
+				kMap.put("rowdata", table[0][col]);
+				kMap.put(table[i][0], table[i][col]);
+			}
+			kMap.put("row", size);
+			exporttableData.add(kMap);
+		}
+		return exporttableData;
 	}
 
+	//comparing data from excell sheet with table data of progress bar Not found
+	public void compareexporttableDatantableNotFound(List<Map<String, String>> dataTableNotfound,
+			List<Map<String, String>> exporttableDataNotFound) {
+		
+		for (Map<String, String> m1 : dataTableNotfound) {
+			for (Map<String, String> m2 : exporttableDataNotFound) {
+				//Assert.assertEquals(m1.size(), m2.size());
+				Assert.assertEquals(m1.get("rowdata"), m2.get("rowdata"), "verifying list for " +m2.get("tableCellValues"));
+				//assertTrue(m1.equals(m2));
+			}				
+		}		
+		
+	}
 }	

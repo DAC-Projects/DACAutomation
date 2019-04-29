@@ -8,40 +8,12 @@
 </listeners>
 
 
-<test name="TransparenSEE" parallel="tests" group-by-instances="true">
-   <parameter name="Filter" value= "US,Alaska,Anchorage,All Locations"/>
+ <test name="TransparenSEE" parallel="tests" group-by-instances="true">
+   <!-- <parameter name="Filter" value= "US,All States,All Cities,All Locations"/> -->
    <parameter name="browser" value="chrome"/>
     <classes>
 	 	<class name= "com.dac.testcases.TPSEE.TPSEE_Visibility_Test" /> 
-		<!-- <class name= "com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />  -->
+		<!-- <class name= "com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" /> --> 
      </classes>
  </test>
- 
-<!-- <test name="TransparenSEEFirefox" parallel="tests" group-by-instances="true">
-   <parameter name="Filter" value= "US,Alaska,Anchorage,All Locations"/>
-   <parameter name="browser" value="firefox"/>
-    <classes>
-	 	<class name= "com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />  
-		<class name= "com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" /> 
-     </classes>
- </test> -->
-  
- <!-- <test name="TransparenSEEAllLocation" parallel="tests" group-by-instances="true">
-   <parameter name="Filter" value= "US,Alaska,Anchorage,All Locations"/>
-  <parameter name="browser" value="ie"/>
-    <classes>
-	 	<class name= "com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />  
-		<class name= "com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" /> 
-     </classes>
-  </test> -->
-  
- <!--  <test name="TransparenSEEAllLocation" parallel="tests" group-by-instances="true">
-   <parameter name="Filter" value= "All Countries"/>
-  <parameter name="browser" value="chrome"/>
-    <classes>
-	 	<class name= "com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />  
-		<class name= "com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" /> 
-     </classes>
-  </test> -->
-  
 </suite>

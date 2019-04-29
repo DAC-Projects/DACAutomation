@@ -149,6 +149,12 @@ public class Navigationpage extends BasePage{
       waitUntilLoad(driver);
   	}
        
+    public void  navigateToVisibility() {
+    	  
+    	  clickelement(Visibility);   
+        System.out.println("Waiting for page to load**********");
+        waitUntilLoad(driver);
+    	}
 
     public void  navigateTPSEE_Accuracy() {
   	  
