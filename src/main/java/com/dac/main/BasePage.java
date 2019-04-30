@@ -35,6 +35,7 @@ import org.testng.Assert;
 
 import resources.CurrentState;
 import resources.DateFormats;
+import resources.JSWaiter;
 
 /***/
 public class BasePage {
@@ -59,7 +60,7 @@ public class BasePage {
    * 
    * @param driver : for which driver need to wait till page's script get loaded		*/
   public void waitUntilLoad(WebDriver driver) {
-    
+	  JSWaiter.waitJQueryAngular();
     // WebDriverWait wait = new WebDriverWait(driver, 30);
     try {
       // wait for jQuery to load
@@ -126,7 +127,7 @@ public class BasePage {
    */
   public synchronized void download(String browser, WebElement downloadBTN, int timeout)
       throws InterruptedException {
-
+	  JSWaiter.waitJQueryAngular(); 
     File dwnldDir = new File("./downloads");
     long initialSize = dwnldDir.listFiles().length;
     System.out.println("directory size is " + initialSize);// check file size
@@ -173,6 +174,7 @@ public class BasePage {
    * 
    * @param element : element/button to click		*/
   public void clickelement(WebElement element) {
+	  JSWaiter.waitJQueryAngular(); 
     wait.until(ExpectedConditions.visibilityOf(element));
      	try {
     	      if (element.isDisplayed() & element.isEnabled()) {
@@ -249,6 +251,7 @@ public class BasePage {
    */
   public String getClipboardContents(WebElement element)
       throws UnsupportedFlavorException, IOException {
+	  JSWaiter.waitJQueryAngular(); 
 	  String eleText = "";
 	  if(element.isEnabled()) {
 		  System.out.println("if block starts");
@@ -314,6 +317,7 @@ public class BasePage {
    * 
    * Used for weblet testing, tool tip text verification etc. 		*/
   public void verifyText(WebElement e, String eText) {
+	  JSWaiter.waitJQueryAngular(); 
     String aText = e.getText().trim();
     System.out.println(aText);
     Assert.assertEquals(aText, eText);
@@ -324,7 +328,7 @@ public class BasePage {
    * 
    * @param element : to scroll the web page till the specific web element		*/
   public void scrollByElement(WebElement element) {
-
+	  JSWaiter.waitJQueryAngular(); 
     JavascriptExecutor js = (JavascriptExecutor) driver;
     int yLoc = element.getLocation().getY() - 10;
     int xLoc = element.getLocation().getX();
@@ -355,6 +359,7 @@ public class BasePage {
    * @return
    */
   public boolean isAlertPresent() {
+	  JSWaiter.waitJQueryAngular(); 
     try {
       driver.switchTo().alert();
       return true;
@@ -372,6 +377,7 @@ public class BasePage {
    */
   public boolean waitForElement(WebElement elemnt, int timeSec) {
     try {
+    	JSWaiter.waitJQueryAngular(); 
       WebDriverWait wait = new WebDriverWait(driver, timeSec);
     /*  if ((wait.until(ExpectedConditions.visibilityOf(elemnt)) != null)
           || (wait.until(ExpectedConditions.visibilityOf(elemnt)) != false) {
@@ -392,6 +398,7 @@ public class BasePage {
    * @param table : webelement of UI table for reading the table
    */
   public String[][] readTable(WebElement table) {
+	  JSWaiter.waitJQueryAngular(); 
     driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
     List<WebElement> allRows = table.findElements(By.tagName("tr"));
     String[][] rowResults = new String[allRows.size()][];
