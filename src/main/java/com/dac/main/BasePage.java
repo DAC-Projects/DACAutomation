@@ -101,7 +101,7 @@ public class BasePage {
    * @param timeout : waiting time to download the file
    * @param dir : directory where the file will download			 */
   public void checkFileSizeIncrsd(long initialSize, int timeout, File dir) {
-
+	  JSWaiter.waitJQueryAngular();
     WebDriverWait dwnldwait = new WebDriverWait(driver, timeout);
 
     ExpectedCondition<Boolean> chkFileDownld = new ExpectedCondition<Boolean>() {

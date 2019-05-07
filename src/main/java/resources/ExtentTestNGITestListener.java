@@ -92,7 +92,7 @@ public class ExtentTestNGITestListener
    * @see org.testng.ITestListener#onStart(org.testng.ITestContext)		*/
   @Override
   public synchronized void onStart(ITestContext context) {
-
+	 
     CurrentState
         .setBrowser(context.getCurrentXmlTest().getParameter("browser"));
     CurrentState.setTestName(context.getName());

@@ -140,7 +140,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			assertTrue(false, "Page not loaded completely");
 	}
 	
-	//overall accuracy score
+	//get overall accuracy score
 	@Override
 	public List<Map<String, String>> getOverviewReport() {
 	JSWaiter.waitJQueryAngular();

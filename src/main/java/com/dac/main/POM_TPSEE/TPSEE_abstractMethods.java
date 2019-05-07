@@ -42,7 +42,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		PageFactory.initElements(driver, this);
 	}
 
-	// Global Filter locators
+	// Global Filter locators 
 
 	@FindBy(xpath="//*[@class='menu transition visible']")
 	private WebElement filterDropDown;

@@ -18,7 +18,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 	Navigationpage np;
 	TPSEE_Accuracy_Page data;
 
-	
+	//Navigation Test
 	@Test(groups = { "smoke" }, description = "Test for navigating to Accuracy page")
 	public void navigateToAccuracyPage() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
@@ -29,6 +29,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		// Assert.assertFalse( "sample error", true);
 	}
 	
+	//Apply Filters
 	@Test(dependsOnMethods = { "navigateToAccuracyPage" }, groups = {
 			"smoke" }, description = "Verify Accuracy page loads after filter applied")
 	public void verifyFilteringReportsAccuracy() throws Exception {
