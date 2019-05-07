@@ -25,7 +25,7 @@ import resources.formatConvert;
 
 /**
  * Before executing this Test Class make sure that you have added updated Data File as 
- * file Name&Path: ".\\filesToUpload\\NewSample.xlsx"
+ * file Name&Path: ".\\data\\NewSample.xlsx"
  * sheetName = "Sheet1"		*/
 public class SA_RevewReportCard_Test extends BaseClass {
 
