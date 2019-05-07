@@ -61,7 +61,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 	
 
 	
-/*	//Test for export and overview report in Accuracy Page
+	//Test for export and overview report in Accuracy Page
 	@SuppressWarnings("unchecked")
 	@Test(dependsOnMethods = { "navigateToAccuracyPage" ,"verifyFilteringReportsAccuracy"}, groups = {
 					"smoke" }, description = "Test for overview export and export verification")
@@ -73,12 +73,12 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
 		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 		addEvidence(CurrentState.getDriver(), "Verified overview export for Accuracy report", "yes");
-	}*/
+	}
 			
 			
 	
 	@SuppressWarnings("unchecked")
-	@Test(dependsOnMethods = { "verifyFilteringReportsAccuracy" }, groups = { "smoke" }, description = "Test for overview report and tooltip data")
+	@Test(dependsOnMethods = { "verifyOverviewReportnExportAccuarcy" }, groups = { "smoke" }, description = "Test for overview report and tooltip data")
 	public void verifyOverviewReportnTooltipAccuracy() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());

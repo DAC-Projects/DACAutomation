@@ -342,9 +342,9 @@ public class ExtentTestNGITestListener
     if (browser.equalsIgnoreCase("Chrome")) {
 
 
-      //WebDriverManager.chromedriver().version("73.0.3683.68").setup(); 
+     WebDriverManager.chromedriver().version("74.0.3729.6").setup(); 
 
-     WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
+     //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
 
       HashMap<String, Object> chromePref = new HashMap<>();
       chromePref.put("download.default_directory", downloadFolder);

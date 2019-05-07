@@ -344,9 +344,6 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		for (Map<String, String> m1 : exporttableData) {
 			for (Map<String, String> m2 : verifysitelinkdata) {
 				if (m1.get("rowdata").equals(m2.get("rowdata"))) {
-					/*Assert.assertEquals(m1.get("Displayed Name"), m2.get("Displayed Name"), "verifying list for " +m2.get("Confirmed Info"));
-					Assert.assertEquals(m1.get("Displayed Address"), m2.get("Displayed Address"), "verifying list for " +m2.get("Confirmed Info"));
-					Assert.assertEquals(m1.get("Displayed Phone Number"), m2.get("Displayed Phone Number"), "verifying list for " +m2.get("Confirmed Info"));*/
 					Assert.assertEquals(m1.get("rowdata").contains(m2.get("rowdata")), true);
 				}
 			}
