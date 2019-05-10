@@ -37,7 +37,7 @@ public class Navigationpage extends BasePage{
 	@FindBy(xpath = "//*[@id='reportSiteOrder']/a/span")
 	private WebElement AllLocations;
 
-	@FindBy(id = "//a[@href='/Dashboard/AllGroups/']/span")
+	@FindBy(xpath = "//a[@href='/Dashboard/AllGroups/']/span")
 	private WebElement AllGroups;
 
 	@FindBy(xpath = "//a[@href='/Dashboard/VaReport/']/span")
@@ -191,8 +191,7 @@ public class Navigationpage extends BasePage{
     }
     
     public void navigateToAllGroups() {
-    	
-    	
+    	   	
     	action.moveToElement(Settings).perform();
     	waitForElement(Group, 20);
     	action.moveToElement(AllGroups).perform();

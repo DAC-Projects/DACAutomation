@@ -272,7 +272,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 							String headerText = headerTableRow.get(column).getText(), celtext ="";
 							if(column==1 & row < rows_count) {
 								celtext = driver.findElement(By.xpath("(//*[@id='inaccuracy_results']/tbody/tr)["+ (row+1) +"]")).getText();
-								System.out.println("/n"+celtext);
+								System.out.println("\n"+celtext);
 							}
 							kMap.put("rowdata", celtext);
 							tableCellValues.add(kMap);
@@ -403,7 +403,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			    				String headerText = headerTableRow.get(column).getText(), celtext ="";
 			    				if(column==1 & row < rows_count) {
 			    					celtext = driver.findElement(By.xpath("(//*[@id='inaccuracy_results']/tbody/tr)["+ (row+1) +"]")).getText();
-			    					System.out.println("/n"+celtext);
+			    					System.out.println("\n"+celtext);
 			    			}
 			    				kMap.put("rowdata", celtext);
 			    				tableCellValues.add(kMap);
@@ -523,7 +523,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 								String headerText = headerTableRow.get(column).getText(), celtext ="";
 								if(column==1 & row < rows_count) {
 									celtext = driver.findElement(By.xpath("(//*[@id='inaccuracy_results']/tbody/tr)["+ (row+1) +"]")).getText();
-									System.out.println("/n"+celtext);
+									System.out.println("\n"+celtext);
 								}
 							
 								kMap.put("rowdata", celtext);
