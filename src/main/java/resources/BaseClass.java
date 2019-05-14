@@ -98,7 +98,10 @@ public abstract class BaseClass {
 
     case "Sentiment Analysis":
     case "SA":
-        return IAutoconst.Fit4LessAccount;
+        return IAutoconst.transparenSEE;
+        	   //IAutoconst.Fit4LessAccount;
+        	   //IAutoconst.neuralTuringTechAccount;
+        
 
     default:
       return IAutoconst.transparenSEE;

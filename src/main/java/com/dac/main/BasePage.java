@@ -10,6 +10,9 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -189,6 +192,7 @@ public class BasePage {
     	    } catch (NoSuchElementException e) {
     	      Assert.fail("element" + element + " NOT found");
     	    }
+     	JSWaiter.waitJQueryAngular();
     
   }
 
@@ -335,6 +339,8 @@ public class BasePage {
     js.executeScript("window.scrollTo(" + xLoc + ", " + yLoc + ")");
 
   }
+  
+ 
 
   /**
    * This method is used to get the today's date in IST format ie. dd-mm-yyyy 		*/
