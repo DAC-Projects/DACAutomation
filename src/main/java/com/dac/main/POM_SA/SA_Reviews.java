@@ -269,7 +269,8 @@ public class SA_Reviews extends BasePage{
 				
 				try
 				{ 
-					if(!source.get(numberOfReviews).equals("foursquare")) {
+					String src = source.get(numberOfReviews);
+					if(!((src).equals("foursquare"))) {
 						Integer.parseInt(rating);
 						dupRating = ",\""+rating+"\",\"\",\"";
 						numberOfStarReviews++;
@@ -295,6 +296,7 @@ public class SA_Reviews extends BasePage{
 		System.out.println("total Data size after excluding \"yelp\" : "+a.size());
 		System.out.println("number of reviews : "+numberOfReviews+" numberOfRecommends : "+numberOfRecommends);
 		System.out.println("sumOfAllStars : "+sumOfAllStars+" numberOfNonRecommends : "+numberOfNonRecommends);
+		System.out.println("numberOfStarReviews : "+numberOfStarReviews);
 		calReviews();	calRecommendationsCount();
 	}
 	
@@ -340,7 +342,8 @@ public class SA_Reviews extends BasePage{
 		String avgRev = "";
 		DecimalFormat newFormat = new DecimalFormat("#.#");
 		if(isDataAvailable()) {
-			double oneDecimal =  Double.valueOf(newFormat.format(sumOfAllStars/(double)numberOfStarReviews));
+			double oneDecimal =  Double.valueOf(newFormat.format(sumOfAllStars/
+					(double)numberOfStarReviews));
 			if(sumOfAllStars==0) avgRev = "NA"; else avgRev = ""+oneDecimal;
 			if(numberOfReviews==1) {
 				Assert.assertEquals(singleReviewOverallmsg.getText().trim(), "Score of "+avgRev+" from "+numberOfReviews+" review.");
@@ -378,6 +381,7 @@ public class SA_Reviews extends BasePage{
 			List<WebElement> yelpStars = driver.findElements(By.xpath("(//*[@id='Review']//*[@class='author'])["+reviewNum+"]/span/div/img[not(contains(@src,'grey'))]"));
 			System.out.println("yelpStars.size() : "+yelpStars.size());
 			sumOfAllStars = sumOfAllStars + yelpStars.size();
+			rating = ""+stars.size();
 		}
 		return rating;
 	}
