@@ -83,16 +83,16 @@ public class Navigationpage extends BasePage{
 	@FindBy(linkText="English")
 	private WebElement selectDB_langEnglish;
 	
-	@FindBy(xpath="(//a[contains(text(),'Espa�ol')])[1]")
+	@FindBy(xpath="(//a[contains(text(),'Español')])[1]")
 	private WebElement selectDB_langSpanish_Spain;
 	
-	@FindBy(xpath="(//a[contains(text(),'Espa�ol')])[2]")
+	@FindBy(xpath="(//a[contains(text(),'Español')])[2]")
 	private WebElement selectDB_langSpanish_Mexico;
 	
-	@FindBy(xpath="(//a[contains(text(),'Fran�ais')])[1]")
+	@FindBy(xpath="(//a[contains(text(),'Français')])[1]")
 	private WebElement selectDB_langFrench_Canada;
 	
-	@FindBy(xpath="(//a[contains(text(),'Fran�ais')])[2]")
+	@FindBy(xpath="(//a[contains(text(),'Français')])[2]")
 	private WebElement selectDB_langFrench_France;
 	
 	@FindBy(linkText="Italiano")
