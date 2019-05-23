@@ -102,7 +102,9 @@ public class TPSEE_Visibility_Test extends BaseClass {
 			"smoke" }, description = "Test for verifying progress bar in Visibility page")
 	public void numberofentriesnExporttableVisibility() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-			data.compareexporttableDatantable(data.DataTablefound(),data.getExporttableDataFound());
+			/*data.DataTablefound();
+			data.getExporttableDataFound();
+			*/data.compareexporttableDatantable(data.DataTablefound(),data.getExporttableDataFound());
 			CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
 			CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 			addEvidence(CurrentState.getDriver(),
@@ -115,6 +117,8 @@ public class TPSEE_Visibility_Test extends BaseClass {
 				"smoke" }, description = "Test for verifying progress bar in Visibility page")
 		public void numberofentriesnExporttableNotFoundVisibility() throws Exception {
 				data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+				/*data.DataTableNotfound();
+				data.getExporttableDataNotFound();*/
 				data.compareexporttableDatantableNotFound(data.DataTableNotfound(),data.getExporttableDataNotFound());
 				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
 				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));

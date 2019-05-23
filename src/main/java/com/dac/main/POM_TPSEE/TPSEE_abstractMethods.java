@@ -201,7 +201,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		//read the tooltip variables
 		tooltipvalue = grphtooltip.getText();
 		System.out.println("\n Reading tooltipdata ********** \n");
-		System.out.println("\n tooltipvalue is \n"+ tooltipvalue);
+		System.out.println("\n tooltipvalue is \n" +tooltipvalue);
 		
 		//read the tooltip variables
 		rows = grphtooltip.findElements(By.tagName("span"));

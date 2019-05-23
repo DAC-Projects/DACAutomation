@@ -169,39 +169,20 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	/* Export visibility overview report below filter*/
 	public void exportvisibilityrpt() throws InterruptedException, FileNotFoundException, IOException{
 		JSWaiter.waitJQueryAngular();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("btn-group")));
+		waitForElement(exportBtn, 40);
 		scrollByElement(exportBtn);
-		if(exportBtn.isEnabled() & exportBtn.isDisplayed()) {
-			wait.until(ExpectedConditions.visibilityOf(exportBtn));
-			//exportBTN.click();
-			action.moveToElement(exportBtn).click(exportBtn).perform();
-			Thread.sleep(5000);
-		}
-		if(exportdate.isEnabled() & exportdate.isDisplayed()) {
-			wait.until(ExpectedConditions.visibilityOf(exportdate));
-			action.moveToElement(exportdate).click(exportdate).perform();
-			Thread.sleep(5000);
-		}
-		if(dtpicker.isEnabled() & dtpicker.isDisplayed()) {
-			wait.until(ExpectedConditions.visibilityOf(dtpicker));
-			action.moveToElement(dtpicker).click(dtpicker).perform();
-			Thread.sleep(5000);
-		} 
-		if(date.isEnabled() & date.isDisplayed()) {
-			wait.until(ExpectedConditions.visibilityOf(date));
-			action.moveToElement(date).click(date).perform();
-			Thread.sleep(5000);
-		}
-		if(export.isEnabled() & export.isDisplayed()) {
-			wait.until(ExpectedConditions.visibilityOf(export));
-			action.moveToElement(export).click(export).perform();
-			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+AccuracyExport));
-			Thread.sleep(5000);
-			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
-			
-		}else {
-			System.out.println("No Data Available in Accuracy Page");
-		}
+		clickelement(exportBtn);
+		waitForElement(exportdate,40);
+		scrollByElement(exportdate);
+		clickelement(exportdate);
+		waitForElement(dtpicker,40);
+		scrollByElement(dtpicker);
+		waitForElement(date, 40);
+		scrollByElement(date);
+		clickelement(date);
+	    //download visibility report
+	    download(CurrentState.getBrowser(), export, 30);
+	    convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+AccuracyExport));
 	}
 	
 	//printing visibility report data from downloaded excel sheet 
@@ -460,9 +441,6 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			for (Map<String, String> m1 : getInAccuracyExporttableData) {
 				for (Map<String, String> m2 : verifyInAccuracysitelinkdata) {
 					if (m1.get("rowdata").equals(m2.get("rowdata"))) {
-						/*Assert.assertEquals(m1.get("Displayed Name"), m2.get("Displayed Name"), "verifying list for " +m2.get("Confirmed Info"));
-						Assert.assertEquals(m1.get("Displayed Address"), m2.get("Displayed Address"), "verifying list for " +m2.get("Confirmed Info"));
-						Assert.assertEquals(m1.get("Displayed Phone Number"), m2.get("Displayed Phone Number"), "verifying list for " +m2.get("Confirmed Info"));*/
 						Assert.assertEquals(m1.get("rowdata").contains(m2.get("rowdata")), true);
 					}
 				}
@@ -581,9 +559,6 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		for (Map<String, String> m1 : getIgnoredExporttableData) {
 			for (Map<String, String> m2 : verifyIgnoredsitelinkdata) {
 				if (m1.get("rowdata").equals(m2.get("rowdata"))) {
-					/*Assert.assertEquals(m1.get("Displayed Name"), m2.get("Displayed Name"), "verifying list for " +m2.get("Confirmed Info"));
-					Assert.assertEquals(m1.get("Displayed Address"), m2.get("Displayed Address"), "verifying list for " +m2.get("Confirmed Info"));
-					Assert.assertEquals(m1.get("Displayed Phone Number"), m2.get("Displayed Phone Number"), "verifying list for " +m2.get("Confirmed Info"));*/
 					Assert.assertEquals(m1.get("rowdata").contains(m2.get("rowdata")), true);
 				}
 			}
