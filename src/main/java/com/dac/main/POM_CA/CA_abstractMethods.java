@@ -117,8 +117,6 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	
 public void applyFilter(String Country, String State, String City, String Location) {
 
-	
-	
 	JSWaiter.waitJQueryAngular();
 	wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("apply_filter")));
 	WebElement country,state,city,location;
@@ -128,8 +126,6 @@ public void applyFilter(String Country, String State, String City, String Locati
 	if (Country == null || State == null || City == null | Location == null || Location.equalsIgnoreCase("null")) Location = "All Locations";
 	try {
 		waitForElement(filter_Panel, 25);
-
-		scrollByElement(CATitleContent);
 		waitUntilLoad(driver);
 		if(!Country.equals("All Countries")) {
 			clickelement(FilterCountry);

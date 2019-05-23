@@ -229,72 +229,78 @@ public class SA_ReviewReportCard_Page extends BasePage{
 	 *            for Global filtering reports			*/
 	public void applyGlobalFilter(String Group, String CountryCode, String State, String City, String Location) {
 		JSWaiter.waitJQueryAngular();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
-		WebElement country,state,city,location,group;
-		if(Group == null || Group.equalsIgnoreCase("none")) Group = "None";
-		if (CountryCode == null || CountryCode.equalsIgnoreCase("null")) CountryCode = "All Countries";
-		if (CountryCode == null || State == null || State.equalsIgnoreCase("null")) State = "All States";
-		if (CountryCode == null || State == null || City == null || City.equalsIgnoreCase("null")) City = "All Cities"; 
-		if (CountryCode == null || State == null || City == null | Location == null || Location.equalsIgnoreCase("null")) Location = "All Locations";
 		try {
-			waitForElement(filter_Panel, 25);
-			scrollByElement(RRCPageTitle);
-			waitUntilLoad(driver);
-			if(!Group.equals("None")) {			
-				JSWaiter.waitJQueryAngular();
-				clickelement(fiterGroup);
-				waitForElement(filterDropDown, 20);
-				group = filterState.findElement(By.xpath("//div[@data-value='"+Group+"']"));
-				waitForElement(group, 10);
-				clickelement(group);
+			if(isDataAvailable()) {
+				WebElement country,state,city,location,group;
+				if(Group == null || Group.equalsIgnoreCase("none")) Group = "None";
+				if (CountryCode == null || CountryCode.equalsIgnoreCase("null")) CountryCode = "All Countries";
+				if (CountryCode == null || State == null || State.equalsIgnoreCase("null")) State = "All States";
+				if (CountryCode == null || State == null || City == null || City.equalsIgnoreCase("null")) City = "All Cities"; 
+				if (CountryCode == null || State == null || City == null | Location == null || Location.equalsIgnoreCase("null")) Location = "All Locations";
+				try {
+					waitForElement(filter_Panel, 25);
+					scrollByElement(RRCPageTitle);
+					waitUntilLoad(driver);
+					if(!Group.equals("None")) {			
+						JSWaiter.waitJQueryAngular();
+						clickelement(fiterGroup);
+						waitForElement(filterDropDown, 20);
+						group = filterState.findElement(By.xpath("//div[@data-value='"+Group+"']"));
+						waitForElement(group, 10);
+						clickelement(group);
+						waitUntilLoad(driver);
+					}
+					if(!CountryCode.equals("All Countries")) {
+						JSWaiter.waitJQueryAngular();
+						clickelement(filterCountry);
+						waitForElement(filterDropDown, 20);
+						country = driver.findElement(By.xpath("(//*[contains(@class,'myList')])[1]//div[@data-value='"+CountryCode.toUpperCase()+"']"));
+						waitForElement(country, 10);
+						Thread.sleep(1000);
+						clickelement(country);
+						waitUntilLoad(driver);
+					}
+					if(!State.equals("All States")) {			
+						JSWaiter.waitJQueryAngular();
+						clickelement(filterState);
+						waitForElement(filterDropDown, 20);
+						state = filterState.findElement(By.xpath("//div[@data-value='"+State+"']"));
+						waitForElement(state, 10);
+						Thread.sleep(1000);
+						clickelement(state);
+						waitUntilLoad(driver);
+					}
+					if(!City.equals("All Cities")) {
+						JSWaiter.waitJQueryAngular();
+						clickelement(filterCity);
+						waitForElement(filterDropDown, 20);
+						city = filterCity.findElement(By.xpath("//div[@data-value='"+City+"']"));
+						waitForElement(city, 10);
+						Thread.sleep(1000);
+						clickelement(city);
+						waitUntilLoad(driver);
+					}
+					if(!Location.equals("All Locations")) {			
+						JSWaiter.waitJQueryAngular();
+						clickelement(filterlocation);
+						waitForElement(filterDropDown, 20);
+						location = filterlocation.findElement(By.xpath("//div[text()='"+Location+"']"));
+						waitForElement(location, 10);
+						Thread.sleep(1000);
+						clickelement(location);
+						waitUntilLoad(driver);
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
+					Assert.fail("searched Country/State/City/Location may not be there or may be a typo error please check it");
+				}
 				waitUntilLoad(driver);
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
+
 			}
-			if(!CountryCode.equals("All Countries")) {
-				JSWaiter.waitJQueryAngular();
-				clickelement(filterCountry);
-				waitForElement(filterDropDown, 20);
-				country = driver.findElement(By.xpath("(//*[contains(@class,'myList')])[1]//div[@data-value='"+CountryCode.toUpperCase()+"']"));
-				waitForElement(country, 10);
-				Thread.sleep(1000);
-				clickelement(country);
-				waitUntilLoad(driver);
-			}
-			if(!State.equals("All States")) {			
-				JSWaiter.waitJQueryAngular();
-				clickelement(filterState);
-				waitForElement(filterDropDown, 20);
-				state = filterState.findElement(By.xpath("//div[@data-value='"+State+"']"));
-				waitForElement(state, 10);
-				Thread.sleep(1000);
-				clickelement(state);
-				waitUntilLoad(driver);
-			}
-			if(!City.equals("All Cities")) {
-				JSWaiter.waitJQueryAngular();
-				clickelement(filterCity);
-				waitForElement(filterDropDown, 20);
-				city = filterCity.findElement(By.xpath("//div[@data-value='"+City+"']"));
-				waitForElement(city, 10);
-				Thread.sleep(1000);
-				clickelement(city);
-				waitUntilLoad(driver);
-			}
-			if(!Location.equals("All Locations")) {			
-				JSWaiter.waitJQueryAngular();
-				clickelement(filterlocation);
-				waitForElement(filterDropDown, 20);
-				location = filterlocation.findElement(By.xpath("//div[text()='"+Location+"']"));
-				waitForElement(location, 10);
-				Thread.sleep(1000);
-				clickelement(location);
-				waitUntilLoad(driver);
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-			Assert.fail("searched Country/State/City/Location may not be there or may be a typo error please check it");
+		} catch (Exception e1) {
+			e1.printStackTrace();
 		}
-		waitUntilLoad(driver);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 	}
 	
 	/**

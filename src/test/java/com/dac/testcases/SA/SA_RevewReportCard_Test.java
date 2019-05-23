@@ -1,9 +1,5 @@
 package com.dac.testcases.SA;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.text.DecimalFormat;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,12 +11,9 @@ import com.dac.main.BasePage;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_SA.SA_ReviewReportCard_Page;
 import com.dac.main.POM_SA.SA_gatherData;
-
-import junit.framework.Assert;
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
-import resources.IAutoconst;
 import resources.formatConvert;
 
 /**
@@ -29,17 +22,16 @@ import resources.formatConvert;
  * sheetName = "Sheet1"		*/
 public class SA_RevewReportCard_Test extends BaseClass {
 
-	static String dataFile = ".\\data\\NewSample.xlsx", sheetName = "Sheet1";
+	static String dataFile = ".\\data\\AggregationFile_Fit4less_RRC.xlsx", sheetName = "Sheet1";
 	
 	@Test(enabled = true)
 	public void navigateToRRC() throws Exception {
 		Navigationpage np=new Navigationpage(CurrentState.getDriver());
-		//np.select_DB_Lang_Link("en", "US");
+		np.select_DB_Lang_Link("en", "US");
 		np.navigateToSA_ReportCard();
 		//Thread.sleep(2000);
 		addEvidence(CurrentState.getDriver(), "Navigated to Review Report Card page", "yes");
 	}
-	
 	
 	@Test(groups= {"smoke"}, description = "With/Without applying filters, verification of calculated RRCscores and Grades with data comparision")
 	public void rrcCalScenaraio1() throws Exception {
@@ -59,33 +51,33 @@ public class SA_RevewReportCard_Test extends BaseClass {
 				String City = wb.getCellValue(i, wb.seacrh_pattern("City", 0).get(0).intValue());
 				String Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
 				
-				s.applyGlobalFilter(Group, CountryCode, State, City, Location);
-				System.out.println(Group+", "+CountryCode+", "+State+", "+City+", "+Location);
-				s.clickApplyFilterBTN();
-				BaseClass.addEvidence(CurrentState.getDriver(),
-						"Applied global filter: "+Group+", "+CountryCode+", "+State+", "+City+", "+Location+"", "yes");
-				
 				if(s.isDataAvailable()) {
-					
-					String excelTimePeriod = wb.getCellValue(i, wb.seacrh_pattern("TimePeriod", 0).get(0).intValue()); //fetch the TimePeriod Criteria from an excel
-					String timePeriodValue = (s.selectTimePeriod(excelTimePeriod)).trim();  
-					
-					String b = wb.getCellValue(i, wb.seacrh_pattern("FilterBySource", 0).get(0).intValue());
-					String[] c = {b};
-					if(b.contains(",")) {
-						c = StringUtils.stripAll(b.split(","));
-					}
-					s.filterBySource(c);
-					
+					s.applyGlobalFilter(Group, CountryCode, State, City, Location);
+					System.out.println(Group+", "+CountryCode+", "+State+", "+City+", "+Location);
+					s.clickApplyFilterBTN();
 					BaseClass.addEvidence(CurrentState.getDriver(),
-							"Applied timePeriod : "+timePeriodValue+ " and filterBySource : "+Arrays.toString(c)+"", "yes");
+							"Applied global filter: "+Group+", "+CountryCode+", "+State+", "+City+", "+Location+"", "yes");
 					
-					List<Long> cleintRefId = getClientRefs(downloadExcel());
-					String[] calScore = sd.calculateRRC_Scores(dataFile, sheetName, new Integer(timePeriodValue), Arrays.asList(c), cleintRefId);
-					s.isRRCScoreCorrect(calScore[0], calScore[1]);	
-					dataComparision();
+						String excelTimePeriod = wb.getCellValue(i, wb.seacrh_pattern("TimePeriod", 0).get(0).intValue()); //fetch the TimePeriod Criteria from an excel
+						String timePeriodValue = (s.selectTimePeriod(excelTimePeriod)).trim();  
+						
+						String b = wb.getCellValue(i, wb.seacrh_pattern("FilterBySource", 0).get(0).intValue());
+						String[] c = {b};
+						if(b.contains(",")) {
+							c = StringUtils.stripAll(b.split(","));
+						}
+						s.filterBySource(c);
+						
+						BaseClass.addEvidence(CurrentState.getDriver(),
+								"Applied timePeriod : "+timePeriodValue+ " and filterBySource : "+Arrays.toString(c)+"", "yes");
+						
+						List<Long> cleintRefId = getClientRefs(downloadExcel());
+						String[] calScore = sd.calculateRRC_Scores(dataFile, sheetName, new Integer(timePeriodValue), Arrays.asList(c), cleintRefId);
+						s.isRRCScoreCorrect(calScore[0], calScore[1]);	
+						dataComparision();
+					
+					Thread.sleep(4000);
 				}
-				Thread.sleep(4000);
 				System.out.println("-------------- Scenarios : "+ count++ + "Ends --------------------");
 			}
 		}catch(Exception e) {
