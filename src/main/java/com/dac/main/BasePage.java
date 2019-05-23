@@ -333,6 +333,7 @@ public class BasePage {
    * @param element : to scroll the web page till the specific web element		*/
   public void scrollByElement(WebElement element) {
 	  JSWaiter.waitJQueryAngular(); 
+	  wait.until(ExpectedConditions.visibilityOf(element));
     JavascriptExecutor js = (JavascriptExecutor) driver;
     int yLoc = element.getLocation().getY() - 10;
     int xLoc = element.getLocation().getX();

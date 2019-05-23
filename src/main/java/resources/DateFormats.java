@@ -62,6 +62,37 @@ public class DateFormats {
 		return shortDateFromat;
 	}
 	
+	public static String shortDateFormatOf(String langCode, String contryCode) {
+		String DateFormat = "";
+		
+		String langConCode = langCode+"_"+contryCode;
+		
+		switch(langConCode) {
+		
+		case "de_DE" : DateFormat = "dd.MM.yyyy";
+					   break;
+					   
+		case "en_US" : DateFormat = "MM/dd/yyyy";
+		   			   break;
+		   			   
+		case "es_ES" : 
+		case "it_IT" : 
+		case "fr_FR" : 
+		case "es_MX" : DateFormat = "dd/MM/yyyy";
+		   			   break;
+		   			   
+		case "sv_SE" : 
+		case "fr_CA" : DateFormat = "yyyy-MM-dd";
+		   			   break; 
+					 
+		default		 : System.out.println("Selected wrong Language Code or Contry Code please check and Execute once again");
+		}
+		
+		System.out.println(DateFormat);
+		
+		return DateFormat;
+	}
+	
 	/**
 	 * This method is used to return the "long date" in string format according to the country code and language code.
 	 * if we pass any wrong country code or/and language code then it will print the message to check the country code and language code 
