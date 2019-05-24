@@ -42,7 +42,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		PageFactory.initElements(driver, this);
 	}
 
-	// Global Filter locators
+	// Global Filter locators 
 
 	@FindBy(xpath="//*[@class='menu transition visible']")
 	private WebElement filterDropDown;
@@ -75,7 +75,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	@FindBy(css = "rect.highcharts-plot-background")
 	public WebElement hstryGrph;
 
-	@FindBy(css = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none")
+	@FindBy(css = ".highcharts-label.highcharts-tooltip-box.highcharts-color-none")
 	private WebElement grphtooltip; 
 	
 	//section of overall report
@@ -201,7 +201,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		//read the tooltip variables
 		tooltipvalue = grphtooltip.getText();
 		System.out.println("\n Reading tooltipdata ********** \n");
-		System.out.println("\n tooltipvalue is \n"+ tooltipvalue);
+		System.out.println("\n tooltipvalue is \n" +tooltipvalue);
 		
 		//read the tooltip variables
 		rows = grphtooltip.findElements(By.tagName("span"));

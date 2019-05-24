@@ -4,9 +4,7 @@ package com.dac.main.POM_CA;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,10 +42,6 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 		action = new Actions(driver);
 		PageFactory.initElements(driver, this);
 	}
-
-	// Global Filter locators
-	@FindBy(xpath="(//*[@id='divCIAccuracy']/h1)")
-	private WebElement CATitleContent;
 	
 	@FindBy(id="myGroups")
 	private WebElement fiterGroup;

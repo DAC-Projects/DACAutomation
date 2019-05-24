@@ -18,7 +18,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 	Navigationpage np;
 	TPSEE_Accuracy_Page data;
 
-	
+	//Navigation Test
 	@Test(groups = { "smoke" }, description = "Test for navigating to Accuracy page")
 	public void navigateToAccuracyPage() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
@@ -29,6 +29,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		// Assert.assertFalse( "sample error", true);
 	}
 	
+	//Apply Filters
 	@Test(dependsOnMethods = { "navigateToAccuracyPage" }, groups = {
 			"smoke" }, description = "Verify Accuracy page loads after filter applied")
 	public void verifyFilteringReportsAccuracy() throws Exception {
@@ -61,7 +62,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 	
 
 	
-/*	//Test for export and overview report in Accuracy Page
+	//Test for export and overview report in Accuracy Page
 	@SuppressWarnings("unchecked")
 	@Test(dependsOnMethods = { "navigateToAccuracyPage" ,"verifyFilteringReportsAccuracy"}, groups = {
 					"smoke" }, description = "Test for overview export and export verification")
@@ -69,21 +70,16 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		export = data.getExportData();
 		data.getOverviewReport();
-		//data.compareExprttoOvervw(data.getExportData(), data.getOverviewReport());
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 		addEvidence(CurrentState.getDriver(), "Verified overview export for Accuracy report", "yes");
-	}*/
+	}
 			
 			
 	
 	@SuppressWarnings("unchecked")
-	@Test(dependsOnMethods = { "verifyFilteringReportsAccuracy" }, groups = { "smoke" }, description = "Test for overview report and tooltip data")
+	@Test(dependsOnMethods = { "verifyOverviewReportnExportAccuarcy" }, groups = { "smoke" }, description = "Test for overview report and tooltip data")
 	public void verifyOverviewReportnTooltipAccuracy() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 		addEvidence(CurrentState.getDriver(), "Tooltip values verified from Overview Accuracy report", "yes");
 	}
 	
@@ -95,8 +91,6 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 	public void verifySiteTablenExportAccuracy() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.verifyaccuracySitetable();
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 		addEvidence(CurrentState.getDriver(),
 				"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
 	}
@@ -121,35 +115,18 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		public void numberofentriesnExporttableAccuracy() throws Exception {
 				data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 				data.compareexporttableDatantable(data.getExporttableData(),data.verifysitelinkdata());
-				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 				addEvidence(CurrentState.getDriver(),
 						"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
 		}
 		
 		//Test for compare number of rows from export table and table data in Accuracy Page
-				@SuppressWarnings("unchecked")
-				@Test(dependsOnMethods = { "numberofentriesnExporttableAccuracy"}, groups = {
-						"smoke" }, description = "Test for verifying InAccuracy case data and export data in Accuracy page")
-				public void numberofentriesnInAccuracyExporttableAccuracy() throws Exception {
-						data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-						data.compareexporttableDatanInAccuracytable(data.verifyInAccuracysitelinkdata(),data.getInAccuracyExporttableData());
-						CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-						CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
-						addEvidence(CurrentState.getDriver(),
-								"Site level scores in Accuracy site table  and overview Accuracy export found matching for InAccuracy", "yes");
-				}
-				
-				/*//Test for compare number of rows from export table and table data in Accuracy Page
-				@SuppressWarnings("unchecked")
-				@Test(dependsOnMethods = { "numberofentriesnInAccuracyExporttableAccuracy"}, groups = {
-						"smoke" }, description = "Test for verifying ignored case and export data in Accuracy page")
-				public void numberofentriesnIgnoredExporttableAccuracy() throws Exception {
-						data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-						data.compareexporttableDatanIgnoredtable(data.verifyIgnoredsitelinkdata(),data.getIgnoredExporttableData());
-						CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-						CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
-						addEvidence(CurrentState.getDriver(),
-								"Site level scores in Accuracy site table  and overview Accuracy export found matching for InAccuracy", "yes");
-				}*/
+		@SuppressWarnings("unchecked")
+		@Test(dependsOnMethods = { "numberofentriesnExporttableAccuracy"}, groups = {
+				"smoke" }, description = "Test for verifying InAccuracy case data and export data in Accuracy page")
+		public void numberofentriesnInAccuracyExporttableAccuracy() throws Exception {
+			data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+			data.compareexporttableDatanInAccuracytable(data.verifyInAccuracysitelinkdata(),data.getInAccuracyExporttableData());
+			addEvidence(CurrentState.getDriver(),
+					"Site level scores in Accuracy site table  and overview Accuracy export found matching for InAccuracy", "yes");
+		}
 }
