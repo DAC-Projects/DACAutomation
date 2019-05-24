@@ -275,21 +275,6 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 
 		
 		
-		/*public  List<Map<String, String>> numberofentries() {
-			
-			waitForElement(tableresult,50);
-			List<Map<String, String>> totalentries = new ArrayList<Map<String, String>>();
-			//getting the text at the bottom of the table and split the string by space
-			List<WebElement> col = driver.findElements(By.xpath("//table[@id='inaccuracy_results']/tbody"));
-			System.out.println(col.size());
-			rows = tableresultset.findElements(By.tagName("tr"));
-			waitForElement(tableresultset,50);
-			int count = rows.size();
-			System.out.println("\n Total number of rows : "+count);
-			return totalentries;
-			}*/
-		
-		
 		public void exporttable() throws FileNotFoundException, IOException, InterruptedException {
 			
 			waitForElement(tableresult, 40);

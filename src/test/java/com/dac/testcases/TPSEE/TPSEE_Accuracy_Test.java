@@ -70,9 +70,6 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		export = data.getExportData();
 		data.getOverviewReport();
-		//data.compareExprttoOvervw(data.getExportData(), data.getOverviewReport());
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 		addEvidence(CurrentState.getDriver(), "Verified overview export for Accuracy report", "yes");
 	}
 			
@@ -83,8 +80,6 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 	public void verifyOverviewReportnTooltipAccuracy() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 		addEvidence(CurrentState.getDriver(), "Tooltip values verified from Overview Accuracy report", "yes");
 	}
 	
@@ -96,8 +91,6 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 	public void verifySiteTablenExportAccuracy() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.verifyaccuracySitetable();
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 		addEvidence(CurrentState.getDriver(),
 				"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
 	}
@@ -122,8 +115,6 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		public void numberofentriesnExporttableAccuracy() throws Exception {
 				data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 				data.compareexporttableDatantable(data.getExporttableData(),data.verifysitelinkdata());
-				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 				addEvidence(CurrentState.getDriver(),
 						"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
 		}
@@ -135,8 +126,6 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 				public void numberofentriesnInAccuracyExporttableAccuracy() throws Exception {
 						data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 						data.compareexporttableDatanInAccuracytable(data.verifyInAccuracysitelinkdata(),data.getInAccuracyExporttableData());
-						CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-						CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 						addEvidence(CurrentState.getDriver(),
 								"Site level scores in Accuracy site table  and overview Accuracy export found matching for InAccuracy", "yes");
 				}
@@ -148,8 +137,6 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 				public void numberofentriesnIgnoredExporttableAccuracy() throws Exception {
 						data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 						data.compareexporttableDatanIgnoredtable(data.verifyIgnoredsitelinkdata(),data.getIgnoredExporttableData());
-						CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-						CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 						addEvidence(CurrentState.getDriver(),
 								"Site level scores in Accuracy site table  and overview Accuracy export found matching for InAccuracy", "yes");
 				}*/
