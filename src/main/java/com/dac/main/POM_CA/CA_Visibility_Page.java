@@ -115,7 +115,7 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 	}
 
 	/* (non-Javadoc)
-	 * Reads overview report and return values as list
+	 * Reads overview report and return values as list.
 	 * @see com.dac.main.POM_CA.CA_abstractMethods#getOverviewReport()
 	 */
 	@Override

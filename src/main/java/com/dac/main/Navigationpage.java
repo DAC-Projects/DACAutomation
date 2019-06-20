@@ -89,16 +89,16 @@ public class Navigationpage extends BasePage{
 	@FindBy(linkText="English")
 	private WebElement selectDB_langEnglish;
 	
-	@FindBy(xpath="(//a[contains(text(),'Español')])[1]")
+	@FindBy(xpath="(//a[contains(text(),'EspaÃ±ol')])[1]")
 	private WebElement selectDB_langSpanish_Spain;
 	
-	@FindBy(xpath="(//a[contains(text(),'Español')])[2]")
+	@FindBy(xpath="(//a[contains(text(),'EspaÃ±ol')])[2]")
 	private WebElement selectDB_langSpanish_Mexico;
 	
-	@FindBy(xpath="(//a[contains(text(),'Français')])[1]")
+	@FindBy(xpath="(//a[contains(text(),'FranÃ§ais')])[1]")
 	private WebElement selectDB_langFrench_Canada;
 	
-	@FindBy(xpath="(//a[contains(text(),'Français')])[2]")
+	@FindBy(xpath="(//a[contains(text(),'FranÃ§ais')])[2]")
 	private WebElement selectDB_langFrench_France;
 	
 	@FindBy(linkText="Italiano")
@@ -251,10 +251,9 @@ public class Navigationpage extends BasePage{
 	public void navigateToSA_ReviewReport() {
 		JSWaiter.waitJQueryAngular();
 		wait.until(ExpectedConditions.visibilityOf(ReviewReport));
-		scrollByElement(ReportCard);
+		scrollByElement(ReviewReport);
 		clickelement(ReviewReport);   
 	      System.out.println("Waiting for page to load**********");
-	      waitUntilLoad(driver);
 	}
 
 	/** To click on SA_ReportCard link in LHS to navigate to SA_ReportCard page   */
@@ -397,7 +396,7 @@ public class Navigationpage extends BasePage{
 				 					selectDB_langSpanish_Spain.click();
 				 				}
 				 				catch(Exception e){
-				 					if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Español')]")).isDisplayed()) {
+				 					if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Espaï¿½ol')]")).isDisplayed()) {
 										   break;
 									}
 				 				}
@@ -408,7 +407,7 @@ public class Navigationpage extends BasePage{
 								   selectDB_langSpanish_Mexico.click();
 							   }
 							   catch(Exception e){
-								   if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Español')]")).isDisplayed()) {
+								   if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Espaï¿½ol')]")).isDisplayed()) {
 									   break;
 								   }
 							   }
@@ -419,7 +418,7 @@ public class Navigationpage extends BasePage{
 								   selectDB_langFrench_Canada.click();
 							   }
 							   catch(Exception e){
-								   if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Français')]")).isDisplayed()) {
+								   if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Franï¿½ais')]")).isDisplayed()) {
 									   break;
 								   }
 							   }
@@ -430,7 +429,7 @@ public class Navigationpage extends BasePage{
 				 				   selectDB_langFrench_France.click();
 				 			   }
 				 			   catch(Exception e){
-				 				  if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Français')]")).isDisplayed()) {
+				 				  if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Franï¿½ais')]")).isDisplayed()) {
 									   break;
 								   }
 				 			   }

@@ -241,6 +241,7 @@ public class SA_ReviewReportCard_Page extends BasePage{
 			scrollByElement(RRCPageTitle);
 			waitUntilLoad(driver);
 			if(!Group.equals("None")) {			
+				JSWaiter.waitJQueryAngular();
 				clickelement(fiterGroup);
 				waitForElement(filterDropDown, 20);
 				group = filterState.findElement(By.xpath("//div[@data-value='"+Group+"']"));
@@ -249,6 +250,7 @@ public class SA_ReviewReportCard_Page extends BasePage{
 				waitUntilLoad(driver);
 			}
 			if(!CountryCode.equals("All Countries")) {
+				JSWaiter.waitJQueryAngular();
 				clickelement(filterCountry);
 				waitForElement(filterDropDown, 20);
 				country = driver.findElement(By.xpath("(//*[contains(@class,'myList')])[1]//div[@data-value='"+CountryCode.toUpperCase()+"']"));
@@ -258,6 +260,7 @@ public class SA_ReviewReportCard_Page extends BasePage{
 				waitUntilLoad(driver);
 			}
 			if(!State.equals("All States")) {			
+				JSWaiter.waitJQueryAngular();
 				clickelement(filterState);
 				waitForElement(filterDropDown, 20);
 				state = filterState.findElement(By.xpath("//div[@data-value='"+State+"']"));
@@ -267,6 +270,7 @@ public class SA_ReviewReportCard_Page extends BasePage{
 				waitUntilLoad(driver);
 			}
 			if(!City.equals("All Cities")) {
+				JSWaiter.waitJQueryAngular();
 				clickelement(filterCity);
 				waitForElement(filterDropDown, 20);
 				city = filterCity.findElement(By.xpath("//div[@data-value='"+City+"']"));
@@ -276,6 +280,7 @@ public class SA_ReviewReportCard_Page extends BasePage{
 				waitUntilLoad(driver);
 			}
 			if(!Location.equals("All Locations")) {			
+				JSWaiter.waitJQueryAngular();
 				clickelement(filterlocation);
 				waitForElement(filterDropDown, 20);
 				location = filterlocation.findElement(By.xpath("//div[text()='"+Location+"']"));
