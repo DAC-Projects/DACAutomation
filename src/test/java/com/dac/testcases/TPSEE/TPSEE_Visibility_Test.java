@@ -66,8 +66,6 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		export = data.getExportData();
 		data.compareExprttoOvervw(data.getOverviewReport(),export);
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
 	}
 
@@ -78,8 +76,6 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	public void verifyOverviewReportnTooltipVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 		addEvidence(CurrentState.getDriver(), "Tooltip values verified from Overview visibility report", "yes");
 	}
 
@@ -90,8 +86,6 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	public void verifySiteTablenExportVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.verifySitetable();
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 		addEvidence(CurrentState.getDriver(),
 				"Data of sitesTable", "yes");
 	}
@@ -102,9 +96,9 @@ public class TPSEE_Visibility_Test extends BaseClass {
 			"smoke" }, description = "Test for verifying progress bar in Visibility page")
 	public void numberofentriesnExporttableVisibility() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-			data.compareexporttableDatantable(data.DataTablefound(),data.getExporttableDataFound());
-			CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-			CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
+			/*data.DataTablefound();
+			data.getExporttableDataFound();
+			*/data.compareexporttableDatantable(data.DataTablefound(),data.getExporttableDataFound());
 			addEvidence(CurrentState.getDriver(),
 					"Site level scores in Visibility site table  and overview visibility export found matching", "yes");
 	}
@@ -115,9 +109,9 @@ public class TPSEE_Visibility_Test extends BaseClass {
 				"smoke" }, description = "Test for verifying progress bar in Visibility page")
 		public void numberofentriesnExporttableNotFoundVisibility() throws Exception {
 				data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+				/*data.DataTableNotfound();
+				data.getExporttableDataNotFound();*/
 				data.compareexporttableDatantableNotFound(data.DataTableNotfound(),data.getExporttableDataNotFound());
-				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 				addEvidence(CurrentState.getDriver(),
 						"Site level scores in Visibility site table  and overview visibility export found matching", "yes");
 		}
@@ -129,8 +123,6 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		public void comparevendorsListnverifySitevendors() throws Exception{
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 			data.comparevendorsListnverifySitevendors(data.verifySitevendors(), data.vendorsList());
-			CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-			CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 			addEvidence(CurrentState.getDriver(),
 				"Site Vendors in Visibility site vendors ", "yes");
 	}

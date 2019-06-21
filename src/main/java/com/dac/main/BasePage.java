@@ -104,7 +104,7 @@ public class BasePage {
    * @param timeout : waiting time to download the file
    * @param dir : directory where the file will download			 */
   public void checkFileSizeIncrsd(long initialSize, int timeout, File dir) {
-
+	  JSWaiter.waitJQueryAngular();
     WebDriverWait dwnldwait = new WebDriverWait(driver, timeout);
 
     ExpectedCondition<Boolean> chkFileDownld = new ExpectedCondition<Boolean>() {
@@ -130,8 +130,8 @@ public class BasePage {
    */
   public synchronized void download(String browser, WebElement downloadBTN, int timeout)
       throws InterruptedException {
-	  JSWaiter.waitJQueryAngular(); 
-    File dwnldDir = new File("./downloads");
+	  	JSWaiter.waitJQueryAngular();
+		File dwnldDir = new File("./downloads");
     long initialSize = dwnldDir.listFiles().length;
     System.out.println("directory size is " + initialSize);// check file size
 
@@ -177,8 +177,9 @@ public class BasePage {
    * 
    * @param element : element/button to click		*/
   public void clickelement(WebElement element) {
-	  JSWaiter.waitJQueryAngular(); 
-    wait.until(ExpectedConditions.visibilityOf(element));
+
+	  JSWaiter.waitJQueryAngular();
+		wait.until(ExpectedConditions.visibilityOf(element));
      	try {
     	      if (element.isDisplayed() & element.isEnabled()) {
     	        try {
@@ -255,7 +256,8 @@ public class BasePage {
    */
   public String getClipboardContents(WebElement element)
       throws UnsupportedFlavorException, IOException {
-	  JSWaiter.waitJQueryAngular(); 
+
+	  JSWaiter.waitJQueryAngular();
 	  String eleText = "";
 	  if(element.isEnabled()) {
 		  System.out.println("if block starts");
@@ -321,8 +323,9 @@ public class BasePage {
    * 
    * Used for weblet testing, tool tip text verification etc. 		*/
   public void verifyText(WebElement e, String eText) {
-	  JSWaiter.waitJQueryAngular(); 
-    String aText = e.getText().trim();
+
+	  JSWaiter.waitJQueryAngular();
+	String aText = e.getText().trim();
     System.out.println(aText);
     Assert.assertEquals(aText, eText);
   }
@@ -332,8 +335,10 @@ public class BasePage {
    * 
    * @param element : to scroll the web page till the specific web element		*/
   public void scrollByElement(WebElement element) {
+
 	  JSWaiter.waitJQueryAngular(); 
 	  wait.until(ExpectedConditions.visibilityOf(element));
+
     JavascriptExecutor js = (JavascriptExecutor) driver;
     int yLoc = element.getLocation().getY() - 10;
     int xLoc = element.getLocation().getX();
@@ -384,7 +389,8 @@ public class BasePage {
    */
   public boolean waitForElement(WebElement elemnt, int timeSec) {
     try {
-    	JSWaiter.waitJQueryAngular(); 
+
+    	JSWaiter.waitJQueryAngular();
       WebDriverWait wait = new WebDriverWait(driver, timeSec);
     /*  if ((wait.until(ExpectedConditions.visibilityOf(elemnt)) != null)
           || (wait.until(ExpectedConditions.visibilityOf(elemnt)) != false) {
@@ -405,7 +411,8 @@ public class BasePage {
    * @param table : webelement of UI table for reading the table
    */
   public String[][] readTable(WebElement table) {
-	  JSWaiter.waitJQueryAngular(); 
+
+	  JSWaiter.waitJQueryAngular();
     driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
     List<WebElement> allRows = table.findElements(By.tagName("tr"));
     String[][] rowResults = new String[allRows.size()][];
