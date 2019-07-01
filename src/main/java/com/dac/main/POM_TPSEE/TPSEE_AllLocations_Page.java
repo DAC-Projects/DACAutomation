@@ -169,14 +169,15 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods{
 	}
 
 	
-	@SuppressWarnings("unlikely-arg-type")
+
 	public void compareExprttoAnalysisSiteLinkData(List<Map<String, String>> LocationDataTable,
 			List<Map<String, String>> getLocationDataTableExport) {
 		
 		for (Map<String, String> m1 : LocationDataTable) {
 			for (Map<String, String> m2 : getLocationDataTableExport) {
 				Assert.assertEquals(m1.size(), m2.size());
-				assertTrue(getLocationDataTableExport.contains(LocationDataTable), "Data Matches");
+				Assert.assertEquals(m1.get("Location"), m2.get("Location"), "Data Matches");
+				
 			}
 		}
 	}
