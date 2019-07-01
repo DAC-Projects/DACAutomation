@@ -19,6 +19,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import com.dac.main.BasePage;
+
+import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
 import resources.JSWaiter;
@@ -147,6 +150,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	public List<Map<String, String>> RankingDataTable() throws InterruptedException{
 		JSWaiter.waitJQueryAngular();
 		waitForElement(RankingTable, 40);
+		if(driver.findElement(By.className("dataTables_info")).isDisplayed()) {
 		//getting into progressbar found listing
 		System.out.println("\n reading table data********************* \n");
 		String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
@@ -196,8 +200,16 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	    }
 	    	System.out.println("Total number of entries in table : "+count);
 	    	Assert.assertTrue(entiresText.contains(""+count+""), "Table Data count matches with total enties count");
-	    	return tableCellValues;
-	}
+		}else if(driver.findElement(By.className("dataTables_empty")).isDisplayed()) {
+			try {
+				BaseClass.addEvidence(driver, "Data is not available for selected Filter", "yes");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+			return tableCellValues;
+			}
 	
 	
 	public void RankingDataTableExport() throws FileNotFoundException, IOException, InterruptedException {
@@ -239,4 +251,38 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 			}
 		}
 	}
+	
+	
+	public void compareXlData_UIdata() throws Exception {
+		JSWaiter.waitJQueryAngular();
+		List < WebElement > Columns_row = RankingTableHeader.findElements(By.tagName("th"));
+		int col_count = Columns_row.size();
+		String newfilename = BasePage.getLastModifiedFile("./downloads");
+		//String newfilename = new formatConvert("./downloads/"+fileName).convertFile("xlsx");
+		ExcelHandler a = new ExcelHandler("./downloads/"+newfilename, "Sheet0"); a.deleteEmptyRows();
+		int xlRowCount=new ExcelHandler("./downloads/"+newfilename, "Sheet0").getRowCount();
+		int count = 0;
+		for(int i=1;i<xlRowCount;i++) {
+			col_count = a.getColCount(i);
+			for(int j=0;j<=col_count;j++) {
+				String cellValue = a.getCellValue(i, j+1).trim();
+				if(cellValue.contains("%")) cellValue = new String(""+Double.parseDouble(cellValue.replace("%", ""))+"%");
+				if(cellValue.length() != 0 & cellValue != null) {
+					Map<String, String> uiTableCellValue = tableCellValues.get(count);
+					if(uiTableCellValue.containsValue(cellValue)) { // | uiTableCellValue.equals(cellValue)
+						Assert.assertTrue(uiTableCellValue.containsValue(cellValue), uiTableCellValue+" is matches with Downloaded Excel value : "+cellValue);
+					}else {
+						Assert.assertTrue(false, uiTableCellValue+" is NOT matches with Downloaded Excel value : "+cellValue);
+					}
+					
+					if(j <1 | j >5) count++;
+				}
+			}
+		}
+		CurrentState.getLogger().info("UI table data matches with Exported Excel Data");
+		Assert.assertTrue(true, "UI table data matches with Exported Excel Data");
+		tableCellValues.clear();
+	}
+	
+	
 }

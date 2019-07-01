@@ -22,6 +22,7 @@ import org.testng.Assert;
 
 import com.dac.main.BasePage;
 
+import resources.ExcelHandler;
 import resources.FileHandler;
 import resources.JSWaiter;
 import resources.formatConvert;
@@ -91,6 +92,9 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 
 	@FindBy(xpath = "//a[contains(text(),'Next')]")
 	private WebElement pagination;
+	
+	@FindBy(xpath = "//div[@class='container']/div[@class='row']/div[@class='col-lg-2 bar-chart-column']")
+	private WebElement vendorslist;
 	
 	/**
 	 * @param Country
@@ -287,7 +291,34 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			}
 		}
 	}
-	
+	//To get Vendors List displaying in the application
+	public List<Map<String, String>> verifySitevendors() {
+			JSWaiter.waitJQueryAngular();
+			waitForElement(vendorslist, 40);
+			scrollByElement(vendorslist);
+			Map<String, String> kMap;
+			List<Map<String, String>> Vendors = new ArrayList<Map<String, String>>();
+			List<WebElement> elements = driver.findElements(By.xpath("//div[@class='container']/div[@class='row']/div[@class='col-lg-2 bar-chart-column']"));
+		    java.util.Iterator<WebElement> program = elements.iterator();
+		    kMap = new HashMap<String, String>();
+		        
+		    //reading Vendors data
+		    while (program.hasNext()) {
+		        String values = program.next().getText();
+		        if(!values.equals("null"))
+		        {
+		        	kMap.put("vendors", values);
+		        	System.out.println("\n" +values);
+		        }
+		        else
+		        {
+		            System.out.println("\n No sites displayed \n");
+		        }
+		        //adding into the map
+		        Vendors.add(kMap);
+		    }
+			return Vendors;
+			}
 	//getting data of accuracy score table
 	public List<Map<String, String>> verifyaccuracySitetable() {
 		waitForElement(accuracysite, 30);
@@ -312,4 +343,36 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		    }
 		return accuracysiteTableData;
 	}
+	
+	//Adding Vendors List to Array 
+		public List<Map<String, String>> vendorsList() throws Exception {
+								
+					List<Map<String, String>> Vendorslist = new ArrayList<Map<String, String>>();
+					// Creation of HashMap 
+			    	  Map<String, String> kMap = new HashMap<String, String>();
+			    	   ExcelHandler a = new ExcelHandler("./data/VendorList.xlsx","VendorList");
+			    	   a.deleteEmptyRows();
+			    	   String[][] vendors = a.getExcelTable();
+			    		int colSize = vendors[0].length;
+			    		String size = Integer.toString(colSize);
+			    		for (int col = 1; col < colSize; col++) {
+			    			for (int i = 1; i < vendors.length; i++) {
+			    				kMap.put("Vendors", vendors[0][col]);
+			    				kMap.put(vendors[i][0], vendors[i][col]);
+			    			}
+			      	  Vendorslist.add(kMap);	
+			    	}
+						return Vendorslist;
+				}
+		
+		//Comparing Vendors List from application and Vendors List from Array
+		public void comparevendorsListnverifySitevendors(List<Map<String, String>> verifySitevendors,
+					List<Map<String, String>> vendorsList) {
+				for (Map<String, String> m1 : verifySitevendors) {
+					for (Map<String, String> m2 : vendorsList) {
+						Assert.assertEquals(m1.size(), m2.size());
+						Assert.assertEquals(m1.get("vendors"), m2.get("vendors"), "Data Matches");
+					}
+				}
+			}
 }

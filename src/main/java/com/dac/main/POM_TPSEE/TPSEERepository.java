@@ -27,4 +27,6 @@ public interface TPSEERepository {
 	String ContentAnalysisSiteExport = "ContentAnalysisSiteExport.xlsx";
 	String GoogleRankingExport = "GoogleRankingExport.xlsx";
 	String LocationExport = "LocationExport.xlsx";
+	String ReviewStreamExport = "ReviewStreamExport.xlsx";
+	String ReviewScoreExport = "ReviewScoreExport.xlsx";
 }

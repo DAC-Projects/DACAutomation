@@ -67,8 +67,6 @@ public class TPSEE_GoogleRanking_Test extends BaseClass{
 				public void verifyRankingScoreDataGoogleRanking() throws Exception {
 				data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 				data.RankingScoresData();
-				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 				addEvidence(CurrentState.getDriver(), "Verified Ranking Score for Google Ranking", "yes");
 			}
 	
@@ -79,9 +77,6 @@ public class TPSEE_GoogleRanking_Test extends BaseClass{
 			public void verifyToolTipGoogleRanking() throws Exception {
 				data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 				data.verifyHistoryGraph();
-			//	data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
-				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 				addEvidence(CurrentState.getDriver(), "Tooltip values verified from Google Ranking", "yes");
 			}
 			
@@ -91,11 +86,9 @@ public class TPSEE_GoogleRanking_Test extends BaseClass{
 							"smoke" }, description = "Test for Ranking export and export verification")
 				public void verifyTableDataoExport() throws Exception {
 				data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
-				/*data.SitelLinkData();
-				data.getSiteLinkExporttableData();*/
-				data.compareExprttoAnalysisSiteLinkData(data.RankingDataTable(), data.getRankingDataTableExport());
-				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
+				data.RankingDataTable();
+				data.getRankingDataTableExport();
+				data.compareXlData_UIdata();
 				addEvidence(CurrentState.getDriver(), "Verified Ranking export for Google Ranking", "yes");
 			}
 }
