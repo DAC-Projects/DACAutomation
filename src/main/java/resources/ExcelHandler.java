@@ -29,8 +29,8 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTAutoFilter;
-import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTFilterColumn;
-import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTFilters;
+/*import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTFilterColumn;
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTFilters;*/
 
 /**
  * This class is used to handle the actions to perform on the excel sheet	*/
@@ -391,7 +391,7 @@ public class ExcelHandler {
 	 * 					from 1st row data --> 1								
 	 * used to search for a text in a column and return its row nos
 	 */
-	public List<Integer> find_Row_no( Object[] expectedValue, int fromRow, int column_no) throws IOException{
+	public List<Integer> find_Row_no( List<?> expectedValue, int fromRow, int column_no) throws IOException{
 		
 		List<Integer> matchingRows = new ArrayList<Integer>();
 		//System.out.println("matchingRows.size() : "+matchingRows.size());
@@ -455,7 +455,7 @@ public class ExcelHandler {
 	
 	
 	/**
-	 * used to search for a pattern in a column and return its col nos
+	 * used to search for a pattern in a row and return its col nos
 	 * @param name
 	 */
 	public  List<Integer> seacrh_pattern(String text, int row_no){
@@ -523,7 +523,7 @@ public class ExcelHandler {
   }
   
   	
-  public static void setCriteriaFilter(XSSFSheet sheet, int colId, int firstRow, int lastRow, String[] criteria) throws Exception {
+  /*public static void setCriteriaFilter(XSSFSheet sheet, int colId, int firstRow, int lastRow, String[] criteria) throws Exception {
 	  CTAutoFilter ctAutoFilter = sheet.getCTWorksheet().getAutoFilter();
 	  CTFilterColumn ctFilterColumn = ctAutoFilter.addNewFilterColumn();
 	  ctFilterColumn.setColId(colId);
@@ -544,7 +544,7 @@ public class ExcelHandler {
 	     }
 	     if (hidden) row.getCTRow().setHidden(hidden);
 	  }
-   }
+   }*/
 
   
   

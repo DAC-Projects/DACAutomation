@@ -57,7 +57,7 @@ public class formatConvert {
 		Sheet sheet = wb.createSheet();
 		// read from file
 		String line = br.readLine().trim().replace("﻿", "");
-		System.out.println(line);
+		//System.out.println(line); //to print each row info in console
 		for (int rows = 0; line != null&& !StringUtils.isBlank(line); rows++) {
 			
 			// split by semicolon
@@ -79,7 +79,7 @@ public class formatConvert {
 				cell.setCellValue(item);
 				
 			}
-			System.out.println(line+"***********");
+			//System.out.println(line+"***********"); //to print each row info in console
 			// read next line
 			}
 		line = br.readLine();

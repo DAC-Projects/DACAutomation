@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.ElementNotSelectableException;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.NoSuchElementException;
@@ -21,7 +22,10 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.IClassListener;
+import org.testng.ISuite;
+import org.testng.ISuiteListener;
 import org.testng.ITestClass;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
@@ -41,20 +45,54 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import net.sf.jasperreports.engine.JasperPrint;
 
 public class ExtentTestNGITestListener
-    implements ITestListener, IClassListener, IAutoconst {
+    implements ITestListener, IClassListener, IAutoconst, ISuiteListener {
 
   private static ExtentReports extent = ExtentManager.getInstance();
   private static ThreadLocal parentTest = new ThreadLocal();
   private static ThreadLocal test = new ThreadLocal();
   private static ThreadLocal<ArrayList<JasperPrint>> printList =new ThreadLocal();
     
+  
+  /**
+   * Setting up folders downloads, Screenshot and testevidence And if exist
+   * clear its content
+   * 
+   * @throws IOException
+   */
+  @Override
+  public void onStart(ISuite suite) {
+	  System.out.println("Suite Name : "+ suite.getName());
+	  
+	  String[] folderCreate = { "./downloads", "./Screenshot", "./testevidence" };
+	    System.out.println("folderCreate.toString() : "+folderCreate.toString());
+
+	    for (String folder : folderCreate) {
+	      File file = new File(folder);
+
+	      if (!file.exists()) {
+
+	       file.mkdirs();
+	      }
+
+	      try {
+			FileUtils.cleanDirectory(file);
+			 System.out.println("cleaned directory");
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("catch block");
+		}
+	    }
+  	
+  }
+  
+  
   /**
    * Set parent "node" for extent reports store "browser" and "test name" from testng.xml
    * 
    * @see org.testng.ITestListener#onStart(org.testng.ITestContext)		*/
   @Override
   public synchronized void onStart(ITestContext context) {
-
+	 
     CurrentState
         .setBrowser(context.getCurrentXmlTest().getParameter("browser"));
     CurrentState.setTestName(context.getName());
@@ -79,6 +117,9 @@ public class ExtentTestNGITestListener
       }
       CurrentState.getDriver().manage().window().maximize();
       CurrentState.getDriver().manage().deleteAllCookies();
+      //Send driver object to JSWaiter Class
+      JSWaiter.setDriver(CurrentState.getDriver());
+      
       BaseClass.navigateToBasePage();
    
   }
@@ -289,7 +330,7 @@ public class ExtentTestNGITestListener
    * @return the driver in which user going to execute among chrome/firefox/ie.
    * @throws IOException	   */
   public WebDriver openBrowser(String browser) throws IOException {
-
+	  WebDriverWait wait;
     WebDriver driver = null;
 
     File file = new File("./downloads");
@@ -300,14 +341,24 @@ public class ExtentTestNGITestListener
 
     if (browser.equalsIgnoreCase("Chrome")) {
 
-      WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
+
+     WebDriverManager.chromedriver().version("74.0.3729.6").setup(); 
+
+
+     //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
+
       HashMap<String, Object> chromePref = new HashMap<>();
       chromePref.put("download.default_directory", downloadFolder);
       chromePref.put("download.prompt_for_download", "false");
       ChromeOptions options = new ChromeOptions();
+      options.addArguments("disable-infobars");
       options.setExperimentalOption("prefs", chromePref);
+      //WebDriverManager.chromedriver().setup();
       driver = new ChromeDriver(options);
-
+    //Send driver object to JSWaiter Class
+      JSWaiter.setDriver(driver);
+      //This is the default wait for Explicit Waits
+      wait = new WebDriverWait(driver,15);
     } else if (browser.equalsIgnoreCase("Firefox")) {
       WebDriverManager.firefoxdriver().setup();
       FirefoxProfile profile = new FirefoxProfile();
@@ -325,6 +376,10 @@ public class ExtentTestNGITestListener
       firefoxOptions.setCapability(CapabilityType.ELEMENT_SCROLL_BEHAVIOR, 0);
 
       driver = new FirefoxDriver(firefoxOptions);
+    //Send driver object to JSWaiter Class
+      JSWaiter.setDriver(driver);
+      //This is the default wait for Explicit Waits
+      wait = new WebDriverWait(driver,15);
 
     } else if (browser.equalsIgnoreCase("IE")) {
       WebDriverManager.iedriver().architecture(Architecture.X32).setup();
@@ -348,6 +403,10 @@ public class ExtentTestNGITestListener
             "Coulnd't change the registry for default directory for IE");
       }
       driver = new InternetExplorerDriver(capabilities);
+    //Send driver object to JSWaiter Class
+      JSWaiter.setDriver(driver);
+      //This is the default wait for Explicit Waits
+      wait = new WebDriverWait(driver,15);
 
     }
 
@@ -355,5 +414,12 @@ public class ExtentTestNGITestListener
     System.out.println("opened browser");
     return driver;
 
+  }
+
+
+
+  @Override
+  public void onFinish(ISuite suite) {
+	  System.out.println("Finish Suite Name : "+ suite.getName());
   }
 }

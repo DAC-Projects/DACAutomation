@@ -59,6 +59,11 @@ public class LoginAC_Beta {
 	public void findUser(String data) {
 		search_email.sendKeys(data);
 		search_email.sendKeys(Keys.ENTER);
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }
 

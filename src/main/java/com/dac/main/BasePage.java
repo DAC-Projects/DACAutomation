@@ -10,6 +10,9 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -35,6 +38,7 @@ import org.testng.Assert;
 
 import resources.CurrentState;
 import resources.DateFormats;
+import resources.JSWaiter;
 
 /***/
 public class BasePage {
@@ -59,7 +63,7 @@ public class BasePage {
    * 
    * @param driver : for which driver need to wait till page's script get loaded		*/
   public void waitUntilLoad(WebDriver driver) {
-
+	  JSWaiter.waitJQueryAngular();
     // WebDriverWait wait = new WebDriverWait(driver, 30);
     try {
       // wait for jQuery to load
@@ -100,7 +104,7 @@ public class BasePage {
    * @param timeout : waiting time to download the file
    * @param dir : directory where the file will download			 */
   public void checkFileSizeIncrsd(long initialSize, int timeout, File dir) {
-
+	  JSWaiter.waitJQueryAngular();
     WebDriverWait dwnldwait = new WebDriverWait(driver, timeout);
 
     ExpectedCondition<Boolean> chkFileDownld = new ExpectedCondition<Boolean>() {
@@ -126,8 +130,9 @@ public class BasePage {
    */
   public synchronized void download(String browser, WebElement downloadBTN, int timeout)
       throws InterruptedException {
-
-    File dwnldDir = new File("./downloads");
+	  	JSWaiter.waitJQueryAngular();
+	  	
+		File dwnldDir = new File("./downloads");
     long initialSize = dwnldDir.listFiles().length;
     System.out.println("directory size is " + initialSize);// check file size
 
@@ -173,7 +178,9 @@ public class BasePage {
    * 
    * @param element : element/button to click		*/
   public void clickelement(WebElement element) {
-    wait.until(ExpectedConditions.visibilityOf(element));
+
+	  JSWaiter.waitJQueryAngular();
+		wait.until(ExpectedConditions.visibilityOf(element));
      	try {
     	      if (element.isDisplayed() & element.isEnabled()) {
     	        try {
@@ -185,8 +192,9 @@ public class BasePage {
     	        }
     	      }
     	    } catch (NoSuchElementException e) {
-    	      Assert.fail("element " + element + " NOT found");
+    	      Assert.fail("element" + element + " NOT found");
     	    }
+     	JSWaiter.waitJQueryAngular();
     
   }
 
@@ -249,6 +257,8 @@ public class BasePage {
    */
   public String getClipboardContents(WebElement element)
       throws UnsupportedFlavorException, IOException {
+
+	  JSWaiter.waitJQueryAngular();
 	  String eleText = "";
 	  if(element.isEnabled()) {
 		  System.out.println("if block starts");
@@ -314,7 +324,9 @@ public class BasePage {
    * 
    * Used for weblet testing, tool tip text verification etc. 		*/
   public void verifyText(WebElement e, String eText) {
-    String aText = e.getText().trim();
+
+	  JSWaiter.waitJQueryAngular();
+	String aText = e.getText().trim();
     System.out.println(aText);
     Assert.assertEquals(aText, eText);
   }
@@ -325,12 +337,17 @@ public class BasePage {
    * @param element : to scroll the web page till the specific web element		*/
   public void scrollByElement(WebElement element) {
 
+	  JSWaiter.waitJQueryAngular(); 
+	  wait.until(ExpectedConditions.visibilityOf(element));
+
     JavascriptExecutor js = (JavascriptExecutor) driver;
     int yLoc = element.getLocation().getY() - 10;
     int xLoc = element.getLocation().getX();
     js.executeScript("window.scrollTo(" + xLoc + ", " + yLoc + ")");
 
   }
+  
+ 
 
   /**
    * This method is used to get the today's date in IST format ie. dd-mm-yyyy 		*/
@@ -355,6 +372,7 @@ public class BasePage {
    * @return
    */
   public boolean isAlertPresent() {
+	  JSWaiter.waitJQueryAngular(); 
     try {
       driver.switchTo().alert();
       return true;
@@ -372,6 +390,8 @@ public class BasePage {
    */
   public boolean waitForElement(WebElement elemnt, int timeSec) {
     try {
+
+    	JSWaiter.waitJQueryAngular();
       WebDriverWait wait = new WebDriverWait(driver, timeSec);
     /*  if ((wait.until(ExpectedConditions.visibilityOf(elemnt)) != null)
           || (wait.until(ExpectedConditions.visibilityOf(elemnt)) != false) {
@@ -381,17 +401,19 @@ public class BasePage {
 
        return wait.until(ExpectedConditions.visibilityOf(elemnt)) == elemnt ? true : false;
     } catch (TimeoutException e) {
-      Assert.fail("Element did not load in the specified timeout");
+     // Assert.fail("Element did not load in the specified timeout");
       return false;
     }
   }
 
   /**
-   * This method to print the UI table data in Console
+   * This method to print the UI table data in Console of 1st page of pagination only
    * 
    * @param table : webelement of UI table for reading the table
    */
   public String[][] readTable(WebElement table) {
+
+	  JSWaiter.waitJQueryAngular();
     driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
     List<WebElement> allRows = table.findElements(By.tagName("tr"));
     String[][] rowResults = new String[allRows.size()][];

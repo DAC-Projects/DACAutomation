@@ -436,7 +436,7 @@ public class ResponsesPage_RS extends BasePage{
         			}
         			}
         			catch(Exception e) {
-        				
+        				e.printStackTrace();
         			}
         		}
         		else {

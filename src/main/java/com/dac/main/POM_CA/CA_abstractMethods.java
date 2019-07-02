@@ -1,9 +1,12 @@
+
 package com.dac.main.POM_CA;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,16 +20,18 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import com.dac.main.BasePage;
 
+import resources.CurrentState;
 import resources.FileHandler;
+import resources.JSWaiter;
 import resources.formatConvert;
 
 public abstract class CA_abstractMethods extends BasePage implements CARepository {
-
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
@@ -41,6 +46,14 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	}
 
 	// Global Filter locators
+	@FindBy(xpath="(//*[@id='divCIAccuracy']/h1)")
+	private WebElement CATitleContent;
+	
+	@FindBy(id="myGroups")
+	private WebElement fiterGroup;
+	
+	@FindBy(xpath="//*[@class='menu transition visible']")
+	private WebElement filterDropDown;
 
 	@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList")
 	private WebElement FilterCountry;
@@ -64,8 +77,28 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	@FindBy(css = "rect.highcharts-plot-background")
 	public WebElement hstryGrph;
 
-	@FindBy(css = "div.highcharts-label.highcharts-tooltip.highcharts-color-0>span>table")
+	@FindBy(css = "div.highcharts-label.highcharts-tooltip.highcharts-color-undefined")
 	private WebElement grphTable;
+	
+	@FindBy(xpath="//*[@id='compIntAccuracyContainer']//h3")
+	public WebElement Accuracysitescore;
+	
+	@FindBy(xpath="(//*[text()='Bing'])[1]")
+	public WebElement site1;
+	
+	@FindBy(xpath="(//*[text()='Yellowpages.ca'])[1]")
+	public WebElement site2;
+	
+	@FindBy(xpath="(//*[text()='Facebook'])[1]")
+	public WebElement site3;
+	
+	@FindBy(xpath="(//*[text()='Foursquare'])[1]")
+	public WebElement site4;
+	
+	
+
+//	@FindBy(css = "div.highcharts-label.highcharts-tooltip.highcharts-color-0>span>table")
+//	private WebElement grphTable;
 
 	// site table
 	@FindBy(css = "table#compIntVisibilitySitesTable")
@@ -77,35 +110,87 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	 * @param City
 	 * @param Location
 	 *            for Global filtering reports
+	 *            
 	 */
-	public void applyFilter(String Country, String State, String City, String Location) {
+	
+	
+	
+public void applyFilter(String Country, String State, String City, String Location) {
 
+	
+	
+	JSWaiter.waitJQueryAngular();
+	wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("apply_filter")));
+	WebElement country,state,city,location;
+	if (Country == null || Country.equalsIgnoreCase("null")) Country = "All Countries";
+	if (Country == null || State == null || State.equalsIgnoreCase("null")) State = "All States";
+	if (Country == null || State == null || City == null || City.equalsIgnoreCase("null")) City = "All Cities"; 
+	if (Country == null || State == null || City == null | Location == null || Location.equalsIgnoreCase("null")) Location = "All Locations";
+	try {
 		waitForElement(filter_Panel, 25);
-		scrollByElement(filter_Panel);
-		clickelement(FilterCountry);
-		WebElement country = driver.findElement(By.xpath("//div[@value='" + Country + "']"));
-		clickelement(country);
-		clickelement(FilterState);
-		WebElement state = driver.findElement(By.xpath("//div[@value='" + State + "']"));
-		waitForElement(state, 10);
-		clickelement(state);
-		clickelement(FilterCity);
-		WebElement city = driver.findElement(By.xpath("//div[@value='" + City + "']"));
-		waitForElement(city, 10);
-		clickelement(city);
-		clickelement(Filterlocation);
-		WebElement location = driver.findElement(By.xpath("//div[contains(text(),'" + Location + "')]"));
-		waitForElement(location, 10);
-		clickelement(location);
-		scrollByElement(location);
-		clickelement(Apply_filter);
 
+		scrollByElement(CATitleContent);
+		waitUntilLoad(driver);
+		if(!Country.equals("All Countries")) {
+			clickelement(FilterCountry);
+			waitForElement(filterDropDown, 20);
+			country =FilterCountry.findElement(By.xpath("//div[text()='" + Country + "']"));
+			waitForElement(country, 10);
+			Thread.sleep(1000);
+			clickelement(country);
+			waitUntilLoad(driver);
+		}
+		if(!State.equals("All States")) {			
+			clickelement(FilterState);
+			waitForElement(filterDropDown, 20);
+			state = FilterState.findElement(By.xpath("//div[text()='"+State+"']"));
+			waitForElement(state, 10);
+			Thread.sleep(1000);
+			clickelement(state);
+			waitUntilLoad(driver);
+		}
+		if(!City.equals("All Cities")) {
+			clickelement(FilterCity);
+			waitForElement(filterDropDown, 20);
+			city = FilterCity.findElement(By.xpath("//div[text()='"+City+"']"));
+			waitForElement(city, 10);
+			Thread.sleep(1000);
+			clickelement(city);
+			waitUntilLoad(driver);
+		}
+		if(!Location.equals("All Locations")) {			
+			clickelement(Filterlocation);
+			waitForElement(filterDropDown, 20);
+			location = Filterlocation.findElement(By.xpath("//div[text()='"+Location+"']"));
+			waitForElement(location, 10);
+			Thread.sleep(1000);
+			clickelement(location);
+			waitUntilLoad(driver);
+		}
+	}catch(Exception e) {
+		e.printStackTrace();
+		Assert.fail("searched Country/State/City/Location may not be there or may be a typo error please check it");
 	}
+	waitUntilLoad(driver);
+	wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("apply_filter")));
+	}
+
+
+/**
+ * This method used to click on the Apply Filter button		*/
+public void clickApplyFilterBTN() throws InterruptedException {
+	JSWaiter.waitJQueryAngular();
+	if(Apply_filter.isDisplayed()) {
+		clickelement(Apply_filter);
+		Thread.sleep(3000);
+	}
+}
 
 	/**
 	 * @return must implement overview report for all pages
 	 */
 	public abstract List<Map<String, String>> getOverviewReport();
+
 
 	/**
 	 * @param filename
@@ -113,20 +198,29 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	 * Converts passed file to excel format and renames the file
 	 * @throws FileNotFoundException
 	 * @throws IOException
+	 * 
+	 * 
+	 * 
 	 */
+	
+				   
+		
+
 	public void convertExports(String filename, String export) throws FileNotFoundException, IOException {
 		String report_export = new formatConvert(Exportpath + filename).convertFile("xlsx");
 		FileHandler.renameTo(new File(Exportpath + report_export), Exportpath + export);
 	}
 
 	/**
-	 * @return Reads the graph and return tooltip data as a list
+	 * @return History graph value read
 	 */
 	public List<Map<String, String>> verifyHistoryGraph() {
+		//display tool tip
 		waitForElement(hstryGrph, 10);
 		scrollByElement(hstryGrph);
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth() / 2) - 2, 0).click().perform();
+		//read the tooltip variables
 		rows = grphTable.findElements(By.tagName("tr"));
 		String[][] table = readTable(grphTable);
 
@@ -162,9 +256,9 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 			return 0f;
 
 	}
-
-	/**Read sites table and return values as list
-	 * @return
+	/**
+	 * @param s
+	 * @to read site table values
 	 */
 	public List<Map<String, String>> verifySitetable() {
 		waitForElement(siteTable, 10);
@@ -194,11 +288,6 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 
 	}
 
-	/**
-	 * @param exportData
-	 * @param ovrwRprtData
-	 * Compare overview report and export
-	 */
 	public void compareExprttoOvervw(List<Map<String, String>> exportData, List<Map<String, String>> ovrwRprtData) {
 
 		for (Map<String, String> m1 : ovrwRprtData) {
@@ -211,11 +300,6 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 		}
 	}
 
-	/**
-	 * @param tooltipdata
-	 * @param ovrwRprtData
-	 * Comparing overview report and graph
-	 */
 	public void compareReportnGraph(List<Map<String, String>> tooltipdata, List<Map<String, String>> ovrwRprtData) {
 
 		for (Map<String, String> m1 : ovrwRprtData) {
@@ -228,5 +312,39 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 		}
 
 	}
+	
+public void AccuracyScrolldata()
+{
+	
+	waitForElement(site1, 25);
+	scrollByElement(site1);
+	waitUntilLoad(driver);
+	
+}	
+public void AccuracyScrolldataSite2()
+{
+	waitForElement(site2, 25);
+	scrollByElement(site2);
+	waitUntilLoad(driver);
+}
+
+public void AccuracyScrolldataSite3()
+{
+	waitForElement(site3, 25);
+	scrollByElement(site3);
+	waitUntilLoad(driver);
+}
+
+public void AccuracyScrolldataSite4()
+{
+	waitForElement(site4, 25);
+	scrollByElement(site4);
+	waitUntilLoad(driver);
+}
 
 }
+
+
+
+
+
