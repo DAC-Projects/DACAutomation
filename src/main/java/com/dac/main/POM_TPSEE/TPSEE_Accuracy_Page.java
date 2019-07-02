@@ -56,8 +56,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		@FindBy(xpath = "//*[@id='btnLocationExport']")
 		private WebElement export;
 		
-		//@FindBy(xpath = "//div[contains(@class,'row scores-row active')]//a[contains(@class,'load-table')][contains(text(),'')]")
-		@FindBy(xpath = "(//div//a[@class='load-table'][contains(text(),'')])[2]")
+		@FindBy(xpath = "(//div//a[@class='load-table'][contains(text(),'')])")
 		private WebElement sitelink;
 		
 		@FindBy(xpath = "//a[@id='ToolTables_inaccuracy_results_0']")
@@ -321,18 +320,6 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			return exporttableData;
 		}
 
-	/*public void compareexporttableDatantable(List<Map<String, String>> exporttableData,
-			List<Map<String, String>> verifysitelinkdata) {
-		for (Map<String, String> m1 : exporttableData) {
-			for (Map<String, String> m2 : verifysitelinkdata) {
-				if (m1.get("rowdata").equals(m2.get("rowdata"))) {
-					Assert.assertEquals(m1.get("rowdata").contains(m2.get("rowdata")), true);
-				}
-			}
-		}
-		
-	}*/
-	
 	public void compareXlData_UIdata() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		List < WebElement > Columns_row = titlehead.findElements(By.tagName("th"));
@@ -475,21 +462,8 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			}
 			return exporttableData;
 		}
-
-		/*public void compareexporttableDatanInAccuracytable(List<Map<String, String>> getInAccuracyExporttableData,
-				List<Map<String, String>> verifyInAccuracysitelinkdata) {
-			for (Map<String, String> m1 : getInAccuracyExporttableData) {
-				for (Map<String, String> m2 : verifyInAccuracysitelinkdata) {
-					if (m1.get("rowdata").equals(m2.get("rowdata"))) {
-						Assert.assertEquals(m1.get("rowdata").contains(m2.get("rowdata")), true);
-					}
-				}
-			}
-			
-		}*/
 		
 		//Clicking on progress bar and getting the data from the table for found
-
 		public List<Map<String, String>> verifyIgnoredsitelinkdata() throws InterruptedException{
 			JSWaiter.waitJQueryAngular();
 			waitForElement(accuracysite, 40);
