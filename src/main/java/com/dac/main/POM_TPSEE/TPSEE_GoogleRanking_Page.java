@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -79,6 +80,28 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "//div[@id='rankingDetail_info']")
 	private WebElement entiresText;
 	
+	@FindBy(xpath = "//div[@class='col-sm-12'][1]")
+	private WebElement acckeypanel;
+	
+	@FindBy(xpath = "(//div/a[@class='remove'])[6]")
+	private WebElement removeacckey;
+	
+	@FindBy(xpath = "//div[@class='selectize-input items full has-options has-items']")
+	private WebElement accountkeyword;
+		
+	@FindBy(xpath = "//select[@id='ddlGroup']")
+	private WebElement Group;
+	
+	@FindBy(xpath = "(//div[@class='col-sm-12']//table)[2]")
+	private WebElement GroupKeypanel;
+	
+	@FindBy(xpath = "//div[@class='selectize-input items not-full']")
+	private WebElement GroupKeywords;
+	
+	@FindBy(xpath = "//button[@id='btnSave']")
+	private WebElement SaveKeyword;
+	
+	
 	/*-----------------------Ranking Table---------------------------*/
 	
 	/*-------------------------Pagination-----------------------*/
@@ -107,7 +130,54 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+	public void applyKeywords(String AccKey, String GrKey, String GrKeyword) {
+		JSWaiter.waitJQueryAngular();
+		WebElement AccountKeyword,GroupKey,GroupKeyword;
+		if(AccKey == null || AccKey.equalsIgnoreCase("null")) AccKey = "";
+		if(GrKey == null || GrKey.equalsIgnoreCase("none")) GrKey = "None";
+		if(GrKeyword == null || GrKeyword.equalsIgnoreCase("null")) GrKeyword = "";
+		try {
+			waitForElement(acckeypanel, 25);
+			scrollByElement(accountkeyword);
+			waitUntilLoad(driver);
+			if(!AccKey.equals("null")) {
+				if(removeacckey.isDisplayed()){
+					clickelement(removeacckey);
+					waitForElement(accountkeyword,20);
+					AccountKeyword = acckeypanel.findElement(By.xpath("(//div[@class='col-sm-12'][1]//input)[2]"));
+					AccountKeyword.sendKeys(AccKey);
+					AccountKeyword.sendKeys(Keys.ENTER);
+					}else{
+						System.out.println("No keywords");
+					}
+			}
+			waitForElement(GroupKeypanel, 25);
+			scrollByElement(Group);
+			waitUntilLoad(driver);
+			if(!GrKey.equals("None")) {			
+				clickelement(GroupKeypanel);
+				waitForElement(Group, 20);
+				GroupKey = Group.findElement(By.xpath("//div[@data-value='"+GrKey+"']"));
+				waitForElement(GroupKey, 10);
+				clickelement(GroupKey);
+				waitUntilLoad(driver);
+				GroupKeyword = acckeypanel.findElement(By.xpath("(//div[@class='col-sm-12'][1]//input)[2]"));
+				GroupKeyword.sendKeys(GrKeyword);
+				GroupKeyword.sendKeys(Keys.ENTER);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			Assert.fail("Keywords not added");
+	}
+	waitUntilLoad(driver);
+	
 
+}
+	
+	
+	
 	public List<Map<String, String>> RankingScoresData() throws InterruptedException {
 		JSWaiter.waitJQueryAngular();
 		if(ScoresTable.isDisplayed()){
@@ -282,6 +352,19 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 		CurrentState.getLogger().info("UI table data matches with Exported Excel Data");
 		Assert.assertTrue(true, "UI table data matches with Exported Excel Data");
 		tableCellValues.clear();
+	}
+
+
+
+	public void clickApplyKeyword() throws InterruptedException {
+		// TODO Auto-generated method stub
+		
+		JSWaiter.waitJQueryAngular();
+		if(SaveKeyword.isDisplayed()) {
+			clickelement(SaveKeyword);
+			Thread.sleep(3000);
+		}
+		
 	}
 	
 	
