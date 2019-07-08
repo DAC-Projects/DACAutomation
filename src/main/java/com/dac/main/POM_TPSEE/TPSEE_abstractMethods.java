@@ -119,7 +119,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			if(!Group.equals("None")) {			
 				clickelement(fiterGroup);
 				waitForElement(filterDropDown, 20);
-				group = FilterState.findElement(By.xpath("//div[@data-value='"+Group+"']"));
+				group = fiterGroup.findElement(By.xpath("//div[@data-value='"+Group+"']"));
 				waitForElement(group, 10);
 				clickelement(group);
 				waitUntilLoad(driver);

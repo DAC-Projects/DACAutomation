@@ -31,6 +31,31 @@ public class TPSEE_GoogleRanking_Test extends BaseClass{
 	}
 	
 	@Test(dependsOnMethods = { "navigateToGoogleRankingPage" }, groups = {
+			"smoke" }, description = "Add Account Level and Group Level Keyword")
+	public void verifyApplyKeywords() throws Exception {
+		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
+		try {
+			ExcelHandler wb = new ExcelHandler("./data/GroupAndAccountKeywords.xlsx", "AccountLevelKeywords"); wb.deleteEmptyRows();
+			TPSEE_GoogleRanking_Page s = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
+			for(int i=1;i<=wb.getRowCount();i++) {
+				if(i>1) CurrentState.getDriver().navigate().refresh();
+				s.waitUntilLoad(CurrentState.getDriver());
+				String AccKey = wb.getCellValue(i, wb.seacrh_pattern("AccountKeyword", 0).get(0).intValue());
+				String GrKey = wb.getCellValue(i, wb.seacrh_pattern("GroupKey", 0).get(0).intValue());
+				String GrKeyword = wb.getCellValue(i, wb.seacrh_pattern("GroupKeyword", 0).get(0).intValue());
+				s.applyKeywords(AccKey , GrKey , GrKeyword);
+				System.out.println(AccKey+", "+GrKey+", "+GrKeyword);
+				System.out.println();
+				s.clickApplyKeyword();
+				BaseClass.addEvidence(CurrentState.getDriver(),
+						"Applied Account and Group Level Keywords: "+AccKey+", "+GrKey+", "+GrKeyword+"", "yes");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test(dependsOnMethods = { "verifyApplyKeywords" }, groups = {
 	"smoke" }, description = "Verify Google Ranking page loads after filter applied")
 	public void verifyFilteringReportsnavigateToGoogleRanking() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
@@ -62,7 +87,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass{
 	
 	//Test for export and overview report in Content Analysis Page
 			@SuppressWarnings("unchecked")
-			@Test(dependsOnMethods = { "navigateToGoogleRankingPage" ,"verifyFilteringReportsnavigateToGoogleRanking"}, groups = {
+			@Test(dependsOnMethods = { "verifyFilteringReportsnavigateToGoogleRanking"}, groups = {
 							"smoke" }, description = "Test for Ranking scores Data")
 				public void verifyRankingScoreDataGoogleRanking() throws Exception {
 				data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
