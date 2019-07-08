@@ -131,6 +131,7 @@ public class BasePage {
   public synchronized void download(String browser, WebElement downloadBTN, int timeout)
       throws InterruptedException {
 	  	JSWaiter.waitJQueryAngular();
+	  	
 		File dwnldDir = new File("./downloads");
     long initialSize = dwnldDir.listFiles().length;
     System.out.println("directory size is " + initialSize);// check file size

@@ -96,9 +96,9 @@ public class TPSEE_Visibility_Test extends BaseClass {
 			"smoke" }, description = "Test for verifying progress bar in Visibility page")
 	public void numberofentriesnExporttableVisibility() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-			/*data.DataTablefound();
+			data.DataTablefound();
 			data.getExporttableDataFound();
-			*/data.compareexporttableDatantable(data.DataTablefound(),data.getExporttableDataFound());
+			data.compareXlDataNotFoundandNotFound_UIdata();
 			addEvidence(CurrentState.getDriver(),
 					"Site level scores in Visibility site table  and overview visibility export found matching", "yes");
 	}
@@ -109,16 +109,16 @@ public class TPSEE_Visibility_Test extends BaseClass {
 				"smoke" }, description = "Test for verifying progress bar in Visibility page")
 		public void numberofentriesnExporttableNotFoundVisibility() throws Exception {
 				data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-				/*data.DataTableNotfound();
-				data.getExporttableDataNotFound();*/
-				data.compareexporttableDatantableNotFound(data.DataTableNotfound(),data.getExporttableDataNotFound());
+				data.DataTableNotfound();
+				data.getExporttableDataNotFound();
+				data.compareXlDataNotFoundandNotFound_UIdata();
 				addEvidence(CurrentState.getDriver(),
 						"Site level scores in Visibility site table  and overview visibility export found matching", "yes");
 		}
 	
 	//Test to compare vendors in the application in Visibility Page
 		@SuppressWarnings("unchecked")
-		@Test(dependsOnMethods = {"numberofentriesnExporttableNotFoundVisibility"},groups = {"smoke"},
+		@Test(dependsOnMethods = {"verifyFilteringReportsVisibility"},groups = {"smoke"},
 				description ="Verify Site Vendors List")
 		public void comparevendorsListnverifySitevendors() throws Exception{
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());

@@ -34,7 +34,7 @@ public class Navigationpage extends BasePage{
 	}
 
 	// -------------------------------- TSEE ------------------------------
-	@FindBy(xpath = "//*[@id='reportSiteOrder']/a/span")
+	@FindBy(xpath = "//a[@href='/Dashboard/AllLocations/']/span")
 	private WebElement AllLocations;
 
 	@FindBy(xpath = "//a[@href='/Dashboard/AllGroups/']/span")
@@ -54,6 +54,9 @@ public class Navigationpage extends BasePage{
 	
 	@FindBy(xpath = "//a[@href='/Dashboard/ReviewStream']/span")
 	private WebElement ReviewStream;
+	
+	@FindBy(xpath = "//a[@href='/Review/ReviewScore/']/span")
+	private WebElement DisplayedReviewScore;
 	
 	@FindBy(xpath = "//li[@class='settings-dropdown-cog']")
 	private WebElement Settings;
@@ -198,6 +201,18 @@ public class Navigationpage extends BasePage{
     	//clickelement(AllGroups);
     	driver.findElement(By.xpath("//a[@href='/Dashboard/AllGroups/']/span")).click();
     	//action.moveToElement(AllGroups).click().perform();
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    public void navigateToReviewStream() {
+    	clickelement(ReviewStream);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    public void navigateToDisplayedReviewScore() {
+    	clickelement(DisplayedReviewScore);
     	System.out.println("Waiting for page to load********");
     	waitUntilLoad(driver);
     }
