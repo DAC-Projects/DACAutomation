@@ -92,7 +92,7 @@ public class ExtentTestNGITestListener
    * @see org.testng.ITestListener#onStart(org.testng.ITestContext)		*/
   @Override
   public synchronized void onStart(ITestContext context) {
-
+	 
     CurrentState
         .setBrowser(context.getCurrentXmlTest().getParameter("browser"));
     CurrentState.setTestName(context.getName());
@@ -342,7 +342,8 @@ public class ExtentTestNGITestListener
     if (browser.equalsIgnoreCase("Chrome")) {
 
 
-      WebDriverManager.chromedriver().version("74.0.3729.6").setup(); 
+     WebDriverManager.chromedriver().version("74.0.3729.6").setup(); 
+
 
      //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
 

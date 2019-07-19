@@ -34,16 +34,16 @@ public class Navigationpage extends BasePage{
 	}
 
 	// -------------------------------- TSEE ------------------------------
-	@FindBy(id = "//a[@href='/Dashboard/AllLocations/']/span")
+	@FindBy(xpath = "//a[@href='/Dashboard/AllLocations/']/span")
 	private WebElement AllLocations;
 
-	@FindBy(id = "//a[@href='/Dashboard/AllGroups/']/span")
+	@FindBy(xpath = "//a[@href='/Dashboard/AllGroups/']/span")
 	private WebElement AllGroups;
 
 	@FindBy(xpath = "//a[@href='/Dashboard/VaReport/']/span")
 	private WebElement Visibility;
 
-	@FindBy(xpath = "//*[@id=\'Accuracy_Index\']")
+	@FindBy(xpath = "//*[@id='Accuracy_Index']")
 	private WebElement Accuracy;
 
 	@FindBy(xpath = "//a[@href='/Dashboard/AnalysisReport/']/span")
@@ -54,6 +54,15 @@ public class Navigationpage extends BasePage{
 	
 	@FindBy(xpath = "//a[@href='/Dashboard/ReviewStream']/span")
 	private WebElement ReviewStream;
+	
+	@FindBy(xpath = "//a[@href='/Review/ReviewScore/']/span")
+	private WebElement DisplayedReviewScore;
+	
+	@FindBy(xpath = "//li[@class='settings-dropdown-cog']")
+	private WebElement Settings;
+	
+	@FindBy(xpath = "//ul[contains(@class,'settings-list dashboardColor')]")
+	private WebElement Group;
 	
 	//------------------------- SA and RRM -------------------------------------
 	
@@ -165,6 +174,51 @@ public class Navigationpage extends BasePage{
       System.out.println("Waiting for page to load**********");
       waitUntilLoad(driver);
   	}
+    
+    public void navigateToContentAnalysis() {
+    	
+    	clickelement(Analysis);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    public void navigateToGoogleRanking() {
+    	
+    	clickelement(GoogleRanking);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    public void navigateToAllLocations() {
+    	
+    	clickelement(AllLocations);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    public void navigateToAllGroups() {
+    	   	
+    	action.moveToElement(Settings).perform();
+    	waitForElement(Group, 20);
+    	action.moveToElement(AllGroups).perform();
+    	//clickelement(AllGroups);
+    	driver.findElement(By.xpath("//a[@href='/Dashboard/AllGroups/']/span")).click();
+    	//action.moveToElement(AllGroups).click().perform();
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    public void navigateToReviewStream() {
+    	clickelement(ReviewStream);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    public void navigateToDisplayedReviewScore() {
+    	clickelement(DisplayedReviewScore);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
     
     //-----CA
     

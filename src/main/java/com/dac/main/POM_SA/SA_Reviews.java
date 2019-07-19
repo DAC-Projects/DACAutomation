@@ -5,8 +5,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -23,8 +27,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import com.dac.main.BasePage;
+import com.google.common.collect.Ordering;
 
 import resources.CurrentState;
+import resources.DateFormats;
 import resources.ExcelHandler;
 import resources.IAutoconst;
 import resources.JSWaiter;
@@ -134,6 +140,12 @@ public class SA_Reviews extends BasePage{
 	@FindBy(id="popOverRecommendation")
 	private WebElement recommendationsPopUp;
 	
+	@FindBy(xpath="//*[@id='Review']//*[@class='source-filter-items']/li/label")
+	private List<WebElement> sourceList;
+	
+	@FindBy(xpath="//*[@id='Review']//*[@class='dropdown source-filter']")
+	private WebElement sourceDropDown;
+	
 	//-----------------------------------------------------------
 	
 	@FindBy(xpath = "//*[@class='business-info']//span[@itemprop='name']")
@@ -171,10 +183,9 @@ public class SA_Reviews extends BasePage{
 	public void clickExportBTN() throws InterruptedException {
 		JSWaiter.waitJQueryAngular();
 		//wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
+		wait.until(ExpectedConditions.visibilityOf(exportBTN));
 		scrollByElement(exportBTN);
 		if(exportBTN.isEnabled() & exportBTN.isDisplayed()) {
-			wait.until(ExpectedConditions.visibilityOf(exportBTN));
-			//exportBTN.click();
 			action.moveToElement(exportBTN).click(exportBTN).perform();
 			Thread.sleep(5000);
 			//System.out.println("downloaded file name: "+getLastModifiedFile("./downloads"));
@@ -224,16 +235,29 @@ public class SA_Reviews extends BasePage{
 		return Integer.parseInt(numOfPages);
 	}
 	
-	public void allLocationInfo() throws InterruptedException, MalformedURLException, IOException {
+	public List<String> getSourceList() {
+		JSWaiter.waitJQueryAngular();
+		List<String> sourceLst = new ArrayList<String>();
+		clickelement(sourceDropDown);
+		for(int i = 0; i<sourceList.size(); i++) {
+			sourceLst.add(sourceList.get(i).getText());
+			System.out.println(sourceList.get(i).getText());
+		}
+		return sourceLst;
+	}
+	
+	public ArrayList<String> allLocationInfo() throws InterruptedException, MalformedURLException, IOException {
 		JSWaiter.waitJQueryAngular();
 		Thread.sleep(3000);
 		HashMap<Integer,ArrayList<String>> a = new HashMap<Integer,ArrayList<String>>();
 					 		
 		int totPages = getTotalPagesPagination();
-		ArrayList<String> links,source;
-		links = new ArrayList<String>(); source= new ArrayList<String>();
+		System.out.println("totPages : "+totPages);
+		ArrayList<String> links,source, dataExport;
+		links = new ArrayList<String>(); source= new ArrayList<String>(); dataExport = new ArrayList<String>();
 		ArrayList<String> totData = new ArrayList<String>();
 		int count = 1;
+		List<String> lst = getSourceList();
 		
 		for(int page=1; page<=totPages;page++) {
 			scrollByElement(exportBTN);
@@ -248,6 +272,8 @@ public class SA_Reviews extends BasePage{
 				links.add(link);
 				if (link.contains("foursquare")) s = "foursquare";
 				else s = link.substring(link.indexOf(".")+1,link.indexOf(".", link.indexOf(".")+1));
+				for(String b:lst) { if(b.equalsIgnoreCase(s)) s = b; }
+				System.out.println(s);
 				source.add(s);  //this will not work for "yellowPages.com"
 			}
 			
@@ -283,8 +309,10 @@ public class SA_Reviews extends BasePage{
 				
 				if(!source.get(numberOfReviews).equalsIgnoreCase("yelp")) {
 					System.out.println("count : "+count);
-					System.out.println("exportedData : "+ "\""+refID+"\",\""+source.get(numberOfReviews)+"\",\""+links.get(i)+"\","+
-										locationData+",\" "+reviewDate.get(i).getText()+"\",\""+review+"\",\""+author+"\""+dupRating);
+					String data = "\""+refID+"\",\""+source.get(numberOfReviews)+"\",\""+links.get(i)+"\","+
+							locationData+",\" "+reviewDate.get(i).getText()+"\",\""+review+"\",\""+author+"\""+dupRating;
+					System.out.println("exportedData : "+ data);
+					dataExport.add(data);
 					a.put(count++, totData);
 				}
 				System.out.println("-----------------------------");
@@ -298,6 +326,129 @@ public class SA_Reviews extends BasePage{
 		System.out.println("sumOfAllStars : "+sumOfAllStars+" numberOfNonRecommends : "+numberOfNonRecommends);
 		System.out.println("numberOfStarReviews : "+numberOfStarReviews);
 		calReviews();	calRecommendationsCount();
+		return dataExport;
+	}
+	
+	public ArrayList<Integer> getSortedRatings() {
+		int totPages = getTotalPagesPagination();
+		ArrayList<Integer> ratingList=new ArrayList<>();
+		ArrayList<Integer> exportRatingList=new ArrayList<>();
+		List<WebElement> stars = new ArrayList<>();
+		String rating = "0";
+		
+		for(int page=1; page<=totPages;page++) {
+			
+			for(WebElement ListingLink : viewListingLink) {
+				String link = ListingLink.getAttribute("href");
+				for(int i=0;i<reviewDate.size();i++) {
+					if(link.contains("foursquare")) {
+						rating = "0";
+						ratingList.add(Integer.parseInt(rating));
+						exportRatingList.add(Integer.parseInt(rating));
+					}
+					else if(!link.contains("yelp")) {
+						try{
+							rating = driver.findElement(By.xpath("(//*[@id='Review']//*[@class='author'])["+(i + 1)+"]/span/div/span")).getText();  //for facebook
+							if(rating.equals("Recommends")) rating = "5";
+							else if(rating.equals("Doesn't Recommend")) rating = "1";
+						} catch(Exception e){
+							stars = driver.findElements(By.xpath("(//*[@id='Review']//*[@class='author'])["+(i + 1)+"]/span/div/i[contains(@class,'yellow')]"));
+							sumOfAllStars = sumOfAllStars + stars.size();
+							rating = ""+stars.size();
+						}
+						ratingList.add(Integer.parseInt(rating));
+						exportRatingList.add(Integer.parseInt(rating));
+						System.out.println("Rating : "+rating);
+					}else {
+						List<WebElement> yelpStars = driver.findElements(By.xpath("(//*[@id='Review']//*[@class='author'])["+(i + 1)+"]/span/div/img[not(contains(@src,'grey'))]"));
+						//System.out.println("yelpStars.size() : "+yelpStars.size());
+						sumOfAllStars = sumOfAllStars + yelpStars.size();
+						rating = ""+stars.size();
+						ratingList.add(Integer.parseInt(rating));
+					}
+				}
+			}
+			
+			clickelement(paginationNextPageBTN);
+		}
+		return ratingList;
+	}
+	
+	public ArrayList<String> getLocationNameSort() {
+		int totPages = getTotalPagesPagination();
+		ArrayList<String> locationNameList=new ArrayList<>();
+		System.out.println("totPages : "+totPages);
+		for(int page=1; page<=totPages;page++) {
+			for(int i=0;i<reviewDate.size();i++) {
+				locationNameList.add(locationName.get(i).getText().trim());
+			}
+			clickelement(paginationNextPageBTN);
+		}
+		return locationNameList;
+	}
+	
+	// ascending order 
+	public void checkASCLocationNameOrder(ArrayList<String> locationNameList) {
+		JSWaiter.waitJQueryAngular();
+		ArrayList<String> locationNames = new ArrayList<>(locationNameList);
+		ArrayList<String> duplocationNames = new ArrayList<>(locationNameList);
+		Collections.sort(locationNames);
+		Assert.assertEquals(locationNames, duplocationNames);
+	}
+	
+	
+	public ArrayList<Date> getAllReviewDatesSort() {
+		int totPages = getTotalPagesPagination();
+		ArrayList<Date> reviewDateList=new ArrayList<>();
+		SimpleDateFormat format=new SimpleDateFormat("MM/dd/yyyy");
+		System.out.println("totPages : "+totPages);
+		for(int page=1; page<=totPages;page++) {
+			for(int i=0;i<reviewDate.size();i++) {
+				try {
+					reviewDateList.add(format.parse(reviewDate.get(i).getText().trim()));
+				} catch (ParseException e) {  e.printStackTrace(); 	}
+			}
+			clickelement(paginationNextPageBTN);
+		}
+		return reviewDateList;
+	}
+	
+	// ascending order - Star Rating - Highest to Lowest
+	public void checkASCRatingOrder(ArrayList<Integer> ratingList) throws ParseException {
+		JSWaiter.waitJQueryAngular();
+		ArrayList<Integer> rating = new ArrayList<>(ratingList);
+		ArrayList<Integer> dupRating = new ArrayList<>(ratingList);
+		Collections.sort(rating);
+		Assert.assertEquals(rating, dupRating);
+	}
+	
+	// ascending order - Star Rating - Lowest to Highest 
+		public void checkDSCRatingOrder(ArrayList<Integer> ratingList) throws ParseException {
+			JSWaiter.waitJQueryAngular();
+			ArrayList<Integer> rating = new ArrayList<>(ratingList);
+			ArrayList<Integer> dupRating = new ArrayList<>(ratingList);
+			Collections.sort(rating, Collections.reverseOrder());
+			Assert.assertEquals(rating, dupRating);
+		}
+		
+		
+	
+	// ascending order - older to new
+	public void checkASCDateOrder(ArrayList<Date> reviewDateList) throws ParseException {
+		JSWaiter.waitJQueryAngular();
+		ArrayList<Date> date=new ArrayList<>(reviewDateList);
+		ArrayList<Date> dupDate = new ArrayList<>(reviewDateList);
+		Collections.sort(date);
+		Assert.assertEquals(date, dupDate);
+	}
+	
+	// descending order - new to older
+	public void checkDSCDateOrder(ArrayList<Date> reviewDateList) throws ParseException {
+		JSWaiter.waitJQueryAngular();
+		ArrayList<Date> date=new ArrayList<>(reviewDateList);
+		ArrayList<Date> dupDate = new ArrayList<>(reviewDateList);
+		Collections.sort(date, Collections.reverseOrder());
+		Assert.assertEquals(date, dupDate);
 	}
 	
 	private String locationInfo(int reviewNum) {
@@ -386,6 +537,10 @@ public class SA_Reviews extends BasePage{
 		return rating;
 	}
 	
+	
+	
+	
+	
 	private String getReview(int reviewNum) {
 		String review;
 		boolean revExist;
@@ -403,6 +558,7 @@ public class SA_Reviews extends BasePage{
 			} catch(Exception e) {lRev = false;}
 			if(lRev) {
 				review = driver.findElement(By.xpath("(//*[@id='Review']//*[@class='author'])["+reviewNum+"]/../../following-sibling::div[3]")).getText();
+				System.out.println("review.length(): "+review.length()+"review :"+review);
 				review = (review.substring(0, (review.length()-10))).trim();
 			}
 			else review = driver.findElement(By.xpath("(//*[@id='Review']//*[@class='author'])["+reviewNum+"]/../../following-sibling::div[2]")).getText();
@@ -412,12 +568,16 @@ public class SA_Reviews extends BasePage{
 	}
 	
 	//working
-	public void selectSort(String sortBy) {
+	public String selectSort(String sortBy) {
 		JSWaiter.waitJQueryAngular();
 		scrollByElement(reviewsTab);
 		clickelement(filterSortByTB);
-		clickelement(driver.findElement(By.xpath("//*[@id='Review']//*[@class='sortingSelect']//*[@class='item' and text()='"+sortBy+"']")));
-		clickelement(driver.findElement(By.xpath("//*[@id='Review']//*[@id='sortingText']")));
+		String selectedOpt = driver.findElement(By.xpath("//*[@id='Review']//*[@class='sortingSelect']//div[@class='text']")).getText().trim();
+		if(!selectedOpt.equals(sortBy)) {
+			clickelement(driver.findElement(By.xpath("//*[@id='Review']//*[@class='sortingSelect']//*[@class='item' and text()='"+sortBy+"']")));
+			clickelement(driver.findElement(By.xpath("//*[@id='Review']//*[@id='sortingText']")));			
+		}
+		return sortBy.trim();
 	}
 	
 	//working

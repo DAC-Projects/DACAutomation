@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -19,6 +20,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import com.dac.main.BasePage;
+
+import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
 import resources.JSWaiter;
@@ -168,43 +172,26 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	/*-------------------------------------------------------------------*/
 	
 	/* Export visibility overview report below filter*/
-	public void exportvisibilityrpt() throws InterruptedException, FileNotFoundException, IOException{
+	public void exportvisibilityrpt() throws InterruptedException, FileNotFoundException, IOException, ExecutionException{
 		JSWaiter.waitJQueryAngular();
-		if(exportBtn.isEnabled() & exportBtn.isDisplayed()) {
-			wait.until(ExpectedConditions.visibilityOf(exportBtn));
-			//exportBTN.click();
-			action.moveToElement(exportBtn).click(exportBtn).perform();
-			Thread.sleep(5000);
-		}
-		if(csvexport.isEnabled() & csvexport.isDisplayed()) {
-			wait.until(ExpectedConditions.visibilityOf(csvexport));
-			action.moveToElement(csvexport).click(csvexport).perform();
-			Thread.sleep(5000);
-		}
-		if(exportdate.isEnabled() & exportdate.isDisplayed()) {
-			wait.until(ExpectedConditions.visibilityOf(exportdate));
-			action.moveToElement(exportdate).click(exportdate).perform();
-			Thread.sleep(5000);
-		}
-		if(dtpicker.isEnabled() & dtpicker.isDisplayed()) {
-			wait.until(ExpectedConditions.visibilityOf(dtpicker));
-			action.moveToElement(dtpicker).click(dtpicker).perform();
-			Thread.sleep(5000);
-		} 
-		if(date.isEnabled() & date.isDisplayed()) {
-			wait.until(ExpectedConditions.visibilityOf(date));
-			action.moveToElement(date).click(date).perform();
-			Thread.sleep(5000);
-		}
-		if(export.isEnabled() & export.isDisplayed()) {
-			wait.until(ExpectedConditions.visibilityOf(export));
-			action.moveToElement(export).click(export).perform();
-			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExport));
-			Thread.sleep(5000);
-			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
-			}else {
-			System.out.println("No Data Available in Visibility Page");
-		}
+		//waitForElement(overall, 40);
+				waitForElement(exportBtn, 40);
+				scrollByElement(exportBtn);
+				clickelement(exportBtn);
+				waitForElement(csvexport, 40);
+				scrollByElement(csvexport);
+				clickelement(csvexport);
+				waitForElement(exportdate,40);
+				scrollByElement(exportdate);
+				clickelement(exportdate);
+				waitForElement(dtpicker,40);
+				scrollByElement(dtpicker);
+				waitForElement(date, 40);
+				scrollByElement(date);
+				clickelement(date);
+			    //download visibility report
+				download(CurrentState.getBrowser(), export, 30);
+			    convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExport));
 	}
 	
 	/* Export visibility overview report below filter in pdf for current date*/
@@ -276,6 +263,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	public List<Map<String, String>> getExportData() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		exportvisibilityrpt();
+		JSWaiter.waitJQueryAngular();
 		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+VisibilityExport), "Sheet0").getExcelTable();
 		List<Map<String, String>> exportData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
@@ -315,6 +303,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		System.out.println("\n progress bar clicked \n");
 		waitForElement(progressdata,40);
 		scrollByElement(progressdata);
+		if(driver.findElement(By.className("dataTables_info")).isDisplayed()) {
 		System.out.println("\n reading progress bar data div ********************* \n");
 		waitForElement(progresstable,50);
 		scrollByElement(progresstable);
@@ -365,8 +354,17 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	    }
 	    System.out.println("Total number of entries in table : "+count);
 	    Assert.assertTrue(entiresText.contains(""+count+""), "Table Data count matches with total enties count");
-	    return tableCellValues;
-	}
+		}else if(driver.findElement(By.className("dataTables_empty")).isDisplayed()) {
+			try {
+				BaseClass.addEvidence(driver, "Data is not available for selected Filter", "yes");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+			return tableCellValues;
+			}
+
 		
 	//Clicking on progress bar and getting the data from the table for Not Found list
 	public List<Map<String, String>> DataTableNotfound() throws InterruptedException{
@@ -376,12 +374,11 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		//getting into progressbar found listing
 		scrollByElement(progressNotfound);
 		//clicking on found listing progress bar
-		clickelement(progressNotfound);
-		scrollByElement(progressNotfound);
-		clickelement(progressNotfound);
+		action.doubleClick(progressNotfound).build().perform();
 		System.out.println("\n progress bar clicked \n");
 		waitForElement(progressdata,40);
 		scrollByElement(progressdata);
+		if(driver.findElement(By.className("dataTables_info")).isDisplayed()) {
 		System.out.println("\n reading progress bar data div ********************* \n");
 		JSWaiter.waitJQueryAngular();
 		waitForElement(progresstable,50);
@@ -432,8 +429,17 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	    }
 	    System.out.println("Total number of entries in table : "+count);
 	    Assert.assertTrue(entiresText.contains(""+count+""), "Table Data count matches with total enties count");
-	    return tableCellValues;
+	}else if(driver.findElement(By.className("dataTables_empty")).isDisplayed()) {
+		try {
+			BaseClass.addEvidence(driver, "Data is not available for selected Filter", "yes");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+		return tableCellValues;
+		}
+
 		
 	//exporting progress bar table data
 	public void exporttablefound() throws FileNotFoundException, IOException, InterruptedException {				
@@ -469,79 +475,12 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 					kMap.put("rowdata", table[0][col]);
 					kMap.put(table[i][0], table[i][col]);
 				}
-				kMap.put("row", size);
 				exporttableData.add(kMap);
 			}
 			return exporttableData;
 		}
 	
-	//To get Vendors List displaying in the application
-	public List<Map<String, String>> verifySitevendors() {
-			JSWaiter.waitJQueryAngular();
-			waitForElement(vendorslist, 40);
-			scrollByElement(vendorslist);
-			Map<String, String> kMap;
-			List<Map<String, String>> Vendors = new ArrayList<Map<String, String>>();
-			List<WebElement> elements = driver.findElements(By.xpath("//div[@class='container']/div[@class='row']/div[@class='col-lg-2 bar-chart-column']"));
-		    java.util.Iterator<WebElement> program = elements.iterator();
-		    kMap = new HashMap<String, String>();
-		        
-		    //reading Vendors data
-		    while (program.hasNext()) {
-		        String values = program.next().getText();
-		        if(!values.equals("null"))
-		        {
-		        	kMap.put("vendors", values);
-		        	System.out.println("\n" +values);
-		        }
-		        else
-		        {
-		            System.out.println("\n No sites displayed \n");
-		        }
-		        //adding into the map
-		        Vendors.add(kMap);
-		    }
-			return Vendors;
-			}
-			
-	//Adding Vendors List to Array 
-	public List<Map<String, String>> vendorsList() throws Exception {
-							
-				List<Map<String, String>> Vendorslist = new ArrayList<Map<String, String>>();
-				// Creation of HashMap 
-		    	  Map<String, String> kMap = new HashMap<String, String>();
-		    	  String[][] vendors = new ExcelHandler("./data/VendorList.xlsx","VendorList").getExcelTable();
-		    	  kMap.put("vendors", vendors.toString());
-		    	  System.out.println("\n"+kMap.size());
-		      	  Vendorslist.add(kMap);
-		       	  return Vendorslist;	
-			}
-
-	//Comparing Vendors List from application and Vendors List from Array
-	public void comparevendorsListnverifySitevendors(List<Map<String, String>> verifySitevendors,
-				List<Map<String, String>> vendorsList) {
-			for (Map<String, String> m1 : verifySitevendors) {
-				for (Map<String, String> m2 : vendorsList) {
-					
-						//Assert.assertEquals(m1.size(), m2.size());
-						Assert.assertEquals(m1.get("Vendors"), m2.get("Vendors"), "verifying list for " +m2.get("Vendors"));
-						//assertTrue(m1.equals(m2));
-				}
-			}
-		}
-
-	//comparing data from excell sheet with table data of progress bar found
-	public void compareexporttableDatantable(List<Map<String, String>> getExporttableData,
-				List<Map<String, String>> paginationfound) {
-			for (Map<String, String> m1 : getExporttableData) {
-				for (Map<String, String> m2 : paginationfound) {
-					Assert.assertEquals(m1.size(), m2.size());
-					Assert.assertEquals(m1.get("rowdata"), m2.get("rowdata"), "verifying list for " +m2.get("tableCellValues"));
-					//assertTrue(m1.equals(m2));
-				}				
-			}			
-		}
-
+	
 	//exporting progress bar Not found table data
 	public void exporttableNotfound() throws FileNotFoundException, IOException, InterruptedException {
 		JSWaiter.waitJQueryAngular();
@@ -576,23 +515,41 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 				kMap.put("rowdata", table[0][col]);
 				kMap.put(table[i][0], table[i][col]);
 			}
-			kMap.put("row", size);
 			exporttableData.add(kMap);
 		}
 		return exporttableData;
 	}
-
-	//comparing data from excell sheet with table data of progress bar Not found
-	public void compareexporttableDatantableNotFound(List<Map<String, String>> dataTableNotfound,
-			List<Map<String, String>> exporttableDataNotFound) {
-		
-		for (Map<String, String> m1 : dataTableNotfound) {
-			for (Map<String, String> m2 : exporttableDataNotFound) {
-				//Assert.assertEquals(m1.size(), m2.size());
-				Assert.assertEquals(m1.get("rowdata"), m2.get("rowdata"), "verifying list for " +m2.get("tableCellValues"));
-				//assertTrue(m1.equals(m2));
-			}				
-		}		
-		
+	
+	//comparing data from excell sheet with table data of progress bar Not found and Found
+	public void compareXlDataNotFoundandNotFound_UIdata() throws Exception {
+		JSWaiter.waitJQueryAngular();
+		List < WebElement > Columns_row = titlehead.findElements(By.tagName("th"));
+		int col_count = Columns_row.size();
+		String newfilename = BasePage.getLastModifiedFile("./downloads");
+		//String newfilename = new formatConvert("./downloads/"+fileName).convertFile("xlsx");
+		ExcelHandler a = new ExcelHandler("./downloads/"+newfilename, "Sheet0"); a.deleteEmptyRows();
+		int xlRowCount=new ExcelHandler("./downloads/"+newfilename, "Sheet0").getRowCount();
+		int count = 0;
+		for(int i=1;i<xlRowCount;i++) {
+			col_count = a.getColCount(i);
+			for(int j=0;j<=col_count;j++) {
+				String cellValue = a.getCellValue(i, j+1).trim();
+				if(cellValue.contains("%")) cellValue = new String(""+Double.parseDouble(cellValue.replace("%", ""))+"%");
+				if(cellValue.length() != 0 & cellValue != null) {
+					Map<String, String> uiTableCellValue = tableCellValues.get(count);
+					if(uiTableCellValue.containsValue(cellValue)) { // | uiTableCellValue.equals(cellValue)
+						Assert.assertTrue(uiTableCellValue.containsValue(cellValue), uiTableCellValue+" is matches with Downloaded Excel value : "+cellValue);
+					}else {
+						Assert.assertTrue(false, uiTableCellValue+" is NOT matches with Downloaded Excel value : "+cellValue);
+					}
+					
+					if(j <1 | j >5) count++;
+				}
+			}
+		}
+		CurrentState.getLogger().info("UI table data matches with Exported Excel Data");
+		Assert.assertTrue(true, "UI table data matches with Exported Excel Data");
+		tableCellValues.clear();
 	}
+	
 }	

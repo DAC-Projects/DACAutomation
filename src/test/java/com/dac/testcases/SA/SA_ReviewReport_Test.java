@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,21 +35,33 @@ public class SA_ReviewReport_Test extends BaseClass {
 		//Thread.sleep(2000);
 		addEvidence(CurrentState.getDriver(), "Navigated to Review Report Card page", "yes");
 	}
-	
+		
 	@Test(enabled = true, dependsOnMethods= {"navigateToRRC"})
-	public void selectSource() throws Exception {
+	public void dataComparision() throws Exception {
 		SA_Reviews s = new SA_Reviews(CurrentState.getDriver());
-		//s.locationInfo();
-		s.allLocationInfo();
-		/*s.clickExportBTN();
+		ArrayList<String> dataRead = s.allLocationInfo();
+		s.clickExportBTN();
 		Thread.sleep(3000);
 		String fileName = (BasePage.getLastModifiedFile("./downloads")).trim();
 		System.out.println("fileName : "+fileName);
-		List<String> reviewReportData = readBooksFromCSV("./downloads/"+fileName);*/
+		List<String> reviewReportData = readDataFromCSV("./downloads/"+fileName);
+		System.out.println("########################################");
+		for(int i = 0; i<dataRead.size(); i++) {
+			String exportedData = reviewReportData.get(i + 1);
+			String data = dataRead.get(i);
+			if(exportedData.contains(data)) System.out.println("pass");
+			else System.out.println("fail");
+		}
+		System.out.println("#############################################");
 		
 	}
 	
-	private static List<String> readBooksFromCSV(String fileName) { 
+	/**
+	 * This method is used to read the each line from extracted .csv file as a object of list
+	 * and return the <List>	
+	 * 
+	 * @param fileName : pass the ".csv" file name including path and extension if the file. To get the data*/
+	private static List<String> readDataFromCSV(String fileName) { 
 		List<String> reviewReportData = new ArrayList<>();
 		Path pathToFile = Paths.get(fileName); // create an instance of BufferedReader // using try with resource, Java 7 feature to close resources 
 		try (BufferedReader br = Files.newBufferedReader(pathToFile, StandardCharsets.UTF_8)) { // read the first line from the text file
