@@ -132,6 +132,9 @@ public class Navigationpage extends BasePage{
   
     @FindBy(xpath="//a[@href='/CompetitiveAnalysis/Analysis']")
     private WebElement CA_ContentAnalysis;
+    
+    @FindBy(xpath="//a[@href='/CompetitiveAnalysis/Summary']")
+    private WebElement CA_Summary;
 
     
 	@FindBy(xpath="//a[@href='/CompetitiveAnalysis/Review']/span")
@@ -164,6 +167,13 @@ public class Navigationpage extends BasePage{
   	}
     
     //-----CA
+    
+    /** To click on CA_Review link in LHS to navigate to CA_Summary page   */
+	public void navigateCA_Summarypage() {
+	  clickelement(CA_Summary);   
+      System.out.println("Waiting for the Summary page to load**********");
+      waitUntilLoad(driver);
+	}
 
 	/** To click on CA_Visibility link in LHS to navigate to CA_Visibility page   */
 

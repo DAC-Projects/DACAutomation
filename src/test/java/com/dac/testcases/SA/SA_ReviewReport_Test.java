@@ -16,8 +16,7 @@ import org.testng.annotations.Test;
 
 import com.dac.main.BasePage;
 import com.dac.main.Navigationpage;
-import com.dac.main.POM_SA.SA_ReviewReport_Page;
-import com.dac.main.POM_SA.SA_ReviewReport_Page.reviews;
+
 import com.dac.main.POM_SA.SA_Reviews;
 
 import resources.BaseClass;
