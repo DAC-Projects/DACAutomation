@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Suite" parallel="tests">
+<suite name="Suite" parallel="none">
  
 <listeners>
 <listener class-name="resources.ExtentTestNGITestListener"></listener>
 </listeners>
   
 
- <!--    <test name="Customer Feedback" parallel="false" group-by-instances="true">
+    <test name="TransparenSEE" parallel="false" group-by-instances="true">
 
   <parameter name="browser" value="chrome"/>
     <classes>
-	 	<class name= "com.dac.testcases.CF.VerifyCreate_DraftBrandCamp" /> 
-	    <class name= "com.dac.testcases.CF.VerifyCreate_DraftLocCamp" /> 
+	 	<class name= "com.dac.testcases.TPSEE.TPSEE_Visibility_Test" /> 
+	  	<class name= "com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" /> 
+		<class name= "com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
+		
     </classes>
-  </test> -->
+  </test>
 
 
 
@@ -25,17 +27,18 @@
     </classes>
   </test>
 
-  <!-- <test name="Competitive Analysis" parallel="false" group-by-instances="true">
+  <test name="Competitive Analysis" parallel="false" group-by-instances="true">
 
    <parameter name="Filter" value= "US,Illinois,Chicago,53 W Jackson Blvd Ste 1264"/>
   <parameter name="browser" value="chrome"/>
     <classes>
-	 <class name= "com.dac.testcases.CA.CA_Review_Test" /> 
+	 <class name= "com.dac.testcases.CA.CA_ContentAnalysis_Test" /> 
 		<class name= "com.dac.testcases.CA.CA_Visibility_Test" /> 
+		<class name= "com.dac.testcases.CA.CA_Accuracy_Test" /> 
 	    
     </classes>
 
-  </test> -->
+  </test>
 
  
   

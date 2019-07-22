@@ -81,6 +81,7 @@ public abstract class BaseClass {
     
     CurrentState.getDriver().manage().window().maximize();
     System.out.println("navigted to Dashboard");
+    lp.notificationHandle();
 
   }
 
@@ -101,7 +102,11 @@ public abstract class BaseClass {
         return IAutoconst.transparenSEE;
         	   //IAutoconst.Fit4LessAccount;
         	   //IAutoconst.neuralTuringTechAccount;
-        
+    case "transparenSEE_Prod_Asheley":
+    	return IAutoconst.transparenSEE_Prod_Asheley;
+    	
+    case "transparenSEE_Prod_Casella":
+    	return IAutoconst.transparenSEE_Prod_Casella;	
 
     default:
       return IAutoconst.transparenSEE;

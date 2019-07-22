@@ -46,8 +46,8 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	}
 
 	// Global Filter locators
-	@FindBy(xpath="(//*[@id='divCIAccuracy']/h1)")
-	private WebElement CATitleContent;
+//	@FindBy(xpath="(//*[@id='divCIAccuracy']/h1)")
+//	private WebElement CATitleContent;
 	
 	@FindBy(id="myGroups")
 	private WebElement fiterGroup;
@@ -129,7 +129,7 @@ public void applyFilter(String Country, String State, String City, String Locati
 	try {
 		waitForElement(filter_Panel, 25);
 
-		scrollByElement(CATitleContent);
+//		scrollByElement(CATitleContent);
 		waitUntilLoad(driver);
 		if(!Country.equals("All Countries")) {
 			clickelement(FilterCountry);
