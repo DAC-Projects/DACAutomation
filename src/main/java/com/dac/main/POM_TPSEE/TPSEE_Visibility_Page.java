@@ -20,6 +20,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import com.dac.main.BasePage;
+
+import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
 import resources.JSWaiter;
@@ -187,7 +190,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 				scrollByElement(date);
 				clickelement(date);
 			    //download visibility report
-			    download(CurrentState.getBrowser(), export, 30);
+				download(CurrentState.getBrowser(), export, 30);
 			    convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExport));
 	}
 	
@@ -300,6 +303,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		System.out.println("\n progress bar clicked \n");
 		waitForElement(progressdata,40);
 		scrollByElement(progressdata);
+		if(driver.findElement(By.className("dataTables_info")).isDisplayed()) {
 		System.out.println("\n reading progress bar data div ********************* \n");
 		waitForElement(progresstable,50);
 		scrollByElement(progresstable);
@@ -350,8 +354,17 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	    }
 	    System.out.println("Total number of entries in table : "+count);
 	    Assert.assertTrue(entiresText.contains(""+count+""), "Table Data count matches with total enties count");
-	    return tableCellValues;
-	}
+		}else if(driver.findElement(By.className("dataTables_empty")).isDisplayed()) {
+			try {
+				BaseClass.addEvidence(driver, "Data is not available for selected Filter", "yes");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+			return tableCellValues;
+			}
+
 		
 	//Clicking on progress bar and getting the data from the table for Not Found list
 	public List<Map<String, String>> DataTableNotfound() throws InterruptedException{
@@ -361,12 +374,11 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		//getting into progressbar found listing
 		scrollByElement(progressNotfound);
 		//clicking on found listing progress bar
-		clickelement(progressNotfound);
-		scrollByElement(progressNotfound);
-		clickelement(progressNotfound);
+		action.doubleClick(progressNotfound).build().perform();
 		System.out.println("\n progress bar clicked \n");
 		waitForElement(progressdata,40);
 		scrollByElement(progressdata);
+		if(driver.findElement(By.className("dataTables_info")).isDisplayed()) {
 		System.out.println("\n reading progress bar data div ********************* \n");
 		JSWaiter.waitJQueryAngular();
 		waitForElement(progresstable,50);
@@ -417,8 +429,17 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	    }
 	    System.out.println("Total number of entries in table : "+count);
 	    Assert.assertTrue(entiresText.contains(""+count+""), "Table Data count matches with total enties count");
-	    return tableCellValues;
+	}else if(driver.findElement(By.className("dataTables_empty")).isDisplayed()) {
+		try {
+			BaseClass.addEvidence(driver, "Data is not available for selected Filter", "yes");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+		return tableCellValues;
+		}
+
 		
 	//exporting progress bar table data
 	public void exporttablefound() throws FileNotFoundException, IOException, InterruptedException {				
@@ -459,70 +480,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 			return exporttableData;
 		}
 	
-	//To get Vendors List displaying in the application
-	public List<Map<String, String>> verifySitevendors() {
-			JSWaiter.waitJQueryAngular();
-			waitForElement(vendorslist, 40);
-			scrollByElement(vendorslist);
-			Map<String, String> kMap;
-			List<Map<String, String>> Vendors = new ArrayList<Map<String, String>>();
-			List<WebElement> elements = driver.findElements(By.xpath("//div[@class='container']/div[@class='row']/div[@class='col-lg-2 bar-chart-column']"));
-		    java.util.Iterator<WebElement> program = elements.iterator();
-		    kMap = new HashMap<String, String>();
-		        
-		    //reading Vendors data
-		    while (program.hasNext()) {
-		        String values = program.next().getText();
-		        if(!values.equals("null"))
-		        {
-		        	kMap.put("vendors", values);
-		        	System.out.println("\n" +values);
-		        }
-		        else
-		        {
-		            System.out.println("\n No sites displayed \n");
-		        }
-		        //adding into the map
-		        Vendors.add(kMap);
-		    }
-			return Vendors;
-			}
-			
-	//Adding Vendors List to Array 
-	public List<Map<String, String>> vendorsList() throws Exception {
-							
-				List<Map<String, String>> Vendorslist = new ArrayList<Map<String, String>>();
-				// Creation of HashMap 
-		    	  Map<String, String> kMap = new HashMap<String, String>();
-		    	  String[][] vendors = new ExcelHandler("./data/VendorList.xlsx","VendorList").getExcelTable();
-		    	  kMap.put("vendors", vendors.toString());
-		    	  System.out.println("\n"+kMap.size());
-		      	  Vendorslist.add(kMap);
-		       	  return Vendorslist;	
-			}
-
-	//Comparing Vendors List from application and Vendors List from Array
-	public void comparevendorsListnverifySitevendors(List<Map<String, String>> verifySitevendors,
-				List<Map<String, String>> vendorsList) {
-			for (Map<String, String> m1 : verifySitevendors) {
-				for (Map<String, String> m2 : vendorsList) {
-						Assert.assertEquals(m1.get("Vendors"), m2.get("Vendors"), "Data Matches");
-				}
-			}
-		}
-
-	//comparing data from excell sheet with table data of progress bar found
-	public void compareexporttableDatantable(List<Map<String, String>> getExporttableData,
-				List<Map<String, String>> paginationfound) {
-			for (Map<String, String> m1 : getExporttableData) {
-				for (Map<String, String> m2 : paginationfound) {
-					if (m1.get("rowdata").equals(m2.get("rowdata"))) {
-						Assert.assertEquals(m1.get("rowdata").contains(m2.get("rowdata")), true);
-					}
-				}				
-			}			
-		}
-
+	
 	//exporting progress bar Not found table data
 	public void exporttableNotfound() throws FileNotFoundException, IOException, InterruptedException {
 		JSWaiter.waitJQueryAngular();
@@ -561,17 +519,37 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		}
 		return exporttableData;
 	}
-
-	//comparing data from excell sheet with table data of progress bar Not found
-	public void compareexporttableDatantableNotFound(List<Map<String, String>> dataTableNotfound,
-			List<Map<String, String>> exporttableDataNotFound) {
-		
-		for (Map<String, String> m1 : dataTableNotfound) {
-			for (Map<String, String> m2 : exporttableDataNotFound) {
-				if (m1.get("rowdata").equals(m2.get("rowdata"))) {
-				Assert.assertEquals(m1.get("rowdata").contains(m2.get("rowdata")), true);
-			}}				
-		}		
-		
+	
+	//comparing data from excell sheet with table data of progress bar Not found and Found
+	public void compareXlDataNotFoundandNotFound_UIdata() throws Exception {
+		JSWaiter.waitJQueryAngular();
+		List < WebElement > Columns_row = titlehead.findElements(By.tagName("th"));
+		int col_count = Columns_row.size();
+		String newfilename = BasePage.getLastModifiedFile("./downloads");
+		//String newfilename = new formatConvert("./downloads/"+fileName).convertFile("xlsx");
+		ExcelHandler a = new ExcelHandler("./downloads/"+newfilename, "Sheet0"); a.deleteEmptyRows();
+		int xlRowCount=new ExcelHandler("./downloads/"+newfilename, "Sheet0").getRowCount();
+		int count = 0;
+		for(int i=1;i<xlRowCount;i++) {
+			col_count = a.getColCount(i);
+			for(int j=0;j<=col_count;j++) {
+				String cellValue = a.getCellValue(i, j+1).trim();
+				if(cellValue.contains("%")) cellValue = new String(""+Double.parseDouble(cellValue.replace("%", ""))+"%");
+				if(cellValue.length() != 0 & cellValue != null) {
+					Map<String, String> uiTableCellValue = tableCellValues.get(count);
+					if(uiTableCellValue.containsValue(cellValue)) { // | uiTableCellValue.equals(cellValue)
+						Assert.assertTrue(uiTableCellValue.containsValue(cellValue), uiTableCellValue+" is matches with Downloaded Excel value : "+cellValue);
+					}else {
+						Assert.assertTrue(false, uiTableCellValue+" is NOT matches with Downloaded Excel value : "+cellValue);
+					}
+					
+					if(j <1 | j >5) count++;
+				}
+			}
+		}
+		CurrentState.getLogger().info("UI table data matches with Exported Excel Data");
+		Assert.assertTrue(true, "UI table data matches with Exported Excel Data");
+		tableCellValues.clear();
 	}
+	
 }	

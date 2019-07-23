@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_Accuracy_Page;
+import com.dac.main.POM_TPSEE.TPSEE_ContentAnalysis_Page;
 import com.selenium.testevidence.SeleniumEvidence;
 import resources.BaseClass;
 import resources.CurrentState;
@@ -102,8 +103,6 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		public void siteLinkdata() throws Exception {
 				data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 				data.verifysitelinkdata();
-				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-				CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 				addEvidence(CurrentState.getDriver(),
 						"printing data found and total number of rows", "yes");
 		}
@@ -114,7 +113,9 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 				"smoke" }, description = "Test for verifying site link data in Accuracy page")
 		public void numberofentriesnExporttableAccuracy() throws Exception {
 				data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-				data.compareexporttableDatantable(data.getExporttableData(),data.verifysitelinkdata());
+				data.getExporttableData();
+				data.verifysitelinkdata();
+				data.compareXlData_UIdata();
 				addEvidence(CurrentState.getDriver(),
 						"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
 		}
@@ -125,10 +126,23 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 						"smoke" }, description = "Test for verifying InAccuracy case data and export data in Accuracy page")
 				public void numberofentriesnInAccuracyExporttableAccuracy() throws Exception {
 						data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-						data.compareexporttableDatanInAccuracytable(data.verifyInAccuracysitelinkdata(),data.getInAccuracyExporttableData());
+						data.verifyInAccuracysitelinkdata();
+						data.getInAccuracyExporttableData();
+						data.compareXlData_UIdata();
 						addEvidence(CurrentState.getDriver(),
 								"Site level scores in Accuracy site table  and overview Accuracy export found matching for InAccuracy", "yes");
 				}
+				
+				//Test to compare vendors in the application in Visibility Page
+				@SuppressWarnings("unchecked")
+				@Test(dependsOnMethods = {"numberofentriesnExporttableAccuracy"},groups = {"smoke"},
+						description ="Verify Site Vendors List")
+				public void comparevendorsListnverifySitevendors() throws Exception{
+					data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+					data.comparevendorsListnverifySitevendors(data.verifyAccuracySitevendors(), data.vendorsList());
+					addEvidence(CurrentState.getDriver(),
+						"Site Vendors in Content Analysis site vendors ", "yes");
+			}
 				
 				/*//Test for compare number of rows from export table and table data in Accuracy Page
 				@SuppressWarnings("unchecked")
@@ -136,6 +150,9 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 						"smoke" }, description = "Test for verifying ignored case and export data in Accuracy page")
 				public void numberofentriesnIgnoredExporttableAccuracy() throws Exception {
 						data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+						data.verifyIgnoredsitelinkdata();
+						data.getIgnoredExporttableData();
+						data.compareXlData_UIdata();
 						data.compareexporttableDatanIgnoredtable(data.verifyIgnoredsitelinkdata(),data.getIgnoredExporttableData());
 						addEvidence(CurrentState.getDriver(),
 								"Site level scores in Accuracy site table  and overview Accuracy export found matching for InAccuracy", "yes");
