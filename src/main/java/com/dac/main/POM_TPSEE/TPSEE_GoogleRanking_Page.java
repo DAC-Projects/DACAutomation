@@ -83,10 +83,10 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "//div[@class='col-sm-12'][1]")
 	private WebElement acckeypanel;
 	
-	@FindBy(xpath = "(//div/a[@class='remove'])[6]")
+	@FindBy(xpath = "(//div/a[@class='remove'])[last()]")
 	private WebElement removeacckey;
 	
-	@FindBy(xpath = "//div[@class='selectize-input items full has-options has-items']")
+	@FindBy(xpath = "//div[@class='selectize-input items not-full has-options has-items']")
 	private WebElement accountkeyword;
 		
 	@FindBy(xpath = "//select[@id='ddlGroup']")
