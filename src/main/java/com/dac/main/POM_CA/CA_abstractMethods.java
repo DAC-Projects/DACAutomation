@@ -21,6 +21,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -45,9 +46,7 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 		PageFactory.initElements(driver, this);
 	}
 
-	// Global Filter locators
-//	@FindBy(xpath="(//*[@id='divCIAccuracy']/h1)")
-//	private WebElement CATitleContent;
+
 	
 	@FindBy(id="myGroups")
 	private WebElement fiterGroup;
@@ -76,7 +75,13 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	// History graph
 	@FindBy(css = "rect.highcharts-plot-background")
 	public WebElement hstryGrph;
-
+	
+	@FindBy(xpath="(//*[@class='highcharts-background'])[2]")
+	public WebElement hstryGrphLoc;
+	
+	@FindBy(xpath="(//*[@class='(//*[@class='highcharts-plot-background'])[2]")
+	public WebElement hstryGrphLoc1;
+	
 	@FindBy(css = "div.highcharts-label.highcharts-tooltip.highcharts-color-undefined")
 	private WebElement grphTable;
 	
@@ -95,6 +100,10 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	@FindBy(xpath="(//*[text()='Foursquare'])[1]")
 	public WebElement site4;
 	
+	@FindBy(css="div.ui.fluid.normal.dropdown.search.selection")
+	private WebElement selectlocation;
+	
+	
 	
 
 //	@FindBy(css = "div.highcharts-label.highcharts-tooltip.highcharts-color-0>span>table")
@@ -104,7 +113,9 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	@FindBy(css = "table#compIntVisibilitySitesTable")
 	public WebElement siteTable;
 
-	/**
+	@FindBy(xpath="(//*[@id='compIntVisibilitySitesTable'])[2]")
+	public WebElement siteTableLoc;
+	/*
 	 * @param Country
 	 * @param State
 	 * @param City
@@ -129,7 +140,6 @@ public void applyFilter(String Country, String State, String City, String Locati
 	try {
 		waitForElement(filter_Panel, 25);
 
-//		scrollByElement(CATitleContent);
 		waitUntilLoad(driver);
 		if(!Country.equals("All Countries")) {
 			clickelement(FilterCountry);
@@ -174,6 +184,14 @@ public void applyFilter(String Country, String State, String City, String Locati
 	waitUntilLoad(driver);
 	wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("apply_filter")));
 	}
+
+public void selectionLocationforcompetitor(String LocationSelect) throws InterruptedException
+{
+	waitForElement(selectlocation,30);
+	clickelement(selectlocation);
+    WebElement selloc = driver.findElement(By.xpath("//div[contains(text(),'"+ LocationSelect +"')]"));
+    clickelement(selloc);	
+	}	
 
 
 /**
@@ -241,6 +259,34 @@ public void clickApplyFilterBTN() throws InterruptedException {
 		return tooltipdata;
 
 	}
+	
+	public List<Map<String, String>> verifyHistoryGraphLocationcompSet() {
+		//display tool tip
+		waitForElement(hstryGrphLoc, 10);
+		scrollByElement(hstryGrphLoc);
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+		action.moveToElement(hstryGrphLoc).moveByOffset((hstryGrphLoc.getSize().getWidth() / 2) - 2, 0).click().perform();
+		//read the tooltip variables
+		rows = grphTable.findElements(By.tagName("tr"));
+		String[][] table = readTable(grphTable);
+
+		List<Map<String, String>> tooltipdata = new ArrayList<Map<String, String>>();
+		for (int i = 0; i < table.length / 4; i += 4) {
+			Map<String, String> kMap = new HashMap<String, String>();
+			kMap.put("compName", table[i][0]);
+			kMap.put(table[i + 1][0], table[i + 1][1]);
+			kMap.put(table[i + 2][0], table[i + 2][1]);
+			kMap.put(table[i + 3][0], table[i + 3][1]);
+			tooltipdata.add(kMap);
+		}
+
+		System.out.println(tooltipdata.get(0).get("compName"));
+		System.out.println(tooltipdata.get(0).get("Date"));
+		System.out.println(tooltipdata.get(0).get("Overall"));
+		System.out.println(tooltipdata.get(0).get("Total Locations"));
+		return tooltipdata;
+
+	}
 
 	/**
 	 * @param s
@@ -287,11 +333,52 @@ public void clickApplyFilterBTN() throws InterruptedException {
 		return siteTableData;
 
 	}
+	
+	
+	public List<Map<String, String>> verifySitetableLocn() {
+		waitForElement(siteTableLoc, 10);
+		scrollByElement(siteTableLoc);
+		System.out.println("Reading site table**********");
+		String[][] table = readTable(siteTableLoc);
+		List<Map<String, String>> siteTableData = new ArrayList<Map<String, String>>();
+		Map<String, String> kMap = new HashMap<String, String>();
+		for (int j = 0; j < table[0].length - 1; j++) {
+
+			kMap.put("compName", table[0][j + 1]);
+			for (int i = 1; i < table.length; i++) {
+				kMap.put(table[i][0], table[i][j + 1]);
+			}
+			siteTableData.add(kMap);
+		}
+
+		System.out.println("MAP******************MAP");
+		for (String name : siteTableData.get(1).keySet()) {
+
+			String key = name.toString();
+			String value = siteTableData.get(1).get(name).toString();
+			System.out.println(key + " " + value);
+		}
+
+		return siteTableData;
+
+	}
 
 	public void compareExprttoOvervw(List<Map<String, String>> exportData, List<Map<String, String>> ovrwRprtData) {
 
 		for (Map<String, String> m1 : ovrwRprtData) {
 			for (Map<String, String> m2 : exportData) {
+				if (m1.get("compName").equals(m2.get("compName"))) {
+					Assert.assertEquals(formatFloat(m1.get("score")), formatFloat(m2.get("Overall")), 0.05f,
+							"Verifying score for" + m1.get("compName"));
+				}
+			}
+		}
+	}
+	
+	public void compareExprttoLocation(List<Map<String, String>> exportData1, List<Map<String, String>> lcnRprtData) {
+
+		for (Map<String, String> m1 : lcnRprtData) {
+			for (Map<String, String> m2 : exportData1) {
 				if (m1.get("compName").equals(m2.get("compName"))) {
 					Assert.assertEquals(formatFloat(m1.get("score")), formatFloat(m2.get("Overall")), 0.05f,
 							"Verifying score for" + m1.get("compName"));
