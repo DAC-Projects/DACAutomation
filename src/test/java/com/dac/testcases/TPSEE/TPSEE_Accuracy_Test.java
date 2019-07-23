@@ -128,6 +128,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 						data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 						data.verifyInAccuracysitelinkdata();
 						data.getInAccuracyExporttableData();
+						data.compareXlData_UIdata();
 						addEvidence(CurrentState.getDriver(),
 								"Site level scores in Accuracy site table  and overview Accuracy export found matching for InAccuracy", "yes");
 				}
@@ -149,6 +150,9 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 						"smoke" }, description = "Test for verifying ignored case and export data in Accuracy page")
 				public void numberofentriesnIgnoredExporttableAccuracy() throws Exception {
 						data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+						data.verifyIgnoredsitelinkdata();
+						data.getIgnoredExporttableData();
+						data.compareXlData_UIdata();
 						data.compareexporttableDatanIgnoredtable(data.verifyIgnoredsitelinkdata(),data.getIgnoredExporttableData());
 						addEvidence(CurrentState.getDriver(),
 								"Site level scores in Accuracy site table  and overview Accuracy export found matching for InAccuracy", "yes");

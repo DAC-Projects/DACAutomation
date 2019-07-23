@@ -240,7 +240,9 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			String entiresText = driver.findElement(By.className("dataTables_info")).getText();
 			entiresText = entiresText.substring(entiresText.indexOf("("));
 			WebElement TableTitle = driver.findElement(By.xpath("//*[@id='inaccuracy_table_title']"));
+			String s = TableTitle.toString();
 			scrollByElement(TableTitle);
+			if(!s.equalsIgnoreCase("Yelp")) {
 			int count = 0;
 			if(paginationNext.isDisplayed()) {
 				for(int i=1;i<=page;i++) {	//Loop will execute till the all the row of table completes.
@@ -285,6 +287,13 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 				e.printStackTrace();
 			}
 		}
+			}else {
+				try {
+					BaseClass.addEvidence(driver, "Data is not available for Yelp", "yes");
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
 			return tableCellValues;
 			}
 
@@ -293,13 +302,20 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		public void exporttable() throws FileNotFoundException, IOException, InterruptedException {
 			
 			waitForElement(tableresult, 40);
+			WebElement TableTitle = driver.findElement(By.xpath("//*[@id='inaccuracy_table_title']"));
+			String s = TableTitle.toString();
+			scrollByElement(TableTitle);
+			if(!s.equalsIgnoreCase("Yelp")) {
 			waitForElement(tablebtn, 40);
 			//scrollByElement(tablebtn);
 			download(CurrentState.getBrowser(), tablebtn, 30);
 			JSWaiter.waitUntilJQueryReady();
 			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+AccuracyExporttable));
-			
+			}else {
+				System.out.println("Data Not available for :" +s);
+			}
 		}
+			
 		
 	//printing visibility progress bar table data from downloaded excel sheet
 	public List<Map<String, String>> getExporttableData() throws Exception {
@@ -322,6 +338,10 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 
 	public void compareXlData_UIdata() throws Exception {
 		JSWaiter.waitJQueryAngular();
+		WebElement TableTitle = driver.findElement(By.xpath("//*[@id='inaccuracy_table_title']"));
+		String s = TableTitle.toString();
+		scrollByElement(TableTitle);
+		if(!s.equalsIgnoreCase("Yelp")) {
 		List < WebElement > Columns_row = titlehead.findElements(By.tagName("th"));
 		int col_count = Columns_row.size();
 		String newfilename = BasePage.getLastModifiedFile("./downloads");
@@ -349,7 +369,10 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		CurrentState.getLogger().info("UI table data matches with Exported Excel Data");
 		Assert.assertTrue(true, "UI table data matches with Exported Excel Data");
 		tableCellValues.clear();
+	}else {
+		System.out.println("Data not available for : " +s);
 	}
+		}
 	
 	
 	//Clicking on progress bar and getting the data from the table for found
@@ -385,7 +408,9 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 				String entiresText = driver.findElement(By.className("dataTables_info")).getText();
 				entiresText = entiresText.substring(entiresText.indexOf("("));
 				WebElement TableTitle = driver.findElement(By.xpath("//*[@id='inaccuracy_table_title']"));
+				String s = TableTitle.toString();
 				scrollByElement(TableTitle);
+				if(!s.equalsIgnoreCase("Yelp")) {				
 				int count = 0;
 			    if(paginationNext.isDisplayed()) {
 			    	for(int i=1;i<=page;i++) {	//Loop will execute till the all the row of table completes.
@@ -429,6 +454,13 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 						e.printStackTrace();
 					}
 				}
+				}else {
+					try {
+						BaseClass.addEvidence(driver, "Data is not available for Yelp", "yes");
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
 					return tableCellValues;
 			}
 			
@@ -436,13 +468,20 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		public void exporttableInAccuracy() throws FileNotFoundException, IOException, InterruptedException {
 				
 				waitForElement(tableresult, 40);
+				WebElement TableTitle = driver.findElement(By.xpath("//*[@id='inaccuracy_table_title']"));
+				String s = TableTitle.toString();
+				scrollByElement(TableTitle);
+				if(!s.equalsIgnoreCase("Yelp")) {
 				waitForElement(tablebtn, 40);
 				//scrollByElement(tablebtn);
 				download(CurrentState.getBrowser(), tablebtn, 30);
 				JSWaiter.waitUntilJQueryReady();
 				convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+AccuracyExporttableInAccuracy));
 				
+			}else {
+				System.out.println("No Data Available for :" +s);
 			}
+				}
 			
 		//printing visibility progress bar table data from downloaded excel sheet
 		public List<Map<String, String>> getInAccuracyExporttableData() throws Exception {
@@ -496,7 +535,9 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			String entiresText = driver.findElement(By.className("dataTables_info")).getText();
 			entiresText = entiresText.substring(entiresText.indexOf("("));
 			WebElement TableTitle = driver.findElement(By.xpath("//*[@id='inaccuracy_table_title']"));
+			String s = TableTitle.toString();
 			scrollByElement(TableTitle);
+			if(!s.equalsIgnoreCase("Yelp")) {
 			int count = 0;
 				if(paginationNext.isDisplayed()) {
 					for(int i=1;i<=page;i++) {	//Loop will execute till the all the row of table completes.
@@ -535,6 +576,10 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 				System.out.println("Total number of entries in table : "+count);
 				Assert.assertTrue(entiresText.contains(""+count+""), "Table Data count matches with total enties count");
 			}
+			else {
+				System.out.println("No Data Available for : "+s);
+			}
+		}
 			return tableCellValues;
 		}
 			
@@ -543,12 +588,19 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			WebElement Ignoredchkbox = driver.findElement(By.xpath("//input[@id='toggle_overridden']"));
 			Ignoredchkbox.click();
 			waitForElement(tableresult, 40);
+			WebElement TableTitle = driver.findElement(By.xpath("//*[@id='inaccuracy_table_title']"));
+			String s = TableTitle.toString();
+			scrollByElement(TableTitle);
+			if(!s.equalsIgnoreCase("Yelp")) {
 			waitForElement(tablebtn, 40);
 			//scrollByElement(tablebtn);
 			JSWaiter.waitUntilJQueryReady();
 			download(CurrentState.getBrowser(), tablebtn, 30);
 			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+AccuracyExporttableIgnored));
+			}else {
+				System.out.println("No Data Available for :"+s);
 			}
+		}
 		
 		//printing visibility progress bar table data from downloaded excel sheet
 		public List<Map<String, String>> getIgnoredExporttableData() throws Exception {
@@ -568,7 +620,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			return exporttableData;
 		}
 
-	public void compareexporttableDatanIgnoredtable(List<Map<String, String>> getIgnoredExporttableData,
+	/*public void compareexporttableDatanIgnoredtable(List<Map<String, String>> getIgnoredExporttableData,
 			List<Map<String, String>> verifyIgnoredsitelinkdata) {
 		for (Map<String, String> m1 : getIgnoredExporttableData) {
 			for (Map<String, String> m2 : verifyIgnoredsitelinkdata) {
@@ -578,7 +630,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			}
 		}
 		
-	}
+	}*/
 	
 	//To get Vendors List displaying in the application
 		public List<Map<String, String>> verifyAccuracySitevendors() {
