@@ -14,10 +14,11 @@
 		<!-- <parameter name="Filter" value= "US,All States,All Cities,All Locations"/> -->
 		<parameter name="browser" value="chrome" />
 		<classes>
-		<class name="com.dac.testcases.CA.CA_Accuracy_Test" />
-			<!--class name="com.dac.testcases.CA.CA_Visibility_Test" />
+	<!--	<class name="com.dac.testcases.CA.CA_Accuracy_Test" />
+		-->
+			<class name="com.dac.testcases.CA.CA_Visibility_Test" />
 			
-			<class name="com.dac.testcases.CA.CA_ContentAnalysis_Test" /-->
+			<class name="com.dac.testcases.CA.CA_ContentAnalysis_Test"/>
 		
 		</classes>
 	</test>
