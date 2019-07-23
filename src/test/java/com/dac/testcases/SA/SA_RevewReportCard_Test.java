@@ -81,8 +81,8 @@ public class SA_RevewReportCard_Test extends BaseClass {
 							"Applied timePeriod : "+timePeriodValue+ " and filterBySource : "+Arrays.toString(c)+"", "yes");
 					
 					List<Long> cleintRefId = getClientRefs(downloadExcel());
-					String[] calScore = sd.calculateRRC_Scores(dataFile, sheetName, new Integer(timePeriodValue), Arrays.asList(c), cleintRefId);
-					s.isRRCScoreCorrect(calScore[0], calScore[1]);	
+					//String[] calScore = sd.calculateRRC_Scores(dataFile, sheetName, new Integer(timePeriodValue), Arrays.asList(c), cleintRefId);
+					//s.isRRCScoreCorrect(calScore[0], calScore[1]);	
 					dataComparision();
 				}
 				Thread.sleep(4000);

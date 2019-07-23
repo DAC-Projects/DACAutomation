@@ -10,20 +10,20 @@
 
 	<test name="Competitive Analysis" 
 		group-by-instances="true">
-		<!-- <parameter name="Filter" value= "US,All States,All Cities,All Locations"/> -->
-		<parameter name="browser" value="chrome" />
-		<classes>
-			<!-- <class name="com.dac.testcases.CA.CA_ContentAnalysis_Test" />
-			<class name="com.dac.testcases.CA.CA_Visibility_Test" />
+ <parameter name="Filter" value= "Fokwah Inc, 2318 Danforth Ave., Scarborough, Ontario, M4C 1K7;"/>
+   <parameter name="browser" value="chrome"/>
+    <classes>
+	<class name="com.dac.testcases.CA.CA_Visibility_Test" />
 			<class name="com.dac.testcases.CA.CA_Accuracy_Test" />
- -->
+			<class name="com.dac.testcases.CA.CA_ContentAnalysis_Test" />
+			<class name="com.dac.testcases.CA.CA_Review_Test"/>
 
 		</classes>
 	</test>  
 
 	<test name="transparenSEE_Prod_Asheley"
 		group-by-instances="true">
-		<!-- <parameter name="Filter" value= "US,All States,All Cities,All Locations"/> -->
+		<!-- <parameter name="Filter" value= "US,All States,All Cities,All Locations"/>
 		<parameter name="browser" value="chrome" />
 		<classes>
 			<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
@@ -32,6 +32,7 @@
 			<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
 			 
 			 <class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
+			  -->
 		</classes>
 	</test>
 </suite> 

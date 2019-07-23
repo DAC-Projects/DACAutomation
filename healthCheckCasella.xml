@@ -11,13 +11,11 @@
 	
 	<test name="transparenSEE_Prod_Casella"
 		group-by-instances="true">
-		<!-- <parameter name="Filter" value= "US,All States,All Cities,All Locations"/> -->
-		<parameter name="browser" value="chrome" />
-		<classes>
-		<class name="com.dac.testcases.CA.CA_Accuracy_Test" />
-			<!--class name="com.dac.testcases.CA.CA_Visibility_Test" />
-			
-			<class name="com.dac.testcases.CA.CA_ContentAnalysis_Test" /-->
+		<parameter name="Filter" value= "Casella Waste Systems, 5802 State Highway 28, Cooperstown, NY, 13326;"/>
+   <parameter name="browser" value="chrome"/>
+    <classes>
+
+			<class name="com.dac.testcases.CA.CA_Review_Test"/>
 		
 		</classes>
 	</test>
