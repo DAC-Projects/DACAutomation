@@ -69,8 +69,6 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 			public void verifyOverviewReportnExportContentAnalysis() throws Exception {
 			data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 			data.compareExprttoAnalysisSiteData(data.getExportData(), data.AnalysisSiteData());
-			CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-			CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 			addEvidence(CurrentState.getDriver(), "Verified overview export for Accuracy report", "yes");
 		}
 		
@@ -81,8 +79,6 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 		public void verifyOverviewReportnTooltipContentAnalysis() throws Exception {
 			data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 			data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
-			CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-			CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 			addEvidence(CurrentState.getDriver(), "Tooltip values verified from Overview Content Analysis report", "yes");
 		}
 		
@@ -92,11 +88,20 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 								"smoke" }, description = "Test for overview export and export verification")
 					public void verifyTableDataoExport() throws Exception {
 					data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
-					/*data.SitelLinkData();
-					data.getSiteLinkExporttableData();*/
-					data.compareExprttoAnalysisSiteLinkData(data.SitelLinkData(), data.getSiteLinkExporttableData());
-					CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-					CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
+					data.SitelLinkData();
+					data.getSiteLinkExporttableData();
+					data.compareXlData_UIdata();
 					addEvidence(CurrentState.getDriver(), "Verified overview export for Accuracy report", "yes");
 				}
+				
+				//Test to compare vendors in the application in Visibility Page
+				@SuppressWarnings("unchecked")
+				@Test(dependsOnMethods = {"verifyTableDataoExport"},groups = {"smoke"},
+						description ="Verify Site Vendors List")
+				public void comparevendorsListnverifySitevendors() throws Exception{
+					data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
+					data.comparevendorsListnverifySitevendors(data.verifyAnalysisSitevendors(), data.vendorsList());
+					addEvidence(CurrentState.getDriver(),
+						"Site Vendors in Content Analysis site vendors ", "yes");
+			}
 }

@@ -16,7 +16,7 @@ import com.dac.main.Navigationpage;
 import com.dac.main.POM_SA.SA_ReviewReportCard_Page;
 import com.dac.main.POM_SA.SA_gatherData;
 
-import junit.framework.Assert;
+//import junit.framework.Assert;
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
@@ -59,13 +59,15 @@ public class SA_RevewReportCard_Test extends BaseClass {
 				String City = wb.getCellValue(i, wb.seacrh_pattern("City", 0).get(0).intValue());
 				String Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
 				
+				if(s.isDataAvailable()) {
+				
 				s.applyGlobalFilter(Group, CountryCode, State, City, Location);
 				System.out.println(Group+", "+CountryCode+", "+State+", "+City+", "+Location);
 				s.clickApplyFilterBTN();
 				BaseClass.addEvidence(CurrentState.getDriver(),
 						"Applied global filter: "+Group+", "+CountryCode+", "+State+", "+City+", "+Location+"", "yes");
 				
-				if(s.isDataAvailable()) {
+				
 					
 					String excelTimePeriod = wb.getCellValue(i, wb.seacrh_pattern("TimePeriod", 0).get(0).intValue()); //fetch the TimePeriod Criteria from an excel
 					String timePeriodValue = (s.selectTimePeriod(excelTimePeriod)).trim();  

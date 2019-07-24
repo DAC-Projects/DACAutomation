@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -19,6 +20,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import com.dac.main.BasePage;
+
+import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
 import resources.JSWaiter;
@@ -76,6 +80,28 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "//div[@id='rankingDetail_info']")
 	private WebElement entiresText;
 	
+	@FindBy(xpath = "//div[@class='col-sm-12'][1]")
+	private WebElement acckeypanel;
+	
+	@FindBy(xpath = "(//div/a[@class='remove'])[last()]")
+	private WebElement removeacckey;
+	
+	@FindBy(xpath = "//div[@class='selectize-input items not-full has-options has-items']")
+   	private WebElement accountkeyword;
+		
+	@FindBy(xpath = "//select[@id='ddlGroup']")
+	private WebElement Group;
+	
+	@FindBy(xpath = "(//div[@class='col-sm-12']//table)[2]")
+	private WebElement GroupKeypanel;
+	
+	@FindBy(xpath = "//div[@class='selectize-input items not-full']")
+	private WebElement GroupKeywords;
+	
+	@FindBy(xpath = "//button[@id='btnSave']")
+	private WebElement SaveKeyword;
+	
+	
 	/*-----------------------Ranking Table---------------------------*/
 	
 	/*-------------------------Pagination-----------------------*/
@@ -104,7 +130,54 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+	public void applyKeywords(String AccKey, String GrKey, String GrKeyword) {
+		JSWaiter.waitJQueryAngular();
+		WebElement AccountKeyword,GroupKey,GroupKeyword;
+		if(AccKey == null || AccKey.equalsIgnoreCase("null")) AccKey = "";
+		if(GrKey == null || GrKey.equalsIgnoreCase("none")) GrKey = "None";
+		if(GrKeyword == null || GrKeyword.equalsIgnoreCase("null")) GrKeyword = "";
+		try {
+			waitForElement(acckeypanel, 25);
+			scrollByElement(accountkeyword);
+			waitUntilLoad(driver);
+			if(!AccKey.equals("null")) {
+				if(removeacckey.isDisplayed()){
+					clickelement(removeacckey);
+					waitForElement(accountkeyword,20);
+					AccountKeyword = acckeypanel.findElement(By.xpath("(//div[@class='col-sm-12'][1]//input)[2]"));
+					AccountKeyword.sendKeys(AccKey);
+					AccountKeyword.sendKeys(Keys.ENTER);
+					}else{
+						System.out.println("No keywords");
+					}
+			}
+			waitForElement(GroupKeypanel, 25);
+			scrollByElement(Group);
+			waitUntilLoad(driver);
+			if(!GrKey.equals("None")) {			
+				clickelement(GroupKeypanel);
+				waitForElement(Group, 20);
+				GroupKey = Group.findElement(By.xpath("//div[@data-value='"+GrKey+"']"));
+				waitForElement(GroupKey, 10);
+				clickelement(GroupKey);
+				waitUntilLoad(driver);
+				GroupKeyword = acckeypanel.findElement(By.xpath("(//div[@class='col-sm-12'][1]//input)[2]"));
+				GroupKeyword.sendKeys(GrKeyword);
+				GroupKeyword.sendKeys(Keys.ENTER);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			Assert.fail("Keywords not added");
+	}
+	waitUntilLoad(driver);
+	
 
+}
+	
+	
+	
 	public List<Map<String, String>> RankingScoresData() throws InterruptedException {
 		JSWaiter.waitJQueryAngular();
 		if(ScoresTable.isDisplayed()){
@@ -147,6 +220,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	public List<Map<String, String>> RankingDataTable() throws InterruptedException{
 		JSWaiter.waitJQueryAngular();
 		waitForElement(RankingTable, 40);
+		if(driver.findElement(By.className("dataTables_info")).isDisplayed()) {
 		//getting into progressbar found listing
 		System.out.println("\n reading table data********************* \n");
 		String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
@@ -196,8 +270,16 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	    }
 	    	System.out.println("Total number of entries in table : "+count);
 	    	Assert.assertTrue(entiresText.contains(""+count+""), "Table Data count matches with total enties count");
-	    	return tableCellValues;
-	}
+		}else if(driver.findElement(By.className("dataTables_empty")).isDisplayed()) {
+			try {
+				BaseClass.addEvidence(driver, "Data is not available for selected Filter", "yes");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+			return tableCellValues;
+			}
 	
 	
 	public void RankingDataTableExport() throws FileNotFoundException, IOException, InterruptedException {
@@ -239,4 +321,51 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 			}
 		}
 	}
+	
+	
+	public void compareXlData_UIdata() throws Exception {
+		JSWaiter.waitJQueryAngular();
+		List < WebElement > Columns_row = RankingTableHeader.findElements(By.tagName("th"));
+		int col_count = Columns_row.size();
+		String newfilename = BasePage.getLastModifiedFile("./downloads");
+		//String newfilename = new formatConvert("./downloads/"+fileName).convertFile("xlsx");
+		ExcelHandler a = new ExcelHandler("./downloads/"+newfilename, "Sheet0"); a.deleteEmptyRows();
+		int xlRowCount=new ExcelHandler("./downloads/"+newfilename, "Sheet0").getRowCount();
+		int count = 0;
+		for(int i=1;i<xlRowCount;i++) {
+			col_count = a.getColCount(i);
+			for(int j=0;j<=col_count;j++) {
+				String cellValue = a.getCellValue(i, j+1).trim();
+				if(cellValue.contains("%")) cellValue = new String(""+Double.parseDouble(cellValue.replace("%", ""))+"%");
+				if(cellValue.length() != 0 & cellValue != null) {
+					Map<String, String> uiTableCellValue = tableCellValues.get(count);
+					if(uiTableCellValue.containsValue(cellValue)) { // | uiTableCellValue.equals(cellValue)
+						Assert.assertTrue(uiTableCellValue.containsValue(cellValue), uiTableCellValue+" is matches with Downloaded Excel value : "+cellValue);
+					}else {
+						Assert.assertTrue(false, uiTableCellValue+" is NOT matches with Downloaded Excel value : "+cellValue);
+					}
+					
+					if(j <1 | j >5) count++;
+				}
+			}
+		}
+		CurrentState.getLogger().info("UI table data matches with Exported Excel Data");
+		Assert.assertTrue(true, "UI table data matches with Exported Excel Data");
+		tableCellValues.clear();
+	}
+
+
+
+	public void clickApplyKeyword() throws InterruptedException {
+		// TODO Auto-generated method stub
+		
+		JSWaiter.waitJQueryAngular();
+		if(SaveKeyword.isDisplayed()) {
+			clickelement(SaveKeyword);
+			Thread.sleep(3000);
+		}
+		
+	}
+	
+	
 }
