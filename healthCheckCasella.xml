@@ -7,22 +7,22 @@
 		<listener class-name="resources.ExtentTestNGITestListener"></listener>
 	</listeners>
 
-
 	
 	<test name="transparenSEE_Prod_Casella"
 		group-by-instances="true">
 		<parameter name="Filter" value= "Casella Waste Systems, 5802 State Highway 28, Cooperstown, NY, 13326;"/>
 		<parameter name="browser" value="chrome" />
 		<classes>
-	<!--	<class name="com.dac.testcases.CA.CA_Accuracy_Test" />
-	
-			<class name="com.dac.testcases.CA.CA_Visibility_Test" />
-			
+		<class name="com.dac.testcases.CA.CA_Accuracy_Test" />	
+			<class name="com.dac.testcases.CA.CA_Visibility_Test" />			
 			<class name="com.dac.testcases.CA.CA_ContentAnalysis_Test"/>
 			<class name="com.dac.testcases.CA.CA_Review_Test"/>
-				-->
 			
-		<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
+			<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
+			<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
+			<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />			
+			<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
+			
 		</classes>
 	</test>
 </suite> 
