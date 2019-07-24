@@ -18,6 +18,8 @@ public interface CARepository {
 	String AccuracyExport = "AccuracyExport.xlsx";
 	String VisibilityExport = "VisibilityExport.xlsx";
 	String ReviewExport = "ReviewExport.xlsx";
+	String ReviewLocationCompetitorExportAll="ReviewLocationCompetitorExportAll.xlsx";
+	String ReviewLocationCompetitorExport="ReviewLocationCompetitorExport.xlsx";
 	String CAExport = "CAExport.xlsx";
 	String Exportpath ="./downloads/";
 	

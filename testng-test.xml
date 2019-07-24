@@ -20,22 +20,26 @@
 
 
 
-      <test name="Sentiment Analysis" parallel="false" group-by-instances="true">
+   <!--    <test name="Sentiment Analysis" parallel="false" group-by-instances="true">
   <parameter name="browser" value="chrome"/>
     <classes>
 	 	<class name= "com.dac.testcases.SA.SA_RevewReportCard_Test" /> 
     </classes>
-  </test>
+  </test> -->
 
   <test name="Competitive Analysis" parallel="false" group-by-instances="true">
 
-   <parameter name="Filter" value= "US,Illinois,Chicago,53 W Jackson Blvd Ste 1264"/>
-  <parameter name="browser" value="chrome"/>
+  <parameter name="Filter" value= "Fokwah Inc, 2318 Danforth Ave., Scarborough, Ontario, M4C 1K7;"/>
+   <parameter name="browser" value="chrome"/>
     <classes>
+
 	 <class name= "com.dac.testcases.CA.CA_ContentAnalysis_Test" /> 
 		<class name= "com.dac.testcases.CA.CA_Visibility_Test" /> 
 		<class name= "com.dac.testcases.CA.CA_Accuracy_Test" /> 
-	    
+
+<!-- 	 <class name= "com.dac.testcases.CA.CA_Review_Test" /> 
+ -->		<class name= "com.dac.testcases.CA.CA_Summary_Test" /> 
+
     </classes>
 
   </test>

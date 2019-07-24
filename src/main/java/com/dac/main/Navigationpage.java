@@ -34,7 +34,7 @@ public class Navigationpage extends BasePage{
 	}
 
 	// -------------------------------- TSEE ------------------------------
-	@FindBy(xpath = "//*[@id='reportSiteOrder']/a/span")
+	@FindBy(xpath = "//a[@href='/Dashboard/AllLocations/']/span")
 	private WebElement AllLocations;
 
 	@FindBy(xpath = "//a[@href='/Dashboard/AllGroups/']/span")
@@ -54,6 +54,9 @@ public class Navigationpage extends BasePage{
 	
 	@FindBy(xpath = "//a[@href='/Dashboard/ReviewStream']/span")
 	private WebElement ReviewStream;
+	
+	@FindBy(xpath = "//a[@href='/Review/ReviewScore/']/span")
+	private WebElement DisplayedReviewScore;
 	
 	@FindBy(xpath = "//li[@class='settings-dropdown-cog']")
 	private WebElement Settings;
@@ -138,6 +141,9 @@ public class Navigationpage extends BasePage{
   
     @FindBy(xpath="//a[@href='/CompetitiveAnalysis/Analysis']")
     private WebElement CA_ContentAnalysis;
+    
+    @FindBy(xpath="//a[@href='/CompetitiveAnalysis/Summary']")
+    private WebElement CA_Summary;
 
     
 	@FindBy(xpath="//a[@href='/CompetitiveAnalysis/Review']/span")
@@ -202,7 +208,26 @@ public class Navigationpage extends BasePage{
     	waitUntilLoad(driver);
     }
     
+    public void navigateToReviewStream() {
+    	clickelement(ReviewStream);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    public void navigateToDisplayedReviewScore() {
+    	clickelement(DisplayedReviewScore);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
     //-----CA
+    
+    /** To click on CA_Review link in LHS to navigate to CA_Summary page   */
+	public void navigateCA_Summarypage() {
+	  clickelement(CA_Summary);   
+      System.out.println("Waiting for the Summary page to load**********");
+      waitUntilLoad(driver);
+	}
 
 	/** To click on CA_Visibility link in LHS to navigate to CA_Visibility page   */
 
