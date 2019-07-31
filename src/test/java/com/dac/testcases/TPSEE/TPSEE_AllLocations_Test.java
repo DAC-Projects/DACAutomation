@@ -55,7 +55,13 @@ public class TPSEE_AllLocations_Test extends BaseClass{
 				s.clickApplyFilterBTN();
 				BaseClass.addEvidence(CurrentState.getDriver(),
 				"Applied global filter: "+Group+", "+CountryCode+", "+State+", "+City+", "+Location+"", "yes");
+				/*if(s.isDataAvailable()) {
+				data.LocationDataTable();
+				data.getLocationDataTableExport();
+				data.compareXlData_UIdata();
+				}*/
 			}
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -68,8 +74,6 @@ public class TPSEE_AllLocations_Test extends BaseClass{
 		public void verifyTableDataoExport() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.compareExprttoAnalysisSiteLinkData(data.LocationDataTable(), data.getLocationDataTableExport());
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}
 
