@@ -88,9 +88,10 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 								"smoke" }, description = "Test for overview export and export verification")
 					public void verifyTableDataoExport() throws Exception {
 					data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
-					data.SitelLinkData();
+					data.compareexporttableDatannumberofentries(data.SitelLinkData(),data.getSiteLinkExporttableData());
+					/*data.SitelLinkData();
 					data.getSiteLinkExporttableData();
-					data.compareXlData_UIdata();
+					data.compareXlData_UIdata();*/
 					addEvidence(CurrentState.getDriver(), "Verified overview export for Accuracy report", "yes");
 				}
 				

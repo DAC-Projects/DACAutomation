@@ -74,9 +74,10 @@ public class TPSEE_Displayed_Review_Score_Test extends BaseClass {
 						"smoke" }, description = "Test for Review export and export verification")
 			public void verifyTableDataoExport() throws Exception {
 			data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
-			data.ReviewDataTable();
+			data.compareexporttableDatanstardetails(data.ReviewDataTable(),data.getReviewDataTableExport());
+			/*data.ReviewDataTable();
 			data.getReviewDataTableExport();
-			data.compareXlReviewData_UIdata();
+			data.compareXlReviewData_UIdata();*/
 			addEvidence(CurrentState.getDriver(), "Verified Review export for UI Data", "yes");
 		}
 }

@@ -631,6 +631,30 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		}
 		
 	}*/
+		
+		public void compareexporttableDatannumberofentries(List<Map<String, String>> getExporttableData,
+		List<Map<String, String>> verifysitelinkdata) {
+	for (Map<String, String> m1 : getExporttableData) {
+		for (Map<String, String> m2 : verifysitelinkdata) {
+			if (m1.get("rowdata").equals(m2.get("rowdata"))) {
+				Assert.assertEquals(m1.get("rowdata").contains(m2.get("rowdata")), true);
+			}
+		}
+	}
+	
+}
+		
+		public void compareexporttableDatanInaccuracytable(List<Map<String, String>> getIgnoredExporttableData,
+		List<Map<String, String>> verifyIgnoredsitelinkdata) {
+	for (Map<String, String> m1 : getIgnoredExporttableData) {
+		for (Map<String, String> m2 : verifyIgnoredsitelinkdata) {
+			if (m1.get("rowdata").equals(m2.get("rowdata"))) {
+				Assert.assertEquals(m1.get("rowdata").contains(m2.get("rowdata")), true);
+			}
+		}
+	}
+	
+}
 	
 	//To get Vendors List displaying in the application
 		public List<Map<String, String>> verifyAccuracySitevendors() {

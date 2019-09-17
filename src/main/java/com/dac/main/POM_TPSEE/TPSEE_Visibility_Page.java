@@ -551,5 +551,32 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		Assert.assertTrue(true, "UI table data matches with Exported Excel Data");
 		tableCellValues.clear();
 	}
-	
-}	
+
+	//comparing total entries in excel of visibilityreport table and test from bottom of the table
+	public  void compareexporttableDatannumberofentries(List<Map<String, String>> dataTablefound,
+			List<Map<String, String>> exporttableDataFound) {	
+					
+			for (Map<String, String> m1 : dataTablefound) {
+				for (Map<String, String> m2 : exporttableDataFound) {
+					if (m1.get("rowdata").equals(m2.get("rowdata"))) {
+						Assert.assertEquals(formatFloat(m1.get("rowdata")), formatFloat(m2.get("rowdata")));
+					}
+				}
+			}
+		}
+
+	public void compareexporttableDatannumberofentriesNotFound(List<Map<String, String>> dataTableNotfound,
+			List<Map<String, String>> exporttableDataNotFound) {
+		// TODO Auto-generated method stub
+		
+		for (Map<String, String> m1 : dataTableNotfound) {
+			for (Map<String, String> m2 : exporttableDataNotFound) {
+				if (m1.get("rowdata").equals(m2.get("rowdata"))) {
+					Assert.assertEquals(formatFloat(m1.get("rowdata")), formatFloat(m2.get("rowdata")));
+				}
+			}
+		}
+		
+	}
+		
+	}

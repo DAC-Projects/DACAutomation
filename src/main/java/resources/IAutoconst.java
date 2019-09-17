@@ -26,7 +26,8 @@ public interface IAutoconst {
 	String baseUrl="http://staging.manage.dacgroup.com:82/accounts/";
 	String[] competitiveAnalysis = {baseUrl+"competitive-analysis-test-account-beta-1", "mobittah98@yahoo.ca"};
 	String[] deepfieldAccount = {baseUrl+"deepfield-software-incorporated-beta", "bmobit@dacgroup.com"};
-	String[] transparenSEE = {baseUrl+"international-account-beta-beta", "svarghese@dacgroup.com"};
+	//String[] transparenSEE = {baseUrl+"international-account-beta-beta", "jmohan@dacgroup.com"};amahadev@dacgroup.com
+	String[] transparenSEE = {baseUrl+"international-account-beta-beta", "1to9test@dacgroup.com"};
 	String[] Fit4LessAccount = {baseUrl+"fit4less-beta", "1test@gmail.com"};
 	String[] neuralTuringTechAccount = {baseUrl+"neural-turing-tech-beta", "svarghese@dacgroup.com"};
 	

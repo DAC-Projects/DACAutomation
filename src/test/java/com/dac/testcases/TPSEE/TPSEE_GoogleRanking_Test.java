@@ -111,9 +111,10 @@ public class TPSEE_GoogleRanking_Test extends BaseClass{
 							"smoke" }, description = "Test for Ranking export and export verification")
 				public void verifyTableDataoExport() throws Exception {
 				data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
-				data.RankingDataTable();
+				data.compareexporttableDatanrankingdetails(data.RankingDataTable(),data.getRankingDataTableExport());
+				/*data.RankingDataTable();
 				data.getRankingDataTableExport();
-				data.compareXlData_UIdata();
+				data.compareXlData_UIdata();*/
 				addEvidence(CurrentState.getDriver(), "Verified Ranking export for Google Ranking", "yes");
 			}
 }

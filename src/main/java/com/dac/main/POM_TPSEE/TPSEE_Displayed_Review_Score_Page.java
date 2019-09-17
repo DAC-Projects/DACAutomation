@@ -57,13 +57,13 @@ public class TPSEE_Displayed_Review_Score_Page extends TPSEE_abstractMethods{
 	@FindBy(id = "ToolTables_reviewscore_results_0")
 	private WebElement TableExport;
 	
-	@FindBy(xpath = "*//div//table")
+	@FindBy(xpath = "//div//table")
 	private WebElement DataTable;
 	
-	@FindBy(xpath = "*//div//table//thead")
+	@FindBy(xpath = "//div//table//thead")
 	private WebElement TableHeader;
 	
-	@FindBy(xpath = "*//div//table//tbody//tr")
+	@FindBy(xpath = "//div//table//tbody//tr")
 	private List<WebElement> TableRow;
 	
 	@FindBy(id = "table_title")
@@ -216,5 +216,20 @@ public class TPSEE_Displayed_Review_Score_Page extends TPSEE_abstractMethods{
 			CurrentState.getLogger().info("UI table data matches with Exported Excel Data");
 			Assert.assertTrue(true, "UI table data matches with Exported Excel Data");
 			tableCellValues.clear();
+		}
+
+		public void compareexporttableDatanstardetails(List<Map<String, String>> reviewDataTable,
+				List<Map<String, String>> reviewDataTableExport) {
+			// TODO Auto-generated method stub
+			
+			for (Map<String, String> m1 : reviewDataTable) {
+				for (Map<String, String> m2 : reviewDataTableExport) {
+					if (m1.get("rowdata").equals(m2.get("rowdata"))) {
+						Assert.assertEquals(m1.size(), m2.size());
+						Assert.assertEquals(m1.get("rowdata").contains(m2.get("rowdata")), true);
+					}
+				}
+			}
+			
 		}
 }

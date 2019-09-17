@@ -30,7 +30,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		// Assert.assertFalse( "sample error", true);
 	}
 	
-	//Apply Filters
+	//Apply Filters 
 	@Test(dependsOnMethods = { "navigateToAccuracyPage" }, groups = {
 			"smoke" }, description = "Verify Accuracy page loads after filter applied")
 	public void verifyFilteringReportsAccuracy() throws Exception {
@@ -113,9 +113,10 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 				"smoke" }, description = "Test for verifying site link data in Accuracy page")
 		public void numberofentriesnExporttableAccuracy() throws Exception {
 				data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-				data.getExporttableData();
+				data.compareexporttableDatannumberofentries(data.getExporttableData(),data.verifysitelinkdata());
+				/*data.getExporttableData();
 				data.verifysitelinkdata();
-				data.compareXlData_UIdata();
+				data.compareXlData_UIdata();*/
 				addEvidence(CurrentState.getDriver(),
 						"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
 		}
@@ -126,9 +127,10 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 						"smoke" }, description = "Test for verifying InAccuracy case data and export data in Accuracy page")
 				public void numberofentriesnInAccuracyExporttableAccuracy() throws Exception {
 						data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-						data.verifyInAccuracysitelinkdata();
+						data.compareexporttableDatanInaccuracytable(data.verifyInAccuracysitelinkdata(),data.getInAccuracyExporttableData());
+						/*data.verifyInAccuracysitelinkdata();
 						data.getInAccuracyExporttableData();
-						data.compareXlData_UIdata();
+						data.compareXlData_UIdata();*/
 						addEvidence(CurrentState.getDriver(),
 								"Site level scores in Accuracy site table  and overview Accuracy export found matching for InAccuracy", "yes");
 				}

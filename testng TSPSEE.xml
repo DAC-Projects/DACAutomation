@@ -12,14 +12,13 @@
    <!-- <parameter name="Filter" value= "US,All States,All Cities,All Locations"/> -->
    <parameter name="browser" value="chrome"/>
     <classes>
-	 <!-- 	<class name= "com.dac.testcases.TPSEE.TPSEE_Visibility_Test" /> 
+	 	<class name= "com.dac.testcases.TPSEE.TPSEE_Visibility_Test" /> 
 	  	<class name= "com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" /> 
 		<class name= "com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
 		<class name= "com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" /> 
 		<class name= "com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />  
-		<class name= "com.dac.testcases.TPSEE.TPSEE_Groups_Test" /> 
-		<class name= "com.dac.testcases.TPSEE.TPSEE_ReviewStream_Test" />  -->
-		<class name= "com.dac.testcases.TPSEE.TPSEE_Displayed_Review_Score_Test" /> 
+		<!-- <class name= "com.dac.testcases.TPSEE.TPSEE_Displayed_Review_Score_Test" />  -->
+		<!-- <class name= "com.dac.testcases.TPSEE.TPSEE_Groups_Test" /> --> 
      </classes>
  </test>
 </suite>

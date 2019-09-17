@@ -87,8 +87,9 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	private WebElement removeacckey;
 	
 	@FindBy(xpath = "//div[@class='selectize-input items not-full has-options has-items']")
+	//selectize-input items has-options has-items not-full
 	private WebElement accountkeyword;
-		
+	
 	@FindBy(xpath = "//select[@id='ddlGroup']")
 	private WebElement Group;
 	
@@ -140,19 +141,20 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 		if(GrKeyword == null || GrKeyword.equalsIgnoreCase("null")) GrKeyword = "";
 		try {
 			waitForElement(acckeypanel, 25);
-			scrollByElement(accountkeyword);
+			scrollByElement(acckeypanel);
 			waitUntilLoad(driver);
-			if(!AccKey.equals("null")) {
-				if(removeacckey.isDisplayed()){
-					clickelement(removeacckey);
-					waitForElement(accountkeyword,20);
-					AccountKeyword = acckeypanel.findElement(By.xpath("(//div[@class='col-sm-12'][1]//input)[2]"));
-					AccountKeyword.sendKeys(AccKey);
-					AccountKeyword.sendKeys(Keys.ENTER);
-					}else{
-						System.out.println("No keywords");
-					}
-			}
+			if(accountkeyword.isEnabled()) {
+				if(!AccKey.equals("null")) {
+					if(removeacckey.isDisplayed()){
+						clickelement(removeacckey);
+						waitForElement(accountkeyword,20);
+						AccountKeyword = acckeypanel.findElement(By.xpath("(//div[@class='col-sm-12'][1]//input)[2]"));
+						AccountKeyword.sendKeys(AccKey);
+						AccountKeyword.sendKeys(Keys.ENTER);
+						}else{
+							System.out.println("No keywords");
+						}
+				}
 			waitForElement(GroupKeypanel, 25);
 			scrollByElement(Group);
 			waitUntilLoad(driver);
@@ -166,6 +168,11 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 				GroupKeyword = acckeypanel.findElement(By.xpath("(//div[@class='col-sm-12'][1]//input)[2]"));
 				GroupKeyword.sendKeys(GrKeyword);
 				GroupKeyword.sendKeys(Keys.ENTER);
+			}else {
+				System.out.println("No Keywords");
+			}
+		}else {
+			System.out.println("Cannot add keywords");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -366,6 +373,19 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 		}
 		
 	}
-	
-	
-}
+
+
+	public void compareexporttableDatanrankingdetails(List<Map<String, String>> rankingDataTable,
+			List<Map<String, String>> rankingDataTableExport) {
+		// TODO Auto-generated method stub
+						for (Map<String, String> m1 : rankingDataTable) {
+					for (Map<String, String> m2 : rankingDataTableExport) {
+						if (m1.get("rowdata").equals(m2.get("rowdata"))) {
+							Assert.assertEquals(m1.size(), m2.size());
+							Assert.assertEquals(m1.get("rowdata").contains(m2.get("rowdata")), true);
+						}
+					}
+				}
+				
+			}
+	}

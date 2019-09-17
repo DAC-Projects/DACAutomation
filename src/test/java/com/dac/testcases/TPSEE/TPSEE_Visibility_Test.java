@@ -96,9 +96,10 @@ public class TPSEE_Visibility_Test extends BaseClass {
 			"smoke" }, description = "Test for verifying progress bar in Visibility page")
 	public void numberofentriesnExporttableVisibility() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-			data.DataTablefound();
+			data.compareexporttableDatannumberofentries(data.DataTablefound(),data.getExporttableDataFound());
+		/*	data.DataTablefound();
 			data.getExporttableDataFound();
-			data.compareXlDataNotFoundandNotFound_UIdata();
+			data.compareXlDataNotFoundandNotFound_UIdata();*/
 			addEvidence(CurrentState.getDriver(),
 					"Site level scores in Visibility site table  and overview visibility export found matching", "yes");
 	}
@@ -109,9 +110,10 @@ public class TPSEE_Visibility_Test extends BaseClass {
 				"smoke" }, description = "Test for verifying progress bar in Visibility page")
 		public void numberofentriesnExporttableNotFoundVisibility() throws Exception {
 				data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-				data.DataTableNotfound();
+				data.compareexporttableDatannumberofentriesNotFound(data.DataTableNotfound(),data.getExporttableDataNotFound());
+				/*data.DataTableNotfound();
 				data.getExporttableDataNotFound();
-				data.compareXlDataNotFoundandNotFound_UIdata();
+				data.compareXlDataNotFoundandNotFound_UIdata();*/
 				addEvidence(CurrentState.getDriver(),
 						"Site level scores in Visibility site table  and overview visibility export found matching", "yes");
 		}

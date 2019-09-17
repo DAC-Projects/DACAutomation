@@ -334,7 +334,8 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 			//adding data into map
 			Map<String, String> kMap = new HashMap<String, String>();
 			for (int i = 1; i < table.length; i++) {
-				kMap.put("Location", table[2][2]);
+				kMap.put("Location", table[0][col]);
+				kMap.put(table[i][0], table[i][col]);
 			}
 		}
 		return exporttableData;
@@ -400,4 +401,19 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 			    }
 				return Vendors;
 				}
-}
+
+
+		public void compareexporttableDatannumberofentries(List<Map<String, String>> sitelLinkData,
+				List<Map<String, String>> siteLinkExporttableData) {
+			
+					for (Map<String, String> m1 : sitelLinkData) {
+					for (Map<String, String> m2 : siteLinkExporttableData) {
+						if (m1.get("rowdata").equals(m2.get("rowdata"))) {
+							Assert.assertEquals(m1.size(), m2.size());
+							Assert.assertEquals(m1.get("rowdata").contains(m2.get("rowdata")), true);
+						}
+					}
+				}
+				
+			}
+		}
