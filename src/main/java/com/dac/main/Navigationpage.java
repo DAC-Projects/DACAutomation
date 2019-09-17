@@ -154,6 +154,20 @@ public class Navigationpage extends BasePage{
 	private WebElement TPSEE_Visibility;
 
     
+    // ------------------------- SE ---------------------------------
+    
+    
+	@FindBy(id="PostsSocialMedia")
+	private WebElement SE_Posts;
+  
+    @FindBy(id="ContentManagementSocialMedia")
+    private WebElement SE_ContentManagement;
+    
+    @FindBy(xpath="//*[@href='/SocialMediaReports/']")
+    private WebElement SE_Reports;
+    
+    
+    
     public void  navigateTPSEE_Visibility() {
   	  
   	  clickelement(TPSEE_Visibility);   
@@ -303,6 +317,30 @@ public class Navigationpage extends BasePage{
 		clickelement(FrequentKeywords);   
 	      System.out.println("Waiting for page to load**********");
 	      waitUntilLoad(driver);
+	}
+	
+	public void navigateToSE_Report() {
+		wait.until(ExpectedConditions.visibilityOf(SE_Reports));
+		scrollByElement(SE_Reports);
+		clickelement(SE_Reports);
+		waitUntilLoad(driver);
+		
+	}
+	
+	public void navigateToSE_Post() {
+		wait.until(ExpectedConditions.visibilityOf(SE_Posts));
+		scrollByElement(SE_Posts);
+		clickelement(SE_Posts);
+		waitUntilLoad(driver);
+		
+	}
+	
+	public void navigateToSE_ContentManagement() {
+		wait.until(ExpectedConditions.visibilityOf(SE_ContentManagement));
+		scrollByElement(SE_ContentManagement);
+		clickelement(SE_ContentManagement);
+		waitUntilLoad(driver);
+		
 	}
 
 	/** To click on TSEE_Accuracy link in LHS to navigate to TSEE_Accuracy page   */
@@ -487,4 +525,6 @@ public class Navigationpage extends BasePage{
 				}
 			}
 	}
+
+
 }
