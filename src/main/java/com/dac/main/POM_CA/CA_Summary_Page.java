@@ -1,16 +1,13 @@
 package com.dac.main.POM_CA;
 
 import static org.testng.Assert.assertTrue;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -18,21 +15,21 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import resources.CurrentState;
 import resources.ExcelHandler;
-import resources.JSWaiter;
 
-public class CA_Visibility_Page extends CA_abstractMethods {
+public class CA_Summary_Page extends CA_abstractMethods{
+
+	
 
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
 
-	public CA_Visibility_Page(WebDriver driver) {
+	public CA_Summary_Page(WebDriver driver) {
 
 		super(driver);
 		this.driver = driver;
@@ -40,8 +37,6 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 		action = new Actions(driver);
 		PageFactory.initElements(driver, this);
 	}
-
-	// locators
 	
 	@FindBy(id="myGroups")
 	private WebElement filterGroup;
@@ -49,7 +44,7 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 	@FindBy(xpath="//*[@class='menu transition hidden']")
 	private WebElement filterDropDown;
 	
-	@FindBy(xpath="(//*[@id='divCIVisibility']/h1)")
+	@FindBy(xpath="(//*[@id='divCISummary']/h1)")
 	private WebElement CATitleContent;
 	
 	// Global Filter locators
@@ -86,48 +81,33 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 	String compScore = ".//div[starts-with(@class, 'competitorScore')]";
 	
 	// site table
-	@FindBy(css = "table#compIntVisibilitySitesTable")
+	@FindBy(css = "table#compIntAccuracySitesTable")
 	private WebElement siteTable;
 
 	List<WebElement> columns;
 	List<WebElement> rows;
 
-	/**
-	 * Export visibility overview report
-	 * @throws InterruptedException
-	 * @throws FileNotFoundException
-	 * @throws IOException
-	 * 
-	 * 
-	 */
-	
-//	Date date = new Date();
-//	   SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy_hmmss_a");
-//	   String formattedDate = sdf.format(date);
-	   
-	   
-	public void exportvisibilityReport() throws InterruptedException, FileNotFoundException, IOException {
+
+	public void exportaccuracyReport() throws InterruptedException, FileNotFoundException, IOException {
 		waitForElement(overviewReport, 10);
 		waitForElement(exportBtn, 10);
 		scrollByElement(exportBtn);
 		download(CurrentState.getBrowser(), exportBtn, 20);
-		convertExports(getLastModifiedFile(Exportpath), VisibilityExport);
+		convertExports(getLastModifiedFile(Exportpath), AccuracyExport);
 	}
 
-	/* (non-Javadoc)
-	 * Reads overview report and return values as list.
-	 * @see com.dac.main.POM_CA.CA_abstractMethods#getOverviewReport()
-	 */
+
+	
 	@Override
 	public List<Map<String, String>> getOverviewReport() {
 		// TODO Auto-generated method stub
 		waitForElement(overviewReport, 10);
 		scrollByElement(overviewReport);
 		Map<String, String> kMap;
-		
 		List<Map<String, String>> ovrwRprtData = new ArrayList<Map<String, String>>();
 		for (int i = 1; i <= competitors.size(); i++) {
 			WebElement s = driver.findElement(By.xpath(xpathCompetitors + "[" + i + "]"));
+			// ovrwRprtData.put("Score", s.findElement(By.xpath(compScore)).getText());
 			kMap = new HashMap<String, String>();
 			kMap.put("compName", s.findElement(By.xpath(compName)).getText());
 			kMap.put("score", s.findElement(By.xpath(compScore)).getText());
@@ -138,30 +118,24 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 		}
 		return ovrwRprtData;
 	}
-
-	/**
-	 * @param timeout
-	 * Verifies all elements are present till timeout in seconds
-	 */
+//	@Override
+//	public List<Map<String, String>> getOverviewReport() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+	
 	public void verify_pageloadCompletely(int timeout) {
 		if (waitForElement(overviewReport, timeout) && waitForElement(siteTable, timeout)
-				&& waitForElement(hstryGrph, timeout)
-				&& waitForElement(hstryGrph, timeout) & waitForElement(filter_Panel, timeout))
+				& waitForElement(filter_Panel, timeout))
 			assertTrue(true, "All sections filter, overview report, site table and graph is loaded");
 		else
 			assertTrue(false, "Page not loaded completely");
 	}
-
 	
-	/**
-	 * Reads export data and return as a list
-	 * @return
-	 * @throws Exception
-	 */
 	public List<Map<String, String>> getExportData() throws Exception {
-		exportvisibilityReport();
+		exportaccuracyReport();
 
-		String[][] table = new ExcelHandler(Exportpath + VisibilityExport, "Sheet0").getExcelTable();
+		String[][] table = new ExcelHandler(Exportpath + AccuracyExport, "Sheet0").getExcelTable();
 		List<Map<String, String>> exportData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
 		for (int col = 1; col < colSize; col++) {
@@ -179,15 +153,8 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 
 	}
 	
-	
-
-	/**
-	 * Compare export and table
-	 * @param exportData
-	 * @param siteTableData
-	 */
 	public void compareExportnTable(List<Map<String, String>> exportData, List<Map<String, String>> siteTableData) {
-	
+		
 		for (Map<String, String> m1 : exportData) {
 			for (Map<String, String> m2 : siteTableData) {
 				
@@ -219,4 +186,9 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 
 	}
 
+	
+
 }
+
+
+

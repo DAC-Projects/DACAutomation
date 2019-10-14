@@ -10,9 +10,10 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_CA.CA_ContentAnalysis_Page;
-import com.dac.main.POM_CA.CA_Review_Page;
+import com.dac.main.POM_CA.CA_ContentAnalysis_Page;
 import resources.BaseClass;
 import resources.CurrentState;
+import resources.ExcelHandler;
 import resources.Utilities;
 //
 public class CA_ContentAnalysis_Test extends BaseClass {
@@ -31,15 +32,37 @@ public class CA_ContentAnalysis_Test extends BaseClass {
 		 CurrentState.getLogger().log(Status.PASS, "Navigated successfully to CA Review page");
 	}
 
-	@Parameters({ "Filter" })
+	
 	@Test(dependsOnMethods = { "navigateToCAPage" }, groups= {"smoke"})
-	public void verifyFilteringReports(String Filter) throws Exception {
-		data = new CA_ContentAnalysis_Page(CurrentState.getDriver());
-		String[] filter = Filter.split(",");
-		data.applyFilter(filter[0], filter[1], filter[2], filter[3]);
-		//data.verify_pageloadCompletely(10);
-		CurrentState.getLogger().log(Status.PASS, "Global filter applied for "+ Arrays.toString(filter));
-	}
+	public void verifyFilteringReports() throws Exception {try {	
+		int count = 1;
+		ExcelHandler wb = new ExcelHandler("./data/FilterCriteria.xlsx", "CA_FIL"); wb.deleteEmptyRows();
+		CA_ContentAnalysis_Page s = new CA_ContentAnalysis_Page(CurrentState.getDriver());
+		for(int i=1;i<=wb.getRowCount();i++) {
+			System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
+			if(i>1) CurrentState.getDriver().navigate().refresh();
+			s.waitUntilLoad(CurrentState.getDriver());
+			
+			
+			String CountryCode = wb.getCellValue(i, wb.seacrh_pattern("Country", 0).get(0).intValue());
+			String State = wb.getCellValue(i, wb.seacrh_pattern("State", 0).get(0).intValue());
+			String City = wb.getCellValue(i, wb.seacrh_pattern("City", 0).get(0).intValue());
+			String Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
+			
+			s.applyFilter(CountryCode, State, City, Location);
+			System.out.println(CountryCode+", "+State+", "+City+", "+Location);
+			s.clickApplyFilterBTN();
+			BaseClass.addEvidence(CurrentState.getDriver(),
+					"Applied global filter: "+CountryCode+", "+State+", "+City+", "+Location+"", "yes");
+			
+			Thread.sleep(4000);
+			System.out.println("-------------- Scenarios : "+ count++ + "Ends --------------------");
+			
+		}
+	}catch(Exception e) {
+		e.printStackTrace();
+		//Assert.fail("");
+	}}
 
 	@Test(dependsOnMethods = { "navigateToCAPage"}, groups= {"smoke"})
 	public void verifyOverviewReportnExport() throws Exception {

@@ -30,7 +30,7 @@ public class CA_gatherData implements CARepository {
 		List<Integer> competitor_col_no = company_level.find_column_no(competitor_column, 0);
 		List<Integer> usrID_col_no = company_level.find_column_no(User, 0);
 		
-		int competitorCount = company_level.find_Row_no(UserID, usrID_col_no.get(0)).size();
+		int competitorCount = company_level.find_Row_no(UserID, 0, usrID_col_no.get(0)).size();
 		Competitor[] competitors = new Competitor[competitorCount];
 		List<Integer> Sites_col = company_level.seacrh_pattern(Site_Name_pattern, 0);
 		int sitesCount = Sites_col.size() - 1;
@@ -73,10 +73,10 @@ public class CA_gatherData implements CARepository {
 		
 		for (Competitor comps : competitors ) {
 			System.out.println(i);
-			new ExcelHandler().write(createMap(comps), comps.competitorName, "./Results_"+level+"_"+UserID+".xlsx");
-			new ExcelHandler().write(new FormulaEvaluator(comps).reviewScore().contentAnalysis().accuracyScore().visibilityScore().execute(),
-					"Results-"+comps.competitorName.substring(0,4)+"..."+i, "./Results_"+level+"_"+UserID+".xlsx");
-		i= i+1;
+			new ExcelHandler("./Results_"+level+"_"+UserID+".xlsx", comps.competitorName).write(createMap(comps),0,0);
+			new ExcelHandler("./Results_"+level+"_"+UserID+".xlsx", "Results-"+comps.competitorName.substring(0,4)+"..."+i)
+							.write(new FormulaEvaluator(comps).reviewScore().contentAnalysis().accuracyScore().visibilityScore().execute(),0,0);
+			i= i+1;
 		}
 		
 	
@@ -86,6 +86,7 @@ public class CA_gatherData implements CARepository {
 			throws Exception {
 
 		Sites site = new Sites();
+		
 		String name = getvalue(x, Site_Name, row, company_level);
 		site.name = ((name != null) ? name : null);
 
@@ -127,7 +128,8 @@ public class CA_gatherData implements CARepository {
 		ExcelHandler read = new ExcelHandler(path, "Sheet0");
 		int column = read.find_column_no(competitors.competitorName, 0).get(0);
 		System.out.println(name);
-		int row = read.find_Row_no(name, 0).get(0);
+		List<String> name1= Arrays.asList(name);
+		int row = read.find_Row_no(name1, 0, 0).get(0);
 		System.out.println("row and column no" + row + "***" + column);
 		return read.getValue(column, row);
 	}

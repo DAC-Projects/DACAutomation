@@ -12,6 +12,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import resources.JSWaiter;
+
 /**
  * Using this class methods it used to navigate to specific page's of navigation panel in TSEE	*/
 public class Navigationpage extends BasePage{
@@ -32,16 +34,16 @@ public class Navigationpage extends BasePage{
 	}
 
 	// -------------------------------- TSEE ------------------------------
-	@FindBy(id = "//a[@href='/Dashboard/AllLocations/']/span")
+	@FindBy(xpath = "//a[@href='/Dashboard/AllLocations/']/span")
 	private WebElement AllLocations;
 
-	@FindBy(id = "//a[@href='/Dashboard/AllGroups/']/span")
+	@FindBy(xpath = "//a[@href='/Dashboard/AllGroups/']/span")
 	private WebElement AllGroups;
 
 	@FindBy(xpath = "//a[@href='/Dashboard/VaReport/']/span")
 	private WebElement Visibility;
 
-	@FindBy(xpath = "//*[@id=\'Accuracy_Index\']")
+	@FindBy(xpath = "//*[@id='Accuracy_Index']")
 	private WebElement Accuracy;
 
 	@FindBy(xpath = "//a[@href='/Dashboard/AnalysisReport/']/span")
@@ -53,12 +55,21 @@ public class Navigationpage extends BasePage{
 	@FindBy(xpath = "//a[@href='/Dashboard/ReviewStream']/span")
 	private WebElement ReviewStream;
 	
+	@FindBy(xpath = "//a[@href='/Review/ReviewScore/']/span")
+	private WebElement DisplayedReviewScore;
+	
+	@FindBy(xpath = "//li[@class='settings-dropdown-cog']")
+	private WebElement Settings;
+	
+	@FindBy(xpath = "//ul[contains(@class,'settings-list dashboardColor')]")
+	private WebElement Group;
+	
 	//------------------------- SA and RRM -------------------------------------
 	
-	@FindBy(xpath = "//a[@href='/Dashboard/Review/ReviewReport/']/span")
+	@FindBy(xpath = "//a[@href='/Review/ReviewReport/']")
 	private WebElement ReviewReport;
 	
-	@FindBy(xpath = "//a[@href=//a[@href='/ReportCard/Index/']]/span")
+	@FindBy(xpath = "//a[@href='/ReportCard/Index/']/span")
 	private WebElement ReportCard;
 	
 	@FindBy(xpath = "//a[@href='/CategorizedSentiment/Index/']/span")
@@ -81,16 +92,16 @@ public class Navigationpage extends BasePage{
 	@FindBy(linkText="English")
 	private WebElement selectDB_langEnglish;
 	
-	@FindBy(xpath="(//a[contains(text(),'Español')])[1]")
+	@FindBy(xpath="(//a[contains(text(),'EspaÃ±ol')])[1]")
 	private WebElement selectDB_langSpanish_Spain;
 	
-	@FindBy(xpath="(//a[contains(text(),'Español')])[2]")
+	@FindBy(xpath="(//a[contains(text(),'EspaÃ±ol')])[2]")
 	private WebElement selectDB_langSpanish_Mexico;
 	
-	@FindBy(xpath="(//a[contains(text(),'Français')])[1]")
+	@FindBy(xpath="(//a[contains(text(),'FranÃ§ais')])[1]")
 	private WebElement selectDB_langFrench_Canada;
 	
-	@FindBy(xpath="(//a[contains(text(),'Français')])[2]")
+	@FindBy(xpath="(//a[contains(text(),'FranÃ§ais')])[2]")
 	private WebElement selectDB_langFrench_France;
 	
 	@FindBy(linkText="Italiano")
@@ -130,6 +141,9 @@ public class Navigationpage extends BasePage{
   
     @FindBy(xpath="//a[@href='/CompetitiveAnalysis/Analysis']")
     private WebElement CA_ContentAnalysis;
+    
+    @FindBy(xpath="//a[@href='/CompetitiveAnalysis/Summary']")
+    private WebElement CA_Summary;
 
     
 	@FindBy(xpath="//a[@href='/CompetitiveAnalysis/Review']/span")
@@ -140,6 +154,20 @@ public class Navigationpage extends BasePage{
 	private WebElement TPSEE_Visibility;
 
     
+    // ------------------------- SE ---------------------------------
+    
+    
+	@FindBy(id="PostsSocialMedia")
+	private WebElement SE_Posts;
+  
+    @FindBy(id="ContentManagementSocialMedia")
+    private WebElement SE_ContentManagement;
+    
+    @FindBy(xpath="//*[@href='/SocialMediaReports/']")
+    private WebElement SE_Reports;
+    
+    
+    
     public void  navigateTPSEE_Visibility() {
   	  
   	  clickelement(TPSEE_Visibility);   
@@ -147,6 +175,12 @@ public class Navigationpage extends BasePage{
       waitUntilLoad(driver);
   	}
        
+    public void  navigateToVisibility() {
+    	  
+    	  clickelement(Visibility);   
+        System.out.println("Waiting for page to load**********");
+        waitUntilLoad(driver);
+    	}
 
     public void  navigateTPSEE_Accuracy() {
   	  
@@ -155,7 +189,59 @@ public class Navigationpage extends BasePage{
       waitUntilLoad(driver);
   	}
     
+    public void navigateToContentAnalysis() {
+    	
+    	clickelement(Analysis);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    public void navigateToGoogleRanking() {
+    	
+    	clickelement(GoogleRanking);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    public void navigateToAllLocations() {
+    	
+    	clickelement(AllLocations);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    public void navigateToAllGroups() {
+    	   	
+    	action.moveToElement(Settings).perform();
+    	waitForElement(Group, 20);
+    	action.moveToElement(AllGroups).perform();
+    	//clickelement(AllGroups);
+    	driver.findElement(By.xpath("//a[@href='/Dashboard/AllGroups/']/span")).click();
+    	//action.moveToElement(AllGroups).click().perform();
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    public void navigateToReviewStream() {
+    	clickelement(ReviewStream);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    public void navigateToDisplayedReviewScore() {
+    	clickelement(DisplayedReviewScore);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
     //-----CA
+    
+    /** To click on CA_Review link in LHS to navigate to CA_Summary page   */
+	public void navigateCA_Summarypage() {
+	  clickelement(CA_Summary);   
+      System.out.println("Waiting for the Summary page to load**********");
+      waitUntilLoad(driver);
+	}
 
 	/** To click on CA_Visibility link in LHS to navigate to CA_Visibility page   */
 
@@ -202,16 +288,21 @@ public class Navigationpage extends BasePage{
 
 	/** To click on SA_ReviewReport link in LHS to navigate to SA_ReviewReport page   */
 	public void navigateToSA_ReviewReport() {
+		JSWaiter.waitJQueryAngular();
+		wait.until(ExpectedConditions.visibilityOf(ReviewReport));
+		scrollByElement(ReviewReport);
 		clickelement(ReviewReport);   
 	      System.out.println("Waiting for page to load**********");
-	      waitUntilLoad(driver);
 	}
 
 	/** To click on SA_ReportCard link in LHS to navigate to SA_ReportCard page   */
 	public void navigateToSA_ReportCard() {
+		JSWaiter.waitJQueryAngular();
+		wait.until(ExpectedConditions.visibilityOf(ReportCard));
+		scrollByElement(ReportCard);
 		clickelement(ReportCard);   
-	      System.out.println("Waiting for page to load**********");
-	      waitUntilLoad(driver);
+	    System.out.println("Waiting for page to load**********");
+	    waitUntilLoad(driver);
 	}
 
 	/** To click on SA_CategorizedSentiment link in LHS to navigate to SA_CategorizedSentiment page   */
@@ -226,6 +317,30 @@ public class Navigationpage extends BasePage{
 		clickelement(FrequentKeywords);   
 	      System.out.println("Waiting for page to load**********");
 	      waitUntilLoad(driver);
+	}
+	
+	public void navigateToSE_Report() {
+		wait.until(ExpectedConditions.visibilityOf(SE_Reports));
+		scrollByElement(SE_Reports);
+		clickelement(SE_Reports);
+		waitUntilLoad(driver);
+		
+	}
+	
+	public void navigateToSE_Post() {
+		wait.until(ExpectedConditions.visibilityOf(SE_Posts));
+		scrollByElement(SE_Posts);
+		clickelement(SE_Posts);
+		waitUntilLoad(driver);
+		
+	}
+	
+	public void navigateToSE_ContentManagement() {
+		wait.until(ExpectedConditions.visibilityOf(SE_ContentManagement));
+		scrollByElement(SE_ContentManagement);
+		clickelement(SE_ContentManagement);
+		waitUntilLoad(driver);
+		
 	}
 
 	/** To click on TSEE_Accuracy link in LHS to navigate to TSEE_Accuracy page   */
@@ -344,7 +459,7 @@ public class Navigationpage extends BasePage{
 				 					selectDB_langSpanish_Spain.click();
 				 				}
 				 				catch(Exception e){
-				 					if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Español')]")).isDisplayed()) {
+				 					if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Espaï¿½ol')]")).isDisplayed()) {
 										   break;
 									}
 				 				}
@@ -355,7 +470,7 @@ public class Navigationpage extends BasePage{
 								   selectDB_langSpanish_Mexico.click();
 							   }
 							   catch(Exception e){
-								   if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Español')]")).isDisplayed()) {
+								   if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Espaï¿½ol')]")).isDisplayed()) {
 									   break;
 								   }
 							   }
@@ -366,7 +481,7 @@ public class Navigationpage extends BasePage{
 								   selectDB_langFrench_Canada.click();
 							   }
 							   catch(Exception e){
-								   if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Français')]")).isDisplayed()) {
+								   if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Franï¿½ais')]")).isDisplayed()) {
 									   break;
 								   }
 							   }
@@ -377,7 +492,7 @@ public class Navigationpage extends BasePage{
 				 				   selectDB_langFrench_France.click();
 				 			   }
 				 			   catch(Exception e){
-				 				  if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Français')]")).isDisplayed()) {
+				 				  if(driver.findElement(By.xpath("//i/following::span[contains(text(),'Franï¿½ais')]")).isDisplayed()) {
 									   break;
 								   }
 				 			   }
@@ -410,4 +525,6 @@ public class Navigationpage extends BasePage{
 				}
 			}
 	}
+
+
 }

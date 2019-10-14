@@ -22,7 +22,9 @@ import org.testng.Assert;
 
 import com.dac.main.BasePage;
 
+import resources.ExcelHandler;
 import resources.FileHandler;
+import resources.JSWaiter;
 import resources.formatConvert;
 
 public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERepository {
@@ -41,8 +43,14 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		PageFactory.initElements(driver, this);
 	}
 
-	// Global Filter locators
+	// Global Filter locators 
 
+	@FindBy(xpath="//*[@class='menu transition visible']")
+	private WebElement filterDropDown;
+	
+	@FindBy(id="myGroups")
+	private WebElement fiterGroup;
+	
 	@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList")
 	private WebElement FilterCountry;
 
@@ -60,12 +68,15 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 
 	@FindBy(css = "div#filter-options")
 	public WebElement filter_Panel;
+	
+	@FindBy(xpath="//h1[contains(text(),'')]")
+	private WebElement PageTitle;
 
 	// History graph
 	@FindBy(css = "rect.highcharts-plot-background")
 	public WebElement hstryGrph;
 
-	@FindBy(css = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none")
+	@FindBy(css = ".highcharts-label.highcharts-tooltip-box.highcharts-color-none")
 	private WebElement grphtooltip; 
 	
 	//section of overall report
@@ -73,12 +84,18 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	private WebElement overall;
 
 	//site tableesTable
-	@FindBy(css = "div#barContainer.barContainer") 
+	@FindBy(xpath = "//div[@class='barContainer']") 
 	public WebElement siteTable;
 	
 	@FindBy(xpath = "//*[@id='accuracyScoresTable']")
 	public WebElement accuracysite;
 
+	@FindBy(xpath = "//a[contains(text(),'Next')]")
+	private WebElement pagination;
+	
+	@FindBy(xpath = "//div[@class='container']/div[@class='row']/div[@class='col-lg-2 bar-chart-column']")
+	private WebElement vendorslist;
+	
 	/**
 	 * @param Country
 	 * @param State
@@ -86,32 +103,81 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	 * @param Location
 	 *            for Global filtering reports
 	 */
-	public void applyFilter(String Country, String State, String City, String Location) {
-
-		waitForElement(filter_Panel, 30);
-		scrollByElement(filter_Panel);
-		clickelement(FilterCountry);
-		WebElement country = driver.findElement(By.xpath("//div[@data-value='" + Country + "']"));
-        clickelement(country);
-        clickelement(FilterState);
-        WebElement state = driver.findElement(By.xpath("//div[contains(text(),'"+ State + "')]"));
-        waitForElement(state, 30);
-        clickelement(state);
-        clickelement(FilterCity);
-        WebElement city = driver.findElement(By.xpath("//div[contains(text(),'"+ City + "')]"));
-        waitForElement(city, 30);
-        clickelement(city);
-		clickelement(Filterlocation);
-		WebElement location = driver.findElement(By.xpath("//div[contains(text(),'" + Location + "')]"));
-		waitForElement(location, 40);
-		clickelement(location);
-		scrollByElement(location);
-		scrollByElement(Apply_filter);
-		clickelement(Apply_filter);
-		waitForElement(filter_Panel, 40);
-		/*scrollByElement(hstryGrph);
-		waitForElement(grphtooltip,50);*/
+	public void applyGlobalFilter(String Group, String CountryCode, String State, String City, String Location) {
+		JSWaiter.waitJQueryAngular();
+		//wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='visibility-page']"))).getText();
+		WebElement country,state,city,location,group;
+		if(Group == null || Group.equalsIgnoreCase("none")) Group = "None";
+		if (CountryCode == null || CountryCode.equalsIgnoreCase("null")) CountryCode = "All Countries";
+		if (CountryCode == null || State == null || State.equalsIgnoreCase("null")) State = "All States";
+		if (CountryCode == null || State == null || City == null || City.equalsIgnoreCase("null")) City = "All Cities"; 
+		if (CountryCode == null || State == null || City == null || Location == null || Location.equalsIgnoreCase("null")) Location = "All Locations";
+		try {
+			waitForElement(filter_Panel, 25);
+			scrollByElement(PageTitle);
+			waitUntilLoad(driver);
+			if(!Group.equals("None")) {			
+				clickelement(fiterGroup);
+				waitForElement(filterDropDown, 20);
+				group = fiterGroup.findElement(By.xpath("//div[@data-value='"+Group+"']"));
+				waitForElement(group, 10);
+				clickelement(group);
+				waitUntilLoad(driver);
+			}
+			if(!CountryCode.equals("All Countries")) {
+				clickelement(FilterCountry);
+				waitForElement(filterDropDown, 20);
+				country = driver.findElement(By.xpath("(//*[contains(@class,'myList')])[1]//div[@data-value='"+CountryCode.toUpperCase()+"']"));
+				waitForElement(country, 10);
+				Thread.sleep(1000);
+				clickelement(country);
+				waitUntilLoad(driver);
+			}
+			if(!State.equals("All States")) {			
+				clickelement(FilterState);
+				waitForElement(filterDropDown, 20);
+				state = FilterState.findElement(By.xpath("//div[@data-value='"+State+"']"));
+				waitForElement(state, 10);
+				Thread.sleep(1000);
+				clickelement(state);
+				waitUntilLoad(driver);
+			}
+			if(!City.equals("All Cities")) {
+				clickelement(FilterCity);
+				waitForElement(filterDropDown, 20);
+				city = FilterCity.findElement(By.xpath("//div[@data-value='"+City+"']"));
+				waitForElement(city, 10);
+				Thread.sleep(1000);
+				clickelement(city);
+				waitUntilLoad(driver);
+			}
+			if(!Location.equals("All Locations")) {			
+				clickelement(Filterlocation);
+				waitForElement(filterDropDown, 20);
+				location = Filterlocation.findElement(By.xpath("//div[text()='"+Location+"']"));
+				waitForElement(location, 10);
+				Thread.sleep(1000);
+				clickelement(location);
+				waitUntilLoad(driver);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			Assert.fail("searched Country/State/City/Location may not be there or may be a typo error please check it");
+		}
+		waitUntilLoad(driver);
+		//wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 	}
+	
+	/**
+	 * This method used to click on the Apply Filter button		*/
+	public void clickApplyFilterBTN() throws InterruptedException {
+		JSWaiter.waitJQueryAngular();
+		if(Apply_filter.isDisplayed()) {
+			clickelement(Apply_filter);
+			Thread.sleep(3000);
+		}
+	}
+
 
 	/**
 	 * @return must implement overview report for all pages
@@ -139,7 +205,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		//read the tooltip variables
 		tooltipvalue = grphtooltip.getText();
 		System.out.println("\n Reading tooltipdata ********** \n");
-		System.out.println("\n tooltipvalue is \n"+ tooltipvalue);
+		System.out.println("\n tooltipvalue is \n" +tooltipvalue);
 		
 		//read the tooltip variables
 		rows = grphtooltip.findElements(By.tagName("span"));
@@ -182,7 +248,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		System.out.println("\n Reading site table********** \n");
 		List<Map<String, String>> siteTableData = new ArrayList<Map<String, String>>();
 		Map<String, String> kMap = new HashMap<String, String>();
-		List<WebElement> elements = driver.findElements(By.xpath("//*[@id=\"barContainer\"]//div//div"));
+		List<WebElement> elements = driver.findElements(By.xpath("//*[@id='barContainer']//div//div"));
 		    java.util.Iterator<WebElement> program = elements.iterator();
 		    while (program.hasNext()) {
 		    	String values = program.next().getText();
@@ -205,7 +271,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 
 		for (Map<String, String> m1 : ovrwRprtData) {
 			for (Map<String, String> m2 : exportData) {
-				if (m1.get("compName").equals(m2.get("compName"))) {
+				if (m1.get("NoofLocation").equals(m2.get("compName"))) {
 					Assert.assertEquals(formatFloat(m1.get("score")), formatFloat(m2.get("overallscore")), 0.05f,
 							"Verifying score for" + m1.get("compName"));
 				}
@@ -225,7 +291,34 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			}
 		}
 	}
-	
+	//To get Vendors List displaying in the application
+	public List<Map<String, String>> verifySitevendors() {
+			JSWaiter.waitJQueryAngular();
+			waitForElement(vendorslist, 40);
+			scrollByElement(vendorslist);
+			Map<String, String> kMap;
+			List<Map<String, String>> Vendors = new ArrayList<Map<String, String>>();
+			List<WebElement> elements = driver.findElements(By.xpath("//div[@class='container']/div[@class='row']/div[@class='col-lg-2 bar-chart-column']"));
+		    java.util.Iterator<WebElement> program = elements.iterator();
+		    kMap = new HashMap<String, String>();
+		        
+		    //reading Vendors data
+		    while (program.hasNext()) {
+		        String values = program.next().getText();
+		        if(!values.equals("null"))
+		        {
+		        	kMap.put("vendors", values);
+		        	System.out.println("\n" +values);
+		        }
+		        else
+		        {
+		            System.out.println("\n No sites displayed \n");
+		        }
+		        //adding into the map
+		        Vendors.add(kMap);
+		    }
+			return Vendors;
+			}
 	//getting data of accuracy score table
 	public List<Map<String, String>> verifyaccuracySitetable() {
 		waitForElement(accuracysite, 30);
@@ -240,6 +333,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		        if(!values.equals("null"))
 		        {
 		            System.out.println("" +values);
+		            kMap.put("sites", values);
 		        }
 		        else
 		        {
@@ -249,4 +343,36 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		    }
 		return accuracysiteTableData;
 	}
+	
+	//Adding Vendors List to Array 
+		public List<Map<String, String>> vendorsList() throws Exception {
+								
+					List<Map<String, String>> Vendorslist = new ArrayList<Map<String, String>>();
+					// Creation of HashMap 
+			    	  Map<String, String> kMap = new HashMap<String, String>();
+			    	   ExcelHandler a = new ExcelHandler("./data/VendorList.xlsx","VendorList");
+			    	   a.deleteEmptyRows();
+			    	   String[][] vendors = a.getExcelTable();
+			    		int colSize = vendors[0].length;
+			    		String size = Integer.toString(colSize);
+			    		for (int col = 1; col < colSize; col++) {
+			    			for (int i = 1; i < vendors.length; i++) {
+			    				kMap.put("Vendors", vendors[0][col]);
+			    				kMap.put(vendors[i][0], vendors[i][col]);
+			    			}
+			      	  Vendorslist.add(kMap);	
+			    	}
+						return Vendorslist;
+				}
+		
+		//Comparing Vendors List from application and Vendors List from Array
+		public void comparevendorsListnverifySitevendors(List<Map<String, String>> verifySitevendors,
+					List<Map<String, String>> vendorsList) {
+				for (Map<String, String> m1 : verifySitevendors) {
+					for (Map<String, String> m2 : vendorsList) {
+						Assert.assertEquals(m1.size(), m2.size());
+						Assert.assertEquals(m1.get("vendors"), m2.get("vendors"), "Data Matches");
+					}
+				}
+			}
 }

@@ -19,6 +19,7 @@ import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -27,6 +28,9 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTAutoFilter;
+/*import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTFilterColumn;
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTFilters;*/
 
 /**
  * This class is used to handle the actions to perform on the excel sheet	*/
@@ -34,7 +38,7 @@ public class ExcelHandler {
 
 	private  FileInputStream fis = null;
 	private  XSSFWorkbook workbook = null;
-	private  XSSFSheet sheet = null;
+	private  XSSFSheet sheet;// = null;
 	private  XSSFRow row = null;
 	private  XSSFCell cell = null;
 	
@@ -49,7 +53,7 @@ public class ExcelHandler {
 		this.sheetName=sheetName;
 		fis = new FileInputStream(this.filePath);
 		workbook = new XSSFWorkbook(fis);
-		sheet = workbook.getSheet(this.sheetName);
+		sheet = workbook.getSheet(sheetName);
 		fis.close();
 	}
 	
@@ -86,20 +90,17 @@ public class ExcelHandler {
 	 * writes the map into the excel by creating a new sheet
 	 * 
 	 * @param data
-	 * @param sheetName
-	 * @param excelName : path of a including Excel file name with extension ie. .xls or .xlsx
+	 * @param rowNum : from which row number data need to write.
+	 * @param colNum : from which cell number of a row need to write the data
 	 * @throws IOException		 */
-	public void write(Map<String, Object[]> data, String sheetName, String excelName) throws IOException {
-		FileInputStream fis = new FileInputStream(new File(excelName));
-		workbook =  new XSSFWorkbook(fis);
-		sheet = workbook.createSheet(sheetName);
+	public void write(Map<String, Object[]> data, int rowNum, int colNum) throws IOException {
 		Set<String> keyset = data.keySet();
 		
-		int rownum = 0;
+		int rownum = rowNum;
 		for (String key : keyset) {
 			Row row = sheet.createRow(rownum++);
 			Object [] objArr = data.get(key);
-			int cellnum = 0;
+			int cellnum = colNum;
 			for (Object obj : objArr) {
 				Cell cell = row.createCell(cellnum++);
 				if(obj instanceof Date) 
@@ -110,14 +111,18 @@ public class ExcelHandler {
 					cell.setCellValue((String)obj);
 				else if(obj instanceof Double)
 					cell.setCellValue((Double)obj);
+				else if(obj instanceof Long)
+					cell.setCellValue((Long)obj);
+				else if(obj instanceof Integer)
+					cell.setCellValue((Integer)obj);
 			}
 		}
 		
 		try {
-			FileOutputStream out = 
-					new FileOutputStream(new File(excelName));
-			workbook.write(out);
-			out.close();
+			fis.close(); //Close the InputStream
+	        FileOutputStream output_file =new FileOutputStream(new File(filePath));  //Open FileOutputStream to write updates
+	        workbook.write(output_file); //write changes
+	        output_file.close();  //close the stream
 			System.out.println("Excel written successfully..");
 			
 		} catch (FileNotFoundException e) {
@@ -144,6 +149,7 @@ public class ExcelHandler {
         FileOutputStream output_file =new FileOutputStream(new File(filePath));  //Open FileOutputStream to write updates
         workbook.write(output_file); //write changes
         output_file.close();  //close the stream
+        System.out.println("Excel value replaced successfully..");
 	}
 	
 	
@@ -161,11 +167,11 @@ public class ExcelHandler {
 			if(cell!=null) {
 				value=cell.toString().replace("?", "");//.replaceAll("[^\\p{Print}]", "");
 			}
-			fis.close(); //Close the InputStream
+			/*fis.close(); //Close the InputStream
             FileOutputStream output_file =new FileOutputStream(new File(filePath));  //Open FileOutputStream to write updates
             workbook.write(output_file); //write changes
             output_file.close();  //close the stream 
-		}
+*/		}
 		catch(NullPointerException e) {
 			System.out.println("current cell value is null");
 		}
@@ -273,7 +279,7 @@ public class ExcelHandler {
 		
 		 for(int i = 0; i < sheet.getLastRowNum(); i++){
 			 
-			 Row rowN = workbook.getSheet(sheetName).getRow(i);
+			 Row rowN = sheet.getRow(i);
 			 //row=sheet.getRow(i);
 		        boolean isRowEmpty=checkIfRowIsEmpty(rowN);
 				if(sheet.getRow(i)==null){
@@ -324,12 +330,12 @@ public class ExcelHandler {
 	        	once:{
 		        int i = 0;
 				while(i<=lastRowNum) {
-					XSSFRow row = workbook.getSheet(sheetName).getRow(i);
+					Row row = workbook.getSheet(sheetName).getRow(i);
 					if(checkIfRowIsEmpty(row)) {
 						 lastRowNum = sheet.getLastRowNum();
 						 System.out.println("lastRowNum : "+ lastRowNum);
 					        if (i >= 0 && i < lastRowNum) {
-					        	XSSFRow removingRow=sheet.getRow(i);
+					        	Row removingRow=sheet.getRow(i);
 					            if(removingRow != null) {
 					                sheet.removeRow(removingRow);
 					                sheet.shiftRows(i + 1, lastRowNum, -1);
@@ -337,7 +343,7 @@ public class ExcelHandler {
 					            }
 					        }
 					        if (i == lastRowNum) {
-					            XSSFRow removingRow=sheet.getRow(i);
+					            Row removingRow=sheet.getRow(i);
 					            if(removingRow != null) {
 					                sheet.removeRow(removingRow);
 					            }
@@ -380,27 +386,76 @@ public class ExcelHandler {
 	
 	/**
 	 * @param name
+	 * @param fromRow : from which row number you want to search for a text
+	 * 					from header-->0
+	 * 					from 1st row data --> 1								
 	 * used to search for a text in a column and return its row nos
 	 */
-	public  List<Integer> find_Row_no(String text, int column_no){
+	public List<Integer> find_Row_no( List<?> expectedValue, int fromRow, int column_no) throws IOException{
+		
+		List<Integer> matchingRows = new ArrayList<Integer>();
+		//System.out.println("matchingRows.size() : "+matchingRows.size());
+		for (int i = fromRow; i <= sheet.getLastRowNum();i++) {
+			XSSFRow row = sheet.getRow(i);
+			if (row.getCell(column_no)!= null && StringUtils.isNotBlank(row.getCell(column_no).toString())){
+				for (Object obj : expectedValue) {
+					if(obj instanceof Date) {
+						if((Date)(row.getCell(column_no).getDateCellValue()) == (Date)obj) {
+							matchingRows.add(i);
+						}
+					}
+					else if(obj instanceof Boolean) {
+						if((boolean)(row.getCell(column_no).getBooleanCellValue()) == (boolean)obj) {
+							matchingRows.add(i);
+						}
+					}
+					else if(obj instanceof String) {
+						if(((String)obj).trim().equalsIgnoreCase(row.getCell(column_no).toString())) {
+							matchingRows.add(i);
+						}
+					}
+					else if(obj instanceof Double) {
+						if((double)(row.getCell(column_no).getNumericCellValue()) == (double)obj) {
+							matchingRows.add(i);
+						}
+					}
+					else if(obj instanceof Long) {						
+						if(((long)(row.getCell(column_no).getNumericCellValue())) == ((Long)obj).longValue()) {					
+							matchingRows.add(i);
+						}
+					}
+					else if(obj instanceof Integer) {
+						if((int)(row.getCell(column_no).getNumericCellValue()) == (int)obj) {
+							matchingRows.add(i);
+					    }
+				    }
+				}
+			}
+		}
+		//System.out.println("matchingRows.size() : "+matchingRows.size());
+		return matchingRows;
+	}
+	
+	
+	/*public  List<Integer> find_Row_no(String[] text, int fromRow, int column_no){
 
 		List<Integer> matchingRows = new ArrayList<Integer>();
 		for (int i=0; i<= sheet.getLastRowNum();i++) {
 			row = sheet.getRow(i);
 			if (row.getCell(column_no)!= null  && StringUtils.isNotBlank(row.getCell(column_no).toString())){
-					
-					if(text.trim().equalsIgnoreCase(row.getCell(column_no).toString())) {
-						
+				for( String a : text ) {
+					if(a.trim().equalsIgnoreCase(row.getCell(column_no).toString())) {
 						matchingRows.add(i);
 					}
+				}
 			}
 		}
 		return matchingRows;
-	}
+	}*/
 	
 	
 	/**
-	 * used to search for a pattern in a column and return its row nos
+	 * used to search for a pattern in a row and return its col nos
 	 * @param name
 	 */
 	public  List<Integer> seacrh_pattern(String text, int row_no){
@@ -465,5 +520,32 @@ public class ExcelHandler {
         }
     }
     return true;
-}
+  }
+  
+  	
+  /*public static void setCriteriaFilter(XSSFSheet sheet, int colId, int firstRow, int lastRow, String[] criteria) throws Exception {
+	  CTAutoFilter ctAutoFilter = sheet.getCTWorksheet().getAutoFilter();
+	  CTFilterColumn ctFilterColumn = ctAutoFilter.addNewFilterColumn();
+	  ctFilterColumn.setColId(colId);
+	  CTFilters ctFilters = ctFilterColumn.addNewFilters();
+
+	  for (int i = 0; i < criteria.length; i++) {
+	   ctFilters.addNewFilter().setVal(criteria[i]);
+	  }
+
+	  //hiding the rows not matching the criterias
+	  DataFormatter dataformatter = new DataFormatter();
+	  for (int r = firstRow; r <= lastRow; r++) {
+	     XSSFRow row = sheet.getRow(r);
+	     boolean hidden = true;
+	     for (int i = 0; i < criteria.length; i++) {
+	        String cellValue = dataformatter.formatCellValue(row.getCell(colId));
+	        if (criteria[i].equals(cellValue)) hidden = false;
+	     }
+	     if (hidden) row.getCTRow().setHidden(hidden);
+	  }
+   }*/
+
+  
+  
 }
