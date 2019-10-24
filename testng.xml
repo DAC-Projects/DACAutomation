@@ -30,10 +30,10 @@
   <parameter name="Filter" value= "US,Illinois,Chicago,53 W Jackson Blvd Ste 1264"/>
   <parameter name="testcasesfile" value="CompetitiveAnalysis.json"></parameter>
     <classes>
-    	 <class name= "com.dac.testcases.CA.CA_Review_Test" />
+    	 <!-- <class name= "com.dac.testcases.CA.CA_Review_Test" /> -->
     	<class name= "com.dac.testcases.CA.CA_Visibility_Test" />
-    	<class name= "com.dac.testcases.CA.SampleClass2" />
-    	<class name= "com.dac.testcases.CA.CA_ContentAnalysis_Test" />
+    	<!-- <class name= "com.dac.testcases.CA.SampleClass2" />
+    	<class name= "com.dac.testcases.CA.CA_ContentAnalysis_Test" /> -->
  	</classes>
   </test> 
   

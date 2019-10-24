@@ -19,10 +19,10 @@
 		<class name= "com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />  
 		<class name= "com.dac.testcases.TPSEE.TPSEE_Displayed_Review_Score_Test" /> 
 		<class name= "com.dac.testcases.TPSEE.TPSEE_Groups_Test" /> 
-		<class name= "com.dac.testcases.TPSEE.TPSEE_GMB_Test" />
 		<class name= "com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
-		<class name = "com.dac.testcases.TPSEE.TPSEE_ReviewStream_Test" />		
-		<!-- <class name= "com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" /> -->
+		<class name = "com.dac.testcases.TPSEE.TPSEE_ReviewStream_Test" />	
+		<!-- <class name= "com.dac.testcases.TPSEE.TPSEE_GMB_Test" />	
+		<class name= "com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" /> -->
      </classes>
  </test>
 </suite>
