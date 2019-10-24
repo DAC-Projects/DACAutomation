@@ -71,6 +71,9 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	
 	@FindBy(xpath="//h1[contains(text(),'')]")
 	private WebElement PageTitle;
+	
+	@FindBy(xpath="//h2[contains(text(),'')]")
+	private WebElement GMBPageTitle;
 
 	// History graph
 	@FindBy(css = "rect.highcharts-plot-background")
@@ -114,7 +117,8 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		if (CountryCode == null || State == null || City == null || Location == null || Location.equalsIgnoreCase("null")) Location = "All Locations";
 		try {
 			waitForElement(filter_Panel, 25);
-			scrollByElement(PageTitle);
+			//waitForElement(PageTitle, 25);
+			//scrollByElement(GMBPageTitle);
 			waitUntilLoad(driver);
 			if(!Group.equals("None")) {			
 				clickelement(fiterGroup);
@@ -214,16 +218,16 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		String[][] table = readTable(grphtooltip);
 		
 		//adding tooltipdata into List
-	List<Map<String, String>> tooltipdata = new ArrayList<Map<String, String>>();
-		for (int i = 0; i < table.length; i += 4) {
-			Map<String, String> kMap = new HashMap<String, String>();
-			kMap.put("Date", table[i][0]);
-			kMap.put(table[i + 1][0], table[i + 1][1]);
-			kMap.put(table[i + 2][0], table[i + 2][1]);
-			tooltipdata.add(kMap);
-		}
-		//returning tooltipdata from list
-		return tooltipdata;
+		List<Map<String, String>> tooltipdata = new ArrayList<Map<String, String>>();
+			for (int i = 0; i < table.length; i += 4) {
+				Map<String, String> kMap = new HashMap<String, String>();
+				kMap.put("Date", table[i][0]);
+				kMap.put(table[i + 1][0], table[i + 1][1]);
+				kMap.put(table[i + 2][0], table[i + 2][1]);
+				tooltipdata.add(kMap);
+			}
+			//returning tooltipdata from list
+			return tooltipdata;
 	}
 
 	/**
@@ -377,4 +381,4 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 					}
 				}
 			}
-}
+	}

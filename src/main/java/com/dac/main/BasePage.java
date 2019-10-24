@@ -10,14 +10,14 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -36,6 +36,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import bsh.ParseException;
 import resources.CurrentState;
 import resources.DateFormats;
 import resources.JSWaiter;
@@ -447,4 +448,75 @@ public class BasePage {
     System.out.println("\n");
     return rowResults;
   }
+
+
+/**
+   * This method is used to covert Date to any Time zone */
+    public static  String  convertTimeZone(String dateFormat,String zone ) throws ParseException  {
+          SimpleDateFormat FORMATTER = new SimpleDateFormat(dateFormat);
+            
+            // I am setting the time zone to EST
+          TimeZone.setDefault(TimeZone.getTimeZone(zone));
+                // Now my default time zone is in EST
+          TimeZone a = TimeZone.getDefault();
+          Date dt = new Date();
+          String tmpdate = FORMATTER.format(new Date());
+//          System.out.println(tmpdate);
+   
+        return tmpdate;//return converted date.
+        }
+    
+    /**
+     * This method is used to get days after  
+     * @throws java.text.ParseException */
+  public static String addDays(String oldDate, int amountOfDays, String dateFormat) throws java.text.ParseException, ParseException {
+      //Given Date in String format
+//      System.out.println("Date before Addition: "+oldDate);
+      //Specifying date format that matches the given date
+      SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+      Calendar c = Calendar.getInstance();
+      //Setting the date to the given date
+	 c.setTime(sdf.parse(oldDate));
+        
+      //Number of Days to add
+      c.add(Calendar.DAY_OF_YEAR, amountOfDays);
+      //Date after adding the days to the given date
+      String newDate = sdf.format(c.getTime());
+      //Displaying the new Date after addition of Days
+//      System.out.println("Date after Addition: "+newDate);
+      return newDate;
+  }
+  
+  /**
+   * To get List of dates in between 2 dates with sepcified date format based on Locale(Country Code)  
+ * @throws java.text.ParseException */
+public static List<String> getDaysBetweenDates(String strDate,String enDate, String dateFormat) throws ParseException, java.text.ParseException
+{
+    
+    List<String> strADate=new ArrayList<String>();
+    DateFormat formatter ; 
+     
+//    System.out.println("Start date: "+strDate);
+//    System.out.println("End date: "+enDate);
+        
+    formatter = new SimpleDateFormat(dateFormat);
+    Date  startDate = (Date)formatter.parse(strDate); 
+    Date  endDate = (Date)formatter.parse(enDate);
+    
+    //Set calendar to End Date
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(endDate);
+    
+    //Check calendar date is start date; 
+    while (cal.getTime().before(startDate)) {
+        cal.add(Calendar.DATE, 1);                                //+1 Calendar day
+        String tmpDate= formatter.format(cal.getTime());        //Convert Date to String format
+        strADate.add(tmpDate);                                    //Add to List
+    }
+
+
+
+//    strADate.forEach(System.out::println);//Print List
+    return strADate;
+}
 }

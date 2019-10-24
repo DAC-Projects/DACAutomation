@@ -64,6 +64,11 @@ public class Navigationpage extends BasePage{
 	@FindBy(xpath = "//ul[contains(@class,'settings-list dashboardColor')]")
 	private WebElement Group;
 	
+	@FindBy(xpath = "//a[@href='/Dashboard/GoogleMyBusiness/']/span")
+	private WebElement GMB;
+	
+	@FindBy(xpath = "//a[@href='/Dashboard/BingPlacesForBusiness/']/span")
+	private WebElement Bing;
 	//------------------------- SA and RRM -------------------------------------
 	
 	@FindBy(xpath = "//a[@href='/Review/ReviewReport/']")
@@ -217,6 +222,21 @@ public class Navigationpage extends BasePage{
     	waitUntilLoad(driver);
     }
     
+    public void navigateToGoogleMyBusiness() {
+    	
+    	clickelement(GMB);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    public void navigateToBingPlacesForBusiness() {
+    	
+    	clickelement(Bing);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+
+
     //-----CA
 
 	/** To click on CA_Visibility link in LHS to navigate to CA_Visibility page   */

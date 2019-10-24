@@ -273,5 +273,27 @@ public class DateFormats {
 		
 		return dateFormat;
 	}
+
+	/**
+	       * To get Date format based on Locale(Country Code)  */
+	    public static String  localeDateFormat(String countryCode) {
+	        String dateFormat = null;
+	       
+	        switch(countryCode) {
+	       
+	        case "IN" :dateFormat = "dd/MM/yyyy";
+	           break;
+	        case "US" :dateFormat = "dd/MM/yyyy";
+	           break;
+	        case "CH" :dateFormat = "MM.dd.yyyy";
+	           break;
+	        case "DK" :dateFormat = "dd-MM-yyyy";
+	           break;
+	        default:dateFormat = "dd/MM/yyyy";
+	           
+	               
+	    }
+	        return dateFormat;
+	 }
 	
 }
