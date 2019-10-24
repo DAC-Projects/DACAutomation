@@ -18,7 +18,6 @@ import resources.ExcelHandler;
 
 public class CA_Accuracy_Test extends BaseClass {
 	
-	
 
 	static List<Map<String, String>> export;
 	Navigationpage np;
