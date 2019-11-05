@@ -1,22 +1,33 @@
 package com.dac.main.POM_TPSEE;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -25,7 +36,6 @@ import com.dac.main.BasePage;
 import resources.ExcelHandler;
 import resources.FileHandler;
 import resources.JSWaiter;
-import resources.formatConvert;
 
 public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERepository {
 
@@ -192,10 +202,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 
 	//convert exported file from csv to xlsx
 	public void convertExports(String filename, String export) throws FileNotFoundException, IOException {
-		String report_export = new formatConvert(Exportpath + filename).convertFile("xlsx");
-		FileHandler.renameTo(new File(Exportpath + report_export), Exportpath + export);
+		//String report_export = new formatConvert(Exportpath + filename).convertFile("xlsx");
+		FileHandler.renameTo(new File(Exportpath + filename), Exportpath + export);
 		
 	}
+	
+	
 
 	/**
 	 * @return History graph value read
@@ -361,6 +373,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			    	   String[][] vendors = a.getExcelTable();
 			    		int colSize = vendors[0].length;
 			    		String size = Integer.toString(colSize);
+			    		System.out.println("Size is :" +size);
 			    		for (int col = 1; col < colSize; col++) {
 			    			for (int i = 1; i < vendors.length; i++) {
 			    				kMap.put("Vendors", vendors[0][col]);
@@ -381,4 +394,176 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 					}
 				}
 			}
+		
+		public int GetDataUsingColName(String PathofXL, String Col_Name) throws Exception {		  
+			
+		      FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
+		      Workbook wb = new XSSFWorkbook(excelFilePath);
+		      Sheet sh = wb.getSheetAt(0);     
+		      Row row = sh.getRow(0);
+		      int col = row.getLastCellNum();
+		      int Last_row = sh.getLastRowNum();
+		      //int cellNum = sh.getPhysicalNumberOfRows();
+		      int col_num = 0;
+		      System.out.println(""+col);	      
+		      for (int i = 0; i <row.getLastCellNum(); i++) {	    	  
+		    	    if ((row.getCell(i).toString()).equals(Col_Name)) {	        	 
+		    	    	col_num = i;	    	    	
+		    	    	System.out.println(""+col_num);	
+		    	    }
+		      }
+		    	       	String s = null;
+		            	int cellValue = 0;
+		            	int y = 0;
+		            	int sum = 0;	
+		            	for(int j =1;j<Last_row; j++) {
+		            		row = sh.getRow(j);
+		            		Cell cell = row.getCell(col_num);
+		            		if (cell != null) {
+		            			if(cell.getCellType() == Cell.CELL_TYPE_STRING) {
+		            				String cellValue1 = cell.getStringCellValue().toString();
+		            			    if(cellValue1.contains("-")) {
+		            				s = cellValue1.replace("-", "0");
+		            				y = Integer.parseInt(s);
+		            				System.out.println("\n " +s);
+		            				sum = sum+y;
+		            			    }
+		            			}else if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+		            				double cellValue2 = cell.getNumericCellValue();
+		            				cellValue = (int)cellValue2;
+		            				System.out.println("\n " +cellValue);
+		            				sum = sum+cellValue;
+		            				}
+		            			System.out.println(""+sum);
+		            			} else {
+		            				System.out.println("Smt wrong");
+		            			}
+		            		System.out.println(":" +sum);
+		            		wb.close();
+		            	}
+						return sum;
+		    }
+		
+		
+		
+		//Export as CSV/XLSX of overall report
+		public void exportVA(WebElement a, WebElement b, WebElement c, WebElement d, WebElement e, WebElement f) throws InterruptedException, FileNotFoundException, IOException{
+			JSWaiter.waitJQueryAngular();
+			//waitForElement(overall, 40);
+			if(a.isDisplayed() && a.isEnabled()) {
+				wait.until(ExpectedConditions.visibilityOf(a));
+				a.click();
+				Thread.sleep(5000);
+			}
+			if(b.isDisplayed() && b.isEnabled()) {
+				wait.until(ExpectedConditions.visibilityOf(b));
+				b.click();
+				Thread.sleep(5000);
+			}
+			if(c.isDisplayed() && c.isEnabled()) {
+				wait.until(ExpectedConditions.visibilityOf(c));
+				c.click();
+				Thread.sleep(5000);
+			}
+			if(d.isDisplayed() && d.isEnabled()) {
+				wait.until(ExpectedConditions.visibilityOf(d));
+				d.click();
+				Thread.sleep(5000);
+			}
+			if(e.isDisplayed() && e.isEnabled()) {
+				wait.until(ExpectedConditions.visibilityOf(e));
+				e.click();
+				Thread.sleep(5000);
+			}
+			if(f.isDisplayed() && f.isEnabled()) {
+				wait.until(ExpectedConditions.visibilityOf(f));
+				f.click();
+				Thread.sleep(5000);
+			}
+		}
+		
+		
+		public void exportVATable(WebElement a, WebElement b) throws InterruptedException, FileNotFoundException, IOException{
+			JSWaiter.waitJQueryAngular();
+			//waitForElement(overall, 40);
+			if(a.isDisplayed() && a.isEnabled()) {
+				wait.until(ExpectedConditions.visibilityOf(a));
+				a.click();
+				Thread.sleep(5000);
+			}
+			if(b.isDisplayed() && b.isEnabled()) {
+				wait.until(ExpectedConditions.visibilityOf(b));
+				b.click();
+				Thread.sleep(5000);
+			}
+		}
+		
+		
+		public List<Map<String, String>> excelreader(String sourceFilePath) throws IOException {
+	    	// Location of the source file
+	       // String sourceFilePath = "C:/Vinay/ApachePoi/TestFile.xls";
+	          
+	        FileInputStream fileInputStream = null;
+	          
+	        // Array List to store the excel sheet data
+	        List excelData = new ArrayList();
+	          
+	        try {
+	              
+	            // FileInputStream to read the excel file
+	            fileInputStream = new FileInputStream(sourceFilePath);
+	   
+	            // Create an excel workbook
+	            XSSFWorkbook excelWorkBook = new XSSFWorkbook(fileInputStream);
+	              
+	            // Retrieve the first sheet of the workbook.
+	            XSSFSheet excelSheet = excelWorkBook.getSheetAt(0);
+	   
+	            // Iterate through the sheet rows and cells. 
+	            // Store the retrieved data in an arrayList
+	            Iterator rows = excelSheet.rowIterator();
+	            while (rows.hasNext()) {
+	                XSSFRow row = (XSSFRow) rows.next();
+	                Iterator cells = row.cellIterator();
+	   
+	                List cellData = new ArrayList();
+	                while (cells.hasNext()) {
+	                    XSSFCell cell = (XSSFCell) cells.next();
+	                    cellData.add(cell);
+	                }
+	   
+	                excelData .add(cellData);
+	            }
+	              
+	            // Print retrieved data to the console
+	            for (int rowNum = 0; rowNum < excelData.size(); rowNum++) {
+	                  
+	                List list = (List) excelData.get(rowNum);
+	                  
+	                for (int cellNum = 0; cellNum < list.size(); cellNum++) {
+	                      
+	                    XSSFCell cell = (XSSFCell) list.get(cellNum);
+	                      
+	                    if(cell.getCellType() == XSSFCell.CELL_TYPE_STRING) {
+	                        System.out.print(cell.getRichStringCellValue().getString() + " ");
+	                    } else if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
+	                        System.out.print(cell.getNumericCellValue() + " ");
+	                    } else if(cell.getCellType() == XSSFCell.CELL_TYPE_BOOLEAN) {
+	                        System.out.println(cell.getBooleanCellValue() + " ");
+	                    }
+	                }
+	                System.out.println("");
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        } finally {
+	            if (fileInputStream != null) {
+	                fileInputStream.close();
+	            }
+	        }
+			return excelData;
+	    }
+		
+		
+		
 	}

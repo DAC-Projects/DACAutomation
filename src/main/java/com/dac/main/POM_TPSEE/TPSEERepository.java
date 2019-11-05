@@ -13,13 +13,16 @@ public interface TPSEERepository {
 	String Site_Name = "Competitors.Sites.*.Name";
 	String Site_Name_pattern = "Sites(.*)\\.Name$";
 	String AccuracyExport = "AccuracyExport.xlsx";
-	String VisibilityExport = "VisibilityExport.xlsx";
+	String VisibilityExportCSV = "VisibilityExportCSV.xlsx";
+	String VisibilityExportXLSX = "VisibilityExportXLSX.xlsx";
 	String VisibilityExportPdf = "VisibilityExport.pdf";
 	String ReviewExport = "ReviewExport.xlsx";
 	String CAExport = "CAExport.xlsx";
 	String Exportpath ="./downloads/";
-	String VisibilityExporttableFound = "VisibilityExporttableFound.xlsx";
-	String VisibilityExporttableNotFound = "VisibilityExporttableNotFound.xlsx";
+	String VisibilityExporttableFoundCSV = "VisibilityExporttableFoundCSV.xlsx";
+	String VisibilityExporttableFoundXLSX = "VisibilityExporttableFoundXLSX.xlsx";
+	String VisibilityExporttableNotFoundCSV = "VisibilityExporttableNotFound.xlsx";
+	String VisibilityExporttableNotFoundXLSX = "VisibilityExporttableNotFound.xlsx";
 	String AccuracyExporttable = "AccuracyExporttable.xlsx";
 	String AccuracyExporttableInAccuracy = "AccuracyExporttableInAccuracy.xlsx";
 	String AccuracyExporttableIgnored = "AccuracyExporttableIgnored.xlsx";
@@ -31,4 +34,6 @@ public interface TPSEERepository {
 	String ReviewScoreExport = "ReviewScoreExport.xlsx";
 	String GMBExport = "GMBExport.xlsx";
 	String BingExport = "BingExport.xlsx";
+	String BingXLSX = "BingXLSX.xlsx";
+	String GMBXLSX = "GMBXLSX.xlsx";
 }

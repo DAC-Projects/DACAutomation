@@ -1,10 +1,10 @@
 package com.dac.main.POM_TPSEE;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -13,7 +13,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
 import resources.CurrentState;
 import resources.JSWaiter;
 
@@ -28,8 +27,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	String PhViewtooltipvalue;
 	String PhQtytooltipvalue;
 	String HowListingtooltipvalue;
+	String Value;
+	String Value1;
+	String Value2;
+	//int sum ;
 	
-	//Navigating to TPSEE Content_Analysis page
+	//Navigating to GMB Page
 	public TPSEE_GMB(WebDriver driver) {
 		
 		super(driver);
@@ -43,20 +46,17 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//div[@id='customerIndex']")
 	private WebElement CustomerActions;
 	
-	@FindBy(xpath = "//span[@id='customerWebsite']")
-	private WebElement WebsitesVisits;
-	
-	@FindBy(xpath = "//span[@id='customerDirections']")
-	private WebElement ReqDir;
-	
-	@FindBy(xpath = "//span[@id='customerPhonecalls']")
-	private WebElement PhCalls;
-	
 	@FindBy(xpath = "//span[@id='customerTotal']")
 	private WebElement TotalActions;
 	
-	@FindBy(xpath = "//div//button[@id='currentBtnExport']")
+	@FindBy(xpath = " //button[@class='btn btn-primary dropdown-toggle export-dropdown-btn']")
 	private WebElement export;
+	
+	@FindBy(xpath = "//a[contains(text(), 'Export as CSV')]")
+	private WebElement CSVExport;
+	
+	@FindBy(xpath  = "//a[contains(text(), 'Export as XLSX')]")
+	private WebElement XLSXExport;
 	
 	@FindBy(xpath = "(//*[contains(@class, 'highcharts-plot-background')])[1]")
 	private WebElement Custgraph;
@@ -91,26 +91,11 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//div[@id='whereIndex']")
 	private WebElement WhereListing;
 	
-	@FindBy(xpath = "//span[@id='whereSearch']")
-	private WebElement Search;
-	
-	@FindBy(xpath = "//span[@id='whereMaps']")
-	private WebElement Maps;
-	
 	@FindBy(xpath = "//span[@id='whereTotal']")
 	private WebElement TotalViews;
 	
 	@FindBy(xpath = "//div[@id='howIndex']")
 	private WebElement HowListing;
-	
-	@FindBy(xpath = "//span[@id='howDiscovery']")
-	private WebElement Discovery;
-	
-	@FindBy(xpath = "//span[@id='howDirect']")
-	private WebElement Direct;
-	
-	@FindBy(xpath = "//span[@id='howBranded']")
-	private WebElement Branded;
 	
 	@FindBy(xpath = "//span[@id='howTotal']")
 	private WebElement TotalSearch;
@@ -130,14 +115,42 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//div[@id='photoCountIndex']")
 	private WebElement PhotoQty;
 	
+	@FindBy(xpath = "//span[contains (text(),'Website Visits')]")
+	private WebElement WebsiteVisits;
 	
+	@FindBy(xpath="//span[contains (text(),'Request Directions')]")
+	private WebElement RequestDir;
+	
+	@FindBy(xpath = "//span[contains (text(),'Phone Calls')]")
+	private WebElement PhoneCalls;
+	
+	@FindBy(xpath = "//span[contains(text(),'Search')]")
+	private WebElement SearchFound;
+	
+	@FindBy(xpath = "//span[contains(text(),'Map')]")
+	private WebElement MapFound;
+	
+	@FindBy(xpath = "//span[contains(text(),'Discovery')]")
+	private WebElement Dis;
+	
+	@FindBy(xpath = "(//span[contains(text(),'Direct')])[2]")
+	private WebElement Dir;
+	
+	@FindBy(xpath = "//span[contains(text(),'Branded')]")
+	private WebElement Brand;
+	
+	@FindBy(xpath = "(//span[contains(text(),'Owner')])[1]")
+	private WebElement Phowner;
+	
+	@FindBy(xpath = "//div[@id='photoViewsIndex']//span[@class='infobox-content'][contains(text(),'Customer')]")
+	private WebElement PhCust;
 	
 	/*-------------------------------Locators-------------------------------------------------*/
 	
 	
 	@Override
 	public List<Map<String, String>> getOverviewReport() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 	
@@ -211,85 +224,98 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		System.out.println("\n tooltipvalue is \n" +PhViewtooltipvalue);
 	}
 
-	public void exportGMB() throws InterruptedException, FileNotFoundException, IOException {
+	public void exportcsvGMB() throws InterruptedException, FileNotFoundException, IOException {
 
 		JSWaiter.waitJQueryAngular();
 		if(export.isDisplayed() && export.isEnabled()) {
 			wait.until(ExpectedConditions.visibilityOf(export));
 			action.moveToElement(export).click(export).perform();
+		}if(CSVExport.isDisplayed() && CSVExport.isEnabled()) {
+			wait.until(ExpectedConditions.visibilityOf(CSVExport));
+			CSVExport.click();
 			Thread.sleep(5000);
-			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+GMBExport));
-			Thread.sleep(20000);
-			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
+			getLastModifiedFile(Exportpath);
 			}else {
 			System.out.println("No Data Available in GMB");
 		}
 	}
+	
+	public void exportXLSXGMB() throws InterruptedException, FileNotFoundException, IOException {
 
-	public void CustomerAction() {
-		
 		JSWaiter.waitJQueryAngular();
+		if(export.isDisplayed() && export.isEnabled()) {
+			wait.until(ExpectedConditions.visibilityOf(export));
+			action.moveToElement(export).click(export).perform();
+		}if(XLSXExport.isDisplayed() && XLSXExport.isEnabled()) {
+			wait.until(ExpectedConditions.visibilityOf(XLSXExport));
+			XLSXExport.click();
+			Thread.sleep(5000);
+			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+GMBXLSX));
+			Thread.sleep(6000);
+			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile(Exportpath));
+			}else {
+			System.out.println("No Data Available in GMB");
+		}
+	}
+	
+	public int GetUIText(WebElement e , WebElement f, WebElement g  ){
+		Value = e.getText();
+		Value1 = f.getText();
+		Value2 = g.getText();		
+		int sum = convertint(Value)+convertint(Value1)+convertint(Value2);
+		System.out.println(":" +sum);
+		return sum;
+		}
+	
+	public int GetUIText2(WebElement e , WebElement f){
+		Value = e.getText();
+		Value1 = f.getText();		
+		int sum = convertint(Value)+convertint(Value1);
+		System.out.println(":" +sum);
+		return sum;
+		}
+	
+	public int GetUIText3(WebElement e ){
+		Value = e.getText();	
+		int sum = convertint(Value);
+		System.out.println(":" +sum);
+		return sum;
+		}
+
+	
+	public int convertint(String s){		
+		int Tot = 0;
+			if(s.contains(",")) {
+				String value = s.replaceAll(",", "");
+				value.trim();
+				Tot = Integer.parseInt(value);
+			}else {
+				Tot = Integer.parseInt(s);
+			}
+			System.out.println("Total :" +Tot);
+			return Tot;			
+		}
+	
+	
+	
+	public void CustomerAction() {
 		try {
+		JSWaiter.waitJQueryAngular();
 		waitForElement(CustomerActions,20);
 		scrollByElement(CustomerActions);
-		waitForElement(WebsitesVisits,10);
-		scrollByElement(WebsitesVisits);
-		String WebVisits = WebsitesVisits.getText();
-		int TotWebVisits = 0;
-		if(WebVisits.contains(",")) {
-			String WVisits = WebVisits.replaceAll(",", "");
-			WVisits.trim();
-			TotWebVisits = Integer.parseInt(WVisits);
-		}else {
-			TotWebVisits = Integer.parseInt(WebVisits);
-		}
-		System.out.println("Website Visits : " +TotWebVisits);
-		waitForElement(ReqDir, 20);
-		scrollByElement(ReqDir);
-		String RequestDirectory = ReqDir.getText();
-		int TotReqDirectory = 0;
-		if(RequestDirectory.contains(",")) {
-			String ReqDirectory = RequestDirectory.replaceAll(",", "");
-			ReqDirectory.trim();
-			TotReqDirectory = Integer.parseInt(ReqDirectory);
-		}else {
-			TotReqDirectory = Integer.parseInt(RequestDirectory);
-		}
-		System.out.println("Request Directory :" +TotReqDirectory);
-		waitForElement(PhCalls, 20);
-		scrollByElement(PhCalls);
-		String PhoneCalls = PhCalls.getText();
-		int TotPhCalls = 0;
-		if(PhoneCalls.contains(",")) {
-			String PhoCalls = PhoneCalls.replaceAll(",", "");
-			PhoCalls.trim();
-			TotPhCalls = Integer.parseInt(PhoCalls);
-		}else {
-			TotPhCalls = Integer.parseInt(PhoneCalls);
-		}
-		System.out.println("Request Directory :" +TotPhCalls);
-		
-		int Total = TotWebVisits+TotReqDirectory+TotPhCalls;
-		System.out.println("Total Action :" +Total);
-		
-		waitForElement(TotalActions,20);
-		scrollByElement(TotalActions);
-		String TotalAction = TotalActions.getText();
-		int TotCustAction = 0;
-		if(TotalAction.contains(",")) {
-			String TotAction = TotalAction.replaceAll(",", "");
-			TotAction.trim();
-			TotCustAction = Integer.parseInt(TotAction);
-		}else {
-			TotCustAction = Integer.parseInt(TotalAction);
-		}
-		System.out.println("Total Actions is :" +TotCustAction);
-		Assert.assertEquals(Total, TotCustAction);
-		System.out.println("Count is equal \n");
+		WebElement WebVisits = driver.findElement(By.xpath("//span[@id='customerWebsite']"));
+		WebElement ReqDirectory = driver.findElement(By.xpath("//span[@id='customerDirections']"));
+		WebElement PhCalls = driver.findElement(By.xpath("//span[@id='customerPhonecalls']"));
+		int actual = GetUIText(WebVisits, ReqDirectory, PhCalls);
+		WebElement TotalActions = driver.findElement(By.xpath("//span[@id='customerTotal']"));
+		int total = GetUIText3(TotalActions);
+		Assert.assertEquals(actual, total , "Count is equal");
 		}catch(Exception e) {
 		e.printStackTrace();
 		}
 	}
+
+	
 
 	public void WhereListingFound() {
 		
@@ -297,52 +323,20 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		try {
 			waitForElement(WhereListing, 20);
 			scrollByElement(WhereListing);
-			waitForElement(Search, 20);
-			scrollByElement(Search);
-			String NumofSearch = Search.getText();
-			int TotNumofSearch = 0;
-			if(NumofSearch.contains(",")) {
-				String NofSearch = NumofSearch.replaceAll(",", "");
-				NofSearch.trim();
-				TotNumofSearch = Integer.parseInt(NofSearch);
-			}else {
-				TotNumofSearch = Integer.parseInt(NumofSearch);
+			WebElement Search = driver.findElement(By.xpath("//span[@id='whereSearch']"));
+			WebElement Maps = driver.findElement(By.xpath("//span[@id='whereMaps']"));
+			int Total = GetUIText2(Search, Maps);
+			waitForElement(TotalViews,20);
+			scrollByElement(TotalViews);
+			String NumofViews = TotalViews.getText();
+			int i = convertint(NumofViews);		
+			System.out.println("Total Number of views :" +i);
+			Assert.assertEquals(Total, i);
+			System.out.println("Count is equal \n");
+			}catch(Exception e) {
+				e.printStackTrace();
 			}
-			System.out.println("Total number of search :" +TotNumofSearch);
-				
-		waitForElement(Maps, 20);
-		scrollByElement(Maps);
-		String NumofMaps = Maps.getText();
-		int TotNumofMaps = 0;
-		if(NumofMaps.contains(",")) {
-			String NofMaps = NumofMaps.replaceAll(",", "");
-			NofMaps.trim();
-			TotNumofMaps = Integer.parseInt(NofMaps);
-		}else {
-			TotNumofMaps = Integer.parseInt(NumofMaps);
 		}
-		System.out.println("Number of Map :" +NumofMaps);		
-		int Total = TotNumofSearch+TotNumofMaps;
-		System.out.println("Total Number of views :" +Total);
-		
-		waitForElement(TotalViews,20);
-		scrollByElement(TotalViews);
-		String NumofViews = TotalViews.getText();
-		int TotNumofViews = 0;
-		if(NumofViews.contains(",")) {
-			String NofViews = NumofViews.replaceAll(",", "");
-			NofViews.trim();
-			TotNumofViews = Integer.parseInt(NofViews);
-		}else {
-			TotNumofViews = Integer.parseInt(NumofViews);
-		}
-		System.out.println("Total Number of views :" +TotNumofViews);
-		Assert.assertEquals(Total, TotNumofViews);
-		System.out.println("Count is equal \n");
-		}catch(Exception e) {
-		e.printStackTrace();
-		}
-	}
 
 	public void HowListingFound() {
 
@@ -350,61 +344,17 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		try {
 		waitForElement(HowListing,20);
 		scrollByElement(HowListing);
-		waitForElement(Discovery,10);
-		scrollByElement(Discovery);
-		String Discover = Discovery.getText();
-		int TotDiscover = 0;
-		if(Discover.contains(",")) {
-			String TDiscovery = Discover.replaceAll(",", "");
-			TDiscovery.trim();
-			TotDiscover = Integer.parseInt(TDiscovery);
-		}else {
-			TotDiscover = Integer.parseInt(Discover);
-		}
-		System.out.println("Discovered : " +TotDiscover);
-		
-		waitForElement(Direct, 20);
-		scrollByElement(Direct);
-		String Directed = Direct.getText();
-		int TotDirected = 0;
-		if(Directed.contains(",")) {
-			String Directory = Directed.replaceAll(",", "");
-			Directory.trim();
-			TotDirected = Integer.parseInt(Directory);
-		}else {
-			TotDirected = Integer.parseInt(Directed);
-		}
-		System.out.println("Directed :" +TotDirected);
-		waitForElement(Branded, 20);
-		scrollByElement(Branded);
-		String Brand = Branded.getText();
-		int TotBrand = 0;
-		if(Brand.contains(",")) {
-			String NumBrand = Brand.replaceAll(",", "");
-			NumBrand.trim();
-			TotBrand = Integer.parseInt(NumBrand);
-		}else {
-			TotBrand = Integer.parseInt(Brand);
-		}
-		System.out.println("Branded :" +TotBrand);
-		
-		int Total = TotDiscover+TotDirected+TotBrand;
-		System.out.println("Total Number of Search :" +Total);
-		
+		WebElement Discovery = driver.findElement(By.xpath("//span[@id='howDiscovery']"));
+		WebElement Direct = driver.findElement(By.xpath("//span[@id='howDirect']"));
+		WebElement Branded = driver.findElement(By.xpath("//span[@id='howBranded']"));
+		int actual = GetUIText(Discovery, Direct, Branded);
 		waitForElement(TotalSearch,20);
 		scrollByElement(TotalSearch);
 		String NumofSearch = TotalSearch.getText();
-		int TotNumofSearch = 0;
-		if(NumofSearch.contains(",")) {
-			String TotalNumofSearch = NumofSearch.replaceAll(",", "");
-			TotalNumofSearch.trim();
-			TotNumofSearch = Integer.parseInt(TotalNumofSearch);
-		}else {
-			TotNumofSearch = Integer.parseInt(NumofSearch);
-		}
-		System.out.println("Total Number of Search :" +TotNumofSearch);
-		Assert.assertEquals(Total, TotNumofSearch);
+		int i = convertint(NumofSearch);
+		Assert.assertEquals(actual, i);
 		System.out.println("count is equal \n");
+		
 		}catch(Exception e) {
 		e.printStackTrace();
 		}
@@ -412,54 +362,402 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 	public void PhotoViews() {
 		
-		JSWaiter.waitJQueryAngular();
-		try {
+		JSWaiter.waitJQueryAngular();	
 			waitForElement(PhotoViews, 20);
 			scrollByElement(PhotoViews);
 			waitForElement(Owner, 20);
-			scrollByElement(Owner);
-			String OwnerView = Owner.getText();
-			int TotOwnerView = 0;
-			if(OwnerView.contains(",")) {
-				String NofOwnerView = OwnerView.replaceAll(",", "");
-				NofOwnerView.trim();
-				TotOwnerView = Integer.parseInt(NofOwnerView);
-			}else {
-				TotOwnerView = Integer.parseInt(OwnerView);
+			scrollByElement(Owner);		
+			WebElement OwnerView = driver.findElement(By.xpath("//span[@id='photoViewsOwner']"));
+			WebElement CustView = driver.findElement(By.xpath("//span[@id='photoViewsCustomer']"));
+			int actual = GetUIText2(OwnerView, CustView);
+			waitForElement(TotalPhViews,20);
+			scrollByElement(TotalPhViews);
+			String NumofPhViews = TotalPhViews.getText();
+			int i = convertint(NumofPhViews);
+			Assert.assertEquals(actual, i);
+			System.out.println("Count is equal \n");
 			}
-			System.out.println("Total number of Owner View :" +TotOwnerView);
-				
-		waitForElement(Customer, 20);
-		scrollByElement(Customer);
-		String CustomerView = Customer.getText();
-		int TotCustView = 0;
-		if(CustomerView.contains(",")) {
-			String NofCustView = CustomerView.replaceAll(",", "");
-			NofCustView.trim();
-			TotCustView = Integer.parseInt(NofCustView);
-		}else {
-			TotCustView = Integer.parseInt(CustomerView);
-		}
-		System.out.println("Number of Map :" +CustomerView);		
-		int Total = TotOwnerView+TotCustView;
-		System.out.println("Total Number of views :" +Total);
+
+	public void VerifyCustomerActiononWebVisits() {
 		
-		waitForElement(TotalPhViews,20);
-		scrollByElement(TotalPhViews);
-		String NumofPhViews = TotalPhViews.getText();
-		int TotNumofPhViews = 0;
-		if(NumofPhViews.contains(",")) {
-			String NofPhViews = NumofPhViews.replaceAll(",", "");
-			NofPhViews.trim();
-			TotNumofPhViews = Integer.parseInt(NofPhViews);
-		}else {
-			TotNumofPhViews = Integer.parseInt(NumofPhViews);
+		try {
+			JSWaiter.waitJQueryAngular();
+			waitForElement(CustomerActions,20);
+			scrollByElement(CustomerActions);
+			WebElement ReqDirectory = driver.findElement(By.xpath("//span[@id='customerDirections']"));
+			WebElement PhCalls = driver.findElement(By.xpath("//span[@id='customerPhonecalls']"));
+			waitForElement(WebsiteVisits, 10);
+			scrollByElement(WebsiteVisits);
+			if(WebsiteVisits.isDisplayed() && WebsiteVisits.isEnabled()) {
+			clickelement(WebsiteVisits);
+			int actual = GetUIText2(ReqDirectory, PhCalls);
+			waitForElement(TotalActions,20);
+			scrollByElement(TotalActions);
+			String TotalAction = TotalActions.getText();
+			int i = convertint(TotalAction);
+			System.out.println("Total Webvisits is :" +i);	
+			Assert.assertEquals(actual, i);
+			System.out.println("Count is equal \n");
+			clickelement(WebsiteVisits);
+				}
+			}
+		catch(Exception e) {
+			e.printStackTrace();
+			}		
+	}
+
+	public void VerifyCustomerActiononWebReqDirectory() {
+		
+		try {
+			JSWaiter.waitJQueryAngular();
+			waitForElement(CustomerActions,20);
+			scrollByElement(CustomerActions);
+			WebElement WebVisits = driver.findElement(By.xpath("//span[@id='customerWebsite']"));
+			WebElement PhCalls = driver.findElement(By.xpath("//span[@id='customerPhonecalls']"));
+			waitForElement(RequestDir, 10);
+			scrollByElement(RequestDir);
+			if(RequestDir.isDisplayed() && RequestDir.isEnabled()) {
+			clickelement(RequestDir);
+			int actual = GetUIText2(WebVisits, PhCalls);
+			waitForElement(TotalActions,20);
+			scrollByElement(TotalActions);
+			String TotalAction = TotalActions.getText();
+			int i = convertint(TotalAction);
+			System.out.println("Total Request is :" +i);	
+			Assert.assertEquals(actual, i);
+			System.out.println("Count is equal \n");
+			clickelement(RequestDir);
+				}
 		}
-		System.out.println("Total Number of views :" +TotNumofPhViews);
-		Assert.assertEquals(Total, TotNumofPhViews);
-		System.out.println("Count is equal \n");
+		catch(Exception e) {
+			e.printStackTrace();
+			}		
+	}
+
+	public void VerifyCustomerActiononPhCalls() {
+		
+		try {
+			JSWaiter.waitJQueryAngular();
+			waitForElement(CustomerActions,20);
+			scrollByElement(CustomerActions);
+			WebElement WebVisits = driver.findElement(By.xpath("//span[@id='customerWebsite']"));
+			WebElement ReqDirectory = driver.findElement(By.xpath("//span[@id='customerDirections']"));
+			waitForElement(PhoneCalls, 10);
+			scrollByElement(PhoneCalls);
+			if(PhoneCalls.isDisplayed() && PhoneCalls.isEnabled()) {
+			clickelement(PhoneCalls);
+			int actual = GetUIText2(WebVisits, ReqDirectory);
+			waitForElement(TotalActions,20);
+			scrollByElement(TotalActions);
+			String TotalAction = TotalActions.getText();
+			int i = convertint(TotalAction);
+			System.out.println("Total Phone is :" +i);	
+			Assert.assertEquals(actual, i);
+			System.out.println("Count is equal \n");
+			clickelement(PhoneCalls);
+				}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			}			
+	}
+
+	public void WhereListingSearchFound() {
+		
+		JSWaiter.waitJQueryAngular();
+		try {
+			waitForElement(WhereListing, 20);
+			scrollByElement(WhereListing);
+			WebElement Maps = driver.findElement(By.xpath("//span[@id='whereMaps']"));
+			waitForElement(SearchFound, 10);
+			scrollByElement(SearchFound);
+			if(SearchFound.isDisplayed() && SearchFound.isEnabled()) {
+				clickelement(SearchFound);
+				int Total = GetUIText3( Maps);
+			waitForElement(TotalViews,20);
+			scrollByElement(TotalViews);
+			String NumofViews = TotalViews.getText();
+			int i = convertint(NumofViews);		
+			System.out.println("Total Number of views :" +i);
+			Assert.assertEquals(Total, i);
+			System.out.println("Count is equal \n");
+			clickelement(SearchFound);
+			}
+		}catch(Exception e) {
+				e.printStackTrace();
+			}
+	}
+
+	public void WhereListingMapFound() {
+	
+		JSWaiter.waitJQueryAngular();
+		try {
+			waitForElement(WhereListing, 20);
+			scrollByElement(WhereListing);
+			WebElement Search = driver.findElement(By.xpath("//span[@id='whereSearch']"));
+			waitForElement(SearchFound, 10);
+			scrollByElement(SearchFound);
+			if(MapFound.isDisplayed() && MapFound.isEnabled()) {
+				clickelement(MapFound);
+				int Total = GetUIText3(Search);
+			waitForElement(TotalViews,20);
+			scrollByElement(TotalViews);
+			String NumofViews = TotalViews.getText();
+			int i = convertint(NumofViews);		
+			System.out.println("Total Number of views :" +i);
+			Assert.assertEquals(Total, i);
+			System.out.println("Count is equal \n");
+			clickelement(MapFound);			
+		}else {
+			System.out.println("No Data");		
+		}
+		}catch(Exception e) {
+				e.printStackTrace();
+			}		
+	}
+
+	public void HowListingDiscoveryFound() {
+		
+		JSWaiter.waitJQueryAngular();
+		try {
+		waitForElement(HowListing,20);
+		scrollByElement(HowListing);
+		WebElement Direct = driver.findElement(By.xpath("//span[@id='howDirect']"));
+		WebElement Branded = driver.findElement(By.xpath("//span[@id='howBranded']"));
+		waitForElement(Dis, 10);
+		if(Dis.isDisplayed() && Dis.isEnabled()) {
+			clickelement(Dis);
+		int actual = GetUIText2(Direct, Branded);
+		waitForElement(TotalSearch,20);
+		scrollByElement(TotalSearch);
+		String NumofSearch = TotalSearch.getText();
+		int i = convertint(NumofSearch);
+		Assert.assertEquals(actual, i);
+		System.out.println("count is equal \n");
+		clickelement(Dis);
+		}		
 		}catch(Exception e) {
 		e.printStackTrace();
 		}
+		
+	}
+
+	public void HowListingDirFound() {
+		
+		JSWaiter.waitJQueryAngular();
+		try {
+		waitForElement(HowListing,20);
+		scrollByElement(HowListing);
+		WebElement Discovery = driver.findElement(By.xpath("//span[@id='howDiscovery']"));
+		WebElement Branded = driver.findElement(By.xpath("//span[@id='howBranded']"));
+		if(Dir.isDisplayed() && Dir.isEnabled()) {
+			scrollByElement(Dir);
+			clickelement(Dir);
+		int actual = GetUIText2(Discovery, Branded);
+		waitForElement(TotalSearch,20);
+		scrollByElement(TotalSearch);
+		String NumofSearch = TotalSearch.getText();
+		int i = convertint(NumofSearch);
+		Assert.assertEquals(actual, i);
+		System.out.println("count is equal \n");
+		clickelement(Dir);				
+		}
+		}catch(Exception e) {
+		e.printStackTrace();
+		}
+		
+	}
+
+	public void HowListingBrandFound() {
+
+		JSWaiter.waitJQueryAngular();
+		try {
+		waitForElement(HowListing,20);
+		scrollByElement(HowListing);
+		WebElement Discovery = driver.findElement(By.xpath("//span[@id='howDiscovery']"));
+		WebElement Direct = driver.findElement(By.xpath("//span[@id='howDirect']"));
+		waitForElement(Dir, 10);
+		if(Brand.isDisplayed() && Brand.isEnabled()) {
+			clickelement(Brand);
+		int actual = GetUIText2(Discovery, Direct);
+		waitForElement(TotalSearch,20);
+		scrollByElement(TotalSearch);
+		String NumofSearch = TotalSearch.getText();
+		int i = convertint(NumofSearch);
+		Assert.assertEquals(actual, i);
+		System.out.println("count is equal \n");
+		clickelement(Brand);	
+		}
+		}catch(Exception e) {
+		e.printStackTrace();
+		}
+	}
+
+	public void OwnerPhotoViews() {
+
+		JSWaiter.waitJQueryAngular();	
+		waitForElement(PhotoViews, 20);
+		scrollByElement(PhotoViews);
+		waitForElement(Owner, 20);
+		scrollByElement(Owner);	
+		WebElement CustView = driver.findElement(By.xpath("//span[@id='photoViewsCustomer']"));
+		if(Phowner.isDisplayed() && Phowner.isEnabled()) {
+			clickelement(Phowner);
+		int actual = GetUIText3(CustView);
+		waitForElement(TotalPhViews,20);
+		scrollByElement(TotalPhViews);
+		String NumofPhViews = TotalPhViews.getText();
+		int i = convertint(NumofPhViews);
+		Assert.assertEquals(actual, i);
+		System.out.println("Count is equal \n");
+		clickelement(Phowner);
+		}
+	}
+
+	public void CustomerPhotoViews() {
+
+		JSWaiter.waitJQueryAngular();	
+		waitForElement(PhotoViews, 20);
+		scrollByElement(PhotoViews);
+		waitForElement(Owner, 20);
+		scrollByElement(Owner);		
+		WebElement OwnerView = driver.findElement(By.xpath("//span[@id='photoViewsOwner']"));
+		if(PhCust.isDisplayed() && PhCust.isEnabled()) {
+			clickelement(PhCust);
+		int actual = GetUIText3(OwnerView);
+		waitForElement(TotalPhViews,20);
+		scrollByElement(TotalPhViews);
+		String NumofPhViews = TotalPhViews.getText();
+		int i = convertint(NumofPhViews);
+		Assert.assertEquals(actual, i);
+		System.out.println("Count is equal \n");
+		clickelement(PhCust);
+		}
+	}	
+
+	public void CompareUIXLWebActions() throws Exception {
+		
+		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Website Actions");
+		WebElement WebActions = driver.findElement(By.xpath("//span[@id='customerWebsite']"));
+		int total = GetUIText3(WebActions);
+		Assert.assertEquals(x, total , "Count is equal");
+		
+	}
+	
+	
+	public void CompareUIXLReqDirActions() throws Exception {
+		
+		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Request Directions Actions");
+		WebElement ReqDirActions = driver.findElement(By.xpath("//span[@id='customerDirections']"));
+		int total = GetUIText3(ReqDirActions);
+		Assert.assertEquals(x, total , "Count is equal");
+		
+	}
+
+	public void CompareUIXLPhCalls() throws Exception {
+
+		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Phone Call Actions");
+		WebElement PhCallActions = driver.findElement(By.xpath("//span[@id='customerPhonecalls']"));
+		int total = GetUIText3(PhCallActions);
+		Assert.assertEquals(x, total , "Count is equal");
+		
+	}
+
+	public void CompareUIXLTotActions() throws Exception {
+		
+		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Total Actions");
+		WebElement TotalActions = driver.findElement(By.xpath("//span[@id='customerTotal']"));
+		int total = GetUIText3(TotalActions);
+		Assert.assertEquals(x, total , "Count is equal");
+		
+	}
+
+	public void CompareUIXLWhereSearch() throws Exception {
+
+		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Search Views");
+		WebElement WhereSearch = driver.findElement(By.xpath("//span[@id='whereSearch']"));
+		int total = GetUIText3(WhereSearch);
+		Assert.assertEquals(x, total , "Count is equal");
+		
+	}
+
+	public void CompareUIXLWhereMap() throws Exception {
+
+		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Maps Views");
+		WebElement WhereMap = driver.findElement(By.xpath("//span[@id='whereMaps']"));
+		int total = GetUIText3(WhereMap);
+		Assert.assertEquals(x, total , "Count is equal");
+		
+	}
+
+	public void CompareUIXLWhereTotalViews() throws Exception {
+
+		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Total Views");
+		WebElement WhereTotalViews = driver.findElement(By.xpath("//span[@id='whereTotal']"));
+		int total = GetUIText3(WhereTotalViews);
+		Assert.assertEquals(x, total , "Count is equal");
+		
+	}
+
+	public void CompareUIXLDiscovery() throws Exception {
+
+		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Discovery");
+		WebElement Discovery = driver.findElement(By.xpath("//span[@id='howDiscovery']"));
+		int total = GetUIText3(Discovery);
+		Assert.assertEquals(x, total , "Count is equal");
+		
+	}
+
+	public void CompareUIXLDirect() throws Exception {
+		
+		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Direct");
+		WebElement Direct = driver.findElement(By.xpath("//span[@id='howDirect']"));
+		int total = GetUIText3(Direct);
+		Assert.assertEquals(x, total , "Count is equal");
+		
+	}
+
+	public void CompareUIXLBranded() throws Exception {
+
+		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Branded");
+		WebElement Direct = driver.findElement(By.xpath("//span[@id='howBranded']"));
+		int total = GetUIText3(Direct);
+		Assert.assertEquals(x, total , "Count is equal");
+		
+	}
+
+	public void CompareUIXLTotalSearch() throws Exception {
+
+		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Total Searches");
+		WebElement TotalSearch = driver.findElement(By.xpath("//span[@id='howTotal']"));
+		int total = GetUIText3(TotalSearch);
+		Assert.assertEquals(x, total , "Count is equal");
+		
+	}
+
+	public void CompareUIXLOwnerPhView() throws Exception {
+
+		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Owner Photo Views");
+		WebElement OwnerPhView = driver.findElement(By.xpath("//span[@id='photoViewsOwner']"));
+		int total = GetUIText3(OwnerPhView);
+		Assert.assertEquals(x, total , "Count is equal");
+		
+	}
+
+	public void CompareUIXLCustPhView() throws Exception {
+
+		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Customer Photo Views");
+		WebElement CustPhView = driver.findElement(By.xpath("//span[@id='photoViewsCustomer']"));
+		int total = GetUIText3(CustPhView);
+		Assert.assertEquals(x, total , "Count is equal");
+		
+	}
+
+	public void CompareUIXLTotPhView() throws Exception {
+
+		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Total Photo Views");
+		WebElement TotPhView = driver.findElement(By.xpath("(//span[@id='photoViewsTotal'])[1]"));
+		int total = GetUIText3(TotPhView);
+		Assert.assertEquals(x, total , "Count is equal");		
 	}
 }

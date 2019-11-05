@@ -27,7 +27,7 @@ public class TPSEE_Bing_Test extends BaseClass{
 		addEvidence(CurrentState.getDriver(), "Navigate to Bing page from Dashboard", "yes");
 	}
 	
-	//Test to apply filter in Bing Page
+	//Test to apply filter in Bing Page		
 	@Test(dependsOnMethods = { "navigateToBingPage" }, groups = {
 	"smoke" }, description = "Verify Bing page loads after filter applied")
 	public void verifyFilteringReportsBing() throws Exception {
@@ -66,12 +66,23 @@ public class TPSEE_Bing_Test extends BaseClass{
 				addEvidence(CurrentState.getDriver(), "Tooltip values verified", "yes");
 			}
 			
-		/*//Test to export Bing report 
+		//Test to export Bing report 
+			
 			@Test(dependsOnMethods = {"verifyTooltipBing"},groups = {"smoke"},
+					description ="Verify Site Vendors List")
+			public void BingCSVExport() throws Exception{
+				data = new TPSEE_Bing_Page(CurrentState.getDriver());
+				data.exportCSVBing();
+				addEvidence(CurrentState.getDriver(),
+					"Verifying export functionality ", "yes");
+			}
+			
+			
+			@Test(dependsOnMethods = {"BingCSVExport"},groups = {"smoke"},
 					description ="Verify Site Vendors List")
 			public void BingExport() throws Exception{
 				data = new TPSEE_Bing_Page(CurrentState.getDriver());
-				data.exportBing();
+				data.exportXLSXBing();
 				addEvidence(CurrentState.getDriver(),
 					"Verifying export functionality ", "yes");
 			}
@@ -81,8 +92,8 @@ public class TPSEE_Bing_Test extends BaseClass{
 					description ="Verify Impressions")
 			public void VerifyTotalImpressionUIExport() throws Exception{
 				data = new TPSEE_Bing_Page(CurrentState.getDriver());
-				data.compareUInExportImpressions(data.addsubexcel(), data.getImpressions());
+				data.compareUInExportImpressions();
 				addEvidence(CurrentState.getDriver(),
 					"Compare UI and export Impressions ", "yes");
-			}*/
+			}
 }
