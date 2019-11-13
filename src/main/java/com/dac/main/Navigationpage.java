@@ -39,7 +39,7 @@ public class Navigationpage extends BasePage{
 
 	@FindBy(xpath = "//a[@href='/Dashboard/AllGroups/']/span")
 	private WebElement AllGroups;
-
+	
 	@FindBy(xpath = "//a[@href='/Dashboard/VaReport/']/span")
 	private WebElement Visibility;
 
@@ -63,6 +63,9 @@ public class Navigationpage extends BasePage{
 	
 	@FindBy(xpath = "//ul[contains(@class,'settings-list dashboardColor')]")
 	private WebElement Group;
+	
+	@FindBy(xpath = "//a[@href='/Dashboard/LocalReportsScoreChange/']")
+	private WebElement ScoreChange;
 	
 	//------------------------- SA and RRM -------------------------------------
 	
@@ -216,6 +219,18 @@ public class Navigationpage extends BasePage{
     
     public void navigateToDisplayedReviewScore() {
     	clickelement(DisplayedReviewScore);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    public void navigateToLocalReportsScoreChange() {
+	   	
+    	action.moveToElement(Settings).perform();
+    	waitForElement(ScoreChange, 20);
+    	action.moveToElement(ScoreChange).perform();
+    	clickelement(ScoreChange);
+    
+    	//action.moveToElement(AllGroups).click().perform();
     	System.out.println("Waiting for page to load********");
     	waitUntilLoad(driver);
     }

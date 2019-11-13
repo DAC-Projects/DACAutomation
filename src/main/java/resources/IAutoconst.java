@@ -16,7 +16,7 @@ public interface IAutoconst {
 	
 	String CONFIG_PATH="./data.properties";
 	
-	// Auth centre variables
+//	// Auth centre variables beta
 	String url ="http://dac-map-beta.azurewebsites.net/#",
 
 	 email="wakram@dacgroup.com",
@@ -29,5 +29,9 @@ public interface IAutoconst {
 	String[] transparenSEE = {baseUrl+"international-account-beta-beta", "svarghese@dacgroup.com"};
 	String[] Fit4LessAccount = {baseUrl+"fit4less-beta", "1test@gmail.com"};
 	String[] neuralTuringTechAccount = {baseUrl+"neural-turing-tech-beta", "svarghese@dacgroup.com"};
+//	String[] transparenSEE = {baseUrl+"international-account-beta-beta", "spillai@dacgroup.com","IN"};
+	
+	
+	String userLocale="IN";
 	
 }

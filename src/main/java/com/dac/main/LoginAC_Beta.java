@@ -27,10 +27,14 @@ public class LoginAC_Beta {
 	@FindBy(id="search_email")
 	private WebElement search_email;
 	
+	/*----------Link for Beta-----------*/
 	@FindBy(linkText="Phoenix Dashboard")
 	private WebElement Dashboard;
 	
-	
+	/*----------Link for Staging-----------*/
+		/*@FindBy(linkText="TransparenSee")
+	private WebElement Dashboard;*/
+		
 	public LoginAC_Beta() {
 		this.driver = CurrentState.getDriver();
 		PageFactory.initElements(driver, this);
