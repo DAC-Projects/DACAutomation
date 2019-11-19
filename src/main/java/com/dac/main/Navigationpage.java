@@ -33,6 +33,10 @@ public class Navigationpage extends BasePage{
 		
 	}
 
+	
+	@FindBy(xpath = "//div//button[contains(@class,'walkme-custom-balloon-button walkme-custom-balloon-weak-button walkme-custom-balloon-cancel-button walkme-action-cancel walkme-click-and-hover')]")
+	private WebElement walkmeclose;
+	
 	// -------------------------------- TSEE ------------------------------
 	@FindBy(xpath = "//a[@href='/Dashboard/AllLocations/']/span")
 	private WebElement AllLocations;
