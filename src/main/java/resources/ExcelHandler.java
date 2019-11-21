@@ -32,6 +32,8 @@ import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTAutoFilter;
 /*import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTFilterColumn;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTFilters;*/
 
+import com.dac.main.BasePage;
+
 /**
  * This class is used to handle the actions to perform on the excel sheet	*/
 public class ExcelHandler {
@@ -39,7 +41,7 @@ public class ExcelHandler {
 	private  FileInputStream fis = null;
 	private  XSSFWorkbook workbook = null;
 	private  XSSFSheet sheet;// = null;
-	private  XSSFRow row = null;
+	private  Row row = null;
 	private  XSSFCell cell = null;
 	
 	public String filePath="";
@@ -86,7 +88,7 @@ public class ExcelHandler {
 	}
 	
 	/**
-	 * Accepts a map(consist of rowno as string and values as Obj array), sheet name to create, excel name
+	 * Accepts a map(consist of rowno as string and values as Obj array), sheet  to create, excel name
 	 * writes the map into the excel by creating a new sheet
 	 * 
 	 * @param data
@@ -545,7 +547,5 @@ public class ExcelHandler {
 	     if (hidden) row.getCTRow().setHidden(hidden);
 	  }
    }*/
-
-  
   
 }

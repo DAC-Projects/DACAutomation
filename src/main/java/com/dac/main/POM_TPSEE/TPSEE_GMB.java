@@ -250,7 +250,7 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 			wait.until(ExpectedConditions.visibilityOf(XLSXExport));
 			XLSXExport.click();
 			Thread.sleep(5000);
-			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+GMBXLSX));
+			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+GMBXLSX));
 			Thread.sleep(6000);
 			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile(Exportpath));
 			}else {

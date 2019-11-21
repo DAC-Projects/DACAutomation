@@ -289,6 +289,8 @@ public class DateFormats {
 	           break;
 	        case "DK" :dateFormat = "dd-MM-yyyy";
 	           break;
+	        case "MY" :dateFormat = "MM/DD/YYYY";
+	           break;
 	        default:dateFormat = "dd/MM/yyyy";
 	           
 	               

@@ -20,8 +20,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import com.dac.main.BasePage;
-
+import bsh.ParseException;
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
@@ -45,11 +44,14 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 
 	
 	//Exporting into csv 
-	@FindBy(xpath = "//*[@id='btnVisibilityExport']")
+	@FindBy(xpath = "//*[@id='visibilityCurrentExportDropdown']//button")
 	private WebElement exportBtn;
 	
-	@FindBy(xpath = "//*[@id='csvData']")
+	@FindBy(xpath = "//a[contains(text(),'Export as CSV')]")
 	private WebElement csvexport;
+	
+	@FindBy(xpath = "//a[contains(text(),'Export as XLSX')]")
+	private WebElement XLSXExport;
 	
 	@FindBy(xpath = "//*[@id='exportdate']")
 	private WebElement exportdate;
@@ -62,6 +64,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	
 	@FindBy(xpath = "//*[@id='btnLocationExport']")
 	private WebElement export;
+	
 	
 	//Exporting into pdf
 	
@@ -126,8 +129,14 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//*[@id='visibility_results']/tbody")
 	private WebElement progresstablevalue;
 	
-	@FindBy(xpath = "//*[@id='ToolTables_visibility_results_0']")
+	@FindBy(xpath = "//*[@id='listingsForVendorExport']//button")
 	private WebElement exporttable;
+	
+	@FindBy(xpath = "//div[@id='listingsForVendorExport']//a[contains(text(),'Export as CSV')]")
+	private WebElement ExporttableCSV;
+	
+	@FindBy(xpath = "//div[@id='listingsForVendorExport']//a[contains(text(),'Export as XLSX')]")
+	private WebElement ExporttableXLSX;
 	
 	@FindBy(xpath = "//*[@id='visibility_table_title']")
 	private WebElement title;
@@ -136,7 +145,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	private WebElement titlehead;
 	
 	@FindBy(xpath = "//*[@id='visibility_results']/tbody/tr")
-	private List<WebElement> reviewTableRow;
+	private List<WebElement> VisibityTableRow;
 	
 	String Vendortitle = "//*[@id='visibility_table_title']";
 	
@@ -169,36 +178,31 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	private WebElement vendorslist;
 	
 	public static List<Map<String, String>> tableCellValues = new ArrayList<Map<String, String>>();
+	public static List<Map<String, String>> tableCellValues1 = new ArrayList<Map<String, String>>();
 	/*-------------------------------------------------------------------*/
 	
-	/* Export visibility overview report below filter*/
-	public void exportvisibilityrpt() throws InterruptedException, FileNotFoundException, IOException, ExecutionException{
+	/* Export visibility overview CSV report below filter*/
+	public void exportvisibilityrptCSV() throws InterruptedException, FileNotFoundException, IOException, ExecutionException{
+		
 		JSWaiter.waitJQueryAngular();
-		//waitForElement(overall, 40);
-				waitForElement(exportBtn, 40);
-				scrollByElement(exportBtn);
-				clickelement(exportBtn);
-				waitForElement(csvexport, 40);
-				scrollByElement(csvexport);
-				clickelement(csvexport);
-				waitForElement(exportdate,40);
-				scrollByElement(exportdate);
-				clickelement(exportdate);
-				waitForElement(dtpicker,40);
-				scrollByElement(dtpicker);
-				waitForElement(date, 40);
-				scrollByElement(date);
-				clickelement(date);
-			    //download visibility report
-				download(CurrentState.getBrowser(), export, 30);
-			    convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExport));
+		exportVA(exportBtn, csvexport, exportdate, dtpicker, date, export);
+		//download visibility report
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExportCSV));
+		//System.out.println("" +getLastModifiedFile("./downloads"));
+	}
+	
+	public void exportvisibilityrptXLSX() throws InterruptedException, FileNotFoundException, IOException, ExecutionException{
+		
+		JSWaiter.waitJQueryAngular();
+		exportVA(exportBtn, XLSXExport, exportdate, dtpicker, date, export);
+		//download visibility report
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExportXLSX));
+		//System.out.println("" +getLastModifiedFile("./downloads"));
 	}
 	
 	/* Export visibility overview report below filter in pdf for current date*/
 	public void exportvisibilityrptpdf() throws InterruptedException, FileNotFoundException, IOException{
 	    JSWaiter.waitJQueryAngular();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("btn btn-primary dropdown-toggle")));
-		scrollByElement(exportBtn);
 		if(exportBtn.isEnabled() & exportBtn.isDisplayed()) {
 			wait.until(ExpectedConditions.visibilityOf(exportBtn));
 			action.moveToElement(exportBtn).click(exportBtn).perform();
@@ -218,14 +222,12 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 			wait.until(ExpectedConditions.visibilityOf(pdfclick));
 			action.moveToElement(pdfclick).click(pdfclick).perform();
 			Thread.sleep(5000);
-			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExportPdf));
+		}
+			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExportPdf));
 			Thread.sleep(5000);
 			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
-			}else {
-			System.out.println("No Data Available in Visibility Page");
 		}
 	     
-	}
 	
 	//To get overall score of visibility
 	public List<Map<String, String>> getOverviewReport() {
@@ -262,9 +264,9 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	//printing visibility report data from downloaded excel sheet 
 	public List<Map<String, String>> getExportData() throws Exception {
 		JSWaiter.waitJQueryAngular();
-		exportvisibilityrpt();
-		JSWaiter.waitJQueryAngular();
-		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+VisibilityExport), "Sheet0").getExcelTable();
+		exportvisibilityrptXLSX();
+		Thread.sleep(5000);
+		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+VisibilityExportXLSX), "Sheet0").getExcelTable();
 		List<Map<String, String>> exportData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
 		for (int col = 1; col < colSize; col++) {
@@ -273,12 +275,12 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 			for (int i = 1; i < table.length; i++) {
 				kMap.put("compName", table[0][col]);
 				kMap.put(table[i][0], table[i][col]);
-			}
+				exportData.add(kMap);
+			}			
 		}
 		//returning visibility report from excel
 		return exportData;
-
-	}
+		}
 	
 	//comparing values of graph and overall report
 	public void compareReportnGraph(List<Map<String, String>> tooltipdata, List<Map<String, String>> ovrwRprtData) {
@@ -317,13 +319,13 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 		String entiresText = driver.findElement(By.className("dataTables_info")).getText();
 		entiresText = entiresText.substring(entiresText.indexOf("("));
-		WebElement TableTitle = driver.findElement(By.xpath("//*[@id='visibility_table_title']"));
+		WebElement TableTitle = driver.findElement(By.xpath("//*[@id='visibilityTableHeader']/h3"));
 		scrollByElement(TableTitle);
 		int count = 0;
 	    if(paginationNext.isDisplayed()) {
 	    	for(int i=1;i<=page;i++) {	//Loop will execute till the all the row of table completes.
 	    		scrollByElement(TableTitle);
-	    		List < WebElement > rows_table = reviewTableRow;	//To locate rows of table. 
+	    		List < WebElement > rows_table = VisibityTableRow;	//To locate rows of table. 
 	    		int rows_count = rows_table.size();		//To calculate no of rows In table.
 	    		count = count + rows_count;
 	    		Map<String, String> kMap = new HashMap<String, String>();
@@ -365,6 +367,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 			return tableCellValues;
 			}
 
+
 		
 	//Clicking on progress bar and getting the data from the table for Not Found list
 	public List<Map<String, String>> DataTableNotfound() throws InterruptedException{
@@ -392,13 +395,13 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 		String entiresText = driver.findElement(By.className("dataTables_info")).getText();
 		entiresText = entiresText.substring(entiresText.indexOf("("));
-		WebElement TableTitle = driver.findElement(By.xpath("//*[@id='visibility_table_title']"));
+		WebElement TableTitle = driver.findElement(By.xpath("//*[@class='visibility-table-title heading-title']"));
 		scrollByElement(TableTitle);
 		int count = 0;
 	    if(paginationNext.isDisplayed()) {
 	    	for(int i=1;i<=page;i++) {	//Loop will execute till the all the row of table completes.
 	    		scrollByElement(TableTitle);
-	    		List < WebElement > rows_table = reviewTableRow;	//To locate rows of table. 
+	    		List < WebElement > rows_table = VisibityTableRow;	//To locate rows of table. 
 	    		int rows_count = rows_table.size();		//To calculate no of rows In table.
 	    		count = count + rows_count;
 	    		Map<String, String> kMap = new HashMap<String, String>();
@@ -410,9 +413,12 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	    			for (int column = 0; column < columns_count; column++) {	//Loop will execute till the last cell of that specific row.
 	    				List<WebElement> headerTableRow=titlehead.findElements(By.tagName("th"));
 	    				String headerText = headerTableRow.get(column).getText(), celtext ="";
+	    				
 	    				if(column==1 & row < rows_count) {
-	    					celtext = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]")).getText();
-	    					System.out.println("\n"+celtext);
+	    					
+		    					celtext = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]/td[9]/a[1]")).getAttribute("href");
+		    					System.out.println("\n"+celtext);
+	   
 	    			}
 	    				kMap.put("rowdata", celtext);
 	    				tableCellValues.add(kMap);
@@ -441,71 +447,82 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		}
 
 		
-	//exporting progress bar table data
-	public void exporttablefound() throws FileNotFoundException, IOException, InterruptedException {				
+	//exporting progress bar table data CSV
+	public void exporttablefoundCSV() throws FileNotFoundException, IOException, InterruptedException {				
 			JSWaiter.waitJQueryAngular();
 			waitForElement(progressdata, 40);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
-			scrollByElement(exporttable);
-			if(exporttable.isEnabled() & exporttable.isDisplayed()) {
-				wait.until(ExpectedConditions.visibilityOf(exporttable));
-				action.moveToElement(exporttable).click(exporttable).perform();
-				Thread.sleep(5000);
-				convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExporttableFound));
+			exportVATable(exporttable, ExporttableCSV);
+			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExporttableFoundXLSX));
+			Thread.sleep(5000);
+			//System.out.println("downloaded file name: "+getLastModifiedFile("./downloads"));
+			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
+		}
+		
+	
+	//exporting progress bar table data CSV
+		public void exporttablefoundXLSX() throws FileNotFoundException, IOException, InterruptedException {				
+				JSWaiter.waitJQueryAngular();
+				waitForElement(progressdata, 40);
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
+				exportVATable(exporttable, ExporttableXLSX);
+				renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExporttableFoundXLSX));
 				Thread.sleep(5000);
 				//System.out.println("downloaded file name: "+getLastModifiedFile("./downloads"));
 				CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
-				
-			}else {
-				System.out.println("No Data Available in Visibility Page");
 			}
-		}
+		
 		
 	//printing visibility progress bar table data from downloaded excel sheet
 	public List<Map<String, String>> getExporttableDataFound() throws Exception {
 			JSWaiter.waitJQueryAngular();
-			exporttablefound();
-			String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+VisibilityExporttableFound), "Sheet0").getExcelTable();
+			exporttablefoundXLSX();
+			String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+VisibilityExporttableFoundXLSX), "Visibility_Report").getExcelTable();
 			List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
 			int colSize = table[0].length;
 			String size = Integer.toString(colSize);
 			for (int col = 1; col < colSize; col++) {
 				Map<String, String> kMap = new HashMap<String, String>();
 				for (int i = 1; i < table.length; i++) {
-					kMap.put("rowdata", table[0][col]);
-					kMap.put(table[i][0], table[i][col]);
+					kMap.put("Location Number", table[0][col]);
+					kMap.put(table[i][col], table[i][col]);
+					tableCellValues1.add(kMap);
 				}
-				exporttableData.add(kMap);
+				
 			}
-			return exporttableData;
+			return tableCellValues1;
 		}
 	
 	
-	//exporting progress bar Not found table data
-	public void exporttableNotfound() throws FileNotFoundException, IOException, InterruptedException {
+	//exporting progress bar Not found table data in CSV
+	public void exporttableNotfoundCSV() throws FileNotFoundException, IOException, InterruptedException {
 		JSWaiter.waitJQueryAngular();
 		waitForElement(progressdata, 40);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
-		scrollByElement(exporttable);
-		if(exporttable.isEnabled() & exporttable.isDisplayed()) {
-			wait.until(ExpectedConditions.visibilityOf(exporttable));
-			action.moveToElement(exporttable).click(exporttable).perform();
-			Thread.sleep(5000);
-			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExporttableNotFound));
+			exportVATable(exporttable, ExporttableXLSX);
+			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExporttableNotFoundCSV));
 			Thread.sleep(5000);
 			//System.out.println("downloaded file name: "+getLastModifiedFile("./downloads"));
 			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
 			
-		}else {
-			System.out.println("No Data Available in Visibility Page");
 		}
-	}
+	//exporting progress bar Not found table data in CSV
+	public void exporttableNotfoundXLSX() throws FileNotFoundException, IOException, InterruptedException {
+		JSWaiter.waitJQueryAngular();
+		waitForElement(progressdata, 40);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
+			exportVATable(exporttable, ExporttableXLSX);
+			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExporttableNotFoundXLSX));
+			Thread.sleep(5000);
+			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
+			
+		}
 	
 	//printing visibility progress bar Not found table data from downloaded excel sheet
 	public List<Map<String, String>> getExporttableDataNotFound() throws Exception {
 		JSWaiter.waitJQueryAngular();
-		exporttableNotfound();
-		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+VisibilityExporttableNotFound), "Sheet0").getExcelTable();
+		exporttableNotfoundXLSX();
+		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+VisibilityExporttableNotFoundXLSX), "Visibility_Report").getExcelTable();
 		List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
 		String size = Integer.toString(colSize);
@@ -514,10 +531,11 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 			for (int i = 1; i < table.length; i++) {
 				kMap.put("rowdata", table[0][col]);
 				kMap.put(table[i][0], table[i][col]);
-			}
-			exporttableData.add(kMap);
+				exporttableData.add(kMap);
+			}			
 		}
 		return exporttableData;
+		
 	}
 	
 	//comparing data from excell sheet with table data of progress bar Not found and Found
@@ -525,15 +543,15 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		JSWaiter.waitJQueryAngular();
 		List < WebElement > Columns_row = titlehead.findElements(By.tagName("th"));
 		int col_count = Columns_row.size();
-		String newfilename = BasePage.getLastModifiedFile("./downloads");
+		//String newfilename = BasePage.getLastModifiedFile("./downloads");
 		//String newfilename = new formatConvert("./downloads/"+fileName).convertFile("xlsx");
-		ExcelHandler a = new ExcelHandler("./downloads/"+newfilename, "Sheet0"); a.deleteEmptyRows();
-		int xlRowCount=new ExcelHandler("./downloads/"+newfilename, "Sheet0").getRowCount();
+		ExcelHandler a = new ExcelHandler("./downloads/chromeVisibilityExporttableFoundXLSX.xlsx", "Visibility_Report"); a.deleteEmptyRows();
+		int xlRowCount=new ExcelHandler("./downloads/chromeVisibilityExporttableFoundXLSX.xlsx", "Visibility_Report").getRowCount();
 		int count = 0;
-		for(int i=1;i<xlRowCount;i++) {
+		for(int i=0;i<xlRowCount;i++) {
 			col_count = a.getColCount(i);
-			for(int j=0;j<=col_count;j++) {
-				String cellValue = a.getCellValue(i, j+1).trim();
+			for(int j=1;j<=col_count;j++) {
+				String cellValue = a.getCellValue(i, j).trim();
 				if(cellValue.contains("%")) cellValue = new String(""+Double.parseDouble(cellValue.replace("%", ""))+"%");
 				if(cellValue.length() != 0 & cellValue != null) {
 					Map<String, String> uiTableCellValue = tableCellValues.get(count);
@@ -556,13 +574,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	public  void compareexporttableDatannumberofentries(List<Map<String, String>> dataTablefound,
 			List<Map<String, String>> exporttableDataFound) {	
 					
-			for (Map<String, String> m1 : dataTablefound) {
-				for (Map<String, String> m2 : exporttableDataFound) {
-					if (m1.get("rowdata").equals(m2.get("rowdata"))) {
-						Assert.assertEquals(formatFloat(m1.get("rowdata")), formatFloat(m2.get("rowdata")));
-					}
-				}
-			}
+		Assert.assertEquals(tableCellValues, tableCellValues1);
 		}
 
 	public void compareexporttableDatannumberofentriesNotFound(List<Map<String, String>> dataTableNotfound,
@@ -575,8 +587,6 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 					Assert.assertEquals(formatFloat(m1.get("rowdata")), formatFloat(m2.get("rowdata")));
 				}
 			}
-		}
-		
-	}
-		
-	}
+		}		
+	}		
+}

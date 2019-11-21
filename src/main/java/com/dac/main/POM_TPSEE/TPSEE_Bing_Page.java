@@ -74,7 +74,7 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 			wait.until(ExpectedConditions.visibilityOf(XLSXExport));
 			XLSXExport.click();
 			Thread.sleep(5000);
-			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+BingXLSX));
+			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+BingXLSX));
 			Thread.sleep(6000);
 			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile(Exportpath));
 			}else {

@@ -4,10 +4,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -17,11 +22,9 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -36,6 +39,7 @@ import com.dac.main.BasePage;
 import resources.ExcelHandler;
 import resources.FileHandler;
 import resources.JSWaiter;
+import resources.formatConvert;
 
 public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERepository {
 
@@ -89,7 +93,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	@FindBy(css = "rect.highcharts-plot-background")
 	public WebElement hstryGrph;
 
-	@FindBy(css = ".highcharts-label.highcharts-tooltip-box.highcharts-color-none")
+	@FindBy(css = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none")
 	private WebElement grphtooltip; 
 	
 	//section of overall report
@@ -108,6 +112,49 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	
 	@FindBy(xpath = "//div[@class='container']/div[@class='row']/div[@class='col-lg-2 bar-chart-column']")
 	private WebElement vendorslist;
+	
+	@FindBy(xpath = "(//*[name()='g' and @class='highcharts-range-selector-group']/*[name()='g'])[1]")
+	private WebElement highChartZoom;
+	
+	@FindBy(xpath = "(//*[name()='g' and @class='highcharts-range-selector-buttons']/*[name()='g'])[1]")
+	private WebElement highChart_1M;
+	
+	@FindBy(xpath = "(//*[name()='g' and @class='highcharts-range-selector-buttons']/*[name()='g'])[2]")
+	private WebElement highChart_3M;
+	
+	@FindBy(xpath = "(//*[name()='g' and @class='highcharts-range-selector-buttons']/*[name()='g'])[3]")
+	private WebElement highChart_6M;
+	
+	@FindBy(xpath = "(//*[name()='g' and @class='highcharts-range-selector-buttons']/*[name()='g'])[4]")
+	private WebElement highChart_YTD;
+	
+	@FindBy(xpath = "(//*[name()='g' and @class='highcharts-range-selector-buttons']/*[name()='g'])[5]")
+	private WebElement highChart_1y;
+	
+	@FindBy(xpath = "(//*[name()='g' and @class='highcharts-range-selector-buttons']/*[name()='g'])[6]")
+	private WebElement highChart_All;
+	
+	@FindBy(xpath = "(//*[name()='g' and @class='highcharts-input-group']/*[name()='g'])[2]/*[name()='text']")
+	private WebElement highChart_fromDate;
+	
+	@FindBy(xpath = "(//*[name()='g' and @class='highcharts-input-group']/*[name()='g'])[4]/*[name()='text']")
+	private WebElement highChart_toDate;
+	
+	@FindBy(className = "ui-datepicker-month")
+	private WebElement currentMonth_DatePicker;
+	
+	@FindBy(className = "ui-datepicker-year")
+	private WebElement currentYear_DatePicker;
+	
+	@FindBy(xpath = "//*[@class='back-to-top btn btn-primary']")
+	private WebElement Top;
+	
+	@FindBy(xpath = "//*[@data-handler='prev']")
+	private WebElement prevMonth;
+	
+	@FindBy(xpath = "//*[@data-handler='next']")
+	private WebElement nextMonth;
+	
 	
 	/**
 	 * @param Country
@@ -202,9 +249,13 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 
 	//convert exported file from csv to xlsx
 	public void convertExports(String filename, String export) throws FileNotFoundException, IOException {
-		//String report_export = new formatConvert(Exportpath + filename).convertFile("xlsx");
+		String report_export = new formatConvert(Exportpath + filename).convertFile("xlsx");
 		FileHandler.renameTo(new File(Exportpath + filename), Exportpath + export);
 		
+	}
+	
+	public void renamefile(String filename, String export) throws FileNotFoundException, IOException{
+		FileHandler.renameTo(new File(Exportpath + filename), Exportpath + export);
 	}
 	
 	
@@ -395,6 +446,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				}
 			}
 		
+		//Get data using column name
 		public int GetDataUsingColName(String PathofXL, String Col_Name) throws Exception {		  
 			
 		      FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
@@ -498,72 +550,334 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			}
 		}
 		
-		
-		public List<Map<String, String>> excelreader(String sourceFilePath) throws IOException {
-	    	// Location of the source file
-	       // String sourceFilePath = "C:/Vinay/ApachePoi/TestFile.xls";
-	          
-	        FileInputStream fileInputStream = null;
-	          
-	        // Array List to store the excel sheet data
-	        List excelData = new ArrayList();
-	          
-	        try {
-	              
-	            // FileInputStream to read the excel file
-	            fileInputStream = new FileInputStream(sourceFilePath);
-	   
-	            // Create an excel workbook
-	            XSSFWorkbook excelWorkBook = new XSSFWorkbook(fileInputStream);
-	              
-	            // Retrieve the first sheet of the workbook.
-	            XSSFSheet excelSheet = excelWorkBook.getSheetAt(0);
-	   
-	            // Iterate through the sheet rows and cells. 
-	            // Store the retrieved data in an arrayList
-	            Iterator rows = excelSheet.rowIterator();
-	            while (rows.hasNext()) {
-	                XSSFRow row = (XSSFRow) rows.next();
-	                Iterator cells = row.cellIterator();
-	   
-	                List cellData = new ArrayList();
-	                while (cells.hasNext()) {
-	                    XSSFCell cell = (XSSFCell) cells.next();
-	                    cellData.add(cell);
-	                }
-	   
-	                excelData .add(cellData);
-	            }
-	              
-	            // Print retrieved data to the console
-	            for (int rowNum = 0; rowNum < excelData.size(); rowNum++) {
-	                  
-	                List list = (List) excelData.get(rowNum);
-	                  
-	                for (int cellNum = 0; cellNum < list.size(); cellNum++) {
-	                      
-	                    XSSFCell cell = (XSSFCell) list.get(cellNum);
-	                      
-	                    if(cell.getCellType() == XSSFCell.CELL_TYPE_STRING) {
-	                        System.out.print(cell.getRichStringCellValue().getString() + " ");
-	                    } else if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
-	                        System.out.print(cell.getNumericCellValue() + " ");
-	                    } else if(cell.getCellType() == XSSFCell.CELL_TYPE_BOOLEAN) {
-	                        System.out.println(cell.getBooleanCellValue() + " ");
-	                    }
-	                }
-	                System.out.println("");
-	            }
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        } finally {
-	            if (fileInputStream != null) {
-	                fileInputStream.close();
-	            }
-	        }
-			return excelData;
-	    }
+		/**
+		 * Get the initial point and date of the graph
+		 * @return initial/starting History graph value 
+		 * @throws ParseException 
+		 * @throws bsh.ParseException 
+		 * @throws InterruptedException 
+		 * @throws IOException 
+		 * @throws FileNotFoundException 
+		 */
+		public String verifyinitialHistoryGraph() throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
+			
+			waitForElement(hstryGrph, 30);
+			scrollByElement(hstryGrph);
+			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+			action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 -980, 0).click().perform();
+			
+			//read the tooltip variables
+			String initialtooltipvalue = grphtooltip.getText();
+			System.out.println("\n Reading tooltipdata ********** \n");
+			System.out.println("\n tooltipvalue is \n" +initialtooltipvalue);
+			String initdate = initialtooltipvalue.substring(0, 10);
+			System.out.println(initdate);
+			return initdate;
+		}
 		
 		
+		//Get the Latest point and date of the graph
+		public String verifyfinalHistorygraph() throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException{
+			waitForElement(hstryGrph, 30);
+			scrollByElement(hstryGrph);
+			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+			action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 - 2, 0).click().perform();
+			
+			//read the tooltip variables
+			String finaltooltipvalue = grphtooltip.getText();
+			System.out.println("\n Reading tooltipdata ********** \n");
+			System.out.println("\n tooltipvalue is \n" +finaltooltipvalue);
+			String finaldate = finaltooltipvalue.substring(0, 10);
+			return finaldate;			
+		}		
+		
+		//To Get Number of days between two dates
+		
+	//	^((([0]?[1-9]|1[0-2])(:|\.)
+		
+		public  int getNumberofDays() throws Exception {
+	
+			Date init = getInitialDate();
+			Thread.sleep(5000);
+			Date end =  getFinalDate();
+			Thread.sleep(5000);
+			String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
+			SimpleDateFormat formats = new SimpleDateFormat(var);
+			System.out.println(var);
+			String today = ((JavascriptExecutor)driver).executeScript("return moment().format(window.dateFormat.shortTemplate.PlainHtml.toUpperCase())").toString();
+			System.out.println(today);
+			Date todaydate = formats.parse(today);
+			System.out.println(todaydate);
+			String Yesterday = ((JavascriptExecutor)driver).executeScript("return moment().add({days: -1}).format(window.dateFormat.shortTemplate.PlainHtml.toUpperCase())").toString();
+			Date latest = formats.parse(Yesterday);
+			System.out.println(latest);
+			Thread.sleep(5000);			
+			Assert.assertEquals(end, latest);
+			long difference = Math.abs(init.getTime() - end.getTime());
+	        long differenceDates = difference / (24 * 60 * 60 * 1000);
+			int diff = (int)(long)differenceDates;
+			System.out.println(diff);	
+			System.out.println(diff);
+			return diff;
+		}
+		
+		
+		//Get initial point of graph
+		public Date getInitialDate() throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
+			
+			String var = null;			
+			var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
+			System.out.println(var);
+			String InitialDate = verifyinitialHistoryGraph();
+			SimpleDateFormat formats = new SimpleDateFormat(var);
+			Date startDate = formats.parse(InitialDate);
+			
+			return startDate;
+			
+		}
+		
+		//Get final point of the graph
+		public Date getFinalDate() throws bsh.ParseException, FileNotFoundException, ParseException, IOException, InterruptedException {
+			
+			String var = null;			
+			var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
+			System.out.println(var);
+			String FinalDate = verifyfinalHistorygraph();
+			SimpleDateFormat formats = new SimpleDateFormat(var);
+			Date endtDate = formats.parse(FinalDate);
+			
+			return endtDate;
+		}
+
+		//To check whether element is clicked
+		public boolean eleClicked(WebElement element) {
+			if(element.isDisplayed()) {
+				String classes = element.getAttribute("class");
+				boolean isDisabled = classes.contains("highcharts-button highcharts-button-pressed");
+				System.out.println(isDisabled);
+				return !(isDisabled);			
+			}
+			return false;
+		}
+		
+		//Click on highchart zoom functionality
+		public TPSEE_abstractMethods clickHighchartCriteria(String durationFor) throws Exception {
+			durationFor = durationFor.toLowerCase();
+			scrollByElement(highChartZoom);
+			int days;			
+			if((!durationFor.equalsIgnoreCase("null"))) {				
+				switch(durationFor) {				
+				case "1m"  : 	clickelement(highChart_1M);
+								if(eleClicked(highChart_1M)) {
+								days = getNumberofDays();			
+								if(days >= 28 && days<=31 ) {
+									System.out.println("1 Month data is displayed");
+								}else {
+									System.out.println("Not 1 Month");
+										}
+									}else {
+										System.out.println("Element not clicked");
+									}
+								break;
+							
+				case "3m"  : 	clickelement(highChart_3M);
+								if(eleClicked(highChart_3M)) {
+								days = getNumberofDays();
+								if(days>=90 && days<=92) {
+									System.out.println("3 Month data is displayed");
+									}else {
+										System.out.println("Not 3 Month");
+										}
+									}else {
+										System.out.println("Element not clicked");
+									}
+								break;
+							 
+				case "6m"  : 	clickelement(highChart_6M);
+								if(eleClicked(highChart_6M)) {
+									days = getNumberofDays();
+									if(days>=180 && days<=184) {
+										System.out.println("6 Month data is displayed");
+									}else {
+										System.out.println("Not 6 Month");
+										}
+									}else {
+										System.out.println("Element not clicked");
+									}
+								break;
+							 
+				case "ytd" : 	clickelement(highChart_YTD);
+								if(eleClicked(highChart_YTD)) {
+							 	days = getNumberofDays();
+								}else {
+									System.out.println("Element Not clicked");
+									}
+								break;
+						     
+				case "1y"  : 	clickelement(highChart_1y);
+								if(eleClicked(highChart_1y)) {
+									days = getNumberofDays();
+									if(days>=364 && days<=366) {
+										System.out.println("1 Year data is displayed");
+									}else {
+										System.out.println("Not 1 Year");
+										
+										}
+									}else {
+									System.out.println("Element not clicked");
+									}
+								break;
+							 
+				case "all" :
+				default    : 	clickelement(highChart_All);
+								if(eleClicked(highChart_All)) {
+								days = getNumberofDays();
+								}else {
+									System.out.println("Element not clicked");
+								}				
+						}
+				}
+				return this;
+		}	
+		
+		//To check whether given element is visible 
+		public boolean IsVisible(WebElement Title) {
+			boolean  Visibiltyofele = false;
+			if(Title.isDisplayed()) {
+				Visibiltyofele =  true;
+			}else {
+				System.out.println("Element Not Visible");
+			}
+			return Visibiltyofele;			
+		}
+		
+		//Top button fuctionality
+		public void TopButton() throws InterruptedException {			
+			waitForElement(Top, 10);
+			scrollByElement(Top);
+			if(Top.isDisplayed() && Top.isEnabled()) {
+				clickelement(Top);
+				Thread.sleep(5000);
+				boolean x = IsVisible(Top);
+				System.out.println(x);
+				if(x = true) {
+					System.out.println("Button Clicked");
+				}else {
+					System.out.println("Button not clicked");
+				}				
+			}else {
+				System.out.println("Title is not displayed");
+			}			
+		}	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		String regex = "^[- /.]";
+		
+		private void selectCalender_Date(WebElement calenderField, int day_d, String month_MMM, int year_YYYY) {
+
+			clickelement(calenderField);
+			//calenderField.click();
+			int diff = year_YYYY - Integer.parseInt(currentYear_DatePicker.getText());
+			if(diff != 0) {
+				while(diff < 0) {
+					clickelement(prevMonth);
+					//prevMonth.click();
+					diff = year_YYYY - Integer.parseInt(currentYear_DatePicker.getText());
+				}
+				while(diff > 0) {
+					clickelement(nextMonth);
+					//nextMonth.click();
+					diff = year_YYYY - Integer.parseInt(currentYear_DatePicker.getText());
+				}
+			}
+			if(diff == 0) {
+				if(!(month_MMM.equals(currentMonth_DatePicker.getText()))) {
+					int actualMonthCode = monthCode(currentMonth_DatePicker.getText());
+					int expMonthCode = monthCode(month_MMM);
+					int diffMonth = expMonthCode - actualMonthCode;
+					while(diffMonth < 0) {
+						clickelement(prevMonth);
+						//prevMonth.click();
+						diffMonth = monthCode(month_MMM) - monthCode(currentMonth_DatePicker.getText());
+					}
+					while(diffMonth > 0) {
+						clickelement(nextMonth);
+						//nextMonth.click();
+						diffMonth = monthCode(month_MMM) - monthCode(currentMonth_DatePicker.getText());
+					}
+				}
+			}
+			(driver.findElement(By.xpath("//*[@class='ui-datepicker-calendar']//td/a[text()="+day_d+"]"))).click();;
+		}
+		
+		private int monthCode(String month_MMM) {
+
+			int month = 0;
+			Date date;
+			try {
+				
+				date = new SimpleDateFormat("MMM", Locale.ENGLISH).parse("February");
+				 Calendar cal = Calendar.getInstance();
+				 cal.setTime(date);
+				 month = cal.get(Calendar.MONTH);
+				 //System.out.println(month);
+				 //System.out.println(month == Calendar.FEBRUARY);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			return month;
+		}
+
+		public TPSEE_abstractMethods selectCalender_FromDate(int day_d, String month_MMM, int year_YYYY) {
+			if(day_d != 0 | !(month_MMM.equalsIgnoreCase("null")) | year_YYYY != 0 ) {
+				selectCalender_Date(highChart_fromDate, day_d, month_MMM, year_YYYY);
+			}
+			return this;
+		}
+		
+		public TPSEE_abstractMethods selectCalender_ToDate(int day_d, String month_MMM, int year_YYYY) {
+			if(day_d != 0 | !(month_MMM.equalsIgnoreCase("null")) | year_YYYY != 0 ) {
+				selectCalender_Date(highChart_toDate, day_d, month_MMM, year_YYYY);	
+			}
+			return this;
+		}
+		
+		public String getCurrentFromDate() {
+			return highChart_fromDate.getText();
+		}
+		
+		public String getCurrentToDate() {
+			return highChart_toDate.getText();
+		}
+
+		public void enterFromDate(String date) {
+			JSWaiter.waitJQueryAngular();
+			String[] dateSplit = date.split("/");
+			String Lchars = Month.of(Integer.parseInt(dateSplit[0])).name().toLowerCase();
+			String month =Month.of(Integer.parseInt(dateSplit[0])).name().charAt(0)+Lchars.substring(1, Lchars.length());
+			selectCalender_FromDate(Integer.parseInt(dateSplit[0]), month, Integer.parseInt(dateSplit[2]));
+		}
+			
+		public void enterToDate(String date) {
+			JSWaiter.waitJQueryAngular();
+			String[] dateSplit = date.split("/");
+			String Lchars = Month.of(Integer.parseInt(dateSplit[0])).name().toLowerCase();
+			String month =Month.of(Integer.parseInt(dateSplit[0])).name().charAt(0)+Lchars.substring(1, Lchars.length());
+			selectCalender_ToDate(Integer.parseInt(dateSplit[0]), month, Integer.parseInt(dateSplit[2]));
+		}
+	
 		
 	}
