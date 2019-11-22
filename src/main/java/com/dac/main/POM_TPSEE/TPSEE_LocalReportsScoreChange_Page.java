@@ -1,8 +1,13 @@
 package com.dac.main.POM_TPSEE;
 
+import java.io.FileInputStream;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -37,6 +42,9 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 	}
 
 	/*----------------Locators----------------*/
+
+	@FindBy(xpath = "//*[@id='notificationList']")
+	private WebElement notificationList ;
 	
 	@FindBy(xpath = "//*[@id='name1']")
 	private WebElement notificationName;
@@ -71,19 +79,27 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 	private WebElement notificationTitle;
 	
 	@FindBy(xpath = "//*[@class='notification-success success modal fade in']")
-	private WebElement DialogBox;
+	private WebElement successDialogBox;
+	
+	@FindBy(xpath="//*[@id='table_notification']//tr[1]/td[7]")
+	private WebElement Actions;
+	
+	@FindBy(xpath = "//*[@class='bootbox modal fade bootbox-confirm in']")
+	private WebElement confirmDialogBox;
 
 
 	public void LocalReportScoreChangeNotifiction(String strNotificationName, String strEmail, 
 			String strReportname, String strCondition, String strPercentage) {
-		WebElement emailAddress;
+		WebElement emailAddress,msg, btnClose;
 		JSWaiter.waitJQueryAngular();
 		try {
 		waitForElement(notificationTitle, 10);
+		notificationName.clear();
 		notificationName.sendKeys(strNotificationName);
 		
 		waitForElement(notification, 10);
 		emailAddress = notification.findElement(By.xpath("(//div[@class='col-sm-10']//input)[3]"));
+		emailAddress.clear();
 		emailAddress.sendKeys(strEmail);
 		emailAddress.sendKeys(Keys.ENTER);
 		
@@ -94,17 +110,22 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 		selectValue(selectCondition, strCondition);
 		
 		waitForElement(percentage, 10);
+		percentage.clear();
 		percentage.sendKeys(strPercentage);
 		savedata();
 		
-		boolean dialog=DialogBox.isDisplayed();
+		boolean dialog=successDialogBox.isDisplayed();
 		System.out.println(" dispalyed box :"+ dialog);
 		
-		if(DialogBox.isDisplayed()) {
-			WebElement msg=driver.findElement(By.xpath("//*[@class='notification-success success modal fade in']//div[1]//div//div[2]/h3"));
+		if(successDialogBox.isDisplayed()) {
+			msg=driver.findElement(By.xpath("//*[@class='notification-success success modal fade in']//div[1]//div//div[2]/h3"));
+			btnClose=driver.findElement(By.xpath("//*[@class='notification-success success modal fade in']//div[1]//div//div[3]//button"));
 			String ms=msg.getText();
 			System.out.println(ms);
 			Assert.assertTrue(ms.toLowerCase().contains("success"));
+			clickelement(btnClose);
+			scrollByElement(notificationList);
+			waitUntilLoad(driver);
 		}else {
 			Assert.fail("Notification not added");
 		}
@@ -128,28 +149,55 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 	private void savedata() {
 		if(btnSave.isDisplayed()) {
 			clickelement(btnSave);
-			waitForElement(DialogBox, 10);
-		}
-	}
-	private void readXcelFile() {
-		try {
-			ExcelHandler wb = new ExcelHandler("./data/GroupAndAccountKeywords.xlsx", "AccountLevelKeywords"); wb.deleteEmptyRows();
-			for(int i=1;i<=wb.getRowCount();i++) {
-				if(i>1) CurrentState.getDriver().navigate().refresh();
-				waitUntilLoad(CurrentState.getDriver());
-				String AccKey = wb.getCellValue(i, wb.seacrh_pattern("AccountKeyword", 0).get(0).intValue());
-				String GrKey = wb.getCellValue(i, wb.seacrh_pattern("GroupKey", 0).get(0).intValue());
-				String GrKeyword = wb.getCellValue(i, wb.seacrh_pattern("GroupKeyword", 0).get(0).intValue());
-				//applyKeywords(AccKey , GrKey , GrKeyword);
-				System.out.println(AccKey+", "+GrKey+", "+GrKeyword);
-				System.out.println();
-			//	s.clickApplyKeyword();
-				BaseClass.addEvidence(CurrentState.getDriver(),
-						"Applied Account and Group Level Keywords: "+AccKey+", "+GrKey+", "+GrKeyword+"", "yes");
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
+			waitForElement(successDialogBox, 10);
 		}
 	}
 	
+	public String[][] readConfiguration() throws Exception{
+				
+		String [][] tbl=new ExcelHandler("./data/ReportScoreChangeNotification.xlsx", "Configuration").getExcelTable();
+		System.out.println("String Array Excel: "+tbl.length);
+		
+		return tbl;
+		
+	}
+	public void editEmailNotification(String [][] configuration) {
+		WebElement btnEdit;
+		JSWaiter.waitJQueryAngular();
+		
+		btnEdit=Actions.findElement(By.xpath("//*[@id='table_notification']//tr[1]//td[7]//button[1]"));
+		scrollByElement(btnEdit);
+		clickelement(btnEdit);
+		LocalReportScoreChangeNotifiction(configuration[2][0],configuration[2][1],configuration[2][2],configuration[2][3],configuration[2][4]);
+		System.out.println("Notification Updated");
+		
+	}
+
+	public void deleteEmailNotification() {
+		WebElement btnDelete,btnConfirmOK,msg,btnClose;
+		JSWaiter.waitJQueryAngular();
+		
+		btnDelete=Actions.findElement(By.xpath("//*[@id='table_notification']//tr[1]//td[7]//button[2]"));
+		scrollByElement(btnDelete);
+		clickelement(btnDelete);
+		if(confirmDialogBox.isDisplayed()) {
+			btnConfirmOK=driver.findElement(By.xpath("//*[@class='bootbox modal fade bootbox-confirm in']//div//div[2]//button[2]"));
+			scrollByElement(btnConfirmOK);
+			clickelement(btnConfirmOK);
+			waitUntilLoad(driver);
+		}
+		if(successDialogBox.isDisplayed()) {
+			msg=driver.findElement(By.xpath("//*[@class='notification-success success modal fade in']//div[1]//div//div[2]/h3"));
+			btnClose=driver.findElement(By.xpath("//*[@class='notification-success success modal fade in']//div[1]//div//div[3]//button"));
+			String ms=msg.getText();
+			System.out.println(ms);
+			Assert.assertTrue(ms.toLowerCase().contains("success"));
+			clickelement(btnClose);
+			waitUntilLoad(driver);
+		}else {
+			Assert.fail("Notification not Deleted");
+		}
+		System.out.println("Notification Deleted");
+		
+	}
 }
