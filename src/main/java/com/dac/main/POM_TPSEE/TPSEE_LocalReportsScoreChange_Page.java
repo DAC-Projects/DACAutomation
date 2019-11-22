@@ -1,6 +1,7 @@
 package com.dac.main.POM_TPSEE;
 
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -86,7 +87,16 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 	
 	@FindBy(xpath = "//*[@class='bootbox modal fade bootbox-confirm in']")
 	private WebElement confirmDialogBox;
-
+	
+	/*--------------------Notification List Table------------------*/
+	@FindBy(xpath = "//div[@id='table_groups_wrapper']/table")
+	private WebElement NotificationTable;
+	
+	@FindBy(xpath = "//table[@id='table_notification']//thead")
+	private WebElement NotificationTableHeader;
+	
+	@FindBy(xpath = "//table[@id='table_notification']//tbody//tr")
+	private List<WebElement> NotificationTableRow;
 
 	public void LocalReportScoreChangeNotifiction(String strNotificationName, String strEmail, 
 			String strReportname, String strCondition, String strPercentage) {
@@ -161,6 +171,25 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 		return tbl;
 		
 	}
+	public void verifyEmailNotification(String [][] configuration, int row) {
+		String[] data = new String[1];
+		JSWaiter.waitJQueryAngular();
+		scrollByElement(NotificationTableHeader);
+		data=getNotificationTableDate(row);
+		System.out.println("Notification Name: "+data[0]+" Input Data: "+configuration[row][0]);
+		System.out.println("Email: "+data[3]+" Input Data: "+configuration[row][1]);
+		System.out.println("Report: "+data[4]+" Input Data: "+configuration[row][2]);
+		System.out.println("Condition: "+data[5]+" Input Data: "+configuration[row][3]);
+		System.out.println("Percentage: "+data[5]+" Input Data: "+configuration[row][4]);
+		
+		Assert.assertEquals(data[0], configuration[row][0],"Notification Name verification");
+		Assert.assertTrue(data[3].contains(configuration[row][1]),"Email verification");
+		Assert.assertEquals(data[4], configuration[row][2],"Report verification");
+		Assert.assertTrue(data[5].contains(configuration[row][3]),"Condition verification");
+		Assert.assertTrue(data[5].contains(configuration[row][4]),"Percentage verification");
+		System.out.println("Notification Verified");
+		
+	}
 	public void editEmailNotification(String [][] configuration) {
 		WebElement btnEdit;
 		JSWaiter.waitJQueryAngular();
@@ -200,4 +229,41 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 		System.out.println("Notification Deleted");
 		
 	}
+	
+	@SuppressWarnings("unused")
+	private String[] getNotificationTableDate(int row) {
+		ArrayList<String> Data = new ArrayList<String>();
+		
+		JSWaiter.waitJQueryAngular();
+		scrollByElement(NotificationTableHeader);
+		List < WebElement > rows_table = NotificationTableRow;
+		List < WebElement > Columns_row = rows_table.get(row-1).findElements(By.tagName("td"));
+		List < WebElement > headerTableRow=NotificationTableHeader.findElements(By.tagName("th"));
+		int columns_count = Columns_row.size();	
+		String headerText = "" , celtext ="";
+		for (int column = 0; column < columns_count; column++) {
+			headerText = headerTableRow.get(column).getText().toString();
+			celtext = Columns_row.get(column).getText().trim();
+			Data.add(celtext);
+		}
+		System.out.println("Values from Table : "+Data);
+		String[] str = GetStringArray(Data); 
+		return str;
+	}
+	
+	public static String[] GetStringArray(ArrayList<String> arr) 
+    { 
+  
+        // declaration and initialise String Array 
+        String str[] = new String[arr.size()]; 
+  
+        // ArrayList to Array Conversion 
+        for (int j = 0; j < arr.size(); j++) { 
+  
+            // Assign each value to String array 
+            str[j] = arr.get(j); 
+        } 
+  
+        return str; 
+    }
 }

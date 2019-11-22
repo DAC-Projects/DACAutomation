@@ -130,6 +130,7 @@ public class TPSEE_ReviewStream_Page extends TPSEE_abstractMethods{
 	    	for(int i=0;i<page;i++) {	//Loop will execute for all records in page
 	    		scrollByElement(ReviewStreamTableHeader);
 	    		List < WebElement > rows_table = ReviewStreamTableRow;	//To locate rows of table.
+	    		
 	     		int rows_count = rows_table.size();		//To calculate no of rows In table.
 	     		System.out.println("Rows in : "+rows_count+" Page: "+page);
 //	    		count = count + rows_count;
@@ -140,18 +141,10 @@ public class TPSEE_ReviewStream_Page extends TPSEE_abstractMethods{
 
 	    			List < WebElement > Columns_row = rows_table.get(row).findElements(By.tagName("td"));	//To locate columns(cells) of that specific row.
 	    			int columns_count = Columns_row.size();	
-	    			//System.out.println("Column count is: "+columns_count);
-//	    			int noOfRows=row+1;
+
 	    			String reviewdate= Columns_row.get(3).getText();// driver.findElement(By.xpath("//*[@id='table_review']//tr//td[4]")).getText();
 	    			String source=driver.findElement(By.xpath("//table[@id='table_review']//tbody//tr["+ (row+1) +"]//td//a")).getAttribute("href");
-	    		//	String rowtext=driver.findElement(By.xpath("//table[@id='table_review']//tbody//tr["+ (row+1) +"]")).getText();
-	    			//System.out.println("Row text: "+rowtext);
-//	    			System.out.println("Row : ("+(row+1)+") - Review Date: "+reviewdate+" & Source >>"+source);
-	    			
-	    			//Columns_row.forEach(System.out::println);//Print List
-	    			
-//	    			System.out.println("Number of cells In Row " + noOfRows + " are " + columns_count);
-	    			boolean date_exist=ReviewStreamDate(reviewdate);
+	       			boolean date_exist=ReviewStreamDate(reviewdate);
 	    			//int column =0;
 	    			if(!source.contains("yelp")) {
 	    				if (date_exist) {

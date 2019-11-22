@@ -24,7 +24,6 @@ public class TPSEE_LocalReportsScoreChange_Test extends BaseClass {
 			CurrentState.getLogger().log(Status.PASS, "Navigated successfully to Local Reports Score Change Page");
 			addEvidence(CurrentState.getDriver(), "Navigate to Local Reports Score Change from Dashboard", "yes");
 
-			// Assert.assertFalse( "sample error", true);
 		}
 		
 		//Test for Create Email Notification
@@ -37,6 +36,7 @@ public class TPSEE_LocalReportsScoreChange_Test extends BaseClass {
 					configuration=notification.readConfiguration();
 					
 					notification.LocalReportScoreChangeNotifiction(configuration[1][0],configuration[1][1],configuration[1][2],configuration[1][3],configuration[1][4]);
+					notification.verifyEmailNotification(configuration, 1);
 					CurrentState.getLogger().log(Status.PASS, "Notification Created");
 					addEvidence(CurrentState.getDriver(), "New Local Report Score Change Notification Created", "yes");
 				}
@@ -48,10 +48,11 @@ public class TPSEE_LocalReportsScoreChange_Test extends BaseClass {
 		public void editEmailNotification() throws Exception {
 					notification = new TPSEE_LocalReportsScoreChange_Page(CurrentState.getDriver());
 					notification.editEmailNotification(configuration);
-//					notification.LocalReportScoreChangeNotifiction("Notification3","spillai@dacgroup.com","Visibility","below","50");
+					notification.verifyEmailNotification(configuration, 2);
 					CurrentState.getLogger().log(Status.PASS, "Notification Updated");
 					addEvidence(CurrentState.getDriver(), "Local Report Score Change Notification Updated", "yes");
 				}
+		
 		
 		//Test for Edit Email Notification
 				@SuppressWarnings("unchecked")
@@ -60,7 +61,6 @@ public class TPSEE_LocalReportsScoreChange_Test extends BaseClass {
 				public void deleteEmailNotification() throws Exception {
 							notification = new TPSEE_LocalReportsScoreChange_Page(CurrentState.getDriver());
 							notification.deleteEmailNotification();
-//							notification.LocalReportScoreChangeNotifiction("Notification3","spillai@dacgroup.com","Visibility","below","50");
 							CurrentState.getLogger().log(Status.PASS, "Notification deleted");
 							addEvidence(CurrentState.getDriver(), "Local Report Score Change Notification deleted", "yes");
 						}
