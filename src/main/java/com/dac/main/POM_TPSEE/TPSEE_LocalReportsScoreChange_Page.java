@@ -115,8 +115,6 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 		String strReportname=inputData[excelRow][2]; String strCondition=inputData[excelRow][3];
 		String strPercentage=inputData[excelRow][4]; 				
 		JSWaiter.waitJQueryAngular();
-//		NotificationTabelData=getNotificationTableData();
-		System.out.println("Inside Save Notification : "+ excelRow);
 		
 			try {
 				waitForElement(notificationTitle, 30);
@@ -197,17 +195,7 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 				break loop;
 			}
 		}
-		
-		
-	
-		
-//		btnDelete=getDeleteButtonRow(ExcelData[newData][0]);
-//		if(btnDelete != null) {
-//			scrollByElement(btnDelete);
-//			clickelement(btnDelete);
-//		}
-//				Actions.findElement(By.xpath("//*[@id='table_notification']//tr[1]//td[7]//button[1]"));
-		
+			
 		LocalReportScoreChangeNotifiction(ExcelData,newData);
 		verifyEmailNotification(ExcelData, newData);
 		
@@ -219,7 +207,8 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 		JSWaiter.waitJQueryAngular();
 		System.out.println("verifyEmailNotification "+ row);
 		scrollByElement(NotificationTableHeader);
-		data=getNotificationTableData(row);
+		int uiRow=1;
+		data=getNotificationTableData(uiRow);
 		System.out.println("Notification Name: "+data[0]+" Input Data: "+configuration[row][0]);
 		System.out.println("Email: "+data[3]+" Input Data: "+configuration[row][1]);
 		System.out.println("Report: "+data[4]+" Input Data: "+configuration[row][2]);
@@ -239,7 +228,6 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 		JSWaiter.waitJQueryAngular();
 		System.out.println("editEmailNotification "+ newData+"Old: "+oldData);
 		btnEdit=getEditButtonRow(ExcelData[oldData][0]);
-//				Actions.findElement(By.xpath("//*[@id='table_notification']//tr[1]//td[7]//button[1]"));
 		scrollByElement(btnEdit);
 		clickelement(btnEdit);
 		LocalReportScoreChangeNotifiction(ExcelData,newData);
@@ -254,8 +242,6 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 		System.out.println("deleteEmailNotification "+ excelRow);
 		
 		btnDelete=getDeleteButtonRow(ExcelData[excelRow][0]);
-		
-//				Actions.findElement(By.xpath("//*[@id='table_notification']//tr[1]//td[7]//button[2]"));
 		scrollByElement(btnDelete);
 		clickelement(btnDelete);
 		waitForElement(confirmDialogBox, 30);
