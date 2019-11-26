@@ -13,7 +13,7 @@ import resources.CurrentState;
 public class TPSEE_LocalReportsScoreChange_Test extends BaseClass {
 	Navigationpage np;
 	TPSEE_LocalReportsScoreChange_Page notification ;
-	String configuration[][];
+	String xcelInputData[][];
 
 	
 	//Navigation Test
@@ -24,6 +24,7 @@ public class TPSEE_LocalReportsScoreChange_Test extends BaseClass {
 			CurrentState.getLogger().log(Status.PASS, "Navigated successfully to Local Reports Score Change Page");
 			addEvidence(CurrentState.getDriver(), "Navigate to Local Reports Score Change from Dashboard", "yes");
 
+			// Assert.assertFalse( "sample error", true);
 		}
 		
 		//Test for Create Email Notification
@@ -33,10 +34,10 @@ public class TPSEE_LocalReportsScoreChange_Test extends BaseClass {
 		public void createEmailNotification() throws Exception {
 			
 					notification = new TPSEE_LocalReportsScoreChange_Page(CurrentState.getDriver());
-					configuration=notification.readConfiguration();
+					xcelInputData=notification.readXcelInput();
 					
-					notification.LocalReportScoreChangeNotifiction(configuration[1][0],configuration[1][1],configuration[1][2],configuration[1][3],configuration[1][4]);
-					notification.verifyEmailNotification(configuration, 1);
+					notification.createEmailNotification(xcelInputData,1);
+					
 					CurrentState.getLogger().log(Status.PASS, "Notification Created");
 					addEvidence(CurrentState.getDriver(), "New Local Report Score Change Notification Created", "yes");
 				}
@@ -47,8 +48,9 @@ public class TPSEE_LocalReportsScoreChange_Test extends BaseClass {
 								"smoke" }, description = "TC: Updating Notification to Local Report Score Change")
 		public void editEmailNotification() throws Exception {
 					notification = new TPSEE_LocalReportsScoreChange_Page(CurrentState.getDriver());
-					notification.editEmailNotification(configuration);
-					notification.verifyEmailNotification(configuration, 2);
+					
+					notification.editEmailNotification(xcelInputData,1,2);
+					
 					CurrentState.getLogger().log(Status.PASS, "Notification Updated");
 					addEvidence(CurrentState.getDriver(), "Local Report Score Change Notification Updated", "yes");
 				}
@@ -60,7 +62,7 @@ public class TPSEE_LocalReportsScoreChange_Test extends BaseClass {
 										"smoke" }, description = "TC: Deleting Notification to Local Report Score Change")
 				public void deleteEmailNotification() throws Exception {
 							notification = new TPSEE_LocalReportsScoreChange_Page(CurrentState.getDriver());
-							notification.deleteEmailNotification();
+							notification.deleteEmailNotification(xcelInputData,2);
 							CurrentState.getLogger().log(Status.PASS, "Notification deleted");
 							addEvidence(CurrentState.getDriver(), "Local Report Score Change Notification deleted", "yes");
 						}

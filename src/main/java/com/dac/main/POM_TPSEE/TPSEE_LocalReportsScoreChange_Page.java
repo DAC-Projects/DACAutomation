@@ -27,6 +27,7 @@ import resources.ExcelHandler;
 import resources.JSWaiter;
 
 public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
+	public String [] NotificationTabelData;
 
 	public TPSEE_LocalReportsScoreChange_Page(WebDriver driver) {
 		super(driver);
@@ -97,53 +98,64 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 	
 	@FindBy(xpath = "//table[@id='table_notification']//tbody//tr")
 	private List<WebElement> NotificationTableRow;
-
-	public void LocalReportScoreChangeNotifiction(String strNotificationName, String strEmail, 
-			String strReportname, String strCondition, String strPercentage) {
-		WebElement emailAddress,msg, btnClose;
+	
+	/*-----------Success Popup message for Save*/
+	@FindBy(xpath = "//*[@class='notification-success success modal fade in']//div[1]//div//div[3]//button")
+	private WebElement SuccessBtnClose;
+	
+	@FindBy(xpath = "//*[@class='notification-success success modal fade in']//div[1]//div//div[2]/h3")
+	private WebElement SuccessMessage;
+	
+	
+	
+	
+	public void LocalReportScoreChangeNotifiction(String [][] inputData, int excelRow) {
+		WebElement emailAddress;
+		String strNotificationName=inputData[excelRow][0]; String strEmail=inputData[excelRow][1];
+		String strReportname=inputData[excelRow][2]; String strCondition=inputData[excelRow][3];
+		String strPercentage=inputData[excelRow][4]; 				
 		JSWaiter.waitJQueryAngular();
-		try {
-		waitForElement(notificationTitle, 10);
-		notificationName.clear();
-		notificationName.sendKeys(strNotificationName);
+//		NotificationTabelData=getNotificationTableData();
+		System.out.println("Inside Save Notification : "+ excelRow);
 		
-		waitForElement(notification, 10);
-		emailAddress = notification.findElement(By.xpath("(//div[@class='col-sm-10']//input)[3]"));
-		emailAddress.clear();
-		emailAddress.sendKeys(strEmail);
-		emailAddress.sendKeys(Keys.ENTER);
+			try {
+				waitForElement(notificationTitle, 30);
+				waitForElement(notificationName, 30);
+				notificationName.clear();
+				notificationName.sendKeys(strNotificationName);
+				
+				waitForElement(notification, 10);
+				emailAddress = notification.findElement(By.xpath("(//div[@class='col-sm-10']//input)[3]"));
+				emailAddress.clear();
+				emailAddress.sendKeys(strEmail);
+				emailAddress.sendKeys(Keys.ENTER);
+				
+				waitForElement(selectReport, 10);
+				selectValue(selectReport, strReportname);
+				
+				waitForElement(selectCondition, 10);
+				selectValue(selectCondition, strCondition);
+				
+				waitForElement(percentage, 10);
+				percentage.clear();
+				percentage.sendKeys(strPercentage);
+				savedata();
+				
+					
+				waitForElement(successDialogBox, 20);
+				Assert.assertTrue(SuccessMessage.getText().equals("Success! Your request has been completed!"));
+				
+				clickelement(SuccessBtnClose);
+				scrollByElement(notificationList);
+				
+			
+				
+				}catch(Exception e) {
+					e.printStackTrace();
+					Assert.fail("Notification not added");
+				}
 		
-		waitForElement(selectReport, 10);
-		selectValue(selectReport, strReportname);
 		
-		waitForElement(selectCondition, 10);
-		selectValue(selectCondition, strCondition);
-		
-		waitForElement(percentage, 10);
-		percentage.clear();
-		percentage.sendKeys(strPercentage);
-		savedata();
-		
-		boolean dialog=successDialogBox.isDisplayed();
-		System.out.println(" dispalyed box :"+ dialog);
-		
-		if(successDialogBox.isDisplayed()) {
-			msg=driver.findElement(By.xpath("//*[@class='notification-success success modal fade in']//div[1]//div//div[2]/h3"));
-			btnClose=driver.findElement(By.xpath("//*[@class='notification-success success modal fade in']//div[1]//div//div[3]//button"));
-			String ms=msg.getText();
-			System.out.println(ms);
-			Assert.assertTrue(ms.toLowerCase().contains("success"));
-			clickelement(btnClose);
-			scrollByElement(notificationList);
-			waitUntilLoad(driver);
-		}else {
-			Assert.fail("Notification not added");
-		}
-		
-		}catch(Exception e) {
-			e.printStackTrace();
-			Assert.fail("Notification not added");
-		}
 		waitUntilLoad(driver);
 		
 	}
@@ -163,7 +175,7 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 		}
 	}
 	
-	public String[][] readConfiguration() throws Exception{
+	public String[][] readXcelInput() throws Exception{
 				
 		String [][] tbl=new ExcelHandler("./data/ReportScoreChangeNotification.xlsx", "Configuration").getExcelTable();
 		System.out.println("String Array Excel: "+tbl.length);
@@ -171,11 +183,43 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 		return tbl;
 		
 	}
+	public void createEmailNotification(String [][] ExcelData, int newData) {
+		
+		JSWaiter.waitJQueryAngular();
+		System.out.println("createEmailNotification "+ newData);
+		loop:
+		for(int i=1;i<=10;i++) {
+			try {
+				deleteEmailNotification(ExcelData,newData);
+			}catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("No details existing for delete");
+				break loop;
+			}
+		}
+		
+		
+	
+		
+//		btnDelete=getDeleteButtonRow(ExcelData[newData][0]);
+//		if(btnDelete != null) {
+//			scrollByElement(btnDelete);
+//			clickelement(btnDelete);
+//		}
+//				Actions.findElement(By.xpath("//*[@id='table_notification']//tr[1]//td[7]//button[1]"));
+		
+		LocalReportScoreChangeNotifiction(ExcelData,newData);
+		verifyEmailNotification(ExcelData, newData);
+		
+		System.out.println("Notification Created");
+		
+	}
 	public void verifyEmailNotification(String [][] configuration, int row) {
 		String[] data = new String[1];
 		JSWaiter.waitJQueryAngular();
+		System.out.println("verifyEmailNotification "+ row);
 		scrollByElement(NotificationTableHeader);
-		data=getNotificationTableDate(row);
+		data=getNotificationTableData(row);
 		System.out.println("Notification Name: "+data[0]+" Input Data: "+configuration[row][0]);
 		System.out.println("Email: "+data[3]+" Input Data: "+configuration[row][1]);
 		System.out.println("Report: "+data[4]+" Input Data: "+configuration[row][2]);
@@ -190,53 +234,52 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 		System.out.println("Notification Verified");
 		
 	}
-	public void editEmailNotification(String [][] configuration) {
+	public void editEmailNotification(String [][] ExcelData,int oldData, int newData) {
 		WebElement btnEdit;
 		JSWaiter.waitJQueryAngular();
-		
-		btnEdit=Actions.findElement(By.xpath("//*[@id='table_notification']//tr[1]//td[7]//button[1]"));
+		System.out.println("editEmailNotification "+ newData+"Old: "+oldData);
+		btnEdit=getEditButtonRow(ExcelData[oldData][0]);
+//				Actions.findElement(By.xpath("//*[@id='table_notification']//tr[1]//td[7]//button[1]"));
 		scrollByElement(btnEdit);
 		clickelement(btnEdit);
-		LocalReportScoreChangeNotifiction(configuration[2][0],configuration[2][1],configuration[2][2],configuration[2][3],configuration[2][4]);
+		LocalReportScoreChangeNotifiction(ExcelData,newData);
+		verifyEmailNotification(ExcelData,newData);
 		System.out.println("Notification Updated");
 		
 	}
 
-	public void deleteEmailNotification() {
-		WebElement btnDelete,btnConfirmOK,msg,btnClose;
+	public void deleteEmailNotification(String [][] ExcelData, int excelRow) {
+		WebElement btnDelete,btnConfirmOK;
 		JSWaiter.waitJQueryAngular();
+		System.out.println("deleteEmailNotification "+ excelRow);
 		
-		btnDelete=Actions.findElement(By.xpath("//*[@id='table_notification']//tr[1]//td[7]//button[2]"));
+		btnDelete=getDeleteButtonRow(ExcelData[excelRow][0]);
+		
+//				Actions.findElement(By.xpath("//*[@id='table_notification']//tr[1]//td[7]//button[2]"));
 		scrollByElement(btnDelete);
 		clickelement(btnDelete);
-		if(confirmDialogBox.isDisplayed()) {
-			btnConfirmOK=driver.findElement(By.xpath("//*[@class='bootbox modal fade bootbox-confirm in']//div//div[2]//button[2]"));
-			scrollByElement(btnConfirmOK);
-			clickelement(btnConfirmOK);
-			waitUntilLoad(driver);
-		}
-		if(successDialogBox.isDisplayed()) {
-			msg=driver.findElement(By.xpath("//*[@class='notification-success success modal fade in']//div[1]//div//div[2]/h3"));
-			btnClose=driver.findElement(By.xpath("//*[@class='notification-success success modal fade in']//div[1]//div//div[3]//button"));
-			String ms=msg.getText();
-			System.out.println(ms);
-			Assert.assertTrue(ms.toLowerCase().contains("success"));
-			clickelement(btnClose);
-			waitUntilLoad(driver);
-		}else {
-			Assert.fail("Notification not Deleted");
-		}
+		waitForElement(confirmDialogBox, 30);
+		btnConfirmOK=driver.findElement(By.xpath("//*[@class='bootbox modal fade bootbox-confirm in']//div//div[2]//button[2]"));
+		waitForElement(btnConfirmOK, 20);
+		scrollByElement(btnConfirmOK);
+		clickelement(btnConfirmOK);
+	
+		waitForElement(successDialogBox,10);
+		Assert.assertTrue(SuccessMessage.getText().equals("Success! Your request has been completed!"));
+		clickelement(SuccessBtnClose);
 		System.out.println("Notification Deleted");
-		
+					
 	}
 	
 	@SuppressWarnings("unused")
-	private String[] getNotificationTableDate(int row) {
+	private String[] getNotificationTableData(int row) {
 		ArrayList<String> Data = new ArrayList<String>();
 		
 		JSWaiter.waitJQueryAngular();
 		scrollByElement(NotificationTableHeader);
 		List < WebElement > rows_table = NotificationTableRow;
+		int rows_count = rows_table.size();
+		
 		List < WebElement > Columns_row = rows_table.get(row-1).findElements(By.tagName("td"));
 		List < WebElement > headerTableRow=NotificationTableHeader.findElements(By.tagName("th"));
 		int columns_count = Columns_row.size();	
@@ -246,6 +289,7 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 			celtext = Columns_row.get(column).getText().trim();
 			Data.add(celtext);
 		}
+		
 		System.out.println("Values from Table : "+Data);
 		String[] str = GetStringArray(Data); 
 		return str;
@@ -266,4 +310,21 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
   
         return str; 
     }
+	private WebElement getDeleteButtonRow(String columnText) {
+		System.out.println("Inside getDeleteButtonRow Method: "+ columnText);
+		
+		WebElement btnRemove=driver.findElement(By.xpath("//td[text()='"+ columnText +"']/..//button[@class='btn btn-xs btn-danger remove-notification fa fa-remove']"));
+		
+		return btnRemove;
+		
+	}
+	
+	private WebElement getEditButtonRow(String columnText) {
+		System.out.println("Inside getEditButtonRow Method: "+columnText );
+		
+		WebElement btnRemove=driver.findElement(By.xpath("//td[text()='"+ columnText +"']/..//button[@class='btn btn-xs btn-danger edit-notification fa fa-edit']"));
+		
+		return btnRemove;
+		
+	}
 }
