@@ -1,11 +1,11 @@
 package com.dac.testcases.TPSEE;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Parameters;
+
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.Status;
@@ -18,22 +18,84 @@ import resources.ExcelHandler;
 
 public class TPSEE_Visibility_Test extends BaseClass {
 	
+	
+	
 	static List<Map<String, String>> export;
 	Navigationpage np;
 	TPSEE_Visibility_Page data;
-
+	double score;
+	int location;
+	ArrayList<String> UIsite = new ArrayList<String>();
+	ArrayList<String> XLsite = new ArrayList<String>();
+	
+	
+	/*@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
+	public void GetKPIValues() throws Exception {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		Thread.sleep(10000);
+		score =data.getVisibilityscore();
+		System.out.println(score);
+		location = data.getVisibilityLoc();
+		System.out.println(location);
+		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
+		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
+	}*/
+	
 	//Test for Navigation to Visibilty Page
-	@Test(groups = { "smoke" }, description = "Test for navigating to Visibility page")
-	public void navigateToVisibilityPage() throws Exception {
-		np = new Navigationpage(CurrentState.getDriver());
-		np.navigateTPSEE_Visibility();
+		@Test(priority = 2,groups = { "smoke" }, description = "Test for navigating to Visibility page")
+		public void navigateToVisibilityPage() throws Exception {
+			np = new Navigationpage(CurrentState.getDriver());
+			np.navigateTPSEE_Visibility();				
+			CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Visibility page");
+			addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
+		}
+
+	/*@Test(dependsOnMethods = {"navigateToVisibilityPage"},groups = { "smoke" }, description = "Test for compare KPI Values")
+	public void ovrviewlocscorecompare() throws Exception {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		Thread.sleep(5000);
+		int ovrvwloc = data.overviewlocation();
+		Assert.assertEquals(location, ovrvwloc);		
+		double ovrvwscr = data.overviewscore();
+		Assert.assertEquals(score, ovrvwscr);		
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Visibility page");
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
+		
+		
 	}
 	
+	//Test to verify Zoom Functionality
+	@Test(priority = 4,groups = {"smoke"},
+			description ="Verify Zoom Functionality")
+	public void gethighchartsdate() throws Exception{
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		String OneMonth ="1m";
+		data.clickHighchartCriteria(OneMonth);
+		addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
+		Thread.sleep(5000);
+		String ThreeMonths = "3m";
+		data.clickHighchartCriteria(ThreeMonths);
+		addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
+		Thread.sleep(5000);
+		String SixMonths = "6m";
+		data.clickHighchartCriteria(SixMonths);
+		addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
+		Thread.sleep(5000);
+		String OneYear = "1y";
+		data.clickHighchartCriteria(OneYear);
+		addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
+		Thread.sleep(5000);
+		String YearToDate ="ytd";
+		data.clickHighchartCriteria(YearToDate);
+		addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
+		Thread.sleep(5000);
+		String ALLDATA = "all";
+		data.clickHighchartCriteria(ALLDATA);
+		addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
+		}
+	
 	//Test for applying filters to Visibilty Page
-	@Parameters({ "Filter" })
-	@Test(dependsOnMethods = { "navigateToVisibilityPage" }, groups = {
+	@Test(dependsOnMethods = {"ovrviewlocscorecompare"}, groups = {
 			"smoke" }, description = "Verify Visibility page loads after filter applied")
 	public void verifyFilteringReportsVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -62,9 +124,8 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	}
 	
 
-/*	//Test for export and overview report in Visibility Page
-	@SuppressWarnings("unchecked")
-	@Test(dependsOnMethods = { "navigateToVisibilityPage" ,"verifyFilteringReportsVisibility"}, groups = {
+	//Test for export and overview report in Visibility Page
+	@Test(priority = 6, groups = {
 			"smoke" }, description = "Test for overview export and export verification")
 	public void verifyOverviewReportnExportVisibilityCSV() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -72,18 +133,34 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
 	}
 
-	@Test(dependsOnMethods = { "verifyOverviewReportnExportVisibilityCSV"}, groups = {
+	@Test(priority = 7, groups = {
 	"smoke" }, description = "Test for overview export and export verification")
 	public void verifyOverviewReportnExportVisibilityXLSX() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.exportvisibilityrptXLSX();
 		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
-}
+	}
+	
+	@Test(priority = 8, groups = {
+	"smoke" }, description = "Test for overview export and export verification")
+	public void verifyexportcurrentpdf() throws Exception {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.exportcurrentvisibilityrptPDF();
+		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
+	}
+	
+	@Test(priority = 9,groups = { "smoke" }, 
+			description = "Test to compare ToolTip Value and Overall Visibility Score")
+	public void PDFHistoryExport() throws Exception {		
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.exporthistoryvisibilityrptPDF();
+		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
+		
+	}
 	
 	
 	//Test for Tooltip and overview report in Visibility Page
-	@SuppressWarnings("unchecked")
-	@Test(dependsOnMethods = { "verifyOverviewReportnExportVisibilityXLSX" }, groups = { "smoke" }, 
+	@Test(priority = 10, groups = { "smoke" }, 
 							description = "Test to compare ToolTip Value and Overall Visibility Score")
 	public void verifyOverviewReportnTooltipVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -92,93 +169,60 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	}
 
 	//Test for SiteTable data in Visibility Page
-	@SuppressWarnings("unchecked")
-	@Test(dependsOnMethods = { "verifyOverviewReportnTooltipVisibility"}, groups = {
+	@Test(priority = 11, groups = {
 			"smoke" }, description = "Test for verifying sitetable in Visibility page")
-	public void verifySiteTablenExportVisibility() throws Exception {
+	public void verifySiteTable() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-		data.verifySitetable();
+		data.verifyAllsites();
+		addEvidence(CurrentState.getDriver(),
+				"Data of sitesTable", "yes");
+		data.verifySearchEngineSites();
+		addEvidence(CurrentState.getDriver(),
+				"Data of sitesTable", "yes");
+		data.verifyDirectorySites();
+		addEvidence(CurrentState.getDriver(),
+				"Data of sitesTable", "yes");
+		data.verifySocialSites();
 		addEvidence(CurrentState.getDriver(),
 				"Data of sitesTable", "yes");
 	}*/
 	
 	//Test for compare number of rows from export table and table data in Visibility Page
-	@SuppressWarnings("unchecked")
-	@Test(dependsOnMethods = { "verifyFilteringReportsVisibility"}, groups = {
+	@Test(priority = 12, groups = {
 			"smoke" }, description = "Test for verifying progress bar in Visibility page")
 	public void numberofentriesnExporttableVisibility() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-			//data.compareexporttableDatannumberofentries(data.DataTablefound(),data.getExporttableDataFound());
-			data.DataTablefound();
-			data.getExporttableDataFound();
-			data.compareXlDataNotFoundandNotFound_UIdata();
+			data.compareexporttableDatannumberofentries(data.DataTablefound(),data.getExporttableDataFound());
 			addEvidence(CurrentState.getDriver(),
 					"Site level scores in Visibility site table  and overview visibility export found matching", "yes");
+			data.exporttablefoundCSV();
 	}
 	
-	//Test for compare number of rows from export table and table data in Visibility Page
-		@Test(dependsOnMethods = { "numberofentriesnExporttableVisibility"}, groups = {
-				"smoke" }, description = "Test for verifying progress bar in Visibility page")
-		public void numberofentriesnExporttableNotFoundVisibility() throws Exception {
-				data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-				//data.compareexporttableDatannumberofentriesNotFound(data.DataTableNotfound(),data.getExporttableDataNotFound());
-				data.DataTableNotfound();
-				data.getExporttableDataNotFound();
-				data.compareXlDataNotFoundandNotFound_UIdata();
-				addEvidence(CurrentState.getDriver(),
-						"Site level scores in Visibility site table  and overview visibility export found matching", "yes");
-		}
-	
-	/*//Test to compare vendors in the application in Visibility Page
-		@Test(dependsOnMethods = {"verifyFilteringReportsVisibility"},groups = {"smoke"},
-				description ="Verify Site Vendors List")
-		public void comparevendorsListnverifySitevendors() throws Exception{
-			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-			data.comparevendorsListnverifySitevendors(data.verifySitevendors(), data.vendorsList());
-			addEvidence(CurrentState.getDriver(),
-				"Site Vendors in Visibility site vendors ", "yes");
-	}*/
-
-		/*//Test to verify Zoom Functionality
-			@Test(dependsOnMethods = {"verifyFilteringReportsVisibility"},groups = {"smoke"},
-					description ="Verify Zoom Functionality")
-			public void gethighchartsdate() throws Exception{
-				data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-				String OneMonth ="1m";
-				data.clickHighchartCriteria(OneMonth);
-				addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
-				Thread.sleep(5000);
-				String ThreeMonths = "3m";
-				data.clickHighchartCriteria(ThreeMonths);
-				addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
-				Thread.sleep(5000);
-				String SixMonths = "6m";
-				data.clickHighchartCriteria(SixMonths);
-				addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
-				Thread.sleep(5000);
-				String OneYear = "1y";
-				data.clickHighchartCriteria(OneYear);
-				addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
-				Thread.sleep(5000);
-				String YearToDate ="ytd";
-				data.clickHighchartCriteria(YearToDate);
-				addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
-				Thread.sleep(5000);
-				String ALLDATA = "all";
-				data.clickHighchartCriteria(ALLDATA);
-				addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
-				
-				
-				}
-			
-			//Test to verify Top button functionality
-			@Test(dependsOnMethods = {"SetCalendarDate"}, groups = {"smoke"},
+	/*//Test to verify Top button functionality
+			@Test(priority = 13, groups = {"smoke"},
 					description = "Verify Top Button")
 				public void GetTopBtn() throws Exception {
 					data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 					data.TopButton();
 					addEvidence(CurrentState.getDriver(), "Top Button click verification", "yes");
 				}		
+		
+			
+				
+	
+	//Test for compare number of rows from export table and table data in Visibility Page
+		@Test(priority = 14, groups = {
+				"smoke" }, description = "Test for verifying progress bar in Visibility page")
+		public void numberofentriesnExporttableNotFoundVisibility() throws Exception {
+				data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+				data.compareexporttableDatannumberofentriesNotFound(data.DataTableNotfound(),data.getExporttableDataNotFound());
+				addEvidence(CurrentState.getDriver(),
+						"Site level scores in Visibility site table  and overview visibility export found matching", "yes");
+				data.exporttableNotfoundCSV();
+		}*/
+		
+		
+				
 			
 			
 			
@@ -187,7 +231,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 			
 			
 			
-			@Test(dependsOnMethods="verifyFilteringReportsVisibility",enabled = true, dataProvider = "testData")
+			/*@Test(dependsOnMethods="verifyFilteringReportsVisibility",enabled = true, dataProvider = "testData")
 			public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month, String to_year) {
 				
 				TPSEE_Visibility_Page s = new TPSEE_Visibility_Page(CurrentState.getDriver());

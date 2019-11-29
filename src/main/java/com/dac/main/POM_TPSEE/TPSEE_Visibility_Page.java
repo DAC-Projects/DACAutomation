@@ -59,7 +59,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	@FindBy(id = "ui-datepicker-div")
 	private WebElement dtpicker;
 	
-	@FindBy(css = "td.ui-datepicker-days-cell-over")
+	@FindBy(xpath = "//td[contains(@class,'ui-datepicker-days-cell-over')]//a[contains(@class,'ui-state-default')]")
 	private WebElement date;
 	
 	@FindBy(xpath = "//*[@id='btnLocationExport']")
@@ -89,6 +89,9 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	
 	@FindBy(xpath = "//*[@id='btnHistoryExport']")
 	private WebElement hstrybtn;
+	
+	@FindBy(xpath ="//div[@id='exportAsyncMessage']//div[@class='close pull-right']")
+	private WebElement close;
 		
 	//section of overall report
 	@FindBy(xpath = "#divBars")
@@ -104,6 +107,16 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	String xpathCompetitors = "//*[@id='divBars']";
 	String NoofLocation = "//*[@id='divNumOfLocations']";
 	String overallscore = "//*[@id='divOverallScoreValue']";
+	
+	@FindBy(xpath = "//div[@id='divNumOfLocations']")
+	private WebElement overviewloc;
+	
+	@FindBy(xpath = "//div[@id='divOverallScoreValue']")
+	private WebElement overviewscore;
+	
+	@FindBy(xpath = "//div[@id='divBars']")
+	private WebElement overviewlayout;
+	
 
 	//Site table section
 	@FindBy(css = "div#barContainer.barContainer")
@@ -171,10 +184,26 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	private List<WebElement> paginationLast;
 	/*-------------------------Pagination-----------------------*/
 	
+	/*--------------------------- Sites Tabs------------------------*/
+	
+	@FindBy(xpath = "//li[@id='liAll']")
+	private WebElement AllSites;
+	
+	@FindBy(xpath = "//li[@id='liSES']")
+	private WebElement SearchEngineSites;
+	
+	@FindBy(xpath = "//li[@id='liDS']")
+	private WebElement DirectorySites;
+	
+	@FindBy(xpath = "//li[@id='liSS']")
+	public WebElement SocialSites;
+	
+	/*--------------------------- Sites Tabs------------------------*/
+	
 	List<WebElement> columns;
 	List<WebElement> rows;
 	
-	@FindBy(xpath = "//div[@class='container']/div[@class='row']/div[@class='col-lg-2 bar-chart-column']")
+	@FindBy(xpath = "//*[@class='col-lg-2 bar-chart-column']")
 	private WebElement vendorslist;
 	
 	public static List<Map<String, String>> tableCellValues = new ArrayList<Map<String, String>>();
@@ -185,8 +214,9 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	public void exportvisibilityrptCSV() throws InterruptedException, FileNotFoundException, IOException, ExecutionException{
 		
 		JSWaiter.waitJQueryAngular();
-		exportVA(exportBtn, csvexport, exportdate, dtpicker, date, export);
+		exportVA(exportBtn, csvexport, exportdate,  date, export);
 		//download visibility report
+		Thread.sleep(10000);
 		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExportCSV));
 		//System.out.println("" +getLastModifiedFile("./downloads"));
 	}
@@ -194,39 +224,39 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	public void exportvisibilityrptXLSX() throws InterruptedException, FileNotFoundException, IOException, ExecutionException{
 		
 		JSWaiter.waitJQueryAngular();
-		exportVA(exportBtn, XLSXExport, exportdate, dtpicker, date, export);
+		exportVA(exportBtn, XLSXExport, exportdate,  date, export);
 		//download visibility report
+		Thread.sleep(10000);
 		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExportXLSX));
 		//System.out.println("" +getLastModifiedFile("./downloads"));
 	}
 	
-	/* Export visibility overview report below filter in pdf for current date*/
-	public void exportvisibilityrptpdf() throws InterruptedException, FileNotFoundException, IOException{
-	    JSWaiter.waitJQueryAngular();
-		if(exportBtn.isEnabled() & exportBtn.isDisplayed()) {
-			wait.until(ExpectedConditions.visibilityOf(exportBtn));
-			action.moveToElement(exportBtn).click(exportBtn).perform();
-			Thread.sleep(5000);
-		}
-		if(pdfexport.isEnabled() & pdfexport.isDisplayed()) {
-			wait.until(ExpectedConditions.visibilityOf(pdfexport));
-			action.moveToElement(pdfexport).click(pdfexport).perform();
-			Thread.sleep(5000);
-		}
-		if(currentpdf.isEnabled() & currentpdf.isDisplayed()) {
-			wait.until(ExpectedConditions.visibilityOf(currentpdf));
-			action.moveToElement(currentpdf).click(currentpdf).perform();
-			Thread.sleep(5000);
-		}
-		if(pdfclick.isEnabled() & pdfclick.isDisplayed()) {
-			wait.until(ExpectedConditions.visibilityOf(pdfclick));
-			action.moveToElement(pdfclick).click(pdfclick).perform();
-			Thread.sleep(5000);
-		}
-			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExportPdf));
-			Thread.sleep(5000);
-			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
-		}
+	public void exportcurrentvisibilityrptPDF() throws InterruptedException, FileNotFoundException, IOException, ExecutionException{
+		
+		JSWaiter.waitJQueryAngular();
+		exportasPDFCurrentDate(exportBtn, pdfexport, currentpdf, pdfclick);
+		//download visibility report
+		Thread.sleep(10000);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExportPdf));
+		verifyfileextension();
+		//System.out.println("" +getLastModifiedFile("./downloads"));
+	}
+	
+
+	
+	
+	public void exporthistoryvisibilityrptPDF() throws FileNotFoundException, InterruptedException, IOException {
+		
+		JSWaiter.waitJQueryAngular();
+		exportasPDFHistory(exportBtn, pdfexport, historypdf, hstrybtn, pdfclick);
+		//download visibility report
+		Thread.sleep(10000);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExportHistoryPdf));
+		verifyfileextension();
+		clickelement(close);
+		//System.out.println("" +getLastModifiedFile("./downloads"));
+	}
+	
 	     
 	
 	//To get overall score of visibility
@@ -395,7 +425,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 		String entiresText = driver.findElement(By.className("dataTables_info")).getText();
 		entiresText = entiresText.substring(entiresText.indexOf("("));
-		WebElement TableTitle = driver.findElement(By.xpath("//*[@class='visibility-table-title heading-title']"));
+		WebElement TableTitle = driver.findElement(By.xpath("//*[@id='visibilityTableHeader']/h3"));
 		scrollByElement(TableTitle);
 		int count = 0;
 	    if(paginationNext.isDisplayed()) {
@@ -416,7 +446,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	    				
 	    				if(column==1 & row < rows_count) {
 	    					
-		    					celtext = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]/td[9]/a[1]")).getAttribute("href");
+		    					celtext = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]")).getText();
 		    					System.out.println("\n"+celtext);
 	   
 	    			}
@@ -453,14 +483,14 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 			waitForElement(progressdata, 40);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 			exportVATable(exporttable, ExporttableCSV);
-			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExporttableFoundXLSX));
+			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExporttableFoundCSV));
 			Thread.sleep(5000);
 			//System.out.println("downloaded file name: "+getLastModifiedFile("./downloads"));
 			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
 		}
 		
 	
-	//exporting progress bar table data CSV
+	//exporting progress bar table data XSLX
 		public void exporttablefoundXLSX() throws FileNotFoundException, IOException, InterruptedException {				
 				JSWaiter.waitJQueryAngular();
 				waitForElement(progressdata, 40);
@@ -569,13 +599,72 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		Assert.assertTrue(true, "UI table data matches with Exported Excel Data");
 		tableCellValues.clear();
 	}
+	
+	
+	public int overviewlocation() {
+		int location = overviewLocation(overviewlayout,overviewloc);
+		return location;
+	}
+	
+	public double overviewscore() {
+		double score = overviewscore(overviewlayout,overviewscore);
+		return score;
+	}
+	
+	
+	public void verifyAllsites() throws Exception{		
+	
+		ArrayList<String> XLsite = GetSiteDataUsingColName("./data/VendorList.xlsx", "All Sites");
+		ArrayList<String> UIsite = verifySitevendors();
+		Assert.assertEquals(XLsite, UIsite, "Matches");
+		
+	}
+	
+	public void verifySearchEngineSites() throws Exception {
+		
+		waitForElement(SearchEngineSites, 10);
+		scrollByElement(SearchEngineSites);
+		Thread.sleep(5000);
+		clickelement(SearchEngineSites);
+		ArrayList<String> XLsite = GetSiteDataUsingColName("./data/VendorList.xlsx", "Search Engine Sites");
+		ArrayList<String> UIsite = verifySitevendors();
+		Assert.assertEquals(XLsite, UIsite, "Matches");
+	}
+	
+	public void verifyDirectorySites() throws Exception {
+		
+		waitForElement(DirectorySites, 10);
+		scrollByElement(DirectorySites);
+		Thread.sleep(5000);
+		clickelement(DirectorySites);
+		ArrayList<String> XLsite = GetSiteDataUsingColName("./data/VendorList.xlsx", "Directory Sites");
+		ArrayList<String> UIsite = verifySitevendors();
+		Assert.assertEquals(XLsite, UIsite, "Matches");
+	}
 
+	public void verifySocialSites() throws Exception {
+		
+		waitForElement(SocialSites, 10);
+		scrollByElement(SocialSites);
+		Thread.sleep(5000);
+		clickelement(SocialSites);
+		ArrayList<String> XLsite = GetSiteDataUsingColName("./data/VendorList.xlsx", "Social Sites");
+		ArrayList<String> UIsite = verifySitevendors();
+		Assert.assertEquals(XLsite, UIsite, "Matches");
+		Thread.sleep(5000);
+		clickelement(AllSites);
+	}
 	//comparing total entries in excel of visibilityreport table and test from bottom of the table
 	public  void compareexporttableDatannumberofentries(List<Map<String, String>> dataTablefound,
-			List<Map<String, String>> exporttableDataFound) {	
-					
-		Assert.assertEquals(tableCellValues, tableCellValues1);
+			List<Map<String, String>> exporttableDataFound) {
+		for(Map<String,String>m1: dataTablefound ) {
+			for(Map<String,String> m2:exporttableDataFound ) {
+				if(m1.get("rowdata").equals(m2.get("Location Number"))) {
+					Assert.assertEquals(m1.get("rowdata").contains(m2.get("Location Number")), "Data Matches");
+				}
+			}
 		}
+	}
 
 	public void compareexporttableDatannumberofentriesNotFound(List<Map<String, String>> dataTableNotfound,
 			List<Map<String, String>> exporttableDataNotFound) {
@@ -584,7 +673,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		for (Map<String, String> m1 : dataTableNotfound) {
 			for (Map<String, String> m2 : exporttableDataNotFound) {
 				if (m1.get("rowdata").equals(m2.get("rowdata"))) {
-					Assert.assertEquals(formatFloat(m1.get("rowdata")), formatFloat(m2.get("rowdata")));
+					Assert.assertEquals(m1.get("rowdata").contains(m2.get("rowdata")), "Data Matches");
 				}
 			}
 		}		

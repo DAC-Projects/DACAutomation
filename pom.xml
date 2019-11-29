@@ -220,7 +220,14 @@
     	<version>3.2.2</version>
 	</dependency>
 	
-	
+	<!-- https://mvnrepository.com/artifact/ru.yandex.qatools.ashot/ashot -->
+<dependency>
+    <groupId>ru.yandex.qatools.ashot</groupId>
+    <artifactId>ashot</artifactId>
+    <version>1.5.3</version>
+</dependency>
+
+
   </dependencies>
   
   

@@ -16,12 +16,13 @@ public interface TPSEERepository {
 	String VisibilityExportCSV = "VisibilityExportCSV.xlsx";
 	String VisibilityExportXLSX = "VisibilityExportXLSX.xlsx";
 	String VisibilityExportPdf = "VisibilityExport.pdf";
+	String VisibilityExportHistoryPdf = "VisibilityExportHistoryPdf.pdf";
 	String ReviewExport = "ReviewExport.xlsx";
 	String CAExport = "CAExport.xlsx";
 	String Exportpath ="./downloads/";
 	String VisibilityExporttableFoundCSV = "VisibilityExporttableFoundCSV.xlsx";
 	String VisibilityExporttableFoundXLSX = "VisibilityExporttableFoundXLSX.xlsx";
-	String VisibilityExporttableNotFoundCSV = "VisibilityExporttableNotFound.xlsx";
+	String VisibilityExporttableNotFoundCSV = "VisibilityExporttableNotFound.";
 	String VisibilityExporttableNotFoundXLSX = "VisibilityExporttableNotFound.xlsx";
 	String AccuracyExporttable = "AccuracyExporttable.xlsx";
 	String AccuracyExporttableInAccuracy = "AccuracyExporttableInAccuracy.xlsx";
