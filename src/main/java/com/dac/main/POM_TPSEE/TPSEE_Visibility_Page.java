@@ -235,7 +235,6 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * @throws ExecutionException
 	 */
 	public void exportvisibilityrptCSV() throws InterruptedException, FileNotFoundException, IOException, ExecutionException{
-		
 		JSWaiter.waitJQueryAngular();
 		exportVA(exportBtn, csvexport, exportdate,  date, export);
 		Thread.sleep(10000);
@@ -250,7 +249,6 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * @throws ExecutionException
 	 */
 	public void exportvisibilityrptXLSX() throws InterruptedException, FileNotFoundException, IOException, ExecutionException{
-		
 		JSWaiter.waitJQueryAngular();
 		exportVA(exportBtn, XLSXExport, exportdate,  date, export);
 		Thread.sleep(10000);
@@ -264,12 +262,12 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * @throws ExecutionException
 	 */
 	public void exportcurrentvisibilityrptPDF() throws InterruptedException, FileNotFoundException, IOException, ExecutionException{
-		
 		JSWaiter.waitJQueryAngular();
 		exportasPDFCurrentDate(exportBtn, pdfexport, currentpdf, pdfclick);
 		Thread.sleep(10000);
 		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExportPdf));
 		verifyfileextension();
+		clickelement(close);
 	}
 	
 	/**
@@ -278,8 +276,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	public void exporthistoryvisibilityrptPDF() throws FileNotFoundException, InterruptedException, IOException {
-		
+	public void exporthistoryvisibilityrptPDF() throws FileNotFoundException, InterruptedException, IOException {		
 		JSWaiter.waitJQueryAngular();
 		exportasPDFHistory(exportBtn, pdfexport, historypdf, hstrybtn, pdfclick);
 		Thread.sleep(10000);
@@ -433,6 +430,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 				e.printStackTrace();
 			}
 		}
+		scrollByElement(progresstable);
 			return tableCellValues;
 			}
 
@@ -627,7 +625,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	}
 	
 	/**
-	 * comparing data from excell sheet with table data of progress bar Not found and Found
+	 * comparing data from excel sheet with table data of progress bar Not found and Found
 	 * @throws Exception
 	 */
 	public void compareXlDataNotFoundandNotFound_UIdata() throws Exception {
@@ -681,8 +679,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * To Verify Sites in ALL SITES Section
 	 * @throws Exception
 	 */
-	public void verifyAllsites() throws Exception{		
-	
+	public void verifyAllsites() throws Exception{			
 		ArrayList<String> XLsite = GetSiteDataUsingColName("./data/VendorList.xlsx", "All Sites");
 		ArrayList<String> UIsite = verifySitevendors();
 		Assert.assertEquals(XLsite, UIsite, "Matches");
@@ -693,8 +690,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * To Verify Search engine sites
 	 * @throws Exception
 	 */
-	public void verifySearchEngineSites() throws Exception {
-		
+	public void verifySearchEngineSites() throws Exception {		
 		waitForElement(SearchEngineSites, 10);
 		scrollByElement(SearchEngineSites);
 		Thread.sleep(5000);
@@ -708,8 +704,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * To verify Directory Sites
 	 * @throws Exception
 	 */
-	public void verifyDirectorySites() throws Exception {
-		
+	public void verifyDirectorySites() throws Exception {		
 		waitForElement(DirectorySites, 10);
 		scrollByElement(DirectorySites);
 		Thread.sleep(5000);
@@ -723,8 +718,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * To verify Social Sites
 	 * @throws Exception
 	 */
-	public void verifySocialSites() throws Exception {
-		
+	public void verifySocialSites() throws Exception {		
 		waitForElement(SocialSites, 10);
 		scrollByElement(SocialSites);
 		Thread.sleep(5000);
@@ -758,8 +752,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * @param exporttableDataNotFound
 	 */
 	public void compareexporttableDatannumberofentriesNotFound(List<Map<String, String>> dataTableNotfound,
-			List<Map<String, String>> exporttableDataNotFound) {
-		
+			List<Map<String, String>> exporttableDataNotFound) {		
 		for (Map<String, String> m1 : dataTableNotfound) {
 			for (Map<String, String> m2 : exporttableDataNotFound) {
 				if (m1.get("rowdata").equals(m2.get("rowdata"))) {

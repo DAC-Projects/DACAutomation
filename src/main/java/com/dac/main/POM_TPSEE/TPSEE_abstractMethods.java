@@ -6,13 +6,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Month;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -35,9 +32,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import com.dac.main.BasePage;
-
-import resources.CurrentState;
-import resources.ExcelHandler;
 import resources.FileHandler;
 import resources.JSWaiter;
 import resources.formatConvert;
@@ -193,6 +187,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	
 	
 	/**
+	 * @param Group
 	 * @param Country
 	 * @param State
 	 * @param City
@@ -201,7 +196,6 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	 */
 	public void applyGlobalFilter(String Group, String CountryCode, String State, String City, String Location) {
 		JSWaiter.waitJQueryAngular();
-		//wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='visibility-page']"))).getText();
 		WebElement country,state,city,location,group;
 		if(Group == null || Group.equalsIgnoreCase("none")) Group = "None";
 		if (CountryCode == null || CountryCode.equalsIgnoreCase("null")) CountryCode = "All Countries";
@@ -210,8 +204,6 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		if (CountryCode == null || State == null || City == null || Location == null || Location.equalsIgnoreCase("null")) Location = "All Locations";
 		try {
 			waitForElement(filter_Panel, 25);
-			//waitForElement(PageTitle, 25);
-			//scrollByElement(GMBPageTitle);
 			waitUntilLoad(driver);
 			if(!Group.equals("None")) {			
 				clickelement(fiterGroup);
@@ -262,7 +254,6 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			Assert.fail("searched Country/State/City/Location may not be there or may be a typo error please check it");
 		}
 		waitUntilLoad(driver);
-		//wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 	}
 	
 	/**
@@ -274,51 +265,49 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			Thread.sleep(3000);
 		}
 	}
-	
-	
-
 
 	/**
 	 * @return must implement overview report for all pages
 	 */
 	public abstract List<Map<String, String>> getOverviewReport();
-
-	//convert exported file from csv to xlsx
+	
+	/**
+	 * convert exported file from csv to xlsx
+	 * @param filename
+	 * @param export
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	public void convertExports(String filename, String export) throws FileNotFoundException, IOException {
 		String report_export = new formatConvert(Exportpath + filename).convertFile("xlsx");
 		FileHandler.renameTo(new File(Exportpath + filename), Exportpath + export);
 		
 	}
 	
-	
-	//Renaming the file downloaded
+	/**
+	 * Renaming the file downloaded
+	 * @param filename
+	 * @param export
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	public void renamefile(String filename, String export) throws FileNotFoundException, IOException{
 		FileHandler.renameTo(new File(Exportpath + filename), Exportpath + export);
-	}
-	
-	
+	}	
 
 	/**
 	 * @return History graph value read
 	 */
 	public List<Map<String, String>> verifyHistoryGraph() {
-		
-		//display tool tip
 		waitForElement(hstryGrph, 30);
 		scrollByElement(hstryGrph);
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth() / 2) - 2, 0).click().perform();
-		
-		//read the tooltip variables
 		tooltipvalue = grphtooltip.getText();
 		System.out.println("\n Reading tooltipdata ********** \n");
 		System.out.println("\n tooltipvalue is \n" +tooltipvalue);
-		
-		//read the tooltip variables
 		rows = grphtooltip.findElements(By.tagName("span"));
 		String[][] table = readTable(grphtooltip);
-		
-		//adding tooltipdata into List
 		List<Map<String, String>> tooltipdata = new ArrayList<Map<String, String>>();
 			for (int i = 0; i < table.length; i += 4) {
 				Map<String, String> kMap = new HashMap<String, String>();
@@ -327,19 +316,14 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				kMap.put(table[i + 2][0], table[i + 2][1]);
 				tooltipdata.add(kMap);
 			}
-			//returning tooltipdata from list
 			return tooltipdata;
-	}
-	
-			
-			
+	}			
 
 	/**
 	 * @param s
 	 * @return Finds no within a string and returns as float
 	 */
 	public float formatFloat(String s) {
-
 		Pattern regex = Pattern.compile("(\\d+(?:\\.\\d+)?)");
 		Matcher matcher = regex.matcher(s);
 		if (matcher.find())
@@ -361,8 +345,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		List<WebElement> elements = driver.findElements(By.xpath("//*[@id='barContainer']//div//div"));
 		    java.util.Iterator<WebElement> program = elements.iterator();
 		    while (program.hasNext()) {
-		    	String values = program.next().getText();
-		        
+		    	String values = program.next().getText();		        
 		        if(!values.equals("null"))
 		        {
 		            System.out.println("" +values);
@@ -376,9 +359,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		return siteTableData;
 	}
 	
-	//Comparing values of overall visibility score and visibility export data
+	/**
+	 * Comparing values of overall visibility score and visibility export data
+	 * @param exportData
+	 * @param ovrwRprtData
+	 */
 	public void compareExprttoOvervw(List<Map<String, String>> exportData, List<Map<String, String>> ovrwRprtData) {
-
 		for (Map<String, String> m1 : ovrwRprtData) {
 			for (Map<String, String> m2 : exportData) {
 				if (m1.get("NoofLocation").equals(m2.get("compName"))) {
@@ -389,9 +375,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		}
 	}
 	
-	//Comparing values of overall visibility score and visibility tooltip data
+	/**
+	 * Comparing values of overall visibility score and visibility tooltip data
+	 * @param tooltipdata
+	 * @param ovrwRprtData
+	 */
 	public void compareReportnGraph(List<Map<String, String>> tooltipdata, List<Map<String, String>> ovrwRprtData) {
-
 		for (Map<String, String> m1 : ovrwRprtData) {
 			for (Map<String, String> m2 : tooltipdata) {
 				if (m1.get("compName").equals(m2.get("overall"))) {
@@ -401,15 +390,17 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			}
 		}
 	}
-	//To get Vendors List displaying in the application
+	/**
+	 * To get Vendors List displaying in the application
+	 * @return
+	 */
 	public ArrayList<String> verifySitevendors() {
 			JSWaiter.waitJQueryAngular();
 			waitForElement(vendorslist, 40);
 			scrollByElement(vendorslist);
 			ArrayList<String> Vendors = new ArrayList<String>();
 			List<WebElement> elements = driver.findElements(By.xpath("//*[@class='col-lg-2 bar-chart-column']"));
-		    java.util.Iterator<WebElement> program = elements.iterator();		        
-		    //reading Vendors data
+		    java.util.Iterator<WebElement> program = elements.iterator();
 		    while (program.hasNext()) {
 		        String values = program.next().getText();
 		        if(!values.equals("null")) {
@@ -425,22 +416,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			return Vendors;
 	}
 	
-	
-	
-
-    
-  
-
-
-
-
-	
-	
-	
-	
-	
-			
-	//getting data of accuracy score table
+	/**
+	 * getting data of accuracy score table			
+	 * @return
+	 */
 	public List<Map<String, String>> verifyaccuracySitetable() {
 		waitForElement(accuracysite, 30);
 		scrollByElement(accuracysite);
@@ -464,50 +443,21 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		    }
 		return accuracysiteTableData;
 	}
-	/*
-	//Adding Vendors List to Array 
-		public List<Map<String, String>> vendorsList() throws Exception {
-								
-					List<Map<String, String>> Vendorslist = new ArrayList<Map<String, String>>();
-					// Creation of HashMap 
-			    	  Map<String, String> kMap = new HashMap<String, String>();
-			    	   ExcelHandler a = new ExcelHandler("./data/VendorList.xlsx","VendorList");
-			    	   a.deleteEmptyRows();
-			    	   String[][] vendors = a.getExcelTable();
-			    		int colSize = vendors[0].length;
-			    		String size = Integer.toString(colSize);
-			    		System.out.println("Size is :" +size);
-			    		for (int col = 1; col < colSize; col++) {
-			    			for (int i = 1; i < vendors.length; i++) {
-			    				kMap.put("Vendors", vendors[0][col]);
-			    				kMap.put(vendors[i][0], vendors[i][col]);
-			    			}
-			      	  Vendorslist.add(kMap);	
-			    	}
-						return Vendorslist;
-				}
-		*/
-		/*//Comparing Vendors List from application and Vendors List from Array
-		public void comparevendorsListnverifySitevendors(List<Map<String, String>> verifySitevendors,
-					List<Map<String, String>> vendorsList) {
-				for (Map<String, String> m1 : verifySitevendors) {
-					for (Map<String, String> m2 : vendorsList) {
-						Assert.assertEquals(m1.size(), m2.size());
-						Assert.assertEquals(m1.get("vendors"), m2.get("vendors"), "Data Matches");
-					}
-				}
-			}*/
 		
-		//Get data using column name and sum for Bing and GMB Page
+		/**
+		 * Get data using column name and sum for Bing and GMB Page
+		 * @param PathofXL
+		 * @param Col_Name
+		 * @return
+		 * @throws Exception
+		 */
 		public int GetDataUsingColName(String PathofXL, String Col_Name) throws Exception {		  
-			
-		      FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
+			  FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
 		      Workbook wb = new XSSFWorkbook(excelFilePath);
 		      Sheet sh = wb.getSheetAt(0);     
 		      Row row = sh.getRow(0);
 		      int col = row.getLastCellNum();
 		      int Last_row = sh.getLastRowNum();
-		      //int cellNum = sh.getPhysicalNumberOfRows();
 		      int col_num = 0;
 		      System.out.println(""+col);	      
 		      for (int i = 0; i <row.getLastCellNum(); i++) {	    	  
@@ -548,18 +498,20 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 						return sum;
 		    }
 		
-		
-		
-		// To get site details 
+		/**
+		 * To get site details
+		 * @param PathofXL
+		 * @param Col_Name
+		 * @return
+		 * @throws Exception
+		 */ 
 		public ArrayList<String> GetSiteDataUsingColName(String PathofXL, String Col_Name) throws Exception {		  
-			
-		      FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
+			  FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
 		      Workbook wb = new XSSFWorkbook(excelFilePath);
 		      Sheet sh = wb.getSheetAt(0);     
 		      Row row = sh.getRow(0);
 		      int col = row.getLastCellNum();
 		      int Last_row = sh.getLastRowNum();
-		      //int cellNum = sh.getPhysicalNumberOfRows();
 		      int col_num = 0;
 		      System.out.println(""+col);	
 		      ArrayList<String> sites  = new ArrayList<String>();
@@ -583,80 +535,108 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		            	}
 					}
 		            	return sites; 
-		    }
+		    }	
 		
-		
-		
-		//Export as CSV/XLSX of overall report
-		public void exportVA(WebElement a, WebElement b, WebElement c, WebElement d, WebElement e) throws InterruptedException, FileNotFoundException, IOException{
+		/**
+		 * Export as CSV/XLSX of overall report
+		 * @param ExportDropdown
+		 * @param ExportType[CSV/XLSX]
+		 * @param DatePicker/Calendar
+		 * @param Date to Select
+		 * @param Export button
+		 * @throws InterruptedException
+		 * @throws FileNotFoundException
+		 * @throws IOException
+		 */
+		public void exportVA(WebElement ExportDropdown, WebElement ExportType, WebElement DatePicker, WebElement SelectDate, WebElement ExportBtn) throws InterruptedException, FileNotFoundException, IOException{
 			JSWaiter.waitJQueryAngular();
-			//waitForElement(overall, 40);
-			waitForElement(a, 10);
-			clickelement(a);
-			waitForElement(b, 10);
-			clickelement(b);
-			waitForElement(c, 10);
-			clickelement(c);	
-			waitForElement(d, 10);
-			clickelement(d);
-			waitForElement(e, 10);
-			clickelement(e);
+			waitForElement(ExportDropdown, 10);
+			clickelement(ExportDropdown);
+			waitForElement(ExportType, 10);
+			clickelement(ExportType);
+			waitForElement(DatePicker, 10);
+			clickelement(DatePicker);	
+			waitForElement(SelectDate, 10);
+			clickelement(SelectDate);
+			waitForElement(ExportBtn, 10);
+			clickelement(ExportBtn);
 		}
 		
-		
-		public void exportVATable(WebElement a, WebElement b) throws InterruptedException, FileNotFoundException, IOException{
+		/**
+		 * Export as CSV/XLSX of overall report
+		 * @param ExportType
+		 * @param ExportBtn
+		 * @throws InterruptedException
+		 * @throws FileNotFoundException
+		 * @throws IOException
+		 */
+		public void exportVATable(WebElement ExportType, WebElement ExportBtn) throws InterruptedException, FileNotFoundException, IOException{
 			JSWaiter.waitJQueryAngular();
-			//waitForElement(overall, 40);
-			if(a.isDisplayed() && a.isEnabled()) {
-				wait.until(ExpectedConditions.visibilityOf(a));
-				a.click();
+			if(ExportType.isDisplayed() && ExportType.isEnabled()) {
+				wait.until(ExpectedConditions.visibilityOf(ExportType));
+				ExportType.click();
 				Thread.sleep(5000);
 			}
-			if(b.isDisplayed() && b.isEnabled()) {
-				wait.until(ExpectedConditions.visibilityOf(b));
-				b.click();
+			if(ExportBtn.isDisplayed() && ExportBtn.isEnabled()) {
+				wait.until(ExpectedConditions.visibilityOf(ExportBtn));
+				ExportBtn.click();
 				Thread.sleep(5000);
 			}
 		}
 		
-		/* Export visibility overview report below filter in pdf for current date*/
-		public void exportasPDFCurrentDate(WebElement a, WebElement b, WebElement c, WebElement d ) throws InterruptedException, FileNotFoundException, IOException{
+		/**
+		 * Export visibility overview report below filter in pdf for current date
+		 * @param ExportDropdown
+		 * @param ExportType
+		 * @param SelectPDF
+		 * @param LinkClick
+		 * @throws InterruptedException
+		 * @throws FileNotFoundException
+		 * @throws IOException
+		 */
+		public void exportasPDFCurrentDate(WebElement ExportDropdown, WebElement ExportType, WebElement SelectPDF, WebElement LinkClick ) throws InterruptedException, FileNotFoundException, IOException{
 		    JSWaiter.waitJQueryAngular();
-			if(a.isEnabled() & a.isDisplayed()) {
-				wait.until(ExpectedConditions.visibilityOf(a));
-				action.moveToElement(a).click().perform();
+			if(ExportDropdown.isEnabled() & ExportDropdown.isDisplayed()) {
+				wait.until(ExpectedConditions.visibilityOf(ExportDropdown));
+				action.moveToElement(ExportDropdown).click().perform();
 				Thread.sleep(5000);
 			}
-			if(b.isEnabled() & b.isDisplayed()) {
-				wait.until(ExpectedConditions.visibilityOf(b));
-				action.moveToElement(b).moveToElement(c).click().perform();
+			if(ExportType.isEnabled() & ExportType.isDisplayed()) {
+				wait.until(ExpectedConditions.visibilityOf(ExportType));
+				action.moveToElement(ExportType).moveToElement(SelectPDF).click().perform();
 				Thread.sleep(10000);
 			}
-			/*if(c.isEnabled() & c.isDisplayed()) {
-				wait.until(ExpectedConditions.visibilityOf(c));
-				action.moveToElement(c).click().perform();
-				
-			}*/
-			if(d.isEnabled() & d.isDisplayed()) {
-				wait.until(ExpectedConditions.visibilityOf(d));
-				action.moveToElement(d).click().perform();
+			if(LinkClick.isEnabled() & LinkClick.isDisplayed()) {
+				wait.until(ExpectedConditions.visibilityOf(LinkClick));
+				action.moveToElement(LinkClick).click().perform();
 				Thread.sleep(5000);
 			}
 		}
 		
-		/* Export visibility overview report below filter in pdf for current date*/
-		public void exportasPDFHistory(WebElement a, WebElement b, WebElement c, WebElement d, WebElement e) throws InterruptedException, FileNotFoundException, IOException{
+		/**
+		 * Export visibility overview report below filter in pdf for current date
+		 * @param ExportDropdown
+		 * @param ExportType
+		 * @param SelectPDF
+		 * @param ExportBtn
+		 * @param LinkClick
+		 * @throws InterruptedException
+		 * @throws FileNotFoundException
+		 * @throws IOException
+		 */
+		public void exportasPDFHistory(WebElement ExportDropdown, WebElement ExportType, WebElement SelectPDF, WebElement ExportBtn, WebElement LinkClick) throws InterruptedException, FileNotFoundException, IOException{
 		    JSWaiter.waitJQueryAngular();
-			a.click();
-			action.moveToElement(b).moveToElement(c).click().perform();
-			d.click();
-			e.click();			
+		    ExportDropdown.click();
+			action.moveToElement(ExportType).moveToElement(SelectPDF).click().perform();
+			ExportBtn.click();
+			LinkClick.click();			
 		}
 		
-		
-		//To get the file extension and verify the same
+		/**
+		 * To get the file extension and verify the same
+		 * @throws InterruptedException
+		 */
 		public void verifyfileextension() throws InterruptedException {
-			
 			String filename = getLastModifiedFile("./downloads");
 			System.out.println(filename);
 			String extension = (filename.substring(filename.lastIndexOf(".") + 1));
@@ -676,31 +656,32 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @throws FileNotFoundException 
 		 */
 		public String verifyinitialHistoryGraph() throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
-			
 			waitForElement(hstryGrph, 30);
 			scrollByElement(hstryGrph);
 			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 			action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 -980, 0).click().perform();
-			
-			//read the tooltip variables
 			String initialtooltipvalue = grphtooltip.getText();
 			System.out.println("\n Reading tooltipdata ********** \n");
-			//System.err.("\n tooltipvalue is \n" +initialtooltipvalue);
 			System.err.println(initialtooltipvalue);
 			String initdate = initialtooltipvalue.substring(0, 10);
 			System.out.println(initdate);
 			return initdate;
 		}
 		
-		
-		//Get the Latest point and date of the graph
+		/**
+		 * Get the Latest point and date of the graph
+		 * @return
+		 * @throws ParseException
+		 * @throws bsh.ParseException
+		 * @throws FileNotFoundException
+		 * @throws IOException
+		 * @throws InterruptedException
+		 */
 		public String verifyfinalHistorygraph() throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException{
 			waitForElement(hstryGrph, 30);
 			scrollByElement(hstryGrph);
 			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 			action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 - 2, 0).click().perform();
-			
-			//read the tooltip variables
 			String finaltooltipvalue = grphtooltip.getText();
 			System.out.println("\n Reading tooltipdata ********** \n");
 			System.out.println("\n tooltipvalue is \n" +finaltooltipvalue);
@@ -708,13 +689,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			return finaldate;			
 		}	
 		
-				
-		//To Get Number of days between two dates
-		
-	//	^((([0]?[1-9]|1[0-2])(:|\.)
-		
+		/**
+		 * To get difference between two dates
+		 * @return
+		 * @throws Exception
+		 */
 		public  int getNumberofDays() throws Exception {
-	
 			Date init = getInitialDate();
 			Thread.sleep(5000);
 			Date end =  getFinalDate();
@@ -739,35 +719,50 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			return diff;
 		}
 		
-		
-		//Get initial point of graph
+		/**
+		 * Get initial point of graph
+		 * @return
+		 * @throws ParseException
+		 * @throws bsh.ParseException
+		 * @throws FileNotFoundException
+		 * @throws IOException
+		 * @throws InterruptedException
+		 */
 		public Date getInitialDate() throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
-			
 			String var = null;			
 			var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
 			System.out.println(var);
 			String InitialDate = verifyinitialHistoryGraph();
 			SimpleDateFormat formats = new SimpleDateFormat(var);
-			Date startDate = formats.parse(InitialDate);
-			
+			Date startDate = formats.parse(InitialDate);			
 			return startDate;
 			
 		}
 		
-		//Get final point of the graph
+		/**
+		 * Get final point of the graph
+		 * @return
+		 * @throws bsh.ParseException
+		 * @throws FileNotFoundException
+		 * @throws ParseException
+		 * @throws IOException
+		 * @throws InterruptedException
+		 */
 		public Date getFinalDate() throws bsh.ParseException, FileNotFoundException, ParseException, IOException, InterruptedException {
-			
 			String var = null;			
 			var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
 			System.out.println(var);
 			String FinalDate = verifyfinalHistorygraph();
 			SimpleDateFormat formats = new SimpleDateFormat(var);
-			Date endtDate = formats.parse(FinalDate);
-			
+			Date endtDate = formats.parse(FinalDate);			
 			return endtDate;
 		}
-
-		//To check whether element is clicked
+		
+		/**
+		 * To check whether element is clicked
+		 * @param element
+		 * @return
+		 */
 		public boolean eleClicked(WebElement element) {
 			if(element.isDisplayed()) {
 				String classes = element.getAttribute("class");
@@ -778,7 +773,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			return false;
 		}
 		
-		//Click on highchart zoom functionality
+		/**
+		 * Click on highchart zoom functionality
+		 * @param durationFor
+		 * @return
+		 * @throws Exception
+		 */
 		public TPSEE_abstractMethods clickHighchartCriteria(String durationFor) throws Exception {
 			durationFor = durationFor.toLowerCase();
 			scrollByElement(highChartZoom);
@@ -858,7 +858,11 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				return this;
 		}	
 		
-		//To check whether given element is visible 
+		/**
+		 * To check whether given element is visible 
+		 * @param Title
+		 * @return
+		 */
 		public boolean IsVisible(WebElement Title) {
 			boolean  Visibiltyofele = false;
 			if(Title.isDisplayed()) {
@@ -869,13 +873,20 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			return Visibiltyofele;			
 		}
 		
-		//Top button fuctionality
-		public void TopButton() throws InterruptedException {			
-			waitForElement(Top, 10);
+		/**
+		 * Top button fuctionality
+		 */
+		public void TopButton()  {			
+			try {
+				waitForElement(Top, 10);
 			scrollByElement(Top);
 			if(Top.isDisplayed() && Top.isEnabled()) {
 				clickelement(Top);
-				Thread.sleep(5000);
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				boolean x = IsVisible(Top);
 				System.out.println(x);
 				if(x = true) {
@@ -886,23 +897,140 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			}else {
 				System.out.println("Title is not displayed");
 			}			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+		
+		/**
+		 * To get Number of Locations from Dashboard 
+		 * @return
+		 */
+		public static int getLocations() {
+			int loc = Integer.parseInt(Locations.getText());
+			System.out.println(loc);
+			return loc;			
+		}
+		
+		/**
+		 * To get Visibility Score from Dashboard
+		 * @return
+		 */
+		public  static double getVisibilityscore() {			
+			String sc = Visibilityscore.getText();
+			System.out.println(sc);
+			String s = sc.replace("%", "");
+			double visibilityscore = Double.parseDouble(s);
+			System.out.println(visibilityscore);
+			return visibilityscore;		
+			
+		}
+		
+		/**
+		 * To get Number of Locations of Visibility from Dashboard
+		 * @return
+		 */
+		public  static int getVisibilityLoc() {		
+			int visibilityloc = Integer.parseInt(VisibilityLoc.getText());
+			System.out.println(visibilityloc);
+			return visibilityloc;		
+			
+		}
+		
+		/**
+		 * To get Accuracy Score from Dashboard
+		 * @return
+		 */
+		public static double getAccuracy() {			
+			double accuracyscore = Double.parseDouble(Accuracyscore.getText());
+			System.out.println(accuracyscore);
+			return accuracyscore;
+		}
+		
+		/**
+		 * To get Number of Locations of Accuracy from Dashboard 
+		 * @return
+		 */
+		public static int getAccuracyLoc() {			
+			int accuracyloc = Integer.parseInt(AccuracyLoc.getText());
+			System.out.println(accuracyloc);
+			return accuracyloc;
+		}
+		
+		/**
+		 * To get Content Analysis Score from Dashboard
+		 * @return
+		 */
+		public static double getContentscore() {			
+			double contentscore = Double.parseDouble(Contentscore.getText());
+			System.out.println(contentscore);
+			return contentscore;
+		}
+		
+		/**
+		 * To get Number of Locations of Content Analysis
+		 * @return
+		 */
+		public static int getContentLoc() {			
+			int contentloc = Integer.parseInt(ContentLoc.getText());
+			System.out.println(contentloc);
+			return contentloc;
+		}
+		
+		/**
+		 * To get Google Ranking Score from Dashboard
+		 * @return
+		 */
+		public static double getGRScore() {			
+			double GRscore = Double.parseDouble(GRScore.getText());
+			System.out.println(GRscore);
+			return GRscore;
+		}
+		
+		/**
+		 * To get Number of locations of Google ranking from Dashboard
+		 * @return
+		 */
+		public static int getGRLoc() {			
+			int GRloc = Integer.parseInt(GRLoc.getText());
+			System.out.println(GRloc);
+			return GRloc;
 		}	
 		
+		/**
+		 * Overview and Dashboard Comparision
+		 * @param layout
+		 * @param loc
+		 * @return
+		 */
+		public int overviewLocation(WebElement layout, WebElement loc ) {	
+			waitForElement(layout, 10);
+			scrollByElement(layout);
+			waitForElement(loc, 10);
+			scrollByElement(loc);
+			int location = Integer.parseInt(loc.getText());					
+			return location;			
+		}
 		
+		/**
+		 * To get overview score from the reports (VAC Reports)
+		 * @param layout
+		 * @param score
+		 * @return
+		 */
+		public double overviewscore(WebElement layout, WebElement score) {
+			waitForElement(layout, 10);
+			scrollByElement(layout);
+			waitForElement(score, 10);
+			scrollByElement(score);
+			String sc = score.getText();
+			String s = sc.replace("%", "");
+			double scores = Double.parseDouble(s);
+			return scores;
+		}		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		String regex = "^[- /.]";
+		/*String regex = "^[- /.]";
 		
 		private void selectCalender_Date(WebElement calenderField, int day_d, String month_MMM, int year_YYYY) {
 
@@ -995,114 +1123,5 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			String Lchars = Month.of(Integer.parseInt(dateSplit[0])).name().toLowerCase();
 			String month =Month.of(Integer.parseInt(dateSplit[0])).name().charAt(0)+Lchars.substring(1, Lchars.length());
 			selectCalender_ToDate(Integer.parseInt(dateSplit[0]), month, Integer.parseInt(dateSplit[2]));
-		}
-	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		public static int getLocations() {
-			int loc = Integer.parseInt(Locations.getText());
-			System.out.println(loc);
-			return loc;
-			
-		}
-
-		public  static double getVisibilityscore() {
-			
-			String sc = Visibilityscore.getText();
-			System.out.println(sc);
-			String s = sc.replace("%", "");
-			double visibilityscore = Double.parseDouble(s);
-			System.out.println(visibilityscore);
-			return visibilityscore;		
-			
-		}
-		
-		public  static int getVisibilityLoc() {		
-			int visibilityloc = Integer.parseInt(VisibilityLoc.getText());
-			System.out.println(visibilityloc);
-			return visibilityloc;		
-			
-		}
-
-		public static double getAccuracy() {
-			
-			double accuracyscore = Double.parseDouble(Accuracyscore.getText());
-			System.out.println(accuracyscore);
-			return accuracyscore;
-		}
-		
-		public static int getAccuracyLoc() {
-			
-			int accuracyloc = Integer.parseInt(AccuracyLoc.getText());
-			System.out.println(accuracyloc);
-			return accuracyloc;
-		}
-		
-		public static double getContentscore() {
-			
-			double contentscore = Double.parseDouble(Contentscore.getText());
-			System.out.println(contentscore);
-			return contentscore;
-		}
-		
-		public static int getContentLoc() {
-			
-			int contentloc = Integer.parseInt(ContentLoc.getText());
-			System.out.println(contentloc);
-			return contentloc;
-		}
-		
-		public static double getGRScore() {
-			
-			double GRscore = Double.parseDouble(GRScore.getText());
-			System.out.println(GRscore);
-			return GRscore;
-		}
-		
-		public static int getGRLoc() {
-			
-			int GRloc = Integer.parseInt(GRLoc.getText());
-			System.out.println(GRloc);
-			return GRloc;
-		}
-		
-		
-		
-		//Overview and Dashboard Comparision
-		public int overviewLocation(WebElement layout, WebElement loc ) {	
-			waitForElement(layout, 10);
-			scrollByElement(layout);
-			waitForElement(loc, 10);
-			scrollByElement(loc);
-			int location = Integer.parseInt(loc.getText());					
-			return location;			
-		}
-		
-		public double overviewscore(WebElement layout, WebElement score) {
-			waitForElement(layout, 10);
-			scrollByElement(layout);
-			waitForElement(score, 10);
-			scrollByElement(score);
-			String sc = score.getText();
-			String s = sc.replace("%", "");
-			double scores = Double.parseDouble(s);
-			return scores;
-		}		
+		}*/
 	}

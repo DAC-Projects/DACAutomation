@@ -147,7 +147,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * @throws Exception
 	 */
 		@Test(priority = 6, groups = {
-			"smoke" }, description = "Test for overview export and export verification")
+			"smoke" }, description = "Test for export file as CSV")
 		public void verifyOverviewReportnExportVisibilityCSV() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 			data.exportvisibilityrptCSV();
@@ -159,7 +159,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * @throws Exception
 	 */
 		@Test(priority = 7, groups = {
-			"smoke" }, description = "Test for overview export and export verification")
+			"smoke" }, description = "Test for export file as XLSX")
 		public void verifyOverviewReportnExportVisibilityXLSX() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 			data.exportvisibilityrptXLSX();
@@ -171,7 +171,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * @throws Exception
 	 */
 		@Test(priority = 8, groups = {
-			"smoke" }, description = "Test for overview export and export verification")
+			"smoke" }, description = "Test for export file as pdf for Current Date")
 		public void verifyexportcurrentpdf() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 			data.exportcurrentvisibilityrptPDF();
@@ -183,7 +183,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * @throws Exception
 	 */
 		@Test(priority = 9,groups = { "smoke" }, 
-			description = "Test to compare ToolTip Value and Overall Visibility Score")
+			description = "Test for export file as Visibility History pdf")
 		public void PDFHistoryExport() throws Exception {		
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 			data.exporthistoryvisibilityrptPDF();
@@ -212,16 +212,16 @@ public class TPSEE_Visibility_Test extends BaseClass {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 			data.verifyAllsites();
 			addEvidence(CurrentState.getDriver(),
-				"Data of sitesTable", "yes");
+				"Data of All Sites Section ", "yes");
 			data.verifySearchEngineSites();
 			addEvidence(CurrentState.getDriver(),
-				"Data of sitesTable", "yes");
+				"Data of Search Engine Sites", "yes");
 			data.verifyDirectorySites();
 			addEvidence(CurrentState.getDriver(),
-				"Data of sitesTable", "yes");
+				"Data of Directory Sites", "yes");
 			data.verifySocialSites();
 			addEvidence(CurrentState.getDriver(),
-				"Data of sitesTable", "yes");
+				"Data of Social Sites Tab", "yes");
 		}
 	
 	/**
