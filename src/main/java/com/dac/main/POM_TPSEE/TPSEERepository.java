@@ -12,7 +12,8 @@ public interface TPSEERepository {
 	String completeness_Score = "Competitors.Sites.*.CompletenessScore";
 	String Site_Name = "Competitors.Sites.*.Name";
 	String Site_Name_pattern = "Sites(.*)\\.Name$";
-	String AccuracyExport = "AccuracyExport.xlsx";
+	String AccuracyExportCSV = "AccuracyExportcsv.xlsx";
+	String AccuracyExportXLSX = "AccuracyExportxlsx.xlsx";
 	String VisibilityExportCSV = "VisibilityExportCSV.xlsx";
 	String VisibilityExportXLSX = "VisibilityExportXLSX.xlsx";
 	String VisibilityExportPdf = "VisibilityExport.pdf";
@@ -24,8 +25,10 @@ public interface TPSEERepository {
 	String VisibilityExporttableFoundXLSX = "VisibilityExporttableFoundXLSX.xlsx";
 	String VisibilityExporttableNotFoundCSV = "VisibilityExporttableNotFound.";
 	String VisibilityExporttableNotFoundXLSX = "VisibilityExporttableNotFound.xlsx";
-	String AccuracyExporttable = "AccuracyExporttable.xlsx";
-	String AccuracyExporttableInAccuracy = "AccuracyExporttableInAccuracy.xlsx";
+	String AccuracyExporttableXLSX = "AccuracyExporttablexlsx.xlsx";
+	String AccuracyExporttableCSV = "AccuracyExporttablecsv.xlsx";
+	String AccuracyExporttableInAccuracyXLSX = "AccuracyExporttableInAccuracyxlsx.xlsx";
+	String AccuracyExporttableInAccuracyCSV = "AccuracyExporttableInAccuracycsv.xlsx";
 	String AccuracyExporttableIgnored = "AccuracyExporttableIgnored.xlsx";
 	String ContentAnalysisExport = "ContentAnalysisExport.xlsx";
 	String ContentAnalysisSiteExport = "ContentAnalysisSiteExport.xlsx";

@@ -75,9 +75,6 @@ public class TPSEE_Displayed_Review_Score_Test extends BaseClass {
 			public void verifyTableDataoExport() throws Exception {
 			data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
 			data.compareexporttableDatanstardetails(data.ReviewDataTable(),data.getReviewDataTableExport());
-			/*data.ReviewDataTable();
-			data.getReviewDataTableExport();
-			data.compareXlReviewData_UIdata();*/
 			addEvidence(CurrentState.getDriver(), "Verified Review export for UI Data", "yes");
 		}
 }

@@ -55,11 +55,6 @@ public class TPSEE_AllLocations_Test extends BaseClass{
 				s.clickApplyFilterBTN();
 				BaseClass.addEvidence(CurrentState.getDriver(),
 				"Applied global filter: "+Group+", "+CountryCode+", "+State+", "+City+", "+Location+"", "yes");
-				/*if(s.isDataAvailable()) {
-				data.LocationDataTable();
-				data.getLocationDataTableExport();
-				data.compareXlData_UIdata();
-				}*/
 			}
 			
 		}catch(Exception e) {

@@ -1,13 +1,14 @@
 package com.dac.main.POM_TPSEE;
 
-import static org.testng.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -111,8 +112,14 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	//tooltipvalue in the graph
 	@FindBy(css = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none")
 	private WebElement grphtooltip; 
+	
+	
+	@FindBy(css = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none>span>span.bold")
+	private WebElement scorenloc;
 		
 	/* ------------------------------Locators Ends---------------------------------------*/
+	
+	//Download Excel
 	public void exportvisibilityrpt() throws InterruptedException, FileNotFoundException, IOException{
 		JSWaiter.waitJQueryAngular();
 		if(export.isEnabled() & export.isDisplayed()) {
@@ -127,6 +134,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 		}
 	
 	
+	//Get Overview Score
 	@Override
 	public List<Map<String, String>> getOverviewReport() {
 		JSWaiter.waitJQueryAngular();
@@ -146,6 +154,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	}
 	
 	
+	//Download Export
 	public void exportcontentanalysisrpt() throws InterruptedException, FileNotFoundException, IOException {
 		// TODO Auto-generated method stub
 		JSWaiter.waitJQueryAngular();
@@ -162,6 +171,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	}
 	
 	
+	//Store Excel into Map
 	public List<Map<String, String>> getExportData() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		exportcontentanalysisrpt();
@@ -227,13 +237,22 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 		
 		for (Map<String, String> m1 : exportData) {
 			for (Map<String, String> m2 : analysisSiteData) {
+				if (m1.get("rowdata").equals(m2.get("rowdata"))) {
 				Assert.assertEquals(m1.size(), m2.size()-1);
 				Assert.assertEquals(m1.get("rowdata"), m2.get("rowdata"));
-			
+				}
 			}
 		}
 	}
 	
+	/**
+	 * To get Overview Score 
+	 * @return
+	 */
+	public double overviewscore() {
+		double score = overviewcascore(Progress);
+		return score;
+	}
 	
 	public List<Map<String, String>> SitelLinkData() throws InterruptedException{
 		JSWaiter.waitJQueryAngular();
@@ -416,4 +435,31 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 				}
 				
 			}
+		
+		
+		public double CAScore() throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
+			waitForElement(hstryGrph, 30);
+			scrollByElement(hstryGrph);
+			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+			action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 -2, 0).click().perform();
+			String tooltipvalue = grphtooltip.getText();
+			System.out.println("\n Reading tooltipdata ********** \n");
+			System.out.println("\n tooltipvalue is \n" +tooltipvalue);	
+			double score =  Double.parseDouble(tooltipvalue.substring(47, 52));
+			System.out.println(score);
+			return score;			
+		}
+		
+		public int CALoc() throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
+			waitForElement(hstryGrph, 30);
+			scrollByElement(hstryGrph);
+			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+			action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 -2, 0).click().perform();
+			String tooltipvalue = grphtooltip.getText();
+			System.out.println("\n Reading tooltipdata ********** \n");
+			System.out.println("\n tooltipvalue is \n" +tooltipvalue);
+			int numberoflocations = Integer.parseInt(tooltipvalue.substring(31 , 34));
+			System.out.println(numberoflocations);
+			return numberoflocations;	
+		}
 		}

@@ -4,10 +4,12 @@ import static org.testng.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -388,4 +390,31 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 				}
 				
 			}
+	
+	
+	public double GRScore() throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
+		waitForElement(hstryGrph, 30);
+		scrollByElement(hstryGrph);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 -2, 0).click().perform();
+		String tooltipvalue = grphtooltip.getText();
+		System.out.println("\n Reading tooltipdata ********** \n");
+		System.out.println("\n tooltipvalue is \n" +tooltipvalue);	
+		double score =  Double.parseDouble(tooltipvalue.substring(45, 49));
+		System.out.println(score);
+		return score;			
+	}
+	
+	public int GRLoc() throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
+		waitForElement(hstryGrph, 30);
+		scrollByElement(hstryGrph);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 -2, 0).click().perform();
+		String tooltipvalue = grphtooltip.getText();
+		System.out.println("\n Reading tooltipdata ********** \n");
+		System.out.println("\n tooltipvalue is \n" +tooltipvalue);
+		int numberoflocations = Integer.parseInt(tooltipvalue.substring(31 , 34));
+		System.out.println(numberoflocations);
+		return numberoflocations;	
+	}
 	}

@@ -8,7 +8,6 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_Bing_Page;
-import com.dac.main.POM_TPSEE.TPSEE_GMB;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -105,28 +104,29 @@ public class TPSEE_Bing_Test extends BaseClass{
 			public void gethighchartsdate() throws Exception{
 				data = new TPSEE_Bing_Page(CurrentState.getDriver());
 				String OneMonth ="1m";
-				data.clickHighchartCriteria(OneMonth);
+				int start = 980;
+				int end = 0;
+				data.clickHighchartCriteria(OneMonth,start,end);
 				addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
-				
 				Thread.sleep(5000);
 				String ThreeMonths = "3m";
-				data.clickHighchartCriteria(ThreeMonths);
+				data.clickHighchartCriteria(ThreeMonths,start,end);
 				addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
 				Thread.sleep(5000);
 				String SixMonths = "6m";
-				data.clickHighchartCriteria(SixMonths);
+				data.clickHighchartCriteria(SixMonths,start,end);
 				addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
 				Thread.sleep(5000);
 				String OneYear = "1y";
-				data.clickHighchartCriteria(OneYear);
+				data.clickHighchartCriteria(OneYear,start,end);
 				addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
 				Thread.sleep(5000);
 				String YearToDate ="ytd";
-				data.clickHighchartCriteria(YearToDate);
+				data.clickHighchartCriteria(YearToDate,start,end);
 				addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
 				Thread.sleep(5000);
 				String ALLDATA = "all";
-				data.clickHighchartCriteria(ALLDATA);
+				data.clickHighchartCriteria(ALLDATA,start,end);
 				addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
 				}
 }

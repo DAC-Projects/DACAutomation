@@ -68,7 +68,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	@FindBy(xpath = "//*[@id='accuracy']/div[2]/span")
 	private static WebElement Accuracyscore;
 	
-	@FindBy(xpath = "//*[@id='accuarcy']/div[2]/div[2]/span")
+	@FindBy(xpath = "//*[@id='accuracy']/div[2]/div[2]/span")
 	private static WebElement AccuracyLoc;
 	
 	@FindBy(xpath = "//*[@id='contentAnalysis']/div[2]/span")
@@ -123,7 +123,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	@FindBy(css = "rect.highcharts-plot-background")
 	public WebElement hstryGrph;
 
-	@FindBy(css = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none")
+	@FindBy(css = ".highcharts-label.highcharts-tooltip-box.highcharts-color-none")
 	private WebElement grphtooltip; 
 	
 	//section of overall report
@@ -426,7 +426,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		System.out.println("\n Reading accuracy site table********** \n");
 		List<Map<String, String>> accuracysiteTableData = new ArrayList<Map<String, String>>();
 		Map<String, String> kMap = new HashMap<String, String>();
-		List<WebElement> elements = driver.findElements(By.xpath("//*[@id=\"accuracyScoresTable\"]"));
+		List<WebElement> elements = driver.findElements(By.xpath("//*[@id='accuracyScoresTable']"));
 		    java.util.Iterator<WebElement> program = elements.iterator();
 		    while (program.hasNext()) {
 		        String values = program.next().getText();
@@ -655,29 +655,43 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @throws IOException 
 		 * @throws FileNotFoundException 
 		 */
-		public String verifyinitialHistoryGraph() throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
+		public Date verifyinitialHistoryGraph(int start, int end) throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
+			
+			String var = null;			
+			var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
+			System.out.println(var);
+			
 			waitForElement(hstryGrph, 30);
 			scrollByElement(hstryGrph);
 			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-			action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 -980, 0).click().perform();
+			action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 -start, end).click().perform();
 			String initialtooltipvalue = grphtooltip.getText();
 			System.out.println("\n Reading tooltipdata ********** \n");
-			System.err.println(initialtooltipvalue);
+			System.out.println("\n tooltipvalue is \n" +initialtooltipvalue);
 			String initdate = initialtooltipvalue.substring(0, 10);
 			System.out.println(initdate);
-			return initdate;
+			
+			SimpleDateFormat formats = new SimpleDateFormat(var);
+			Date startDate = formats.parse(initdate);			
+			return startDate;
 		}
+		
 		
 		/**
 		 * Get the Latest point and date of the graph
-		 * @return
+		 * @return final/ending History graph value
 		 * @throws ParseException
 		 * @throws bsh.ParseException
 		 * @throws FileNotFoundException
 		 * @throws IOException
 		 * @throws InterruptedException
 		 */
-		public String verifyfinalHistorygraph() throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException{
+		public Date verifyfinalHistorygraph() throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException{
+			
+			String var = null;			
+			var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
+			System.out.println(var);
+			
 			waitForElement(hstryGrph, 30);
 			scrollByElement(hstryGrph);
 			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
@@ -686,7 +700,11 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			System.out.println("\n Reading tooltipdata ********** \n");
 			System.out.println("\n tooltipvalue is \n" +finaltooltipvalue);
 			String finaldate = finaltooltipvalue.substring(0, 10);
-			return finaldate;			
+			System.out.println(finaldate);
+			
+			SimpleDateFormat formats = new SimpleDateFormat(var);
+			Date endtDate = formats.parse(finaldate);			
+			return endtDate;
 		}	
 		
 		/**
@@ -694,10 +712,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @return
 		 * @throws Exception
 		 */
-		public  int getNumberofDays() throws Exception {
-			Date init = getInitialDate();
+		public  int getNumberofDays(int start, int end) throws Exception {
+			Date init = verifyinitialHistoryGraph(start,end);
 			Thread.sleep(5000);
-			Date end =  getFinalDate();
+			Date enddate =  verifyfinalHistorygraph();
 			Thread.sleep(5000);
 			String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
 			SimpleDateFormat formats = new SimpleDateFormat(var);
@@ -711,7 +729,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			System.out.println(latest);
 			Thread.sleep(5000);			
 			Assert.assertEquals(end, latest);
-			long difference = Math.abs(init.getTime() - end.getTime());
+			long difference = Math.abs(init.getTime() - enddate.getTime());
 	        long differenceDates = difference / (24 * 60 * 60 * 1000);
 			int diff = (int)(long)differenceDates;
 			System.out.println(diff);	
@@ -719,44 +737,6 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			return diff;
 		}
 		
-		/**
-		 * Get initial point of graph
-		 * @return
-		 * @throws ParseException
-		 * @throws bsh.ParseException
-		 * @throws FileNotFoundException
-		 * @throws IOException
-		 * @throws InterruptedException
-		 */
-		public Date getInitialDate() throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
-			String var = null;			
-			var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
-			System.out.println(var);
-			String InitialDate = verifyinitialHistoryGraph();
-			SimpleDateFormat formats = new SimpleDateFormat(var);
-			Date startDate = formats.parse(InitialDate);			
-			return startDate;
-			
-		}
-		
-		/**
-		 * Get final point of the graph
-		 * @return
-		 * @throws bsh.ParseException
-		 * @throws FileNotFoundException
-		 * @throws ParseException
-		 * @throws IOException
-		 * @throws InterruptedException
-		 */
-		public Date getFinalDate() throws bsh.ParseException, FileNotFoundException, ParseException, IOException, InterruptedException {
-			String var = null;			
-			var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
-			System.out.println(var);
-			String FinalDate = verifyfinalHistorygraph();
-			SimpleDateFormat formats = new SimpleDateFormat(var);
-			Date endtDate = formats.parse(FinalDate);			
-			return endtDate;
-		}
 		
 		/**
 		 * To check whether element is clicked
@@ -779,84 +759,107 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @return
 		 * @throws Exception
 		 */
-		public TPSEE_abstractMethods clickHighchartCriteria(String durationFor) throws Exception {
+		public TPSEE_abstractMethods clickHighchartCriteria(String durationFor, int start, int end) throws Exception {
 			durationFor = durationFor.toLowerCase();
 			scrollByElement(highChartZoom);
 			int days;			
 			if((!durationFor.equalsIgnoreCase("null"))) {				
 				switch(durationFor) {				
-				case "1m"  : 	clickelement(highChart_1M);
-								if(eleClicked(highChart_1M)) {
-								days = getNumberofDays();			
-								if(days >= 28 && days<=31 ) {
-									System.out.println("1 Month data is displayed");
-								}else {
-									System.out.println("Not 1 Month");
+				case "1m"  : 	try{
+									clickelement(highChart_1M);
+									if(eleClicked(highChart_1M)) {
+										days = getNumberofDays(start, end);			
+										if(days >= 28 && days<=31 ) {
+											System.out.println("1 Month data is displayed");
+										}else {
+											System.out.println("Not 1 Month");
+											}
+										}else {
+											System.out.println("Element not clicked");
 										}
-									}else {
-										System.out.println("Element not clicked");
-									}
+								}catch(Exception e) {
+									e.printStackTrace();
+								}
 								break;
 							
-				case "3m"  : 	clickelement(highChart_3M);
-								if(eleClicked(highChart_3M)) {
-								days = getNumberofDays();
-								if(days>=90 && days<=92) {
-									System.out.println("3 Month data is displayed");
-									}else {
-										System.out.println("Not 3 Month");
+				case "3m"  : 	try{
+									clickelement(highChart_3M);
+									if(eleClicked(highChart_3M)) {
+										days = getNumberofDays(start, end);
+										if(days>=90 && days<=92) {
+											System.out.println("3 Month data is displayed");
+										}else {
+											System.out.println("Not 3 Month");
+											}
+										}else {
+											System.out.println("Element not clicked");
 										}
-									}else {
-										System.out.println("Element not clicked");
+									}catch(Exception e) {
+										e.printStackTrace();
 									}
+									break;
+							 
+				case "6m"  : 	try{
+									clickelement(highChart_6M);
+									if(eleClicked(highChart_6M)) {
+										days = getNumberofDays(start, end);
+										if(days>=180 && days<=184) {
+											System.out.println("6 Month data is displayed");
+										}else {
+											System.out.println("Not 6 Month");
+											}
+										}else {
+											System.out.println("Element not clicked");
+										}
+									}catch(Exception e) {
+										e.printStackTrace();
+										}
 								break;
 							 
-				case "6m"  : 	clickelement(highChart_6M);
-								if(eleClicked(highChart_6M)) {
-									days = getNumberofDays();
-									if(days>=180 && days<=184) {
-										System.out.println("6 Month data is displayed");
+				case "ytd" : 	try{
+									clickelement(highChart_YTD);
+									if(eleClicked(highChart_YTD)) {
+										days = getNumberofDays(start, end);
 									}else {
-										System.out.println("Not 6 Month");
+										System.out.println("Element Not clicked");
 										}
-									}else {
-										System.out.println("Element not clicked");
-									}
-								break;
-							 
-				case "ytd" : 	clickelement(highChart_YTD);
-								if(eleClicked(highChart_YTD)) {
-							 	days = getNumberofDays();
-								}else {
-									System.out.println("Element Not clicked");
-									}
+								}catch(Exception e) {
+									e.printStackTrace();
+								}
 								break;
 						     
-				case "1y"  : 	clickelement(highChart_1y);
-								if(eleClicked(highChart_1y)) {
-									days = getNumberofDays();
-									if(days>=364 && days<=366) {
-										System.out.println("1 Year data is displayed");
-									}else {
-										System.out.println("Not 1 Year");
-										
+				case "1y"  : 	try{
+									clickelement(highChart_1y);
+									if(eleClicked(highChart_1y)) {
+										days = getNumberofDays(start, end);
+										if(days>=364 && days<=366) {
+											System.out.println("1 Year data is displayed");
+										}else {
+											System.out.println("Not 1 Year");
+											}
+										}else {
+											System.out.println("Element not clicked");
 										}
-									}else {
-									System.out.println("Element not clicked");
+									}catch(Exception e) {
+										e.printStackTrace();
 									}
 								break;
 							 
 				case "all" :
-				default    : 	clickelement(highChart_All);
-								if(eleClicked(highChart_All)) {
-								days = getNumberofDays();
-								}else {
-									System.out.println("Element not clicked");
-								}				
-						}
-				}
-				return this;
-		}	
+				default    : 	try{
+									clickelement(highChart_All);
+									if(eleClicked(highChart_All)) {
+										days = getNumberofDays(start, end);
+									}else {
+										System.out.println("Element not clicked");
+										}
+									}catch(Exception e) {
+										e.printStackTrace();
+									}
+								}
+							}
+					return this;
+			}	
 		
 		/**
 		 * To check whether given element is visible 
@@ -878,6 +881,9 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 */
 		public void TopButton()  {			
 			try {
+				
+			JavascriptExecutor jse = (JavascriptExecutor)driver;
+			jse.executeScript("window.scrollBy(0,-250)");
 				waitForElement(Top, 10);
 			scrollByElement(Top);
 			if(Top.isDisplayed() && Top.isEnabled()) {
@@ -921,6 +927,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			String sc = Visibilityscore.getText();
 			System.out.println(sc);
 			String s = sc.replace("%", "");
+			s.trim();
 			double visibilityscore = Double.parseDouble(s);
 			System.out.println(visibilityscore);
 			return visibilityscore;		
@@ -942,8 +949,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * To get Accuracy Score from Dashboard
 		 * @return
 		 */
-		public static double getAccuracy() {			
-			double accuracyscore = Double.parseDouble(Accuracyscore.getText());
+		public static double getAccuracyscore() {	
+			String sc = Accuracyscore.getText();
+			System.out.println(sc);
+			String s = sc.replace("%", "");
+			s.trim();
+			double accuracyscore = Double.parseDouble(s);
 			System.out.println(accuracyscore);
 			return accuracyscore;
 		}
@@ -962,10 +973,14 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * To get Content Analysis Score from Dashboard
 		 * @return
 		 */
-		public static double getContentscore() {			
-			double contentscore = Double.parseDouble(Contentscore.getText());
-			System.out.println(contentscore);
-			return contentscore;
+		public static double getContentscore() {	
+			String sc = Contentscore.getText();
+			System.out.println(sc);
+			String s = sc.replace("%", "");
+			s.trim();
+			double cascore = Double.parseDouble(s);
+			System.out.println(cascore);
+			return cascore;	
 		}
 		
 		/**
@@ -1014,7 +1029,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		}
 		
 		/**
-		 * To get overview score from the reports (VAC Reports)
+		 * To get overview score from the reports (VA Reports)
 		 * @param layout
 		 * @param score
 		 * @return
@@ -1025,6 +1040,16 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			waitForElement(score, 10);
 			scrollByElement(score);
 			String sc = score.getText();
+			String s = sc.replace("%", "");
+			double scores = Double.parseDouble(s);
+			return scores;
+		}		
+		
+		
+		public double overviewcascore(WebElement score) {
+			waitForElement(score, 10);
+			scrollByElement(score);
+			String sc = score.getAttribute("data-percent");
 			String s = sc.replace("%", "");
 			double scores = Double.parseDouble(s);
 			return scores;

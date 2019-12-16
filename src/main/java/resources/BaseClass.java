@@ -1,6 +1,8 @@
 package resources;
 
 import java.util.ArrayList;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -24,14 +26,14 @@ public abstract class BaseClass {
 
     WebDriverWait wait = new WebDriverWait(CurrentState.getDriver(), 10);
     
-    /*if(!CurrentState.getBrowser().contains("ie")) {
+/*    if(!CurrentState.getBrowser().contains("ie")) {
 
-   /* WebDriverWait wait = new WebDriverWait(CurrentState.getDriver(), 10);
-    if(!CurrentState.getBrowser().contains("ie")) {
+   // WebDriverWait wait = new WebDriverWait(CurrentState.getDriver(), 10);
+*/    if(!CurrentState.getBrowser().contains("ie")) {
 
     	wait.until(ExpectedConditions.visibilityOf(CurrentState.getDriver().findElement(By.xpath("//div[contains(@class,'close-button walkme-x-button')]"))));
     	CurrentState.getDriver().findElement(By.xpath("//div[contains(@class,'close-button walkme-x-button')]")).click();    	
-    }*/
+	}
   }
 
   /**

@@ -1,7 +1,5 @@
 package com.dac.main.POM_TPSEE;
 
-import static org.testng.Assert.assertTrue;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -103,6 +101,8 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods{
 		return false;
 	}
 	
+	
+	//Get UI table
 	public List<Map<String, String>> LocationDataTable() throws InterruptedException{
 		JSWaiter.waitJQueryAngular();
 		waitForElement(LocationTable, 40);
@@ -161,6 +161,7 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods{
 	}
 	
 	
+	//Download Excel sheet
 	public void LocationDataTableExport() throws FileNotFoundException, IOException, InterruptedException {
 		waitForElement(LocationTable, 40);
 		waitForElement(Export, 40);
@@ -170,6 +171,7 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods{
 		}
 
 	
+	//Get Excel into Map
 	public List<Map<String, String>> getLocationDataTableExport() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		LocationDataTableExport();
@@ -188,20 +190,22 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods{
 	}
 
 	
-
+	// Compare UI and Excel
 	public void compareExprttoAnalysisSiteLinkData(List<Map<String, String>> LocationDataTable,
 			List<Map<String, String>> getLocationDataTableExport) {
 		
 		for (Map<String, String> m1 : LocationDataTable) {
 			for (Map<String, String> m2 : getLocationDataTableExport) {
+				if (m1.get("Location").equals(m2.get("Location")))
 				Assert.assertEquals(m1.size(), m2.size());
-				Assert.assertEquals(m1.get("Location"), m2.get("Location"), "Data Matches");
+				Assert.assertEquals(m1.get("Location").contains(m2.get("Location")), "Data Matches");
 				
 			}
 		}
 	}
 
 	
+	//Compare UI and Excel
 	public void compareXlData_UIdata() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		List < WebElement > Columns_row = LocationTableHeader.findElements(By.tagName("th"));

@@ -1,16 +1,14 @@
 package com.dac.testcases.TPSEE;
 
-import org.testng.annotations.Test;
-import org.testng.annotations.Test;
 import java.util.List;
 import java.util.Map;
 
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
-import com.dac.main.POM_TPSEE.TPSEE_Accuracy_Page;
 import com.dac.main.POM_TPSEE.TPSEE_ContentAnalysis_Page;
-import com.dac.main.POM_TPSEE.TPSEE_Visibility_Page;
-import com.selenium.testevidence.SeleniumEvidence;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -21,19 +19,81 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 	static List<Map<String, String>> export;
 	Navigationpage np;
 	TPSEE_ContentAnalysis_Page data;
+	double score;
+	int location;
 	
-	@Test(groups = { "smoke" }, description = "Test for navigating to ContentAnalysis page")
+	
+	/**
+	 * Test to get dashboard scores
+	 * @throws Exception
+	 */
+		@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
+		public void GetKPIValues() throws Exception {
+			data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
+			Thread.sleep(10000);
+			score =data.getContentscore();
+			System.out.println(score);
+			location = data.getContentLoc();
+			System.out.println(location);
+			CurrentState.getLogger().log(Status.PASS, "KPI Scores");
+			addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
+		}
+		
+		
+	@Test(priority = 2, groups = { "smoke" }, description = "Test for navigating to ContentAnalysis page")
 	public void navigateToContentAnalysisPage() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateToContentAnalysis();
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Accuracy page");
 		addEvidence(CurrentState.getDriver(), "Navigate to ContentAnalysis page from Dashboard", "yes");
-
-		// Assert.assertFalse( "sample error", true);
 	}
 	
-	@Test(dependsOnMethods = { "navigateToContentAnalysisPage" }, groups = {
-	"smoke" }, description = "Verify Content Analysis page loads after filter applied")
+	
+	//CAScorenLoc
+	@Test(priority = 3, groups = { "smoke" }, description = "Test for navigating to ContentAnalysis page")
+	public void Verifyscorenloc() throws Exception {
+		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
+		double CAscore = data.CAScore();
+		Assert.assertEquals(CAscore, score);
+		int CALoc = data.CALoc();
+		Assert.assertEquals(CALoc, location);
+		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Accuracy page");
+		addEvidence(CurrentState.getDriver(), "Navigate to ContentAnalysis page from Dashboard", "yes");
+	}
+	
+	//Test to verify Zoom Functionality 
+		@Test(priority = 4,groups = {"smoke"},
+				description ="Verify Zoom Functionality")
+		public void gethighchartsdate() throws Exception{
+			data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
+			String OneMonth ="1m";
+			int start = 1060;
+			int end = 0;
+			data.clickHighchartCriteria(OneMonth,start,end);
+			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
+			Thread.sleep(5000);
+			String ThreeMonths = "3m";
+			data.clickHighchartCriteria(ThreeMonths,start,end);
+			addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
+			Thread.sleep(5000);
+			String SixMonths = "6m";
+			data.clickHighchartCriteria(SixMonths,start,end);
+			addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
+			Thread.sleep(5000);
+			String OneYear = "1y";
+			data.clickHighchartCriteria(OneYear,start,end);
+			addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
+			Thread.sleep(5000);
+			String YearToDate ="ytd";
+			data.clickHighchartCriteria(YearToDate,start,end);
+			addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
+			Thread.sleep(5000);
+			String ALLDATA = "all";
+			data.clickHighchartCriteria(ALLDATA,start,end);
+			addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
+			}
+	
+		@Test(priority = 5, groups = {"smoke" }, description = "Verify Content Analysis page loads after filter applied")
 	public void verifyFilteringReportsContentAnalysis() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		try {	
@@ -62,9 +122,11 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 		}
 	}
 	
+	
+	
 	//Test for export and overview report in Content Analysis Page
 		@SuppressWarnings("unchecked")
-		@Test(dependsOnMethods = { "navigateToContentAnalysisPage" ,"verifyFilteringReportsContentAnalysis"}, groups = {
+		@Test(priority = 6, groups = {
 						"smoke" }, description = "Test for overview export and export verification")
 			public void verifyOverviewReportnExportContentAnalysis() throws Exception {
 			data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
@@ -74,7 +136,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 		
 		//Test for Tooltip and overview report in Content Analysis Page
 		@SuppressWarnings("unchecked")
-		@Test(dependsOnMethods = { "verifyOverviewReportnExportContentAnalysis" }, groups = { "smoke" }, 
+		@Test(priority = 7, groups = { "smoke" }, 
 								description = "Test to compare ToolTip Value and Overall Analysis Score")
 		public void verifyOverviewReportnTooltipContentAnalysis() throws Exception {
 			data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
@@ -83,19 +145,15 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 		}
 		
 		//Test for export and overview report in Content Analysis Page
-				@SuppressWarnings("unchecked")
-				@Test(dependsOnMethods = { "verifyFilteringReportsContentAnalysis"}, groups = {
+				@Test(priority = 8, groups = {
 								"smoke" }, description = "Test for overview export and export verification")
 					public void verifyTableDataoExport() throws Exception {
 					data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 					data.compareexporttableDatannumberofentries(data.SitelLinkData(),data.getSiteLinkExporttableData());
-					/*data.SitelLinkData();
-					data.getSiteLinkExporttableData();
-					data.compareXlData_UIdata();*/
 					addEvidence(CurrentState.getDriver(), "Verified overview export for Accuracy report", "yes");
 				}
 				
-				//Test to compare vendors in the application in Visibility Page
+				/*//Test to compare vendors in the application in Visibility Page
 				@SuppressWarnings("unchecked")
 				@Test(dependsOnMethods = {"verifyTableDataoExport"},groups = {"smoke"},
 						description ="Verify Site Vendors List")
@@ -104,5 +162,19 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 					data.comparevendorsListnverifySitevendors(data.verifyAnalysisSitevendors(), data.vendorsList());
 					addEvidence(CurrentState.getDriver(),
 						"Site Vendors in Content Analysis site vendors ", "yes");
-			}
+			}*/
+	
+	/**
+	 * Test to verify Top button functionality
+	 * @throws Exception
+	 */
+		@Test(priority = 9, groups = {"smoke"},
+			description = "Verify Top Button")
+		public void GetTopBtn() throws Exception {
+			data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
+			data.TopButton();
+			addEvidence(CurrentState.getDriver(), "Top Button click verification", "yes");
+		}		
+				
+				
 }
