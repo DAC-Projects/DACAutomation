@@ -63,7 +63,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * Test To get overall score and compare with dashboard values 
 	 * @throws Exception
 	 */		
-		@Test(dependsOnMethods = {"navigateToVisibilityPage"},groups = { "smoke" }, description = "Test for compare KPI Values")
+		@Test(priority=3,groups = { "smoke" }, description = "Test for compare KPI Values")
 		public void ovrviewlocscorecompare() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 			Thread.sleep(5000);
@@ -121,7 +121,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * @param Location
 	 * @throws Exception
 	 */
-		@Test(dependsOnMethods = {"gethighchartsdate"}, groups = {
+		@Test(priority = 5, groups = {
 			"smoke" }, description = "Verify Visibility page loads after filter applied")
 		public void verifyFilteringReportsVisibility() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
