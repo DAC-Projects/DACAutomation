@@ -18,9 +18,10 @@ public class TPSEE_Bing_Test extends BaseClass{
 	static List<Map<String, String>> export;
 	Navigationpage np;
 	TPSEE_Bing_Page data;
+	String grph = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none";
 	
 	//Test to navigate to Bing Page
-	@Test(groups = { "smoke" }, description = "Test for navigating to Bing page")
+	@Test(priority=1,groups = { "smoke" }, description = "Test for navigating to Bing page")
 	public void navigateToBingPage() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateToBingPlacesForBusiness();
@@ -29,7 +30,7 @@ public class TPSEE_Bing_Test extends BaseClass{
 	}
 	
 	//Test to apply filter in Bing Page		
-	@Test(dependsOnMethods = { "navigateToBingPage" }, groups = {
+	@Test(priority=2, groups = {
 	"smoke" }, description = "Verify Bing page loads after filter applied")
 	public void verifyFilteringReportsBing() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
@@ -59,7 +60,7 @@ public class TPSEE_Bing_Test extends BaseClass{
 	}
 	
 		//Test for Tooltip score in Bing Page
-			@Test(dependsOnMethods = { "verifyFilteringReportsBing" }, groups = { "smoke" }, 
+			@Test(priority=3, groups = { "smoke" }, 
 									description = "Test to get ToolTip Value Score")
 			public void verifyTooltipBing() throws Exception {
 				data = new TPSEE_Bing_Page(CurrentState.getDriver());
@@ -69,7 +70,7 @@ public class TPSEE_Bing_Test extends BaseClass{
 			
 		//Test to export Bing report 
 			
-			@Test(dependsOnMethods = {"verifyTooltipBing"},groups = {"smoke"},
+			@Test(priority=4,groups = {"smoke"},
 					description ="Verify Site Vendors List")
 			public void BingCSVExport() throws Exception{
 				data = new TPSEE_Bing_Page(CurrentState.getDriver());
@@ -79,7 +80,7 @@ public class TPSEE_Bing_Test extends BaseClass{
 			}
 			
 			
-			@Test(dependsOnMethods = {"BingCSVExport"},groups = {"smoke"},
+			@Test(priority=5,groups = {"smoke"},
 					description ="Verify Site Vendors List")
 			public void BingExport() throws Exception{
 				data = new TPSEE_Bing_Page(CurrentState.getDriver());
@@ -89,7 +90,7 @@ public class TPSEE_Bing_Test extends BaseClass{
 			}
 
 		//Test for comparing UI and export Impression count	
-			@Test(dependsOnMethods = {"BingExport"},groups = {"smoke"},
+			@Test(priority=6,groups = {"smoke"},
 					description ="Verify Impressions")
 			public void VerifyTotalImpressionUIExport() throws Exception{
 				data = new TPSEE_Bing_Page(CurrentState.getDriver());
@@ -99,34 +100,34 @@ public class TPSEE_Bing_Test extends BaseClass{
 			}
 			
 			//Test to verify Zoom Functionality
-			@Test(dependsOnMethods = {"verifyFilteringReportsBing"},groups = {"smoke"},
+			@Test(priority=7,groups = {"smoke"},
 					description ="Verify Zoom Functionality")
 			public void gethighchartsdate() throws Exception{
 				data = new TPSEE_Bing_Page(CurrentState.getDriver());
 				String OneMonth ="1m";
 				int start = 980;
 				int end = 0;
-				data.clickHighchartCriteria(OneMonth,start,end);
+				data.clickHighchartCriteria(OneMonth,start,end,grph);
 				addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
 				Thread.sleep(5000);
 				String ThreeMonths = "3m";
-				data.clickHighchartCriteria(ThreeMonths,start,end);
+				data.clickHighchartCriteria(ThreeMonths,start,end,grph);
 				addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
 				Thread.sleep(5000);
 				String SixMonths = "6m";
-				data.clickHighchartCriteria(SixMonths,start,end);
+				data.clickHighchartCriteria(SixMonths,start,end,grph);
 				addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
 				Thread.sleep(5000);
 				String OneYear = "1y";
-				data.clickHighchartCriteria(OneYear,start,end);
+				data.clickHighchartCriteria(OneYear,start,end,grph);
 				addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
 				Thread.sleep(5000);
 				String YearToDate ="ytd";
-				data.clickHighchartCriteria(YearToDate,start,end);
+				data.clickHighchartCriteria(YearToDate,start,end,grph);
 				addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
 				Thread.sleep(5000);
 				String ALLDATA = "all";
-				data.clickHighchartCriteria(ALLDATA,start,end);
+				data.clickHighchartCriteria(ALLDATA,start,end,grph);
 				addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
 				}
 }

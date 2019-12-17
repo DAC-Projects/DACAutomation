@@ -21,7 +21,7 @@ public class TPSEE_AllLocations_Test extends BaseClass{
 	Navigationpage np;
 	TPSEE_AllLocations_Page data;
 	
-	@Test(groups = { "smoke" }, description = "Test for navigating to All Locations page")
+	@Test(priority =1,groups = { "smoke" }, description = "Test for navigating to All Locations page")
 	public void navigateToAllLocationsPage() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateToAllLocations();
@@ -31,7 +31,7 @@ public class TPSEE_AllLocations_Test extends BaseClass{
 		// Assert.assertFalse( "sample error", true);
 	}
 	
-	@Test(dependsOnMethods = { "navigateToAllLocationsPage" }, groups = {
+	@Test(priority=2, groups = {
 	"smoke" }, description = "Verify All Locations page loads after filter applied")
 	public void verifyFilteringReportsnavigateToAllLocations() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
@@ -63,8 +63,7 @@ public class TPSEE_AllLocations_Test extends BaseClass{
 	}
 	
 	//Test for export and overview report in Content Analysis Page
-	@SuppressWarnings("unchecked")
-	@Test(dependsOnMethods = { "verifyFilteringReportsnavigateToAllLocations"}, groups = {
+	@Test(priority=3, groups = {
 					"smoke" }, description = "Test for Location export and export verification")
 		public void verifyTableDataoExport() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());

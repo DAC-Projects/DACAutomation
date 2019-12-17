@@ -18,8 +18,9 @@ public class TPSEE_GMB_Test extends BaseClass{
 	Navigationpage np;
 	TPSEE_GMB data;
 	WebDriver driver;
+	String grph = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none";
 	
-	@Test(groups = { "smoke" }, description = "Test for navigating to GMB page")
+	@Test(priority=1,groups = { "smoke" }, description = "Test for navigating to GMB page")
 	public void navigateToGoogleMyBusiness() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateToGoogleMyBusiness();
@@ -29,7 +30,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 		// Assert.assertFalse( "sample error", true);
 	}
 	
-	@Test(dependsOnMethods = { "navigateToGoogleMyBusiness" }, groups = {
+	@Test(priority=2, groups = {
 	"smoke" }, description = "Verify GMB page loads after filter applied")
 	public void verifyFilteringReportsGMB() throws Exception {
 		data = new TPSEE_GMB(CurrentState.getDriver());
@@ -58,7 +59,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 		}
 	}
 	
-	@Test(dependsOnMethods = { "verifyFilteringReportsGMB" }, groups = { "smoke" }, 
+	@Test(priority=3, groups = { "smoke" }, 
 							description = "Verify ToolTip Value ")
 	public void verifyTooltip() throws Exception {
 		data = new TPSEE_GMB(CurrentState.getDriver());
@@ -79,7 +80,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 	}
 	
 	
-	@Test(dependsOnMethods = {"verifyFilteringReportsGMB"},groups = {"smoke"},
+	@Test(priority=4,groups = {"smoke"},
 			description ="Verify CSV Export")
 	public void GMBExportasCSV() throws Exception{
 		data = new TPSEE_GMB(CurrentState.getDriver());
@@ -88,7 +89,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 			"Verifying CSV export functionality ", "yes");
 	}
 	
-	@Test(dependsOnMethods = {"GMBExportasCSV"},groups = {"smoke"},
+	@Test(priority=5,groups = {"smoke"},
 			description ="Verify XLSX Export")
 	public void GMBExportasXLSX() throws Exception{
 		data = new TPSEE_GMB(CurrentState.getDriver());
@@ -97,7 +98,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 			"Verifying XLSX export functionality ", "yes");
 	}
 	
-	@Test(dependsOnMethods = {"GMBExportasXLSX"},groups = {"smoke"},
+	@Test(priority=6,groups = {"smoke"},
 			description ="UI and XL comparision for WebActions")
 	public void UIXLCompareofWebActions() throws Exception{
 		data = new TPSEE_GMB(CurrentState.getDriver());
@@ -106,7 +107,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 			"UI and XL comparision for WebActions  ", "yes");
 	}
 	
-	@Test(dependsOnMethods = {"UIXLCompareofWebActions"},groups = {"smoke"},
+	@Test(priority=7,groups = {"smoke"},
 			description ="UI and XL comparision for Request Directory")
 	public void UIXLCompareofReqDirActions() throws Exception{
 		data = new TPSEE_GMB(CurrentState.getDriver());
@@ -115,7 +116,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 			"UI and XL comparision for Request Directory ", "yes");
 	}
 	
-	@Test(dependsOnMethods = {"UIXLCompareofReqDirActions"},groups = {"smoke"},
+	@Test(priority=8,groups = {"smoke"},
 			description ="UI and XL comparision for Phone Calls")
 	public void UIXLCompareofPhCalls() throws Exception{
 		data = new TPSEE_GMB(CurrentState.getDriver());
@@ -124,7 +125,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 			"UI and XL comparision for Phone Calls ", "yes");
 	}
 	
-	@Test(dependsOnMethods = {"UIXLCompareofPhCalls"},groups = {"smoke"},
+	@Test(priority=8,groups = {"smoke"},
 			description ="UI and XL comparision for Total Actions")
 	public void UIXLCompareofTotalActions() throws Exception{
 		data = new TPSEE_GMB(CurrentState.getDriver());
@@ -134,7 +135,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 	}
 	
 
-		@Test(dependsOnMethods = {"UIXLCompareofTotalActions"},groups = {"smoke"},
+		@Test(priority=9,groups = {"smoke"},
 				description ="Verify Customer Action UI")
 		public void VerifyCustomerActionUI() throws Exception{
 			data = new TPSEE_GMB(CurrentState.getDriver());
@@ -142,7 +143,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 			addEvidence(CurrentState.getDriver(),
 				"Verifying Customer Actions ", "yes");
 	}
-		@Test(dependsOnMethods = {"VerifyCustomerActionUI"},groups = {"smoke"},
+		@Test(priority=10,groups = {"smoke"},
 				description ="Verify Customer Web Action UI")
 		public void VerifyCustomerActionUIWebVisits() throws Exception{
 			data = new TPSEE_GMB(CurrentState.getDriver());
@@ -151,7 +152,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 					"Verifying Customer Actions on Web Visits", "yes");
 		}
 		
-		@Test(dependsOnMethods = {"VerifyCustomerActionUIWebVisits"},groups = {"smoke"},
+		@Test(priority=11,groups = {"smoke"},
 				description ="Verify Customer Req Direct Action UI")
 		public void VerifyCustomerActionUIReqDirectory() throws Exception{
 			data = new TPSEE_GMB(CurrentState.getDriver());
@@ -160,7 +161,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 					"Verifying Customer Actions on Request Directory", "yes");
 		}
 		
-		@Test(dependsOnMethods = {"VerifyCustomerActionUIReqDirectory"},groups = {"smoke"},
+		@Test(priority=12,groups = {"smoke"},
 				description ="Verify Customer Phone Action UI")
 		public void VerifyCustomerActionUIPhCalls() throws Exception{
 			data = new TPSEE_GMB(CurrentState.getDriver());
@@ -170,7 +171,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 		}
 		
 		
-		@Test(dependsOnMethods = {"VerifyCustomerActionUIPhCalls"},groups = {"smoke"},
+		@Test(priority=13,groups = {"smoke"},
 				description ="Verify Where Listing found UI")
 		public void VerifyWhereListingUI() throws Exception{
 			data = new TPSEE_GMB(CurrentState.getDriver());
@@ -179,7 +180,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 				"Verifying Where Listing Found UI ", "yes");
 		}
 		
-		@Test(dependsOnMethods = {"VerifyWhereListingUI"},groups = {"smoke"},
+		@Test(priority=14,groups = {"smoke"},
 				description ="Verify Where Listing Search found UI")
 		public void VerifyWhereListingUISearch() throws Exception{
 			data = new TPSEE_GMB(CurrentState.getDriver());
@@ -188,7 +189,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 				"Verifying Where Listing Search Found UI ", "yes");
 		}
 		
-		@Test(dependsOnMethods = {"VerifyWhereListingUISearch"},groups = {"smoke"},
+		@Test(priority=15,groups = {"smoke"},
 				description ="Verify Where Listing Map found UI")
 		public void VerifyWhereListingUIMaps() throws Exception{
 			data = new TPSEE_GMB(CurrentState.getDriver());
@@ -197,7 +198,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 				"Verifying Where Listing Map Found UI ", "yes");
 		}
 		
-		@Test(dependsOnMethods = {"VerifyWhereListingUIMaps"},groups = {"smoke"},
+		@Test(priority=16,groups = {"smoke"},
 				description ="UI and XL comparision for Where Search Listing")
 		public void UIXLCompareofWhereSearch() throws Exception{
 			data = new TPSEE_GMB(CurrentState.getDriver());
@@ -206,7 +207,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 				"UI and XL comparision for Where Search Listing", "yes");
 		}
 		
-		@Test(dependsOnMethods = {"UIXLCompareofWhereSearch"},groups = {"smoke"},
+		@Test(priority=17,groups = {"smoke"},
 				description ="UI and XL comparision for Where Map Listing")
 		public void UIXLCompareofWhereMap() throws Exception{
 			data = new TPSEE_GMB(CurrentState.getDriver());
@@ -215,7 +216,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 				"UI and XL comparision for Where Map Listing ", "yes");
 		}
 		
-		@Test(dependsOnMethods = {"UIXLCompareofWhereMap"},groups = {"smoke"},
+		@Test(priority=18,groups = {"smoke"},
 				description ="UI and XL comparision for Where Total View Listing")
 		public void UIXLCompareofWhereTotalViews() throws Exception{
 			data = new TPSEE_GMB(CurrentState.getDriver());
@@ -224,7 +225,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 				"UI and XL comparision for Where Total View Listing ", "yes");
 		}
 		
-		@Test(dependsOnMethods = {"UIXLCompareofWhereTotalViews"},groups = {"smoke"},
+		@Test(priority=19,groups = {"smoke"},
 				description ="Verify How Listing found UI")
 		public void VerifyHowListingUI() throws Exception{
 			data = new TPSEE_GMB(CurrentState.getDriver());
@@ -233,7 +234,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 				"Verifying How Listing found UI ", "yes");
 		}
 		
-		@Test(dependsOnMethods = {"VerifyHowListingUI"},groups = {"smoke"},
+		@Test(priority=20,groups = {"smoke"},
 				description ="Verify How Listing Discovery found UI")
 		public void VerifyHowListingUIDiscovery() throws Exception{
 			data = new TPSEE_GMB(CurrentState.getDriver());
@@ -242,7 +243,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 				"Verifying How Listing Discovery found UI ", "yes");
 		}
 		
-		@Test(dependsOnMethods = {"VerifyHowListingUIDiscovery"},groups = {"smoke"},
+		@Test(priority=21,groups = {"smoke"},
 				description ="Verify How Listing Directory found UI")
 		public void VerifyHowListingUIDirect() throws Exception{
 			data = new TPSEE_GMB(CurrentState.getDriver());
@@ -251,7 +252,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 				"Verifying How Listing Directory found UI ", "yes");
 		}
 		
-		@Test(dependsOnMethods = {"VerifyHowListingUIDirect"},groups = {"smoke"},
+		@Test(priority=22,groups = {"smoke"},
 				description ="Verify How Brand found UI")
 		public void VerifyHowListingUIBrand() throws Exception{
 			data = new TPSEE_GMB(CurrentState.getDriver());
@@ -262,7 +263,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 		
 	
 	
-		@Test(dependsOnMethods = {"VerifyHowListingUIBrand"},groups = {"smoke"},
+		@Test(priority=23,groups = {"smoke"},
 				description ="Verify Photo Views UI")
 		public void VerifyPhotoViewsUI() throws Exception{
 			data = new TPSEE_GMB(CurrentState.getDriver());
@@ -271,7 +272,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 				"Verifying Photo Views UI ", "yes");
 		}
 				
-		@Test(dependsOnMethods = {"VerifyPhotoViewsUI"},groups = {"smoke"},
+		@Test(priority=24,groups = {"smoke"},
 		description ="UI and XL comparision for How Discovery Listing")
 		public void UIXLCompareofDiscovery() throws Exception{
 			data = new TPSEE_GMB(CurrentState.getDriver());
@@ -280,7 +281,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 					"UI and XL comparision for How Discovery Listing ", "yes");
 		}
 		
-		@Test(dependsOnMethods = {"UIXLCompareofDiscovery"},groups = {"smoke"},
+		@Test(priority=25,groups = {"smoke"},
 				description ="UI and XL comparision for How Direct Listing")
 			public void UIXLCompareofDirect() throws Exception{
 				data = new TPSEE_GMB(CurrentState.getDriver());
@@ -289,7 +290,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 						"UI and XL comparision for How Direct Listing", "yes");
 		}
 		
-		@Test(dependsOnMethods = {"UIXLCompareofDirect"},groups = {"smoke"},
+		@Test(priority=26,groups = {"smoke"},
 				description ="UI and XL comparision for How Brand Listing")
 			public void UIXLCompareofBranded() throws Exception{
 				data = new TPSEE_GMB(CurrentState.getDriver());
@@ -298,7 +299,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 						"UI and XL comparision for How Brand Listing ", "yes");
 		}
 		
-		@Test(dependsOnMethods = {"UIXLCompareofBranded"},groups = {"smoke"},
+		@Test(priority=27,groups = {"smoke"},
 				description ="UI and XL comparision for How total Listing")
 			public void UIXLCompareofTotalSearch() throws Exception{
 				data = new TPSEE_GMB(CurrentState.getDriver());
@@ -307,7 +308,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 						"UI and XL comparision for How total Listing ", "yes");
 		}
 		
-		@Test(dependsOnMethods = {"UIXLCompareofTotalSearch"},groups = {"smoke"},
+		@Test(priority=28,groups = {"smoke"},
 				description ="Verify Owner Photo Views UI")
 		public void VerifyPhotoViewsUIOwner() throws Exception{
 			data = new TPSEE_GMB(CurrentState.getDriver());
@@ -316,7 +317,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 				"Verifying Owner Photo Views UI ", "yes");
 		}
 		
-		@Test(dependsOnMethods = {"VerifyPhotoViewsUIOwner"},groups = {"smoke"},
+		@Test(priority=29,groups = {"smoke"},
 				description ="Verify Customer Photo Views UI")
 		public void VerifyPhotoViewsUICustomer() throws Exception{
 			data = new TPSEE_GMB(CurrentState.getDriver());
@@ -325,7 +326,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 				"Verifying Customer Photo Views UI ", "yes");
 		}
 		
-		@Test(dependsOnMethods = {"VerifyPhotoViewsUICustomer"},groups = {"smoke"},
+		@Test(priority=30,groups = {"smoke"},
 				description ="UI and XL comparision for Owner Photo Views")
 			public void UIXLCompareofOwnerPhView() throws Exception{
 				data = new TPSEE_GMB(CurrentState.getDriver());
@@ -334,7 +335,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 						"UI and XL comparision for Owner Photo Views ", "yes");
 		}
 		
-		@Test(dependsOnMethods = {"UIXLCompareofOwnerPhView"},groups = {"smoke"},
+		@Test(priority=31,groups = {"smoke"},
 				description ="UI and XL comparision for Customer Photo Views")
 			public void UIXLCompareofCustPhView() throws Exception{
 				data = new TPSEE_GMB(CurrentState.getDriver());
@@ -343,7 +344,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 						"UI and XL comparision for Customer Photo Views", "yes");
 		}
 		
-		@Test(dependsOnMethods = {"UIXLCompareofCustPhView"},groups = {"smoke"},
+		@Test(priority=32,groups = {"smoke"},
 				description ="UI and XL comparision for Total Photo Views")
 			public void UIXLCompareofTotPhView() throws Exception{
 				data = new TPSEE_GMB(CurrentState.getDriver());
@@ -353,34 +354,34 @@ public class TPSEE_GMB_Test extends BaseClass{
 		}
 		
 		//Test to verify Zoom Functionality
-		@Test(dependsOnMethods = {"verifyFilteringReportsGMB"},groups = {"smoke"},
+		@Test(priority=33,groups = {"smoke"},
 				description ="Verify Zoom Functionality")
 		public void gethighchartsdate() throws Exception{
 			data = new TPSEE_GMB(CurrentState.getDriver());
 			String OneMonth ="1m";
 			int start = 980;
 			int end = 0;
-			data.clickHighchartCriteria(OneMonth,start,end);
+			data.clickHighchartCriteria(OneMonth,start,end,grph);
 			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String ThreeMonths = "3m";
-			data.clickHighchartCriteria(ThreeMonths,start,end);
+			data.clickHighchartCriteria(ThreeMonths,start,end,grph);
 			addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String SixMonths = "6m";
-			data.clickHighchartCriteria(SixMonths,start,end);
+			data.clickHighchartCriteria(SixMonths,start,end,grph);
 			addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String OneYear = "1y";
-			data.clickHighchartCriteria(OneYear,start,end);
+			data.clickHighchartCriteria(OneYear,start,end,grph);
 			addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String YearToDate ="ytd";
-			data.clickHighchartCriteria(YearToDate,start,end);
+			data.clickHighchartCriteria(YearToDate,start,end,grph);
 			addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String ALLDATA = "all";
-			data.clickHighchartCriteria(ALLDATA,start,end);
+			data.clickHighchartCriteria(ALLDATA,start,end,grph);
 			addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
 			}
 }

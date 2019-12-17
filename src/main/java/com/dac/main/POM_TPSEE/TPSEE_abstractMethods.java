@@ -123,8 +123,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	@FindBy(css = "rect.highcharts-plot-background")
 	public WebElement hstryGrph;
 
-	@FindBy(css = ".highcharts-label.highcharts-tooltip-box.highcharts-color-none")
+	@FindBy(css = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none")
 	private WebElement grphtooltip; 
+	
+	String grph = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none";
+	
+	String grphGR = ".highcharts-label.highcharts-tooltip-box.highcharts-color-none";
 	
 	//section of overall report
 	@FindBy(xpath = "//*[@id='divOverallScoreHeader']//*[@id='divOverallScoreHeader']/div[1]//*[@id='divOverallScoreValue']")
@@ -655,7 +659,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @throws IOException 
 		 * @throws FileNotFoundException 
 		 */
-		public Date verifyinitialHistoryGraph(int start, int end) throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
+		public Date verifyinitialHistoryGraph(int start, int end, String elemnt) throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
 			
 			String var = null;			
 			var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
@@ -665,7 +669,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			scrollByElement(hstryGrph);
 			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 			action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 -start, end).click().perform();
-			String initialtooltipvalue = grphtooltip.getText();
+			String initialtooltipvalue = driver.findElement(By.cssSelector(elemnt)).getText();
 			System.out.println("\n Reading tooltipdata ********** \n");
 			System.out.println("\n tooltipvalue is \n" +initialtooltipvalue);
 			String initdate = initialtooltipvalue.substring(0, 10);
@@ -686,7 +690,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @throws IOException
 		 * @throws InterruptedException
 		 */
-		public Date verifyfinalHistorygraph() throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException{
+		public Date verifyfinalHistorygraph(String elemnt) throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException{
 			
 			String var = null;			
 			var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
@@ -696,7 +700,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			scrollByElement(hstryGrph);
 			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 			action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 - 2, 0).click().perform();
-			String finaltooltipvalue = grphtooltip.getText();
+			String finaltooltipvalue = driver.findElement(By.cssSelector(elemnt)).getText();;
 			System.out.println("\n Reading tooltipdata ********** \n");
 			System.out.println("\n tooltipvalue is \n" +finaltooltipvalue);
 			String finaldate = finaltooltipvalue.substring(0, 10);
@@ -712,10 +716,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @return
 		 * @throws Exception
 		 */
-		public  int getNumberofDays(int start, int end) throws Exception {
-			Date init = verifyinitialHistoryGraph(start,end);
+		public  int getNumberofDays(int start, int end, String elemnt) throws Exception {
+			Date init = verifyinitialHistoryGraph(start,end,elemnt);
 			Thread.sleep(5000);
-			Date enddate =  verifyfinalHistorygraph();
+			Date enddate =  verifyfinalHistorygraph(elemnt);
 			Thread.sleep(5000);
 			String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
 			SimpleDateFormat formats = new SimpleDateFormat(var);
@@ -728,7 +732,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			Date latest = formats.parse(Yesterday);
 			System.out.println(latest);
 			Thread.sleep(5000);			
-			Assert.assertEquals(end, latest);
+			Assert.assertEquals(enddate, latest);
 			long difference = Math.abs(init.getTime() - enddate.getTime());
 	        long differenceDates = difference / (24 * 60 * 60 * 1000);
 			int diff = (int)(long)differenceDates;
@@ -759,7 +763,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @return
 		 * @throws Exception
 		 */
-		public TPSEE_abstractMethods clickHighchartCriteria(String durationFor, int start, int end) throws Exception {
+		public TPSEE_abstractMethods clickHighchartCriteria(String durationFor, int start, int end, String elemnt ) throws Exception {
 			durationFor = durationFor.toLowerCase();
 			scrollByElement(highChartZoom);
 			int days;			
@@ -768,7 +772,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				case "1m"  : 	try{
 									clickelement(highChart_1M);
 									if(eleClicked(highChart_1M)) {
-										days = getNumberofDays(start, end);			
+										days = getNumberofDays(start, end,elemnt);			
 										if(days >= 28 && days<=31 ) {
 											System.out.println("1 Month data is displayed");
 										}else {
@@ -785,7 +789,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				case "3m"  : 	try{
 									clickelement(highChart_3M);
 									if(eleClicked(highChart_3M)) {
-										days = getNumberofDays(start, end);
+										days = getNumberofDays(start, end,elemnt);
 										if(days>=90 && days<=92) {
 											System.out.println("3 Month data is displayed");
 										}else {
@@ -802,7 +806,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				case "6m"  : 	try{
 									clickelement(highChart_6M);
 									if(eleClicked(highChart_6M)) {
-										days = getNumberofDays(start, end);
+										days = getNumberofDays(start, end,elemnt);
 										if(days>=180 && days<=184) {
 											System.out.println("6 Month data is displayed");
 										}else {
@@ -819,7 +823,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				case "ytd" : 	try{
 									clickelement(highChart_YTD);
 									if(eleClicked(highChart_YTD)) {
-										days = getNumberofDays(start, end);
+										days = getNumberofDays(start, end,elemnt);
 									}else {
 										System.out.println("Element Not clicked");
 										}
@@ -831,7 +835,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				case "1y"  : 	try{
 									clickelement(highChart_1y);
 									if(eleClicked(highChart_1y)) {
-										days = getNumberofDays(start, end);
+										days = getNumberofDays(start, end,elemnt);
 										if(days>=364 && days<=366) {
 											System.out.println("1 Year data is displayed");
 										}else {
@@ -849,7 +853,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				default    : 	try{
 									clickelement(highChart_All);
 									if(eleClicked(highChart_All)) {
-										days = getNumberofDays(start, end);
+										days = getNumberofDays(start, end,elemnt);
 									}else {
 										System.out.println("Element not clicked");
 										}

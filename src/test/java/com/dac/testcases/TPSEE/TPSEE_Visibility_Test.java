@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -17,6 +20,7 @@ import resources.ExcelHandler;
 
 public class TPSEE_Visibility_Test extends BaseClass {	
 	
+	
 	static List<Map<String, String>> export;
 	Navigationpage np;
 	TPSEE_Visibility_Page data;
@@ -24,6 +28,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	int location;
 	ArrayList<String> UIsite = new ArrayList<String>();
 	ArrayList<String> XLsite = new ArrayList<String>();
+	String grph = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none";
 	
 	
 	/**
@@ -74,6 +79,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * Test to verify zoom functionality 
 	 * @throws Exception
 	 */
+		
 		@Test(priority = 4,groups = {"smoke"},
 			description ="Verify Zoom Functionality")
 		public void gethighchartsdate() throws Exception{
@@ -81,27 +87,28 @@ public class TPSEE_Visibility_Test extends BaseClass {
 			String OneMonth ="1m";
 			int start = 980;
 			int end = 0;
-			data.clickHighchartCriteria(OneMonth,start,end);
+			
+			data.clickHighchartCriteria(OneMonth,start,end,grph);
 			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String ThreeMonths = "3m";
-			data.clickHighchartCriteria(ThreeMonths,start,end);
+			data.clickHighchartCriteria(ThreeMonths,start,end,grph);
 			addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String SixMonths = "6m";
-			data.clickHighchartCriteria(SixMonths,start,end);
+			data.clickHighchartCriteria(SixMonths,start,end,grph);
 			addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String OneYear = "1y";
-			data.clickHighchartCriteria(OneYear,start,end);
+			data.clickHighchartCriteria(OneYear,start,end,grph);
 			addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String YearToDate ="ytd";
-			data.clickHighchartCriteria(YearToDate,start,end);
+			data.clickHighchartCriteria(YearToDate,start,end,grph);
 			addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String ALLDATA = "all";
-			data.clickHighchartCriteria(ALLDATA,start,end);
+			data.clickHighchartCriteria(ALLDATA,start,end,grph);
 			addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
 			}
 	

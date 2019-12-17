@@ -19,7 +19,7 @@ public class TPSEE_Displayed_Review_Score_Test extends BaseClass {
 	Navigationpage np;
 	TPSEE_Displayed_Review_Score_Page data;
 	
-	@Test(groups = { "smoke" }, description = "Test for navigating to Displayed Riview page")
+	@Test(priority =1,groups = { "smoke" }, description = "Test for navigating to Displayed Riview page")
 	public void navigateToDisplayedReviewScore() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateToDisplayedReviewScore();
@@ -29,7 +29,7 @@ public class TPSEE_Displayed_Review_Score_Test extends BaseClass {
 		// Assert.assertFalse( "sample error", true);
 	}
 	
-	@Test(dependsOnMethods = { "navigateToDisplayedReviewScore" }, groups = {
+	@Test(priority=2, groups = {
 	"smoke" }, description = "Verify Displayed Riview page loads after filter applied")
 	public void verifyFilteringReportsDisplayedReview() throws Exception {
 		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
@@ -59,7 +59,7 @@ public class TPSEE_Displayed_Review_Score_Test extends BaseClass {
 		}
 	}
 	
-	@Test(dependsOnMethods = {"verifyFilteringReportsDisplayedReview"}, groups = {"smoke"},
+	@Test(priority=3, groups = {"smoke"},
 			description ="To get Google and Facebook Ratings")
 	public void verifyscores() throws Exception{
 		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
@@ -70,7 +70,7 @@ public class TPSEE_Displayed_Review_Score_Test extends BaseClass {
 
 	//Test for export and overview report in Content Analysis Page
 		@SuppressWarnings("unchecked")
-		@Test(dependsOnMethods = { "verifyscores"}, groups = {
+		@Test(priority=4, groups = {
 						"smoke" }, description = "Test for Review export and export verification")
 			public void verifyTableDataoExport() throws Exception {
 			data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
