@@ -1,27 +1,26 @@
 package com.dac.main.POM_TPSEE;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
-import resources.JSWaiter;
 
 public class TPSEE_Groups extends TPSEE_abstractMethods {
 	
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
+	TPSEE_GoogleRanking_Page data;
 	
 	public static List<Map<String, String>> tableCellValues = new ArrayList<Map<String, String>>();
 	//Navigating to TPSEE Content_Analysis page
@@ -40,7 +39,7 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 	private WebElement GroupName;
 	
 	@FindBy(xpath = "//*[@id='form-field-groupDesc']")
-	private WebElement Description;
+	private WebElement Descrip;
 	
 	@FindBy(xpath = "//select[@id='select-field-1']")
 	private WebElement Field;
@@ -57,6 +56,19 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//button[@id='btnPreviewGroup']")
 	private WebElement PreviewBtn;
 	
+	/*---------------------- View Group ----------------*/
+	
+	@FindBy(xpath="//div[@class = 'rule-filter-container']")
+	private WebElement First_field;
+	
+	@FindBy(xpath="//div[@class = 'rule-operator-container']")
+	private WebElement Second_field;
+	
+	@FindBy(xpath="//div[@class = 'rule-value-container']")
+	private WebElement Third_field;
+	
+	/*---------------------- View Group ----------------*/
+	
 	/*-------------------------Table Info-----------------------*/
 	@FindBy(xpath = "//*[@id='GroupTable']")
 	private WebElement GroupTable;
@@ -72,7 +84,24 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 	
 	@FindBy(xpath = "//*[@id='table_groups']/tbody/tr")
 	private List<WebElement> TableRow;
+	
 	/*-------------------------Table Info-----------------------*/
+	
+	/*-------------------------To Edit-----------------------*/
+	/*@FindBy(xpath = "//td[text()='country_group_F']/..//*[@class='edit-group']")
+	private WebElement Edit_btn;*/
+	
+	
+	/*-------------------------To Edit----------------------*/
+	
+	/*-------------------------To Delete--------------------*/
+	
+	/*@FindBy(xpath = "//td[text()='country_group_F']/..//*[@class='edit-group']")
+	private WebElement Delete_btn;*/
+	
+	@FindBy(xpath="//button[@data-bb-handler='confirm']")
+	private WebElement Ok_btn;
+	/*-------------------------To Delete-----------------------*/
 	
 	/*-------------------------Pagination-----------------------*/
 	@FindBy(xpath = "(//*[@class='pagination'])")
@@ -94,9 +123,76 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 	
-			//getting the data from the table 
+	
+	
+	public void create_Group(String Group, String Description, String CountryField, String FilterCondition, String Search_Term) throws Exception
+	{
+		
+		
+		
+		GroupName.sendKeys(Group);
+		Descrip.sendKeys(Description);
+		Select country = new Select(driver.findElement(By.xpath("//*[@id='select-field-1']")));
+		Thread.sleep(5000);
+		country.selectByVisibleText(CountryField);
+		Thread.sleep(5000);
+		Select Condition1 = new Select(driver.findElement(By.xpath("//*[@id='select-condition-1']")));
+		Thread.sleep(5000);
+		Condition1.selectByVisibleText(FilterCondition);
+		Thread.sleep(5000);				
+		SearchText.sendKeys(Search_Term);	
+		clickelement(PreviewBtn);
+		//clickelement(SaveBtn);
+		
+	}
+	
+	public ArrayList<String> view_Group(String Groupname) throws Exception
+	{
+		
+		ArrayList<String> rules = new ArrayList();
+		WebElement View_btn=driver.findElement(By.xpath("//a[@class='view-group'][@data-name='"+Groupname+"']"));
+		Thread.sleep(5000);	
+		//save.click();
+		View_btn.click();
+		Thread.sleep(5000);
+		String x = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[0].value").toString();
+		System.out.println(x);
+		rules.add(x);
+		Thread.sleep(5000);
+		String y = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[1].value").toString();;
+		System.out.println(y);
+		rules.add(y);
+		Thread.sleep(5000);
+		String z = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[2].value").toString();;
+		System.out.println(z);
+		rules.add(z);		
+		return rules;
+	}
+	
+	
+	public void edit_Group(String Groupname) throws InterruptedException
+	{
+		
+		WebElement Edit_btn=driver.findElement(By.xpath("//*[@id='btnEdit'][@value='"+Groupname+"']"));
+		Thread.sleep(5000);
+		
+		//save.click();
+		Edit_btn.click();	
+		
+		Thread.sleep(5000);
+		clickelement(SaveBtn);
+	}
+	
+	public void delete_Group(String Group)
+	{
+		WebElement Delete_btn=driver.findElement(By.xpath("//*[@class='remove-group'][@data-name= '"+Group+"']"));
+		Delete_btn.click();
+		Ok_btn.click();
+	}
+	
+	
+		/*	//getting the data from the table 
 			public List<Map<String, String>> getTableData() throws InterruptedException{
 				JSWaiter.waitJQueryAngular();
 				waitForElement(GroupTable,40);
@@ -150,5 +246,5 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 				System.out.println("Total number of entries in table : "+count);
 				Assert.assertTrue(entiresText.contains(""+count+""), "Table Data count matches with total enties count");
 				return tableCellValues;
-			}
+			}*/
 }
