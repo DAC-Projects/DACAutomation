@@ -89,7 +89,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//input[@id='exportEndDate']")
 	private WebElement hstryend;
 	
-	@FindBy(xpath = "//*[@id='btnHistoryExport']")
+	@FindBy(xpath = "//*[@id='btnHistoryExport'][@class = 'btn btn-primary']")
 	private WebElement hstrybtn;
 	
 	@FindBy(xpath ="//div[@id='exportAsyncMessage']//div[@class='close pull-right']")
@@ -375,6 +375,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		System.out.println("\n progress bar clicked \n");
 		waitForElement(progressdata,40);
 		scrollByElement(progressdata);
+		Thread.sleep(5000);
 		if(driver.findElement(By.className("dataTables_info")).isDisplayed()) {
 		System.out.println("\n reading progress bar data div ********************* \n");
 		waitForElement(progresstable,50);
@@ -427,7 +428,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	    					System.out.println("\n"+celtext7);
 	    					System.out.println("\n"+celtext8);
 	    			}
-	    				kMap.put(headerText, celtext);
+	    				kMap.put("rowdata", celtext);
 	    				kMap.put(headerText, celtext1);
 	    				kMap.put(headerText, celtext2);
 	    				kMap.put(headerText, celtext3);
@@ -480,6 +481,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		waitForElement(progresstable,50);
 		scrollByElement(progresstable);
 		System.out.println("\n reading progress bar data table ******************* \n");
+		Thread.sleep(5000);
 		waitForElement(totalentries,50);
 		waitForElement(progresstablevalue,50);
 		String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
@@ -720,6 +722,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		scrollByElement(SearchEngineSites);
 		Thread.sleep(5000);
 		clickelement(SearchEngineSites);
+		Thread.sleep(5000);
 		ArrayList<String> XLsite = GetSiteDataUsingColName("./data/VendorList.xlsx", "Search Engine Sites");
 		ArrayList<String> UIsite = verifySitevendors();
 		Assert.assertEquals(XLsite, UIsite, "Matches");
@@ -734,6 +737,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		scrollByElement(DirectorySites);
 		Thread.sleep(5000);
 		clickelement(DirectorySites);
+		Thread.sleep(5000);
 		ArrayList<String> XLsite = GetSiteDataUsingColName("./data/VendorList.xlsx", "Directory Sites");
 		ArrayList<String> UIsite = verifySitevendors();
 		Assert.assertEquals(XLsite, UIsite, "Matches");
@@ -748,6 +752,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		scrollByElement(SocialSites);
 		Thread.sleep(5000);
 		clickelement(SocialSites);
+		Thread.sleep(5000);
 		ArrayList<String> XLsite = GetSiteDataUsingColName("./data/VendorList.xlsx", "Social Sites");
 		ArrayList<String> UIsite = verifySitevendors();
 		Assert.assertEquals(XLsite, UIsite, "Matches");

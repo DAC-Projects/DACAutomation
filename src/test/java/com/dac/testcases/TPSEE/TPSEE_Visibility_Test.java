@@ -121,7 +121,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * @param Location
 	 * @throws Exception
 	 */
-		@Test(dependsOnMethods = {"ovrviewlocscorecompare"}, groups = {
+		@Test(dependsOnMethods = {"gethighchartsdate"}, groups = {
 			"smoke" }, description = "Verify Visibility page loads after filter applied")
 		public void verifyFilteringReportsVisibility() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());

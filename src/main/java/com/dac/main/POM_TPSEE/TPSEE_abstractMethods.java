@@ -32,6 +32,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import com.dac.main.BasePage;
+
 import resources.FileHandler;
 import resources.JSWaiter;
 import resources.formatConvert;
@@ -630,10 +631,25 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 */
 		public void exportasPDFHistory(WebElement ExportDropdown, WebElement ExportType, WebElement SelectPDF, WebElement ExportBtn, WebElement LinkClick) throws InterruptedException, FileNotFoundException, IOException{
 		    JSWaiter.waitJQueryAngular();
-		    ExportDropdown.click();
-			action.moveToElement(ExportType).moveToElement(SelectPDF).click().perform();
-			ExportBtn.click();
-			LinkClick.click();			
+		    if(ExportDropdown.isDisplayed() & ExportDropdown.isEnabled()) {
+		    	wait.until(ExpectedConditions.visibilityOf(ExportDropdown));
+				action.moveToElement(ExportDropdown).click().perform();
+				Thread.sleep(5000);
+		    }
+		    if(ExportType.isDisplayed() & ExportType.isEnabled()) {
+				wait.until(ExpectedConditions.visibilityOf(ExportType));
+				action.moveToElement(ExportType).moveToElement(SelectPDF).click().perform();
+				Thread.sleep(5000);
+		    }
+		    if(ExportBtn.isDisplayed() & ExportBtn.isEnabled()) {
+		    	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		    	action.moveToElement(ExportBtn).click().perform();
+		    	Thread.sleep(5000);
+		    }
+			if(LinkClick.isDisplayed() & LinkClick.isEnabled()) {
+				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+				action.moveToElement(LinkClick).click().perform();;
+			}			
 		}
 		
 		/**
@@ -926,8 +942,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		/**
 		 * To get Visibility Score from Dashboard
 		 * @return
+		 * @throws InterruptedException 
 		 */
-		public  static double getVisibilityscore() {			
+		public  static double getVisibilityscore() throws InterruptedException {	
+			Thread.sleep(5000);
 			String sc = Visibilityscore.getText();
 			System.out.println(sc);
 			String s = sc.replace("%", "");
@@ -941,8 +959,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		/**
 		 * To get Number of Locations of Visibility from Dashboard
 		 * @return
+		 * @throws InterruptedException 
 		 */
-		public  static int getVisibilityLoc() {		
+		public  static int getVisibilityLoc() throws InterruptedException {	
+			Thread.sleep(5000);
 			int visibilityloc = Integer.parseInt(VisibilityLoc.getText());
 			System.out.println(visibilityloc);
 			return visibilityloc;		
@@ -952,8 +972,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		/**
 		 * To get Accuracy Score from Dashboard
 		 * @return
+		 * @throws InterruptedException 
 		 */
-		public static double getAccuracyscore() {	
+		public static double getAccuracyscore() throws InterruptedException {	
+			Thread.sleep(5000);
 			String sc = Accuracyscore.getText();
 			System.out.println(sc);
 			String s = sc.replace("%", "");
@@ -966,8 +988,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		/**
 		 * To get Number of Locations of Accuracy from Dashboard 
 		 * @return
+		 * @throws InterruptedException 
 		 */
-		public static int getAccuracyLoc() {			
+		public static int getAccuracyLoc() throws InterruptedException {	
+			Thread.sleep(5000);
 			int accuracyloc = Integer.parseInt(AccuracyLoc.getText());
 			System.out.println(accuracyloc);
 			return accuracyloc;
@@ -976,8 +1000,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		/**
 		 * To get Content Analysis Score from Dashboard
 		 * @return
+		 * @throws InterruptedException 
 		 */
-		public static double getContentscore() {	
+		public static double getContentscore() throws InterruptedException {	
+			Thread.sleep(5000);
 			String sc = Contentscore.getText();
 			System.out.println(sc);
 			String s = sc.replace("%", "");
@@ -990,8 +1016,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		/**
 		 * To get Number of Locations of Content Analysis
 		 * @return
+		 * @throws InterruptedException 
 		 */
-		public static int getContentLoc() {			
+		public static int getContentLoc() throws InterruptedException {	
+			Thread.sleep(5000);
 			int contentloc = Integer.parseInt(ContentLoc.getText());
 			System.out.println(contentloc);
 			return contentloc;
@@ -1000,8 +1028,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		/**
 		 * To get Google Ranking Score from Dashboard
 		 * @return
+		 * @throws InterruptedException 
 		 */
-		public static double getGRScore() {			
+		public static double getGRScore() throws InterruptedException {	
+			Thread.sleep(5000);
 			double GRscore = Double.parseDouble(GRScore.getText());
 			System.out.println(GRscore);
 			return GRscore;
@@ -1010,8 +1040,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		/**
 		 * To get Number of locations of Google ranking from Dashboard
 		 * @return
+		 * @throws InterruptedException 
 		 */
-		public static int getGRLoc() {			
+		public static int getGRLoc() throws InterruptedException {		
+			Thread.sleep(5000);
 			int GRloc = Integer.parseInt(GRLoc.getText());
 			System.out.println(GRloc);
 			return GRloc;
