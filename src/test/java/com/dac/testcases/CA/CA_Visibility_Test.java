@@ -1,22 +1,15 @@
 package com.dac.testcases.CA;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_CA.CA_Visibility_Page;
-import com.dac.main.POM_CA.CA_gatherData;
-import com.dac.main.POM_SA.SA_ReviewReportCard_Page;
-import com.dac.main.POM_SA.SA_gatherData;
 import com.selenium.testevidence.SeleniumEvidence;
 
-import junit.framework.Assert;
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;

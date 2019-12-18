@@ -2,6 +2,10 @@ package com.dac.testcases.TPSEE;
 
 import org.testng.annotations.Test;
 import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertEquals;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -67,15 +71,36 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 		@Test(dependsOnMethods = { "navigateToContentAnalysisPage" ,"verifyFilteringReportsContentAnalysis"}, groups = {
 						"smoke" }, description = "Test for overview export and export verification")
 			public void verifyOverviewReportnExportContentAnalysis() throws Exception {
-			data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
-			data.compareExprttoAnalysisSiteData(data.getExportData(), data.AnalysisSiteData());
+			data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());			
+			//data.compareExprttoAnalysisSiteData(data.getExportData(), data.AnalysisSiteData());
+		//	data.getExportData();
+		//	data.getSiteData();
+			
+			
+			String [][] excel = data.getExportDataNew();
+			String [][] UI = data.getSiteData();
+			
+			if(Arrays.deepEquals(excel,UI)) {
+				
+				
+				System.out.println("Value matches");
+			}
+			else {
+				System.out.println("not match");
+			}
 			addEvidence(CurrentState.getDriver(), "Verified overview export for Accuracy report", "yes");
+			
+			for(int i =0; i<UI.length;i++) {
+				assertEquals(Arrays.toString(excel[i]), Arrays.toString(UI[i]));
+			}
+			
+			
 		}
 		
 		//Test for Tooltip and overview report in Content Analysis Page
 		@SuppressWarnings("unchecked")
-		@Test(dependsOnMethods = { "verifyOverviewReportnExportContentAnalysis" }, groups = { "smoke" }, 
-								description = "Test to compare ToolTip Value and Overall Analysis Score")
+//		@Test(dependsOnMethods = { "verifyOverviewReportnExportContentAnalysis" }, groups = { "smoke" }, 
+//								description = "Test to compare ToolTip Value and Overall Analysis Score")
 		public void verifyOverviewReportnTooltipContentAnalysis() throws Exception {
 			data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 			data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
@@ -84,8 +109,8 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 		
 		//Test for export and overview report in Content Analysis Page
 				@SuppressWarnings("unchecked")
-				@Test(dependsOnMethods = { "verifyFilteringReportsContentAnalysis"}, groups = {
-								"smoke" }, description = "Test for overview export and export verification")
+//				@Test(dependsOnMethods = { "verifyFilteringReportsContentAnalysis"}, groups = {
+//								"smoke" }, description = "Test for overview export and export verification")
 					public void verifyTableDataoExport() throws Exception {
 					data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 					data.SitelLinkData();
@@ -96,8 +121,8 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 				
 				//Test to compare vendors in the application in Visibility Page
 				@SuppressWarnings("unchecked")
-				@Test(dependsOnMethods = {"verifyTableDataoExport"},groups = {"smoke"},
-						description ="Verify Site Vendors List")
+//				@Test(dependsOnMethods = {"verifyTableDataoExport"},groups = {"smoke"},
+//						description ="Verify Site Vendors List")
 				public void comparevendorsListnverifySitevendors() throws Exception{
 					data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 					data.comparevendorsListnverifySitevendors(data.verifyAnalysisSitevendors(), data.vendorsList());
