@@ -50,6 +50,9 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//input[@id='search-item-1']")
 	private WebElement SearchText;
 	
+	@FindBy(xpath = "//input[@id='search-item-1']")
+	private WebElement SearchText1;
+	
 	@FindBy(xpath = "//button[@id='loading-btn']")
 	private WebElement SaveBtn;
 	
@@ -67,6 +70,8 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 	@FindBy(xpath="//div[@class = 'rule-value-container']")
 	private WebElement Third_field;
 	
+	@FindBy(xpath="(//button[contains(@class, 'close')])[1]")
+	private WebElement close_btn;
 	/*---------------------- View Group ----------------*/
 	
 	/*-------------------------Table Info-----------------------*/
@@ -142,8 +147,24 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		Condition1.selectByVisibleText(FilterCondition);
 		Thread.sleep(5000);				
 		SearchText.sendKeys(Search_Term);	
+		
+		/*driver.findElement(By.xpath("//button[@id='addFilter']")).click();
+		Thread.sleep(5000);
+		//*[@id='select-field-2']
+		
+		Select country1 = new Select(driver.findElement(By.xpath("//*[@id='select-field-2']")));
+		Thread.sleep(5000);
+		country1.selectByVisibleText(CountryField);
+		Thread.sleep(5000);
+		Select Condition2 = new Select(driver.findElement(By.xpath("//*[@id='select-condition-2']")));
+		Thread.sleep(5000);
+		Condition2.selectByVisibleText(FilterCondition);*/
+		Thread.sleep(5000);				
+		SearchText.sendKeys(Search_Term);	
+		/*SearchText1.sendKeys(Search_Term);*/
 		clickelement(PreviewBtn);
-		//clickelement(SaveBtn);
+		clickelement(SaveBtn);
+		
 		
 	}
 	
@@ -166,8 +187,11 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		Thread.sleep(5000);
 		String z = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[2].value").toString();;
 		System.out.println(z);
-		rules.add(z);		
+		rules.add(z);	
+		clickelement(close_btn);
 		return rules;
+		
+		
 	}
 	
 	

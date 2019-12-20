@@ -47,28 +47,30 @@ public class TPSEE_Groups_Test extends BaseClass{
 	@Test(priority= 2, groups = {"smoke" }, description = "Test to read data from the table")
 		public void CreateTable() throws Exception {
 		data = new TPSEE_Groups(CurrentState.getDriver());
-		 wb = new ExcelHandler("D:\\Excel\\Fetching_Values.xlsx", "Sheet1"); wb.deleteEmptyRows();
+		 wb = new ExcelHandler("./data/Groups.xlsx", "Sheet1"); wb.deleteEmptyRows();
+		 String Group = wb.getCellValue(1, wb.seacrh_pattern("Group", 0).get(0).intValue());
+			String Description = wb.getCellValue(1, wb.seacrh_pattern("Description", 0).get(0).intValue());
 			TPSEE_Groups s = new TPSEE_Groups(CurrentState.getDriver());
 			for(int i=1;i<=wb.getRowCount();i++) {
 				if(i>1) CurrentState.getDriver().navigate().refresh();
-				s.waitUntilLoad(CurrentState.getDriver());
-				String Group = wb.getCellValue(i, wb.seacrh_pattern("Group", 0).get(0).intValue());
-				String Description = wb.getCellValue(i, wb.seacrh_pattern("Description", 0).get(0).intValue());
+				s.waitUntilLoad(CurrentState.getDriver());				
 				String CountryField = wb.getCellValue(i, wb.seacrh_pattern("Field", 0).get(0).intValue());
 				String FilterCondition = wb.getCellValue(i, wb.seacrh_pattern("Condition", 0).get(0).intValue());
 				String Search_Term = wb.getCellValue(i, wb.seacrh_pattern("Search_Term", 0).get(0).intValue());
+				
 				System.out.println(Group+", "+Description+", "+Search_Term);
 		data.create_Group(Group , Description , CountryField , FilterCondition, Search_Term);
 		addEvidence(CurrentState.getDriver(), "Verified Table Data", "yes");
 	}
+			
 	}
 	
-	@Test(priority= 2, groups = {"smoke" }, description = "Test to read data from the table")
+	/*@Test(priority= 2, groups = {"smoke" }, description = "Test to read data from the table")
 	public void ViewTable() throws Exception {
 	data = new TPSEE_Groups(CurrentState.getDriver());
 	ArrayList<String> UIRules = new ArrayList();
 	ArrayList<String> Rules = new ArrayList();
-	wb = new ExcelHandler("D:\\Excel\\Fetching_Values.xlsx", "Sheet1"); wb.deleteEmptyRows();
+	wb = new ExcelHandler("./data/Groups.xlsx", "Sheet1"); wb.deleteEmptyRows();
 	TPSEE_Groups s = new TPSEE_Groups(CurrentState.getDriver());
 	for(int i=1;i<=wb.getRowCount();i++) {
 		if(i>1) CurrentState.getDriver().navigate().refresh();
@@ -93,7 +95,7 @@ public class TPSEE_Groups_Test extends BaseClass{
 		@Test(priority= 3, groups = {"smoke" }, description = "Test to read data from the table")
 		public void EditTable() throws Exception {
 		data = new TPSEE_Groups(CurrentState.getDriver());
-		wb = new ExcelHandler("D:\\Excel\\Fetching_Values.xlsx", "Sheet1"); wb.deleteEmptyRows();
+		wb = new ExcelHandler("./data/Groups.xlsx", "Sheet1"); wb.deleteEmptyRows();
 		TPSEE_Groups s = new TPSEE_Groups(CurrentState.getDriver());
 		for(int i=1;i<=wb.getRowCount();i++) {
 			if(i>1) CurrentState.getDriver().navigate().refresh();
@@ -111,7 +113,7 @@ public class TPSEE_Groups_Test extends BaseClass{
 	@Test(priority= 4, groups = {"smoke" }, description = "Test to read data from the table")
 		public void DeleteTable() throws Exception {
 		data = new TPSEE_Groups(CurrentState.getDriver());
-		wb = new ExcelHandler("D:\\Excel\\Fetching_Values.xlsx", "Sheet1"); wb.deleteEmptyRows();
+		wb = new ExcelHandler("./data/Groups.xlsx", "Sheet1"); wb.deleteEmptyRows();
 		TPSEE_Groups s = new TPSEE_Groups(CurrentState.getDriver());
 		for(int i=1;i<=wb.getRowCount();i++) {
 			if(i>1) CurrentState.getDriver().navigate().refresh();
@@ -121,7 +123,7 @@ public class TPSEE_Groups_Test extends BaseClass{
 			data.delete_Group(Group);
 		//addEvidence(CurrentState.getDriver(), "Verified Table Data", "yes");
 		}
-	}
+	}*/
 	
 	/*@Test(priority= 5, groups = {"smoke" }, description = "Add Account Level and Group Level Keyword")
 public void verifyApplyKeywords() throws Exception {
