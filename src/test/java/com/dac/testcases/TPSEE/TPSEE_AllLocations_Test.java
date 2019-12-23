@@ -1,14 +1,16 @@
-package com.dac.testcases.TPSEE;
+/*package com.dac.testcases.TPSEE;
 
 import java.util.List;
 import java.util.Map;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_AllLocations_Page;
 import com.dac.main.POM_TPSEE.TPSEE_GoogleRanking_Page;
+import com.dac.main.POM_TPSEE.TPSEE_Visibility_Page;
 import com.selenium.testevidence.SeleniumEvidence;
 
 import resources.BaseClass;
@@ -20,8 +22,25 @@ public class TPSEE_AllLocations_Test extends BaseClass{
 	static List<Map<String, String>> export;
 	Navigationpage np;
 	TPSEE_AllLocations_Page data;
+	int location;
 	
-	@Test(priority =1,groups = { "smoke" }, description = "Test for navigating to All Locations page")
+	
+	*//**
+	 * Test to get dashboard scores
+	 * @throws Exception
+	 *//*
+		@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
+		public void GetKPIValues() throws Exception {
+			data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+			Thread.sleep(10000);
+			location = data.getLocations();
+			System.out.println(location);
+			
+			CurrentState.getLogger().log(Status.PASS, "KPI Scores");
+			addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
+		}
+	
+	@Test(priority =2,groups = { "smoke" }, description = "Test for navigating to All Locations page")
 	public void navigateToAllLocationsPage() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateToAllLocations();
@@ -31,7 +50,22 @@ public class TPSEE_AllLocations_Test extends BaseClass{
 		// Assert.assertFalse( "sample error", true);
 	}
 	
-	@Test(priority=2, groups = {
+	*//**
+	 * Test To get overall score and compare with dashboard values 
+	 * @throws Exception
+	 *//*		
+		@Test(priority=3,groups = { "smoke" }, description = "Test for compare KPI Values")
+		public void ovrviewlocscorecompare() throws Exception {
+			data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+			Thread.sleep(5000);
+			int loc = data.numberoflocation();
+			System.out.println(loc);
+			Assert.assertEquals(loc, location);	
+			CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Visibility page");
+			addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
+		}
+	
+	@Test(priority=4, groups = {
 	"smoke" }, description = "Verify All Locations page loads after filter applied")
 	public void verifyFilteringReportsnavigateToAllLocations() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
@@ -63,7 +97,7 @@ public class TPSEE_AllLocations_Test extends BaseClass{
 	}
 	
 	//Test for export and overview report in Content Analysis Page
-	@Test(priority=3, groups = {
+	@Test(priority=5, groups = {
 					"smoke" }, description = "Test for Location export and export verification")
 		public void verifyTableDataoExport() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
@@ -72,3 +106,4 @@ public class TPSEE_AllLocations_Test extends BaseClass{
 	}
 
 }
+*/

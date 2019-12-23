@@ -6,7 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -189,6 +191,19 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	
 	@FindBy(xpath = "//*[@data-handler='next']")
 	private WebElement nextMonth;
+	
+	@FindBy(xpath= "//*[@id = 'exportStartDate']")
+	private WebElement pdffromdate;
+	
+	@FindBy(xpath = "//*[@id = 'exportEndDate']")
+	private WebElement pdftoDate;
+	
+	@FindBy(xpath = "(//*[@class='highcharts-label highcharts-range-input'])[1]")
+	private WebElement fromDate;
+	
+	@FindBy(xpath = "(//*[@class='highcharts-label highcharts-range-input'])[2]")
+	private WebElement toDate;
+	
 	
 	
 	/**
@@ -629,9 +644,9 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @throws FileNotFoundException
 		 * @throws IOException
 		 */
-		public void exportasPDFHistory(WebElement ExportDropdown, WebElement ExportType, WebElement SelectPDF, WebElement ExportBtn, WebElement LinkClick) throws InterruptedException, FileNotFoundException, IOException{
+		public void exportasPDFHistory(/*WebElement ExportDropdown, WebElement ExportType, WebElement SelectPDF,*/ WebElement ExportBtn, WebElement LinkClick) throws InterruptedException, FileNotFoundException, IOException{
 		    JSWaiter.waitJQueryAngular();
-		    if(ExportDropdown.isDisplayed() & ExportDropdown.isEnabled()) {
+		   /* if(ExportDropdown.isDisplayed() & ExportDropdown.isEnabled()) {
 		    	wait.until(ExpectedConditions.visibilityOf(ExportDropdown));
 				action.moveToElement(ExportDropdown).click().perform();
 				Thread.sleep(5000);
@@ -640,7 +655,8 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				wait.until(ExpectedConditions.visibilityOf(ExportType));
 				action.moveToElement(ExportType).moveToElement(SelectPDF).click().perform();
 				Thread.sleep(5000);
-		    }
+				
+		    }*/
 		    if(ExportBtn.isDisplayed() & ExportBtn.isEnabled()) {
 		    	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		    	action.moveToElement(ExportBtn).click().perform();
@@ -652,6 +668,23 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			}			
 		}
 		
+		
+		public void exporthistrybtn(WebElement ExportDropdown, WebElement ExportType, WebElement SelectPDF) throws InterruptedException, FileNotFoundException, IOException {
+			Thread.sleep(5000);
+			
+			 if(ExportDropdown.isDisplayed() & ExportDropdown.isEnabled()) {
+			    	wait.until(ExpectedConditions.visibilityOf(ExportDropdown));
+					action.moveToElement(ExportDropdown).click().perform();
+					Thread.sleep(5000);
+			    }
+			    if(ExportType.isDisplayed() & ExportType.isEnabled()) {
+					wait.until(ExpectedConditions.visibilityOf(ExportType));
+					action.moveToElement(ExportType).moveToElement(SelectPDF).click().perform();
+					Thread.sleep(5000);
+					
+			    }		
+			
+		}
 		/**
 		 * To get the file extension and verify the same
 		 * @throws InterruptedException
@@ -1064,6 +1097,15 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			return location;			
 		}
 		
+		public int numofloc(WebElement locations) {
+			waitForElement(locations, 10);
+			scrollByElement(locations);
+			String s = locations.getText();
+			String x = s.substring(s.indexOf("(") + 1, s.indexOf(")"));
+			int location = Integer.parseInt(x);
+			return location;
+		}
+		
 		/**
 		 * To get overview score from the reports (VA Reports)
 		 * @param layout
@@ -1091,98 +1133,107 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			return scores;
 		}		
 		
-		/*String regex = "^[- /.]";
-		
-		private void selectCalender_Date(WebElement calenderField, int day_d, String month_MMM, int year_YYYY) {
-
-			clickelement(calenderField);
-			//calenderField.click();
-			int diff = year_YYYY - Integer.parseInt(currentYear_DatePicker.getText());
-			if(diff != 0) {
-				while(diff < 0) {
-					clickelement(prevMonth);
-					//prevMonth.click();
-					diff = year_YYYY - Integer.parseInt(currentYear_DatePicker.getText());
-				}
-				while(diff > 0) {
-					clickelement(nextMonth);
-					//nextMonth.click();
-					diff = year_YYYY - Integer.parseInt(currentYear_DatePicker.getText());
-				}
-			}
-			if(diff == 0) {
-				if(!(month_MMM.equals(currentMonth_DatePicker.getText()))) {
-					int actualMonthCode = monthCode(currentMonth_DatePicker.getText());
-					int expMonthCode = monthCode(month_MMM);
-					int diffMonth = expMonthCode - actualMonthCode;
-					while(diffMonth < 0) {
-						clickelement(prevMonth);
-						//prevMonth.click();
-						diffMonth = monthCode(month_MMM) - monthCode(currentMonth_DatePicker.getText());
-					}
-					while(diffMonth > 0) {
-						clickelement(nextMonth);
-						//nextMonth.click();
-						diffMonth = monthCode(month_MMM) - monthCode(currentMonth_DatePicker.getText());
-					}
-				}
-			}
-			(driver.findElement(By.xpath("//*[@class='ui-datepicker-calendar']//td/a[text()="+day_d+"]"))).click();
-		}
-		
-		private int monthCode(String month_MMM) {
-
-			int month = 0;
-			Date date;
-			try {
-				
-				date = new SimpleDateFormat("MMM", Locale.ENGLISH).parse("February");
-				 Calendar cal = Calendar.getInstance();
-				 cal.setTime(date);
-				 month = cal.get(Calendar.MONTH);
-				 //System.out.println(month);
-				 //System.out.println(month == Calendar.FEBRUARY);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-			return month;
-		}
-
-		public TPSEE_abstractMethods selectCalender_FromDate(int day_d, String month_MMM, int year_YYYY) {
-			if(day_d != 0 | !(month_MMM.equalsIgnoreCase("null")) | year_YYYY != 0 ) {
-				selectCalender_Date(highChart_fromDate, day_d, month_MMM, year_YYYY);
-			}
-			return this;
-		}
-		
-		public TPSEE_abstractMethods selectCalender_ToDate(int day_d, String month_MMM, int year_YYYY) {
-			if(day_d != 0 | !(month_MMM.equalsIgnoreCase("null")) | year_YYYY != 0 ) {
-				selectCalender_Date(highChart_toDate, day_d, month_MMM, year_YYYY);	
-			}
-			return this;
-		}
-		
-		public String getCurrentFromDate() {
-			return highChart_fromDate.getText();
-		}
-		
-		public String getCurrentToDate() {
-			return highChart_toDate.getText();
-		}
-
-		public void enterFromDate(String date) {
-			JSWaiter.waitJQueryAngular();
-			String[] dateSplit = date.split("/");
-			String Lchars = Month.of(Integer.parseInt(dateSplit[0])).name().toLowerCase();
-			String month =Month.of(Integer.parseInt(dateSplit[0])).name().charAt(0)+Lchars.substring(1, Lchars.length());
-			selectCalender_FromDate(Integer.parseInt(dateSplit[0]), month, Integer.parseInt(dateSplit[2]));
-		}
-			
-		public void enterToDate(String date) {
-			JSWaiter.waitJQueryAngular();
-			String[] dateSplit = date.split("/");
-			String Lchars = Month.of(Integer.parseInt(dateSplit[0])).name().toLowerCase();
-			String month =Month.of(Integer.parseInt(dateSplit[0])).name().charAt(0)+Lchars.substring(1, Lchars.length());
-			selectCalender_ToDate(Integer.parseInt(dateSplit[0]), month, Integer.parseInt(dateSplit[2]));
-		}*/
+		public Date getCurrentfromDate() throws ParseException {
+		String currentfromDate = fromDate.getText();
+		String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
+		System.out.println(var);
+		SimpleDateFormat formats = new SimpleDateFormat(var);
+		Date finalcurrentdate = formats.parse(currentfromDate);
+		return finalcurrentdate;
 	}
+	
+	public Date getCurrenttoDate() throws ParseException {
+		String currenttoDate = toDate.getText();
+		String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
+		System.out.println(var);
+		SimpleDateFormat formats = new SimpleDateFormat(var);
+		Date finaltodate = formats.parse(currenttoDate);
+		return finaltodate;
+	}
+	
+	private void selectCalender_Date(String calenderField, int day_d, String month_MMM, int year_YYYY) {
+
+		//clickelement(calenderField);
+		driver.findElement(By.xpath(calenderField)).click();
+		int diff = year_YYYY - Integer.parseInt(currentYear_DatePicker.getText());
+		if(diff != 0) {
+			while(diff < 0) {
+				clickelement(prevMonth);
+				diff = year_YYYY - Integer.parseInt(currentYear_DatePicker.getText());
+			}
+			while(diff > 0) {
+				clickelement(nextMonth);
+				diff = year_YYYY - Integer.parseInt(currentYear_DatePicker.getText());
+			}
+		}
+		if(diff == 0) {
+			if(!(month_MMM.equals(currentMonth_DatePicker.getText()))) {
+				int actualMonthCode = monthCode(currentMonth_DatePicker.getText());
+				int expMonthCode = monthCode(month_MMM);
+				int diffMonth = expMonthCode - actualMonthCode;
+				while(diffMonth < 0) {
+					clickelement(prevMonth);
+					diffMonth = monthCode(month_MMM) - monthCode(currentMonth_DatePicker.getText());
+				}
+				while(diffMonth > 0) {
+					clickelement(nextMonth);
+					diffMonth = monthCode(month_MMM) - monthCode(currentMonth_DatePicker.getText());
+				}
+			}
+		}
+		(driver.findElement(By.xpath("//*[@class='ui-datepicker-calendar']//td/a[text()="+day_d+"]"))).click();
+	}
+	
+	private int monthCode(String month_MMM) {
+
+		int month = 0;
+		Date date;
+		try {
+			 date = new SimpleDateFormat("MMM").parse(month_MMM);
+			 Calendar cal = Calendar.getInstance();
+			 cal.setTime(date);
+			 month = cal.get(Calendar.MONTH);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return month;
+	}
+	
+	public  void selectCalender_FromDate(String calenderField,int day_d, String month_MMM, int year_YYYY) {
+		if(day_d != 0 | !(month_MMM.equalsIgnoreCase("null")) | year_YYYY != 0 ) {
+			selectCalender_Date(calenderField, day_d, month_MMM, year_YYYY);
+		}
+		
+	}
+	
+	public void  selectCalender_ToDate(String calenderField,int day_d, String month_MMM, int year_YYYY) {
+		if(day_d != 0 | !(month_MMM.equalsIgnoreCase("null")) | year_YYYY != 0 ) {
+			selectCalender_Date(calenderField, day_d, month_MMM, year_YYYY);	
+		}
+		
+	}
+	
+	
+	public ArrayList<String> verifyfoundSitevendors(){
+			driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+			ArrayList<String> foundVendors = new ArrayList<String>();
+			List<WebElement> vendorrow = driver.findElements(By.xpath("(//*[@id='barContainer']//div[@class='row'])"));
+			vendorrow.size();			
+			for(int i = 1 ; i<=vendorrow.size(); i++){
+				WebElement foundlisting = driver.findElement(By.xpath("(*//div[@class='col-lg-1 bar-chart-column found-number'])["+ i +"]"));
+				String numoflisting = foundlisting.getText();
+				WebElement vendorname =driver.findElement(By.xpath("(//*[@class='col-lg-2 bar-chart-column'])[" + i + "]"));
+				if(!numoflisting.equals("0") ) {
+					scrollByElement(vendorname);
+					String vendor = vendorname.getText();
+					System.out.println(vendor);
+					foundVendors.add(vendor);
+					System.out.println(foundVendors);
+					}
+					else{
+						System.out.println("No found Listing");
+					}
+				}
+					return foundVendors;
+			}
+}

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -752,36 +753,26 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	
 }*/
 	
-	/*//To get Vendors List displaying in the application
-		public List<Map<String, String>> verifyAccuracySitevendors() {
+	//To get Vendors List displaying in the application
+		public ArrayList<String> verifyAccuracySitevendors() {
 				JSWaiter.waitJQueryAngular();
 				waitForElement(vendorslist, 40);
 				scrollByElement(vendorslist);
-				Map<String, String> kMap;
-				List<Map<String, String>> Vendors = new ArrayList<Map<String, String>>();
-				List<WebElement> elements = driver.findElements(By.xpath("//div[@class='container']/div[@class='row']/div[@class='col-lg-2 bar-chart-column']"));
-			    java.util.Iterator<WebElement> program = elements.iterator();
-			    kMap = new HashMap<String, String>();
-			        
-			    //reading Vendors data
-			    while (program.hasNext()) {
-			        String values = program.next().getText();
-			        if(!values.equals("null"))
-			        {
-			        	kMap.put("vendors", values);
-			        	System.out.println("\n" +values);
-			        }
-			        else
-			        {
-			            System.out.println("\n No sites displayed \n");
-			        }
-			        //adding into the map
-			        Vendors.add(kMap);
-			    }
-				return Vendors;
+				ArrayList<String> vendor = new ArrayList<String>();
+				List<WebElement> elements = driver.findElements(By.xpath("//div[@id='allSitesScores']//a[contains(@class,'load-table')]"));
+				System.out.println(elements.size());
+				//*[@id='allSitesScores']/div/div/a
+				for(int i = 1; i<=elements.size(); i++) {
+					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					WebElement vendorlisting = driver.findElement(By.xpath("(//div[@id='allSitesScores']//a[contains(@class,'load-table')][contains(text(),'')])["+i+"]"));
+					scrollByElement(vendorlisting);
+					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					String vendorname = vendorlisting.getText();
+					System.out.println(vendorname);
+					vendor.add(vendorname);
+					System.out.println(vendor);
 				}
-*/
-		
-		
+				return vendor;
+		}
 		
 }

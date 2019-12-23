@@ -1,13 +1,13 @@
 package com.dac.testcases.TPSEE;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.Status;
@@ -26,10 +26,15 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	TPSEE_Visibility_Page data;
 	double score;
 	int location;
+	int start = 980;
+	int end = 0;
 	ArrayList<String> UIsite = new ArrayList<String>();
 	ArrayList<String> XLsite = new ArrayList<String>();
 	String grph = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none";
-	
+	String grphfromDate = "(//*[@class='highcharts-label highcharts-range-input'])[1]";
+	String grphtoDate = "(//*[@class='highcharts-label highcharts-range-input'])[2]";
+	String exportfromDate = "//*[@id='exportStartDate']";
+	String exportToDate = "//*[@id='exportEndDate']";
 	
 	/**
 	 * Test to get dashboard scores
@@ -58,12 +63,33 @@ public class TPSEE_Visibility_Test extends BaseClass {
 			CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Visibility page");
 			addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
 		}
+		
+		
+		@Test(priority = 3,enabled = true, dataProvider = "testData")
+		public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month, String to_year) throws Exception {
+			
+			TPSEE_Visibility_Page s = new TPSEE_Visibility_Page(CurrentState.getDriver());
+			if(!(from_day.equals("null")) | !(to_day.equals("null")) ) {
+				s.selectCalender_FromDate(grphfromDate,(int)(Double.parseDouble(from_day)), from_month, (int)(Double.parseDouble(from_year)));
+				addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
+				s.selectCalender_ToDate(grphtoDate,(int)(Double.parseDouble(to_day)), to_month, (int)(Double.parseDouble(to_year)));	
+				addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");				
+				Date fromcal = s.getCurrentfromDate();
+				Date fromgrph = s.verifyinitialHistoryGraph(start, end, grph);
+				addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
+				Assert.assertEquals(fromgrph, fromcal);
+				Date tocal = s.getCurrenttoDate();
+				Date togrph = s.verifyfinalHistorygraph(grph);
+				Assert.assertEquals(togrph, tocal);
+				addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
+			}				
+		}
 	
 	/**
 	 * Test To get overall score and compare with dashboard values 
 	 * @throws Exception
 	 */		
-		@Test(priority=3,groups = { "smoke" }, description = "Test for compare KPI Values")
+		@Test(priority=4,groups = { "smoke" }, description = "Test for compare KPI Values")
 		public void ovrviewlocscorecompare() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 			Thread.sleep(5000);
@@ -80,14 +106,11 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * @throws Exception
 	 */
 		
-		@Test(priority = 4,groups = {"smoke"},
+		@Test(priority = 5,groups = {"smoke"},
 			description ="Verify Zoom Functionality")
 		public void gethighchartsdate() throws Exception{
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-			String OneMonth ="1m";
-			int start = 980;
-			int end = 0;
-			
+			String OneMonth ="1m";			
 			data.clickHighchartCriteria(OneMonth,start,end,grph);
 			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
 			Thread.sleep(5000);
@@ -121,7 +144,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * @param Location
 	 * @throws Exception
 	 */
-		@Test(priority = 5, groups = {
+		@Test(priority = 6, groups = {
 			"smoke" }, description = "Verify Visibility page loads after filter applied")
 		public void verifyFilteringReportsVisibility() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -148,13 +171,13 @@ public class TPSEE_Visibility_Test extends BaseClass {
 					e.printStackTrace();
 				}
 			}
-	
-
+			
+		
 	/**
 	 * Test to export file as CSV
 	 * @throws Exception
 	 */
-		@Test(priority = 6, groups = {
+		@Test(priority = 7, groups = {
 			"smoke" }, description = "Test for export file as CSV")
 		public void verifyOverviewReportnExportVisibilityCSV() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -166,7 +189,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * Test to export file as XLSX
 	 * @throws Exception
 	 */
-		@Test(priority = 7, groups = {
+		@Test(priority = 8, groups = {
 			"smoke" }, description = "Test for export file as XLSX")
 		public void verifyOverviewReportnExportVisibilityXLSX() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -178,7 +201,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * Test to export as Current Date Pdf
 	 * @throws Exception
 	 */
-		@Test(priority = 8, groups = {
+		@Test(priority = 9, groups = {
 			"smoke" }, description = "Test for export file as pdf for Current Date")
 		public void verifyexportcurrentpdf() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -190,11 +213,17 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * Test to export a file as PDF of applied date
 	 * @throws Exception
 	 */
-		@Test(priority = 9,groups = { "smoke" }, 
+		@Test(priority = 10,groups = { "smoke" }, dataProvider = "testData",
 			description = "Test for export file as Visibility History pdf")
-		public void PDFHistoryExport() throws Exception {		
-			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		public void PDFHistoryExport(String from_day, String from_month, String from_year, String to_day, String to_month, String to_year) throws Exception {		
+			data = new TPSEE_Visibility_Page(CurrentState.getDriver());			
 			data.exporthistoryvisibilityrptPDF();
+			addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
+			data.selectCalender_FromDate(exportfromDate,(int)(Double.parseDouble(from_day)), from_month, (int)(Double.parseDouble(from_year)));
+			Thread.sleep(5000);
+			data.selectCalender_ToDate(exportToDate,(int)(Double.parseDouble(to_day)), to_month, (int)(Double.parseDouble(to_year)));
+			Thread.sleep(5000);
+			data.hstrypdfexport();
 			addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
 		}
 	
@@ -202,7 +231,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * Test for Comparing Tooltip and overview report in Visibility Page
 	 * @throws Exception
 	 */
-		@Test(priority = 10, groups = { "smoke" }, 
+		@Test(priority = 11, groups = { "smoke" }, 
 					description = "Test to compare ToolTip Value and Overall Visibility Score")
 		public void verifyOverviewReportnTooltipVisibility() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -214,7 +243,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * Test for SiteTable data in Visibility Page
 	 * @throws Exception
 	 */
-		@Test(priority = 11, groups = {
+		@Test(priority = 12, groups = {
 			"smoke" }, description = "Test for verifying sitetable in Visibility page")
 		public void verifySiteTable() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -236,7 +265,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * Test for compare number of rows and data from export table and table data in Visibility Page
 	 * @throws Exception
 	 */
-		@Test(priority = 12, groups = {
+		@Test(priority = 13, groups = {
 			"smoke" }, description = "Test for verifying progress bar in Visibility page")
 		public void numberofentriesnExporttableVisibility() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -250,7 +279,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * Test to verify Top button functionality
 	 * @throws Exception
 	 */
-		@Test(priority = 13, groups = {"smoke"},
+		@Test(priority = 14, groups = {"smoke"},
 			description = "Verify Top Button")
 		public void GetTopBtn() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -263,7 +292,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * Test for compare number of rows and data from export table and table data in Visibility Page
 	 * @throws Exception
 	 */
-		@Test(priority = 14, groups = {
+		@Test(priority = 15, groups = {
 			"smoke" }, description = "Test for verifying progress bar in Visibility page")
 		public void numberofentriesnExporttableNotFoundVisibility() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -273,22 +302,6 @@ public class TPSEE_Visibility_Test extends BaseClass {
 			data.exporttableNotfoundCSV();
 		}
 		
-		/*@Test(dependsOnMethods="verifyFilteringReportsVisibility",enabled = true, dataProvider = "testData")
-			public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month, String to_year) {
-				
-				TPSEE_Visibility_Page s = new TPSEE_Visibility_Page(CurrentState.getDriver());
-				String fromDate =s.getCurrentFromDate();
-				String toDate =s.getCurrentToDate();
-				if(!(from_day.equals("null")) | !(to_day.equals("null")) ) {
-					s.selectCalender_FromDate((Integer.parseInt(from_day)), from_month, (Integer.parseInt(from_year)));					
-					s.selectCalender_ToDate(Integer.parseInt(to_day), to_month, (Integer.parseInt(to_year)));			
-				}				
-				
-				System.out.println("fromDate : "+fromDate+" toDate : "+toDate);
-				s.enterFromDate(fromDate);
-				s.enterToDate(toDate);
-			}
-			
 			@DataProvider
 			public String[][] testData(){
 				String[][] data = null, data1 = null;
@@ -297,21 +310,18 @@ public class TPSEE_Visibility_Test extends BaseClass {
 				wb.deleteEmptyRows();
 				int rowCount = wb.getRowCount();
 				System.out.println("rowCount : "+rowCount);
-				data = new String[rowCount][6];
-				data1 = new String[rowCount][6];
+				data = new String[rowCount-1][6];
+				data1 = new String[rowCount-1][6];
 				int row = 0;
 				for(int i = 2; i<=rowCount;i++) {
 					 int colCount = wb.getColCount(i);
 					 for(int j = 0;j<colCount; j++) {
-						 //System.out.println("row : "+row+" j : "+j+" i : "+i);
-						 //System.out.println("wb.getCellValue(i, j).trim() : "+wb.getCellValue(i, j).trim());
 						 if(j > 0) {
 							 if(((wb.getCellValue(i, j).trim()).equalsIgnoreCase("null")) | 
 									 ((wb.getCellValue(i, j).trim()).length() == 0)){
 								 data1[row][j] = "null";
 							 }else data1[row][j] = wb.getCellValue(i, j).trim();
-						 }else data1[row][j] = wb.getCellValue(i, j).trim();
-						 //System.out.println(wb.getCellValue(i, j));					 
+						 }else data1[row][j] = wb.getCellValue(i, j).trim();		 
 					 }
 					 row++;
 					 }
@@ -321,12 +331,12 @@ public class TPSEE_Visibility_Test extends BaseClass {
 					 data[0][3] = wb.getCellValue(2, 3);  // to day
 					 data[0][4] = wb.getCellValue(2, 4);  // to month
 					 data[0][5] = wb.getCellValue(2, 5);  // to year
-					 System.out.println("Arrays.deepToString(data1) : "+Arrays.deepToString(data1));
+					 System.out.println("Arrays.deepToString(data) : "+Arrays.deepToString(data));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				finally {
-					return data1;
+					return data;
 				}
-			}*/
+			}
 }

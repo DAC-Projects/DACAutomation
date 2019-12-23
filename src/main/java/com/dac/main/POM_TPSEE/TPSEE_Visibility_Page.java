@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -278,7 +279,14 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 */
 	public void exporthistoryvisibilityrptPDF() throws FileNotFoundException, InterruptedException, IOException {		
 		JSWaiter.waitJQueryAngular();
-		exportasPDFHistory(exportBtn, pdfexport, historypdf, hstrybtn, pdfclick);
+		exporthistrybtn(exportBtn, pdfexport, historypdf);
+		//exportasPDFHistory(exportBtn, pdfexport, historypdf, hstrybtn, pdfclick);
+		
+	}
+	
+	public void hstrypdfexport() throws FileNotFoundException, InterruptedException, IOException {
+		JSWaiter.waitJQueryAngular();
+		exportasPDFHistory(hstrybtn, pdfclick);
 		Thread.sleep(10000);
 		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExportHistoryPdf));
 		verifyfileextension();
@@ -756,7 +764,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		ArrayList<String> XLsite = GetSiteDataUsingColName("./data/VendorList.xlsx", "Social Sites");
 		ArrayList<String> UIsite = verifySitevendors();
 		Assert.assertEquals(XLsite, UIsite, "Matches");
-		Thread.sleep(5000);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		clickelement(AllSites);
 	}
 	

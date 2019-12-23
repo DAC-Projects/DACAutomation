@@ -58,6 +58,9 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "//div[@id='paginationInfo']")
 	private WebElement entiresText;
 	
+	@FindBy(xpath = "//*[@id='location-table']/h3")
+	private WebElement loc;
+	
 	/*-------------------------Pagination-----------------------*/
 	
 	@FindBy(xpath = "(//*[@class='pagination']//a)")
@@ -197,7 +200,6 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods{
 		for (Map<String, String> m1 : LocationDataTable) {
 			for (Map<String, String> m2 : getLocationDataTableExport) {
 				if (m1.get("Location").equals(m2.get("Location")))
-				Assert.assertEquals(m1.size(), m2.size());
 				Assert.assertEquals(m1.get("Location").contains(m2.get("Location")), "Data Matches");
 				
 			}
@@ -236,4 +238,16 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods{
 		Assert.assertTrue(true, "UI table data matches with Exported Excel Data");
 		tableCellValues.clear();
 	}
+	
+	
+	/**
+	 * To get Overview Location count
+	 * @return
+	 */
+	public int numberoflocation() {
+		int totloc = numofloc(loc);
+		return totloc;
+	}
+	
+	
 }
