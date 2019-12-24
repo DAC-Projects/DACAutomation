@@ -207,8 +207,10 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 		JSWaiter.waitJQueryAngular();
 		System.out.println("verifyEmailNotification "+ row);
 		scrollByElement(NotificationTableHeader);
-		int uiRow=1;
+		int uiRow=getRowIndex(configuration[row][0]);
+		System.out.println("uiRow  "+ uiRow);
 		data=getNotificationTableData(uiRow);
+		
 		System.out.println("Notification Name: "+data[0]+" Input Data: "+configuration[row][0]);
 		System.out.println("Email: "+data[3]+" Input Data: "+configuration[row][1]);
 		System.out.println("Report: "+data[4]+" Input Data: "+configuration[row][2]);
@@ -267,6 +269,7 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 		int rows_count = rows_table.size();
 		
 		List < WebElement > Columns_row = rows_table.get(row-1).findElements(By.tagName("td"));
+		
 		List < WebElement > headerTableRow=NotificationTableHeader.findElements(By.tagName("th"));
 		int columns_count = Columns_row.size();	
 		String headerText = "" , celtext ="";
@@ -313,4 +316,27 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 		return btnRemove;
 		
 	}
+	
+	private int getRowIndex(String columnText) {
+		System.out.println("Inside getRowIndex Method: "+columnText );
+		int k=0;
+			
+		 List<WebElement> tableRows = NotificationTable.findElements(By.tagName("tr"));
+	        for (int i = 0; i < tableRows.size(); i++) {
+	            List<WebElement> tableCols = tableRows.get(i).findElements(By.tagName("td"));
+	                for (int j = 0; j < tableCols.size(); j++) {
+	                if (tableCols.get(j).getText().equals(columnText)) { 
+	                        System.out.println("i = "+i);
+	                    
+	                    	k = +i;
+	                    	break;
+	                        }
+	                    }
+	                }
+	    	return k;
+	
+		
+	}
+	
+	
 }
