@@ -23,7 +23,7 @@ public interface TPSEERepository {
 	String Exportpath ="./downloads/";
 	String VisibilityExporttableFoundCSV = "VisibilityExporttableFoundCSV.xlsx";
 	String VisibilityExporttableFoundXLSX = "VisibilityExporttableFoundXLSX.xlsx";
-	String VisibilityExporttableNotFoundCSV = "VisibilityExporttableNotFound.";
+	String VisibilityExporttableNotFoundCSV = "VisibilityExporttableNotFoundcsv.xlsx";
 	String VisibilityExporttableNotFoundXLSX = "VisibilityExporttableNotFound.xlsx";
 	String AccuracyExporttableXLSX = "AccuracyExporttablexlsx.xlsx";
 	String AccuracyExporttableCSV = "AccuracyExporttablecsv.xlsx";

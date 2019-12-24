@@ -1,4 +1,4 @@
-/*package com.dac.testcases.TPSEE;
+package com.dac.testcases.TPSEE;
 
 import java.util.List;
 import java.util.Map;
@@ -9,9 +9,6 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_AllLocations_Page;
-import com.dac.main.POM_TPSEE.TPSEE_GoogleRanking_Page;
-import com.dac.main.POM_TPSEE.TPSEE_Visibility_Page;
-import com.selenium.testevidence.SeleniumEvidence;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -25,10 +22,10 @@ public class TPSEE_AllLocations_Test extends BaseClass{
 	int location;
 	
 	
-	*//**
+	/**
 	 * Test to get dashboard scores
 	 * @throws Exception
-	 *//*
+	 */
 		@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
 		public void GetKPIValues() throws Exception {
 			data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
@@ -50,10 +47,10 @@ public class TPSEE_AllLocations_Test extends BaseClass{
 		// Assert.assertFalse( "sample error", true);
 	}
 	
-	*//**
+	/**
 	 * Test To get overall score and compare with dashboard values 
 	 * @throws Exception
-	 *//*		
+	 */		
 		@Test(priority=3,groups = { "smoke" }, description = "Test for compare KPI Values")
 		public void ovrviewlocscorecompare() throws Exception {
 			data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
@@ -106,4 +103,3 @@ public class TPSEE_AllLocations_Test extends BaseClass{
 	}
 
 }
-*/

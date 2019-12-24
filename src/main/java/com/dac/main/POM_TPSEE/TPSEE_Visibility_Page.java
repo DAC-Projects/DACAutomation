@@ -424,7 +424,12 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	    					celtext4 = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]/td[5]")).getText();
 	    					celtext5 = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]/td[6]")).getText();
 	    					celtext6 = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]/td[7]")).getText();
+	    					WebElement x = null ;
+	    					if(!x.equals(driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]/td[8]"))) ) {
 	    					celtext7 = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]/td[8]")).getAttribute("href");
+	    					}else {
+	    						celtext7 = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]/td[8]")).getText();
+	    					}
 	    					celtext8 = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]/td[9]/div/a[1]")).getAttribute("href");
 	    					System.out.println("\n"+celtext);
 	    					System.out.println("\n"+celtext1);
@@ -436,7 +441,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	    					System.out.println("\n"+celtext7);
 	    					System.out.println("\n"+celtext8);
 	    			}
-	    				kMap.put("rowdata", celtext);
+	    				kMap.put(headerText, celtext);
 	    				kMap.put(headerText, celtext1);
 	    				kMap.put(headerText, celtext2);
 	    				kMap.put(headerText, celtext3);

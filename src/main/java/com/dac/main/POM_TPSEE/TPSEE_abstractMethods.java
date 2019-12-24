@@ -300,7 +300,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	 */
 	public void convertExports(String filename, String export) throws FileNotFoundException, IOException {
 		String report_export = new formatConvert(Exportpath + filename).convertFile("xlsx");
-		FileHandler.renameTo(new File(Exportpath + filename), Exportpath + export);
+		FileHandler.renameTo(new File(Exportpath + report_export), Exportpath + export);
 		
 	}
 	
