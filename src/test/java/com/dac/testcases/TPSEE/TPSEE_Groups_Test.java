@@ -1,6 +1,7 @@
 package com.dac.testcases.TPSEE;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +44,7 @@ public class TPSEE_Groups_Test extends BaseClass{
 		addEvidence(CurrentState.getDriver(), "Verified Table Data", "yes");
 	}*/
 	
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	@Test(priority= 2, groups = {"smoke" }, description = "Test to read data from the table")
 		public void CreateTable() throws Exception {
 		data = new TPSEE_Groups(CurrentState.getDriver());
@@ -58,14 +59,16 @@ public class TPSEE_Groups_Test extends BaseClass{
 				String FilterCondition = wb.getCellValue(i, wb.seacrh_pattern("Condition", 0).get(0).intValue());
 				String Search_Term = wb.getCellValue(i, wb.seacrh_pattern("Search_Term", 0).get(0).intValue());
 				
+				
 				System.out.println(Group+", "+Description+", "+Search_Term);
 		data.create_Group(Group , Description , CountryField , FilterCondition, Search_Term);
 		addEvidence(CurrentState.getDriver(), "Verified Table Data", "yes");
+		break;
 	}
 			
-	}
+	}*/
 	
-	/*@Test(priority= 2, groups = {"smoke" }, description = "Test to read data from the table")
+	/*@Test(priority= 3, groups = {"smoke" }, description = "Test to read data from the table")
 	public void ViewTable() throws Exception {
 	data = new TPSEE_Groups(CurrentState.getDriver());
 	ArrayList<String> UIRules = new ArrayList();
@@ -90,9 +93,9 @@ public class TPSEE_Groups_Test extends BaseClass{
 		Assert.assertEquals(Rules, UIRules);
 	addEvidence(CurrentState.getDriver(), "Verified Table Data", "yes");
 	}		
-}	
+}	*/
 
-		@Test(priority= 3, groups = {"smoke" }, description = "Test to read data from the table")
+		/*@Test(priority= 4, groups = {"smoke" }, description = "Test to read data from the table")
 		public void EditTable() throws Exception {
 		data = new TPSEE_Groups(CurrentState.getDriver());
 		wb = new ExcelHandler("./data/Groups.xlsx", "Sheet1"); wb.deleteEmptyRows();
@@ -106,11 +109,38 @@ public class TPSEE_Groups_Test extends BaseClass{
 			data.edit_Group(Group);
 		addEvidence(CurrentState.getDriver(), "Verified Table Data", "yes");
 		}		
-	}
+	}*/
 		
+		/*@Test(priority= 6, groups = {"smoke" }, description = "Test to read data from the table")
+		public void AddFilterTable() throws Exception {
+		data = new TPSEE_Groups(CurrentState.getDriver());
+		wb = new ExcelHandler("./data/Groups.xlsx", "Sheet1"); wb.deleteEmptyRows();
+		String Group = wb.getCellValue(1, wb.seacrh_pattern("Group", 0).get(0).intValue());
+        String Description = wb.getCellValue(1, wb.seacrh_pattern("Description", 0).get(0).intValue());
+        TPSEE_Groups s = new TPSEE_Groups(CurrentState.getDriver());
+        int i =1;
+        //for(int i=1;i<=wb.getRowCount();i++) {
+            //if(i>1) CurrentState.getDriver().navigate().refresh();
+            s.waitUntilLoad(CurrentState.getDriver());               
+			String CountryField = wb.getCellValue(i, wb.seacrh_pattern("Field", 0).get(0).intValue());
+            String FilterCondition = wb.getCellValue(i, wb.seacrh_pattern("Condition", 0).get(0).intValue());
+            String Search_Term = wb.getCellValue(i, wb.seacrh_pattern("Search_Term", 0).get(0).intValue());   
+			String CountryField1 = wb.getCellValue(i+1, wb.seacrh_pattern("Field", 0).get(0).intValue());
+			String FilterCondition1 = wb.getCellValue(i+1, wb.seacrh_pattern("Condition", 0).get(0).intValue());
+			String Search_Term1 = wb.getCellValue(i+1, wb.seacrh_pattern("Search_Term", 0).get(0).intValue());
+			String CountryField2 = wb.getCellValue(i+2, wb.seacrh_pattern("Field", 0).get(0).intValue());
+			String FilterCondition2 = wb.getCellValue(i+2, wb.seacrh_pattern("Condition", 0).get(0).intValue());
+			String Search_Term2 = wb.getCellValue(i+2, wb.seacrh_pattern("Search_Term", 0).get(0).intValue());
+			Thread.sleep(5000);
+			data.addFilter_Group(Group , Description , CountryField , FilterCondition, Search_Term, CountryField1 , FilterCondition1, Search_Term1, CountryField2 , FilterCondition2, Search_Term2);
+			
+		addEvidence(CurrentState.getDriver(), "Verified Table Data", "yes");
+		}	*/	
 	
-	@SuppressWarnings("unchecked")
-	@Test(priority= 4, groups = {"smoke" }, description = "Test to read data from the table")
+
+	
+	/*@SuppressWarnings("unchecked")
+	@Test(priority= 5, groups = {"smoke" }, description = "Test to read data from the table")
 		public void DeleteTable() throws Exception {
 		data = new TPSEE_Groups(CurrentState.getDriver());
 		wb = new ExcelHandler("./data/Groups.xlsx", "Sheet1"); wb.deleteEmptyRows();
@@ -124,6 +154,53 @@ public class TPSEE_Groups_Test extends BaseClass{
 		//addEvidence(CurrentState.getDriver(), "Verified Table Data", "yes");
 		}
 	}*/
+	
+	@Test(priority= 7, groups = {"smoke" }, description = "Test to read data from the table")
+	public void VerificationTable() throws Exception {
+	data = new TPSEE_Groups(CurrentState.getDriver());
+	ArrayList<String> UIRules1 = new ArrayList();
+	ArrayList<String> Rules1 = new ArrayList();
+	wb = new ExcelHandler("./data/Groups.xlsx", "Sheet1"); wb.deleteEmptyRows();
+	TPSEE_Groups s = new TPSEE_Groups(CurrentState.getDriver());
+	for(int i=1;i<=wb.getRowCount();i++) {
+		if(i>1) CurrentState.getDriver().navigate().refresh();
+		s.waitUntilLoad(CurrentState.getDriver());
+		String Group = wb.getCellValue(i, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println(Group);
+		String field1 = wb.getCellValue(i, wb.seacrh_pattern("Field", 0).get(0).intValue());
+		Rules1.add(field1);
+		String condn1 = wb.getCellValue(i, wb.seacrh_pattern("Condition", 0).get(0).intValue());
+		Rules1.add(condn1);
+		String srch1 = wb.getCellValue(i, wb.seacrh_pattern("Search_Term", 0).get(0).intValue());
+		Rules1.add(srch1);
+		
+		String field2 = wb.getCellValue(i+1, wb.seacrh_pattern("Field", 0).get(0).intValue());
+		Rules1.add(field2);
+		String condn2 = wb.getCellValue(i+1, wb.seacrh_pattern("Condition", 0).get(0).intValue());
+		Rules1.add(condn2);
+		String srch2 = wb.getCellValue(i+1, wb.seacrh_pattern("Search_Term", 0).get(0).intValue());
+		Rules1.add(srch2);
+		
+		String field3 = wb.getCellValue(i+2, wb.seacrh_pattern("Field", 0).get(0).intValue());
+		Rules1.add(field3);
+		String condn3 = wb.getCellValue(i+2, wb.seacrh_pattern("Condition", 0).get(0).intValue());
+		Rules1.add(condn3);
+		String srch3 = wb.getCellValue(i+2, wb.seacrh_pattern("Search_Term", 0).get(0).intValue());
+		Rules1.add(srch3);
+		
+		System.out.println(Rules1);
+		Thread.sleep(5000);
+		UIRules1 = data.verification(Group);
+		System.out.println(UIRules1);
+		Assert.assertEquals(Rules1, UIRules1);
+		//Collections.sort(UIRules1);
+        //Collections.sort(Rules1);
+        
+       // System.out.println(UIRules1);
+      //  UIRules1.equals(Rules1);
+	addEvidence(CurrentState.getDriver(), "Verified Table Data", "yes");
+	}		
+}	
 	
 	/*@Test(priority= 5, groups = {"smoke" }, description = "Add Account Level and Group Level Keyword")
 public void verifyApplyKeywords() throws Exception {
@@ -150,4 +227,6 @@ try {
 	e.printStackTrace();
 }
 }*/
+	
+	
 }

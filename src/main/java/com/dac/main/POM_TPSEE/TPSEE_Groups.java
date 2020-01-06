@@ -50,8 +50,11 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//input[@id='search-item-1']")
 	private WebElement SearchText;
 	
-	@FindBy(xpath = "//input[@id='search-item-1']")
+	@FindBy(xpath = "//input[@id='search-item-2']")
 	private WebElement SearchText1;
+	
+	@FindBy(xpath = "//input[@id='search-item-3']")
+	private WebElement SearchText2;
 	
 	@FindBy(xpath = "//button[@id='loading-btn']")
 	private WebElement SaveBtn;
@@ -99,6 +102,14 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 	
 	/*-------------------------To Edit----------------------*/
 	
+	/*-------------------------Add Filter-----------------------*/
+	
+	@FindBy(xpath="//*[@id='addFilter']")
+	private WebElement filter_btn;
+	
+	
+	/*-------------------------Add Filter----------------------*/
+	
 	/*-------------------------To Delete--------------------*/
 	
 	/*@FindBy(xpath = "//td[text()='country_group_F']/..//*[@class='edit-group']")
@@ -143,9 +154,9 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		country.selectByVisibleText(CountryField);
 		Thread.sleep(5000);
 		Select Condition1 = new Select(driver.findElement(By.xpath("//*[@id='select-condition-1']")));
-		Thread.sleep(5000);
+		//Thread.sleep(5000);
 		Condition1.selectByVisibleText(FilterCondition);
-		Thread.sleep(5000);				
+	//	Thread.sleep(5000);				
 		SearchText.sendKeys(Search_Term);	
 		
 		/*driver.findElement(By.xpath("//button[@id='addFilter']")).click();
@@ -159,8 +170,8 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		Select Condition2 = new Select(driver.findElement(By.xpath("//*[@id='select-condition-2']")));
 		Thread.sleep(5000);
 		Condition2.selectByVisibleText(FilterCondition);*/
-		Thread.sleep(5000);				
-		SearchText.sendKeys(Search_Term);	
+		//Thread.sleep(5000);				
+		//SearchText.sendKeys(Search_Term);	
 		/*SearchText1.sendKeys(Search_Term);*/
 		clickelement(PreviewBtn);
 		clickelement(SaveBtn);
@@ -208,6 +219,60 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		clickelement(SaveBtn);
 	}
 	
+	public void addFilter_Group(String Group, String Description, String CountryField, String FilterCondition, String Search_Term, String CountryField1, String FilterCondition1, String Search_Term1, String CountryField2, String FilterCondition2, String Search_Term2) throws InterruptedException
+	{
+		
+		GroupName.sendKeys(Group);
+		Descrip.sendKeys(Description);
+		Select country = new Select(driver.findElement(By.xpath("//*[@id='select-field-1']")));
+		Thread.sleep(5000);
+		country.selectByVisibleText(CountryField);
+		Thread.sleep(5000);
+		Select Condition1 = new Select(driver.findElement(By.xpath("//*[@id='select-condition-1']")));
+		Thread.sleep(5000);
+		Condition1.selectByVisibleText(FilterCondition);
+		Thread.sleep(5000);				
+		SearchText.sendKeys(Search_Term);	
+		
+		driver.findElement(By.xpath("//button[@id='addFilter']")).click();
+		Thread.sleep(5000);
+		//*[@id='select-field-2']
+		
+		Select country1 = new Select(driver.findElement(By.xpath("//*[@id='select-field-2']")));
+		Thread.sleep(5000);
+		country1.selectByVisibleText(CountryField1);
+		Thread.sleep(5000);
+		Select Condition2 = new Select(driver.findElement(By.xpath("//*[@id='select-condition-2']")));
+		Thread.sleep(5000);
+		Condition2.selectByVisibleText(FilterCondition1);
+		Thread.sleep(5000);				
+		//SearchText.sendKeys(Search_Term);	
+		SearchText1.sendKeys(Search_Term1);
+		
+
+		driver.findElement(By.xpath("//button[@id='addFilter']")).click();
+		Thread.sleep(5000);
+		driver.findElement(By.xpath("//*[@id='formRadio2']")).click();
+		
+		Select country2 = new Select(driver.findElement(By.xpath("//*[@id='select-field-3']")));
+		Thread.sleep(5000);
+		country2.selectByVisibleText(CountryField2);
+		Thread.sleep(5000);
+		Select Condition3 = new Select(driver.findElement(By.xpath("//*[@id='select-condition-3']")));
+		Thread.sleep(5000);
+		Condition3.selectByVisibleText(FilterCondition2);
+		Thread.sleep(5000);				
+		//SearchText.sendKeys(Search_Term);	
+		SearchText2.sendKeys(Search_Term2);
+		
+		clickelement(PreviewBtn);
+		clickelement(SaveBtn);
+		
+		
+		
+		
+	}
+	
 	public void delete_Group(String Group)
 	{
 		WebElement Delete_btn=driver.findElement(By.xpath("//*[@class='remove-group'][@data-name= '"+Group+"']"));
@@ -215,6 +280,60 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		Ok_btn.click();
 	}
 	
+	public ArrayList<String> verification(String Groupname) throws Exception
+	{
+		ArrayList<String> rules1 = new ArrayList();
+		
+	
+		
+		WebElement View_btn=driver.findElement(By.xpath("//a[@class='view-group'][@data-name='"+Groupname+"']"));
+		Thread.sleep(5000);	
+		//save.click();
+		View_btn.click();
+		Thread.sleep(5000);
+		
+	
+		String x2 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[3].value").toString();
+		System.out.println(x2);
+		rules1.add(x2);
+		Thread.sleep(5000);
+		String y2 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[4].value").toString();;
+		System.out.println(y2);
+		rules1.add(y2);
+		Thread.sleep(5000);
+		String z2 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[5].value").toString();;
+		System.out.println(z2);
+		rules1.add(z2);
+		
+		String x1 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[0].value").toString();
+		System.out.println(x1);
+		rules1.add(x1);
+		Thread.sleep(5000);
+		String y1 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[1].value").toString();;
+		System.out.println(y1);
+		rules1.add(y1);
+		Thread.sleep(5000);
+		String z1 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[2].value").toString();;
+		System.out.println(z1);
+		rules1.add(z1);	
+		
+			
+		
+		String x3 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[6].value").toString();
+		System.out.println(x3);
+		rules1.add(x3);
+		Thread.sleep(5000);
+		String y3 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[7].value").toString();;
+		System.out.println(y3);
+		rules1.add(y3);
+		Thread.sleep(5000);
+		String z3 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[8].value").toString();;
+		System.out.println(z3);
+		rules1.add(z3);	
+		
+		clickelement(close_btn);
+		return rules1;
+	}
 	
 		/*	//getting the data from the table 
 			public List<Map<String, String>> getTableData() throws InterruptedException{
