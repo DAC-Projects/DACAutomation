@@ -719,7 +719,8 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * To Verify Sites in ALL SITES Section
 	 * @throws Exception
 	 */
-	public void verifyAllsites() throws Exception{			
+	public void verifyAllsites() throws Exception{		
+		
 		ArrayList<String> XLsite = GetSiteDataUsingColName("./data/VendorList.xlsx", "All Sites");
 		ArrayList<String> UIsite = verifySitevendors();
 		Assert.assertEquals(XLsite, UIsite, "Matches");

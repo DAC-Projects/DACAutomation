@@ -542,7 +542,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		    	    }
 		      }
 		    	       	String cellValue = null ;
-		            	for(int j =1;j<Last_row; j++) {
+		            	for(int j =1;j<=Last_row; j++) {
 		            		row = sh.getRow(j);
 		            		Cell cell = row.getCell(col_num);
 		            		if (cell != null) {

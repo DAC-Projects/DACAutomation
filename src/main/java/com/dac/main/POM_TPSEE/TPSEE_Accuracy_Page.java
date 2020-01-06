@@ -119,6 +119,18 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		@FindBy(xpath = "//div[@id='divBars']")
 		private WebElement overviewlayout;
 		
+		@FindBy(xpath = "//*[@id='all']")
+		private WebElement Alltab;
+		
+		@FindBy(xpath = "//*[@id='name']")
+		private WebElement Nametab;
+		
+		@FindBy(xpath = "//*[@id='address']")
+		private WebElement Addresstab;
+		
+		@FindBy(xpath = "//*[@id='phone']")
+		private WebElement PHNumtab;
+		
 
 		/*-------------------------Pagination-----------------------*/
 		@FindBy(xpath = "(//*[@class='pagination']//a)")
@@ -439,6 +451,63 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 					}
 				}
 			}
+		
+		public ArrayList<String> verifyHeader() {
+			JSWaiter.waitJQueryAngular();
+			waitForElement(tableresult, 40);
+			scrollByElement(tableresult);
+			ArrayList<String> TableHeader = new ArrayList<String>();
+			List<WebElement> elements = driver.findElements(By.xpath("//*[@id='inaccuracy_results']//th"));
+		    java.util.Iterator<WebElement> program = elements.iterator();
+		    while (program.hasNext()) {
+		        String values = program.next().getText();
+		        if(!values.equals("null")) {
+		        	TableHeader.add(values);
+		        	System.out.println("\n" +values);
+		        }
+		    else
+		        {
+		            System.out.println("\n No sites displayed \n");
+		        }
+		       
+		    }
+			return TableHeader;
+		}
+		
+		public void verifyAllTab() throws Exception{	
+			waitForElement(Alltab, 10);
+			scrollByElement(Alltab);
+			ArrayList<String> XLData = GetSiteDataUsingColName("./data/InaccuracyTabs.xlsx", "ALL");
+			ArrayList<String> UIsite = verifyHeader();
+			Assert.assertEquals(XLData, UIsite, "Matches");			
+		}
+		
+		public void verifyNameTab() throws Exception{		
+			waitForElement(Nametab, 10);
+			scrollByElement(Nametab);
+			clickelement(Nametab);
+			ArrayList<String> XLData = GetSiteDataUsingColName("./data/InaccuracyTabs.xlsx", "NAME");
+			ArrayList<String> UIData = verifyHeader();
+			Assert.assertEquals(XLData, UIData, "Matches");			
+		}
+		
+		public void verifyAddressTab() throws Exception{
+			waitForElement(Addresstab, 10);
+			scrollByElement(Addresstab);
+			clickelement(Addresstab);
+			ArrayList<String> XLData = GetSiteDataUsingColName("./data/InaccuracyTabs.xlsx", "ADDRESS");
+			ArrayList<String> UIData = verifyHeader();
+			Assert.assertEquals(XLData, UIData, "Matches");			
+		}
+		
+		public void verifyPHNOTab() throws Exception{
+			waitForElement(PHNumtab, 10);
+			scrollByElement(PHNumtab);
+			clickelement(PHNumtab);
+			ArrayList<String> XLData = GetSiteDataUsingColName("./data/InaccuracyTabs.xlsx", "PH NUM");
+			ArrayList<String> UIData = verifyHeader();
+			Assert.assertEquals(XLData, UIData, "Matches");			
+		}
 		
 	/*//Comparision of UI and Excel
 	public void compareXlData_UIdata() throws Exception {

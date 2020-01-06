@@ -27,7 +27,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 	double score;
 	int location;
 	String grph = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none";
-	String OneMonth ="1m";
+	
 	int start = 980;
 	int end = 0;
 	String grphfromDate = "(//*[@class='highcharts-label highcharts-range-input'])[1]";
@@ -54,7 +54,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 	/**
 	 * Test to navigate to Visibility Page
 	 * @throws Exception
-	 */
+	 *//*
 		@Test(priority = 2,groups = { "smoke" }, description = "Test for navigating to Visibility page")
 		public void navigateToVisibilityPage() throws Exception {
 			np = new Navigationpage(CurrentState.getDriver());
@@ -71,7 +71,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		System.out.println(foundlistingVendors);
 		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
 		}
-		
+		*/
 		
 		/**
 		 * Test to navigate to Accuracy Page
@@ -88,7 +88,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		/**
 		 * Test to get SiteTable data
 		 * @throws Exception
-		 */
+		 *//*
 		//Test to compare vendors in the application in Visibility Page
 		@Test(priority = 5,groups = {"smoke"},
 				description ="Verify Site Vendors List")
@@ -98,7 +98,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 			Assert.assertEquals(accuracyvendors, foundlistingVendors);
 			addEvidence(CurrentState.getDriver(),
 				"Site Vendors in Content Analysis site vendors ", "yes");
-	}
+	}*/
 	
 		/**
 		 * Test to Compare KPI Values with Report
@@ -144,7 +144,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 			description ="Verify Zoom Functionality")
 		public void gethighchartsdate() throws Exception{
 			data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-			
+			String OneMonth ="1m";
 			data.clickHighchartCriteria(OneMonth,start,end,grph);
 			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
 			Thread.sleep(5000);
@@ -263,11 +263,32 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 						"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
 		}
 		
+		@Test(priority = 15, groups = {
+		"smoke" }, description = "Test for verifying sitetable in Visibility page")
+	public void verifyTableHeaders() throws Exception {
+		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+		data.verifyAllTab();
+		addEvidence(CurrentState.getDriver(),
+			"Data of All Sites Section ", "yes");
+		Thread.sleep(5000);
+		data.verifyNameTab();
+		addEvidence(CurrentState.getDriver(),
+			"Data of Search Engine Sites", "yes");
+		Thread.sleep(5000);
+		data.verifyAddressTab();
+		addEvidence(CurrentState.getDriver(),
+			"Data of Directory Sites", "yes");
+		Thread.sleep(5000);
+		data.verifyPHNOTab();
+		addEvidence(CurrentState.getDriver(),
+			"Data of Social Sites Tab", "yes");
+	}
+		
 		/**
 		 * Test to verify inaccuracy and ignored checkbox
 		 * @throws Exception
 		 */
-		@Test(priority = 15, groups = {
+		@Test(priority = 16, groups = {
 		"smoke" }, description = "Test for verifying site link data in Accuracy page")
 		public void verifycheckbox() throws Exception {
 			data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
@@ -281,7 +302,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		 * Test to verify Top Button
 		 * @throws Exception
 		 */
-		@Test(priority = 16, groups = {"smoke"},
+		@Test(priority = 17, groups = {"smoke"},
 			description = "Verify Top Button")
 		public void GetTopBtn() throws Exception {
 			data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
@@ -327,6 +348,8 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 				return data;
 			}
 		}
+		
+		
 		
 	/*	//Test for compare number of rows from export table and table data in Accuracy Page
 				@Test(priority = 13, groups = {

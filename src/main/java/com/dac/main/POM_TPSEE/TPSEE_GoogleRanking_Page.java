@@ -88,7 +88,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "(//div/a[@class='remove'])[last()]")
 	private WebElement removeacckey;
 	
-	@FindBy(xpath = "//div[@class='selectize-input items not-full has-options has-items']")
+	@FindBy(xpath = "//div[@class = 'selectize-input items full has-options has-items']")
 	//selectize-input items has-options has-items not-full
 	private WebElement accountkeyword;
 	
@@ -145,6 +145,8 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 			waitForElement(acckeypanel, 25);
 			scrollByElement(acckeypanel);
 			waitUntilLoad(driver);
+			waitForElement(accountkeyword, 20);
+			scrollByElement(accountkeyword);
 			if(accountkeyword.isEnabled()) {
 				if(!AccKey.equals("null")) {
 					if(removeacckey.isDisplayed()){
@@ -413,7 +415,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 		String tooltipvalue = grphtooltip.getText();
 		System.out.println("\n Reading tooltipdata ********** \n");
 		System.out.println("\n tooltipvalue is \n" +tooltipvalue);
-		int numberoflocations = Integer.parseInt(tooltipvalue.substring(31 , 34));
+		int numberoflocations = Integer.parseInt(tooltipvalue.substring(30 , 33));
 		System.out.println(numberoflocations);
 		return numberoflocations;	
 	}

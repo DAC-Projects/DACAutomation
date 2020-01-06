@@ -26,7 +26,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 	double score;
 	int location;
 	String grph = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none";
-	int start = 980;
+	int start = 1060;
 	int end = 0;
 	String grphfromDate = "(//*[@class='highcharts-label highcharts-range-input'])[1]";
 	String grphtoDate = "(//*[@class='highcharts-label highcharts-range-input'])[2]";
@@ -76,8 +76,6 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 		public void gethighchartsdate() throws Exception{
 			data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 			String OneMonth ="1m";
-			int start = 1060;
-			int end = 0;
 			data.clickHighchartCriteria(OneMonth,start,end,grph);
 			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
 			Thread.sleep(5000);
