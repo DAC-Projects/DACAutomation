@@ -153,7 +153,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 			addEvidence(CurrentState.getDriver(), "Tooltip values verified from Overview Content Analysis report", "yes");
 		}
 		
-		@Test(priority = 7,enabled = true, dataProvider = "testData")
+		@Test(priority = 8,enabled = true, dataProvider = "testData")
 		public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month, String to_year) throws Exception {
 			
 			data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
@@ -212,7 +212,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 		}
 		
 		//Test for export and overview report in Content Analysis Page
-				@Test(priority = 8, groups = {
+				@Test(priority = 9, groups = {
 								"smoke" }, description = "Test for overview export and export verification")
 					public void verifyTableDataoExport() throws Exception {
 					data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
@@ -235,7 +235,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 	 * Test to verify Top button functionality
 	 * @throws Exception
 	 */
-		@Test(priority = 9, groups = {"smoke"},
+		@Test(priority = 10, groups = {"smoke"},
 			description = "Verify Top Button")
 		public void GetTopBtn() throws Exception {
 			data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
