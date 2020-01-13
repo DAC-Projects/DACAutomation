@@ -4,15 +4,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_Bing_Page;
-import com.dac.main.POM_TPSEE.TPSEE_GMB;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -23,11 +20,52 @@ public class TPSEE_Bing_Test extends BaseClass{
 	static List<Map<String, String>> export;
 	Navigationpage np;
 	TPSEE_Bing_Page data;
+	
 	String grph = ".highcharts-label.highcharts-tooltip-box.highcharts-color-none";
-	int start = 980;
-	int end = 0;
 	String grphfromDate = "(//*[@class='highcharts-label highcharts-range-input'])[1]";
 	String grphtoDate = "(//*[@class='highcharts-label highcharts-range-input'])[2]";
+	
+	String chromepath = "./downloads/chromeBingXLSX.xlsx";
+	String IEpath = "./downloads/IEBingXLSX.xlsx";
+	String FFpath = "./downloads/FFBingXLSX.xlsx";
+	
+	String chromepath1m = "./downloads/chromeBingXLSX1m.xlsx";
+	String IEpath1m = "./downloads/IEBingXLSX1m.xlsx";
+	String FFpath1m = "./downloads/FFBingXLSX1m.xlsx";
+	
+	String chromepath3m = "./downloads/chromeBingXLSX3m.xlsx";
+	String IEpath3m = "./downloads/IEBingXLSX3m.xlsx";
+	String FFpath3m = "./downloads/FFBingXLSX3m.xlsx";
+	
+	String chromepath1y = "./downloads/chromeBingXLSX1y.xlsx";
+	String IEpath1y = "./downloads/IEBingXLSX1y.xlsx";
+	String FFpath1y = "./downloads/FFBingXLSX1y.xlsx";
+	
+	String chromepathytd = "./downloads/chromeBingXLSXytd.xlsx";
+	String IEpathytd = "./downloads/IEBingXLSXytd.xlsx";
+	String FFpathytd = "./downloads/FFBingXLSXytd.xlsx";
+	
+	String chromepath6m = "./downloads/chromeBingXLSX6m.xlsx";
+	String IEpath6m = "./downloads/IEBingXLSX6m.xlsx";
+	String FFpath6m = "./downloads/FFBingXLSX6m.xlsx";
+	
+	String chromepathall = "./downloads/chromeBingXLSXall.xlsx";
+	String IEpathall = "./downloads/IEBingXLSXall.xlsx";
+	String FFpathall = "./downloads/FFBingXLSXall.xlsx";
+	
+	String chromepathdateselect = "./downloads/chromeBingXLSXdateselect.xlsx";
+	String IEpathdateselect = "./downloads/IEBingXLSXdateselect.xlsx";
+	String FFpathdateselect = "./downloads/FFBingXLSXdateselect.xlsx";
+	
+	String BingXLSX = "BingXLSX.xlsx";
+	String BingXLSX1m = "BingXLSX1m.xlsx";
+	String BingXLSX3m = "BingXLSX3m.xlsx";
+	String BingXLSX6m = "BingXLSX6m.xlsx";
+	String BingXLSXytd = "BingXLSXytd.xlsx";
+	String BingXLSX1y = "BingXLSX1y.xlsx";
+	String BingXLSXall = "BingXLSXall.xlsx";
+	String BingXLSXdateselect = "BingXLSXdateselect.xlsx";
+	
 	
 	
 	//Test to navigate to Bing Page
@@ -94,7 +132,7 @@ public class TPSEE_Bing_Test extends BaseClass{
 					description ="Verify Site Vendors List")
 			public void BingExport() throws Exception{
 				data = new TPSEE_Bing_Page(CurrentState.getDriver());
-				data.exportXLSXBing();
+				data.exportXLSXBing(BingXLSX);
 				addEvidence(CurrentState.getDriver(),
 					"Verifying export functionality ", "yes");
 			}
@@ -104,7 +142,7 @@ public class TPSEE_Bing_Test extends BaseClass{
 					description ="Verify Impressions")
 			public void VerifyTotalImpressionUIExport() throws Exception{
 				data = new TPSEE_Bing_Page(CurrentState.getDriver());
-				data.compareUInExportImpressions();
+				data.compareUInExportImpressions(chromepath, IEpath , FFpath);
 				addEvidence(CurrentState.getDriver(),
 					"Compare UI and export Impressions ", "yes");
 			}
@@ -114,98 +152,89 @@ public class TPSEE_Bing_Test extends BaseClass{
 					description ="Verify Zoom Functionality")
 			public void gethighchartsdate() throws Exception{
 				data = new TPSEE_Bing_Page(CurrentState.getDriver());
+				
+				
 				String OneMonth ="1m";
-				data.clickBingHighchartCriteria(OneMonth,grph);
+				data.clickBingHighchartCriteria(OneMonth);
 				addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
 				Thread.sleep(5000);
 				BingCSVExport();
 				Thread.sleep(5000);
 				addEvidence(CurrentState.getDriver(), "CSVExport", "yes");
 				Thread.sleep(5000);
-				BingExport();
+				data.exportXLSXBing(BingXLSX1m);
 				Thread.sleep(5000);
 				addEvidence(CurrentState.getDriver(), "XLSXExport", "yes");
 				Thread.sleep(5000);
-				VerifyTotalImpressionUIExport();
+				data.compareUInExportImpressions(chromepath1m, IEpath1m , FFpath1m);
 				Thread.sleep(5000);
-				addEvidence(CurrentState.getDriver(), "Impression", "yes");
-				Thread.sleep(5000);
+				
+				
 				String ThreeMonths = "3m";
-				data.clickBingHighchartCriteria(ThreeMonths,grph);
+				data.clickBingHighchartCriteria(ThreeMonths);
 				addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
 				Thread.sleep(5000);
-				BingCSVExport();
-				Thread.sleep(5000);
-				addEvidence(CurrentState.getDriver(), "CSVExport", "yes");
-				Thread.sleep(5000);
-				BingExport();
+				data.exportXLSXBing(BingXLSX3m);
 				Thread.sleep(5000);
 				addEvidence(CurrentState.getDriver(), "XLSXExport", "yes");
 				Thread.sleep(5000);
-				VerifyTotalImpressionUIExport();
+				data.compareUInExportImpressions(chromepath3m, IEpath3m , FFpath3m);
 				Thread.sleep(5000);
 				addEvidence(CurrentState.getDriver(), "Impression", "yes");
 				Thread.sleep(5000);
+				
+				
 				String SixMonths = "6m";
-				data.clickBingHighchartCriteria(SixMonths,grph);
+				data.clickBingHighchartCriteria(SixMonths);
 				addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
 				Thread.sleep(5000);
-				BingCSVExport();
-				Thread.sleep(5000);
-				addEvidence(CurrentState.getDriver(), "CSVExport", "yes");
-				Thread.sleep(5000);
-				BingExport();
+				data.exportXLSXBing(BingXLSX6m);
 				Thread.sleep(5000);
 				addEvidence(CurrentState.getDriver(), "XLSXExport", "yes");
 				Thread.sleep(5000);
-				VerifyTotalImpressionUIExport();
+				data.compareUInExportImpressions(chromepath6m, IEpath6m , FFpath6m);
 				Thread.sleep(5000);
 				addEvidence(CurrentState.getDriver(), "Impression", "yes");
 				Thread.sleep(5000);
+				
+				
 				String OneYear = "1y";
-				data.clickBingHighchartCriteria(OneYear,grph);
+				data.clickBingHighchartCriteria(OneYear);
 				addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
 				Thread.sleep(5000);
-				BingCSVExport();
-				Thread.sleep(5000);
-				addEvidence(CurrentState.getDriver(), "CSVExport", "yes");
-				Thread.sleep(5000);
-				BingExport();
+				data.exportXLSXBing(BingXLSX1y);
 				Thread.sleep(5000);
 				addEvidence(CurrentState.getDriver(), "XLSXExport", "yes");
 				Thread.sleep(5000);
-				VerifyTotalImpressionUIExport();
+				data.compareUInExportImpressions(chromepath1y, IEpath1y , FFpath1y);
 				Thread.sleep(5000);
 				addEvidence(CurrentState.getDriver(), "Impression", "yes");
 				Thread.sleep(5000);
+				
+				
 				String YearToDate ="ytd";
-				data.clickBingHighchartCriteria(YearToDate,grph);
+				data.clickBingHighchartCriteria(YearToDate);
 				addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
 				Thread.sleep(5000);
-				BingCSVExport();
-				Thread.sleep(5000);
-				addEvidence(CurrentState.getDriver(), "CSVExport", "yes");
-				Thread.sleep(5000);
-				BingExport();
+				data.exportXLSXBing(BingXLSXytd);
 				Thread.sleep(5000);
 				addEvidence(CurrentState.getDriver(), "XLSXExport", "yes");
 				Thread.sleep(5000);
-				VerifyTotalImpressionUIExport();
+				data.compareUInExportImpressions(chromepathytd, IEpathytd , FFpathytd);
 				Thread.sleep(5000);
 				addEvidence(CurrentState.getDriver(), "Impression", "yes");
 				Thread.sleep(5000);
+				
+				
 				String ALLDATA = "all";
-				data.clickBingHighchartCriteria(ALLDATA,grph);
-				addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
-				BingCSVExport();
+				data.clickBingHighchartCriteria(ALLDATA);
+				addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
 				Thread.sleep(5000);
-				addEvidence(CurrentState.getDriver(), "CSVExport", "yes");
-				Thread.sleep(5000);
-				BingExport();
+				data.exportXLSXBing(BingXLSXall);
 				Thread.sleep(5000);
 				addEvidence(CurrentState.getDriver(), "XLSXExport", "yes");
 				Thread.sleep(5000);
-				VerifyTotalImpressionUIExport();
+				data.compareUInExportImpressions(chromepathall, IEpathall , FFpathall);
 				Thread.sleep(5000);
 				addEvidence(CurrentState.getDriver(), "Impression", "yes");
 				Thread.sleep(5000);
@@ -215,6 +244,7 @@ public class TPSEE_Bing_Test extends BaseClass{
 			public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month, String to_year) throws Exception {
 				
 				data = new TPSEE_Bing_Page(CurrentState.getDriver());
+				
 				if(!(from_day.equals("null")) | !(to_day.equals("null")) ) {
 					data.selectCalender_FromDate(grphfromDate,(int)(Double.parseDouble(from_day)), from_month, (int)(Double.parseDouble(from_year)));
 					addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
@@ -224,6 +254,14 @@ public class TPSEE_Bing_Test extends BaseClass{
 					addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 					Date tocal = data.getCurrenttoDate();
 					addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
+					Thread.sleep(5000);
+					data.exportXLSXBing(BingXLSXdateselect);
+					Thread.sleep(5000);
+					addEvidence(CurrentState.getDriver(), "XLSXExport", "Yes");
+					data.compareUInExportImpressions(chromepathdateselect, IEpathdateselect , FFpathdateselect);
+					Thread.sleep(5000);
+					addEvidence(CurrentState.getDriver(), "Comparision", "Yes");
+					Thread.sleep(5000);
 				}				
 			}
 			

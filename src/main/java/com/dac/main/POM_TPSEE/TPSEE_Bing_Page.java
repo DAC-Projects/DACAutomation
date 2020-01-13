@@ -1,16 +1,12 @@
 package com.dac.main.POM_TPSEE;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.security.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -106,7 +102,7 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 		}
 	}
 	
-	public void exportXLSXBing() throws InterruptedException, FileNotFoundException, IOException {
+	public void exportXLSXBing(String file) throws InterruptedException, FileNotFoundException, IOException {
 
 		JSWaiter.waitJQueryAngular();
 		datavalidatation = driver.findElement(By.xpath("//*[@class='highcharts-title']")).getText();
@@ -118,7 +114,7 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 			wait.until(ExpectedConditions.visibilityOf(XLSXExport));
 			XLSXExport.click();
 			Thread.sleep(5000);
-			renamefile(getLastModifiedFile(Exportpath), (GetTimeStamp() + CurrentState.getBrowser()+BingXLSX));
+			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+file));
 			Thread.sleep(6000);
 			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile(Exportpath));
 			}else {
@@ -178,18 +174,18 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 	}
 	
 	//Compare UI and exported Impression
-	public void compareUInExportImpressions() throws Exception {
+	public void compareUInExportImpressions(String chromepath, String IEpath, String FFpath) throws Exception {
 		datavalidatation = driver.findElement(By.xpath("//*[@class='highcharts-title']")).getText();
 		if(!datavalidatation.equals("There is currently not enough data from Bing to display this report")) {
 		int x=0;
 		if (CurrentState.getBrowser().equals("chrome")) {
-		x = GetDataUsingColName(getLastModifiedFile(Exportpath),"Impression");
+		x = GetDataUsingColName(chromepath,"Impression");
 		}
 		if(CurrentState.getBrowser().equals("IE")){
-			x = GetDataUsingColName("./downloads/IEBingXLSX.xlsx","Impression");
+			x = GetDataUsingColName(IEpath,"Impression");
 		}
 		if(CurrentState.getBrowser().equals("Firefox")){
-			x = GetDataUsingColName("./downloads/FirefoxBingXLSX.xlsx","Impression");
+			x = GetDataUsingColName(FFpath,"Impression");
 		}
 		WebElement Impressions = driver.findElement(By.xpath("//div[@class='big-stats tooltip-info']//span"));
 		int TotalImpressions = getImpressions(Impressions); 
@@ -206,7 +202,7 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 	 * @return
 	 * @throws Exception
 	 */
-	public TPSEE_abstractMethods clickBingHighchartCriteria(String durationFor, String elemnt ) throws Exception {
+	public TPSEE_abstractMethods clickBingHighchartCriteria(String durationFor) throws Exception {
 		datavalidatation = driver.findElement(By.xpath("//*[@class='highcharts-title']")).getText();
 		if(!datavalidatation.equals("There is currently not enough data from Bing to display this report")) {
 		durationFor = durationFor.toLowerCase();
@@ -217,7 +213,7 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 			case "1m"  : 	try{
 								clickelement(highChart_1M);
 								if(eleClicked(highChart_1M)) {
-									days = BinggetNumberofDays(elemnt);			
+									days = BinggetNumberofDays();			
 									if(days >= 28 && days<=31 ) {
 										System.out.println("1 Month data is displayed");
 									}else {
@@ -234,7 +230,7 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 			case "3m"  : 	try{
 								clickelement(highChart_3M);
 								if(eleClicked(highChart_3M)) {
-									days = BinggetNumberofDays(elemnt);
+									days = BinggetNumberofDays();
 									if(days>=90 && days<=92) {
 										System.out.println("3 Month data is displayed");
 									}else {
@@ -251,7 +247,7 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 			case "6m"  : 	try{
 								clickelement(highChart_6M);
 								if(eleClicked(highChart_6M)) {
-									days = BinggetNumberofDays(elemnt);
+									days = BinggetNumberofDays();
 									if(days>=180 && days<=184) {
 										System.out.println("6 Month data is displayed");
 									}else {
@@ -268,7 +264,7 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 			case "ytd" : 	try{
 								clickelement(highChart_YTD);
 								if(eleClicked(highChart_YTD)) {
-									days = BinggetNumberofDays(elemnt);
+									days = BinggetNumberofDays();
 								}else {
 									System.out.println("Element Not clicked");
 									}
@@ -280,7 +276,7 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 			case "1y"  : 	try{
 								clickelement(highChart_1y);
 								if(eleClicked(highChart_1y)) {
-									days = BinggetNumberofDays(elemnt);
+									days = BinggetNumberofDays();
 									if(days>=364 && days<=366) {
 										System.out.println("1 Year data is displayed");
 									}else {
@@ -298,7 +294,7 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 			default    : 	try{
 								clickelement(highChart_All);
 								if(eleClicked(highChart_All)) {
-									days = BinggetNumberofDays(elemnt);
+									days = BinggetNumberofDays();
 								}else {
 									System.out.println("Element not clicked");
 									}
@@ -318,7 +314,7 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 	 * @return
 	 * @throws Exception
 	 */
-	public  int BinggetNumberofDays(String elemnt) throws Exception {
+	public  int BinggetNumberofDays() throws Exception {
 		int diff = 0;
 		datavalidatation = driver.findElement(By.xpath("//*[@class='highcharts-title']")).getText();
 		if(!datavalidatation.equals("There is currently not enough data from Bing to display this report")) {
