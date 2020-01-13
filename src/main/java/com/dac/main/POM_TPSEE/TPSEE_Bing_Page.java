@@ -332,4 +332,14 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 		}
 		return diff;
 	}	
+	
+	
+	public String validdata() {
+		
+		String Isdataavailable = driver.findElement(By.xpath("//*[@class='highcharts-title']")).getText();
+		
+		return Isdataavailable;
+		
+		
+	}
 }

@@ -244,7 +244,8 @@ public class TPSEE_Bing_Test extends BaseClass{
 			public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month, String to_year) throws Exception {
 				
 				data = new TPSEE_Bing_Page(CurrentState.getDriver());
-				
+				String Isdataavailable = data.validdata();
+				if(!Isdataavailable.equals("There is currently not enough data from Bing to display this report")) {
 				if(!(from_day.equals("null")) | !(to_day.equals("null")) ) {
 					data.selectCalender_FromDate(grphfromDate,(int)(Double.parseDouble(from_day)), from_month, (int)(Double.parseDouble(from_year)));
 					addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
@@ -262,7 +263,10 @@ public class TPSEE_Bing_Test extends BaseClass{
 					Thread.sleep(5000);
 					addEvidence(CurrentState.getDriver(), "Comparision", "Yes");
 					Thread.sleep(5000);
-				}				
+				}	
+				}else {
+					System.out.println("No Data Available");
+				}
 			}
 			
 			@DataProvider
