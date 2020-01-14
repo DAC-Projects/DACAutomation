@@ -28,8 +28,8 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 	int location;
 	String grph = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none";
 	
-	int start = 980;
-	int end = 0;
+	int start;
+	int end ;
 	int start1;
 	int end1;
 	String grphfromDate = "(//*[@class='highcharts-label highcharts-range-input'])[1]";
@@ -37,10 +37,10 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 	
 	
 	
-	/**
+/*	*//**
 	 * Test to get dashboard scores
 	 * @throws Exception
-	 */
+	 *//*
 	@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
 	public void GetKPIValues() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
@@ -51,7 +51,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		System.out.println(location);
 		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
-	}
+	}*/
 	
 	/**
 	 * Test to navigate to Visibility Page
@@ -102,10 +102,10 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 				"Site Vendors in Content Analysis site vendors ", "yes");
 	}*/
 	
-		/**
+/*		*//**
 		 * Test to Compare KPI Values with Report
 		 * @throws Exception
-		 */
+		 *//*
 		 
 		@Test(priority = 6, groups = { "smoke" }, description = "Test for compare KPI Values")
 		public void ovrviewlocscorecompare() throws Exception {
@@ -137,7 +137,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 				Assert.assertEquals(togrph, tocal);
 				addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 			}				
-		}
+		}*/
 		/**
 		 * Test to very Zoom Functionality
 		 * @throws Exception
@@ -147,34 +147,34 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		public void gethighchartsdate() throws Exception{
 			data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 			String OneMonth ="1m";
-			data.clickHighchartCriteria(OneMonth,start,end,grph, start1, end1);
+			data.clickHighchartCriteria(OneMonth,980,0,grph, 2, 0);
 			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String ThreeMonths = "3m";
-			data.clickHighchartCriteria(ThreeMonths,start,end,grph, start1, end1);
+			data.clickHighchartCriteria(ThreeMonths,980,0,grph, 2, 0);
 			addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String SixMonths = "6m";
-			data.clickHighchartCriteria(SixMonths,start,end,grph, start1, end1);
+			data.clickHighchartCriteria(SixMonths,988,0,grph, 1, 0);
 			addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String OneYear = "1y";
-			data.clickHighchartCriteria(OneYear,start,end,grph, start1, end1);
+			data.clickHighchartCriteria(OneYear,988,0,grph, 1, 0);
 			addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String YearToDate ="ytd";
-			data.clickHighchartCriteria(YearToDate,start,end,grph, start1, end1);
+			data.clickHighchartCriteria(YearToDate,988,0,grph, 1, 0);
 			addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String ALLDATA = "all";
-			data.clickHighchartCriteria(ALLDATA,start,end,grph, start1, end1);
+			data.clickHighchartCriteria(ALLDATA,988,0,grph, 1, 0);
 			addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
 			}
 	
 		/**
 		 * Test to apply Filters
 		 * @throws Exception
-		 */
+		 *//*
 		@Test(priority = 9, groups = {
 			"smoke" }, description = "Verify Accuracy page loads after filter applied")
 		public void verifyFilteringReportsAccuracy() throws Exception {
@@ -203,10 +203,10 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		}
 	}
 	
-		/**
+		*//**
 		 * Test to export as overall CSV Accuracy Report
 		 * @throws Exception
-		 */
+		 *//*
 		@Test(priority = 10, groups = {
 			"smoke" }, description = "Test for export file as CSV")
 		public void verifyExportAccuracyCSV() throws Exception {
@@ -215,10 +215,10 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 			addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
 		}
 		
-		/**
+		*//**
 		 * Test to export as overall CSV Accuracy Report
 		 * @throws Exception
-		 */
+		 *//*
 		@Test(priority = 11, groups = {
 			"smoke" }, description = "Test for export file as XLSX")
 		public void verifyOverviewReportnExportAccuracyXLSX() throws Exception {
@@ -227,10 +227,10 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 			addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
 		}
 			
-		/**
+		*//**
 		 * Test to verify Tooltip data and overall score of accuracy	
 		 * @throws Exception
-		 */
+		 *//*
 	
 		@Test(priority = 12, groups = { "smoke" }, description = "Test for overview report and tooltip data")
 		public void verifyOverviewReportnTooltipAccuracy() throws Exception {
@@ -239,10 +239,10 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 			addEvidence(CurrentState.getDriver(), "Tooltip values verified from Overview Accuracy report", "yes");
 		}
 	
-	/**
+	*//**
 	 * Test to get SiteTable data
 	 * @throws Exception
-	 */
+	 *//*
 		@Test(priority = 13, groups = {
 			"smoke" }, description = "Test for verifying site data in Accuracy page")
 		public void verifySiteTablenExportAccuracy() throws Exception {
@@ -252,10 +252,10 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 					"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
 		}
 	
-		/**
+		*//**
 		 * Test for compare number of rows from export table and table data in Accuracy Page
 		 * @throws Exception
-		 */
+		 *//*
 		@Test(priority = 14, groups = {
 				"smoke" }, description = "Test for verifying site link data in Accuracy page")
 		public void numberofentriesnExporttableAccuracy() throws Exception {
@@ -286,10 +286,10 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 			"Data of Social Sites Tab", "yes");
 	}
 		
-		/**
+		*//**
 		 * Test to verify inaccuracy and ignored checkbox
 		 * @throws Exception
-		 */
+		 *//*
 		@Test(priority = 16, groups = {
 		"smoke" }, description = "Test for verifying site link data in Accuracy page")
 		public void verifycheckbox() throws Exception {
@@ -300,10 +300,10 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 				"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
 		}
 		
-		/**
+		*//**
 		 * Test to verify Top Button
 		 * @throws Exception
-		 */
+		 *//*
 		@Test(priority = 17, groups = {"smoke"},
 			description = "Verify Top Button")
 		public void GetTopBtn() throws Exception {
@@ -349,7 +349,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 			finally {
 				return data;
 			}
-		}
+		}*/
 		
 		
 		

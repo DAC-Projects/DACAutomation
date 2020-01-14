@@ -234,13 +234,13 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 			wait.until(ExpectedConditions.visibilityOf(CSVExport));
 			CSVExport.click();
 			Thread.sleep(5000);
-			getLastModifiedFile(Exportpath);
+			System.out.println(""+getLastModifiedFile(Exportpath));
 			}else {
 			System.out.println("No Data Available in GMB");
 		}
 	}
 	
-	public void exportXLSXGMB() throws InterruptedException, FileNotFoundException, IOException {
+	public void exportXLSXGMB(String file) throws InterruptedException, FileNotFoundException, IOException {
 
 		JSWaiter.waitJQueryAngular();
 		if(export.isDisplayed() && export.isEnabled()) {
@@ -250,7 +250,7 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 			wait.until(ExpectedConditions.visibilityOf(XLSXExport));
 			XLSXExport.click();
 			Thread.sleep(5000);
-			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+GMBXLSX));
+			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+file));
 			Thread.sleep(6000);
 			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile(Exportpath));
 			}else {
@@ -635,9 +635,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		}
 	}	
 
-	public void CompareUIXLWebActions() throws Exception {
+	public void CompareUIXLWebActions(String filename) throws Exception {
 		
-		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Website Actions");
+		int x = GetDataUsingColName(filename,"Website Actions");		
 		WebElement WebActions = driver.findElement(By.xpath("//span[@id='customerWebsite']"));
 		int total = GetUIText3(WebActions);
 		Assert.assertEquals(x, total , "Count is equal");
@@ -645,119 +645,126 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	}
 	
 	
-	public void CompareUIXLReqDirActions() throws Exception {
+	public void CompareUIXLReqDirActions(String filename) throws Exception {
 		
-		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Request Directions Actions");
+		int x = GetDataUsingColName(filename,"Request Directions Actions");
 		WebElement ReqDirActions = driver.findElement(By.xpath("//span[@id='customerDirections']"));
 		int total = GetUIText3(ReqDirActions);
 		Assert.assertEquals(x, total , "Count is equal");
 		
 	}
 
-	public void CompareUIXLPhCalls() throws Exception {
+	public void CompareUIXLPhCalls(String filename) throws Exception {
 
-		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Phone Call Actions");
+		int x = GetDataUsingColName(filename,"Phone Call Actions");
 		WebElement PhCallActions = driver.findElement(By.xpath("//span[@id='customerPhonecalls']"));
 		int total = GetUIText3(PhCallActions);
 		Assert.assertEquals(x, total , "Count is equal");
 		
 	}
 
-	public void CompareUIXLTotActions() throws Exception {
+	public void CompareUIXLTotActions(String filename) throws Exception {
 		
-		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Total Actions");
+		int x = GetDataUsingColName(filename,"Total Actions");
 		WebElement TotalActions = driver.findElement(By.xpath("//span[@id='customerTotal']"));
 		int total = GetUIText3(TotalActions);
 		Assert.assertEquals(x, total , "Count is equal");
 		
 	}
 
-	public void CompareUIXLWhereSearch() throws Exception {
+	public void CompareUIXLWhereSearch(String filename) throws Exception {
 
-		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Search Views");
+		int x = GetDataUsingColName(filename,"Search Views");
 		WebElement WhereSearch = driver.findElement(By.xpath("//span[@id='whereSearch']"));
 		int total = GetUIText3(WhereSearch);
 		Assert.assertEquals(x, total , "Count is equal");
 		
 	}
 
-	public void CompareUIXLWhereMap() throws Exception {
+	public void CompareUIXLWhereMap(String filename) throws Exception {
 
-		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Maps Views");
+		int x = GetDataUsingColName(filename,"Maps Views");
 		WebElement WhereMap = driver.findElement(By.xpath("//span[@id='whereMaps']"));
 		int total = GetUIText3(WhereMap);
 		Assert.assertEquals(x, total , "Count is equal");
 		
 	}
 
-	public void CompareUIXLWhereTotalViews() throws Exception {
+	public void CompareUIXLWhereTotalViews(String filename) throws Exception {
 
-		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Total Views");
+		int x = GetDataUsingColName(filename,"Total Views");
 		WebElement WhereTotalViews = driver.findElement(By.xpath("//span[@id='whereTotal']"));
 		int total = GetUIText3(WhereTotalViews);
 		Assert.assertEquals(x, total , "Count is equal");
 		
 	}
 
-	public void CompareUIXLDiscovery() throws Exception {
+	public void CompareUIXLDiscovery(String filename) throws Exception {
 
-		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Discovery");
+		int x = GetDataUsingColName(filename,"Discovery");
 		WebElement Discovery = driver.findElement(By.xpath("//span[@id='howDiscovery']"));
 		int total = GetUIText3(Discovery);
 		Assert.assertEquals(x, total , "Count is equal");
 		
 	}
 
-	public void CompareUIXLDirect() throws Exception {
+	public void CompareUIXLDirect(String filename) throws Exception {
 		
-		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Direct");
+		int x = GetDataUsingColName(filename,"Direct");
 		WebElement Direct = driver.findElement(By.xpath("//span[@id='howDirect']"));
 		int total = GetUIText3(Direct);
 		Assert.assertEquals(x, total , "Count is equal");
 		
 	}
 
-	public void CompareUIXLBranded() throws Exception {
+	public void CompareUIXLBranded(String filename) throws Exception {
 
-		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Branded");
+		int x = GetDataUsingColName(filename,"Branded");
 		WebElement Direct = driver.findElement(By.xpath("//span[@id='howBranded']"));
 		int total = GetUIText3(Direct);
 		Assert.assertEquals(x, total , "Count is equal");
 		
 	}
 
-	public void CompareUIXLTotalSearch() throws Exception {
+	public void CompareUIXLTotalSearch(String filename) throws Exception {
 
-		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Total Searches");
+		int x = GetDataUsingColName(filename,"Total Searches");
 		WebElement TotalSearch = driver.findElement(By.xpath("//span[@id='howTotal']"));
 		int total = GetUIText3(TotalSearch);
 		Assert.assertEquals(x, total , "Count is equal");
 		
 	}
 
-	public void CompareUIXLOwnerPhView() throws Exception {
+	public void CompareUIXLOwnerPhView(String filename) throws Exception {
 
-		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Owner Photo Views");
+		int x = GetDataUsingColName(filename,"Owner Photo Views");
 		WebElement OwnerPhView = driver.findElement(By.xpath("//span[@id='photoViewsOwner']"));
 		int total = GetUIText3(OwnerPhView);
 		Assert.assertEquals(x, total , "Count is equal");
 		
 	}
 
-	public void CompareUIXLCustPhView() throws Exception {
+	public void CompareUIXLCustPhView(String filename) throws Exception {
 
-		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Customer Photo Views");
+		int x = GetDataUsingColName(filename,"Customer Photo Views");
 		WebElement CustPhView = driver.findElement(By.xpath("//span[@id='photoViewsCustomer']"));
 		int total = GetUIText3(CustPhView);
 		Assert.assertEquals(x, total , "Count is equal");
 		
 	}
 
-	public void CompareUIXLTotPhView() throws Exception {
+	public void CompareUIXLTotPhView(String filename) throws Exception {
 
-		int x = GetDataUsingColName("./downloads/chromeGMBXLSX.xlsx","Total Photo Views");
+		int x = GetDataUsingColName(filename,"Total Photo Views");
 		WebElement TotPhView = driver.findElement(By.xpath("(//span[@id='photoViewsTotal'])[1]"));
 		int total = GetUIText3(TotPhView);
 		Assert.assertEquals(x, total , "Count is equal");		
+	}
+	
+	
+	public String IsDataAvailable() {
+		
+		String data = driver.findElement(By.xpath("//*[@class='highcharts-title']")).getText();
+		return data;
 	}
 }

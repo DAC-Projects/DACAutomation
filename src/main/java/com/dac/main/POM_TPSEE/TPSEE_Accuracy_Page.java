@@ -22,8 +22,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import com.dac.main.BasePage;
-
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
@@ -452,6 +450,10 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 				}
 			}
 		
+		/**
+		 * To get the Inaccuracy table headers
+		 * @return
+		 */
 		public ArrayList<String> verifyHeader() {
 			JSWaiter.waitJQueryAngular();
 			waitForElement(tableresult, 40);
@@ -474,6 +476,10 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			return TableHeader;
 		}
 		
+		/**
+		 * To verify ALL Tab headers with test data
+		 * @throws Exception
+		 */
 		public void verifyAllTab() throws Exception{	
 			waitForElement(Alltab, 10);
 			scrollByElement(Alltab);
@@ -482,6 +488,10 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			Assert.assertEquals(XLData, UIsite, "Matches");			
 		}
 		
+		/**
+		 * To verify Name Tab headers with test data
+		 * @throws Exception
+		 */
 		public void verifyNameTab() throws Exception{		
 			waitForElement(Nametab, 10);
 			scrollByElement(Nametab);
@@ -491,6 +501,10 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			Assert.assertEquals(XLData, UIData, "Matches");			
 		}
 		
+		/**
+		 * To verify Address Tab headers with test data
+		 * @throws Exception
+		 */
 		public void verifyAddressTab() throws Exception{
 			waitForElement(Addresstab, 10);
 			scrollByElement(Addresstab);
@@ -500,6 +514,10 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			Assert.assertEquals(XLData, UIData, "Matches");			
 		}
 		
+		/**
+		 * To verify PhNo Tab headers with test data
+		 * @throws Exception
+		 */
 		public void verifyPHNOTab() throws Exception{
 			waitForElement(PHNumtab, 10);
 			scrollByElement(PHNumtab);
@@ -822,7 +840,10 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	
 }*/
 	
-	//To get Vendors List displaying in the application
+		/**
+		 * Method returns list of vendors
+		 * @return
+		 */
 		public ArrayList<String> verifyAccuracySitevendors() {
 				JSWaiter.waitJQueryAngular();
 				waitForElement(vendorslist, 40);

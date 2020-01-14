@@ -26,8 +26,10 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 	double score;
 	int location;
 	String grph = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none";
-	int start = 1060;
-	int end = 0;
+	int start;
+	int end;
+	int start1;
+	int end1;
 	String grphfromDate = "(//*[@class='highcharts-label highcharts-range-input'])[1]";
 	String grphtoDate = "(//*[@class='highcharts-label highcharts-range-input'])[2]";
 	
@@ -76,27 +78,27 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 		public void gethighchartsdate() throws Exception{
 			data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 			String OneMonth ="1m";
-			data.clickHighchartCriteria(OneMonth,start,end,grph);
+			data.clickHighchartCriteria(OneMonth,1060,0,grph, 2, 0);
 			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String ThreeMonths = "3m";
-			data.clickHighchartCriteria(ThreeMonths,1070,end,grph);
+			data.clickHighchartCriteria(ThreeMonths,1060,0,grph, 2, 0);
 			addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String SixMonths = "6m";
-			data.clickHighchartCriteria(SixMonths,1070,end,grph);
+			data.clickHighchartCriteria(SixMonths,1075,0,grph, 1, 0);
 			addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String OneYear = "1y";
-			data.clickHighchartCriteria(OneYear,1070,end,grph);
+			data.clickHighchartCriteria(OneYear,1075,0,grph, 1, 0);
 			addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String YearToDate ="ytd";
-			data.clickHighchartCriteria(YearToDate,1070,end,grph);
+			data.clickHighchartCriteria(YearToDate,1075,0,grph, 1, 0);
 			addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String ALLDATA = "all";
-			data.clickHighchartCriteria(ALLDATA,1070,end,grph);
+			data.clickHighchartCriteria(ALLDATA,1075,0,grph, 1, 0);
 			addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
 			}
 	
@@ -165,7 +167,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 				addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 				Assert.assertEquals(fromgrph, fromcal);
 				Date tocal = data.getCurrenttoDate();
-				Date togrph = data.verifyfinalHistorygraph(grph);
+				Date togrph = data.verifyfinalHistorygraph(2, 0, grph);
 				Assert.assertEquals(togrph, tocal);
 				addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 			}				

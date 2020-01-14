@@ -26,8 +26,10 @@ public class TPSEE_GoogleRanking_Test extends BaseClass{
 	double score;
 	int location;
 	String grph = ".highcharts-label.highcharts-tooltip-box.highcharts-color-none";
-	int start = 980;
-	int end = 0;
+	int start;
+	int end;
+	int start1;
+	int end1;
 	String grphfromDate = "(//*[@class='highcharts-label highcharts-range-input'])[1]";
 	String grphtoDate = "(//*[@class='highcharts-label highcharts-range-input'])[2]";
 	
@@ -73,28 +75,28 @@ public class TPSEE_GoogleRanking_Test extends BaseClass{
 		public void gethighchartsdate() throws Exception{
 			data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 			String OneMonth ="1m";
-		data.clickHighchartCriteria(OneMonth,start,end,grph);
-		addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
-		Thread.sleep(5000);
-		String ThreeMonths = "3m";
-		data.clickHighchartCriteria(ThreeMonths,start,end,grph);
-		addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
-		Thread.sleep(5000);
-		String SixMonths = "6m";
-		data.clickHighchartCriteria(SixMonths,start,end,grph);
-		addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
-		Thread.sleep(5000);
-		String OneYear = "1y";
-		data.clickHighchartCriteria(OneYear,start,end,grph);
-		addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
-		Thread.sleep(5000);
-		String YearToDate ="ytd";
-		data.clickHighchartCriteria(YearToDate,start,end,grph);
-		addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
-		Thread.sleep(5000);
-		String ALLDATA = "all";
-		data.clickHighchartCriteria(ALLDATA,start,end,grph);
-		addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
+			data.clickHighchartCriteria(OneMonth,980,0,grph, 2, 0);
+			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
+			Thread.sleep(5000);
+			String ThreeMonths = "3m";
+			data.clickHighchartCriteria(ThreeMonths,980,0,grph, 2, 0);
+			addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
+			Thread.sleep(5000);
+			String SixMonths = "6m";
+			data.clickHighchartCriteria(SixMonths,988,0,grph, 1, 0);
+			addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
+			Thread.sleep(5000);
+			String OneYear = "1y";
+			data.clickHighchartCriteria(OneYear,988,0,grph, 1, 0);
+			addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
+			Thread.sleep(5000);
+			String YearToDate ="ytd";
+			data.clickHighchartCriteria(YearToDate,988,0,grph, 1, 0);
+			addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
+			Thread.sleep(5000);
+			String ALLDATA = "all";
+			data.clickHighchartCriteria(ALLDATA,988,0,grph, 1, 0);
+			addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
 	}
 		
 		@Test(priority = 5,enabled = true, dataProvider = "testData")
@@ -111,7 +113,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass{
 				addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 				Assert.assertEquals(fromgrph, fromcal);
 				Date tocal = data.getCurrenttoDate();
-				Date togrph = data.verifyfinalHistorygraph(grph);
+				Date togrph = data.verifyfinalHistorygraph(2, 0, grph);
 				Assert.assertEquals(togrph, tocal);
 				addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 			}				
