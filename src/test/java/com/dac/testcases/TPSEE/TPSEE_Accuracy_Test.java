@@ -30,6 +30,8 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 	
 	int start = 980;
 	int end = 0;
+	int start1;
+	int end1;
 	String grphfromDate = "(//*[@class='highcharts-label highcharts-range-input'])[1]";
 	String grphtoDate = "(//*[@class='highcharts-label highcharts-range-input'])[2]";
 	
@@ -131,7 +133,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 				addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 				Assert.assertEquals(fromgrph, fromcal);
 				Date tocal = data.getCurrenttoDate();
-				Date togrph = data.verifyfinalHistorygraph(grph);
+				Date togrph = data.verifyfinalHistorygraph(start1, end1, grph);
 				Assert.assertEquals(togrph, tocal);
 				addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 			}				
@@ -145,27 +147,27 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		public void gethighchartsdate() throws Exception{
 			data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 			String OneMonth ="1m";
-			data.clickHighchartCriteria(OneMonth,start,end,grph);
+			data.clickHighchartCriteria(OneMonth,start,end,grph, start1, end1);
 			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String ThreeMonths = "3m";
-			data.clickHighchartCriteria(ThreeMonths,start,end,grph);
+			data.clickHighchartCriteria(ThreeMonths,start,end,grph, start1, end1);
 			addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String SixMonths = "6m";
-			data.clickHighchartCriteria(SixMonths,start,end,grph);
+			data.clickHighchartCriteria(SixMonths,start,end,grph, start1, end1);
 			addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String OneYear = "1y";
-			data.clickHighchartCriteria(OneYear,start,end,grph);
+			data.clickHighchartCriteria(OneYear,start,end,grph, start1, end1);
 			addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String YearToDate ="ytd";
-			data.clickHighchartCriteria(YearToDate,start,end,grph);
+			data.clickHighchartCriteria(YearToDate,start,end,grph, start1, end1);
 			addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String ALLDATA = "all";
-			data.clickHighchartCriteria(ALLDATA,start,end,grph);
+			data.clickHighchartCriteria(ALLDATA,start,end,grph, start1, end1);
 			addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
 			}
 	

@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -634,10 +634,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		}
 		
 		/**
-		 * Export visibility overview report below filter in pdf for current date
-		 * @param ExportDropdown
-		 * @param ExportType
-		 * @param SelectPDF
+		 * Click on PDF Export Link
 		 * @param ExportBtn
 		 * @param LinkClick
 		 * @throws InterruptedException
@@ -646,17 +643,6 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 */
 		public void exportasPDFHistory(/*WebElement ExportDropdown, WebElement ExportType, WebElement SelectPDF,*/ WebElement ExportBtn, WebElement LinkClick) throws InterruptedException, FileNotFoundException, IOException{
 		    JSWaiter.waitJQueryAngular();
-		   /* if(ExportDropdown.isDisplayed() & ExportDropdown.isEnabled()) {
-		    	wait.until(ExpectedConditions.visibilityOf(ExportDropdown));
-				action.moveToElement(ExportDropdown).click().perform();
-				Thread.sleep(5000);
-		    }
-		    if(ExportType.isDisplayed() & ExportType.isEnabled()) {
-				wait.until(ExpectedConditions.visibilityOf(ExportType));
-				action.moveToElement(ExportType).moveToElement(SelectPDF).click().perform();
-				Thread.sleep(5000);
-				
-		    }*/
 		    if(ExportBtn.isDisplayed() & ExportBtn.isEnabled()) {
 		    	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		    	action.moveToElement(ExportBtn).click().perform();
@@ -668,7 +654,15 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			}			
 		}
 		
-		
+		/**
+		 * Click on history button Pdf
+		 * @param ExportDropdown
+		 * @param ExportType
+		 * @param SelectPDF
+		 * @throws InterruptedException
+		 * @throws FileNotFoundException
+		 * @throws IOException
+		 */
 		public void exporthistrybtn(WebElement ExportDropdown, WebElement ExportType, WebElement SelectPDF) throws InterruptedException, FileNotFoundException, IOException {
 			Thread.sleep(5000);
 			
@@ -739,7 +733,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @throws IOException
 		 * @throws InterruptedException
 		 */
-		public Date verifyfinalHistorygraph(String elemnt) throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException{
+		public Date verifyfinalHistorygraph(int start, int end, String elemnt) throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException{
 			
 			String var = null;			
 			var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
@@ -748,7 +742,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			waitForElement(hstryGrph, 30);
 			scrollByElement(hstryGrph);
 			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-			action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 - 2, 0).click().perform();
+			action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 - start, end).click().perform();
 			String finaltooltipvalue = driver.findElement(By.cssSelector(elemnt)).getText();;
 			System.out.println("\n Reading tooltipdata ********** \n");
 			System.out.println("\n tooltipvalue is \n" +finaltooltipvalue);
@@ -765,10 +759,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @return
 		 * @throws Exception
 		 */
-		public  int getNumberofDays(int start, int end, String elemnt) throws Exception {
+		public  int getNumberofDays(int start, int end, String elemnt, int start1, int end1) throws Exception {
 			Date init = verifyinitialHistoryGraph(start,end,elemnt);
 			Thread.sleep(5000);
-			Date enddate =  verifyfinalHistorygraph(elemnt);
+			Date enddate =  verifyfinalHistorygraph(start1,end1, elemnt);
 			Thread.sleep(5000);
 			String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
 			SimpleDateFormat formats = new SimpleDateFormat(var);
@@ -812,7 +806,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @return
 		 * @throws Exception
 		 */
-		public TPSEE_abstractMethods clickHighchartCriteria(String durationFor, int start, int end, String elemnt ) throws Exception {
+		public TPSEE_abstractMethods clickHighchartCriteria(String durationFor, int start, int end, String elemnt, int start1, int end1 ) throws Exception {
 			durationFor = durationFor.toLowerCase();
 			scrollByElement(highChartZoom);
 			int days;			
@@ -821,7 +815,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				case "1m"  : 	try{
 									clickelement(highChart_1M);
 									if(eleClicked(highChart_1M)) {
-										days = getNumberofDays(start, end,elemnt);			
+										days = getNumberofDays(start, end,elemnt,start1,end1);			
 										if(days >= 28 && days<=31 ) {
 											System.out.println("1 Month data is displayed");
 										}else {
@@ -838,7 +832,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				case "3m"  : 	try{
 									clickelement(highChart_3M);
 									if(eleClicked(highChart_3M)) {
-										days = getNumberofDays(start, end,elemnt);
+										days = getNumberofDays(start, end,elemnt,start1,end1);
 										if(days>=90 && days<=92) {
 											System.out.println("3 Month data is displayed");
 										}else {
@@ -855,7 +849,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				case "6m"  : 	try{
 									clickelement(highChart_6M);
 									if(eleClicked(highChart_6M)) {
-										days = getNumberofDays(start, end,elemnt);
+										days = getNumberofDays(start, end,elemnt,start1,end1);
 										if(days>=180 && days<=184) {
 											System.out.println("6 Month data is displayed");
 										}else {
@@ -872,7 +866,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				case "ytd" : 	try{
 									clickelement(highChart_YTD);
 									if(eleClicked(highChart_YTD)) {
-										days = getNumberofDays(start, end,elemnt);
+										days = getNumberofDays(start, end,elemnt,start1,end1);
 									}else {
 										System.out.println("Element Not clicked");
 										}
@@ -884,7 +878,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				case "1y"  : 	try{
 									clickelement(highChart_1y);
 									if(eleClicked(highChart_1y)) {
-										days = getNumberofDays(start, end,elemnt);
+										days = getNumberofDays(start, end,elemnt,start1,end1);
 										if(days>=364 && days<=366) {
 											System.out.println("1 Year data is displayed");
 										}else {
@@ -902,7 +896,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				default    : 	try{
 									clickelement(highChart_All);
 									if(eleClicked(highChart_All)) {
-										days = getNumberofDays(start, end,elemnt);
+										days = getNumberofDays(start, end,elemnt,start1,end1);
 									}else {
 										System.out.println("Element not clicked");
 										}
@@ -1123,7 +1117,11 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			return scores;
 		}		
 		
-		
+		/**
+		 * To get overall score for Content Analysis Report
+		 * @param score
+		 * @return
+		 */
 		public double overviewcascore(WebElement score) {
 			waitForElement(score, 10);
 			scrollByElement(score);
@@ -1133,6 +1131,11 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			return scores;
 		}		
 		
+		/**
+		 * To get current selected from date from UI Calendar
+		 * @return
+		 * @throws ParseException
+		 */
 		public Date getCurrentfromDate() throws ParseException {
 		String currentfromDate = fromDate.getText();
 		String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
@@ -1142,17 +1145,29 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		return finalcurrentdate;
 	}
 	
-	public Date getCurrenttoDate() throws ParseException {
+		/**
+		 * To get current selected to date from UI Calendar
+		 * @return
+		 * @throws ParseException
+		 */
+		public Date getCurrenttoDate() throws ParseException {
 		String currenttoDate = toDate.getText();
 		String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
 		System.out.println(var);
 		SimpleDateFormat formats = new SimpleDateFormat(var);
 		Date finaltodate = formats.parse(currenttoDate);
 		return finaltodate;
-	}
+		}
 	
-	private void selectCalender_Date(String calenderField, int day_d, String month_MMM, int year_YYYY) {
-
+		
+		/**
+		 * To pass date to the UI Calendar
+		 * @param calenderField
+		 * @param day_d
+		 * @param month_MMM
+		 * @param year_YYYY
+		 */
+		private void selectCalender_Date(String calenderField, int day_d, String month_MMM, int year_YYYY) {
 		//clickelement(calenderField);
 		driver.findElement(By.xpath(calenderField)).click();
 		int diff = year_YYYY - Integer.parseInt(currentYear_DatePicker.getText());
@@ -1184,7 +1199,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		(driver.findElement(By.xpath("//*[@class='ui-datepicker-calendar']//td/a[text()="+day_d+"]"))).click();
 	}
 	
-	private int monthCode(String month_MMM) {
+		/**
+		 * To get month code
+		 * @param month_MMM
+		 * @return
+		 */
+		private int monthCode(String month_MMM) {
 
 		int month = 0;
 		Date date;
@@ -1199,22 +1219,39 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		return month;
 	}
 	
-	public  void selectCalender_FromDate(String calenderField,int day_d, String month_MMM, int year_YYYY) {
+		/**
+		 * To set from date in a calendar
+		 * @param calenderField
+		 * @param day_d
+		 * @param month_MMM
+		 * @param year_YYYY
+		 */
+		public  void selectCalender_FromDate(String calenderField,int day_d, String month_MMM, int year_YYYY) {
 		if(day_d != 0 | !(month_MMM.equalsIgnoreCase("null")) | year_YYYY != 0 ) {
 			selectCalender_Date(calenderField, day_d, month_MMM, year_YYYY);
 		}
 		
 	}
 	
-	public void  selectCalender_ToDate(String calenderField,int day_d, String month_MMM, int year_YYYY) {
+		/**
+		 * To set to date in calendar
+		 * @param calenderField
+		 * @param day_d
+		 * @param month_MMM
+		 * @param year_YYYY
+		 */
+		public void  selectCalender_ToDate(String calenderField,int day_d, String month_MMM, int year_YYYY) {
 		if(day_d != 0 | !(month_MMM.equalsIgnoreCase("null")) | year_YYYY != 0 ) {
 			selectCalender_Date(calenderField, day_d, month_MMM, year_YYYY);	
 		}
 		
 	}
 	
-	
-	public ArrayList<String> verifyfoundSitevendors(){
+		/**
+		 * Method returns list of found vendors
+		 * @return
+		 */
+		public ArrayList<String> verifyfoundSitevendors(){
 			driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 			ArrayList<String> foundVendors = new ArrayList<String>();
 			List<WebElement> vendorrow = driver.findElements(By.xpath("(//*[@id='barContainer']//div[@class='row'])"));
