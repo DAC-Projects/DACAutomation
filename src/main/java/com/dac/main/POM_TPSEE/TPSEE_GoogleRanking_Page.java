@@ -419,4 +419,28 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 		System.out.println(numberoflocations);
 		return numberoflocations;	
 	}
+	
+	/**
+	 * @return History graph value read
+	 */
+	public List<Map<String, String>> verifyGRHistoryGraph() {
+		waitForElement(hstryGrph, 30);
+		scrollByElement(hstryGrph);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth() / 2) - 2, 0).click().perform();
+		tooltipvalue = grphtooltip.getText();
+		System.out.println("\n Reading tooltipdata ********** \n");
+		System.out.println("\n tooltipvalue is \n" +tooltipvalue);
+		rows = grphtooltip.findElements(By.tagName("span"));
+		String[][] table = readTable(grphtooltip);
+		List<Map<String, String>> tooltipdata = new ArrayList<Map<String, String>>();
+			for (int i = 0; i < table.length; i += 4) {
+				Map<String, String> kMap = new HashMap<String, String>();
+				kMap.put("Date", table[i][0]);
+				kMap.put(table[i + 1][0], table[i + 1][1]);
+				kMap.put(table[i + 2][0], table[i + 2][1]);
+				tooltipdata.add(kMap);
+			}
+			return tooltipdata;
+	}			
 	}

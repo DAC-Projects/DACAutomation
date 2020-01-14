@@ -227,7 +227,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass{
 									description = "Test to get Tooltip Data")
 			public void verifyToolTipGoogleRanking() throws Exception {
 				data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
-				data.verifyHistoryGraph();
+				data.verifyGRHistoryGraph();
 				addEvidence(CurrentState.getDriver(), "Tooltip values verified from Google Ranking", "yes");
 			}
 			
