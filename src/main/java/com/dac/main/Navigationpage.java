@@ -71,6 +71,10 @@ public class Navigationpage extends BasePage{
 	@FindBy(xpath = "//a[@href='/Dashboard/LocalReportsScoreChange/']")
 	private WebElement ScoreChange;
 	
+	@FindBy(xpath = "//a[@href='/Dashboard/ReviewsNotification/']")
+	private WebElement ReviewNotification;
+	
+	
 	//------------------------- SA and RRM -------------------------------------
 	
 	@FindBy(xpath = "//a[@href='/Review/ReviewReport/']")
@@ -233,6 +237,18 @@ public class Navigationpage extends BasePage{
     	waitForElement(ScoreChange, 20);
     	action.moveToElement(ScoreChange).perform();
     	clickelement(ScoreChange);
+    
+    	//action.moveToElement(AllGroups).click().perform();
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    public void navigateToReviewNotifications() {
+	   	
+    	action.moveToElement(Settings).perform();
+    	waitForElement(ReviewNotification, 20);
+    	action.moveToElement(ReviewNotification).perform();
+    	clickelement(ReviewNotification);
     
     	//action.moveToElement(AllGroups).click().perform();
     	System.out.println("Waiting for page to load********");

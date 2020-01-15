@@ -212,7 +212,7 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 		data=getNotificationTableData(uiRow);
 		
 		System.out.println("Notification Name: "+data[0]+" Input Data: "+configuration[row][0]);
-		System.out.println("Email: "+data[3]+" Input Data: "+configuration[row][1]);
+		System.out.println("Email: "+data[1]+" Input Data: "+configuration[row][1]);
 		System.out.println("Report: "+data[4]+" Input Data: "+configuration[row][2]);
 		System.out.println("Condition: "+data[5]+" Input Data: "+configuration[row][3]);
 		System.out.println("Percentage: "+data[5]+" Input Data: "+configuration[row][4]);
