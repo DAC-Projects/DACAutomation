@@ -40,6 +40,7 @@ import com.selenium.testevidence.GenerateEvidenceReport;
 import com.selenium.testevidence.SeleniumEvidence;
 
 import io.github.bonigarcia.wdm.Architecture;
+import io.github.bonigarcia.wdm.DriverManagerType;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import net.sf.jasperreports.engine.JasperPrint;
 
@@ -332,32 +333,48 @@ public class ExtentTestNGITestListener
 	  WebDriverWait wait;
     WebDriver driver = null;
 
-    File file = new File("./downloads");
+    File file = new File(".\\downloads");
     if (!file.exists())
       file.mkdirs();
 
-    String downloadFolder = System.getProperty("user.dir") + "/downloads";
+    String downloadFolder = System.getProperty("user.dir") + "\\downloads";
 
     if (browser.equalsIgnoreCase("Chrome")) {
 
 
-     WebDriverManager.chromedriver().version("74.0.3729.6").setup(); 
+    WebDriverManager.chromedriver().version("79.0.3945.36").setup(); 
 
 
-     //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
+    //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
 
-      HashMap<String, Object> chromePref = new HashMap<>();
-      chromePref.put("download.default_directory", downloadFolder);
-      chromePref.put("download.prompt_for_download", "false");
-      ChromeOptions options = new ChromeOptions();
-      options.addArguments("disable-infobars");
-      options.setExperimentalOption("prefs", chromePref);
-      //WebDriverManager.chromedriver().setup();
-      driver = new ChromeDriver(options);
-    //Send driver object to JSWaiter Class
-      JSWaiter.setDriver(driver);
-      //This is the default wait for Explicit Waits
-      wait = new WebDriverWait(driver,15);
+    HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
+    		chromePrefs.put("profile.default_content_settings.popups", 0);
+    		chromePrefs.put("download.default_directory", downloadFolder);
+    		chromePrefs.put("download.prompt_for_download", false);
+    		chromePrefs.put("plugins.plugins_disabled", "Chrome PDF Viewer");
+    		ChromeOptions options=new ChromeOptions();
+
+    		//options.addArguments("--headless")
+    		//options.addArguments("--window-size=1920,1080")
+    		options.addArguments("--test-type");
+    		//options.addArguments("--disable-gpu")
+    		options.addArguments("--no-sandbox");
+    		//options.addArguments("--disable-dev-shm-usage")
+    		options.addArguments("--disable-software-rasterizer");
+    		options.addArguments("--disable-popup-blocking");
+    		options.addArguments("--disable-extensions");
+    		options.setExperimentalOption("prefs", chromePrefs);
+
+    		DesiredCapabilities cap = DesiredCapabilities.chrome();
+    		cap.setCapability(ChromeOptions.CAPABILITY, options);
+    		cap.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+    		driver = new ChromeDriver(cap);    
+    		driver.manage().window().maximize();
+
+  //Send driver object to JSWaiter Class
+    JSWaiter.setDriver(driver);
+    //This is the default wait for Explicit Waits
+    wait = new WebDriverWait(driver,15);
     } else if (browser.equalsIgnoreCase("Firefox")) {
       WebDriverManager.firefoxdriver().setup();
       FirefoxProfile profile = new FirefoxProfile();
