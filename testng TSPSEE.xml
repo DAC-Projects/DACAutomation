@@ -8,7 +8,7 @@
 </listeners>
 
 
- <test name="transparenSEE" parallel="tests" group-by-instances="true">
+ <test name="Competitive Analysis" parallel="tests" group-by-instances="true">
    <!-- <parameter name="Filter" value= "US,All States,All Cities,All Locations"/> -->
    <parameter name="browser" value="chrome"/>
     <classes>
@@ -20,9 +20,9 @@
 		<class name= "com.dac.testcases.TPSEE.TPSEE_Groups_Test" /> 
 		<class name= "com.dac.testcases.TPSEE.TPSEE_ReviewStream_Test" /> 
 		<class name= "com.dac.testcases.TPSEE.TPSEE_DisplayedReviewScore_Test" /> 
-		<class name= "com.dac.testcases.SE.CompareReportsData_PostData" /> -->
-		
-		<class name= "com.dac.testcases.TPSEE.TPSEE_ESRreports_Test"/>
+		<class name= "com.dac.testcases.SE.CompareReportsData_PostData" /> 
+		<class name= "com.dac.testcases.TPSEE.TPSEE_ESRreports_Test"/>-->
+		<class name= "com.dac.testcases.CA.CA_Visibility_Test"/>
      </classes>
  </test>
 </suite>

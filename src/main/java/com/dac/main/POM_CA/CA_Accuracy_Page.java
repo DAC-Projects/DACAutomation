@@ -62,6 +62,10 @@ public class CA_Accuracy_Page extends CA_abstractMethods{
 		@FindBy(css = "button#apply_filter")
 		private WebElement Apply_filter;
 		
+		@FindBy(xpath = "//table[@class='table-responsive table-hover']/tbody/tr")
+		private List<WebElement> reviewTableRow;
+		
+	
 	// export button
 	@FindBy(css = "button#btnExport>span")
 	private WebElement exportBtn;
@@ -73,10 +77,17 @@ public class CA_Accuracy_Page extends CA_abstractMethods{
 	// section of overview report
 	@FindBy(xpath = "//div[@id='compIntOverviewContainer']//div[starts-with(@class,'overviewSubContainer')]")
 	private List<WebElement> competitors;
+	
+	
 
 	String xpathCompetitors = "(//div[@id='compIntOverviewContainer']//div[starts-with(@class,'overviewSubContainer')])";
 	String compName = ".//div[starts-with(@class, 'competitorName')]";
 	String compScore = ".//div[starts-with(@class, 'competitorScore')]";
+	
+	//table
+	
+	@FindBy(xpath="//table[@class='table-responsive table-hover']/tbody/tr")
+	 private List<WebElement> tableRow;
 	
 	// site table
 	@FindBy(css = "table#compIntAccuracySitesTable")
@@ -121,6 +132,15 @@ public class CA_Accuracy_Page extends CA_abstractMethods{
 //		// TODO Auto-generated method stub
 //		return null;
 //	}
+	public List<Map<String, String>> DataTable() throws InterruptedException{
+		
+	
+		WebElement TableTitle = driver.findElement(By.xpath("//*[@class = 'title-divider']"));
+		List < WebElement > rows_table = tableRow;
+		return null;
+		
+	}
+
 	
 	public void verify_pageloadCompletely(int timeout) {
 		if (waitForElement(overviewReport, timeout) && waitForElement(siteTable, timeout)
