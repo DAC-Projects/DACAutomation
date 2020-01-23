@@ -75,27 +75,27 @@ public class TPSEE_GoogleRanking_Test extends BaseClass{
 		public void gethighchartsdate() throws Exception{
 			data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 			String OneMonth ="1m";
-			data.clickHighchartCriteria(OneMonth,980,0,grph, 2, 0);
+			data.clickHighchartCriteria(OneMonth,1040,0,grph, 2, 0);
 			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String ThreeMonths = "3m";
-			data.clickHighchartCriteria(ThreeMonths,980,0,grph, 2, 0);
+			data.clickHighchartCriteria(ThreeMonths,1040,0,grph, 2, 0);
 			addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String SixMonths = "6m";
-			data.clickHighchartCriteria(SixMonths,988,0,grph, 1, 0);
+			data.clickHighchartCriteria(SixMonths,1042,0,grph, 1, 0);
 			addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String OneYear = "1y";
-			data.clickHighchartCriteria(OneYear,988,0,grph, 1, 0);
+			data.clickHighchartCriteria(OneYear,1044,0,grph, 1, 0);
 			addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String YearToDate ="ytd";
-			data.clickHighchartCriteria(YearToDate,988,0,grph, 1, 0);
+			data.clickHighchartCriteria(YearToDate,1042,0,grph, 1, 0);
 			addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String ALLDATA = "all";
-			data.clickHighchartCriteria(ALLDATA,988,0,grph, 1, 0);
+			data.clickHighchartCriteria(ALLDATA,1044,0,grph, 1, 0);
 			addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
 	}
 		

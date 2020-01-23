@@ -82,27 +82,27 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String ThreeMonths = "3m";
-			data.clickHighchartCriteria(ThreeMonths,1060,0,grph, 2, 0);
+			data.clickHighchartCriteria(ThreeMonths,1070,0,grph, 2, 0);
 			addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String SixMonths = "6m";
-			data.clickHighchartCriteria(SixMonths,1075,0,grph, 1, 0);
+			data.clickHighchartCriteria(SixMonths,1072,0,grph, 1, 0);
 			addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String OneYear = "1y";
-			data.clickHighchartCriteria(OneYear,1075,0,grph, 1, 0);
+			data.clickHighchartCriteria(OneYear,1072,0,grph, 1, 0);
 			addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String YearToDate ="ytd";
-			data.clickHighchartCriteria(YearToDate,1075,0,grph, 1, 0);
+			data.clickHighchartCriteria(YearToDate,1072,0,grph, 1, 0);
 			addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
 			Thread.sleep(5000);
 			String ALLDATA = "all";
-			data.clickHighchartCriteria(ALLDATA,1075,0,grph, 1, 0);
+			data.clickHighchartCriteria(ALLDATA,1074,0,grph, 1, 0);
 			addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
 			}
 	
-		@Test(priority = 5, groups = {"smoke" }, description = "Verify Content Analysis page loads after filter applied")
+//		@Test(priority = 5, groups = {"smoke" }, description = "Verify Content Analysis page loads after filter applied")
 	public void verifyFilteringReportsContentAnalysis() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		try {	
@@ -153,7 +153,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 			addEvidence(CurrentState.getDriver(), "Tooltip values verified from Overview Content Analysis report", "yes");
 		}
 		
-		@Test(priority = 8,enabled = true, dataProvider = "testData")
+//		@Test(priority = 8,enabled = true, dataProvider = "testData")
 		public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month, String to_year) throws Exception {
 			
 			data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
@@ -235,8 +235,8 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 	 * Test to verify Top button functionality
 	 * @throws Exception
 	 */
-		@Test(priority = 10, groups = {"smoke"},
-			description = "Verify Top Button")
+//		@Test(priority = 10, groups = {"smoke"},
+//			description = "Verify Top Button")
 		public void GetTopBtn() throws Exception {
 			data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 			data.TopButton();
