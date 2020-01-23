@@ -5,6 +5,7 @@ import static org.testng.Assert.assertTrue;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ import resources.CurrentState;
 import resources.ExcelHandler;
 
 public class CA_Accuracy_Page extends CA_abstractMethods{
-	
+
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
@@ -35,41 +36,41 @@ public class CA_Accuracy_Page extends CA_abstractMethods{
 		action = new Actions(driver);
 		PageFactory.initElements(driver, this);
 	}
-	
+
 	@FindBy(id="myGroups")
 	private WebElement filterGroup;
-	
+
 	@FindBy(xpath="//*[@class='menu transition hidden']")
 	private WebElement filterDropDown;
-	
+
 	@FindBy(xpath="(//*[@id='divCIAccuracy']/h1)")
 	private WebElement CATitleContent;
-	
+
 	// Global Filter locators
 
-		@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList")
-		private WebElement FilterCountry;
+	@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList")
+	private WebElement FilterCountry;
 
-		@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList1")
-		private WebElement FilterState;
+	@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList1")
+	private WebElement FilterState;
 
-		@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList2")
-		private WebElement FilterCity;
+	@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList2")
+	private WebElement FilterCity;
 
-		@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList3")
-		private WebElement Filterlocation;
+	@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList3")
+	private WebElement Filterlocation;
 
-		@FindBy(css = "button#apply_filter")
-		private WebElement Apply_filter;
-		
+	@FindBy(css = "button#apply_filter")
+	private WebElement Apply_filter;
+
 	// export button
 	@FindBy(css = "button#btnExport>span")
 	private WebElement exportBtn;
-	
+
 	// overview report
 	@FindBy(css = "div#compIntOverviewContainer")
 	private WebElement overviewReport;
-	
+
 	// section of overview report
 	@FindBy(xpath = "//div[@id='compIntOverviewContainer']//div[starts-with(@class,'overviewSubContainer')]")
 	private List<WebElement> competitors;
@@ -77,7 +78,7 @@ public class CA_Accuracy_Page extends CA_abstractMethods{
 	String xpathCompetitors = "(//div[@id='compIntOverviewContainer']//div[starts-with(@class,'overviewSubContainer')])";
 	String compName = ".//div[starts-with(@class, 'competitorName')]";
 	String compScore = ".//div[starts-with(@class, 'competitorScore')]";
-	
+
 	// site table
 	@FindBy(css = "table#compIntAccuracySitesTable")
 	private WebElement siteTable;
@@ -95,7 +96,7 @@ public class CA_Accuracy_Page extends CA_abstractMethods{
 	}
 
 
-	
+
 	@Override
 	public List<Map<String, String>> getOverviewReport() {
 		// TODO Auto-generated method stub
@@ -116,12 +117,12 @@ public class CA_Accuracy_Page extends CA_abstractMethods{
 		}
 		return ovrwRprtData;
 	}
-//	@Override
-//	public List<Map<String, String>> getOverviewReport() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-	
+	//	@Override
+	//	public List<Map<String, String>> getOverviewReport() {
+	//		// TODO Auto-generated method stub
+	//		return null;
+	//	}
+
 	public void verify_pageloadCompletely(int timeout) {
 		if (waitForElement(overviewReport, timeout) && waitForElement(siteTable, timeout)
 				& waitForElement(filter_Panel, timeout))
@@ -129,7 +130,7 @@ public class CA_Accuracy_Page extends CA_abstractMethods{
 		else
 			assertTrue(false, "Page not loaded completely");
 	}
-	
+
 	public List<Map<String, String>> getExportData() throws Exception {
 		exportaccuracyReport();
 
@@ -145,23 +146,23 @@ public class CA_Accuracy_Page extends CA_abstractMethods{
 			}
 			exportData.add(kMap);//to be reviewed
 		}
-		
+
 
 		return exportData;
 
 	}
-	
+
 	public void compareExportnTable(List<Map<String, String>> exportData, List<Map<String, String>> siteTableData) {
-		
+
 		for (Map<String, String> m1 : exportData) {
 			for (Map<String, String> m2 : siteTableData) {
-				
+
 				if (m1.get("compName").equals(m2.get("compName"))) {
-					
+
 					Assert.assertEquals(m1.size() - 1, m2.size());
 					m1.forEach((k,v)->{
 						System.out.println("for name " + k + " score from export " + v
-						+ "and score from site table" + m2.get(k));
+								+ "and score from site table" + m2.get(k));
 						if (!k.equalsIgnoreCase("Overall") && !k.contains("Yellowpages")
 								&& !k.equals("compName")) {
 							Assert.assertEquals(formatFloat(v), formatFloat(m2.get(k)), 0.05,
@@ -172,11 +173,11 @@ public class CA_Accuracy_Page extends CA_abstractMethods{
 						} else if (k.equalsIgnoreCase("Yellowpages")) {
 							Assert.assertEquals(formatFloat(v), formatFloat(m2.get("Yellowpages.ca")), 0.05,
 									"Verifying score for " + k + "for" + m1.get("compName"));
-	
+
 						}
-					
-				});
-					
+
+					});
+
 				}
 			}
 
@@ -184,6 +185,31 @@ public class CA_Accuracy_Page extends CA_abstractMethods{
 
 	}
 
-	
+	public void calculateAccuracyScore() throws Exception {
+		String[][] table = new ExcelHandler(Exportpath + AccuracyExport, "Sheet0").getExcelTable();
+		
+	//	double FinScore;
+		double[] FinScore = new double[table[0].length-1];
+		
+		int[][] visScore = new int[][]{{1,1},{0,0},{0,0},{0,0},{0,0},{0,0}};
+		double[] score = new double[table.length-2];
+//		double [][] fullScore = new double[table.length-2][table[0].length-1];
+		for (int j=0;j<table[0].length-1;j++) {
+			double totScore = 0;
+			int sum = 0;
+		for(int i=0;i<table.length-2;i++) {			 
 
+			score[i] = Double.parseDouble(table[i+2][1].replace("%", ""));
+			System.out.println("double array value"+i+":" + Arrays.toString(score) );
+
+			totScore = totScore + visScore[j][i]*score[i];
+			sum = sum + visScore[j][i];
+		}
+		FinScore[j] = totScore/sum;
+		
+		
+		
+		}
+		System.out.println("FinScore :"+Arrays.toString(FinScore));
+	}
 }

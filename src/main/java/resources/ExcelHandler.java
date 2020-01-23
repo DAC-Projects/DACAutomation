@@ -218,6 +218,39 @@ public class ExcelHandler {
 			rows[i] = cellValues;
 			System.out.println(Arrays.toString(rows[i]));
 		}return rows;
+		
+	}
+	
+	
+		public String[][] getExcelTableWithout0() throws Exception {
+			String flag;
+			System.out.println("Reading excel------");
+			ExcelHandler excel	= new ExcelHandler(this.filePath, this.sheetName);
+			int row = excel.getRowCount();
+			String[][] rows = new String[row+1][];
+			System.out.println("total no of rows is"+ row);
+			String[] cellValues ;
+			for(int i=0;i<=row;i++) {
+				flag = "0";
+				Row currentrow = sheet.getRow(i);
+				int col = currentrow.getLastCellNum();
+				cellValues = new String[col];
+				for(int j=0;j<col;j++) {	
+					cellValues[j] = new ExcelHandler(filePath, sheetName).getCellValue(i, j);
+				
+					if(j!=0) {					
+						if(!cellValues[j].contains("0.00"))
+							flag = "1";
+						
+					}
+				}
+				if(flag.contains("1")) {		
+				rows[i] = cellValues;
+				}
+				System.out.println(Arrays.toString(rows[i]));
+			}return rows;
+				
+		
 	}
 	public String[][] getExcelTableNew() throws Exception {
 		System.out.println("Reading excel------");
@@ -243,6 +276,9 @@ public class ExcelHandler {
 		System.out.println(" excle array sze"+rows.length+" "+rows[0].length);
 		return rows;
 	}
+	
+	
+	
 	
 	public int getRowCount() {
 		int rowCount=0;

@@ -77,23 +77,31 @@ public class CA_Accuracy_Test extends BaseClass {
 	    CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));    
 	    addEvidence(CurrentState.getDriver(), "Verified overview export for Accuracy report", "yes"); 
 		}
+	
+	
+	@Test(dependsOnMethods = { "verifyOverviewReportnExportAccuracy" })
+	public void calculation() throws Exception {
+		
+		data = new CA_Accuracy_Page(CurrentState.getDriver());
+		data.calculateAccuracyScore(); 
+	}
 
 		@SuppressWarnings("unchecked")
-	  @Test(dependsOnMethods = { "verifyOverviewReportnExportAccuracy" }, groups= {"smoke"}, description = "Test for Accuracy Score by Site")
+//	  @Test(dependsOnMethods = { "verifyOverviewReportnExportAccuracy" }, groups= {"smoke"}, description = "Test for Accuracy Score by Site")
 		public void verifyAccuracyscorebysites() throws Exception {
 			data = new CA_Accuracy_Page(CurrentState.getDriver());
 			data.AccuracyScrolldata(); 
 	    addEvidence(CurrentState.getDriver(), "Site values successfully captured", "yes");    
 		}
 		@SuppressWarnings("unchecked")
-		 @Test(dependsOnMethods = { "verifyAccuracyscorebysites" }, groups= {"smoke"}, description = "Test for Accuracy Score by Site1")
+//		 @Test(dependsOnMethods = { "verifyAccuracyscorebysites" }, groups= {"smoke"}, description = "Test for Accuracy Score by Site1")
 			public void verifyAccuracyscorebysites1() throws Exception {
 				data = new CA_Accuracy_Page(CurrentState.getDriver());
 				data.AccuracyScrolldataSite2(); 
 		    addEvidence(CurrentState.getDriver(), "Site values successfully captured", "yes");    
 			}
 		@SuppressWarnings("unchecked")
-		 @Test(dependsOnMethods = { "verifyAccuracyscorebysites1" }, groups= {"smoke"}, description = "Test for Accuracy Score by Site2")
+//		 @Test(dependsOnMethods = { "verifyAccuracyscorebysites1" }, groups= {"smoke"}, description = "Test for Accuracy Score by Site2")
 			public void verifyAccuracyscorebysites2() throws Exception {
 				data = new CA_Accuracy_Page(CurrentState.getDriver());
 				data.AccuracyScrolldataSite3(); 
@@ -102,7 +110,7 @@ public class CA_Accuracy_Test extends BaseClass {
 		
 		@SuppressWarnings("unchecked")
 		 
-		 @Test(dependsOnMethods = { "verifyAccuracyscorebysites2" }, groups= {"smoke"}, description = "Test for Accuracy Score by Site3")
+//		 @Test(dependsOnMethods = { "verifyAccuracyscorebysites2" }, groups= {"smoke"}, description = "Test for Accuracy Score by Site3")
 			public void verifyAccuracyscorebysites3() throws Exception {
 				data = new CA_Accuracy_Page(CurrentState.getDriver());
 				data.AccuracyScrolldataSite4(); 
