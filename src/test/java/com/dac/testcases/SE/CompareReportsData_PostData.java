@@ -3,6 +3,7 @@ package com.dac.testcases.SE;
 import java.util.Arrays;
 
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -10,7 +11,7 @@ import com.dac.main.Navigationpage;
 import com.dac.main.POM_SE.SE_Post_Page;
 import com.dac.main.POM_SE.SE_Report_Page;
 
-import junit.framework.Assert;
+
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
