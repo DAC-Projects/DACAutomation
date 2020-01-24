@@ -47,8 +47,7 @@ public class CA_Visibility_Test extends BaseClass {
 			System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
 			if(i>1) CurrentState.getDriver().navigate().refresh();
 			s.waitUntilLoad(CurrentState.getDriver());
-			
-			
+			Thread.sleep(4000);
 			String CountryCode = wb.getCellValue(i, wb.seacrh_pattern("Country", 0).get(0).intValue());
 			String State = wb.getCellValue(i, wb.seacrh_pattern("State", 0).get(0).intValue());
 			String City = wb.getCellValue(i, wb.seacrh_pattern("City", 0).get(0).intValue());
@@ -83,6 +82,7 @@ public class CA_Visibility_Test extends BaseClass {
 	public void verifyOverviewReportnExportVisibility() throws Exception {
 		data = new CA_Visibility_Page(CurrentState.getDriver());
 		export = data.getExportData();
+		data.VisibilityExport1();
 		data.compareExprttoOvervw(export, data.getOverviewReport());
 		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
     CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));    
@@ -90,7 +90,7 @@ public class CA_Visibility_Test extends BaseClass {
 	}
 
 	@SuppressWarnings("unchecked")
-  @Test(dependsOnMethods = { "navigateToVisibilityPage" }, groups= {"smoke"}, description = "Test for overview report and tooltip")
+//  @Test(dependsOnMethods = { "navigateToVisibilityPage" }, groups= {"smoke"}, description = "Test for overview report and tooltip")
 	public void verifyOverviewReportnTooltipVisibility() throws Exception {
 		data = new CA_Visibility_Page(CurrentState.getDriver());
 		data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());  
@@ -98,10 +98,14 @@ public class CA_Visibility_Test extends BaseClass {
 	}
 
 	@SuppressWarnings("unchecked")
-  @Test(dependsOnMethods = { "navigateToVisibilityPage", "verifyOverviewReportnExportVisibility" }, groups= {"smoke"},description = "Test for comparing export and table")
+//  @Test(dependsOnMethods = { "navigateToVisibilityPage", "verifyOverviewReportnExportVisibility" }, groups= {"smoke"},description = "Test for comparing export and table")
 	public void verifySiteTablenExportVisibility() throws Exception {
 		data = new CA_Visibility_Page(CurrentState.getDriver());
-		data.compareExportnTable(export, data.verifySitetable());  
+		data.compareExportnTable(export, data.verifySitetable());
+		Thread.sleep(5000);
+		//data.compareList(data.total(), data.getOverviewReport1());
+		data.total();
+		
     addEvidence(CurrentState.getDriver(), "Site level scores in Visibility site table  and overview visibility export found matching", "yes");   
 	}
 

@@ -33,15 +33,13 @@ public abstract class BaseClass {
 
     WebDriverWait wait = new WebDriverWait(CurrentState.getDriver(), 10);
     
-    /*if(!CurrentState.getBrowser().contains("ie")) {
-
-   /* WebDriverWait wait = new WebDriverWait(CurrentState.getDriver(), 10);
     if(!CurrentState.getBrowser().contains("ie")) {
 
-    	wait.until(ExpectedConditions.visibilityOf(CurrentState.getDriver().findElement(By.xpath("//div[contains(@class,'close-button walkme-x-button')]"))));
-    	CurrentState.getDriver().findElement(By.xpath("//div[contains(@class,'close-button walkme-x-button')]")).click();    	
-    }*/
-  }
+
+           //wait.until(ExpectedConditions.visibilityOf(CurrentState.getDriver().findElement(By.xpath("//div//button[contains(@class,'walkme-custom-balloon-button walkme-custom-balloon-weak-button walkme-custom-balloon-cancel-button walkme-action-cancel walkme-click-and-hover')]"))));
+           //CurrentState.getDriver().findElement(By.xpath("//div//button[contains(@class,'walkme-custom-balloon-button walkme-custom-balloon-weak-button walkme-custom-balloon-cancel-button walkme-action-cancel walkme-click-and-hover')]")).click();        
+       }
+ }
 
   /**
    * This method used to login to AC1 for a specific account which using for respective modules		

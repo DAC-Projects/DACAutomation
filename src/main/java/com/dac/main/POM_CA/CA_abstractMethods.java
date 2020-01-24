@@ -234,6 +234,7 @@ public void clickApplyFilterBTN() throws InterruptedException {
 	 */
 	public List<Map<String, String>> verifyHistoryGraph() {
 		//display tool tip
+		int i;
 		waitForElement(hstryGrph, 10);
 		scrollByElement(hstryGrph);
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
@@ -243,25 +244,30 @@ public void clickApplyFilterBTN() throws InterruptedException {
 		String[][] table = readTable(grphTable);
 
 		List<Map<String, String>> tooltipdata = new ArrayList<Map<String, String>>();
-		for (int i = 0; i < table.length / 4; i += 4) {
+		System.out.println(table.length);
+		for ( i = 0; i < table.length / 4; i += 4) {
 			Map<String, String> kMap = new HashMap<String, String>();
 			kMap.put("compName", table[i][0]);
 			kMap.put(table[i + 1][0], table[i + 1][1]);
 			kMap.put(table[i + 2][0], table[i + 2][1]);
 			kMap.put(table[i + 3][0], table[i + 3][1]);
+			
+
+			
 			tooltipdata.add(kMap);
 		}
-
 		System.out.println(tooltipdata.get(0).get("compName"));
 		System.out.println(tooltipdata.get(0).get("Date"));
 		System.out.println(tooltipdata.get(0).get("Overall"));
 		System.out.println(tooltipdata.get(0).get("Total Locations"));
+	
 		return tooltipdata;
 
 	}
 	
 	public List<Map<String, String>> verifyHistoryGraphLocationcompSet() {
 		//display tool tip
+		int i;
 		waitForElement(hstryGrphLoc, 10);
 		scrollByElement(hstryGrphLoc);
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
@@ -271,7 +277,7 @@ public void clickApplyFilterBTN() throws InterruptedException {
 		String[][] table = readTable(grphTable);
 
 		List<Map<String, String>> tooltipdata = new ArrayList<Map<String, String>>();
-		for (int i = 0; i < table.length / 4; i += 4) {
+		for ( i = 0; i < table.length / 4; i += 4) {
 			Map<String, String> kMap = new HashMap<String, String>();
 			kMap.put("compName", table[i][0]);
 			kMap.put(table[i + 1][0], table[i + 1][1]);
@@ -279,7 +285,7 @@ public void clickApplyFilterBTN() throws InterruptedException {
 			kMap.put(table[i + 3][0], table[i + 3][1]);
 			tooltipdata.add(kMap);
 		}
-
+		
 		System.out.println(tooltipdata.get(0).get("compName"));
 		System.out.println(tooltipdata.get(0).get("Date"));
 		System.out.println(tooltipdata.get(0).get("Overall"));
@@ -400,6 +406,19 @@ public void clickApplyFilterBTN() throws InterruptedException {
 
 	}
 	
+	
+	public double convertint(String s){       
+		double Tot = 0;
+            if(s.contains(",")) {
+                String value = s.replaceAll("%", "");
+                value.trim();
+                Tot = Double.parseDouble(value);
+            }else {
+                Tot = Double.parseDouble(s);
+            }
+            System.out.println("Total :" +Tot);
+            return Tot;           
+        }
 public void AccuracyScrolldata()
 {
 	

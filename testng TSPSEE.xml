@@ -7,13 +7,15 @@
 <listener class-name="resources.ExtentTestNGITestListener"></listener>
 </listeners>
 
- 
-
 
  <test name="TransparenSEE" parallel="tests" group-by-instances="true">
+
+
+
    <!-- <parameter name="Filter" value= "US,All States,All Cities,All Locations"/> -->
    <parameter name="browser" value="chrome"/>
     <classes>
+
     <class name= "com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
         
           <!-- <class name= "com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" /> 
@@ -27,6 +29,7 @@
         <class name = "com.dac.testcases.TPSEE.TPSEE_ReviewStream_Test" />    
         <class name= "com.dac.testcases.TPSEE.TPSEE_GMB_Test" />    
         <class name= "com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" /> -->
+
      </classes>
  </test>
 </suite>

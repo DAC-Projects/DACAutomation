@@ -3,8 +3,10 @@ package com.dac.main.POM_CA;
 import static org.testng.Assert.assertTrue;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +33,7 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
+	static int[][] finalArray;
 
 	public CA_Visibility_Page(WebDriver driver) {
 
@@ -40,6 +43,8 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 		action = new Actions(driver);
 		PageFactory.initElements(driver, this);
 	}
+	String ss;
+	int result;
 
 	// locators
 	
@@ -69,6 +74,18 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 		@FindBy(css = "button#apply_filter")
 		private WebElement Apply_filter;
 		
+		@FindBy(xpath = "//*[@id=\"compIntVisibilitySitesTable\"]/tbody/tr")
+		private List<WebElement> reviewTableRow;
+		
+		@FindBy(xpath="//*[@id=\"divCIVisibility\"]/div[6]/div[1]/h3")
+		private WebElement titlehead;
+		
+		@FindBy(xpath="//*[@id='compIntVisibilitySitesTable']/tbody/tr/td[2]")
+		private WebElement col; 
+		
+		
+		
+		
 	// export button
 	@FindBy(css = "button#btnExport>span")
 	private WebElement exportBtn;
@@ -83,7 +100,8 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 
 	String xpathCompetitors = "(//div[@id='compIntOverviewContainer']//div[starts-with(@class,'overviewSubContainer')])";
 	String compName = ".//div[starts-with(@class, 'competitorName')]";
-	String compScore = ".//div[starts-with(@class, 'competitorScore')]";
+	String compScore = ".//div[starts-with(@class, 'competitorScore')]"; 
+	String locationcount =".//div[starts-with(@class, 'competitorLocations')]";
 	
 	// site table
 	@FindBy(css = "table#compIntVisibilitySitesTable")
@@ -91,6 +109,9 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 
 	List<WebElement> columns;
 	List<WebElement> rows;
+	
+	ArrayList<Double> list1 = new ArrayList<Double>();
+	ArrayList<Double> list2 = new ArrayList<>();
 
 	/**
 	 * Export visibility overview report
@@ -113,7 +134,6 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 		download(CurrentState.getBrowser(), exportBtn, 20);
 		convertExports(getLastModifiedFile(Exportpath), VisibilityExport);
 	}
-
 	/* (non-Javadoc)
 	 * Reads overview report and return values as list.
 	 * @see com.dac.main.POM_CA.CA_abstractMethods#getOverviewReport()
@@ -131,14 +151,131 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 			kMap = new HashMap<String, String>();
 			kMap.put("compName", s.findElement(By.xpath(compName)).getText());
 			kMap.put("score", s.findElement(By.xpath(compScore)).getText());
-			System.out.format("%10s%10s", s.findElement(By.xpath(compName)).getText(),
+		
+						System.out.format("%10s%10s", s.findElement(By.xpath(compName)).getText(),
 					s.findElement(By.xpath(compScore)).getText());
+						System.out.println("test");
+			
 			System.out.println("");
 			ovrwRprtData.add(kMap);
 		}
 		return ovrwRprtData;
-	}
+}
 
+	
+	public List<Double> Tablevalues(String col) throws Exception{
+		List<Double> score = new ArrayList<>();
+		int columns_count=0;
+		WebElement TableTitle = driver.findElement(By.xpath("//*[@id='divCIVisibility']/div[6]/div[1]/h3"));
+		scrollByElement(TableTitle);
+		WebElement mytable = driver.findElement(By.xpath("//*[@id='compIntVisibilitySitesTable']"));
+	    	//To locate rows of table. 
+	    	List < WebElement > rows_table = mytable.findElements(By.tagName("tr"));
+	    	//To calculate no of rows In table.
+	    	int rows_count = rows_table.size()-1;
+	    	System.out.print("Row count"+rows_count);
+	    	List < WebElement > col_table = mytable.findElements(By.tagName("th"));
+	    	int col_count = col_table.size()-1;
+	    	System.out.print("Col count"+col_count);
+	        int i;
+			List<WebElement> costColumns= driver.findElements(By.xpath(col));
+	        ArrayList<Double> list = new ArrayList<Double>();
+			for(WebElement e:costColumns)
+			{System.out.println(e.getText());
+				String x = "0.0" ;
+				String n = e.getText();
+				double y= 0.0;
+				if(n.contains("%")){
+					x =n.replace("%", "").trim();
+					System.out.println(x);
+					}
+				if(n.contains("-")) {
+					x =n.replace("-", "0.0").trim();
+					System.out.println(x);}
+				 y=Double.parseDouble(x);
+				 System.out.println(y);	
+				 list.add(y);
+				 			
+			}
+			ArrayList<Integer> listarray = new ArrayList<Integer>();
+			System.out.println("array"+list);	
+			int aa=list.size();
+			System.out.println("count" + aa);
+			//int[] y = new int[400];
+			//for(int i1=0; i1<list.size()/2; i1++) {
+				//y[i1]=(int) (result*list.get(i1))/100;
+			//listarray.add((int) y[i1]);
+			//}
+			System.out.println("values"+listarray);
+			double sum = 0;
+			for( i = 0; i < list.size(); i++) 
+			    sum += list.get(i);
+			System.out.println("total price: "+sum);
+			double avg = (sum/rows_count);
+			DecimalFormat numberFormat = new DecimalFormat("#.00");
+			double avgFinal=Double.parseDouble(numberFormat.format(avg));
+			System.out.println(avgFinal);
+			score.add(avgFinal);
+			System.out.println("abi"+ score);
+			return score;	
+		
+	}
+	public  List<Double> total() throws Exception {
+		for(int i=2;i<10;i++) {
+		System.out.println("Executing");
+		List<Double> d = Tablevalues("//*[@id='compIntVisibilitySitesTable']/tbody/tr/td[" + i + "]");
+		System.out.println("exe"+ d);	
+		list1.addAll(d);
+		System.out.println(list1);
+		}
+	return list1;  }
+	
+	
+public List<Double> getOverviewReport1() {
+	// TODO Auto-generated method stub
+	waitForElement(overviewReport, 10);
+	scrollByElement(overviewReport);
+	String a=null;
+	String x = null;
+	double y=0;
+	System.out.println(competitors.size());
+	for (int i = 1; i <= competitors.size()/2; i++) {
+		WebElement s = driver.findElement(By.xpath(xpathCompetitors + "[" + i + "]"));
+		 a=s.findElement(By.xpath(compScore)).getText();
+		 if(a.contains("%")){
+				x =a.replace("%", "").trim();
+				 y=Double.parseDouble(x);
+				System.out.println(y);
+				}
+		 list2.add(y);
+		 }
+	System.out.println(list2);
+	
+	return list2;
+}
+
+/*public List<WebElement> getLocation() {
+	
+	List<WebElement> actmenu = driver.findElements(By.xpath(locationcount)); 
+	int array[] = new int [actmenu.size()/2];
+    for (int i = 0; i <actmenu.size()/2; i++) {
+    	System.out.println("size" + actmenu.size());
+    	String ss=actmenu.get(i).getText();
+    	System.out.println(actmenu.get(i).getText());
+       String ad=ss.substring(5, 6);
+    System.out.println(ad);
+    	 result = Integer.parseInt(ad);			
+    	array[i]=result;
+    	}
+    System.out.println("int"+ Arrays.toString(array));
+    return actmenu;
+	}*/
+	public void compareList(List<Double> total ,List<Double> getOverviewReport1 ) {
+		/*System.out.println(list1);
+		System.out.println(list2);*/
+		//Assert.assertEquals(list1, list2 , "Comparing overview and table");
+		Assert.assertEquals(list1.equals(list2), true);
+	}
 	/**
 	 * @param timeout
 	 * Verifies all elements are present till timeout in seconds
@@ -173,13 +310,71 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 			}
 			exportData.add(kMap);//to be reviewed
 		}
+		System.out.println("Abi"+ exportData);
 		
 
 		return exportData;
 
 	}
-	
-	
+	public void VisibilityExport1() throws Exception {
+//Getting locations
+		List<WebElement> actmenu = driver.findElements(By.xpath(locationcount)); 
+		int array[] = new int [actmenu.size()/2];
+	    for (int i = 0; i <actmenu.size()/2; i++) {
+	    //	System.out.println("size" + actmenu.size());
+	    	String ss=actmenu.get(i).getText();
+	   // 	System.out.println(actmenu.get(i).getText());
+	     //  String ad=ss.substring(5, 6);
+	       String[] ad = ss.split(" ");
+	//    System.out.println(ad);
+	    	 result = Integer.parseInt(ad[1]);			
+	    	array[i]=result;
+	    	
+	    	//System.out.println("abiarr"+array[i]);
+	     System.out.println("int"+ Arrays.toString(array));
+	    	}
+	    
+	    //cal
+	   
+        String[][] table = new ExcelHandler(Exportpath + VisibilityExport, "Sheet0").getExcelTableWithout0();
+        System.out.println("Row length = "+table.length);
+       // System.out.println("Score1 = "+table[2][1]);
+        int i;
+        int col;
+        double[] tableValues = new double[table.length-1];
+       
+        double[] arry = new double[table.length-1];
+        int colSize1 = table[0].length;
+        finalArray =new int [colSize1-1][table.length-2];
+        //System.out.println(colSize1);
+       int k =0;
+        for (col = 1; col < colSize1; col++) { 
+
+        for(i=0;i<table.length-2;i++) {       
+        
+             tableValues[i] = Double.parseDouble(table[i+2][col]);
+             System.out.println(tableValues[i]);
+             System.out.println(array[col-1]);
+            arry[i]= tableValues[i]/100 *array[col-1];  
+           // System.out.println("Array "+Arrays.toString(arry));
+            finalArray[col-1][i] = (int) Math.round(arry[i]);
+            
+           
+        }
+        System.out.println("array "+col+":"+Arrays.toString(finalArray[col-1]));
+        
+  }
+        
+        
+        System.out.println(Arrays.deepToString(finalArray));
+        //System.out.println("Double array value"+i+":" + Arrays.toString(tableValues) );
+        }
+        
+        
+         
+        
+        
+    
 
 	/**
 	 * Compare export and table

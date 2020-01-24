@@ -64,6 +64,9 @@ public class Navigationpage extends BasePage{
 	@FindBy(xpath = "//ul[contains(@class,'settings-list dashboardColor')]")
 	private WebElement Group;
 	
+	@FindBy(xpath = "//a[@href='/Dashboard/ESRFrequency/']/span")	
+    private WebElement ESR;
+	
 	//------------------------- SA and RRM -------------------------------------
 	
 	@FindBy(xpath = "//a[@href='/Review/ReviewReport/']")
@@ -167,6 +170,7 @@ public class Navigationpage extends BasePage{
     private WebElement SE_Reports;
     
     
+  //---------------------- TransparenSEE-------------------------------
     
     public void  navigateTPSEE_Visibility() {
   	  
@@ -233,6 +237,18 @@ public class Navigationpage extends BasePage{
     	System.out.println("Waiting for page to load********");
     	waitUntilLoad(driver);
     }
+    public void navigateToESR() {
+	   	
+    	action.moveToElement(Settings).perform();
+    	waitForElement(ESR, 20);
+    	action.moveToElement(ESR).perform();
+    	driver.findElement(By.xpath("//a[@href='/Dashboard/ESRFrequency/']/span")).click();
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    
+  //---------------------- TransparenSEE-------------------------------
     
     //-----CA
     

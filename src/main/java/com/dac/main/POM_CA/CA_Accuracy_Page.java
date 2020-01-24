@@ -63,6 +63,9 @@ public class CA_Accuracy_Page extends CA_abstractMethods{
 	@FindBy(css = "button#apply_filter")
 	private WebElement Apply_filter;
 
+	@FindBy(xpath = "//table[@class='table-responsive table-hover']/tbody/tr")
+	private List<WebElement> reviewTableRow;
+
 	// export button
 	@FindBy(css = "button#btnExport>span")
 	private WebElement exportBtn;
@@ -75,9 +78,14 @@ public class CA_Accuracy_Page extends CA_abstractMethods{
 	@FindBy(xpath = "//div[@id='compIntOverviewContainer']//div[starts-with(@class,'overviewSubContainer')]")
 	private List<WebElement> competitors;
 
+
+
 	String xpathCompetitors = "(//div[@id='compIntOverviewContainer']//div[starts-with(@class,'overviewSubContainer')])";
 	String compName = ".//div[starts-with(@class, 'competitorName')]";
 	String compScore = ".//div[starts-with(@class, 'competitorScore')]";
+	
+	@FindBy(xpath="//table[@class='table-responsive table-hover']/tbody/tr")
+	private List<WebElement> tableRow;
 
 	// site table
 	@FindBy(css = "table#compIntAccuracySitesTable")
@@ -117,11 +125,21 @@ public class CA_Accuracy_Page extends CA_abstractMethods{
 		}
 		return ovrwRprtData;
 	}
+
 	//	@Override
 	//	public List<Map<String, String>> getOverviewReport() {
 	//		// TODO Auto-generated method stub
 	//		return null;
 	//	}
+	public List<Map<String, String>> DataTable() throws InterruptedException{
+
+
+		WebElement TableTitle = driver.findElement(By.xpath("//*[@class = 'title-divider']"));
+		List < WebElement > rows_table = tableRow;
+		return null;
+
+	}
+
 
 	public void verify_pageloadCompletely(int timeout) {
 		if (waitForElement(overviewReport, timeout) && waitForElement(siteTable, timeout)
@@ -187,28 +205,29 @@ public class CA_Accuracy_Page extends CA_abstractMethods{
 
 	public void calculateAccuracyScore() throws Exception {
 		String[][] table = new ExcelHandler(Exportpath + AccuracyExport, "Sheet0").getExcelTable();
-		
-	//	double FinScore;
+
+		//	double FinScore;
 		double[] FinScore = new double[table[0].length-1];
-		
-		int[][] visScore = new int[][]{{1,1},{0,0},{0,0},{0,0},{0,0},{0,0}};
+
+		//int[][] visScore = new int[][]{{1,1},{0,0},{0,0},{0,0},{0,0},{0,0}};
+		int[][] visScore = CA_Visibility_Page.finalArray;
 		double[] score = new double[table.length-2];
-//		double [][] fullScore = new double[table.length-2][table[0].length-1];
+		//		double [][] fullScore = new double[table.length-2][table[0].length-1];
 		for (int j=0;j<table[0].length-1;j++) {
 			double totScore = 0;
 			int sum = 0;
-		for(int i=0;i<table.length-2;i++) {			 
+			for(int i=0;i<table.length-2;i++) {			 
 
-			score[i] = Double.parseDouble(table[i+2][1].replace("%", ""));
-			System.out.println("double array value"+i+":" + Arrays.toString(score) );
+				score[i] = Double.parseDouble(table[i+2][1].replace("%", ""));
+				System.out.println("double array value"+i+":" + Arrays.toString(score) );
 
-			totScore = totScore + visScore[j][i]*score[i];
-			sum = sum + visScore[j][i];
-		}
-		FinScore[j] = totScore/sum;
-		
-		
-		
+				totScore = totScore + visScore[j][i]*score[i];
+				sum = sum + visScore[j][i];
+			}
+			FinScore[j] = totScore/sum;
+
+
+
 		}
 		System.out.println("FinScore :"+Arrays.toString(FinScore));
 	}

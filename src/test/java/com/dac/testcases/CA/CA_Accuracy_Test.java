@@ -79,6 +79,10 @@ public class CA_Accuracy_Test extends BaseClass {
 		}
 	
 	
+	
+	
+	
+	
 	@Test(dependsOnMethods = { "verifyOverviewReportnExportAccuracy" })
 	public void calculation() throws Exception {
 		
@@ -86,6 +90,12 @@ public class CA_Accuracy_Test extends BaseClass {
 		data.calculateAccuracyScore(); 
 	}
 
+	
+	
+	
+	
+	
+	
 		@SuppressWarnings("unchecked")
 //	  @Test(dependsOnMethods = { "verifyOverviewReportnExportAccuracy" }, groups= {"smoke"}, description = "Test for Accuracy Score by Site")
 		public void verifyAccuracyscorebysites() throws Exception {
