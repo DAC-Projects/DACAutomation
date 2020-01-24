@@ -333,16 +333,16 @@ public class ExtentTestNGITestListener
 	  WebDriverWait wait;
     WebDriver driver = null;
 
-    File file = new File("./downloads");
+    File file = new File(".\\downloads");
     if (!file.exists())
       file.mkdirs();
 
-    String downloadFolder = System.getProperty("user.dir") + "/downloads";
+    String downloadFolder = System.getProperty("user.dir") + "\\downloads";
 
     if (browser.equalsIgnoreCase("Chrome")) {
 
 
-     WebDriverManager.chromedriver().version("74.0.3729.6").setup(); 
+     WebDriverManager.chromedriver().version("79.0.3945.36").setup(); 
 
 
      //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();

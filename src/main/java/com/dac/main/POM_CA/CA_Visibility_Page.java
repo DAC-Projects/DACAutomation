@@ -323,9 +323,10 @@ public List<Double> getOverviewReport1() {
 	    //	System.out.println("size" + actmenu.size());
 	    	String ss=actmenu.get(i).getText();
 	   // 	System.out.println(actmenu.get(i).getText());
-	       String ad=ss.substring(5, 6);
+	     //  String ad=ss.substring(5, 6);
+	       String[] ad = ss.split(" ");
 	//    System.out.println(ad);
-	    	 result = Integer.parseInt(ad);			
+	    	 result = Integer.parseInt(ad[1]);			
 	    	array[i]=result;
 	    	
 	    	//System.out.println("abiarr"+array[i]);
@@ -334,8 +335,8 @@ public List<Double> getOverviewReport1() {
 	    
 	    //cal
 	   
-        String[][] table = new ExcelHandler(Exportpath + VisibilityExport, "Sheet0").getExcelTable();
-        //System.out.println("Row length = "+table.length);
+        String[][] table = new ExcelHandler(Exportpath + VisibilityExport, "Sheet0").getExcelTableWithout0();
+        System.out.println("Row length = "+table.length);
        // System.out.println("Score1 = "+table[2][1]);
         int i;
         int col;
@@ -346,18 +347,16 @@ public List<Double> getOverviewReport1() {
         double[][] finalArray =new double[colSize1-1][table.length-2];
         //System.out.println(colSize1);
        int k =0;
-        for (col = 1; col < colSize1; col++) {
+        for (col = 1; col < colSize1; col++) { 
 
- 
-
-        for(i=0;i<table.length-3;i++) {       
+        for(i=0;i<table.length-2;i++) {       
         
              tableValues[i] = Double.parseDouble(table[i+2][col]);
              System.out.println(tableValues[i]);
              System.out.println(array[col-1]);
             arry[i]= tableValues[i]/100 *array[col-1];  
            // System.out.println("Array "+Arrays.toString(arry));
-            finalArray[col-1][i] = arry[i];
+            finalArray[col-1][i] = Math.round(arry[i]);
             
            
         }
