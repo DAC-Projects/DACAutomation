@@ -8,9 +8,7 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_CA.CA_Accuracy_Page;
-import com.dac.main.POM_CA.CA_Accuracy_Page;
 import com.selenium.testevidence.SeleniumEvidence;
-import com.dac.main.POM_CA.CA_Accuracy_Page;
 
 import resources.BaseClass;
 import resources.CurrentState;
