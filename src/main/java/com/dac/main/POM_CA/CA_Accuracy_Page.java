@@ -1,5 +1,6 @@
 package com.dac.main.POM_CA;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
@@ -18,6 +19,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import resources.CurrentState;
 import resources.ExcelHandler;
@@ -209,7 +211,6 @@ public class CA_Accuracy_Page extends CA_abstractMethods{
 		//	double FinScore;
 		double[] FinScore = new double[table[0].length-1];
 
-		//int[][] visScore = new int[][]{{1,1},{0,0},{0,0},{0,0},{0,0},{0,0}};
 		int[][] visScore = CA_Visibility_Page.finalArray;
 		double[] score = new double[table.length-2];
 		//		double [][] fullScore = new double[table.length-2][table[0].length-1];
@@ -224,11 +225,20 @@ public class CA_Accuracy_Page extends CA_abstractMethods{
 				totScore = totScore + visScore[j][i]*score[i];
 				sum = sum + visScore[j][i];
 			}
-			FinScore[j] = totScore/sum;
-
-
-
+			if(sum!=0) {
+				FinScore[j] = Math.round((totScore/sum)*100.0)/100.0;
+			}
+			else {
+				FinScore[j] = 0.00;
+			}
+			
 		}
 		System.out.println("FinScore :"+Arrays.toString(FinScore));
+		for (int k=0;k<table[0].length-1;k++) {
+			
+			assertEquals(FinScore[k], table[1][k+1].replace("%", ""));
+			System.out.println("Compare "+k+FinScore[k]+table[1][k+1]);
+		}
+		
 	}
 }

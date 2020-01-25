@@ -237,8 +237,8 @@ public class ExtentTestNGITestListener
   @Override
   public synchronized void onAfterClass(ITestClass testClass) {
    
- //   CurrentState.getDriver().quit();
- //   CurrentState.setDriver(null);
+    CurrentState.getDriver().quit();
+    CurrentState.setDriver(null);
   }
 
   /**
