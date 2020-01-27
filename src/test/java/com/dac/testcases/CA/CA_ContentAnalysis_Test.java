@@ -11,6 +11,8 @@ import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_CA.CA_ContentAnalysis_Page;
 import com.dac.main.POM_CA.CA_Review_Page;
+import com.dac.main.POM_CA.CA_Visibility_Page;
+
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.Utilities;
@@ -63,6 +65,43 @@ public class CA_ContentAnalysis_Test extends BaseClass {
 		
 	}
 
+	
+	//Test to verify Zoom Functionality
+		@Test(priority=2,groups = {"smoke"},
+				description ="Verify Zoom Functionality")
+		public void gethighchartsdate() throws Exception{
+			data = new CA_ContentAnalysis_Page(CurrentState.getDriver());
+					
+			String OneMonth ="1m";
+			data.clickHighchartCriteria(OneMonth);
+			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
+			Thread.sleep(5000);
+			
+			String ThreeMonth ="3m";
+			data.clickHighchartCriteria(ThreeMonth);
+			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
+			Thread.sleep(5000);
+			
+			String SixMonth ="6m";
+			data.clickHighchartCriteria(SixMonth);
+			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
+			Thread.sleep(5000);
+			
+			String OneYear ="1y";
+			data.clickHighchartCriteria(OneYear);
+			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
+			Thread.sleep(5000);
+			
+			String YearToDate ="ytd";
+			data.clickHighchartCriteria(YearToDate);
+			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
+			Thread.sleep(5000);
+			
+			String ALLDATA ="all";
+			data.clickHighchartCriteria(ALLDATA);
+			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
+			Thread.sleep(5000);
+		}
 
 
 }

@@ -14,6 +14,8 @@ import com.dac.main.POM_CA.CA_Visibility_Page;
 import com.dac.main.POM_CA.CA_gatherData;
 import com.dac.main.POM_SA.SA_ReviewReportCard_Page;
 import com.dac.main.POM_SA.SA_gatherData;
+import com.dac.main.POM_TPSEE.TPSEE_Bing_Page;
+import com.dac.main.POM_TPSEE.TPSEE_Visibility_Page;
 import com.selenium.testevidence.SeleniumEvidence;
 
 import junit.framework.Assert;
@@ -23,15 +25,20 @@ import resources.ExcelHandler;
 
 public class CA_Visibility_Test extends BaseClass {
 
+	String grph = "div.highcharts-label.highcharts-tooltip.highcharts-color-undefined";
+	String grphfromDate = "(//*[@class='highcharts-label highcharts-range-input'])[1]";
+	String grphtoDate = "(//*[@class='highcharts-label highcharts-range-input'])[2]";
+	String exportfromDate = "//*[@id='exportStartDate']";
+	String exportToDate = "//*[@id='exportEndDate']";
+	
 	
 	static List<Map<String, String>> export;
 	Navigationpage np;
 	CA_Visibility_Page data;
 
-	@SuppressWarnings("unchecked")
 //  @Test(groups= {"smoke"},description = "Test for navigating to Visibility page")
 //	  @Test(groups= {"smoke"},description = "Test for navigating to Visibility page with all filter condition check")
-	@Test(enabled = true)
+	@Test(enabled = true, priority = 1)
 	public void navigateToVisibilityPage() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateCA_Visibility();
@@ -42,7 +49,7 @@ public class CA_Visibility_Test extends BaseClass {
      //Assert.assertFalse( "sample error", true);
 	}
 
-	@SuppressWarnings("unchecked")
+/*	@SuppressWarnings("unchecked")
 //  @Parameters({ "Filter" })
 	//Filter Condition Apply
 	@Test(dependsOnMethods = { "navigateToVisibilityPage" }, groups= {"smoke"}, description = "Verify Visibility page loads after filter applied")
@@ -110,6 +117,44 @@ public class CA_Visibility_Test extends BaseClass {
 		data = new CA_Visibility_Page(CurrentState.getDriver());
 		data.compareExportnTable(export, data.verifySitetable());  
     addEvidence(CurrentState.getDriver(), "Site level scores in Visibility site table  and overview visibility export found matching", "yes");   
-	}
+	}*/
 
+	//Test to verify Zoom Functionality
+	@Test(priority=2,groups = {"smoke"},
+			description ="Verify Zoom Functionality")
+	public void gethighchartsdate() throws Exception{
+		data = new CA_Visibility_Page(CurrentState.getDriver());
+				
+		String OneMonth ="1m";
+		data.clickHighchartCriteria(OneMonth);
+		addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
+		Thread.sleep(5000);
+		
+		String ThreeMonth ="3m";
+		data.clickHighchartCriteria(ThreeMonth);
+		addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
+		Thread.sleep(5000);
+		
+		String SixMonth ="6m";
+		data.clickHighchartCriteria(SixMonth);
+		addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
+		Thread.sleep(5000);
+		
+		String OneYear ="1y";
+		data.clickHighchartCriteria(OneYear);
+		addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
+		Thread.sleep(5000);
+		
+		String YearToDate ="ytd";
+		data.clickHighchartCriteria(YearToDate);
+		addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
+		Thread.sleep(5000);
+		
+		String ALLDATA ="all";
+		data.clickHighchartCriteria(ALLDATA);
+		addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
+		Thread.sleep(5000);
+	}
+		
+		
 }

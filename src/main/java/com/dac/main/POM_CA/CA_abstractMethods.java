@@ -4,8 +4,10 @@ package com.dac.main.POM_CA;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -25,6 +28,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import com.dac.main.BasePage;
+import com.dac.main.POM_TPSEE.TPSEE_abstractMethods;
 
 import resources.CurrentState;
 import resources.FileHandler;
@@ -95,6 +99,53 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	@FindBy(xpath="(//*[text()='Foursquare'])[1]")
 	public WebElement site4;
 	
+	@FindBy(xpath = "(//*[name()='g' and @class='highcharts-range-selector-group']/*[name()='g'])[1]")
+	private WebElement highChartZoom;
+	
+	@FindBy(xpath = "(//*[name()='g' and @class='highcharts-range-selector-buttons']/*[name()='g'])[1]")
+	private WebElement highChart_1M;
+	
+	@FindBy(xpath = "(//*[name()='g' and @class='highcharts-range-selector-buttons']/*[name()='g'])[2]")
+	private WebElement highChart_3M;
+	
+	@FindBy(xpath = "(//*[name()='g' and @class='highcharts-range-selector-buttons']/*[name()='g'])[3]")
+	private WebElement highChart_6M;
+	
+	@FindBy(xpath = "(//*[name()='g' and @class='highcharts-range-selector-buttons']/*[name()='g'])[4]")
+	private WebElement highChart_YTD;
+	
+	@FindBy(xpath = "(//*[name()='g' and @class='highcharts-range-selector-buttons']/*[name()='g'])[5]")
+	private WebElement highChart_1y;
+	
+	@FindBy(xpath = "(//*[name()='g' and @class='highcharts-range-selector-buttons']/*[name()='g'])[6]")
+	private WebElement highChart_All;
+	
+	@FindBy(xpath = "(//*[name()='g' and @class='highcharts-input-group']/*[name()='g'])[2]/*[name()='text']")
+	private WebElement highChart_fromDate;
+	
+	@FindBy(xpath = "(//*[name()='g' and @class='highcharts-input-group']/*[name()='g'])[4]/*[name()='text']")
+	private WebElement highChart_toDate;
+	
+	@FindBy(className = "ui-datepicker-month")
+	private WebElement currentMonth_DatePicker;
+	
+	@FindBy(className = "ui-datepicker-year")
+	private WebElement currentYear_DatePicker;
+	
+	@FindBy(xpath = "//*[@class='back-to-top btn btn-primary']")
+	private WebElement Top;
+	
+	@FindBy(xpath = "//*[@data-handler='prev']")
+	private WebElement prevMonth;
+	
+	@FindBy(xpath = "//*[@data-handler='next']")
+	private WebElement nextMonth;
+	
+	@FindBy(xpath = "(//*[@class='highcharts-label highcharts-range-input'])[1]")
+	private WebElement fromDate;
+	
+	@FindBy(xpath = "(//*[@class='highcharts-label highcharts-range-input'])[2]")
+	private WebElement toDate;
 	
 
 //	@FindBy(css = "div.highcharts-label.highcharts-tooltip.highcharts-color-0>span>table")
@@ -342,6 +393,264 @@ public void AccuracyScrolldataSite4()
 	waitUntilLoad(driver);
 }
 
+
+/**
+ * Click on highchart zoom functionality
+ * @param durationFor
+ * @return
+ * @throws Exception
+ */
+public CA_abstractMethods clickHighchartCriteria(String durationFor) throws Exception {
+	durationFor = durationFor.toLowerCase();
+	scrollByElement(highChartZoom);
+	int days;			
+	if((!durationFor.equalsIgnoreCase("null"))) {				
+		switch(durationFor) {				
+		case "1m"  : 	try{
+							clickelement(highChart_1M);
+							if(eleClicked(highChart_1M)) {
+								days = getNumberofDays();			
+								if(days >= 28 && days<=31 ) {
+									System.out.println("1 Month data is displayed");
+								}else {
+									System.out.println("Not 1 Month");
+									}
+								}else {
+									System.out.println("Element not clicked");
+								}
+						}catch(Exception e) {
+							e.printStackTrace();
+						}
+						break;
+					
+		case "3m"  : 	try{
+							clickelement(highChart_3M);
+							if(eleClicked(highChart_3M)) {
+								days = getNumberofDays();
+								if(days>=90 && days<=92) {
+									System.out.println("3 Month data is displayed");
+								}else {
+									System.out.println("Not 3 Month");
+									}
+								}else {
+									System.out.println("Element not clicked");
+								}
+							}catch(Exception e) {
+								e.printStackTrace();
+							}
+							break;
+					 
+		case "6m"  : 	try{
+							clickelement(highChart_6M);
+							if(eleClicked(highChart_6M)) {
+								days = getNumberofDays();
+								if(days>=180 && days<=184) {
+									System.out.println("6 Month data is displayed");
+								}else {
+									System.out.println("Not 6 Month");
+									}
+								}else {
+									System.out.println("Element not clicked");
+								}
+							}catch(Exception e) {
+								e.printStackTrace();
+								}
+						break;
+					 
+		case "ytd" : 	try{
+							clickelement(highChart_YTD);
+							if(eleClicked(highChart_YTD)) {
+								days = getNumberofDays();
+							}else {
+								System.out.println("Element Not clicked");
+								}
+						}catch(Exception e) {
+							e.printStackTrace();
+						}
+						break;
+				     
+		case "1y"  : 	try{
+							clickelement(highChart_1y);
+							if(eleClicked(highChart_1y)) {
+								days = getNumberofDays();
+								if(days>=364 && days<=366) {
+									System.out.println("1 Year data is displayed");
+								}else {
+									System.out.println("Not 1 Year");
+									}
+								}else {
+									System.out.println("Element not clicked");
+								}
+							}catch(Exception e) {
+								e.printStackTrace();
+							}
+						break;
+					 
+		case "all" :
+		default    : 	try{
+							clickelement(highChart_All);
+							if(eleClicked(highChart_All)) {
+								days = getNumberofDays();
+							}else {
+								System.out.println("Element not clicked");
+								}
+							}catch(Exception e) {
+								e.printStackTrace();
+							}
+						}
+					}
+
+			return this;
+	}	
+
+/**
+ * To get difference between two dates
+ * @return
+ * @throws Exception
+ */
+public  int getNumberofDays() throws Exception {
+	int diff = 0;
+	Date init = getCurrentfromDate();
+	Thread.sleep(5000);
+	Date enddate =  getCurrenttoDate();
+	Thread.sleep(5000);
+	long difference = Math.abs(init.getTime() - enddate.getTime());
+    long differenceDates = difference / (24 * 60 * 60 * 1000);
+	diff = (int)(long)differenceDates;		
+	System.out.println(diff);	
+	return diff;
+}	
+
+/**
+ * To get current selected from date from UI Calendar
+ * @return
+ * @throws ParseException
+ */
+public Date getCurrentfromDate() throws ParseException {
+String currentfromDate = fromDate.getText();
+String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
+System.out.println(var);
+SimpleDateFormat formats = new SimpleDateFormat(var);
+Date finalcurrentdate = formats.parse(currentfromDate);
+return finalcurrentdate;
+}
+
+/**
+ * To get current selected to date from UI Calendar
+ * @return
+ * @throws ParseException
+ */
+public Date getCurrenttoDate() throws ParseException {
+String currenttoDate = toDate.getText();
+String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
+System.out.println(var);
+SimpleDateFormat formats = new SimpleDateFormat(var);
+Date finaltodate = formats.parse(currenttoDate);
+return finaltodate;
+}
+
+
+/**
+ * To pass date to the UI Calendar
+ * @param calenderField
+ * @param day_d
+ * @param month_MMM
+ * @param year_YYYY
+ */
+private void selectCalender_Date(String calenderField, int day_d, String month_MMM, int year_YYYY) {
+//clickelement(calenderField);
+driver.findElement(By.xpath(calenderField)).click();
+int diff = year_YYYY - Integer.parseInt(currentYear_DatePicker.getText());
+if(diff != 0) {
+	while(diff < 0) {
+		clickelement(prevMonth);
+		diff = year_YYYY - Integer.parseInt(currentYear_DatePicker.getText());
+	}
+	while(diff > 0) {
+		clickelement(nextMonth);
+		diff = year_YYYY - Integer.parseInt(currentYear_DatePicker.getText());
+	}
+}
+if(diff == 0) {
+	if(!(month_MMM.equals(currentMonth_DatePicker.getText()))) {
+		int actualMonthCode = monthCode(currentMonth_DatePicker.getText());
+		int expMonthCode = monthCode(month_MMM);
+		int diffMonth = expMonthCode - actualMonthCode;
+		while(diffMonth < 0) {
+			clickelement(prevMonth);
+			diffMonth = monthCode(month_MMM) - monthCode(currentMonth_DatePicker.getText());
+		}
+		while(diffMonth > 0) {
+			clickelement(nextMonth);
+			diffMonth = monthCode(month_MMM) - monthCode(currentMonth_DatePicker.getText());
+		}
+	}
+}
+(driver.findElement(By.xpath("//*[@class='ui-datepicker-calendar']//td/a[text()="+day_d+"]"))).click();
+}
+
+/**
+ * To get month code
+ * @param month_MMM
+ * @return
+ */
+private int monthCode(String month_MMM) {
+
+int month = 0;
+Date date;
+try {
+	 date = new SimpleDateFormat("MMM").parse(month_MMM);
+	 Calendar cal = Calendar.getInstance();
+	 cal.setTime(date);
+	 month = cal.get(Calendar.MONTH);
+} catch (ParseException e) {
+	e.printStackTrace();
+}
+return month;
+}
+
+/**
+ * To set from date in a calendar
+ * @param calenderField
+ * @param day_d
+ * @param month_MMM
+ * @param year_YYYY
+ */
+public  void selectCalender_FromDate(String calenderField,int day_d, String month_MMM, int year_YYYY) {
+if(day_d != 0 | !(month_MMM.equalsIgnoreCase("null")) | year_YYYY != 0 ) {
+	selectCalender_Date(calenderField, day_d, month_MMM, year_YYYY);
+}
+
+}
+
+/**
+ * To set to date in calendar
+ * @param calenderField
+ * @param day_d
+ * @param month_MMM
+ * @param year_YYYY
+ */
+public void  selectCalender_ToDate(String calenderField,int day_d, String month_MMM, int year_YYYY) {
+if(day_d != 0 | !(month_MMM.equalsIgnoreCase("null")) | year_YYYY != 0 ) {
+	selectCalender_Date(calenderField, day_d, month_MMM, year_YYYY);	
+}
+
+}
+
+/**
+ * To check whether element is clicked
+ * @param element
+ * @return
+ */
+public boolean eleClicked(WebElement element) {
+	if(element.isDisplayed()) {
+		String classes = element.getAttribute("class");
+		boolean isDisabled = classes.contains("highcharts-button highcharts-button-pressed");
+		System.out.println(isDisabled);
+		return !(isDisabled);			
+	}
+	return false;
+}
 }
 
 
