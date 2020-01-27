@@ -120,7 +120,6 @@ public class CA_Review_Test extends BaseClass {
       CurrentState.getLogger().log(Status.PASS,
           "Site level scores in site table  and overview report export found matching");
       addEvidence(CurrentState.getDriver(), "Site level scores in Review site table  and overview report export found matchin", "yes"); 
-
   }
   
   @Test(dependsOnMethods = { "verifySiteTablenExport"}, groups = {
@@ -159,18 +158,18 @@ public class CA_Review_Test extends BaseClass {
 		Thread.sleep(3000);
   }
   
-//  @Test(dependsOnMethods = { "selectlocationforcompetitor"}, groups = {
-//  "smoke" }, description = "Export Location data")
-//  
-//  public void exportlocationcompetitordata() throws Exception
-//  {
-//	  data = new CA_Review_Page(CurrentState.getDriver());
-//      export = data.getExportDataLocation();
-//      data.compareExprttoLocation(export, data.getLocationReport());
-//      CurrentState.getLogger().log(Status.PASS,
-//          "Overview report export and Overview report data found matching");
-//      addEvidence(CurrentState.getDriver(), "Verified overview export for review report", "yes"); 
-//  }
+  @Test(dependsOnMethods = { "selectlocationforcompetitor"}, groups = {
+  "smoke" }, description = "Export Location data")
+  
+  public void exportlocationcompetitordata() throws Exception
+  {
+  data = new CA_Review_Page(CurrentState.getDriver());
+      export = data.getExportDataLocation();
+      data.compareExprttoLocation(export, data.getLocationReport());
+     CurrentState.getLogger().log(Status.PASS,
+          "Overview report export and Overview report data found matching");
+      addEvidence(CurrentState.getDriver(), "Verified overview export for review report", "yes"); 
+  }
   
   @Test(dependsOnMethods = { "selectlocationforcompetitor" }, groups = {
   "smoke" }, description = "Test for verifying tooltips in Review page")
@@ -180,7 +179,7 @@ public void verifylocationReportTooltipReview() throws Exception {
   data.verifyHistoryGraphLocationcompSet();
   data.getLocationReport();
   CurrentState.getLogger().log(Status.PASS,
-      "Review history graph tooltip and overview report score found matching");
+      "Review history graph tooltip and overview relcnRprtDataport score found matching");
   addEvidence(CurrentState.getDriver(), "Tooltip values verified from Overview report", "yes"); 
 
 }

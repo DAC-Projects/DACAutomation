@@ -106,6 +106,7 @@ public class CA_Review_Page extends CA_abstractMethods {
 		scrollByElement(exportBtn);
 		download(CurrentState.getBrowser(), exportBtn, 20);
 		convertExports(getLastModifiedFile(Exportpath), ReviewExport);
+		//renamefile(getLastModifiedFile(Exportpath), ReviewExport); 
 	}
 
 	public void exportAllReviewLocationSet() throws InterruptedException, FileNotFoundException, IOException
@@ -114,7 +115,9 @@ public class CA_Review_Page extends CA_abstractMethods {
 		waitForElement(exportBtnAll,30);
 		scrollByElement(exportBtnAll);
 		download(CurrentState.getBrowser(), exportBtnAll, 20);
-		convertExports(getLastModifiedFile(Exportpath), ReviewLocationCompetitorExportAll);
+		//convertExports(getLastModifiedFile(Exportpath), ReviewLocationCompetitorExportAll);
+		renamefile(getLastModifiedFile(Exportpath), ReviewLocationCompetitorExportAll); 
+
 		
 		
 	}
@@ -124,7 +127,8 @@ public class CA_Review_Page extends CA_abstractMethods {
 		waitForElement(exportlocation, 10);
 		scrollByElement(exportlocation);
 		download(CurrentState.getBrowser(), exportlocation, 20);
-		convertExports(getLastModifiedFile(Exportpath), ReviewLocationCompetitorExport);
+	//	convertExports(getLastModifiedFile(Exportpath), ReviewLocationCompetitorExport);
+		renamefile(getLastModifiedFile(Exportpath), ReviewLocationCompetitorExport); 
 	}
 	
 	
@@ -243,7 +247,7 @@ public class CA_Review_Page extends CA_abstractMethods {
 	public List<Map<String, String>> getExportDataLocation() throws Exception {
 		exportlocationset();
 
-		String[][] table = new ExcelHandler(Exportpath + ReviewLocationCompetitorExport, "Sheet0").getExcelTable();
+		String[][] table = new ExcelHandler(Exportpath + ReviewLocationCompetitorExport, "CA_LocalReview").getExcelTable();
 		List<Map<String, String>> exportData1 = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
 		for (int col = 1; col < colSize; col++) {
@@ -261,9 +265,9 @@ public class CA_Review_Page extends CA_abstractMethods {
 
 	}
 
-	public void compareExportnTable(List<Map<String, String>> exportData, List<Map<String, String>> siteTableData) {
+	public void compareExportnTable(List<Map<String, String>> exportData1, List<Map<String, String>> siteTableData) {
 
-		for (Map<String, String> m1 : exportData) {
+		for (Map<String, String> m1 : exportData1) {
 			for (Map<String, String> m2 : siteTableData) {
 				if (m1.get("compName").equals(m2.get("compName"))) {
 					Assert.assertEquals(m1.size() - 1, m2.size());

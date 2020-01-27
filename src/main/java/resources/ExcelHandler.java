@@ -203,6 +203,8 @@ public class ExcelHandler {
 	public String[][] getExcelTable() throws Exception {
 		System.out.println("Reading excel------");
 		ExcelHandler excel	= new ExcelHandler(this.filePath, this.sheetName);
+		System.out.println(this.sheetName);
+		System.out.println(this.filePath);
 		int row = excel.getRowCount();
 		String[][] rows = new String[row+1][];
 		System.out.println("total no of rows is"+ row);
@@ -216,7 +218,8 @@ public class ExcelHandler {
 			}
 					
 			rows[i] = cellValues;
-			System.out.println(Arrays.toString(rows[i]));
+			//System.out.println("Array values");
+			System.out.println("Array values"+Arrays.toString(rows[i]));
 		}return rows;
 	}
 	

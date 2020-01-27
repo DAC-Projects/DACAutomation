@@ -445,6 +445,7 @@ public class BasePage {
       i++;
     }
     System.out.println("\n");
+    System.out.println("Final Table Print"+Arrays.toString(rowResults));
     return rowResults;
   }
 }

@@ -228,6 +228,10 @@ public void clickApplyFilterBTN() throws InterruptedException {
 		String report_export = new formatConvert(Exportpath + filename).convertFile("xlsx");
 		FileHandler.renameTo(new File(Exportpath + report_export), Exportpath + export);
 	}
+	
+	public void renamefile(String filename, String export) throws FileNotFoundException, IOException{
+        FileHandler.renameTo(new File(Exportpath + filename), Exportpath + export);
+    }   
 
 	/**
 	 * @return History graph value read
@@ -320,14 +324,12 @@ public void clickApplyFilterBTN() throws InterruptedException {
 		List<Map<String, String>> siteTableData = new ArrayList<Map<String, String>>();
 		Map<String, String> kMap = new HashMap<String, String>();
 		for (int j = 0; j < table[0].length - 1; j++) {
-
 			kMap.put("compName", table[0][j + 1]);
 			for (int i = 1; i < table.length; i++) {
 				kMap.put(table[i][0], table[i][j + 1]);
 			}
 			siteTableData.add(kMap);
-		}
-
+		}		
 		System.out.println("MAP******************MAP");
 		for (String name : siteTableData.get(1).keySet()) {
 
@@ -347,16 +349,16 @@ public void clickApplyFilterBTN() throws InterruptedException {
 		System.out.println("Reading site table**********");
 		String[][] table = readTable(siteTableLoc);
 		List<Map<String, String>> siteTableData = new ArrayList<Map<String, String>>();
-		Map<String, String> kMap = new HashMap<String, String>();
-		for (int j = 0; j < table[0].length - 1; j++) {
-
+		
+		for (int j = 0; j < table[1].length - 1; j++) {
+			Map<String, String> kMap = new HashMap<String, String>();
 			kMap.put("compName", table[0][j + 1]);
 			for (int i = 1; i < table.length; i++) {
 				kMap.put(table[i][0], table[i][j + 1]);
 			}
 			siteTableData.add(kMap);
 		}
-
+		System.out.println("Siteprint"+ siteTableData);
 		System.out.println("MAP******************MAP");
 		for (String name : siteTableData.get(1).keySet()) {
 
@@ -384,8 +386,13 @@ public void clickApplyFilterBTN() throws InterruptedException {
 	public void compareExprttoLocation(List<Map<String, String>> exportData1, List<Map<String, String>> lcnRprtData) {
 
 		for (Map<String, String> m1 : lcnRprtData) {
+			
+			System.out.println("Abi location"+lcnRprtData);
 			for (Map<String, String> m2 : exportData1) {
+				System.out.println("Abi export "+exportData1);
 				if (m1.get("compName").equals(m2.get("compName"))) {
+					
+					System.out.println("Testing is working");
 					Assert.assertEquals(formatFloat(m1.get("score")), formatFloat(m2.get("Overall")), 0.05f,
 							"Verifying score for" + m1.get("compName"));
 				}
