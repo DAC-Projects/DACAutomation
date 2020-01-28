@@ -223,6 +223,55 @@ public class ExcelHandler {
 		}return rows;
 	}
 	
+	public String[][] getExcelTableWithout0() throws Exception {
+		String flag;
+		int count = 0;
+		int col = 0;
+		System.out.println("Reading excel------");
+		ExcelHandler excel	= new ExcelHandler(this.filePath, this.sheetName);
+		int row = excel.getRowCount();
+		String[][] rows = new String[row+1][];
+		System.out.println("total no of rows is"+ row);
+		String[] cellValues ;
+		for(int i=0;i<=row;i++) {
+			flag = "0";
+			Row currentrow = sheet.getRow(i);
+			col = currentrow.getLastCellNum();
+			cellValues = new String[col];
+			for(int j=0;j<col;j++) {	
+				cellValues[j] = new ExcelHandler(filePath, sheetName).getCellValue(i, j);
+			
+				if(j!=0) {					
+					if(!cellValues[j].equals("0")) {
+						System.out.println("flag set to 1" +cellValues[j]);
+						flag = "1";
+					}
+				}
+			}
+			if(flag.contains("1")) {
+			rows[count] = cellValues;
+			System.out.println("rw value "+count+Arrays.toString(rows[count]));
+			count++;
+			}
+			
+		}
+		String[][] newarray = new String[count][];
+		for (int i = 0; i < count; ++i) {
+			newarray[i] = new String[col];
+	         for (int j = 0; j < col; ++j) {
+	        	 newarray[i][j] = rows[i][j];
+	         }
+	      }
+	      System.out.println(Arrays.deepToString(newarray));
+	  
+	
+		
+		return newarray;
+			
+	
+}
+	
+	
 	public int getRowCount() {
 		int rowCount=0;
 		try {

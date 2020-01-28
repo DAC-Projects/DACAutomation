@@ -45,7 +45,7 @@ public class CA_Visibility_Test extends BaseClass {
 	@SuppressWarnings("unchecked")
 //  @Parameters({ "Filter" })
 	//Filter Condition Apply
-	@Test(dependsOnMethods = { "navigateToVisibilityPage" }, groups= {"smoke"}, description = "Verify Visibility page loads after filter applied")
+//	@Test(dependsOnMethods = { "navigateToVisibilityPage" }, groups= {"smoke"}, description = "Verify Visibility page loads after filter applied")
 	public void verifyFilteringReportsVisibility() throws Exception {try {	
 		int count = 1;
 		ExcelHandler wb = new ExcelHandler("./data/FilterCriteria.xlsx", "CA_FIL"); wb.deleteEmptyRows();
