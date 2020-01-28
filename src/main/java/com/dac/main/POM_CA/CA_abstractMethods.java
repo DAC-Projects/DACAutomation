@@ -386,10 +386,8 @@ public void clickApplyFilterBTN() throws InterruptedException {
 	public void compareExprttoLocation(List<Map<String, String>> exportData1, List<Map<String, String>> lcnRprtData) {
 
 		for (Map<String, String> m1 : lcnRprtData) {
-			
-			System.out.println("Abi location"+lcnRprtData);
 			for (Map<String, String> m2 : exportData1) {
-				System.out.println("Abi export "+exportData1);
+				
 				if (m1.get("compName").equals(m2.get("compName"))) {
 					
 					System.out.println("Testing is working");

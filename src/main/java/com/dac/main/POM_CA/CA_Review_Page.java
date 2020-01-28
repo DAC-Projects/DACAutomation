@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.poi.ddf.EscherColorRef.SysIndexSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -171,6 +172,7 @@ public class CA_Review_Page extends CA_abstractMethods {
 			System.out.println("");
 			ovrwRprtData.add(kMap);
 		}
+		System.out.println("Over view report"+ovrwRprtData);
 		return ovrwRprtData;
 
 	}
@@ -250,7 +252,7 @@ public class CA_Review_Page extends CA_abstractMethods {
 		String[][] table = new ExcelHandler(Exportpath + ReviewLocationCompetitorExport, "CA_LocalReview").getExcelTable();
 		List<Map<String, String>> exportData1 = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
-		for (int col = 1; col < colSize; col++) {
+		for (int col = 1; col < 2; col++) {
 			Map<String, String> kMap = new HashMap<String, String>();
 
 			for (int i = 1; i < table.length; i++) {
@@ -259,7 +261,9 @@ public class CA_Review_Page extends CA_abstractMethods {
 				kMap.put(table[i][0], table[i][col]);
 			}
 			exportData1.add(kMap);
+
 		}
+		System.out.println("Export data 1"+ exportData1);
 
 		return exportData1;
 

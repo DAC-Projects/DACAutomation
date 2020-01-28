@@ -89,6 +89,8 @@ public class CA_Review_Test extends BaseClass {
   @Test(dependsOnMethods = { "verifyFilteringReportsReview" }, groups = {
       "smoke" }, description = "Test for Review overview export and export verification")
   public void verifyOverviewReportnExportReview() throws Exception {
+	  
+	  // export and overview compare
  
       data = new CA_Review_Page(CurrentState.getDriver());
       export = data.getExportData();
@@ -158,18 +160,8 @@ public class CA_Review_Test extends BaseClass {
 		Thread.sleep(3000);
   }
   
-  @Test(dependsOnMethods = { "selectlocationforcompetitor"}, groups = {
-  "smoke" }, description = "Export Location data")
+ 
   
-  public void exportlocationcompetitordata() throws Exception
-  {
-  data = new CA_Review_Page(CurrentState.getDriver());
-      export = data.getExportDataLocation();
-      data.compareExprttoLocation(export, data.getLocationReport());
-     CurrentState.getLogger().log(Status.PASS,
-          "Overview report export and Overview report data found matching");
-      addEvidence(CurrentState.getDriver(), "Verified overview export for review report", "yes"); 
-  }
   
   @Test(dependsOnMethods = { "selectlocationforcompetitor" }, groups = {
   "smoke" }, description = "Test for verifying tooltips in Review page")
@@ -195,7 +187,18 @@ public void verifylocationSiteTableExport() throws Exception {
   addEvidence(CurrentState.getDriver(), "Site level scores in Review site table  and overview report export found matchin", "yes"); 
 
 }
-  
+@Test(dependsOnMethods = { "selectlocationforcompetitor"}, groups = {
+"smoke" }, description = "Export Location data")
+
+public void exportlocationcompetitordata() throws Exception
+{
+data = new CA_Review_Page(CurrentState.getDriver());
+    export = data.getExportDataLocation();
+    data.compareExprttoLocation(export, data.getLocationReport());
+   CurrentState.getLogger().log(Status.PASS,
+        "Overview report export and Overview report data found matching");
+    addEvidence(CurrentState.getDriver(), "Verified overview export for review report", "yes"); 
+}
   }
   
 
