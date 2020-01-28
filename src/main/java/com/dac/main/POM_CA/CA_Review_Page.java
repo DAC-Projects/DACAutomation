@@ -251,7 +251,7 @@ public class CA_Review_Page extends CA_abstractMethods {
 
 		String[][] table = new ExcelHandler(Exportpath + ReviewLocationCompetitorExport, "CA_LocalReview").getExcelTable();
 		List<Map<String, String>> exportData1 = new ArrayList<Map<String, String>>();
-		int colSize = table[0].length;
+		//int colSize = table[0].length;
 		for (int col = 1; col < 2; col++) {
 			Map<String, String> kMap = new HashMap<String, String>();
 

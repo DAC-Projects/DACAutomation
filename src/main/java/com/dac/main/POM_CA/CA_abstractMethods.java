@@ -389,7 +389,6 @@ public void clickApplyFilterBTN() throws InterruptedException {
 			for (Map<String, String> m2 : exportData1) {
 				
 				if (m1.get("compName").equals(m2.get("compName"))) {
-					
 					System.out.println("Testing is working");
 					Assert.assertEquals(formatFloat(m1.get("score")), formatFloat(m2.get("Overall")), 0.05f,
 							"Verifying score for" + m1.get("compName"));
