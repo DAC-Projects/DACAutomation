@@ -33,7 +33,7 @@ public class CA_ContentAnalysis_Test extends BaseClass {
 	}
 
 	
-//	@Test(dependsOnMethods = { "navigateToCAPage" }, groups= {"smoke"})
+	@Test(dependsOnMethods = { "navigateToCAPage" }, groups= {"smoke"})
 	public void verifyFilteringReports() throws Exception {try {	
 		int count = 1;
 		ExcelHandler wb = new ExcelHandler("./data/FilterCriteria.xlsx", "CA_FIL"); wb.deleteEmptyRows();
@@ -74,7 +74,7 @@ public class CA_ContentAnalysis_Test extends BaseClass {
 		
 	}
 
-//	@Test( dependsOnMethods = { "navigateToCAPage" }, groups= {"smoke"})
+	@Test( dependsOnMethods = { "navigateToCAPage" }, groups= {"smoke"})
 	public void verifyOverviewReportnTooltip() throws Exception {
 		data = new CA_ContentAnalysis_Page(CurrentState.getDriver());
 		data.compareReportnGraph(data.verifyHistoryGraph(), exportData);
@@ -87,4 +87,11 @@ public class CA_ContentAnalysis_Test extends BaseClass {
 		data = new CA_ContentAnalysis_Page(CurrentState.getDriver());
 		data.calculateContentAnalysisScore();		
 	}
+	
+	@Test( dependsOnMethods = { "navigateToCAPage" }, groups= {"smoke"})
+	public void UiCalculation() throws Exception {
+		data = new CA_ContentAnalysis_Page(CurrentState.getDriver());
+		data.UiCalculation();		
+	}
+	
 }

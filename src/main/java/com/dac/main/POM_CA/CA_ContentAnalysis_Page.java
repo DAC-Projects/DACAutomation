@@ -1,5 +1,6 @@
 package com.dac.main.POM_CA;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
@@ -49,6 +50,16 @@ public class CA_ContentAnalysis_Page extends CA_abstractMethods {
 
 	@FindBy(css = "table.table-responsive.table-hover>thead>th")
 	private List<WebElement> competitors;
+	
+	@FindBy(xpath = "//div[@class='site-score pull-right ng-binding']")
+	private List<WebElement> vendorScore;
+	
+	@FindBy(xpath = "//div[@class='category-information']")
+	private WebElement categoryInformation;
+	
+	@FindBy(xpath = "//div[@class=\"score pull-right ng-binding\"]")
+	private WebElement avgScore;
+	
 
 	String xpathCompetitors = "(//div[@id='compIntOverviewContainer']//div[starts-with(@class,'overviewSubContainer')])";
 	String compName = ".//div[starts-with(@class, 'competitorName')]";
@@ -149,4 +160,34 @@ public class CA_ContentAnalysis_Page extends CA_abstractMethods {
 			Assert.assertEquals(FinScore[i], Double.parseDouble(table[1][i+1]));
 		}
 	}
+	
+	public void UiCalculation() {
+		
+		System.out.println("UI calculation");
+		clickelement(categoryInformation);
+		double score=0;
+		String UIvalue = null;
+		double Finscore=0;
+		int size = vendorScore.size()/2;
+		int counter=0;
+		System.out.println("size "+size);
+		for(int i =0; i<size;i++) {
+			
+			UIvalue =  vendorScore.get(i).getText().replace("%", "");
+			
+			if(!UIvalue.contains("-")|| !UIvalue.contains("N/A")) {
+			 score =Double.parseDouble(UIvalue)+score;
+			 counter++;
+			 System.out.println("Score "+score);
+			}
+		}
+		
+		Finscore =  Math.round((score/counter)*100.0)/100.0;
+		 System.out.println("FinScore "+Finscore);
+		 
+		 assertEquals(avgScore.getText(), Finscore+"%");
+	}
+	
+	
+	
 }
