@@ -87,5 +87,4 @@ public class CA_ContentAnalysis_Test extends BaseClass {
 		data = new CA_ContentAnalysis_Page(CurrentState.getDriver());
 		data.calculateContentAnalysisScore();		
 	}
-
 }

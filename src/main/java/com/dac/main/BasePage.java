@@ -440,7 +440,7 @@ public class BasePage {
       }
       rowResults[i] = cellValues;
 
-      System.out.println(Arrays.toString(rowResults[i]));
+      System.out.println("UI data"+Arrays.toString(rowResults[i]));
 
       i++;
     }

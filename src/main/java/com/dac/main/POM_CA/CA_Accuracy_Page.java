@@ -219,11 +219,18 @@ public class CA_Accuracy_Page extends CA_abstractMethods{
 			int sum = 0;
 			for(int i=0;i<table.length-2;i++) {			 
 
-				score[i] = Double.parseDouble(table[i+2][1].replace("%", ""));
+				if(table[i+2][j+1].isEmpty()) {
+					score[i] = 0;
+				}
+				else {
+				score[i] = Double.parseDouble(table[i+2][j+1].replace("%", ""));
+				}
 				System.out.println("double array value"+i+":" + Arrays.toString(score) );
 
 				totScore = totScore + visScore[j][i]*score[i];
 				sum = sum + visScore[j][i];
+				
+				System.err.println("Total score" +j+totScore+" Sum ="+sum);
 			}
 			if(sum!=0) {
 				FinScore[j] = Math.round((totScore/sum)*100.0)/100.0;
@@ -236,8 +243,8 @@ public class CA_Accuracy_Page extends CA_abstractMethods{
 		System.out.println("FinScore :"+Arrays.toString(FinScore));
 		for (int k=0;k<table[0].length-1;k++) {
 			
-			assertEquals(FinScore[k], table[1][k+1].replace("%", ""));
-			System.out.println("Compare "+k+FinScore[k]+table[1][k+1]);
+			assertEquals(table[1][k+1].replace("%", ""), String.format("%.2f", FinScore[k]));
+			System.out.println("Compare "+table[1][k+1].replace("%", "")+" * "+ String.format("%.2f", FinScore[k]) );
 		}
 		
 	}

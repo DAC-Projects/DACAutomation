@@ -124,7 +124,7 @@ public class CA_Review_Page extends CA_abstractMethods {
 		waitForElement(exportlocation, 10);
 		scrollByElement(exportlocation);
 		download(CurrentState.getBrowser(), exportlocation, 20);
-		convertExports(getLastModifiedFile(Exportpath), ReviewLocationCompetitorExport);
+		//convertExports(getLastModifiedFile(Exportpath), ReviewLocationCompetitorExport);
 	}
 	
 	
@@ -243,7 +243,7 @@ public class CA_Review_Page extends CA_abstractMethods {
 	public List<Map<String, String>> getExportDataLocation() throws Exception {
 		exportlocationset();
 
-		String[][] table = new ExcelHandler(Exportpath + ReviewLocationCompetitorExport, "Sheet0").getExcelTable();
+		String[][] table = new ExcelHandler(Exportpath + getLastModifiedFile(Exportpath), "CA_LocalReview").getExcelTable();
 		List<Map<String, String>> exportData1 = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
 		for (int col = 1; col < colSize; col++) {
@@ -263,6 +263,10 @@ public class CA_Review_Page extends CA_abstractMethods {
 
 	public void compareExportnTable(List<Map<String, String>> exportData, List<Map<String, String>> siteTableData) {
 
+		System.out.println("Excel data "+ exportData);
+		
+		System.out.println("Excel data "+ siteTableData);
+		
 		for (Map<String, String> m1 : exportData) {
 			for (Map<String, String> m2 : siteTableData) {
 				if (m1.get("compName").equals(m2.get("compName"))) {
