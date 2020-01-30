@@ -368,6 +368,17 @@ public void clickApplyFilterBTN() throws InterruptedException {
 		}
 
 		return siteTableData;
+	}
+		
+		public String[][] verifySitetableLocnInArray() {
+			waitForElement(siteTableLoc, 10);
+			scrollByElement(siteTableLoc);
+			System.out.println("Reading site table**********");
+			String[][] table = readTableInArray(siteTableLoc);
+			
+
+			return table;
+		
 
 	}
 

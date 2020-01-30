@@ -31,14 +31,10 @@ public class CA_Review_Test extends BaseClass {
   static List<Map<String, String>> export;
   Navigationpage np;
   CA_Review_Page data;
-  
+    
 
-  
-
-  @Test(groups = {
-      "smoke" }, description = "Test for navigating to Review page")
+  @Test(priority= 0, groups = { "smoke" }, description = "Test for navigating to Review page")
   public void navigateToReviewPage() throws Exception {
-
   
       np = new Navigationpage(CurrentState.getDriver());
       np.navigateCA_Reviewpage();
@@ -54,7 +50,7 @@ public class CA_Review_Test extends BaseClass {
 //  @Test(dependsOnMethods = { "navigateToReviewPage" }, groups = {
 //      "smoke" }, description = "Verify review page loads after filter applied from Review page")
  
-	@Test(dependsOnMethods = { "navigateToReviewPage" }, groups= {"smoke"}, description = "Verify Review page loads after filter applied")
+//	@Test(dependsOnMethods = { "navigateToReviewPage" }, groups= {"smoke"}, description = "Verify Review page loads after filter applied")
 
   public void verifyFilteringReportsReview() throws Exception {try {	
 		int count = 1;
@@ -86,8 +82,7 @@ public class CA_Review_Test extends BaseClass {
 		//Assert.fail("");
 	}}
 
-  @Test(dependsOnMethods = { "verifyFilteringReportsReview" }, groups = {
-      "smoke" }, description = "Test for Review overview export and export verification")
+//  @Test(dependsOnMethods = { "verifyFilteringReportsReview" }, groups = {"smoke" }, description = "Test for Review overview export and export verification")
   public void verifyOverviewReportnExportReview() throws Exception {
 	  
 	  // export and overview compare
@@ -100,8 +95,7 @@ public class CA_Review_Test extends BaseClass {
       addEvidence(CurrentState.getDriver(), "Verified overview export for review report", "yes"); 
   }
 
-  @Test(dependsOnMethods = { "verifyOverviewReportnExportReview" }, groups = {
-      "smoke" }, description = "Test for verifying tooltips in Review page")
+ // @Test(dependsOnMethods = { "verifyOverviewReportnExportReview" }, groups = {"smoke" }, description = "Test for verifying tooltips in Review page")
   public void verifyOverviewReportnTooltipReview() throws Exception {
   
       data = new CA_Review_Page(CurrentState.getDriver());
@@ -113,8 +107,7 @@ public class CA_Review_Test extends BaseClass {
     
   }
 
-  @Test(dependsOnMethods = {"verifyOverviewReportnExportReview"}, groups = {
-          "smoke" }, description = "Test for comparing Review Site table and overview export values")
+ // @Test(dependsOnMethods = {"verifyOverviewReportnExportReview"}, groups = { "smoke" }, description = "Test for comparing Review Site table and overview export values")
   public void verifySiteTablenExport() throws Exception {
 
       data = new CA_Review_Page(CurrentState.getDriver());
@@ -124,16 +117,14 @@ public class CA_Review_Test extends BaseClass {
       addEvidence(CurrentState.getDriver(), "Site level scores in Review site table  and overview report export found matchin", "yes"); 
   }
   
-  @Test(dependsOnMethods = { "verifySiteTablenExport"}, groups = {
-      "smoke" }, description = "Location Competitor Set Test Evidence Capture with Export")
-  
-  public void navigatetoLocationCompetitorset() throws Exception{
+  @Test( priority= 1,groups = { "smoke" }, description = "Location Competitor Set Test Evidence Capture with Export")
+   public void navigatetoLocationCompetitorset() throws Exception{
 	  
 	  data = new CA_Review_Page(CurrentState.getDriver());
 	  data.LocationCompetitorSetNavigation();
 	  
 	  data = new CA_Review_Page(CurrentState.getDriver());
-      data.exportAllReviewLocationSet();
+ //     data.exportAllReviewLocationSet();
 //      data.compareExprttoOvervw(export, data.getOverviewReport());
       CurrentState.getLogger().log(Status.PASS,
           "Location report export and Location report data found matching");
@@ -146,8 +137,7 @@ public class CA_Review_Test extends BaseClass {
 	      
 }
   @Parameters({ "Filter" })
-  @Test(dependsOnMethods = { "navigatetoLocationCompetitorset"}, groups = {
-  "smoke" }, description = "Select location for competitor")
+  @Test(priority = 2, groups = {"smoke" }, description = "Select location for competitor")
   public void selectlocationforcompetitor(String Filter) throws InterruptedException
   
   {
@@ -163,8 +153,7 @@ public class CA_Review_Test extends BaseClass {
  
   
   
-  @Test(dependsOnMethods = { "selectlocationforcompetitor" }, groups = {
-  "smoke" }, description = "Test for verifying tooltips in Review page")
+//  @Test(dependsOnMethods = { "selectlocationforcompetitor" }, groups = {"smoke" }, description = "Test for verifying tooltips in Review page")
 public void verifylocationReportTooltipReview() throws Exception {
 
   data = new CA_Review_Page(CurrentState.getDriver());
@@ -176,19 +165,19 @@ public void verifylocationReportTooltipReview() throws Exception {
 
 }
 
-@Test(dependsOnMethods = {"verifylocationReportTooltipReview"}, groups = {
+@Test( dependsOnMethods = { "selectlocationforcompetitor" },groups = {
       "smoke" }, description = "Test for comparing Review Site table and overview export values")
 public void verifylocationSiteTableExport() throws Exception {
 
   data = new CA_Review_Page(CurrentState.getDriver());
-  data.compareExportnTable(export, data.verifySitetableLocn());
+ 
+  data.compareExportnTableInArray(data.getExportDataLocationInArray(), data.verifySitetableLocnInArray());
   CurrentState.getLogger().log(Status.PASS,
       "Site level scores in site table  and overview report export found matching");
   addEvidence(CurrentState.getDriver(), "Site level scores in Review site table  and overview report export found matchin", "yes"); 
 
 }
-@Test(dependsOnMethods = { "selectlocationforcompetitor"}, groups = {
-"smoke" }, description = "Export Location data")
+//@Test(dependsOnMethods = { "selectlocationforcompetitor"}, groups = {"smoke" }, description = "Export Location data")
 
 public void exportlocationcompetitordata() throws Exception
 {
