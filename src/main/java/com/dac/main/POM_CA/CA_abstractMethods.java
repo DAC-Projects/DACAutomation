@@ -4,9 +4,8 @@ package com.dac.main.POM_CA;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +13,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,13 +22,12 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import com.dac.main.BasePage;
 
-import resources.CurrentState;
+import resources.ExcelHandler;
 import resources.FileHandler;
 import resources.JSWaiter;
 import resources.formatConvert;
@@ -37,7 +37,10 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	Actions action;
 	WebDriverWait wait;
 	List<WebElement> rows;
-
+	public String filePath="";
+	public String sheetName = "";
+	public int sheetIndex;
+	private  XSSFSheet sheet;
 	public CA_abstractMethods(WebDriver driver) {
 		super(driver);
 		this.driver = driver;
@@ -397,9 +400,11 @@ public void clickApplyFilterBTN() throws InterruptedException {
 	public void compareExprttoLocation(List<Map<String, String>> exportData1, List<Map<String, String>> lcnRprtData) {
 
 		for (Map<String, String> m1 : lcnRprtData) {
+			System.out.println("Abi location"+lcnRprtData);
 			for (Map<String, String> m2 : exportData1) {
 				
 				if (m1.get("compName").equals(m2.get("compName"))) {
+					
 					System.out.println("Testing is working");
 					Assert.assertEquals(formatFloat(m1.get("score")), formatFloat(m2.get("Overall")), 0.05f,
 							"Verifying score for" + m1.get("compName"));
@@ -407,6 +412,20 @@ public void clickApplyFilterBTN() throws InterruptedException {
 			}
 		}
 	}
+	
+	public void compareExprttoLocationOver(List<String> exportData1, List<String> lcnRprtData) {
+		//ArrayList<String> Export=new ArrayList<>(Arrays.asList("1","2","3"));
+		for(int i=0; i<exportData1.size();i++) {
+			if(!exportData1.get(i).contains(lcnRprtData.get(i))) {
+				Assert.assertEquals(exportData1.get(i), lcnRprtData.get(i));
+			}
+		}
+		
+					
+				}
+			
+		
+	
 
 	public void compareReportnGraph(List<Map<String, String>> tooltipdata, List<Map<String, String>> ovrwRprtData) {
 
@@ -462,6 +481,14 @@ public void AccuracyScrolldataSite4()
 	scrollByElement(site4);
 	waitUntilLoad(driver);
 }
+
+
+
+
+
+
+
+
 
 }
 

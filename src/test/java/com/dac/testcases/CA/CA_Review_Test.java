@@ -29,6 +29,7 @@ import resources.Utilities;
 public class CA_Review_Test extends BaseClass {
 
   static List<Map<String, String>> export;
+  static List<String> export1;
   Navigationpage np;
   CA_Review_Page data;
     
@@ -180,8 +181,9 @@ public void verifylocationSiteTableExport() throws Exception {
 public void exportlocationcompetitordata() throws Exception
 {
 data = new CA_Review_Page(CurrentState.getDriver());
-    export = data.getExportDataLocation();
-    data.compareExprttoLocation(export, data.getLocationReport());
+    export1 = data.getExportDataLocationover();
+   data.compareExprttoLocationOver(export1, data.getLocationReportOver());
+   // data.getLocationReportOver();
    CurrentState.getLogger().log(Status.PASS,
         "Overview report export and Overview report data found matching");
     addEvidence(CurrentState.getDriver(), "Verified overview export for review report", "yes"); 

@@ -168,6 +168,34 @@ public class CA_Review_Page extends CA_abstractMethods {
 					s.findElement(By.xpath(compScore)).getText());
 			System.out.println("");
 			ovrwRprtData.add(kMap);
+			
+		}
+		
+		return ovrwRprtData;
+
+	}
+	
+	public List<String> getLocationReportOver() {
+		// TODO Auto-generated method stub
+		waitForElement(LocationReport, 10);
+		scrollByElement(LocationReport);
+		Map<String, String> kMap;
+		ArrayList<String> ovrwRprtData = new ArrayList<String>();
+		System.out.println("Size"+ competitors.size());
+		for (int i = 1; i <= competitors.size(); i++) {
+			WebElement s = driver.findElement(By.xpath(xpathCompetitors + "[" + i + "]"));
+			// ovrwRprtData.put("Score", s.findElement(By.xpath(compScore)).getText());
+			//String name=s.findElement(By.xpath("//div[starts-with(@class, 'competitor-address')]")).getText();
+			String score=s.findElement(By.xpath(compScore)).getText();
+			
+			//kMap = new HashMap<String, String>();
+			System.out.format("%10s%10s", s.findElement(By.xpath(compName)).getText(),
+					s.findElement(By.xpath(compScore)).getText());
+			System.out.println("");
+			//ovrwRprtData.add(kMap);
+			//ovrwRprtData.add(name);
+			ovrwRprtData.add(score);
+			ovrwRprtData.removeAll(Arrays.asList("",null));
 		}
 		System.out.println("Over view report"+ovrwRprtData);
 		return ovrwRprtData;
@@ -265,6 +293,8 @@ public class CA_Review_Page extends CA_abstractMethods {
 		return exportData1;
 
 	}
+	
+
 
 	public String[][] getExportDataLocationInArray() throws Exception {
 		exportlocationset();
@@ -332,5 +362,18 @@ System.out.println("i,j:"+i+","+j+" Actual , expected "+siteTableData[i][j]+","+
 	}
 
 
+	
+	public ArrayList<String> getExportDataLocationover() throws Exception {
+		exportlocationset();
+
+		ArrayList<String> table = new ExcelHandler(Exportpath + ReviewLocationCompetitorExport, "CA_LocalReview").getExcelTablewith();
+		System.out.println("get excel values:" +table);
+		
+
+		return table;
+
+	}
+	
+	
 
 }

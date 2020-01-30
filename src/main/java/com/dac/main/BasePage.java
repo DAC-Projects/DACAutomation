@@ -436,11 +436,13 @@ public class BasePage {
 				} else
 					cellValues[j] = "";
 
+
 				j++;
 			}
 			rowResults[i] = cellValues;
 
 			System.out.println(Arrays.toString(rowResults[i]));
+
 
 			i++;
 		}
