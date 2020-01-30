@@ -34,8 +34,7 @@ public class CA_Review_Test extends BaseClass {
     
 
   @Test(priority= 0, groups = { "smoke" }, description = "Test for navigating to Review page")
-  public void navigateToReviewPage() throws Exception {
-  
+  public void navigateToReviewPage() throws Exception {  
       np = new Navigationpage(CurrentState.getDriver());
       np.navigateCA_Reviewpage();
       /*new CA_Review_Page(CurrentState.getDriver())
@@ -43,8 +42,7 @@ public class CA_Review_Test extends BaseClass {
       CurrentState.getLogger().log(Status.PASS,
           "Navigated successfully to CA Review page");    
       addEvidence(CurrentState.getDriver(), "Navigate to Review page from Dashboard", "yes"); 
-
-  }
+}
 
   
 //  @Test(dependsOnMethods = { "navigateToReviewPage" }, groups = {

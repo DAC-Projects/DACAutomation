@@ -1,7 +1,6 @@
 package com.dac.main.POM_CA;
 
 import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,17 +9,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.poi.ddf.EscherColorRef.SysIndexSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
@@ -164,7 +160,7 @@ public class CA_Review_Page extends CA_abstractMethods {
 		List<Map<String, String>> ovrwRprtData = new ArrayList<Map<String, String>>();
 		for (int i = 1; i <= competitors.size(); i++) {
 			WebElement s = driver.findElement(By.xpath(xpathCompetitors + "[" + i + "]"));
-			// ovrwRprtData.put("Score", s.findElement(By.xpath(compScore)).getText());
+			//ovrwRprtData.put("Score", s.findElement(By.xpath(compScore)).getText());
 			kMap = new HashMap<String, String>();
 			kMap.put("compName", s.findElement(By.xpath(compName)).getText());
 			kMap.put("score", s.findElement(By.xpath(compScore)).getText());
