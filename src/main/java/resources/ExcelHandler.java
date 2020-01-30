@@ -218,7 +218,6 @@ public class ExcelHandler {
 			}
 					
 			rows[i] = cellValues;
-			//System.out.println("Array values");
 			System.out.println("Array values"+Arrays.toString(rows[i]));
 		}return rows;
 	}
@@ -598,6 +597,34 @@ public class ExcelHandler {
 	  }
    }*/
 
+  
+  
+  public ArrayList<String> getExcelTablewith() throws Exception {
+		
+		System.out.println("Reading excel------");
+		ExcelHandler excel	= new ExcelHandler(this.filePath, this.sheetName);
+		System.out.println(this.sheetName);
+		System.out.println(this.filePath);
+		int row = excel.getRowCount();
+		System.out.println("total no of rows is"+ row);
+		String cellValues ;
+		ArrayList<String> a = new ArrayList<String>();
+	//	for(int i=3;i<=3;i++) {
+			Row currentrow = sheet.getRow(3);
+			int col = currentrow.getLastCellNum();
+			cellValues = new String();
+			for(int j=1;j<col;j++) {	
+				cellValues = new ExcelHandler(filePath, sheetName).getCellValue(3, j);
+				j++;
+				a.add(cellValues);	
+			}
+			System.out.println("Array "+a);
+			return a;
+			
+			
+//		}
+	}
+  
   
   
 }
