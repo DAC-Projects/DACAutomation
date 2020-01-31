@@ -1,6 +1,7 @@
 package com.dac.main.POM_TPSEE;
 
 import java.io.FileNotFoundException;
+//import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,8 +44,14 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods{
 	
 	/* ------------------------------Locators---------------------------------------*/
 	
-	@FindBy(xpath = "//a[@id='location_export']")
+	@FindBy(xpath = "//div[@id='locationsTableExportDropdown']/button")
 	private WebElement Export;
+	
+	@FindBy(xpath="//div[@id='locationsTableExportDropdown']//a[contains(text(),'Export as CSV')]")
+	private WebElement Export_csv;
+	
+	@FindBy(xpath="//div[@id='locationsTableExportDropdown']//a[contains(text(),'Export as XLSX')]")
+	private WebElement Export_xlsx;
 	
 	@FindBy(xpath = "//div[@id='locationTable']/table")
 	private WebElement LocationTable;
@@ -164,21 +171,40 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods{
 	}
 	
 	
-	//Download Excel sheet
-	public void LocationDataTableExport() throws FileNotFoundException, IOException, InterruptedException {
-		waitForElement(LocationTable, 40);
-		waitForElement(Export, 40);
-		JSWaiter.waitUntilJQueryReady();
-		download(CurrentState.getBrowser(), Export, 30);
-		convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+LocationExport));
+	/**
+	 * exporting progress bar table data CSV
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	public void LocationDataTableExportCSV() throws FileNotFoundException, IOException, InterruptedException {				
+			JSWaiter.waitJQueryAngular();
+			exportVATable(Export, Export_csv);
+			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+LocationExportCSV));
+			Thread.sleep(5000);
+			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
 		}
-
+		
+	/**
+	 * exporting progress bar table data XSLX
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+		public void LocationDataTableExportXLSX() throws FileNotFoundException, IOException, InterruptedException {				
+				JSWaiter.waitJQueryAngular();
+				exportVATable(Export, Export_xlsx );
+				renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+LocationExportXLSX));
+				Thread.sleep(5000);
+				CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
+			}
+		
 	
 	//Get Excel into Map
 	public List<Map<String, String>> getLocationDataTableExport() throws Exception {
 		JSWaiter.waitJQueryAngular();
-		LocationDataTableExport();
-		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+LocationExport), "Sheet0").getExcelTable();
+		LocationDataTableExportXLSX();
+		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+LocationExportXLSX), "Location_List").getExcelTable();
 		List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
 		for (int col = 1; col < colSize; col++) {

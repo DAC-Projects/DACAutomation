@@ -11,7 +11,6 @@ import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
-import com.dac.main.POM_TPSEE.TPSEE_ContentAnalysis_Page;
 import com.dac.main.POM_TPSEE.TPSEE_GoogleRanking_Page;
 
 import resources.BaseClass;
@@ -99,7 +98,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass{
 			addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
 	}
 		
-		@Test(priority = 5,enabled = true, dataProvider = "testData")
+		@Test(priority = 6,enabled = true, dataProvider = "testData")
 		public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month, String to_year) throws Exception {
 			
 			data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
@@ -235,9 +234,17 @@ public class TPSEE_GoogleRanking_Test extends BaseClass{
 			
 			
 			
+			@Test(priority=10, groups = {
+			"smoke" }, description = "Export as csv")
+				public void exportascsv() throws Exception {
+				data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
+				data.GRDataTableExportCSV();
+				addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
+		}
+			
 			//Test for export and overview report in Content Analysis Page
 			@SuppressWarnings("unchecked")
-			@Test(priority = 10, groups = {
+			@Test(priority = 11, groups = {
 							"smoke" }, description = "Test for Ranking export and export verification")
 				public void verifyTableDataoExport() throws Exception {
 				data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
@@ -250,7 +257,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass{
 		 * Test to verify Top button functionality
 		 * @throws Exception
 		 */
-			@Test(priority = 11, groups = {"smoke"},
+			@Test(priority = 12, groups = {"smoke"},
 				description = "Verify Top Button")
 			public void GetTopBtn() throws Exception {
 				data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());

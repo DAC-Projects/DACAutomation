@@ -7,7 +7,6 @@ import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
-import com.dac.main.POM_TPSEE.TPSEE_AllLocations_Page;
 import com.dac.main.POM_TPSEE.TPSEE_Displayed_Review_Score_Page;
 import resources.BaseClass;
 import resources.CurrentState;
@@ -18,6 +17,9 @@ public class TPSEE_Displayed_Review_Score_Test extends BaseClass {
 	static List<Map<String, String>> export;
 	Navigationpage np;
 	TPSEE_Displayed_Review_Score_Page data;
+	String chromepath = "./downloads/chromeReviewScoreExportXLSX.xlsx";
+	String IEpath = "./downloads/IEReviewScoreExportXLSX.xlsx";
+	String FFpath = "./downloads/FFReviewScoreExportXLSX.xlsx";
 	
 	@Test(priority =1,groups = { "smoke" }, description = "Test for navigating to Displayed Riview page")
 	public void navigateToDisplayedReviewScore() throws Exception {
@@ -59,22 +61,39 @@ public class TPSEE_Displayed_Review_Score_Test extends BaseClass {
 		}
 	}
 	
-	@Test(priority=3, groups = {"smoke"},
-			description ="To get Google and Facebook Ratings")
-	public void verifyscores() throws Exception{
+	@Test(priority=4, groups = {
+	"smoke" }, description = "Export as csv")
+		public void exportascsv() throws Exception {
 		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
-		data.getscrores();
-		addEvidence(CurrentState.getDriver(), "Ratings of Google and facebook", "yes");
+		data. DRSTableExportCSV();
+		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
+	}
+
+	@Test(priority=5, groups = {
+	"smoke" }, description = "Export as csv")
+		public void exportasxlsx() throws Exception {
+		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
+		data. DRSTableExportXLSX();
+		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}
 	
-
-	//Test for export and overview report in Content Analysis Page
-		@SuppressWarnings("unchecked")
-		@Test(priority=4, groups = {
-						"smoke" }, description = "Test for Review export and export verification")
-			public void verifyTableDataoExport() throws Exception {
-			data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
-			data.compareexporttableDatanstardetails(data.ReviewDataTable(),data.getReviewDataTableExport());
-			addEvidence(CurrentState.getDriver(), "Verified Review export for UI Data", "yes");
-		}
+	@Test(priority=6, groups = {
+	"smoke" }, description = "Export as csv")
+		public void Compare_UI_XLRating() throws Exception {
+		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
+		data.compareUInExportGoogle_Score(chromepath, IEpath, FFpath);
+		data.compareUInExportFaceBook_Score(chromepath, IEpath, FFpath);
+		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
+	}
+	
+	@Test(priority=7, groups = {
+	"smoke" }, description = "Export as csv")
+		public void tabledataexport() throws Exception {
+		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
+		data. ReviewDataTable();
+		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
+	}
+	
+	
+	
 }

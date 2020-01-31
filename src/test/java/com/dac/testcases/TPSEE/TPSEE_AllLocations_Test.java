@@ -93,8 +93,16 @@ public class TPSEE_AllLocations_Test extends BaseClass{
 		}
 	}
 	
-	//Test for export and overview report in Content Analysis Page
 	@Test(priority=5, groups = {
+	"smoke" }, description = "Export as csv")
+		public void exportascsv() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.LocationDataTableExportCSV();
+		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
+}
+	
+	//Test for export and overview report in Content Analysis Page
+	@Test(priority=6, groups = {
 					"smoke" }, description = "Test for Location export and export verification")
 		public void verifyTableDataoExport() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());

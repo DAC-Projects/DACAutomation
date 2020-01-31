@@ -54,8 +54,15 @@ public class TPSEE_Displayed_Review_Score_Page extends TPSEE_abstractMethods{
 	
 	/*-------------------------Table Scores-----------------------*/
 	
-	@FindBy(id = "ToolTables_reviewscore_results_0")
-	private WebElement TableExport;
+
+	@FindBy(xpath="//div[@id='reviewScoreReportExportDropdown']//button")
+	private WebElement Export1;
+	
+	@FindBy(xpath="//div[@id='reviewScoreReportExportDropdown']//a[contains(text(),'Export as CSV')]")
+	private WebElement Export1_csv;
+	
+	@FindBy(xpath="//div[@id='reviewScoreReportExportDropdown']//a[contains(text(),'Export as XLSX')]")
+	private WebElement Export1_xlsx;
 	
 	@FindBy(xpath = "//div//table")
 	private WebElement DataTable;
@@ -91,27 +98,75 @@ public class TPSEE_Displayed_Review_Score_Page extends TPSEE_abstractMethods{
 	
 	/*-------------------------Pagination-----------------------*/
 	
-	public void getscrores() throws Exception{
-		
-		JSWaiter.waitJQueryAngular();
-		String GoogleRatingScore = driver.findElement(By.xpath(GoogleRating)).getText();
-		System.out.println("Google Rating is :" +GoogleRatingScore);
-		String FacebookRatingScore = driver.findElement(By.xpath(FacebookRating)).getText();
-		System.out.println("Facebook Rating is :" +FacebookRatingScore);		
+
+	
+	
+public double Google_Score()
+{
+	JSWaiter.waitJQueryAngular();
+	String GoogleRatingScore = driver.findElement(By.xpath(GoogleRating)).getText();
+	String GC=GoogleRatingScore.substring(0, 3);
+	double GC1 = 0.0;
+	if(GC.contains("-")) {
+		GC=GC.replace("-", "0");
+		}
+	 GC1=Double.parseDouble(GC);
+	return GC1;
+	
+}
+
+
+public double Facebook_Score()
+{
+JSWaiter.waitJQueryAngular();
+String FacebookRating_score = driver.findElement(By.xpath(FacebookRating)).getText();
+String FC=FacebookRating_score.substring(0, 3);
+double FC1 = 0.0;
+if(FC.contains("-")) {
+	FC=FC.replace("-", "0");
+ }
+FC1=Double.parseDouble(FC);
+return FC1;
+
+}
+
+public void compareUInExportGoogle_Score(String chromepath, String IEpath, String FFpath) throws Exception {
+	double x=0;
+	if (CurrentState.getBrowser().equals("chrome")) {
+	x = GetDRSDataUsingColName(chromepath,"Google Rating");
+	}
+	if(CurrentState.getBrowser().equals("IE")){
+		x = GetDRSDataUsingColName(IEpath,"Google Rating");
+	}
+	if(CurrentState.getBrowser().equals("Firefox")){
+		x = GetDRSDataUsingColName(FFpath,"Google Rating");
 	}
 	
-	public void DataTableExport() throws FileNotFoundException, IOException, InterruptedException {
-		waitForElement(DataTable, 40);
-		waitForElement(TableExport, 40);
-		JSWaiter.waitUntilJQueryReady();
-		download(CurrentState.getBrowser(), TableExport, 30);
-		convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ReviewScoreExport));
-		}
+	double TotalScore = Google_Score(); 
+	Assert.assertEquals(x, TotalScore , "Count is equal");
+	}
+
+public void compareUInExportFaceBook_Score(String chromepath, String IEpath, String FFpath) throws Exception {
+	double x=0;
+	if (CurrentState.getBrowser().equals("chrome")) {
+	x = GetDRSDataUsingColName(chromepath,"Facebook Rating");
+	}
+	if(CurrentState.getBrowser().equals("IE")){
+		x = GetDRSDataUsingColName(IEpath,"Facebook Rating");
+	}
+	if(CurrentState.getBrowser().equals("Firefox")){
+		x = GetDRSDataUsingColName(FFpath,"Facebook Rating");
+	}
+	
+	double TotalScore = Facebook_Score();
+	Assert.assertEquals(x, TotalScore , "Count is equal");
+	}
+
 	
 	public List<Map<String, String>> getReviewDataTableExport() throws Exception {
 		JSWaiter.waitJQueryAngular();
-		DataTableExport();
-		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+ReviewScoreExport), "Sheet0").getExcelTable();
+		DRSTableExportXLSX();
+		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+ReviewScoreExportXLSX), "Sheet0").getExcelTable();
 		List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
 		for (int col = 1; col < colSize; col++) {
@@ -137,7 +192,7 @@ public class TPSEE_Displayed_Review_Score_Page extends TPSEE_abstractMethods{
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 		String entiresText = driver.findElement(By.className("dataTables_info")).getText();
 		entiresText = entiresText.substring(entiresText.indexOf("("));
-		WebElement TableTitle = driver.findElement(By.xpath("//*[@id='table_title']"));
+		WebElement TableTitle = driver.findElement(By.xpath("//*[@id='reviewscore_wrapper']//*[@class='heading-title']"));
 		scrollByElement(TableTitle);
 		int count = 0;
 	    if(paginationNext.isDisplayed()) {
@@ -184,7 +239,33 @@ public class TPSEE_Displayed_Review_Score_Page extends TPSEE_abstractMethods{
 		}
 			return tableCellValues;
 			}
-
+	/**
+	 * exporting progress bar table data CSV
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	public void DRSTableExportCSV() throws FileNotFoundException, IOException, InterruptedException {				
+			JSWaiter.waitJQueryAngular();
+			exportVATable(Export1, Export1_csv);
+			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ ReviewScoreExportCSV));
+			Thread.sleep(5000);
+			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
+		}
+		
+	/**
+	 * exporting progress bar table data XSLX
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+		public void DRSTableExportXLSX() throws FileNotFoundException, IOException, InterruptedException {				
+				JSWaiter.waitJQueryAngular();
+				exportVATable(Export1, Export1_xlsx );
+				renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ReviewScoreExportXLSX));
+				Thread.sleep(5000);
+				CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
+			}
 	
 	//comparing data from excell sheet with table data of progress bar Not found and Found
 		public void compareXlReviewData_UIdata() throws Exception {

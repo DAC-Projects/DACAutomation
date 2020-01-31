@@ -4,7 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.security.Timestamp;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -204,8 +205,64 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	@FindBy(xpath = "(//*[@class='highcharts-label highcharts-range-input'])[2]")
 	private WebElement toDate;
 	
-	
-	
+	 /**
+     * Get data using column name and sum for Bing and GMB Page
+     * @param PathofXL
+     * @param Col_Name
+     * @return
+     * @throws Exception
+     */
+    public double GetDRSDataUsingColName(String PathofXL, String Col_Name) throws Exception {         
+          FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
+          Workbook wb = new XSSFWorkbook(excelFilePath);
+          Sheet sh = wb.getSheetAt(0);    
+          Row row = sh.getRow(0);
+          int col = row.getLastCellNum();
+          int Last_row = sh.getLastRowNum();
+          int col_num = 0;
+          System.out.println(""+col);         
+          for (int i = 0; i <row.getLastCellNum(); i++) {             
+                if ((row.getCell(i).toString()).equals(Col_Name)) {                
+                    col_num = i;                   
+                    System.out.println(""+col_num);   
+                }
+          }
+                       String s = null;
+                    double y = 0;
+                    double sum = 0;   
+                    double average = 0;
+                    double finalaverage=0.00;
+                    for(int j =1;j<=Last_row; j++) {
+                        row = sh.getRow(j);
+                        Cell cell = row.getCell(col_num);
+                        if (cell != null) {
+                            if(cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                                String cellValue1 = cell.getStringCellValue().toString();
+                                if(cellValue1.contains("N/A")) {
+                                s = cellValue1.replace("N/A", "0");
+                                y = Double.parseDouble(s);
+                                System.out.println("\n " +s);
+                                sum = sum+y;
+                                }
+                            }else if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                                double cellValue2 = cell.getNumericCellValue();
+                                System.out.println("\n " +cellValue2);
+                                sum = sum+cellValue2;
+                                }
+                            System.out.println(""+sum);
+                            average = sum/(Last_row-1);
+                            } else {
+                                System.out.println("Smt wrong");
+                            }
+                        wb.close();
+                    }
+                    BigDecimal bd = BigDecimal.valueOf(average);
+                    bd = bd.setScale(1, RoundingMode.HALF_UP);
+                    finalaverage = bd.doubleValue();
+                    System.out.println(":" +finalaverage);
+                    return finalaverage;
+        }
+    
 	/**
 	 * @param Group
 	 * @param Country

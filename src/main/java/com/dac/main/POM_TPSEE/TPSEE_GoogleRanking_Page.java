@@ -64,8 +64,16 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	
 	/*-----------------------Ranking Table---------------------------*/
 		
-	@FindBy(xpath = "//a[@id='ToolTables_rankingDetail_0']")
+	@FindBy(xpath = "//div[@id='keywordTableExportDropdown']//button")
 	private WebElement Export;
+	
+	@FindBy(xpath = "//div[@id='keywordTableExportDropdown']//a[contains(text(),'Export as CSV')]")
+	private WebElement Export_csv;
+	
+	@FindBy(xpath = "//div[@id='keywordTableExportDropdown']//a[contains(text(),'Export as XLSX')]")
+	private WebElement Export_xlsx;
+	
+	  
 	
 	@FindBy(xpath = "//table[@id='rankingDetail']")
 	private WebElement RankingTable;
@@ -292,21 +300,40 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 			return tableCellValues;
 			}
 	
-	
-	public void RankingDataTableExport() throws FileNotFoundException, IOException, InterruptedException {
-		waitForElement(RankingTable, 40);
-		waitForElement(Export, 40);
-		//scrollByElement(TableExport);
-		JSWaiter.waitUntilJQueryReady();
-		download(CurrentState.getBrowser(), Export, 30);
-		convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+GoogleRankingExport));
+	/**
+	 * exporting progress bar table data CSV
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	public void GRDataTableExportCSV() throws FileNotFoundException, IOException, InterruptedException {				
+			JSWaiter.waitJQueryAngular();
+			exportVATable(Export, Export_csv);
+			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ GoogleRankingExportCSV));
+			Thread.sleep(5000);
+			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
 		}
+		
+	/**
+	 * exporting progress bar table data XSLX
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+		public void GRDataTableExportXLSX() throws FileNotFoundException, IOException, InterruptedException {				
+				JSWaiter.waitJQueryAngular();
+				exportVATable(Export, Export_xlsx);
+				renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+GoogleRankingExportXLSX));
+				Thread.sleep(5000);
+				CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
+			}
+	
 
 	
 	public List<Map<String, String>> getRankingDataTableExport() throws Exception {
 		JSWaiter.waitJQueryAngular();
-		RankingDataTableExport();
-		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+GoogleRankingExport), "Sheet0").getExcelTable();
+		GRDataTableExportXLSX();
+		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+GoogleRankingExportXLSX), "Google_Ranking").getExcelTable();
 		List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
 		for (int col = 1; col < colSize; col++) {
