@@ -37,10 +37,10 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 	
 	
 	
-/*	*//**
+	/**
 	 * Test to get dashboard scores
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
 	public void GetKPIValues() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
@@ -51,12 +51,12 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		System.out.println(location);
 		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
-	}*/
+	}
 	
 	/**
 	 * Test to navigate to Visibility Page
 	 * @throws Exception
-	 *//*
+	 */
 		@Test(priority = 2,groups = { "smoke" }, description = "Test for navigating to Visibility page")
 		public void navigateToVisibilityPage() throws Exception {
 			np = new Navigationpage(CurrentState.getDriver());
@@ -73,7 +73,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		System.out.println(foundlistingVendors);
 		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
 		}
-		*/
+		
 		
 		/**
 		 * Test to navigate to Accuracy Page
@@ -90,7 +90,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		/**
 		 * Test to get SiteTable data
 		 * @throws Exception
-		 *//*
+		 */
 		//Test to compare vendors in the application in Visibility Page
 		@Test(priority = 5,groups = {"smoke"},
 				description ="Verify Site Vendors List")
@@ -100,12 +100,12 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 			Assert.assertEquals(accuracyvendors, foundlistingVendors);
 			addEvidence(CurrentState.getDriver(),
 				"Site Vendors in Content Analysis site vendors ", "yes");
-	}*/
+	}
 	
-/*		*//**
+		/**
 		 * Test to Compare KPI Values with Report
 		 * @throws Exception
-		 *//*
+		 */
 		 
 		@Test(priority = 6, groups = { "smoke" }, description = "Test for compare KPI Values")
 		public void ovrviewlocscorecompare() throws Exception {
@@ -137,7 +137,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 				Assert.assertEquals(togrph, tocal);
 				addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 			}				
-		}*/
+		}
 		/**
 		 * Test to very Zoom Functionality
 		 * @throws Exception
@@ -174,7 +174,7 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		/**
 		 * Test to apply Filters
 		 * @throws Exception
-		 *//*
+		 */
 		@Test(priority = 9, groups = {
 			"smoke" }, description = "Verify Accuracy page loads after filter applied")
 		public void verifyFilteringReportsAccuracy() throws Exception {
@@ -203,10 +203,10 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 		}
 	}
 	
-		*//**
+		/**
 		 * Test to export as overall CSV Accuracy Report
 		 * @throws Exception
-		 *//*
+		 */
 		@Test(priority = 10, groups = {
 			"smoke" }, description = "Test for export file as CSV")
 		public void verifyExportAccuracyCSV() throws Exception {
@@ -215,10 +215,10 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 			addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
 		}
 		
-		*//**
+		/**
 		 * Test to export as overall CSV Accuracy Report
 		 * @throws Exception
-		 *//*
+		 */
 		@Test(priority = 11, groups = {
 			"smoke" }, description = "Test for export file as XLSX")
 		public void verifyOverviewReportnExportAccuracyXLSX() throws Exception {
@@ -227,10 +227,10 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 			addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
 		}
 			
-		*//**
+		/**
 		 * Test to verify Tooltip data and overall score of accuracy	
 		 * @throws Exception
-		 *//*
+		 */
 	
 		@Test(priority = 12, groups = { "smoke" }, description = "Test for overview report and tooltip data")
 		public void verifyOverviewReportnTooltipAccuracy() throws Exception {
@@ -239,10 +239,10 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 			addEvidence(CurrentState.getDriver(), "Tooltip values verified from Overview Accuracy report", "yes");
 		}
 	
-	*//**
+	/**
 	 * Test to get SiteTable data
 	 * @throws Exception
-	 *//*
+	 */
 		@Test(priority = 13, groups = {
 			"smoke" }, description = "Test for verifying site data in Accuracy page")
 		public void verifySiteTablenExportAccuracy() throws Exception {
@@ -252,10 +252,10 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 					"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
 		}
 	
-		*//**
+		/**
 		 * Test for compare number of rows from export table and table data in Accuracy Page
 		 * @throws Exception
-		 *//*
+		 */
 		@Test(priority = 14, groups = {
 				"smoke" }, description = "Test for verifying site link data in Accuracy page")
 		public void numberofentriesnExporttableAccuracy() throws Exception {
@@ -286,10 +286,10 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 			"Data of Social Sites Tab", "yes");
 	}
 		
-		*//**
+		/**
 		 * Test to verify inaccuracy and ignored checkbox
 		 * @throws Exception
-		 *//*
+		 */
 		@Test(priority = 16, groups = {
 		"smoke" }, description = "Test for verifying site link data in Accuracy page")
 		public void verifycheckbox() throws Exception {
@@ -300,10 +300,10 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 				"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
 		}
 		
-		*//**
+		/**
 		 * Test to verify Top Button
 		 * @throws Exception
-		 *//*
+		 */
 		@Test(priority = 17, groups = {"smoke"},
 			description = "Verify Top Button")
 		public void GetTopBtn() throws Exception {
@@ -349,11 +349,11 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 			finally {
 				return data;
 			}
-		}*/
+		}
 		
 		
 		
-	/*	//Test for compare number of rows from export table and table data in Accuracy Page
+		/*//Test for compare number of rows from export table and table data in Accuracy Page
 				@Test(priority = 13, groups = {
 						"smoke" }, description = "Test for verifying InAccuracy case data and export data in Accuracy page")
 				public void numberofentriesnInAccuracyExporttableAccuracy() throws Exception {
@@ -361,9 +361,9 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 						data.compareexporttableDatanInaccuracytable(data.verifyInAccuracysitelinkdata(),data.getInAccuracyExporttableData());
 						addEvidence(CurrentState.getDriver(),
 								"Site level scores in Accuracy site table  and overview Accuracy export found matching for InAccuracy", "yes");
-				}*/
+				}
 				
-				/*//Test to compare vendors in the application in Visibility Page
+				//Test to compare vendors in the application in Visibility Page
 				@SuppressWarnings("unchecked")
 				@Test(dependsOnMethods = {"numberofentriesnExporttableAccuracy"},groups = {"smoke"},
 						description ="Verify Site Vendors List")
@@ -372,9 +372,9 @@ public class TPSEE_Accuracy_Test extends BaseClass{
 					data.comparevendorsListnverifySitevendors(data.verifyAccuracySitevendors(), data.vendorsList());
 					addEvidence(CurrentState.getDriver(),
 						"Site Vendors in Content Analysis site vendors ", "yes");
-			}*/
+			}
 				
-				/*//Test for compare number of rows from export table and table data in Accuracy Page
+				//Test for compare number of rows from export table and table data in Accuracy Page
 				@SuppressWarnings("unchecked")
 				@Test(dependsOnMethods = { "numberofentriesnInAccuracyExporttableAccuracy"}, groups = {
 						"smoke" }, description = "Test for verifying ignored case and export data in Accuracy page")
