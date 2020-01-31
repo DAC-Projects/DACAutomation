@@ -528,9 +528,9 @@ public  int getNumberofDays() throws Exception {
  */
 public Date getCurrentfromDate() throws ParseException {
 String currentfromDate = fromDate.getText();
-String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
-System.out.println(var);
-SimpleDateFormat formats = new SimpleDateFormat(var);
+/*String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
+System.out.println(var);*/
+SimpleDateFormat formats = new SimpleDateFormat("MM/DD/YYYY");
 Date finalcurrentdate = formats.parse(currentfromDate);
 return finalcurrentdate;
 }
@@ -542,9 +542,9 @@ return finalcurrentdate;
  */
 public Date getCurrenttoDate() throws ParseException {
 String currenttoDate = toDate.getText();
-String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
-System.out.println(var);
-SimpleDateFormat formats = new SimpleDateFormat(var);
+/*String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
+System.out.println(var);*/
+SimpleDateFormat formats = new SimpleDateFormat("MM/DD/YYYY");
 Date finaltodate = formats.parse(currenttoDate);
 return finaltodate;
 }
