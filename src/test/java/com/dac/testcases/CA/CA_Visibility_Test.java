@@ -44,7 +44,7 @@ public class CA_Visibility_Test extends BaseClass {
      //Assert.assertFalse( "sample error", true);
 	}
 
-/*	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 //  @Parameters({ "Filter" })
 	//Filter Condition Apply
 	@Test(dependsOnMethods = { "navigateToVisibilityPage" }, groups= {"smoke"}, description = "Verify Visibility page loads after filter applied")
@@ -92,9 +92,7 @@ public class CA_Visibility_Test extends BaseClass {
 	public void verifyOverviewReportnExportVisibility() throws Exception {
 		data = new CA_Visibility_Page(CurrentState.getDriver());
 		export = data.getExportData();
-		data.compareExprttoOvervw(export, data.getOverviewReport());
-		CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 2nd line", null));
-    CurrentState.getEvidenceList().add(new SeleniumEvidence("Selenium page 3rd line", null));    
+		data.compareExprttoOvervw(export, data.getOverviewReport()); 
     addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes"); 
 	}
 
@@ -112,7 +110,7 @@ public class CA_Visibility_Test extends BaseClass {
 		data = new CA_Visibility_Page(CurrentState.getDriver());
 		data.compareExportnTable(export, data.verifySitetable());  
     addEvidence(CurrentState.getDriver(), "Site level scores in Visibility site table  and overview visibility export found matching", "yes");   
-	}*/
+	}
 
 	//Test to verify Zoom Functionality
 	@Test(priority=2,groups = {"smoke"},

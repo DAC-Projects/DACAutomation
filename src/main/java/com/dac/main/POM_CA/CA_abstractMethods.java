@@ -530,6 +530,7 @@ public Date getCurrentfromDate() throws ParseException {
 String currentfromDate = fromDate.getText();
 /*String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
 System.out.println(var);*/
+System.out.println(currentfromDate);
 SimpleDateFormat formats = new SimpleDateFormat("MM/DD/YYYY");
 Date finalcurrentdate = formats.parse(currentfromDate);
 return finalcurrentdate;
@@ -544,6 +545,7 @@ public Date getCurrenttoDate() throws ParseException {
 String currenttoDate = toDate.getText();
 /*String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
 System.out.println(var);*/
+System.out.println(currenttoDate);
 SimpleDateFormat formats = new SimpleDateFormat("MM/DD/YYYY");
 Date finaltodate = formats.parse(currenttoDate);
 return finaltodate;
