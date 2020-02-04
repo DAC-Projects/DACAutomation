@@ -50,16 +50,19 @@ public class CA_ContentAnalysis_Page extends CA_abstractMethods {
 
 	@FindBy(css = "table.table-responsive.table-hover>thead>th")
 	private List<WebElement> competitors;
-	
+
 	@FindBy(xpath = "//div[@class='site-score pull-right ng-binding']")
 	private List<WebElement> vendorScore;
-	
+
 	@FindBy(xpath = "//div[@class='category-information']")
 	private WebElement categoryInformation;
-	
+
+	@FindBy(xpath = "(//div[@class='category-information'])[2]")
+	private WebElement categoryInformation2;
+
 	@FindBy(xpath = "//div[@class=\"score pull-right ng-binding\"]")
-	private WebElement avgScore;
-	
+	private List<WebElement> avgScore;
+
 
 	String xpathCompetitors = "(//div[@id='compIntOverviewContainer']//div[starts-with(@class,'overviewSubContainer')])";
 	String compName = ".//div[starts-with(@class, 'competitorName')]";
@@ -160,34 +163,44 @@ public class CA_ContentAnalysis_Page extends CA_abstractMethods {
 			Assert.assertEquals(FinScore[i], Double.parseDouble(table[1][i+1]));
 		}
 	}
-	
+
 	public void UiCalculation() {
-		
+
 		System.out.println("UI calculation");
-		clickelement(categoryInformation);
-		double score=0;
+
+		double score;
 		String UIvalue = null;
-		double Finscore=0;
-		int size = vendorScore.size()/2;
-		int counter=0;
-		System.out.println("size "+size);
-		for(int i =0; i<size;i++) {
-			
-			UIvalue =  vendorScore.get(i).getText().replace("%", "");
-			
-			if(!UIvalue.contains("-")|| !UIvalue.contains("N/A")) {
-			 score =Double.parseDouble(UIvalue)+score;
-			 counter++;
-			 System.out.println("Score "+score);
+		double Finscore;
+		int size;
+		int counter;
+		//	System.out.println("size "+size);		
+
+
+		for (int j =1;j<=8;j++) {
+			Finscore=0;
+			score=0;
+			counter=0;
+			scrollByElement(driver.findElement(By.xpath("(//div[@class='category-information'])["+j+"]")));
+			clickelement(driver.findElement(By.xpath("(//div[@class='category-information'])["+j+"]")));
+			size = vendorScore.size()/2;		
+			for(int i =0; i<size;i++) {
+				UIvalue =  vendorScore.get(i).getText().replace("%", "");
+				if( !(UIvalue.contains("N/A") ||(UIvalue.contains("-")))) {
+					score =Double.parseDouble(UIvalue)+score;
+					counter++;
+				}		
+				Finscore =  Math.round((score/counter)*100.0)/100.0;		 	
 			}
+			System.out.println("FinScore "+Finscore);	
+			if(counter == 0)
+			{
+				assertEquals(avgScore.get(j-1).getText(), "N/A");
+			}
+			else {
+				String Value = avgScore.get(j-1).getText().replace("%", "");
+				assertEquals(Double.parseDouble(Value), Finscore);
+			}
+			clickelement(driver.findElement(By.xpath("(//div[@class='category-information'])["+j+"]")));
 		}
-		
-		Finscore =  Math.round((score/counter)*100.0)/100.0;
-		 System.out.println("FinScore "+Finscore);
-		 
-		 assertEquals(avgScore.getText(), Finscore+"%");
 	}
-	
-	
-	
 }

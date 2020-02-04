@@ -24,7 +24,7 @@ public class CA_ContentAnalysis_Test extends BaseClass {
 	CA_ContentAnalysis_Page data;
 	List<Map<String, String>>  exportData;
 
-	@Test(groups= {"smoke"})
+	@Test(priority=1,groups= {"smoke"})
 	public void navigateToCAPage() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateCA_ContentAnalysispage();
@@ -33,7 +33,7 @@ public class CA_ContentAnalysis_Test extends BaseClass {
 	}
 
 	
-	@Test(dependsOnMethods = { "navigateToCAPage" }, groups= {"smoke"})
+	@Test(priority=2)
 	public void verifyFilteringReports() throws Exception {try {	
 		int count = 1;
 		ExcelHandler wb = new ExcelHandler("./data/FilterCriteria.xlsx", "CA_FIL"); wb.deleteEmptyRows();
@@ -64,7 +64,7 @@ public class CA_ContentAnalysis_Test extends BaseClass {
 		//Assert.fail("");
 	}}
 
-	@Test(dependsOnMethods = { "navigateToCAPage"}, groups= {"smoke"})
+	@Test(priority=3)
 	public void verifyOverviewReportnExport() throws Exception {
 		data = new CA_ContentAnalysis_Page(CurrentState.getDriver());
 		export = data.getExportData();
@@ -74,7 +74,7 @@ public class CA_ContentAnalysis_Test extends BaseClass {
 		
 	}
 
-	@Test( dependsOnMethods = { "navigateToCAPage" }, groups= {"smoke"})
+	@Test(priority=4)
 	public void verifyOverviewReportnTooltip() throws Exception {
 		data = new CA_ContentAnalysis_Page(CurrentState.getDriver());
 		data.compareReportnGraph(data.verifyHistoryGraph(), exportData);
@@ -82,13 +82,13 @@ public class CA_ContentAnalysis_Test extends BaseClass {
 		
 	}
 
-	@Test( dependsOnMethods = { "navigateToCAPage" }, groups= {"smoke"})
+	@Test(priority=5)
 	public void verifyOverviewReportncalculation() throws Exception {
 		data = new CA_ContentAnalysis_Page(CurrentState.getDriver());
 		data.calculateContentAnalysisScore();		
 	}
 	
-	@Test( dependsOnMethods = { "navigateToCAPage" }, groups= {"smoke"})
+	@Test(priority=6)
 	public void UiCalculation() throws Exception {
 		data = new CA_ContentAnalysis_Page(CurrentState.getDriver());
 		data.UiCalculation();		
