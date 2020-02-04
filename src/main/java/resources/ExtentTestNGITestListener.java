@@ -237,8 +237,8 @@ public class ExtentTestNGITestListener
   @Override
   public synchronized void onAfterClass(ITestClass testClass) {
    
-    CurrentState.getDriver().quit();
-    CurrentState.setDriver(null);
+      CurrentState.getDriver().quit();
+      CurrentState.setDriver(null);
   }
 
   /**
@@ -250,7 +250,7 @@ public class ExtentTestNGITestListener
   public synchronized void onFinish(ITestContext context) {
     extent.flush();
     if (CurrentState.getDriver() != null) {
-      CurrentState.getDriver().quit();
+       CurrentState.getDriver().quit();
     }
     
     if(!printList.get().isEmpty()) {
