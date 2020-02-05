@@ -416,13 +416,14 @@ public void clickApplyFilterBTN() throws InterruptedException {
 	public void compareExprttoLocationOver(List<String> exportData1, List<String> lcnRprtData) {
 		//ArrayList<String> Export=new ArrayList<>(Arrays.asList("1","2","3"));
 		for(int i=0; i<exportData1.size();i++) {
-			if(!exportData1.get(i).contains(lcnRprtData.get(i))) {
+			if((exportData1.get(i).equals("-"))&&(lcnRprtData.get(i)).equals("-")) {
+				System.out.println("Contains -");}
+				else
+					if(!(Double.parseDouble(exportData1.get(i))==Double.parseDouble(lcnRprtData.get(i)))) {
 				Assert.assertEquals(exportData1.get(i), lcnRprtData.get(i));
+					}
+				}					
 			}
-		}
-		
-					
-				}
 			
 		
 	
@@ -481,14 +482,6 @@ public void AccuracyScrolldataSite4()
 	scrollByElement(site4);
 	waitUntilLoad(driver);
 }
-
-
-
-
-
-
-
-
 
 }
 
