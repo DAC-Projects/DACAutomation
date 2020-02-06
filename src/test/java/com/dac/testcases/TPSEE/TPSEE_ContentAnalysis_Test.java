@@ -235,8 +235,8 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 	 * Test to verify Top button functionality
 	 * @throws Exception
 	 */
-//		@Test(priority = 10, groups = {"smoke"},
-//			description = "Verify Top Button")
+		@Test(priority = 10, groups = {"smoke"},
+			description = "Verify Top Button")
 		public void GetTopBtn() throws Exception {
 			data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 			data.TopButton();

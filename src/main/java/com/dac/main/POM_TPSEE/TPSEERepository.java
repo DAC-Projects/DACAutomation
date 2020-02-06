@@ -30,8 +30,10 @@ public interface TPSEERepository {
 	String AccuracyExporttableInAccuracyXLSX = "AccuracyExporttableInAccuracyxlsx.xlsx";
 	String AccuracyExporttableInAccuracyCSV = "AccuracyExporttableInAccuracycsv.xlsx";
 	String AccuracyExporttableIgnored = "AccuracyExporttableIgnored.xlsx";
-	String ContentAnalysisExport = "ContentAnalysisExport.xlsx";
-	String ContentAnalysisSiteExport = "ContentAnalysisSiteExport.xlsx";
+	String ContentAnalysisExportCSV = "ContentAnalysisExportcsv.csv";
+	String ContentAnalysisExportXLSX = "ContentAnalysisExportcsv.xlsx";
+	String ContentAnalysisSiteExportCSV = "ContentAnalysisSiteExportCSV.csv";
+	String ContentAnalysisSiteExportXLSX = "ContentAnalysisSiteExportXLSX.xlsx";
 	String GoogleRankingExportCSV = "GoogleRankingExportCSV.csv";
 	String GoogleRankingExportXLSX = "GoogleRankingExportXLSX.xlsx";
 	String LocationExportCSV = "LocationExportcsv.csv";

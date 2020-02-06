@@ -1036,7 +1036,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			s.trim();
 			double visibilityscore = Double.parseDouble(s);
 			System.out.println(visibilityscore);
-			return visibilityscore;		
+			BigDecimal bd = BigDecimal.valueOf(visibilityscore);
+            bd = bd.setScale(1, RoundingMode.HALF_UP);
+            double finalvisibilityscore = bd.doubleValue();
+			return finalvisibilityscore;		
 			
 		}
 		
@@ -1066,7 +1069,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			s.trim();
 			double accuracyscore = Double.parseDouble(s);
 			System.out.println(accuracyscore);
-			return accuracyscore;
+			BigDecimal bd = BigDecimal.valueOf(accuracyscore);
+			bd = bd.setScale(1, RoundingMode.HALF_UP);
+            double finalaccuracyscore = bd.doubleValue();
+			return finalaccuracyscore;
 		}
 		
 		/**
@@ -1094,7 +1100,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			s.trim();
 			double cascore = Double.parseDouble(s);
 			System.out.println(cascore);
-			return cascore;	
+			BigDecimal bd = BigDecimal.valueOf(cascore);
+			bd = bd.setScale(1, RoundingMode.HALF_UP);
+            double finalcascore = bd.doubleValue();
+			return finalcascore;	
 		}
 		
 		/**
@@ -1118,7 +1127,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			Thread.sleep(5000);
 			double GRscore = Double.parseDouble(GRScore.getText());
 			System.out.println(GRscore);
-			return GRscore;
+			BigDecimal bd = BigDecimal.valueOf(GRscore);
+			bd = bd.setScale(1, RoundingMode.HALF_UP);
+            double finalGRscore = bd.doubleValue();
+			return finalGRscore;
 		}
 		
 		/**
@@ -1171,7 +1183,11 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			String sc = score.getText();
 			String s = sc.replace("%", "");
 			double scores = Double.parseDouble(s);
-			return scores;
+			BigDecimal bd = BigDecimal.valueOf(scores);
+			bd = bd.setScale(1, RoundingMode.HALF_UP);
+            double finaloverviewscore = bd.doubleValue();
+			return finaloverviewscore;
+
 		}		
 		
 		/**
@@ -1185,7 +1201,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			String sc = score.getAttribute("data-percent");
 			String s = sc.replace("%", "");
 			double scores = Double.parseDouble(s);
-			return scores;
+			BigDecimal bd = BigDecimal.valueOf(scores);
+			bd = bd.setScale(1, RoundingMode.HALF_UP);
+            double finaloverviewcascore = bd.doubleValue();
+			return finaloverviewcascore;
 		}		
 		
 		/**

@@ -50,14 +50,19 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	@FindBy(css = "div.progress.progress-striped.pos-rel")
 	private WebElement Progress;
 	
+	@FindBy(xpath ="//*[@id='table_review']")
+	private WebElement contentsiteTable;
 	//@FindBy(css = "div.progress")
 	String Progressbar = "//div[contains(@class,'progress progress-striped pos-rel')]"; //*[@id="page-content"]/div[1]/div
 	
-	@FindBy(xpath = "//div[@id='export_button']")
-	private WebElement export;
+	@FindBy(xpath="//div[@id='completenessTableExportDropdown']//button" )
+	private WebElement export1;
 	
-	@FindBy(xpath = "//table[@id='table_review']")
-	private WebElement siteTable;
+	@FindBy(xpath="//div[@id='completenessTableExportDropdown']//a[contains(text(),'Export as CSV')]")
+	private WebElement export1_csv;
+	
+	@FindBy(xpath=" //div[@id='completenessTableExportDropdown']//a[contains(text(),'Export as XLSX')]" )
+	private WebElement export1_xlsx;
 	
 	@FindBy(xpath="//table[@id='table_review']/tbody/tr")
 	private List<WebElement> SiteTableRow;
@@ -87,8 +92,14 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "//table[@id='incomplete_results']")
 	private WebElement Tableresults;
 	
-	@FindBy(xpath = "//a[@id='ToolTables_incomplete_results_0']")
+	@FindBy(xpath="//div[@id='contentAnalysisIncompleteExportDropdown']/button")
 	private WebElement TableExport;
+	
+	@FindBy(xpath="//div[@id='contentAnalysisIncompleteExportDropdown']//a[contains(text(),'Export as CSV')]")
+	private WebElement TableExport_csv;
+	
+	@FindBy(xpath=" //div[@id='contentAnalysisIncompleteExportDropdown']//a[contains(text(),'Export as XLSX')]")
+	private WebElement TableExport_xlsx;
 	
 	@FindBy(xpath = "//div[@id='incomplete_results_info']")
 	private WebElement entiresText;
@@ -119,19 +130,19 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 		
 	/* ------------------------------Locators Ends---------------------------------------*/
 	
-	//Download Excel
+	/*//Download Excel
 	public void exportvisibilityrpt() throws InterruptedException, FileNotFoundException, IOException{
 		JSWaiter.waitJQueryAngular();
 		if(export.isEnabled() & export.isDisplayed()) {
 			wait.until(ExpectedConditions.visibilityOf(export));
 			action.moveToElement(export).click(export).perform();
-			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ContentAnalysisExport));
+			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ContentAnalysisExportXLSX));
 			Thread.sleep(5000);
 			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
 			}else {
 				System.out.println("No Data Available in ContentAnalysis Page");
 			}
-		}
+		}*/
 	
 	
 	//Get Overview Score
@@ -154,7 +165,36 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	}
 	
 	
-	//Download Export
+	/**
+	 * exporting progress bar table data CSV
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	public void ContentAnalysisExportCSV() throws FileNotFoundException, IOException, InterruptedException {				
+			JSWaiter.waitJQueryAngular();
+			exportVATable(export1, export1_csv);
+			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ContentAnalysisExportCSV));
+			Thread.sleep(5000);
+			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
+		}
+		
+	/**
+	 * exporting progress bar table data XSLX
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+		public void ContentAnalysisExportXLSX() throws FileNotFoundException, IOException, InterruptedException {				
+				JSWaiter.waitJQueryAngular();
+				exportVATable(export1, export1_xlsx );
+				renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ContentAnalysisExportXLSX));
+				Thread.sleep(5000);
+				CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
+			}
+		
+	
+	/*//Download Export
 	public void exportcontentanalysisrpt() throws InterruptedException, FileNotFoundException, IOException {
 		// TODO Auto-generated method stub
 		JSWaiter.waitJQueryAngular();
@@ -162,20 +202,20 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 			wait.until(ExpectedConditions.visibilityOf(export));
 			action.moveToElement(export).click(export).perform();
 			Thread.sleep(5000);
-			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ContentAnalysisExport));
+			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ContentAnalysisExportXLSX));
 			Thread.sleep(5000);
 			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
 			}else {
 			System.out.println("No Data Available in Content Analysis Page");
 		}
-	}
+	}*/
 	
 	
 	//Store Excel into Map
 	public List<Map<String, String>> getExportData() throws Exception {
 		JSWaiter.waitJQueryAngular();
-		exportcontentanalysisrpt();
-		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+ContentAnalysisExport), "Sheet0").getExcelTable();
+		ContentAnalysisExportXLSX();
+		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+ContentAnalysisExportXLSX), "ContentAnalysis_Report").getExcelTable();
 		List<Map<String, String>> exportData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
 		for (int col = 1; col < colSize; col++) {
@@ -193,7 +233,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	
 	public List<Map<String, String>> AnalysisSiteData() throws InterruptedException {
 		JSWaiter.waitJQueryAngular();
-		if(siteTable.isDisplayed()){
+		if(contentsiteTable.isDisplayed()){
 		//WebElement vendorname= driver.findElement(By.xpath("//*[@class='logo-img img-responsive sourceImg']"));
 		WebElement completeAnalysis= driver.findElement(By.xpath("//*[@class='easy-pie-chart percentage easyPieChart']"));
 		scrollByElement(completeAnalysis);
@@ -333,20 +373,48 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 		}
 	
 	
-	public void SiteLinkexporttable() throws FileNotFoundException, IOException, InterruptedException {
+	/*public void SiteLinkexporttable() throws FileNotFoundException, IOException, InterruptedException {
 		waitForElement(SiteLinkTable, 40);
 		waitForElement(TableExport, 40);
 		//scrollByElement(TableExport);
 		JSWaiter.waitUntilJQueryReady();
 		download(CurrentState.getBrowser(), TableExport, 30);
-		convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ContentAnalysisSiteExport));
+		convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ContentAnalysisSiteExportXLSX));
+		}*/
+	
+	/**
+	 * exporting progress bar table data CSV
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	public void ContentAnalysisSiteExportCSV() throws FileNotFoundException, IOException, InterruptedException {				
+			JSWaiter.waitJQueryAngular();
+			exportVATable(TableExport, TableExport_csv);
+			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ContentAnalysisSiteExportCSV));
+			Thread.sleep(5000);
+			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
 		}
+		
+	/**
+	 * exporting progress bar table data XSLX
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+		public void ContentAnalysisSiteExportXLSX() throws FileNotFoundException, IOException, InterruptedException {				
+				JSWaiter.waitJQueryAngular();
+				exportVATable(TableExport, TableExport_xlsx );
+				renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ContentAnalysisSiteExportXLSX));
+				Thread.sleep(5000);
+				CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
+			}
 
 	
 	public List<Map<String, String>> getSiteLinkExporttableData() throws Exception {
 		JSWaiter.waitJQueryAngular();
-		SiteLinkexporttable();
-		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+ContentAnalysisSiteExport), "Sheet0").getExcelTable();
+		ContentAnalysisSiteExportXLSX();
+		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+ContentAnalysisSiteExportXLSX), "Content_Analysis").getExcelTable();
 		List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
 		for (int col = 1; col < colSize; col++) {
