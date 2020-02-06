@@ -2,10 +2,10 @@
 package com.dac.main.POM_CA;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,8 +13,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,7 +31,6 @@ import org.testng.Assert;
 
 import com.dac.main.BasePage;
 
-import resources.ExcelHandler;
 import resources.FileHandler;
 import resources.JSWaiter;
 import resources.formatConvert;
@@ -37,6 +40,7 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	Actions action;
 	WebDriverWait wait;
 	List<WebElement> rows;
+	List<Double> list2 = new ArrayList<Double>();
 	public String filePath="";
 	public String sheetName = "";
 	public int sheetIndex;
@@ -106,7 +110,27 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	@FindBy(css="div.ui.fluid.normal.dropdown.search.selection")
 	private WebElement selectlocation;
 	
-	
+	@FindBy(xpath = "//*[@id='compIntOverviewContainer']/tr/th")
+    private List<WebElement> caOverviewReport;
+   
+    @FindBy(xpath = "//*[@id='compIntOverviewContainer']/tr/th//div[@class='competitorScore color-primary text-right ng-binding']")
+    private WebElement caovrview;
+   
+    String cacompetitors = ".//div[@class='competitorScore color-primary text-right ng-binding']";
+    
+ // overview report
+    @FindBy(css = "div#compIntOverviewContainer")
+    private WebElement overviewReport;
+    
+    // section of overview report
+    @FindBy(xpath = "//div[@id='compIntOverviewContainer']//div[starts-with(@class,'overviewSubContainer')]")
+    private List<WebElement> competitors;
+
+
+
+    String xpathCompetitors = "(//div[@id='compIntOverviewContainer']//div[starts-with(@class,'overviewSubContainer')])";
+    String compName = ".//div[starts-with(@class, 'competitorName')]";
+    String compScore = ".//div[starts-with(@class, 'competitorScore')]";
 	
 
 //	@FindBy(css = "div.highcharts-label.highcharts-tooltip.highcharts-color-0>span>table")
@@ -482,6 +506,138 @@ public void AccuracyScrolldataSite4()
 	scrollByElement(site4);
 	waitUntilLoad(driver);
 }
+
+
+public List<Double> getOverviewReport1() {
+    waitForElement(overviewReport, 10);
+    scrollByElement(overviewReport);
+    String a=null;
+    String x = null;
+    double y=0;
+    System.out.println(competitors.size());
+    for (int i = 1; i <= competitors.size()/2; i++) {
+                    WebElement s = driver.findElement(By.xpath(xpathCompetitors + "[" + i + "]"));
+                    a=s.findElement(By.xpath(compScore)).getText();
+                    if(a.contains("%")){
+                                                    x =a.replace("%", "").trim();
+                                                    y=Double.parseDouble(x);
+                                                    System.out.println(y);
+                                                    }else {
+                                                                    y= Double.parseDouble(a);
+                                                    }
+                    list2.add(y);
+                    }
+    System.out.println("vi sc :"+list2);             
+    return list2;
+}
+
+
+public List<Double> getcaOverviewReport1() {
+    waitForElement(caovrview, 10);
+    scrollByElement(caovrview);
+    String a=null;
+    String x = null;
+    double y=0;
+    System.out.println(caOverviewReport.size());
+    for (int i = 1; i <= caOverviewReport.size()/2; i++) {
+                    WebElement s = driver.findElement(By.xpath("(//div[@class='competitorScore color-primary text-right ng-binding'])[" + i + "]"));
+                    a=s.getText();
+                    if(a.contains("%")){
+                                                    x =a.replace("%", "").trim();
+                                                    y=Double.parseDouble(x);
+                                                    System.out.println(y);
+                                                    }
+                    list2.add(y);
+                    }
+    System.out.println(list2);
+    
+    return list2;
+}
+
+
+public List<Double> getreviewOverviewReport1() {
+    waitForElement(overviewReport, 10);
+    scrollByElement(overviewReport);
+    String a=null;
+    String x = null;
+    double y=0;
+    System.out.println(competitors.size());
+    for (int i = 1; i <= competitors.size(); i++) {
+                    WebElement s = driver.findElement(By.xpath(xpathCompetitors + "[" + i + "]"));
+                    a=s.findElement(By.xpath(compScore)).getText();
+                    if(a.contains("-")){
+                                                    x =a.replace("-", "0").trim();
+                                                    y=Double.parseDouble(x);
+                                                    System.out.println(y);
+                                                    }else {
+                                                                    y= Double.parseDouble(a);
+                                                    }
+                    list2.add(y);
+                    }
+    System.out.println("vascore:"+list2);       
+    return list2;
+}
+
+/**
+* Get data using column name and sum for Bing and GMB Page
+* @param PathofXL
+* @param Col_Name
+* @return
+* @throws Exception
+*/
+public List<Double> GetSummaryDataUsingColName(String PathofXL, String Col_Name) throws Exception {         
+FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
+Workbook wb = new XSSFWorkbook(excelFilePath);
+Sheet sh = wb.getSheetAt(0);    
+Row row = sh.getRow(0);
+int col = row.getLastCellNum();
+int Last_row = sh.getLastRowNum();
+int col_num = 0;
+System.out.println(""+col);      
+List<Double> exportdata = new ArrayList<Double>();
+for (int i = 1; i <row.getLastCellNum(); i++) {             
+if ((row.getCell(i).toString()).equals(Col_Name)) {                
+   col_num = i;                   
+   System.out.println(""+col_num);   
+}
+}
+   String s = null;
+   double y = 0;
+   for(int j =1;j<=Last_row; j++) {
+       row = sh.getRow(j);
+       Cell cell = row.getCell(col_num);
+       if (cell != null) {
+           if(cell.getCellType() == Cell.CELL_TYPE_STRING) {
+               String cellValue1 = cell.getStringCellValue();
+               if(cellValue1.contains("%")) {
+               s = cellValue1.replace("%", "");
+               y = Double.parseDouble(s);
+               System.out.println("\n " +s);
+               }else {
+                    y=Double.parseDouble(cellValue1);
+               }
+               
+           }else if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+               //double cellValue2 = cell.getNumericCellValue();
+               String cellValue2 = Double. toString(cell.getNumericCellValue());
+               System.out.println("\n " +cellValue2);
+               if(cellValue2.contains("%")) {
+                   s = cellValue2.replace("%", "");
+                   y = Double.parseDouble(s);
+                   System.out.println("\n " +s);
+                   }else {
+                   y=Double.parseDouble(cellValue2);
+                   }
+                }
+           }
+       exportdata.add(y);
+       System.out.println(""+exportdata);
+       wb.close();
+   }
+  
+   return exportdata;
+}
+
 
 }
 
