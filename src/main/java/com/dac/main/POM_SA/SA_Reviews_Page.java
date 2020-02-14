@@ -541,8 +541,6 @@ public class SA_Reviews_Page extends SA_Abstarct_Methods{
 		
 	}
 	
-	
-	
 	/**
 	 * To Get the Tag name from dropdown
 	 * @return

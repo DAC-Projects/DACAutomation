@@ -567,7 +567,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 			if(!UIdat.equals("There is currently not enough data from Google to display this report")) {
 			data = new TPSEE_GMB(CurrentState.getDriver());
 			String OneMonth ="1m";
-			data.clickHighchartCriteria(OneMonth,980,0,grph, 2, 0);
+			data.clickHighchartCriteria(OneMonth);
 			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			data.exportXLSXGMB(GMBXLSX1m);
@@ -717,7 +717,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 
 
 			String ThreeMonths = "3m";
-			data.clickHighchartCriteria(ThreeMonths,980,0,grph, 2, 0);
+			data.clickHighchartCriteria(ThreeMonths);
 			addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			
@@ -867,7 +867,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 			Thread.sleep(5000);
 			
 			String SixMonths = "6m";
-			data.clickHighchartCriteria(SixMonths,988,0,grph, 1, 0);
+			data.clickHighchartCriteria(SixMonths);
 			addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
 			Thread.sleep(5000);
 			
@@ -1017,7 +1017,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 			Thread.sleep(5000);
 			
 			String OneYear = "1y";
-			data.clickHighchartCriteria(OneYear,988,0,grph, 1, 0);
+			data.clickHighchartCriteria(OneYear);
 			addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
 			Thread.sleep(5000);
 			
@@ -1167,7 +1167,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 			Thread.sleep(5000);
 			
 			String YearToDate ="ytd";
-			data.clickHighchartCriteria(YearToDate,988,0,grph, 1, 0);
+			data.clickHighchartCriteria(YearToDate);
 			addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
 			Thread.sleep(5000);
 			
@@ -1317,7 +1317,7 @@ public class TPSEE_GMB_Test extends BaseClass{
 			Thread.sleep(5000);
 			
 			String ALLDATA = "all";
-			data.clickHighchartCriteria(ALLDATA,988,0,grph, 1, 0);
+			data.clickHighchartCriteria(ALLDATA);
 			addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
 			
 			data.exportXLSXGMB(GMBXLSXall);

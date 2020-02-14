@@ -863,7 +863,9 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @return
 		 * @throws Exception
 		 */
-		public TPSEE_abstractMethods clickHighchartCriteria(String durationFor, int start, int end, String elemnt, int start1, int end1 ) throws Exception {
+	
+		public TPSEE_abstractMethods clickHighchartCriteria(String durationFor) throws Exception {
+			
 			durationFor = durationFor.toLowerCase();
 			scrollByElement(highChartZoom);
 			int days;			
@@ -872,7 +874,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				case "1m"  : 	try{
 									clickelement(highChart_1M);
 									if(eleClicked(highChart_1M)) {
-										days = getNumberofDays(start, end,elemnt,start1,end1);			
+										days = getNumberofDays();			
 										if(days >= 28 && days<=31 ) {
 											System.out.println("1 Month data is displayed");
 										}else {
@@ -889,7 +891,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				case "3m"  : 	try{
 									clickelement(highChart_3M);
 									if(eleClicked(highChart_3M)) {
-										days = getNumberofDays(start, end,elemnt,start1,end1);
+										days = getNumberofDays();
 										if(days>=90 && days<=92) {
 											System.out.println("3 Month data is displayed");
 										}else {
@@ -906,7 +908,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				case "6m"  : 	try{
 									clickelement(highChart_6M);
 									if(eleClicked(highChart_6M)) {
-										days = getNumberofDays(start, end,elemnt,start1,end1);
+										days = getNumberofDays();
 										if(days>=180 && days<=184) {
 											System.out.println("6 Month data is displayed");
 										}else {
@@ -923,7 +925,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				case "ytd" : 	try{
 									clickelement(highChart_YTD);
 									if(eleClicked(highChart_YTD)) {
-										days = getNumberofDays(start, end,elemnt,start1,end1);
+										days = getNumberofDays();
 									}else {
 										System.out.println("Element Not clicked");
 										}
@@ -935,7 +937,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				case "1y"  : 	try{
 									clickelement(highChart_1y);
 									if(eleClicked(highChart_1y)) {
-										days = getNumberofDays(start, end,elemnt,start1,end1);
+										days = getNumberofDays();
 										if(days>=364 && days<=366) {
 											System.out.println("1 Year data is displayed");
 										}else {
@@ -953,7 +955,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				default    : 	try{
 									clickelement(highChart_All);
 									if(eleClicked(highChart_All)) {
-										days = getNumberofDays(start, end,elemnt,start1,end1);
+										days = getNumberofDays();
 									}else {
 										System.out.println("Element not clicked");
 										}
@@ -962,8 +964,27 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 									}
 								}
 							}
+		
 					return this;
 			}	
+		
+		/**
+		 * To get difference between two dates
+		 * @return
+		 * @throws Exception
+		 */
+		public  int getNumberofDays() throws Exception {
+			int diff = 0;
+			Date init = getCurrentfromDate();
+			Thread.sleep(5000);
+			Date enddate =  getCurrenttoDate();
+			Thread.sleep(5000);
+			long difference = Math.abs(init.getTime() - enddate.getTime());
+	        long differenceDates = difference / (24 * 60 * 60 * 1000);
+			diff = (int)(long)differenceDates;		
+			System.out.println(diff);	
+			return diff;
+		}	
 		
 		/**
 		 * To check whether given element is visible 

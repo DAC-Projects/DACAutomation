@@ -414,42 +414,15 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	    			int noOfRows=row+1;
 	    			for (int column = 0; column < columns_count; column++) {	//Loop will execute till the last cell of that specific row.
 	    				List<WebElement> headerTableRow=titlehead.findElements(By.tagName("th"));
-	    				String headerText = headerTableRow.get(column).getText(), celtext ="", celtext1 ="", celtext2 ="", celtext3 =""
-	    						, celtext4 ="", celtext5 ="", celtext6 ="", celtext7 ="", celtext8 ="";
-	    				if(column==0 & row < rows_count) {
-	    					celtext = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]/td[1]")).getText();
-	    					celtext1 = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]/td[2]")).getText();
-	    					celtext2 = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]/td[3]")).getText();
-	    					celtext3 = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]/td[4]")).getText();
-	    					celtext4 = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]/td[5]")).getText();
-	    					celtext5 = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]/td[6]")).getText();
-	    					celtext6 = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]/td[7]")).getText();
-	    					WebElement x = null ;
-	    					if(!x.equals(driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]/td[8]"))) ) {
-	    					celtext7 = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]/td[8]")).getAttribute("href");
-	    					}else {
-	    						celtext7 = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]/td[8]")).getText();
-	    					}
-	    					celtext8 = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]/td[9]/div/a[1]")).getAttribute("href");
-	    					System.out.println("\n"+celtext);
-	    					System.out.println("\n"+celtext1);
-	    					System.out.println("\n"+celtext2);
-	    					System.out.println("\n"+celtext3);
-	    					System.out.println("\n"+celtext4);
-	    					System.out.println("\n"+celtext5);
-	    					System.out.println("\n"+celtext6);
-	    					System.out.println("\n"+celtext7);
-	    					System.out.println("\n"+celtext8);
+	    				String headerText = headerTableRow.get(column).getText(), celtext ="";
+	    				
+	    				if(column==1 & row < rows_count) {
+	    					
+		    					celtext = driver.findElement(By.xpath("(//*[@id='visibility_results']/tbody/tr)["+ (row+1) +"]")).getText();
+		    					System.out.println("\n"+celtext);
+	   
 	    			}
-	    				kMap.put(headerText, celtext);
-	    				kMap.put(headerText, celtext1);
-	    				kMap.put(headerText, celtext2);
-	    				kMap.put(headerText, celtext3);
-	    				kMap.put(headerText, celtext4);
-	    				kMap.put(headerText, celtext5);
-	    				kMap.put(headerText, celtext6);
-	    				kMap.put(headerText, celtext7);
-	    				kMap.put(headerText, celtext8);
+	    				kMap.put("rowdata", celtext);
 	    				tableCellValues.add(kMap);
 	    			}
 	    		}

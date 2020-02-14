@@ -85,6 +85,7 @@ public abstract class BaseClass {
     	return IAutoconst.transparenSEE;
 
     case "Sentiment Analysis":
+    	return IAutoconst.neuralTuringTechAccount;
     case "SA":
         return IAutoconst.transparenSEE;
         	   //IAutoconst.Fit4LessAccount;
