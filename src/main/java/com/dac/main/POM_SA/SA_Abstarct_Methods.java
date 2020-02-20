@@ -643,13 +643,14 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 	            		Cell cell = row.getCell(col_num);
 	            		if (cell != null) {
 	            			if(cell.getCellType() == Cell.CELL_TYPE_STRING) {
-	            				 cellValue = cell.getStringCellValue().toString();
+	            				 cellValue = cell.getStringCellValue();
 	            				 ExportData.add(cellValue);
 	            			    } 
-	            		System.out.println(":" +ExportData);
-	            		wb.close();
+	            		
 	            	}
 				}
+	            	System.out.println("From Excel:" +ExportData);
+            		wb.close();
 	            	return ExportData; 
 	    }	
 	

@@ -30,14 +30,13 @@ public class SA_Reviews_Test extends BaseClass{
 	/**
 	 * Test to get Dashboard Values
 	 * @throws InterruptedException
-	 */
+	 *//*
 	@Test(enabled = true, priority =1)
 	public void getDashboardreview() throws InterruptedException {
 		data = new SA_Reviews_Page(CurrentState.getDriver());
-		dashreview = data.getavgreview();
-		
+		dashreview = data.getavgreview();		
 		DashRnPs = data.getDashRnpsscore();
-	}
+	}*/
 	
 	
 	/**
@@ -232,7 +231,7 @@ public class SA_Reviews_Test extends BaseClass{
 		*//**
 		 * To Compare Reviews Export and UI
 		 * @throws Exception 
-		 *//*
+		 */
 		@Test(priority = 9)
 			public void compareUIandXLData() throws Exception {
 				data = new SA_Reviews_Page(CurrentState.getDriver());
@@ -250,10 +249,10 @@ public class SA_Reviews_Test extends BaseClass{
 				addEvidence(CurrentState.getDriver(),"Get UI Reviews, Ref-Code, Business Name and Links", "Yes");
 		}
 		
-	*//**
+	/**
 	 * Test to apply source filter
 	 * @throws Exception
-	 *//*
+	 */
 		@Test(priority = 10)
 		public void compareUISourceData() throws Exception {
 			data = new SA_Reviews_Page(CurrentState.getDriver());
@@ -274,9 +273,9 @@ public class SA_Reviews_Test extends BaseClass{
 			}catch(Exception e) {
 				e.printStackTrace();
 			}			
-	}*/
+	}
 		
-		@Test(priority = 11)
+		/*@Test(priority = 11)
 		public void compareUITagsearchData() throws Exception {
 			data = new SA_Reviews_Page(CurrentState.getDriver());
 			try {	
@@ -296,7 +295,7 @@ public class SA_Reviews_Test extends BaseClass{
 			}catch(Exception e) {
 				e.printStackTrace();
 			}			
-	}
+	}*/
 		
 		/*@Test(priority = 12)
 		public void compareUIKeywordsearchData() throws Exception {
@@ -319,10 +318,10 @@ public class SA_Reviews_Test extends BaseClass{
 			}catch(Exception e) {
 				e.printStackTrace();
 			}			
-	}
+	}*/
 		
 		
-		@Test(priority = 13)
+		/*@Test(priority = 13)
 		public void compareUISentimentData() throws Exception {
 			data = new SA_Reviews_Page(CurrentState.getDriver());
 			try {	
@@ -342,12 +341,12 @@ public class SA_Reviews_Test extends BaseClass{
 			}catch(Exception e) {
 				e.printStackTrace();
 			}			
-	}
+	}*/
 		
 		
 		
 		
-		*//**
+		/**
 		 * Test to verify Top button functionality
 		 * @throws Exception
 		 *//*
@@ -358,6 +357,29 @@ public class SA_Reviews_Test extends BaseClass{
 				addEvidence(CurrentState.getDriver(), "Top Button click verification", "yes");
 			}	*/
 		
+	/*
+	@Test(priority = 14)
+	public void compareUISentimentCategoryData() throws Exception {
+		data = new SA_Reviews_Page(CurrentState.getDriver());
+		try {	
+			int count = 1;
+			ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "SA_Advanced_Filters"); wb.deleteEmptyRows();
+			SA_Reviews_Page s = new SA_Reviews_Page(CurrentState.getDriver());
+			for(int i=1;i<=wb.getRowCount();i++) {
+				System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
+				if(i>1) CurrentState.getDriver().navigate().refresh();
+				s.waitUntilLoad(CurrentState.getDriver());
+				String text = wb.getCellValue(i, wb.seacrh_pattern("Sentiment Category", 0).get(0).intValue());
+				s.applySentimentCategory(text);
+				addEvidence(CurrentState.getDriver(),"Applied Sentiment Category Filter", "Yes");
+				s.compareSentimentsCategorywithreviews(text);
+				addEvidence(CurrentState.getDriver(),"Search for Sentiment Category", "Yes");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}			
+	} */
+	
 	@DataProvider
 	public String[][] testData(){
 		String[][] data = null, data1 = null;

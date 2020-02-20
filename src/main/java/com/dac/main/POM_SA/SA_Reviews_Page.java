@@ -70,7 +70,7 @@ public class SA_Reviews_Page extends SA_Abstarct_Methods{
 	@FindBy(id="btnReportExport")
 	private WebElement exportBTN;
 	
-	@FindBy(xpath = "//*[@class='row reviewEnhancement']")
+	@FindBy(xpath = "//*[@class='reviewEnhancement']")
 	private WebElement ReviewSection;
 	
 	@FindBy(xpath="//*[@id='Review']//dl[contains(@class,'source-filter')]")
@@ -131,10 +131,10 @@ public class SA_Reviews_Page extends SA_Abstarct_Methods{
 	@FindBy(xpath = "(//*[@class='pagination']//a)[1]")
 	private WebElement paginationPrev;
 	
-	@FindBy(xpath = "(//*[@class='pagination']//a)[last()]")
+	@FindBy(xpath = "(//*[@class='pagination']//a)[last()-1]")
 	private WebElement paginationLast;
 	
-	@FindBy(xpath = "(//*[@class='pagination']//a)[last()-1]")
+	@FindBy(xpath = "(//*[@class='pagination']//a)[last()]")
 	private WebElement paginationNext;
 	
 	/*-------------------------Pagination-----------------------*/
@@ -279,8 +279,7 @@ public class SA_Reviews_Page extends SA_Abstarct_Methods{
 		waitForElement(ReviewSection, 10);
 		scrollByElement(ReviewSection);
 		waitForElement(paginationLast, 10);
-		clickelement(paginationLast);
-		int lastpage = Integer.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-2]")).getText());
+		int lastpage = Integer.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
 		System.out.println("Last Page Number is :" +lastpage);
 		waitForElement(paginationPrev, 10);
 		clickelement(paginationPrev);
@@ -294,17 +293,17 @@ public class SA_Reviews_Page extends SA_Abstarct_Methods{
 	    			String text = driver.findElement(By.xpath("(//*[@id='Review']//div[@class='form-group col-xs-12'])["+ row +"]//*[@id='viewListingLink']")).getAttribute("href");
 	    			Thread.sleep(2000);
 	    			if(!text.contains("yelp")) {
-	    			String BName = driver.findElement(By.xpath("(//div[@class='row reviewEnhancement']//div[@class='form-group col-xs-12'])["+ row +"]//div[@class='business-info']//div//strong")).getText();
+	    			String BName = driver.findElement(By.xpath("(//div[@class='reviewEnhancement']//div[@class='form-group col-xs-12'])["+ row +"]//div[@class='business-info']//div//strong")).getText();
 	    			System.out.println(BName);
 	    			Thread.sleep(2000);
-	    			String ReferenceNum = driver.findElement(By.xpath("(//div[@class='row reviewEnhancement']//div[@class='form-group col-xs-12'])["+ row +"]//div[@class='reference-code']//div[2]")).getText();
+	    			String ReferenceNum = driver.findElement(By.xpath("(//div[@class='reviewEnhancement']//div[@class='form-group col-xs-12'])["+ row +"]//div[@class='reference-code']//div[2]")).getText();
 	    			System.out.println(ReferenceNum);
 	    			Thread.sleep(2000);
-	    			String LinksUrl = driver.findElement(By.xpath("(//div[@class='row reviewEnhancement']//div[@class='form-group col-xs-12'])["+ row +"]//*[@id='viewListingLink']")).getAttribute("href");
+	    			String LinksUrl = driver.findElement(By.xpath("(//div[@class='reviewEnhancement']//div[@class='form-group col-xs-12'])["+ row +"]//*[@id='viewListingLink']")).getAttribute("href");
 	    			System.out.println(LinksUrl);
 	    			Thread.sleep(2000);
-	    			String loc = driver.findElement(By.xpath("(//*[@id='filter-options']//div[@class= 'ui fluid search selection dropdown myList1'])["+ row +"]")).getText().toLowerCase();
-	    			if(!Text.equals("Null")) {
+	    			String loc = driver.findElement(By.xpath("//*[contains(@class,'myList1')]")).getText().toLowerCase();
+	    			if(!Text.equalsIgnoreCase("Null")) {
 	    				String locdetails = driver.findElement(By.xpath("(//*[@class='location-separator'])[" + row + "]")).getText().toLowerCase();
 	    				Assert.assertTrue("Found", locdetails.contains(loc));
 	    			}else {
@@ -367,13 +366,13 @@ public class SA_Reviews_Page extends SA_Abstarct_Methods{
 				XLSource = GetDataUsingColName(FFpath, "Source");
 				Thread.sleep(1000);
 			}				
-			Assert.assertEquals(XLBname.size(), BusinssName.size());
+			Assert.assertEquals(XLBname.size()-1, BusinssName.size());
 			Assert.assertEquals(XLBname, BusinssName);
-			Assert.assertEquals(XLRefCode.size(), ReferenceNumber.size());
+			Assert.assertEquals(XLRefCode.size()-1, ReferenceNumber.size());
 			Assert.assertEquals(XLRefCode, ReferenceNumber);
-			Assert.assertEquals(XLURL.size(), URL.size());
+			Assert.assertEquals(XLURL.size()-1, URL.size());
 			Assert.assertEquals(XLURL, URL);
-			Assert.assertEquals(XLSource.size(), URL.size());
+			Assert.assertEquals(XLSource.size()-1, URL.size());
 			if(XLSource.size() == URL.size()) {
 				for(int i =0; i<=XLSource.size()-1;i++) {
 					XLSource.get(i).contains(URL.get(i));
@@ -431,8 +430,7 @@ public class SA_Reviews_Page extends SA_Abstarct_Methods{
 		waitForElement(ReviewSection, 10);
 		scrollByElement(ReviewSection);
 		waitForElement(paginationLast, 10);
-		clickelement(paginationLast);
-		int lastpage = Integer.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-2]")).getText());
+		int lastpage = Integer.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
 		System.out.println("Last Page Number is :" +lastpage);
 		waitForElement(paginationPrev, 10);
 		clickelement(paginationPrev);
@@ -455,6 +453,7 @@ public class SA_Reviews_Page extends SA_Abstarct_Methods{
 	}catch(Exception e) {
 			e.printStackTrace();
 		}
+		clickelement(SourceTab);
 		action.moveToElement(driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='All'])[1]"))).click().build().perform();
 	}
 	
@@ -511,8 +510,7 @@ public class SA_Reviews_Page extends SA_Abstarct_Methods{
 		waitForElement(ReviewSection, 10);
 		scrollByElement(ReviewSection);
 		waitForElement(paginationLast, 10);
-		clickelement(paginationLast);
-		int lastpage = Integer.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-2]")).getText());
+		int lastpage = Integer.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
 		System.out.println("Last Page Number is :" +lastpage);
 		waitForElement(paginationPrev, 10);
 		clickelement(paginationPrev);
@@ -535,9 +533,9 @@ public class SA_Reviews_Page extends SA_Abstarct_Methods{
 	}catch(Exception e) {
 			e.printStackTrace();
 		}
-		scrollByElement(advanceSearch);
-		clickelement(advanceSearch);
-		driver.findElement(By.xpath("(//a[@class='tagit-close'])[1]")).click();
+		/*scrollByElement(advanceSearch);
+		clickelement(advanceSearch);*/
+		action.moveToElement(driver.findElement(By.xpath("(//a[@class='tagit-close'])[1]"))).click().build().perform();
 		
 	}
 	
@@ -589,8 +587,7 @@ public class SA_Reviews_Page extends SA_Abstarct_Methods{
 		waitForElement(ReviewSection, 10);
 		scrollByElement(ReviewSection);
 		waitForElement(paginationLast, 10);
-		clickelement(paginationLast);
-		int lastpage = Integer.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-2]")).getText());
+		int lastpage = Integer.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
 		System.out.println("Last Page Number is :" +lastpage);
 		waitForElement(paginationPrev, 10);
 		clickelement(paginationPrev);
@@ -653,8 +650,7 @@ public class SA_Reviews_Page extends SA_Abstarct_Methods{
 		waitForElement(ReviewSection, 10);
 		scrollByElement(ReviewSection);
 		waitForElement(paginationLast, 10);
-		clickelement(paginationLast);
-		int lastpage = Integer.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-2]")).getText());
+		int lastpage = Integer.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
 		System.out.println("Last Page Number is :" +lastpage);
 		waitForElement(paginationPrev, 10);
 		clickelement(paginationPrev);
@@ -696,4 +692,70 @@ public class SA_Reviews_Page extends SA_Abstarct_Methods{
 		clickelement(SentimentTab);
 		driver.findElement(By.xpath("(//div[@class='sentiment-score-filter']//div[contains(text(), 'All')])[1]")).click();
 	} 	
+	
+	
+	/**
+	 * To apply Search tag filter
+	 * @param text
+	 */
+	public void applySentimentCategory(String Text) {
+		JSWaiter.waitJQueryAngular();
+		if(Text == null || Text.equalsIgnoreCase("none")) Text = "All";
+		try {
+			waitForElement(SourceTab, 25);
+			waitUntilLoad(driver);
+			waitForElement(advanceSearch, 10);
+			scrollByElement(advanceSearch);
+			clickelement(advanceSearch);
+			if(!Text.equals("None")) {			
+				scrollByElement(SentimentCategoryTab);	
+				clickelement(SentimentCategoryTab);
+				action.moveToElement(driver.findElement(By.xpath("//*[@class='dropdown sentiment-category-filter']//input[contains(@title, '"+ Text +"')]"))).click().build().perform();
+				clickelement(SentimentCategoryTab);
+				waitUntilLoad(driver);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * To compare the source with Reviews
+	 */
+	public void compareSentimentsCategorywithreviews(String Text) {
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		JSWaiter.waitJQueryAngular();		
+		waitForElement(ReviewSection, 10);
+		scrollByElement(ReviewSection);
+		waitForElement(paginationLast, 10);
+		int lastpage = Integer.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
+		System.out.println("Last Page Number is :" +lastpage);
+		waitForElement(paginationPrev, 10);
+		clickelement(paginationPrev);
+		try {
+		if(paginationNext.isDisplayed()) {
+			for(int i=1;i<=lastpage;i++) {		    	
+				int size = Reviews.size();
+				System.out.println(size);
+				for(int j = 1; j<= size; j++) {
+					String ReviewsSentimentCategory = driver.findElement(By.xpath("(//div[contains(@class,'custom-tooltip')])["+ j +"]")).getAttribute("class");
+					if(ReviewsSentimentCategory.contains(Text)) {
+						assert(!ReviewsSentimentCategory.contains("grey"));
+						Assert.assertTrue("Sentiment Category Not Found", ReviewsSentimentCategory.toLowerCase().contains(Text.toLowerCase()));
+					}
+				}if(paginationNext.isEnabled()) {
+					scrollByElement(paginationNext);
+					paginationNext.click();
+					Thread.sleep(4000);
+				}		
+			}	
+		}
+	}catch(Exception e) {
+			e.printStackTrace();
+		}
+		clickelement(SentimentCategoryTab);
+		action.moveToElement(driver.findElement(By.xpath("(//*[@class='dropdown sentiment-category-filter']//input[contains(@title, 'All')])"))).click().build().perform();
+	} 	
+	
 }

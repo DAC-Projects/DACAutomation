@@ -12,8 +12,8 @@
    <parameter name="browser" value="chrome"/>
     <classes>	  	    	
    		
-   		<class name= "com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
-	  	 <!--  <class name= "com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
+   		<class name= "com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" /> 
+	  	  <!-- <class name= "com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
 	  	 <class name= "com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
 	  	<class name= "com.dac.testcases.TPSEE.Locations" />
 	  	<class name= "com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" /> 		
@@ -25,7 +25,7 @@
 		<class name= "com.dac.testcases.TPSEE.TPSEE_Bing_Test" />		
 		<class name= "com.dac.testcases.TPSEE.TPSEE_Groups_Test" /> 
 		<class name = "com.dac.testcases.TPSEE.TPSEE_ReviewStream_Test" />	
-		<class name= "com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" />		 -->
+		<class name= "com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" />	 -->	
      </classes>
  </test>
  
@@ -42,12 +42,14 @@
  	</classes>
   </test>  -->
   
-  <!-- 
-      <test name="Sentiment Analysis" parallel="false" group-by-instances="true">
+  
+      <!-- <test name="Sentiment Analysis" parallel="false" group-by-instances="true">
   <parameter name="browser" value="chrome"/>
     <classes>
 	 	<class name= "com.dac.testcases.SA.SA_RevewReportCard_Test" /> 
 	 	<class name= "com.dac.testcases.SA.SA_Reviews_Test" /> 
     </classes>
   </test> -->
+  
+  
 </suite>
