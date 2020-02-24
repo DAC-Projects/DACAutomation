@@ -589,7 +589,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		JSWaiter.waitJQueryAngular();
 		waitForElement(progressdata, 40);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
-			exportVATable(exporttable, ExporttableXLSX);
+			exportVATable(exporttable, ExporttableCSV);
 			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExporttableNotFoundCSV));
 			Thread.sleep(5000);
 			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));

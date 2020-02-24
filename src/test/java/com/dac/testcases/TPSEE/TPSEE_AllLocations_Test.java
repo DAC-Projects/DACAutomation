@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_AllLocations_Page;
+import com.dac.main.POM_TPSEE.TPSEE_abstractMethods;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -29,10 +30,9 @@ public class TPSEE_AllLocations_Test extends BaseClass{
 		@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
 		public void GetKPIValues() throws Exception {
 			data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
-			Thread.sleep(10000);
+			Thread.sleep(50000);
 			location = data.getLocations();
-			System.out.println(location);
-			
+			System.out.println(location);			
 			CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 			addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
 		}
@@ -74,8 +74,7 @@ public class TPSEE_AllLocations_Test extends BaseClass{
 			for(int i=1;i<=wb.getRowCount();i++) {
 				System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
 				if(i>1) CurrentState.getDriver().navigate().refresh();
-				s.waitUntilLoad(CurrentState.getDriver());
-		
+				s.waitUntilLoad(CurrentState.getDriver());		
 				String Group = wb.getCellValue(i, wb.seacrh_pattern("Group", 0).get(0).intValue());
 				String CountryCode = wb.getCellValue(i, wb.seacrh_pattern("Country", 0).get(0).intValue());
 				String State = wb.getCellValue(i, wb.seacrh_pattern("State", 0).get(0).intValue());

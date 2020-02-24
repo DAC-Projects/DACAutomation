@@ -876,6 +876,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 									if(eleClicked(highChart_1M)) {
 										days = getNumberofDays();			
 										if(days >= 28 && days<=31 ) {
+											assert(true);
 											System.out.println("1 Month data is displayed");
 										}else {
 											System.out.println("Not 1 Month");
@@ -893,6 +894,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 									if(eleClicked(highChart_3M)) {
 										days = getNumberofDays();
 										if(days>=90 && days<=92) {
+											assert(true);
 											System.out.println("3 Month data is displayed");
 										}else {
 											System.out.println("Not 3 Month");
@@ -910,6 +912,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 									if(eleClicked(highChart_6M)) {
 										days = getNumberofDays();
 										if(days>=180 && days<=184) {
+											assert(true);
 											System.out.println("6 Month data is displayed");
 										}else {
 											System.out.println("Not 6 Month");
@@ -926,6 +929,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 									clickelement(highChart_YTD);
 									if(eleClicked(highChart_YTD)) {
 										days = getNumberofDays();
+										assert(true);
 									}else {
 										System.out.println("Element Not clicked");
 										}
@@ -939,6 +943,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 									if(eleClicked(highChart_1y)) {
 										days = getNumberofDays();
 										if(days>=364 && days<=366) {
+											assert(true);
 											System.out.println("1 Year data is displayed");
 										}else {
 											System.out.println("Not 1 Year");
@@ -956,6 +961,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 									clickelement(highChart_All);
 									if(eleClicked(highChart_All)) {
 										days = getNumberofDays();
+										assert(true);
 									}else {
 										System.out.println("Element not clicked");
 										}
@@ -1038,8 +1044,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * To get Number of Locations from Dashboard 
 		 * @return
 		 */
-		public static int getLocations() {
-			int loc = Integer.parseInt(Locations.getText());
+		public int getLocations() {
+			wait.until(ExpectedConditions.visibilityOf(Locations));
+			waitUntilLoad(driver);
+			String s  = Locations.getText();
+			System.out.println("Locations are :" +s);
+			int loc = Integer.parseInt(s);
 			System.out.println(loc);
 			return loc;			
 		}
@@ -1049,7 +1059,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @return
 		 * @throws InterruptedException 
 		 */
-		public  static double getVisibilityscore() throws InterruptedException {	
+		public  double getVisibilityscore() throws InterruptedException {	
 			Thread.sleep(5000);
 			String sc = Visibilityscore.getText();
 			System.out.println(sc);
@@ -1069,7 +1079,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @return
 		 * @throws InterruptedException 
 		 */
-		public  static int getVisibilityLoc() throws InterruptedException {	
+		public  int getVisibilityLoc() throws InterruptedException {	
 			Thread.sleep(5000);
 			int visibilityloc = Integer.parseInt(VisibilityLoc.getText());
 			System.out.println(visibilityloc);
@@ -1113,7 +1123,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @return
 		 * @throws InterruptedException 
 		 */
-		public static double getContentscore() throws InterruptedException {	
+		public double getContentscore() throws InterruptedException {	
 			Thread.sleep(5000);
 			String sc = Contentscore.getText();
 			System.out.println(sc);
@@ -1132,7 +1142,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @return
 		 * @throws InterruptedException 
 		 */
-		public static int getContentLoc() throws InterruptedException {	
+		public int getContentLoc() throws InterruptedException {	
 			Thread.sleep(5000);
 			int contentloc = Integer.parseInt(ContentLoc.getText());
 			System.out.println(contentloc);

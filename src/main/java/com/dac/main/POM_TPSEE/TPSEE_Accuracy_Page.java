@@ -281,9 +281,8 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			JSWaiter.waitJQueryAngular();
 			waitForElement(accuracysite, 40);
 			waitForElement(siteshow, 40);
-			//getting into progressbar found listing
 			scrollByElement(sitelink);
-			//clicking on found listing progress bar
+			//clicking on vendor link
 			clickelement(sitelink);
 			System.out.println("\n Link clicked \n");
 			waitForElement(tableresult,40);

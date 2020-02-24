@@ -71,8 +71,8 @@ public class Navigationpage extends BasePage{
 	private WebElement Bing;
 	//------------------------- SA and RRM -------------------------------------
 	
-	@FindBy(xpath = "//a[@href='/Review/ReviewReport/']")
-	private WebElement ReviewReport;
+	@FindBy(xpath = "//a[@href='/Review/ReviewFeed/']")
+	private WebElement ReviewFeed;
 	
 	@FindBy(xpath = "//a[@href='/ReportCard/Index/']/span")
 	private WebElement ReportCard;
@@ -285,9 +285,9 @@ public class Navigationpage extends BasePage{
 	/** To click on SA_ReviewReport link in LHS to navigate to SA_ReviewReport page   */
 	public void navigateToSA_ReviewReport() {
 		JSWaiter.waitJQueryAngular();
-		wait.until(ExpectedConditions.visibilityOf(ReviewReport));
-		scrollByElement(ReviewReport);
-		clickelement(ReviewReport);   
+		wait.until(ExpectedConditions.visibilityOf(ReviewFeed));
+		scrollByElement(ReviewFeed);
+		clickelement(ReviewFeed);   
 	      System.out.println("Waiting for page to load**********");
 	}
 

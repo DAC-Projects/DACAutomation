@@ -122,7 +122,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	
 	//tooltipvalue in the graph
 	@FindBy(css = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none")
-	private WebElement grphtooltip; 
+	private WebElement grphtooltip;  
 	
 	
 	@FindBy(css = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none>span>span.bold")
@@ -513,7 +513,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 			String tooltipvalue = grphtooltip.getText();
 			System.out.println("\n Reading tooltipdata ********** \n");
 			System.out.println("\n tooltipvalue is \n" +tooltipvalue);	
-			double score =  Double.parseDouble(tooltipvalue.substring(47, 52));
+			double score =  Double.parseDouble(tooltipvalue.substring(47, 51));
 			System.out.println(score);
 			return score;			
 		}
@@ -526,7 +526,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 			String tooltipvalue = grphtooltip.getText();
 			System.out.println("\n Reading tooltipdata ********** \n");
 			System.out.println("\n tooltipvalue is \n" +tooltipvalue);
-			int numberoflocations = Integer.parseInt(tooltipvalue.substring(31 , 34));
+			int numberoflocations = Integer.parseInt(tooltipvalue.substring(31, 33));
 			System.out.println(numberoflocations);
 			return numberoflocations;	
 		}

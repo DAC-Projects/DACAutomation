@@ -187,16 +187,15 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods{
 		
 	/**
 	 * exporting progress bar table data XSLX
-	 * @throws FileNotFoundException
-	 * @throws IOException
-	 * @throws InterruptedException
+	 * @throws Exception 
 	 */
-		public void LocationDataTableExportXLSX() throws FileNotFoundException, IOException, InterruptedException {				
+		public void LocationDataTableExportXLSX() throws Exception {				
 				JSWaiter.waitJQueryAngular();
 				exportVATable(Export, Export_xlsx );
 				renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+LocationExportXLSX));
 				Thread.sleep(5000);
 				CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
+				BaseClass.addEvidence(CurrentState.getDriver(), "Download XLSX File", "yes");
 			}
 		
 	
