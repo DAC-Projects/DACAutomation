@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -18,8 +21,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
-import com.dac.main.BasePage;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -41,7 +42,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	private List<WebElement> Site;
 	
 	//Exporting into csv 
-		@FindBy(xpath = "//button[@id='btnLocationExportPopUp']")
+		@FindBy(xpath = "//*[@id='accuracyCurrentExportDropdown']//button")
 		private WebElement exportBtn;
 		
 		@FindBy(xpath = "//*[@id='exportdate']")
@@ -53,14 +54,23 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		@FindBy(css = "td.ui-datepicker-days-cell-over")
 		private WebElement date;
 		
+		@FindBy(xpath = "//a[contains(text(),'Export as CSV')]")
+		private WebElement csvexport;
+		
+		@FindBy(xpath = "//a[contains(text(),'Export as XLSX')]")
+		private WebElement XLSXExport;
+		
 		@FindBy(xpath = "//*[@id='btnLocationExport']")
 		private WebElement export;
 		
 		@FindBy(xpath = "(//div//a[@class='load-table'][contains(text(),'')])")
 		private WebElement sitelink;
 		
-		@FindBy(xpath = "//a[@id='ToolTables_inaccuracy_results_0']")
+		@FindBy(xpath = "//*[@id='vendorAccuracyReportExport']//button")
 		private WebElement tablebtn;
+		
+		@FindBy(xpath = "//*[@id='vendorAccuracyReportExport']//a[contains(text(),'Export as XLSX')]")
+		private WebElement ExporttableXLSX;
 		
 		@FindBy(xpath = "//*[@id='inaccuracy_table_title']")
 		private WebElement tabletitle;
@@ -98,6 +108,27 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		@FindBy(xpath = "//div[@id='allSitesScores']//a[contains(@class,'load-table')][contains(text(),'')]")
 		private WebElement vendorslist;
 		
+		@FindBy(xpath = "//div[@id='divNumOfLocations']")
+		private WebElement overviewloc;
+		
+		@FindBy(xpath = "//div[@id='divOverallScoreValue']")
+		private WebElement overviewscore;
+		
+		@FindBy(xpath = "//div[@id='divBars']")
+		private WebElement overviewlayout;
+		
+		@FindBy(xpath = "//*[@id='all']")
+		private WebElement Alltab;
+		
+		@FindBy(xpath = "//*[@id='name']")
+		private WebElement Nametab;
+		
+		@FindBy(xpath = "//*[@id='address']")
+		private WebElement Addresstab;
+		
+		@FindBy(xpath = "//*[@id='phone']")
+		private WebElement PHNumtab;
+		
 
 		/*-------------------------Pagination-----------------------*/
 		@FindBy(xpath = "(//*[@class='pagination']//a)")
@@ -114,16 +145,17 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		/*-------------------------Pagination-----------------------*/
 		
 		public static List<Map<String, String>> tableCellValues = new ArrayList<Map<String, String>>();
-	
-	public TPSEE_Accuracy_Page(WebDriver driver) {
-
-		super(driver);
-		this.driver = driver;
-		wait = new WebDriverWait(driver, 10);
-		action = new Actions(driver);
-		PageFactory.initElements(driver, this);
-
-	}
+	/**
+	 * Initializing webdriver
+	 * @param driver
+	 */
+		public TPSEE_Accuracy_Page(WebDriver driver) {
+			super(driver);
+			this.driver = driver;
+			wait = new WebDriverWait(driver, 10);
+			action = new Actions(driver);
+			PageFactory.initElements(driver, this);
+		}
 	
 	//tooltipvalue in the graph
 	@FindBy(css = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none")
@@ -136,69 +168,99 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		@FindBy(xpath = "//*[@id='divBars']")
 		private List<WebElement> comp;
 
-	public void verify_pageloadCompletely(int timeout) {
-		if ( waitForElement(grphtooltip, timeout)
+		/**
+		 * Page load method
+		 * @param timeout
+		 */
+		public void verify_pageloadCompletely(int timeout) {
+			if ( waitForElement(grphtooltip, timeout)
 				&& waitForElement(hstryGrph, timeout)
 				&& waitForElement(hstryGrph, timeout) & waitForElement(filter_Panel, timeout))
-			assertTrue(true, "All sections filter, overview report, site table and graph is loaded");
-		else
-			assertTrue(false, "Page not loaded completely");
-	}
+				assertTrue(true, "All sections filter, overview report, site table and graph is loaded");
+			else
+				assertTrue(false, "Page not loaded completely");
+		}
 	
-	//get overall accuracy score
-	@Override
-	public List<Map<String, String>> getOverviewReport() {
-	JSWaiter.waitJQueryAngular();
-	waitForElement(overall, 40);
-	scrollByElement(overall);
-	Map<String, String> kMap;
-	List<Map<String, String>> ovrwRprtData = new ArrayList<Map<String, String>>();
-	for (int i = 1; i <= Site.size(); i++) {
-		WebElement s = driver.findElement(By.xpath(xpathCompetitors + "[" + i + "]"));
-		kMap = new HashMap<String, String>();
-		kMap.put("NoofLocation", s.findElement(By.xpath(NoofLocation)).getText());
-		kMap.put("score", s.findElement(By.xpath(overallscore)).getText());
-		System.out.format("%10s%10s", s.findElement(By.xpath(NoofLocation)).getText(),
+		/**
+		 * To get Overview Location count
+		 * @return
+		 */
+		public int overviewlocation() {
+			int location = overviewLocation(overviewlayout,overviewloc);
+			return location;
+		}
+	
+		/**
+		 * To get Overview Score 
+		 * @return
+		 */
+		public double overviewscore() {
+			double score = overviewscore(overviewlayout,overviewscore);
+			return score;
+		}
+	
+		/**
+		 * To get overall accuracy score
+		 */
+		@Override
+		public List<Map<String, String>> getOverviewReport() {
+			JSWaiter.waitJQueryAngular();
+			waitForElement(overall, 40);
+			scrollByElement(overall);
+			Map<String, String> kMap;
+			List<Map<String, String>> ovrwRprtData = new ArrayList<Map<String, String>>();
+			for (int i = 1; i <= Site.size(); i++) {
+				WebElement s = driver.findElement(By.xpath(xpathCompetitors + "[" + i + "]"));
+				kMap = new HashMap<String, String>();
+				kMap.put("NoofLocation", s.findElement(By.xpath(NoofLocation)).getText());
+				kMap.put("score", s.findElement(By.xpath(overallscore)).getText());
+				System.out.format("%10s%10s", s.findElement(By.xpath(NoofLocation)).getText(),
 				s.findElement(By.xpath(overallscore)).getText());
-		ovrwRprtData.add(kMap);
-	}
-	return ovrwRprtData;
-	}
+				ovrwRprtData.add(kMap);
+			}
+			return ovrwRprtData;
+		}
 
-	public void compareExportnTable(List<Map<String, String>> verifyHistoryGraph,
-			List<Map<String, String>> verifySitetable) {
-		
-		
-	}
+		/**
+		 * Export as CSV overall accuracy
+		 * @throws InterruptedException
+		 * @throws FileNotFoundException
+		 * @throws IOException
+		 * @throws ExecutionException
+		 */
+		public void exportaccuracyrptCSV() throws InterruptedException, FileNotFoundException, IOException, ExecutionException{
+			JSWaiter.waitJQueryAngular();
+			exportVA(exportBtn, csvexport, exportdate,  date, export);
+			Thread.sleep(10000);
+			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExportCSV));
+		}
 	
-	/* Export visibility overview report below filter*/
-	public void exportvisibilityrpt() throws InterruptedException, FileNotFoundException, IOException{
-		JSWaiter.waitJQueryAngular();
-		waitForElement(exportBtn, 40);
-		scrollByElement(exportBtn);
-		clickelement(exportBtn);
-		waitForElement(exportdate,40);
-		scrollByElement(exportdate);
-		clickelement(exportdate);
-		waitForElement(dtpicker,40);
-		scrollByElement(dtpicker);
-		waitForElement(date, 40);
-		scrollByElement(date);
-		clickelement(date);
-	    //download visibility report
-	    download(CurrentState.getBrowser(), export, 30);
-	    convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+AccuracyExport));
-	}
+		/**
+		 * Export as XLSX overall accuracy
+		 * @throws InterruptedException
+		 * @throws FileNotFoundException
+		 * @throws IOException
+		 * @throws ExecutionException
+		 */
+		public void exportaccuracyrptXLSX() throws InterruptedException, FileNotFoundException, IOException, ExecutionException{
+			JSWaiter.waitJQueryAngular();
+			exportVA(exportBtn, XLSXExport, exportdate,  date, export);
+			Thread.sleep(10000);
+			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExportXLSX));
+		}	
 	
-	//printing visibility report data from downloaded excel sheet 
+		/**
+		 * To get list of data from excel
+		 * @return
+		 * @throws Exception
+		 */
 		public List<Map<String, String>> getExportData() throws Exception {
 			JSWaiter.waitJQueryAngular();
-			exportvisibilityrpt();
-			String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+AccuracyExport), "Sheet0").getExcelTable();
+			exportaccuracyrptXLSX();
+			String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+AccuracyExportXLSX), "Sheet0").getExcelTable();
 			List<Map<String, String>> exportData = new ArrayList<Map<String, String>>();
 			int colSize = table[0].length;
 			for (int col = 1; col < colSize; col++) {
-				//adding data into map
 				Map<String, String> kMap = new HashMap<String, String>();
 				for (int i = 1; i < table.length; i++) {
 					kMap.put("NoofLocation", table[0][col]);
@@ -206,13 +268,14 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 				}
 				exportData.add(kMap);
 			}
-			//returning visibility report from excel
 			return exportData;
-
-		}
+		}		
 		
-		
-		//Clicking on progress bar and getting the data from the table for found
+		/**
+		 * To Get UI table Data
+		 * @return
+		 * @throws InterruptedException
+		 */
 
 		public List<Map<String, String>> verifysitelinkdata() throws InterruptedException{
 			JSWaiter.waitJQueryAngular();
@@ -240,7 +303,9 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			String entiresText = driver.findElement(By.className("dataTables_info")).getText();
 			entiresText = entiresText.substring(entiresText.indexOf("("));
 			WebElement TableTitle = driver.findElement(By.xpath("//*[@id='inaccuracy_table_title']"));
+			String s = TableTitle.toString();
 			scrollByElement(TableTitle);
+			if(!s.equalsIgnoreCase("Yelp")) {
 			int count = 0;
 			if(paginationNext.isDisplayed()) {
 				for(int i=1;i<=page;i++) {	//Loop will execute till the all the row of table completes.
@@ -285,31 +350,53 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 				e.printStackTrace();
 			}
 		}
+			}else {
+				try {
+					BaseClass.addEvidence(driver, "Data is not available for Yelp", "yes");
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
 			return tableCellValues;
 			}
 
-		
-		
-		public void exporttable() throws FileNotFoundException, IOException, InterruptedException {
-			
+		/**
+		 * To export table data as XLSX
+		 * @throws FileNotFoundException
+		 * @throws IOException
+		 * @throws InterruptedException
+		 */
+		public void exporttableAccuracyXLSX() throws FileNotFoundException, IOException, InterruptedException {
+			JSWaiter.waitJQueryAngular();
 			waitForElement(tableresult, 40);
-			waitForElement(tablebtn, 40);
-			//scrollByElement(tablebtn);
-			download(CurrentState.getBrowser(), tablebtn, 30);
-			JSWaiter.waitUntilJQueryReady();
-			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+AccuracyExporttable));
-			
+			WebElement TableTitle = driver.findElement(By.xpath("//*[@id='inaccuracy_table_title']"));
+			String s = TableTitle.toString();
+			scrollByElement(TableTitle);
+			if(!s.equalsIgnoreCase("Yelp")) {
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
+				exportVATable(tablebtn, ExporttableXLSX);
+				renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+AccuracyExporttableXLSX));
+				Thread.sleep(5000);
+				CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
+				
+			}else {
+				System.out.println("Data Not available for :" +s);
+			}
 		}
 		
-	//printing visibility progress bar table data from downloaded excel sheet
-	public List<Map<String, String>> getExporttableData() throws Exception {
+		
+		/**
+		 * 	To get data from export XLSX file
+		 * @return
+		 * @throws Exception
+		 */
+		public List<Map<String, String>> getExporttableData() throws Exception {
 			JSWaiter.waitJQueryAngular();
-			exporttable();
-			String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+AccuracyExporttable), "Sheet0").getExcelTable();
+			exporttableAccuracyXLSX();
+			String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+AccuracyExporttableXLSX), "Accuracy_Report").getExcelTable();
 			List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
 			int colSize = table[0].length;
 			for (int col = 1; col < colSize; col++) {
-				//adding data into map
 				Map<String, String> kMap = new HashMap<String, String>();
 				for (int i = 1; i < table.length; i++) {
 					kMap.put("rowdata", table[0][col]);
@@ -319,14 +406,140 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			}
 			return exporttableData;
 		}
+	
+		/**
+		 * Method to verify inaccuracy checkbox
+		 */
+		public void showinaccuracy() {
+			waitForElement(InAccuracychkBox, 10);
+			clickelement(InAccuracychkBox);
+			String var = ((JavascriptExecutor)driver).executeScript("return document.getElementById('toggle-inaccuracies').checked").toString();
+			System.out.println(var);
+			boolean app = Boolean.parseBoolean(var);
+			boolean out = true;
+			Assert.assertEquals(app, out , "Matches");
+		}
 
+		/**
+		 * Method to verify ignored checkbox
+		 */
+		public void showignored() {
+			waitForElement(IgnoredchkBox, 10);
+			clickelement(IgnoredchkBox);
+			String var = ((JavascriptExecutor)driver).executeScript("return document.getElementById('toggle_overridden').checked").toString();
+			System.out.println(var);
+			boolean app = Boolean.parseBoolean(var);
+			boolean out = true;
+			Assert.assertEquals(app, out , "Matches");
+		}
+
+	
+		/**
+		 * Compare XL and UI data
+		 * @param getExporttableData
+		 * @param verifysitelinkdata
+		 */
+		public void compareexporttableDatannumberofentries(List<Map<String, String>> getExporttableData,
+		List<Map<String, String>> verifysitelinkdata) {
+			for (Map<String, String> m1 : getExporttableData) {
+				for (Map<String, String> m2 : verifysitelinkdata) {
+					if (m1.get("rowdata").equals(m2.get("rowdata"))) {
+						Assert.assertEquals(m1.get("rowdata").contains(m2.get("rowdata")), true);
+						}
+					}
+				}
+			}
+		
+		/**
+		 * To get the Inaccuracy table headers
+		 * @return
+		 */
+		public ArrayList<String> verifyHeader() {
+			JSWaiter.waitJQueryAngular();
+			waitForElement(tableresult, 40);
+			scrollByElement(tableresult);
+			ArrayList<String> TableHeader = new ArrayList<String>();
+			List<WebElement> elements = driver.findElements(By.xpath("//*[@id='inaccuracy_results']//th"));
+		    java.util.Iterator<WebElement> program = elements.iterator();
+		    while (program.hasNext()) {
+		        String values = program.next().getText();
+		        if(!values.equals("null")) {
+		        	TableHeader.add(values);
+		        	System.out.println("\n" +values);
+		        }
+		    else
+		        {
+		            System.out.println("\n No sites displayed \n");
+		        }
+		       
+		    }
+			return TableHeader;
+		}
+		
+		/**
+		 * To verify ALL Tab headers with test data
+		 * @throws Exception
+		 */
+		public void verifyAllTab() throws Exception{	
+			waitForElement(Alltab, 10);
+			scrollByElement(Alltab);
+			ArrayList<String> XLData = GetSiteDataUsingColName("./data/InaccuracyTabs.xlsx", "ALL");
+			ArrayList<String> UIsite = verifyHeader();
+			Assert.assertEquals(XLData, UIsite, "Matches");			
+		}
+		
+		/**
+		 * To verify Name Tab headers with test data
+		 * @throws Exception
+		 */
+		public void verifyNameTab() throws Exception{		
+			waitForElement(Nametab, 10);
+			scrollByElement(Nametab);
+			clickelement(Nametab);
+			ArrayList<String> XLData = GetSiteDataUsingColName("./data/InaccuracyTabs.xlsx", "NAME");
+			ArrayList<String> UIData = verifyHeader();
+			Assert.assertEquals(XLData, UIData, "Matches");			
+		}
+		
+		/**
+		 * To verify Address Tab headers with test data
+		 * @throws Exception
+		 */
+		public void verifyAddressTab() throws Exception{
+			waitForElement(Addresstab, 10);
+			scrollByElement(Addresstab);
+			clickelement(Addresstab);
+			ArrayList<String> XLData = GetSiteDataUsingColName("./data/InaccuracyTabs.xlsx", "ADDRESS");
+			ArrayList<String> UIData = verifyHeader();
+			Assert.assertEquals(XLData, UIData, "Matches");			
+		}
+		
+		/**
+		 * To verify PhNo Tab headers with test data
+		 * @throws Exception
+		 */
+		public void verifyPHNOTab() throws Exception{
+			waitForElement(PHNumtab, 10);
+			scrollByElement(PHNumtab);
+			clickelement(PHNumtab);
+			ArrayList<String> XLData = GetSiteDataUsingColName("./data/InaccuracyTabs.xlsx", "PH NUM");
+			ArrayList<String> UIData = verifyHeader();
+			Assert.assertEquals(XLData, UIData, "Matches");			
+		}
+		
+	/*//Comparision of UI and Excel
 	public void compareXlData_UIdata() throws Exception {
 		JSWaiter.waitJQueryAngular();
+		WebElement TableTitle = driver.findElement(By.xpath("//*[@id='inaccuracy_table_title']"));
+		String s = TableTitle.toString();
+		scrollByElement(TableTitle);
+		if(!s.equalsIgnoreCase("Yelp")) {
 		List < WebElement > Columns_row = titlehead.findElements(By.tagName("th"));
 		int col_count = Columns_row.size();
 		String newfilename = BasePage.getLastModifiedFile("./downloads");
 		//String newfilename = new formatConvert("./downloads/"+fileName).convertFile("xlsx");
 		ExcelHandler a = new ExcelHandler("./downloads/"+newfilename, "Sheet0"); a.deleteEmptyRows();
+		//a.find_column_no("", 0);
 		int xlRowCount=new ExcelHandler("./downloads/"+newfilename, "Sheet0").getRowCount();
 		int count = 0;
 		for(int i=1;i<xlRowCount;i++) {
@@ -349,10 +562,13 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		CurrentState.getLogger().info("UI table data matches with Exported Excel Data");
 		Assert.assertTrue(true, "UI table data matches with Exported Excel Data");
 		tableCellValues.clear();
+	}else {
+		System.out.println("Data not available for : " +s);
 	}
+		}
+	*/
 	
-	
-	//Clicking on progress bar and getting the data from the table for found
+	/*//Clicking on progress bar and getting the data from the table for found
 			public List<Map<String, String>> verifyInAccuracysitelinkdata() throws InterruptedException{
 				JSWaiter.waitJQueryAngular();
 				waitForElement(accuracysite, 40);
@@ -385,7 +601,9 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 				String entiresText = driver.findElement(By.className("dataTables_info")).getText();
 				entiresText = entiresText.substring(entiresText.indexOf("("));
 				WebElement TableTitle = driver.findElement(By.xpath("//*[@id='inaccuracy_table_title']"));
+				String s = TableTitle.toString();
 				scrollByElement(TableTitle);
+				if(!s.equalsIgnoreCase("Yelp")) {				
 				int count = 0;
 			    if(paginationNext.isDisplayed()) {
 			    	for(int i=1;i<=page;i++) {	//Loop will execute till the all the row of table completes.
@@ -429,26 +647,40 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 						e.printStackTrace();
 					}
 				}
+				}else {
+					try {
+						BaseClass.addEvidence(driver, "Data is not available for Yelp", "yes");
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
 					return tableCellValues;
 			}
 			
 			
-		public void exporttableInAccuracy() throws FileNotFoundException, IOException, InterruptedException {
-				
+			public void exporttableInAccuracy() throws FileNotFoundException, IOException, InterruptedException {
+				JSWaiter.waitJQueryAngular();
 				waitForElement(tableresult, 40);
-				waitForElement(tablebtn, 40);
-				//scrollByElement(tablebtn);
-				download(CurrentState.getBrowser(), tablebtn, 30);
-				JSWaiter.waitUntilJQueryReady();
-				convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+AccuracyExporttableInAccuracy));
-				
-			}
+				WebElement TableTitle = driver.findElement(By.xpath("//*[@id='inaccuracy_table_title']"));
+				String s = TableTitle.toString();
+				scrollByElement(TableTitle);
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
+				if(!s.equalsIgnoreCase("Yelp")) {				
+					exportVATable(tablebtn, ExporttableXLSX);
+					renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+AccuracyExporttableInAccuracyXLSX));
+					Thread.sleep(5000);
+					CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
+					
+				}else {
+					System.out.println("No Data Available for :" +s);
+				}
+					}
 			
 		//printing visibility progress bar table data from downloaded excel sheet
 		public List<Map<String, String>> getInAccuracyExporttableData() throws Exception {
 			JSWaiter.waitJQueryAngular();
 			exporttableInAccuracy();
-			String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+AccuracyExporttableInAccuracy), "Sheet0").getExcelTable();
+			String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+AccuracyExporttableInAccuracyXLSX), "Sheet0").getExcelTable();
 			List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
 			int colSize = table[0].length;
 			for (int col = 1; col < colSize; col++) {
@@ -496,7 +728,9 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			String entiresText = driver.findElement(By.className("dataTables_info")).getText();
 			entiresText = entiresText.substring(entiresText.indexOf("("));
 			WebElement TableTitle = driver.findElement(By.xpath("//*[@id='inaccuracy_table_title']"));
+			String s = TableTitle.toString();
 			scrollByElement(TableTitle);
+			if(!s.equalsIgnoreCase("Yelp")) {
 			int count = 0;
 				if(paginationNext.isDisplayed()) {
 					for(int i=1;i<=page;i++) {	//Loop will execute till the all the row of table completes.
@@ -535,6 +769,10 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 				System.out.println("Total number of entries in table : "+count);
 				Assert.assertTrue(entiresText.contains(""+count+""), "Table Data count matches with total enties count");
 			}
+			else {
+				System.out.println("No Data Available for : "+s);
+			}
+		}
 			return tableCellValues;
 		}
 			
@@ -543,12 +781,19 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			WebElement Ignoredchkbox = driver.findElement(By.xpath("//input[@id='toggle_overridden']"));
 			Ignoredchkbox.click();
 			waitForElement(tableresult, 40);
+			WebElement TableTitle = driver.findElement(By.xpath("//*[@id='inaccuracy_table_title']"));
+			String s = TableTitle.toString();
+			scrollByElement(TableTitle);
+			if(!s.equalsIgnoreCase("Yelp")) {
 			waitForElement(tablebtn, 40);
 			//scrollByElement(tablebtn);
 			JSWaiter.waitUntilJQueryReady();
 			download(CurrentState.getBrowser(), tablebtn, 30);
-			convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+AccuracyExporttableIgnored));
+			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+AccuracyExporttableIgnored));
+			}else {
+				System.out.println("No Data Available for :"+s);
 			}
+		}
 		
 		//printing visibility progress bar table data from downloaded excel sheet
 		public List<Map<String, String>> getIgnoredExporttableData() throws Exception {
@@ -568,6 +813,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			return exporttableData;
 		}
 
+	//Compare Ignored UI Table and Excel
 	public void compareexporttableDatanIgnoredtable(List<Map<String, String>> getIgnoredExporttableData,
 			List<Map<String, String>> verifyIgnoredsitelinkdata) {
 		for (Map<String, String> m1 : getIgnoredExporttableData) {
@@ -578,35 +824,45 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			}
 		}
 		
+	}*/
+		
+	
+		/*//Compare Inaccuracy UI and Export
+		public void compareexporttableDatanInaccuracytable(List<Map<String, String>> getIgnoredExporttableData,
+		List<Map<String, String>> verifyIgnoredsitelinkdata) {
+	for (Map<String, String> m1 : getIgnoredExporttableData) {
+		for (Map<String, String> m2 : verifyIgnoredsitelinkdata) {
+			if (m1.get("rowdata").equals(m2.get("rowdata"))) {
+				Assert.assertEquals(m1.get("rowdata").contains(m2.get("rowdata")), true);
+			}
+		}
 	}
 	
-	//To get Vendors List displaying in the application
-		public List<Map<String, String>> verifyAccuracySitevendors() {
+}*/
+	
+		/**
+		 * Method returns list of vendors
+		 * @return
+		 */
+		public ArrayList<String> verifyAccuracySitevendors() {
 				JSWaiter.waitJQueryAngular();
 				waitForElement(vendorslist, 40);
 				scrollByElement(vendorslist);
-				Map<String, String> kMap;
-				List<Map<String, String>> Vendors = new ArrayList<Map<String, String>>();
-				List<WebElement> elements = driver.findElements(By.xpath("//div[@class='container']/div[@class='row']/div[@class='col-lg-2 bar-chart-column']"));
-			    java.util.Iterator<WebElement> program = elements.iterator();
-			    kMap = new HashMap<String, String>();
-			        
-			    //reading Vendors data
-			    while (program.hasNext()) {
-			        String values = program.next().getText();
-			        if(!values.equals("null"))
-			        {
-			        	kMap.put("vendors", values);
-			        	System.out.println("\n" +values);
-			        }
-			        else
-			        {
-			            System.out.println("\n No sites displayed \n");
-			        }
-			        //adding into the map
-			        Vendors.add(kMap);
-			    }
-				return Vendors;
+				ArrayList<String> vendor = new ArrayList<String>();
+				List<WebElement> elements = driver.findElements(By.xpath("//div[@id='allSitesScores']//a[contains(@class,'load-table')]"));
+				System.out.println(elements.size());
+				//*[@id='allSitesScores']/div/div/a
+				for(int i = 1; i<=elements.size(); i++) {
+					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					WebElement vendorlisting = driver.findElement(By.xpath("(//div[@id='allSitesScores']//a[contains(@class,'load-table')][contains(text(),'')])["+i+"]"));
+					scrollByElement(vendorlisting);
+					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					String vendorname = vendorlisting.getText();
+					System.out.println(vendorname);
+					vendor.add(vendorname);
+					System.out.println(vendor);
 				}
+				return vendor;
+		}
 		
 }

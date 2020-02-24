@@ -21,7 +21,8 @@
       <test name="Sentiment Analysis" parallel="false" group-by-instances="true">
   <parameter name="browser" value="chrome"/>
     <classes>
-	 	<class name= "com.dac.testcases.SA.SA_RevewReportCard_Test" /> 
+	 	<!-- <class name= "com.dac.testcases.SA.SA_RevewReportCard_Test" /> --> 
+	 	<class name= "com.dac.testcases.SA.SA_Reviews_Test" /> 
     </classes>
   </test>
 

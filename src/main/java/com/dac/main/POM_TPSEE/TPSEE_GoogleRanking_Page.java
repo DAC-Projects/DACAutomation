@@ -4,10 +4,12 @@ import static org.testng.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -62,8 +64,16 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	
 	/*-----------------------Ranking Table---------------------------*/
 		
-	@FindBy(xpath = "//a[@id='ToolTables_rankingDetail_0']")
+	@FindBy(xpath = "//div[@id='keywordTableExportDropdown']//button")
 	private WebElement Export;
+	
+	@FindBy(xpath = "//div[@id='keywordTableExportDropdown']//a[contains(text(),'Export as CSV')]")
+	private WebElement Export_csv;
+	
+	@FindBy(xpath = "//div[@id='keywordTableExportDropdown']//a[contains(text(),'Export as XLSX')]")
+	private WebElement Export_xlsx;
+	
+	  
 	
 	@FindBy(xpath = "//table[@id='rankingDetail']")
 	private WebElement RankingTable;
@@ -83,12 +93,13 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "//div[@class='col-sm-12'][1]")
 	private WebElement acckeypanel;
 	
-	@FindBy(xpath = "(//div/a[@class='remove'])[6]")
+	@FindBy(xpath = "(//div/a[@class='remove'])[last()]")
 	private WebElement removeacckey;
 	
-	@FindBy(xpath = "//div[@class='selectize-input items full has-options has-items']")
+	@FindBy(xpath = "//div[@class = 'selectize-input items full has-options has-items']")
+	//selectize-input items has-options has-items not-full
 	private WebElement accountkeyword;
-		
+	
 	@FindBy(xpath = "//select[@id='ddlGroup']")
 	private WebElement Group;
 	
@@ -140,19 +151,22 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 		if(GrKeyword == null || GrKeyword.equalsIgnoreCase("null")) GrKeyword = "";
 		try {
 			waitForElement(acckeypanel, 25);
-			scrollByElement(accountkeyword);
+			scrollByElement(acckeypanel);
 			waitUntilLoad(driver);
-			if(!AccKey.equals("null")) {
-				if(removeacckey.isDisplayed()){
-					clickelement(removeacckey);
-					waitForElement(accountkeyword,20);
-					AccountKeyword = acckeypanel.findElement(By.xpath("(//div[@class='col-sm-12'][1]//input)[2]"));
-					AccountKeyword.sendKeys(AccKey);
-					AccountKeyword.sendKeys(Keys.ENTER);
-					}else{
-						System.out.println("No keywords");
-					}
-			}
+			waitForElement(accountkeyword, 20);
+			scrollByElement(accountkeyword);
+			if(accountkeyword.isEnabled()) {
+				if(!AccKey.equals("null")) {
+					if(removeacckey.isDisplayed()){
+						clickelement(removeacckey);
+						waitForElement(accountkeyword,20);
+						AccountKeyword = acckeypanel.findElement(By.xpath("(//div[@class='col-sm-12'][1]//input)[2]"));
+						AccountKeyword.sendKeys(AccKey);
+						AccountKeyword.sendKeys(Keys.ENTER);
+						}else{
+							System.out.println("No keywords");
+						}
+				}
 			waitForElement(GroupKeypanel, 25);
 			scrollByElement(Group);
 			waitUntilLoad(driver);
@@ -166,6 +180,11 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 				GroupKeyword = acckeypanel.findElement(By.xpath("(//div[@class='col-sm-12'][1]//input)[2]"));
 				GroupKeyword.sendKeys(GrKeyword);
 				GroupKeyword.sendKeys(Keys.ENTER);
+			}else {
+				System.out.println("No Keywords");
+			}
+		}else {
+			System.out.println("Cannot add keywords");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -281,21 +300,40 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 			return tableCellValues;
 			}
 	
-	
-	public void RankingDataTableExport() throws FileNotFoundException, IOException, InterruptedException {
-		waitForElement(RankingTable, 40);
-		waitForElement(Export, 40);
-		//scrollByElement(TableExport);
-		JSWaiter.waitUntilJQueryReady();
-		download(CurrentState.getBrowser(), Export, 30);
-		convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+GoogleRankingExport));
+	/**
+	 * exporting progress bar table data CSV
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	public void GRDataTableExportCSV() throws FileNotFoundException, IOException, InterruptedException {				
+			JSWaiter.waitJQueryAngular();
+			exportVATable(Export, Export_csv);
+			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ GoogleRankingExportCSV));
+			Thread.sleep(5000);
+			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
 		}
+		
+	/**
+	 * exporting progress bar table data XSLX
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+		public void GRDataTableExportXLSX() throws FileNotFoundException, IOException, InterruptedException {				
+				JSWaiter.waitJQueryAngular();
+				exportVATable(Export, Export_xlsx);
+				renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+GoogleRankingExportXLSX));
+				Thread.sleep(5000);
+				CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
+			}
+	
 
 	
 	public List<Map<String, String>> getRankingDataTableExport() throws Exception {
 		JSWaiter.waitJQueryAngular();
-		RankingDataTableExport();
-		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+GoogleRankingExport), "Sheet0").getExcelTable();
+		GRDataTableExportXLSX();
+		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+GoogleRankingExportXLSX), "Google_Ranking").getExcelTable();
 		List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
 		for (int col = 1; col < colSize; col++) {
@@ -366,6 +404,70 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 		}
 		
 	}
+
+
+	public void compareexporttableDatanrankingdetails(List<Map<String, String>> rankingDataTable,
+			List<Map<String, String>> rankingDataTableExport) {
+		// TODO Auto-generated method stub
+						for (Map<String, String> m1 : rankingDataTable) {
+					for (Map<String, String> m2 : rankingDataTableExport) {
+						if (m1.get("rowdata").equals(m2.get("rowdata"))) {
+							Assert.assertEquals(m1.size(), m2.size());
+							Assert.assertEquals(m1.get("rowdata").contains(m2.get("rowdata")), true);
+						}
+					}
+				}
+				
+			}
 	
 	
-}
+	public double GRScore() throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
+		waitForElement(hstryGrph, 30);
+		scrollByElement(hstryGrph);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 -2, 0).click().perform();
+		String tooltipvalue = grphtooltip.getText();
+		System.out.println("\n Reading tooltipdata ********** \n");
+		System.out.println("\n tooltipvalue is \n" +tooltipvalue);	
+		double score =  Double.parseDouble(tooltipvalue.substring(45, 49));
+		System.out.println(score);
+		return score;			
+	}
+	
+	public int GRLoc() throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
+		waitForElement(hstryGrph, 30);
+		scrollByElement(hstryGrph);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 -2, 0).click().perform();
+		String tooltipvalue = grphtooltip.getText();
+		System.out.println("\n Reading tooltipdata ********** \n");
+		System.out.println("\n tooltipvalue is \n" +tooltipvalue);
+		int numberoflocations = Integer.parseInt(tooltipvalue.substring(30 , 33));
+		System.out.println(numberoflocations);
+		return numberoflocations;	
+	}
+	
+	/**
+	 * @return History graph value read
+	 */
+	public List<Map<String, String>> verifyGRHistoryGraph() {
+		waitForElement(hstryGrph, 30);
+		scrollByElement(hstryGrph);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth() / 2) - 2, 0).click().perform();
+		tooltipvalue = grphtooltip.getText();
+		System.out.println("\n Reading tooltipdata ********** \n");
+		System.out.println("\n tooltipvalue is \n" +tooltipvalue);
+		rows = grphtooltip.findElements(By.tagName("span"));
+		String[][] table = readTable(grphtooltip);
+		List<Map<String, String>> tooltipdata = new ArrayList<Map<String, String>>();
+			for (int i = 0; i < table.length; i += 4) {
+				Map<String, String> kMap = new HashMap<String, String>();
+				kMap.put("Date", table[i][0]);
+				kMap.put(table[i + 1][0], table[i + 1][1]);
+				kMap.put(table[i + 2][0], table[i + 2][1]);
+				tooltipdata.add(kMap);
+			}
+			return tooltipdata;
+	}			
+	}

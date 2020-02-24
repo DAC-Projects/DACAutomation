@@ -1,20 +1,13 @@
 package resources;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.BeforeSuite;
-
-import com.dac.main.DashboardpageKPI_Menu;
 import com.dac.main.LoginAC_Beta;
 import com.selenium.testevidence.SeleniumEvidence;
 
@@ -31,15 +24,10 @@ public abstract class BaseClass {
     BaseClass.loginAuth(lp);
     BaseClass.navigateToDashboard(lp);
 
-    WebDriverWait wait = new WebDriverWait(CurrentState.getDriver(), 10);
-    
-    /*if(!CurrentState.getBrowser().contains("ie")) {
-
-   /* WebDriverWait wait = new WebDriverWait(CurrentState.getDriver(), 10);
+    /*WebDriverWait wait = new WebDriverWait(CurrentState.getDriver(), 10);
     if(!CurrentState.getBrowser().contains("ie")) {
-
-    	wait.until(ExpectedConditions.visibilityOf(CurrentState.getDriver().findElement(By.xpath("//div[contains(@class,'close-button walkme-x-button')]"))));
-    	CurrentState.getDriver().findElement(By.xpath("//div[contains(@class,'close-button walkme-x-button')]")).click();    	
+    	wait.until(ExpectedConditions.visibilityOf(CurrentState.getDriver().findElement(By.xpath("//div//button[contains(@class,'walkme-custom-balloon-button walkme-custom-balloon-weak-button walkme-custom-balloon-cancel-button walkme-action-cancel walkme-click-and-hover')]"))));
+    	CurrentState.getDriver().findElement(By.xpath("//div//button[contains(@class,'walkme-custom-balloon-button walkme-custom-balloon-weak-button walkme-custom-balloon-cancel-button walkme-action-cancel walkme-click-and-hover')]")).click();
     }*/
   }
 
@@ -97,6 +85,7 @@ public abstract class BaseClass {
     	return IAutoconst.transparenSEE;
 
     case "Sentiment Analysis":
+    	return IAutoconst.neuralTuringTechAccount;
     case "SA":
         return IAutoconst.transparenSEE;
         	   //IAutoconst.Fit4LessAccount;

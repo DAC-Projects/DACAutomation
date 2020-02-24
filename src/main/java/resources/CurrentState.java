@@ -1,12 +1,10 @@
 package resources;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 
 import com.aventstack.extentreports.ExtentTest;
-import com.selenium.testevidence.SeleniumEvidence;
 
 /**
  * This class provides thread-local variables.

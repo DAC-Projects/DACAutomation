@@ -15,22 +15,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.EncryptedDocumentException;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTAutoFilter;
-/*import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTFilterColumn;
-import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTFilters;*/
 
 /**
  * This class is used to handle the actions to perform on the excel sheet	*/
@@ -39,7 +30,7 @@ public class ExcelHandler {
 	private  FileInputStream fis = null;
 	private  XSSFWorkbook workbook = null;
 	private  XSSFSheet sheet;// = null;
-	private  XSSFRow row = null;
+	private  Row row = null;
 	private  XSSFCell cell = null;
 	
 	public String filePath="";
@@ -86,7 +77,7 @@ public class ExcelHandler {
 	}
 	
 	/**
-	 * Accepts a map(consist of rowno as string and values as Obj array), sheet name to create, excel name
+	 * Accepts a map(consist of rowno as string and values as Obj array), sheet  to create, excel name
 	 * writes the map into the excel by creating a new sheet
 	 * 
 	 * @param data
@@ -163,6 +154,7 @@ public class ExcelHandler {
 		String value="";
 		try {
 			//System.out.println("row num: "+rowNum+"\n cellNum :"+column);
+			//sheet.autoSizeColumn(column);
 			cell=sheet.getRow(rowNum).getCell(column);
 			if(cell!=null) {
 				value=cell.toString().replace("?", "");//.replaceAll("[^\\p{Print}]", "");
@@ -203,6 +195,7 @@ public class ExcelHandler {
 	public String[][] getExcelTable() throws Exception {
 		System.out.println("Reading excel------");
 		ExcelHandler excel	= new ExcelHandler(this.filePath, this.sheetName);
+		
 		int row = excel.getRowCount();
 		String[][] rows = new String[row+1][];
 		System.out.println("total no of rows is"+ row);
@@ -210,8 +203,10 @@ public class ExcelHandler {
 		for(int i=0;i<=row;i++) {
 			Row currentrow = sheet.getRow(i);
 			int col = currentrow.getLastCellNum();
+			
 			cellValues = new String[col];
 			for(int j=0;j<col;j++) {	
+				//sheet.autoSizeColumn(j);
 				cellValues[j] = new ExcelHandler(filePath, sheetName).getCellValue(i, j);
 			}
 					
@@ -545,7 +540,5 @@ public class ExcelHandler {
 	     if (hidden) row.getCTRow().setHidden(hidden);
 	  }
    }*/
-
-  
   
 }
