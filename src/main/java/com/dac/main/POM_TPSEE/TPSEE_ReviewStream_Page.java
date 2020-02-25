@@ -53,8 +53,14 @@ public class TPSEE_ReviewStream_Page extends TPSEE_abstractMethods{
 	
 	/* ------------------------------Locators---------------------------------------*/
 	
-	@FindBy(xpath = "//button[@id='btnReportExportWordCloud']")
+	@FindBy(xpath = "//div[@id='reviewStreamReportExportDropDown']//button")
 	private WebElement exportBtn;
+	
+	@FindBy(xpath = "//li//a[contains(text(),'Export as CSV')]")
+	private WebElement exportCSV;
+	
+	@FindBy(xpath = "//li//a[contains(text(),'Export as XLSX')]")
+	private WebElement exportXSLX;
 	
 	@FindBy(xpath = "//div[@id='table_review_wrapper']/table")
 	private WebElement ReviewStreamTable;
@@ -231,25 +237,30 @@ public class TPSEE_ReviewStream_Page extends TPSEE_abstractMethods{
 		JSWaiter.waitUntilJQueryReady();
 		System.out.println("Clicking Download button");
 		exportBtn.click();
+		//exportCSV.click();		
+		//convertExports(getLastModifiedFile(Exportpath), CurrentState.getBrowser()+ReviewStreamExportCSV);
+		exportXSLX.click();
+		
 		boolean msgbox=waitForElement(msgExportLink, 180);
-////		System.out.println("msgbox is : "+msgbox);
-//		downloadFile(exportBtn);
+		
+		/*System.out.println("msgbox is : "+msgbox);
+	downloadFile(exportBtn);
 		if (msgbox){
-//			System.out.println("Alert window identified");
-			downloadFile(msgExportLink);
+			System.out.println("Alert window identified");
+		downloadFile(msgExportLink);
 			msgbox=true;
 		}else {
-//			System.out.println("Alert window not identified");
-//			download(CurrentState.getBrowser(), exportBtn, 30);
+			System.out.println("Alert window not identified");
+			download(CurrentState.getBrowser(), exportBtn, 30);
 			downloadFile(exportBtn);
-		}
-				
+		}*/
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ReviewStreamExportXLSX));		
 	}
 	
-	private void downloadFile(WebElement element) throws InterruptedException, FileNotFoundException, IOException {
+	/*private void downloadFile(WebElement element) throws InterruptedException, FileNotFoundException, IOException {
 		download(CurrentState.getBrowser(), element, 30);
-		convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ReviewStreamExport));
-	}
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ReviewStreamExportXLSX));
+	}*/
 	
 	/*-----------printing Review Stream data from download excel sheet------------*/
 	public List<Map<String, String>> getReviewStreamExportData(String [][ ]exceldata) throws Exception {
@@ -318,7 +329,7 @@ public class TPSEE_ReviewStream_Page extends TPSEE_abstractMethods{
 	public String[][] excelExported() throws Exception{
 		ReviewStreamDataTableExport();
 		
-		String [][] tbl=new ExcelHandler(Exportpath + (CurrentState.getBrowser()+ReviewStreamExport), "Sheet0").getExcelTable();
+		String [][] tbl=new ExcelHandler(Exportpath + (CurrentState.getBrowser()+ReviewStreamExportXLSX), "Review_Stream").getExcelTable();
 		System.out.println("String Array Excel: "+tbl.length);
 		
 		return tbl;

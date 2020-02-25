@@ -190,6 +190,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		FileHandler.renameTo(new File(Exportpath + report_export), Exportpath + export);
 		
 	}
+	
+	public void renamefile(String filename, String export) throws FileNotFoundException, IOException{
+		FileHandler.renameTo(new File(Exportpath + filename), Exportpath + export);
+	}	
 
 	/**
 	 * @return History graph value read
