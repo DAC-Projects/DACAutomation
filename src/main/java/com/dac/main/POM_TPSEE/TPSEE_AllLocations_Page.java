@@ -1,5 +1,8 @@
 package com.dac.main.POM_TPSEE;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 //import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -179,7 +182,24 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods{
 	 */
 	public void LocationDataTableExportCSV() throws FileNotFoundException, IOException, InterruptedException {				
 			JSWaiter.waitJQueryAngular();
-			exportVATable(Export, Export_csv);
+			
+			 try {
+				 exportVATable(Export, Export_csv);
+			        Thread.sleep(4000);
+			        Robot robot = new Robot();
+			        robot.setAutoDelay(5000);
+			        Thread.sleep(3000);
+			        robot.keyPress(KeyEvent.VK_ALT);
+			        robot.keyPress(KeyEvent.VK_S);
+			        Thread.sleep(1000);
+			        robot.keyRelease(KeyEvent.VK_ALT);
+			        robot.keyRelease(KeyEvent.VK_S);
+			        if ("firefox".equalsIgnoreCase(CurrentState.getBrowser()))
+			          robot.keyPress(KeyEvent.VK_ENTER);
+
+			      } catch (AWTException e) {
+			        e.printStackTrace();
+			      }
 			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+LocationExportCSV));
 			Thread.sleep(5000);
 			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
@@ -191,7 +211,24 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods{
 	 */
 		public void LocationDataTableExportXLSX() throws Exception {				
 				JSWaiter.waitJQueryAngular();
-				exportVATable(Export, Export_xlsx );
+				
+				try {
+						exportVATable(Export, Export_xlsx );
+				        Thread.sleep(4000);
+				        Robot robot = new Robot();
+				        robot.setAutoDelay(5000);
+				        Thread.sleep(3000);
+				        robot.keyPress(KeyEvent.VK_ALT);
+				        robot.keyPress(KeyEvent.VK_S);
+				        Thread.sleep(1000);
+				        robot.keyRelease(KeyEvent.VK_ALT);
+				        robot.keyRelease(KeyEvent.VK_S);
+				        if ("firefox".equalsIgnoreCase(CurrentState.getBrowser()))
+				          robot.keyPress(KeyEvent.VK_ENTER);
+
+				      } catch (AWTException e) {
+				        e.printStackTrace();
+				      }
 				renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+LocationExportXLSX));
 				Thread.sleep(5000);
 				CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));

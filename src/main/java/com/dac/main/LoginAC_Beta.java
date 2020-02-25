@@ -37,6 +37,7 @@ public class LoginAC_Beta {
 	}
 	
 	public void setUserName(String un) {
+		//UserNameTB.click();
 		UserNameTB.sendKeys(un);
 	}
 	

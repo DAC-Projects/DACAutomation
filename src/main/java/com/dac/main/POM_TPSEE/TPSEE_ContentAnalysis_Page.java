@@ -513,7 +513,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 			String tooltipvalue = grphtooltip.getText();
 			System.out.println("\n Reading tooltipdata ********** \n");
 			System.out.println("\n tooltipvalue is \n" +tooltipvalue);	
-			double score =  Double.parseDouble(tooltipvalue.substring(47, 51));
+			double score =  Double.parseDouble(tooltipvalue.substring(46, 51));
 			System.out.println(score);
 			return score;			
 		}

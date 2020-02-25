@@ -79,14 +79,21 @@ public class TPSEE_Displayed_Review_Score_Test extends BaseClass {
 	
 	@Test(priority=6, groups = {
 	"smoke" }, description = "Export as csv")
-		public void Compare_UI_XLRating() throws Exception {
+		public void Compare_UI_XLGoogleRating() throws Exception {
 		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
 		data.compareUInExportGoogle_Score(chromepath, IEpath, FFpath);
-		data.compareUInExportFaceBook_Score(chromepath, IEpath, FFpath);
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}
 	
 	@Test(priority=7, groups = {
+	"smoke" }, description = "Export as csv")
+		public void Compare_UI_XLFacebookRating() throws Exception {
+		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
+		data.compareUInExportFaceBook_Score(chromepath, IEpath, FFpath);
+		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
+	}
+	
+	@Test(priority=8, groups = {
 	"smoke" }, description = "Export as csv")
 		public void tabledataexport() throws Exception {
 		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());

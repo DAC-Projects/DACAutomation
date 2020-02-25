@@ -152,10 +152,11 @@ public class TPSEE_Bing_Test extends BaseClass{
 					description ="Verify Zoom Functionality")
 			public void gethighchartsdate() throws Exception{
 				data = new TPSEE_Bing_Page(CurrentState.getDriver());
-				
+				String Isdataavailable = data.validdata();
+				if(!Isdataavailable.equals("There is currently not enough data from Bing to display this report")) {
 				
 				String OneMonth ="1m";
-				data.clickBingHighchartCriteria(OneMonth);
+				data.clickHighchartCriteria(OneMonth);
 				addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
 				Thread.sleep(5000);
 				BingCSVExport();
@@ -171,7 +172,7 @@ public class TPSEE_Bing_Test extends BaseClass{
 				
 				
 				String ThreeMonths = "3m";
-				data.clickBingHighchartCriteria(ThreeMonths);
+				data.clickHighchartCriteria(ThreeMonths);
 				addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
 				Thread.sleep(5000);
 				data.exportXLSXBing(BingXLSX3m);
@@ -185,7 +186,7 @@ public class TPSEE_Bing_Test extends BaseClass{
 				
 				
 				String SixMonths = "6m";
-				data.clickBingHighchartCriteria(SixMonths);
+				data.clickHighchartCriteria(SixMonths);
 				addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
 				Thread.sleep(5000);
 				data.exportXLSXBing(BingXLSX6m);
@@ -199,7 +200,7 @@ public class TPSEE_Bing_Test extends BaseClass{
 				
 				
 				String OneYear = "1y";
-				data.clickBingHighchartCriteria(OneYear);
+				data.clickHighchartCriteria(OneYear);
 				addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
 				Thread.sleep(5000);
 				data.exportXLSXBing(BingXLSX1y);
@@ -213,7 +214,7 @@ public class TPSEE_Bing_Test extends BaseClass{
 				
 				
 				String YearToDate ="ytd";
-				data.clickBingHighchartCriteria(YearToDate);
+				data.clickHighchartCriteria(YearToDate);
 				addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
 				Thread.sleep(5000);
 				data.exportXLSXBing(BingXLSXytd);
@@ -227,7 +228,7 @@ public class TPSEE_Bing_Test extends BaseClass{
 				
 				
 				String ALLDATA = "all";
-				data.clickBingHighchartCriteria(ALLDATA);
+				data.clickHighchartCriteria(ALLDATA);
 				addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
 				Thread.sleep(5000);
 				data.exportXLSXBing(BingXLSXall);
@@ -239,8 +240,9 @@ public class TPSEE_Bing_Test extends BaseClass{
 				addEvidence(CurrentState.getDriver(), "Impression", "yes");
 				Thread.sleep(5000);
 				}
+			}
 			
-			@Test(priority = 8,enabled = true, dataProvider = "testData")
+			@Test(priority = 8,dataProvider = "testData")
 			public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month, String to_year) throws Exception {
 				
 				data = new TPSEE_Bing_Page(CurrentState.getDriver());
