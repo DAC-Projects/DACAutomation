@@ -45,4 +45,5 @@ public interface TPSEERepository {
 	String BingExport = "BingExport.xlsx";
 	String BingXLSX = "BingXLSX.xlsx";
 	String GMBXLSX = "GMBXLSX.xlsx";
+	String ReviewStreamExportXLSX = "ReviewStreamExportXLSX.xlsx";
 }

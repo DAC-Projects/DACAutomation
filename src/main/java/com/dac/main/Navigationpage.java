@@ -69,6 +69,16 @@ public class Navigationpage extends BasePage{
 	
 	@FindBy(xpath = "//a[@href='/Dashboard/BingPlacesForBusiness/']/span")
 	private WebElement Bing;
+	
+	@FindBy(xpath = "//a[@href='/Dashboard/ESRFrequency/']/span")   
+    private WebElement ESR;
+	
+	@FindBy(xpath = "//a[@href='/Dashboard/LocalReportsScoreChange/']")
+	private WebElement ScoreChange;
+	
+	@FindBy(xpath = "//a[@href='/Dashboard/ReviewsNotification/']")
+	private WebElement ReviewNotification;
+	
 	//------------------------- SA and RRM -------------------------------------
 	
 	@FindBy(xpath = "//a[@href='/Review/ReviewFeed/']")
@@ -154,7 +164,13 @@ public class Navigationpage extends BasePage{
   //---------------------- TransparenSEE-------------------------------
     @FindBy(id="VA")
 	private WebElement TPSEE_Visibility;
+    
+    /*------------------------------Social---------------------------------------*/
 
+    @FindBy(xpath ="//a[@href='/SocialMedia/ContentManagement']/span")
+    private WebElement SE_ContentManagement;
+    
+    /*------------------------------Social---------------------------------------*/
     
     public void  navigateTPSEE_Visibility() {
   	  
@@ -232,6 +248,40 @@ public class Navigationpage extends BasePage{
     public void navigateToBingPlacesForBusiness() {
     	
     	clickelement(Bing);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    public void navigateToESR() {
+        
+        action.moveToElement(Settings).perform();
+        waitForElement(ESR, 20);
+        action.moveToElement(ESR).perform();
+        driver.findElement(By.xpath("//a[@href='/Dashboard/ESRFrequency/']/span")).click();
+        System.out.println("Waiting for page to load********");
+        waitUntilLoad(driver);
+    }
+    
+public void navigateToLocalReportsScoreChange() {
+	   	
+    	action.moveToElement(Settings).perform();
+    	waitForElement(ScoreChange, 20);
+    	action.moveToElement(ScoreChange).perform();
+    	clickelement(ScoreChange);
+    
+    	//action.moveToElement(AllGroups).click().perform();
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    public void navigateToReviewNotifications() {
+	   	
+    	action.moveToElement(Settings).perform();
+    	waitForElement(ReviewNotification, 20);
+    	action.moveToElement(ReviewNotification).perform();
+    	clickelement(ReviewNotification);
+    
+    	//action.moveToElement(AllGroups).click().perform();
     	System.out.println("Waiting for page to load********");
     	waitUntilLoad(driver);
     }
@@ -379,6 +429,15 @@ public class Navigationpage extends BasePage{
 	private void DB_LangList() {
 		clickelement(DBLangLink);
 		clickelement(DBLangPopUp);
+	}
+	
+	
+	
+	/** To click on TSEE_Visibility link in LHS to navigate to TSEE_Visibility page   */
+	public void navigateToSE_ContentManagement() {
+		clickelement(SE_ContentManagement);   
+	    System.out.println("Waiting for page to load**********");
+	    waitUntilLoad(driver);
 	}
      
 
