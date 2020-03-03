@@ -139,5 +139,7 @@ public class ContentManagement_Test extends BaseClass{
 		data.SearchPublishedTypeinTable(PublishedType);
 		addEvidence(CurrentState.getDriver(),"Verify Type exists in the table","yes");
 	}
+	
+	
 
 }
