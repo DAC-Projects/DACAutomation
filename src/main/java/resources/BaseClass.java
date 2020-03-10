@@ -93,6 +93,8 @@ public abstract class BaseClass {
     case "Social Engagement" :
     	return IAutoconst.SocialdeepFieldAccount;
         
+    case "Social Automation" :
+    	return IAutoconst.SocialAutomationAccount;
 
     default:
       return IAutoconst.transparenSEE;
