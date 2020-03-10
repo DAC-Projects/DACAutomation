@@ -13,7 +13,7 @@
     <classes>	  	    	
    		
    		<class name= "com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" /> 
-	  	  <!-- <class name= "com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
+	  	<class name= "com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
 	  	 <class name= "com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
 	  	<class name= "com.dac.testcases.TPSEE.Locations" />
 	  	<class name= "com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" /> 		
@@ -23,33 +23,9 @@
 		<class name= "com.dac.testcases.TPSEE.TPSEE_Displayed_Review_Score_Test" /> 
 		<class name= "com.dac.testcases.TPSEE.TPSEE_GMB_Test" />
 		<class name= "com.dac.testcases.TPSEE.TPSEE_Bing_Test" />		
-		<class name= "com.dac.testcases.TPSEE.TPSEE_Groups_Test" /> 
-		<class name = "com.dac.testcases.TPSEE.TPSEE_ReviewStream_Test" />	
-		<class name= "com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" />	 -->	
-     </classes>
- </test>
+
+  </classes>
  
- 
-<!--  <test name="Competitive Analysis">
-  <parameter name="browser" value="chrome"/>
-  <parameter name="Filter" value= "US,Illinois,Chicago,53 W Jackson Blvd Ste 1264"/>
-  <parameter name="testcasesfile" value="CompetitiveAnalysis.json"></parameter>
-    <classes>
-    	 <class name= "com.dac.testcases.CA.CA_Review_Test" />
-    	<class name= "com.dac.testcases.CA.CA_Visibility_Test" />
-    	<class name= "com.dac.testcases.CA.SampleClass2" />
-    	<class name= "com.dac.testcases.CA.CA_ContentAnalysis_Test" />
- 	</classes>
-  </test>  -->
-  
-  
-      <!-- <test name="Sentiment Analysis" parallel="false" group-by-instances="true">
-  <parameter name="browser" value="chrome"/>
-    <classes>
-	 	<class name= "com.dac.testcases.SA.SA_RevewReportCard_Test" /> 
-	 	<class name= "com.dac.testcases.SA.SA_Reviews_Test" /> 
-    </classes>
-  </test> -->
-  
+   </test>
   
 </suite>

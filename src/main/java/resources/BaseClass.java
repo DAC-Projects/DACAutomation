@@ -24,12 +24,19 @@ public abstract class BaseClass {
     BaseClass.loginAuth(lp);
     BaseClass.navigateToDashboard(lp);
 
+
     /*WebDriverWait wait = new WebDriverWait(CurrentState.getDriver(), 10);
+=======
+    WebDriverWait wait = new WebDriverWait(CurrentState.getDriver(), 10);
+    
+>>>>>>> refs/heads/TSEE_Abinaya
     if(!CurrentState.getBrowser().contains("ie")) {
+<<<<<<< HEAD
     	wait.until(ExpectedConditions.visibilityOf(CurrentState.getDriver().findElement(By.xpath("//div//button[contains(@class,'walkme-custom-balloon-button walkme-custom-balloon-weak-button walkme-custom-balloon-cancel-button walkme-action-cancel walkme-click-and-hover')]"))));
     	CurrentState.getDriver().findElement(By.xpath("//div//button[contains(@class,'walkme-custom-balloon-button walkme-custom-balloon-weak-button walkme-custom-balloon-cancel-button walkme-action-cancel walkme-click-and-hover')]")).click();
     }*/
   }
+
 
   /**
    * This method used to login to AC1 for a specific account which using for respective modules		
@@ -83,6 +90,9 @@ public abstract class BaseClass {
 
     case "TransparenSEE":
     	return IAutoconst.transparenSEE;
+    	
+    case "SE":
+    	return IAutoconst.deepfieldAccount_SE;
 
     case "Sentiment Analysis":
     	return IAutoconst.neuralTuringTechAccount;
@@ -109,16 +119,20 @@ public abstract class BaseClass {
    * @isImageNeeded: while execution of test case, to create the test evidence
    * 				 if user wants to take a screen shot then, he/she can give as "yes" 
    * 				 otherwise "no"			*/
-  public static void addEvidence(WebDriver driver, String testStep, String isImageNeeded) throws Exception {
+  public static void addEvidence(WebDriver driver, String testStep, String isImageNeeded) {
 	  
-	  if(isImageNeeded.equals("yes")) {
-		  CurrentState.getEvidenceList().add(new SeleniumEvidence(testStep, takeScreenshot(driver)));
-		  CurrentState.getLogger().info(testStep);
-	  }
-	  else {
-		  CurrentState.getEvidenceList().add(new SeleniumEvidence(testStep, null));
-		  CurrentState.getLogger().info(testStep);
-	  }	  
+		  try {
+			if(isImageNeeded.equals("yes")) {
+			   CurrentState.getEvidenceList().add(new SeleniumEvidence(testStep, takeScreenshot(driver)));
+			   CurrentState.getLogger().info(testStep);
+			}
+			else {
+			   CurrentState.getEvidenceList().add(new SeleniumEvidence(testStep, null));
+			   CurrentState.getLogger().info(testStep);
+		    }	  
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
   }
-
 }

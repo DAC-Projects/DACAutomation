@@ -1,5 +1,6 @@
 package com.dac.main.POM_TPSEE;
 
+import static org.testng.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -531,3 +532,5 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 			return numberoflocations;	
 		}
 		}
+
+

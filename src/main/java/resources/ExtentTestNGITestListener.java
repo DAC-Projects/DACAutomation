@@ -344,7 +344,6 @@ public class ExtentTestNGITestListener
 
     WebDriverManager.chromedriver().version("80.0.3987.16").setup(); 
 
-
     //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
 
     HashMap<String, Object> chromePrefs = new HashMap<String, Object>();

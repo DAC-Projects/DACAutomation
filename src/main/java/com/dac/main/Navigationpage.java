@@ -69,6 +69,10 @@ public class Navigationpage extends BasePage{
 	
 	@FindBy(xpath = "//a[@href='/Dashboard/BingPlacesForBusiness/']/span")
 	private WebElement Bing;
+
+	@FindBy(xpath = "//a[@href='/Dashboard/ESRFrequency/']/span")	
+    private WebElement ESR;
+	
 	//------------------------- SA and RRM -------------------------------------
 	
 	@FindBy(xpath = "//a[@href='/Review/ReviewReport/']")
@@ -146,6 +150,9 @@ public class Navigationpage extends BasePage{
   
     @FindBy(xpath="//a[@href='/CompetitiveAnalysis/Analysis']")
     private WebElement CA_ContentAnalysis;
+    
+    @FindBy(xpath="//a[@href='/CompetitiveAnalysis/Summary']")
+    private WebElement CA_Summary;
 
     
 	@FindBy(xpath="//a[@href='/CompetitiveAnalysis/Review']/span")
@@ -155,6 +162,21 @@ public class Navigationpage extends BasePage{
     @FindBy(id="VA")
 	private WebElement TPSEE_Visibility;
 
+    
+    // ------------------------- SE ---------------------------------
+    
+    
+	@FindBy(id="PostsSocialMedia")
+	private WebElement SE_Posts;
+  
+    @FindBy(id="ContentManagementSocialMedia")
+    private WebElement SE_ContentManagement;
+    
+    @FindBy(xpath="//*[@href='/SocialMediaReports/']")
+    private WebElement SE_Reports;
+    
+    
+  //---------------------- TransparenSEE-------------------------------
     
     public void  navigateTPSEE_Visibility() {
   	  
@@ -221,6 +243,18 @@ public class Navigationpage extends BasePage{
     	System.out.println("Waiting for page to load********");
     	waitUntilLoad(driver);
     }
+    public void navigateToESR() {
+	   	
+    	action.moveToElement(Settings).perform();
+    	waitForElement(ESR, 20);
+    	action.moveToElement(ESR).perform();
+    	driver.findElement(By.xpath("//a[@href='/Dashboard/ESRFrequency/']/span")).click();
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    
+  //---------------------- TransparenSEE-------------------------------
     
     public void navigateToGoogleMyBusiness() {
     	
@@ -238,6 +272,13 @@ public class Navigationpage extends BasePage{
 
 
     //-----CA
+    
+    /** To click on CA_Review link in LHS to navigate to CA_Summary page   */
+	public void navigateCA_Summarypage() {
+	  clickelement(CA_Summary);   
+      System.out.println("Waiting for the Summary page to load**********");
+      waitUntilLoad(driver);
+	}
 
 	/** To click on CA_Visibility link in LHS to navigate to CA_Visibility page   */
 
@@ -313,6 +354,30 @@ public class Navigationpage extends BasePage{
 		clickelement(FrequentKeywords);   
 	      System.out.println("Waiting for page to load**********");
 	      waitUntilLoad(driver);
+	}
+	
+	public void navigateToSE_Report() {
+		wait.until(ExpectedConditions.visibilityOf(SE_Reports));
+		scrollByElement(SE_Reports);
+		clickelement(SE_Reports);
+		waitUntilLoad(driver);
+		
+	}
+	
+	public void navigateToSE_Post() {
+		wait.until(ExpectedConditions.visibilityOf(SE_Posts));
+		scrollByElement(SE_Posts);
+		clickelement(SE_Posts);
+		waitUntilLoad(driver);
+		
+	}
+	
+	public void navigateToSE_ContentManagement() {
+		wait.until(ExpectedConditions.visibilityOf(SE_ContentManagement));
+		scrollByElement(SE_ContentManagement);
+		clickelement(SE_ContentManagement);
+		waitUntilLoad(driver);
+		
 	}
 
 	/** To click on TSEE_Accuracy link in LHS to navigate to TSEE_Accuracy page   */
@@ -497,4 +562,6 @@ public class Navigationpage extends BasePage{
 				}
 			}
 	}
+
+
 }

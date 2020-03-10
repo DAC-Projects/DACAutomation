@@ -1,7 +1,6 @@
 package com.dac.main.POM_CA;
 
 import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,7 +9,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -21,6 +19,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import resources.CurrentState;
 import resources.ExcelHandler;
@@ -40,11 +39,54 @@ public class CA_Review_Page extends CA_abstractMethods {
 		PageFactory.initElements(driver, this);
 	}
 
+	@FindBy(id="myGroups")
+	private WebElement filterGroup;
+
+	@FindBy(xpath="//*[@class='menu transition hidden']")
+	private WebElement filterDropDown;
+
+	@FindBy(xpath="(//*[@id='divCIReview']/h1)")
+	private WebElement CATitleContent;
+
+	@FindBy(xpath="(//h4[contains(text(),'Location Competitor Sets')])")
+	private WebElement CALocationCompetitorSet;
+
+	@FindBy(xpath="(//*[@id='btnExportAll']")
+	private WebElement exportlocationcomp;
+
+
+
+	// Global Filter locators
+
+	@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList")
+	private WebElement FilterCountry;
+
+	@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList1")
+	private WebElement FilterState;
+
+	@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList2")
+	private WebElement FilterCity;
+
+	@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList3")
+	private WebElement Filterlocation;
+
+	@FindBy(css = "button#apply_filter")
+	private WebElement Apply_filter;
+
 	@FindBy(css = "button#btnExport>span")
 	private WebElement exportBtn;
 
+	@FindBy(css="button#btnExportAll>span")
+	private WebElement exportBtnAll;
+
+	@FindBy(xpath="(//button[@id='btnExport'])[2]")
+	private WebElement exportlocation;
+
 	@FindBy(css = "div#compIntOverviewContainer")
 	private WebElement overviewReport;
+
+	@FindBy(xpath="(//div[@id='compIntOverviewContainer'])[2]")
+	private WebElement LocationReport;
 
 	@FindBy(xpath = "//div[@id='compIntOverviewContainer']//div[starts-with(@class,'overviewSubContainer')]")
 	private List<WebElement> competitors;
@@ -62,7 +104,31 @@ public class CA_Review_Page extends CA_abstractMethods {
 		scrollByElement(exportBtn);
 		download(CurrentState.getBrowser(), exportBtn, 20);
 		convertExports(getLastModifiedFile(Exportpath), ReviewExport);
+		//renamefile(getLastModifiedFile(Exportpath), ReviewExport); 
 	}
+
+	public void exportAllReviewLocationSet() throws InterruptedException, FileNotFoundException, IOException
+	{
+		waitForElement(CALocationCompetitorSet, 10);
+		waitForElement(exportBtnAll,30);
+		scrollByElement(exportBtnAll);
+		download(CurrentState.getBrowser(), exportBtnAll, 20);
+		//convertExports(getLastModifiedFile(Exportpath), ReviewLocationCompetitorExportAll);
+		renamefile(getLastModifiedFile(Exportpath), ReviewLocationCompetitorExportAll); 
+
+
+
+	}
+
+	public void exportlocationset() throws InterruptedException, FileNotFoundException, IOException {
+		waitForElement(CALocationCompetitorSet, 10);
+		waitForElement(exportlocation, 10);
+		scrollByElement(exportlocation);
+		download(CurrentState.getBrowser(), exportlocation, 20);
+		//	convertExports(getLastModifiedFile(Exportpath), ReviewLocationCompetitorExport);
+		renamefile(getLastModifiedFile(Exportpath), ReviewLocationCompetitorExport); 
+	}
+
 
 	@Override
 	public List<Map<String, String>> getOverviewReport() {
@@ -82,6 +148,56 @@ public class CA_Review_Page extends CA_abstractMethods {
 			System.out.println("");
 			ovrwRprtData.add(kMap);
 		}
+		return ovrwRprtData;
+
+	}
+
+	public List<Map<String, String>> getLocationReport() {
+		// TODO Auto-generated method stub
+		waitForElement(LocationReport, 10);
+		scrollByElement(LocationReport);
+		Map<String, String> kMap;
+		List<Map<String, String>> ovrwRprtData = new ArrayList<Map<String, String>>();
+		for (int i = 1; i <= competitors.size(); i++) {
+			WebElement s = driver.findElement(By.xpath(xpathCompetitors + "[" + i + "]"));
+			//ovrwRprtData.put("Score", s.findElement(By.xpath(compScore)).getText());
+			kMap = new HashMap<String, String>();
+			kMap.put("compName", s.findElement(By.xpath(compName)).getText());
+			kMap.put("score", s.findElement(By.xpath(compScore)).getText());
+			System.out.format("%10s%10s", s.findElement(By.xpath(compName)).getText(),
+					s.findElement(By.xpath(compScore)).getText());
+			System.out.println("");
+			ovrwRprtData.add(kMap);
+			
+		}
+		
+		return ovrwRprtData;
+
+	}
+	
+	public List<String> getLocationReportOver() {
+		// TODO Auto-generated method stub
+		waitForElement(LocationReport, 10);
+		scrollByElement(LocationReport);
+		Map<String, String> kMap;
+		ArrayList<String> ovrwRprtData = new ArrayList<String>();
+		System.out.println("Size"+ competitors.size());
+		for (int i = 1; i <= competitors.size(); i++) {
+			WebElement s = driver.findElement(By.xpath(xpathCompetitors + "[" + i + "]"));
+			// ovrwRprtData.put("Score", s.findElement(By.xpath(compScore)).getText());
+			//String name=s.findElement(By.xpath("//div[starts-with(@class, 'competitor-address')]")).getText();
+			String score=s.findElement(By.xpath(compScore)).getText();
+			
+			//kMap = new HashMap<String, String>();
+			System.out.format("%10s%10s", s.findElement(By.xpath(compName)).getText(),
+					s.findElement(By.xpath(compScore)).getText());
+			System.out.println("");
+			//ovrwRprtData.add(kMap);
+			//ovrwRprtData.add(name);
+			ovrwRprtData.add(score);
+			ovrwRprtData.removeAll(Arrays.asList("",null));
+		}
+		System.out.println("Over view report"+ovrwRprtData);
 		return ovrwRprtData;
 
 	}
@@ -155,9 +271,44 @@ public class CA_Review_Page extends CA_abstractMethods {
 
 	}
 
-	public void compareExportnTable(List<Map<String, String>> exportData, List<Map<String, String>> siteTableData) {
+	public List<Map<String, String>> getExportDataLocation() throws Exception {
+		exportlocationset();
 
-		for (Map<String, String> m1 : exportData) {
+		String[][] table = new ExcelHandler(Exportpath + ReviewLocationCompetitorExport, "CA_LocalReview").getExcelTable();
+		List<Map<String, String>> exportData1 = new ArrayList<Map<String, String>>();
+		//int colSize = table[0].length;
+		for (int col = 1; col < 2; col++) {
+			Map<String, String> kMap = new HashMap<String, String>();
+
+			for (int i = 1; i < table.length; i++) {
+				System.out.println("i value" + i);
+				kMap.put("compName", table[0][col]);
+				kMap.put(table[i][0], table[i][col]);
+			}
+			exportData1.add(kMap);
+
+		}
+		System.out.println("Export data 1"+ exportData1);
+
+		return exportData1;
+
+	}
+	
+
+
+	public String[][] getExportDataLocationInArray() throws Exception {
+		exportlocationset();
+
+		String[][] table = new ExcelHandler(Exportpath + ReviewLocationCompetitorExport, "CA_LocalReview").getExcelTable();
+
+		return table;
+
+	}
+
+
+	public void compareExportnTable(List<Map<String, String>> exportData1, List<Map<String, String>> siteTableData) {
+
+		for (Map<String, String> m1 : exportData1) {
 			for (Map<String, String> m2 : siteTableData) {
 				if (m1.get("compName").equals(m2.get("compName"))) {
 					Assert.assertEquals(m1.size() - 1, m2.size());
@@ -182,5 +333,47 @@ public class CA_Review_Page extends CA_abstractMethods {
 		}
 
 	}
+
+
+	public void compareExportnTableInArray(String [][] exportData1, String [][] siteTableData) {
+		SoftAssert softAssertion= new SoftAssert();
+
+		for(int i=1;i<siteTableData.length;i++) {
+
+			for(int j=1;j<siteTableData[1].length;j++) {
+
+				softAssertion.assertEquals(siteTableData[i][j], exportData1[i+2][j]);
+
+System.out.println("i,j:"+i+","+j+" Actual , expected "+siteTableData[i][j]+","+exportData1[i+2][j]);
+				//	exportData1[i+2][j] siteTableData[i][j]
+			}
+		}
+		
+		softAssertion.assertAll();
+
+	}
+
+	public void LocationCompetitorSetNavigation() throws InterruptedException
+	{
+		if(CALocationCompetitorSet.isDisplayed()) {
+			clickelement(CALocationCompetitorSet);
+			Thread.sleep(3000);
+		}
+	}
+
+
+	
+	public ArrayList<String> getExportDataLocationover() throws Exception {
+		exportlocationset();
+
+		ArrayList<String> table = new ExcelHandler(Exportpath + ReviewLocationCompetitorExport, "CA_LocalReview").getExcelTablewith();
+		System.out.println("get excel values:" +table);
+		
+
+		return table;
+
+	}
+	
+	
 
 }

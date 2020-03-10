@@ -19,8 +19,8 @@ public interface IAutoconst {
 	// Auth centre variables
 	String url ="http://dac-map-beta.azurewebsites.net/#",
 
-	 email="wakram@dacgroup.com",
-	 password="DACQA123";
+	 email="adevaraj@dacgroup.com",
+	 password="DacQa123";
 
 	//account credentials
 	String baseUrl="http://staging.manage.dacgroup.com:82/accounts/";
@@ -28,6 +28,8 @@ public interface IAutoconst {
 	String[] deepfieldAccount = {baseUrl+"deepfield-software-incorporated-beta", "bmobit@dacgroup.com"};
 	String[] transparenSEE = {baseUrl+"aurify-brands-test-beta", "jmohan@dacgroup.com"}; // for GMB
 	//String[] transparenSEE = {baseUrl+"international-account-beta-beta", "amahadev@dacgroup.com"};
+	String[] deepfieldAccount_SE = {baseUrl+"deepfield-software-incorporated-beta", "vijayata_201989@yahoo.com"};
+//	String[] transparenSEE = {baseUrl+"international-account-beta-beta", "spillai@dacgroup.com"}
 	String[] Fit4LessAccount = {baseUrl+"fit4less-beta", "1test@gmail.com"};
 	String[] neuralTuringTechAccount = {baseUrl+"neural-turing-tech-beta", "john.cena@dacgroup.com"};
 	

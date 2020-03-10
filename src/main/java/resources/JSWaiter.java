@@ -33,7 +33,7 @@ public class JSWaiter {
             //Wait for jQuery to load
             jsWait.until(jQueryLoad);
         } else {
-            System.out.println("JQuery is Ready!");
+            //System.out.println("JQuery is Ready!");
         }
     }
 

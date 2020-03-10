@@ -2,13 +2,18 @@
 package com.dac.main.POM_CA;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
+
 import java.util.Calendar;
 import java.util.Date;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +21,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -30,7 +41,6 @@ import org.testng.Assert;
 import com.dac.main.BasePage;
 import com.dac.main.POM_TPSEE.TPSEE_abstractMethods;
 
-import resources.CurrentState;
 import resources.FileHandler;
 import resources.JSWaiter;
 import resources.formatConvert;
@@ -40,7 +50,11 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	Actions action;
 	WebDriverWait wait;
 	List<WebElement> rows;
-
+	List<Double> list2 = new ArrayList<Double>();
+	public String filePath="";
+	public String sheetName = "";
+	public int sheetIndex;
+	private  XSSFSheet sheet;
 	public CA_abstractMethods(WebDriver driver) {
 		super(driver);
 		this.driver = driver;
@@ -49,9 +63,7 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 		PageFactory.initElements(driver, this);
 	}
 
-	// Global Filter locators
-	@FindBy(xpath="(//*[@id='divCIAccuracy']/h1)")
-	private WebElement CATitleContent;
+
 	
 	@FindBy(id="myGroups")
 	private WebElement fiterGroup;
@@ -81,6 +93,12 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	@FindBy(css = "rect.highcharts-plot-background")
 	public WebElement hstryGrph;
 
+	@FindBy(xpath="(//*[@class='highcharts-background'])[2]")
+	public WebElement hstryGrphLoc;
+	
+	@FindBy(xpath="(//*[@class='(//*[@class='highcharts-plot-background'])[2]")
+	public WebElement hstryGrphLoc1;
+
 	@FindBy(css = "div.highcharts-label.highcharts-tooltip.highcharts-color-undefined")
 	private WebElement grphTable;
 	
@@ -99,6 +117,7 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	@FindBy(xpath="(//*[text()='Foursquare'])[1]")
 	public WebElement site4;
 	
+
 	@FindBy(xpath = "(//*[name()='g' and @class='highcharts-range-selector-group']/*[name()='g'])[1]")
 	private WebElement highChartZoom;
 	
@@ -146,6 +165,33 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	
 	@FindBy(xpath = "(//*[@class='highcharts-label highcharts-range-input'])[2]")
 	private WebElement toDate;
+
+	@FindBy(css="div.ui.fluid.normal.dropdown.search.selection")
+	private WebElement selectlocation;
+	
+	@FindBy(xpath = "//*[@id='compIntOverviewContainer']/tr/th")
+    private List<WebElement> caOverviewReport;
+   
+    @FindBy(xpath = "//*[@id='compIntOverviewContainer']/tr/th//div[@class='competitorScore color-primary text-right ng-binding']")
+    private WebElement caovrview;
+   
+    String cacompetitors = ".//div[@class='competitorScore color-primary text-right ng-binding']";
+    
+ // overview report
+    @FindBy(css = "div#compIntOverviewContainer")
+    private WebElement overviewReport;
+    
+    // section of overview report
+    @FindBy(xpath = "//div[@id='compIntOverviewContainer']//div[starts-with(@class,'overviewSubContainer')]")
+    private List<WebElement> competitors;
+
+    @FindBy(xpath="(//*[@id='divCIAccuracy']/h1)")
+	private WebElement CATitleContent;
+
+    String xpathCompetitors = "(//div[@id='compIntOverviewContainer']//div[starts-with(@class,'overviewSubContainer')])";
+    String compName = ".//div[starts-with(@class, 'competitorName')]";
+    String compScore = ".//div[starts-with(@class, 'competitorScore')]";
+
 	
 
 //	@FindBy(css = "div.highcharts-label.highcharts-tooltip.highcharts-color-0>span>table")
@@ -155,7 +201,9 @@ public abstract class CA_abstractMethods extends BasePage implements CARepositor
 	@FindBy(css = "table#compIntVisibilitySitesTable")
 	public WebElement siteTable;
 
-	/**
+	@FindBy(xpath="(//*[@id='compIntVisibilitySitesTable'])[2]")
+	public WebElement siteTableLoc;
+	/*
 	 * @param Country
 	 * @param State
 	 * @param City
@@ -226,6 +274,14 @@ public void applyFilter(String Country, String State, String City, String Locati
 	wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("apply_filter")));
 	}
 
+public void selectionLocationforcompetitor(String LocationSelect) throws InterruptedException
+{
+	waitForElement(selectlocation,30);
+	clickelement(selectlocation);
+    WebElement selloc = driver.findElement(By.xpath("//div[contains(text(),'"+ LocationSelect +"')]"));
+    clickelement(selloc);	
+	}	
+
 
 /**
  * This method used to click on the Apply Filter button		*/
@@ -261,12 +317,17 @@ public void clickApplyFilterBTN() throws InterruptedException {
 		String report_export = new formatConvert(Exportpath + filename).convertFile("xlsx");
 		FileHandler.renameTo(new File(Exportpath + report_export), Exportpath + export);
 	}
+	
+	public void renamefile(String filename, String export) throws FileNotFoundException, IOException{
+        FileHandler.renameTo(new File(Exportpath + filename), Exportpath + export);
+    }   
 
 	/**
 	 * @return History graph value read
 	 */
 	public List<Map<String, String>> verifyHistoryGraph() {
 		//display tool tip
+		int i;
 		waitForElement(hstryGrph, 10);
 		scrollByElement(hstryGrph);
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
@@ -276,7 +337,40 @@ public void clickApplyFilterBTN() throws InterruptedException {
 		String[][] table = readTable(grphTable);
 
 		List<Map<String, String>> tooltipdata = new ArrayList<Map<String, String>>();
-		for (int i = 0; i < table.length / 4; i += 4) {
+		System.out.println(table.length);
+		for ( i = 0; i < table.length / 4; i += 4) {
+			Map<String, String> kMap = new HashMap<String, String>();
+			kMap.put("compName", table[i][0]);
+			kMap.put(table[i + 1][0], table[i + 1][1]);
+			kMap.put(table[i + 2][0], table[i + 2][1]);
+			kMap.put(table[i + 3][0], table[i + 3][1]);
+			
+
+			
+			tooltipdata.add(kMap);
+		}
+		System.out.println(tooltipdata.get(0).get("compName"));
+		System.out.println(tooltipdata.get(0).get("Date"));
+		System.out.println(tooltipdata.get(0).get("Overall"));
+		System.out.println(tooltipdata.get(0).get("Total Locations"));
+	
+		return tooltipdata;
+
+	}
+	
+	public List<Map<String, String>> verifyHistoryGraphLocationcompSet() {
+		//display tool tip
+		int i;
+		waitForElement(hstryGrphLoc, 10);
+		scrollByElement(hstryGrphLoc);
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+		action.moveToElement(hstryGrphLoc).moveByOffset((hstryGrphLoc.getSize().getWidth() / 2) - 2, 0).click().perform();
+		//read the tooltip variables
+		rows = grphTable.findElements(By.tagName("tr"));
+		String[][] table = readTable(grphTable);
+
+		List<Map<String, String>> tooltipdata = new ArrayList<Map<String, String>>();
+		for ( i = 0; i < table.length / 4; i += 4) {
 			Map<String, String> kMap = new HashMap<String, String>();
 			kMap.put("compName", table[i][0]);
 			kMap.put(table[i + 1][0], table[i + 1][1]);
@@ -284,7 +378,7 @@ public void clickApplyFilterBTN() throws InterruptedException {
 			kMap.put(table[i + 3][0], table[i + 3][1]);
 			tooltipdata.add(kMap);
 		}
-
+		
 		System.out.println(tooltipdata.get(0).get("compName"));
 		System.out.println(tooltipdata.get(0).get("Date"));
 		System.out.println(tooltipdata.get(0).get("Overall"));
@@ -319,14 +413,12 @@ public void clickApplyFilterBTN() throws InterruptedException {
 		List<Map<String, String>> siteTableData = new ArrayList<Map<String, String>>();
 		Map<String, String> kMap = new HashMap<String, String>();
 		for (int j = 0; j < table[0].length - 1; j++) {
-
 			kMap.put("compName", table[0][j + 1]);
 			for (int i = 1; i < table.length; i++) {
 				kMap.put(table[i][0], table[i][j + 1]);
 			}
 			siteTableData.add(kMap);
-		}
-
+		}		
 		System.out.println("MAP******************MAP");
 		for (String name : siteTableData.get(1).keySet()) {
 
@@ -336,6 +428,46 @@ public void clickApplyFilterBTN() throws InterruptedException {
 		}
 
 		return siteTableData;
+
+	}
+	
+	
+	public List<Map<String, String>> verifySitetableLocn() {
+		waitForElement(siteTableLoc, 10);
+		scrollByElement(siteTableLoc);
+		System.out.println("Reading site table**********");
+		String[][] table = readTable(siteTableLoc);
+		List<Map<String, String>> siteTableData = new ArrayList<Map<String, String>>();
+		
+		for (int j = 0; j < table[1].length - 1; j++) {
+			Map<String, String> kMap = new HashMap<String, String>();
+			kMap.put("compName", table[0][j + 1]);
+			for (int i = 1; i < table.length; i++) {
+				kMap.put(table[i][0], table[i][j + 1]);
+			}
+			siteTableData.add(kMap);
+		}
+		System.out.println("Siteprint"+ siteTableData);
+		System.out.println("MAP******************MAP");
+		for (String name : siteTableData.get(1).keySet()) {
+
+			String key = name.toString();
+			String value = siteTableData.get(1).get(name).toString();
+			System.out.println(key + " " + value);
+		}
+
+		return siteTableData;
+	}
+		
+		public String[][] verifySitetableLocnInArray() {
+			waitForElement(siteTableLoc, 10);
+			scrollByElement(siteTableLoc);
+			System.out.println("Reading site table**********");
+			String[][] table = readTableInArray(siteTableLoc);
+			
+
+			return table;
+		
 
 	}
 
@@ -350,6 +482,37 @@ public void clickApplyFilterBTN() throws InterruptedException {
 			}
 		}
 	}
+	
+	public void compareExprttoLocation(List<Map<String, String>> exportData1, List<Map<String, String>> lcnRprtData) {
+
+		for (Map<String, String> m1 : lcnRprtData) {
+			System.out.println("Abi location"+lcnRprtData);
+			for (Map<String, String> m2 : exportData1) {
+				
+				if (m1.get("compName").equals(m2.get("compName"))) {
+					
+					System.out.println("Testing is working");
+					Assert.assertEquals(formatFloat(m1.get("score")), formatFloat(m2.get("Overall")), 0.05f,
+							"Verifying score for" + m1.get("compName"));
+				}
+			}
+		}
+	}
+	
+	public void compareExprttoLocationOver(List<String> exportData1, List<String> lcnRprtData) {
+		//ArrayList<String> Export=new ArrayList<>(Arrays.asList("1","2","3"));
+		for(int i=0; i<exportData1.size();i++) {
+			if((exportData1.get(i).equals("-"))&&(lcnRprtData.get(i)).equals("-")) {
+				System.out.println("Contains -");}
+				else
+					if(!(Double.parseDouble(exportData1.get(i))==Double.parseDouble(lcnRprtData.get(i)))) {
+				Assert.assertEquals(exportData1.get(i), lcnRprtData.get(i));
+					}
+				}					
+			}
+			
+		
+	
 
 	public void compareReportnGraph(List<Map<String, String>> tooltipdata, List<Map<String, String>> ovrwRprtData) {
 
@@ -364,6 +527,19 @@ public void clickApplyFilterBTN() throws InterruptedException {
 
 	}
 	
+	
+	public double convertint(String s){       
+		double Tot = 0;
+            if(s.contains(",")) {
+                String value = s.replaceAll("%", "");
+                value.trim();
+                Tot = Double.parseDouble(value);
+            }else {
+                Tot = Double.parseDouble(s);
+            }
+            System.out.println("Total :" +Tot);
+            return Tot;           
+        }
 public void AccuracyScrolldata()
 {
 	
@@ -653,6 +829,137 @@ public boolean eleClicked(WebElement element) {
 	}
 	return false;
 }
+
+public List<Double> getOverviewReport1() {
+    waitForElement(overviewReport, 10);
+    scrollByElement(overviewReport);
+    String a=null;
+    String x = null;
+    double y=0;
+    System.out.println(competitors.size());
+    for (int i = 1; i <= competitors.size()/2; i++) {
+                    WebElement s = driver.findElement(By.xpath(xpathCompetitors + "[" + i + "]"));
+                    a=s.findElement(By.xpath(compScore)).getText();
+                    if(a.contains("%")){
+                                                    x =a.replace("%", "").trim();
+                                                    y=Double.parseDouble(x);
+                                                    System.out.println(y);
+                                                    }else {
+                                                                    y= Double.parseDouble(a);
+                                                    }
+                    list2.add(y);
+                    }
+    System.out.println("vi sc :"+list2);             
+    return list2;
+}
+
+
+public List<Double> getcaOverviewReport1() {
+    waitForElement(caovrview, 10);
+    scrollByElement(caovrview);
+    String a=null;
+    String x = null;
+    double y=0;
+    System.out.println(caOverviewReport.size());
+    for (int i = 1; i <= caOverviewReport.size()/2; i++) {
+                    WebElement s = driver.findElement(By.xpath("(//div[@class='competitorScore color-primary text-right ng-binding'])[" + i + "]"));
+                    a=s.getText();
+                    if(a.contains("%")){
+                                                    x =a.replace("%", "").trim();
+                                                    y=Double.parseDouble(x);
+                                                    System.out.println(y);
+                                                    }
+                    list2.add(y);
+                    }
+    System.out.println(list2);
+    
+    return list2;
+}
+
+
+public List<Double> getreviewOverviewReport1() {
+    waitForElement(overviewReport, 10);
+    scrollByElement(overviewReport);
+    String a=null;
+    String x = null;
+    double y=0;
+    System.out.println(competitors.size());
+    for (int i = 1; i <= competitors.size(); i++) {
+                    WebElement s = driver.findElement(By.xpath(xpathCompetitors + "[" + i + "]"));
+                    a=s.findElement(By.xpath(compScore)).getText();
+                    if(a.contains("-")){
+                                                    x =a.replace("-", "0").trim();
+                                                    y=Double.parseDouble(x);
+                                                    System.out.println(y);
+                                                    }else {
+                                                                    y= Double.parseDouble(a);
+                                                    }
+                    list2.add(y);
+                    }
+    System.out.println("vascore:"+list2);       
+    return list2;
+}
+
+/**
+* Get data using column name and sum for Bing and GMB Page
+* @param PathofXL
+* @param Col_Name
+* @return
+* @throws Exception
+*/
+public List<Double> GetSummaryDataUsingColName(String PathofXL, String Col_Name) throws Exception {         
+FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
+Workbook wb = new XSSFWorkbook(excelFilePath);
+Sheet sh = wb.getSheetAt(0);    
+Row row = sh.getRow(0);
+int col = row.getLastCellNum();
+int Last_row = sh.getLastRowNum();
+int col_num = 0;
+System.out.println(""+col);      
+List<Double> exportdata = new ArrayList<Double>();
+for (int i = 1; i <row.getLastCellNum(); i++) {             
+if ((row.getCell(i).toString()).equals(Col_Name)) {                
+   col_num = i;                   
+   System.out.println(""+col_num);   
+}
+}
+   String s = null;
+   double y = 0;
+   for(int j =1;j<=Last_row; j++) {
+       row = sh.getRow(j);
+       Cell cell = row.getCell(col_num);
+       if (cell != null) {
+           if(cell.getCellType() == Cell.CELL_TYPE_STRING) {
+               String cellValue1 = cell.getStringCellValue();
+               if(cellValue1.contains("%")) {
+               s = cellValue1.replace("%", "");
+               y = Double.parseDouble(s);
+               System.out.println("\n " +s);
+               }else {
+                    y=Double.parseDouble(cellValue1);
+               }
+               
+           }else if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+               //double cellValue2 = cell.getNumericCellValue();
+               String cellValue2 = Double. toString(cell.getNumericCellValue());
+               System.out.println("\n " +cellValue2);
+               if(cellValue2.contains("%")) {
+                   s = cellValue2.replace("%", "");
+                   y = Double.parseDouble(s);
+                   System.out.println("\n " +s);
+                   }else {
+                   y=Double.parseDouble(cellValue2);
+                   }
+                }
+           }
+       exportdata.add(y);
+       System.out.println(""+exportdata);
+       wb.close();
+   }
+  
+   return exportdata;
+}
+
 }
 
 
