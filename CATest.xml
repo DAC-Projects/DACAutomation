@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="none">
+ 
+<listeners>
+<!-- <listener class-name="resources.IntegrationTestListener"></listener> -->
+<listener class-name="resources.ExtentTestNGITestListener"></listener>
+</listeners>
+
+<!-- <test name="Customer_FeedBack">
+<parameter name="testcasesfile" value="Customer_FeedBack.json"></parameter>
+  <parameter name="browser" value="Chrome"/>
+    <classes>
+  		<class name= "com.dac.testcases.CF.Verify_CreateBrandCampaign" />
+    	<class name= "com.dac.testcases.CF.Verify_CreateLocCampaign" />
+    	<class name= "com.dac.testcases.CF.Verify_CreateMLCCampaign" />
+    	
+	     <class name= "com.dac.testcases.CF.VerifyCampResponsesData" />
+    	<class name= "com.dac.testcases.CF.Verify_CreateLocCampaign" />
+    	<class name= "com.dac.testcases.CF.Verify_BrandLivePreviewN_DeleteCamp" />
+    	<class name= "com.dac.testcases.CF.Verify_LocLivePreviewN_DeleteCamp" />
+    	<class name= "com.dac.testcases.CF.VerifyCreate_DraftBrandCamp" />
+    	<class name= "com.dac.testcases.CF.VerifyCreate_DraftLocCamp" /> 
+    </classes>
+  </test> 
+ -->
+
+<test name="Competitive Analysis">
+  <parameter name="browser" value="chrome"/>
+  <parameter name="Filter" value= "State Farm - Benjamine, Victoria Park ave 1710, North York, Ontario, M1R1R6"/>
+  <parameter name="testcasesfile" value="CompetitiveAnalysis.json"></parameter>
+    <classes>
+        
+
+      <class name= "com.dac.testcases.CA.CA_ContentAnalysis_Test" />
+      <class name= "com.dac.testcases.CA.CA_Visibility_Test" />	
+        
+<!-- 	<class name= "com.dac.testcases.CA.CA_Summary_Test" />
+
+	<class name= "com.dac.testcases.CA.CA_Visibility_Test" />		
+	<class name= "com.dac.testcases.CA.CA_ContentAnalysis_Test" />
+    <class name= "com.dac.testcases.CA.CA_Summary_Test" />
+    <class name= "com.dac.testcases.CA.CA_ContentAnalysis_Test" />
+    <class name= "com.dac.testcases.CA.CA_Visibility_Test" />	
+    <class name= "com.dac.testcases.CA.CA_Accuracy_Test" />
+   -->
+	<!-- <class name= "com.dac.testcases.CA.CA_Accuracy_Test" /> -->
+ 	</classes>
+  </test> 
+  
+</suite>

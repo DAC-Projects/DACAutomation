@@ -26,7 +26,7 @@ public class CA_ContentAnalysis_Test extends BaseClass {
 	String grphfromDate = "(//*[@class='highcharts-label highcharts-range-input'])[1]";
 	String grphtoDate = "(//*[@class='highcharts-label highcharts-range-input'])[2]";
 
-	@Test(groups= {"smoke"})
+	@Test(priority=1,groups= {"smoke"})
 	public void navigateToCAPage() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateCA_ContentAnalysispage();
@@ -35,7 +35,7 @@ public class CA_ContentAnalysis_Test extends BaseClass {
 	}
 
 	
-	@Test(dependsOnMethods = { "navigateToCAPage" }, groups= {"smoke"})
+	@Test(priority=2)
 	public void verifyFilteringReports() throws Exception {try {	
 		int count = 1;
 		ExcelHandler wb = new ExcelHandler("./data/FilterCriteria.xlsx", "CA_FIL"); wb.deleteEmptyRows();
@@ -66,7 +66,7 @@ public class CA_ContentAnalysis_Test extends BaseClass {
 		//Assert.fail("");
 	}}
 
-	@Test(dependsOnMethods = { "navigateToCAPage"}, groups= {"smoke"})
+	@Test(priority=3)
 	public void verifyOverviewReportnExport() throws Exception {
 		data = new CA_ContentAnalysis_Page(CurrentState.getDriver());
 		export = data.getExportData();
@@ -76,7 +76,7 @@ public class CA_ContentAnalysis_Test extends BaseClass {
 		
 	}
 
-	@Test( dependsOnMethods = { "navigateToCAPage" }, groups= {"smoke"})
+	@Test(priority=4)
 	public void verifyOverviewReportnTooltip() throws Exception {
 		data = new CA_ContentAnalysis_Page(CurrentState.getDriver());
 		data.compareReportnGraph(data.verifyHistoryGraph(), exportData);
@@ -84,9 +84,10 @@ public class CA_ContentAnalysis_Test extends BaseClass {
 		
 	}
 
+
 	
 	//Test to verify Zoom Functionality
-		@Test(priority=2,groups = {"smoke"},
+		@Test(priority=5,groups = {"smoke"},
 				description ="Verify Zoom Functionality")
 		public void gethighchartsdate() throws Exception{
 			data = new CA_ContentAnalysis_Page(CurrentState.getDriver());
@@ -123,7 +124,7 @@ public class CA_ContentAnalysis_Test extends BaseClass {
 		}
 
 
-		@Test(priority = 3,enabled = true, dataProvider = "testData")
+		@Test(priority = 6,enabled = true, dataProvider = "testData")
 		public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month, String to_year) throws Exception {
 			
 			CA_ContentAnalysis_Page s = new CA_ContentAnalysis_Page(CurrentState.getDriver());
@@ -176,4 +177,19 @@ public class CA_ContentAnalysis_Test extends BaseClass {
 				return data;
 			}
 		}
+
+
+	@Test(priority=7)
+	public void verifyOverviewReportncalculation() throws Exception {
+		data = new CA_ContentAnalysis_Page(CurrentState.getDriver());
+		data.calculateContentAnalysisScore();		
+	}
+	
+	@Test(priority=8)
+	public void UiCalculation() throws Exception {
+		data = new CA_ContentAnalysis_Page(CurrentState.getDriver());
+		data.UiCalculation();		
+	}
+	
 }
+

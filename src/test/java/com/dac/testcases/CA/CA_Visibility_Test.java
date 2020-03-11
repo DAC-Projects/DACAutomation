@@ -1,10 +1,10 @@
 package com.dac.testcases.CA;
 
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -13,7 +13,6 @@ import com.dac.main.Navigationpage;
 import com.dac.main.POM_CA.CA_Visibility_Page;
 import com.dac.main.POM_TPSEE.TPSEE_Visibility_Page;
 import com.selenium.testevidence.SeleniumEvidence;
-
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
@@ -47,6 +46,7 @@ public class CA_Visibility_Test extends BaseClass {
 	@SuppressWarnings("unchecked")
 //  @Parameters({ "Filter" })
 	//Filter Condition Apply
+
 	@Test(dependsOnMethods = { "navigateToVisibilityPage" }, groups= {"smoke"}, description = "Verify Visibility page loads after filter applied")
 	public void verifyFilteringReportsVisibility() throws Exception {try {	
 		int count = 1;

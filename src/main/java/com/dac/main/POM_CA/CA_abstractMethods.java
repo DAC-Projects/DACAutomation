@@ -447,8 +447,8 @@ public void clickApplyFilterBTN() throws InterruptedException {
 			}
 			siteTableData.add(kMap);
 		}
-		System.out.println("Siteprint"+ siteTableData);
-		System.out.println("MAP******************MAP");
+		System.out.println("MAP******************MAP 2");
+
 		for (String name : siteTableData.get(1).keySet()) {
 
 			String key = name.toString();
@@ -485,6 +485,10 @@ public void clickApplyFilterBTN() throws InterruptedException {
 	
 	public void compareExprttoLocation(List<Map<String, String>> exportData1, List<Map<String, String>> lcnRprtData) {
 
+		
+		System.out.println("excel  Data "+exportData1);
+		System.out.println("UI Data "+lcnRprtData);
+		
 		for (Map<String, String> m1 : lcnRprtData) {
 			System.out.println("Abi location"+lcnRprtData);
 			for (Map<String, String> m2 : exportData1) {

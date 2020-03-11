@@ -33,6 +33,7 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
+	static int[][] finalArray;
 
 	public CA_Visibility_Page(WebDriver driver) {
 
@@ -344,7 +345,7 @@ public List<Double> getOverviewReport1() {
        
         double[] arry = new double[table.length-1];
         int colSize1 = table[0].length;
-        double[][] finalArray =new double[colSize1-1][table.length-2];
+        finalArray =new int [colSize1-1][table.length-2];
         //System.out.println(colSize1);
        int k =0;
         for (col = 1; col < colSize1; col++) { 
@@ -356,7 +357,7 @@ public List<Double> getOverviewReport1() {
              System.out.println(array[col-1]);
             arry[i]= tableValues[i]/100 *array[col-1];  
            // System.out.println("Array "+Arrays.toString(arry));
-            finalArray[col-1][i] = Math.round(arry[i]);
+            finalArray[col-1][i] = (int) Math.round(arry[i]);
             
            
         }

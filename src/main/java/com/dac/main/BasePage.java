@@ -438,9 +438,13 @@ public class BasePage {
 					cellValues[j] = "";
 
 
+
 				j++;
 			}
 			rowResults[i] = cellValues;
+
+
+      System.out.println("UI data"+Arrays.toString(rowResults[i]));
 
 
       i++;

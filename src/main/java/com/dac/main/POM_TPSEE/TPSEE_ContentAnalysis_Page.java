@@ -532,5 +532,3 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 			return numberoflocations;	
 		}
 		}
-
-

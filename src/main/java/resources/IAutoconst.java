@@ -19,7 +19,8 @@ public interface IAutoconst {
 	// Auth centre variables
 	String url ="http://dac-map-beta.azurewebsites.net/#",
 
-	 email="adevaraj@dacgroup.com",
+	 email="achandran@dacgroup.com",
+
 	 password="DacQa123";
 
 	//account credentials

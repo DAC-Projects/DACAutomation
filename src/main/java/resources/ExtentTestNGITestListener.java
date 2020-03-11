@@ -59,7 +59,7 @@ public class ExtentTestNGITestListener
    * 
    * @throws IOException
    */
-  @Override
+ @Override
   public void onStart(ISuite suite) {
 	  System.out.println("Suite Name : "+ suite.getName());
 	  
@@ -237,8 +237,8 @@ public class ExtentTestNGITestListener
   @Override
   public synchronized void onAfterClass(ITestClass testClass) {
    
-    CurrentState.getDriver().quit();
-    CurrentState.setDriver(null);
+      CurrentState.getDriver().quit();
+      CurrentState.setDriver(null);
   }
 
   /**
@@ -250,7 +250,7 @@ public class ExtentTestNGITestListener
   public synchronized void onFinish(ITestContext context) {
     extent.flush();
     if (CurrentState.getDriver() != null) {
-      CurrentState.getDriver().quit();
+       CurrentState.getDriver().quit();
     }
     
     if(!printList.get().isEmpty()) {
@@ -333,14 +333,13 @@ public class ExtentTestNGITestListener
 	  WebDriverWait wait;
     WebDriver driver = null;
 
-    File file = new File(".\\downloads");
+    File file = new File(".//downloads");
     if (!file.exists())
       file.mkdirs();
 
     String downloadFolder = System.getProperty("user.dir") + "\\downloads";
 
     if (browser.equalsIgnoreCase("Chrome")) {
-
 
     WebDriverManager.chromedriver().version("80.0.3987.16").setup(); 
 
