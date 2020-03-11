@@ -30,7 +30,7 @@ public class ContentManagement_Page extends BasePage {
 	public ContentManagement_Page(WebDriver driver) {
 		super(driver);
 		this.driver = driver;
-		wait = new WebDriverWait(driver, 310);
+		wait = new WebDriverWait(driver, 10);
 		action = new Actions(driver);
 		PageFactory.initElements(driver, this);
 	}
@@ -296,7 +296,6 @@ public class ContentManagement_Page extends BasePage {
 						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					}
 				}
-
 			}
 		} else {
 			System.out.println("No Data Avaliable");
@@ -831,6 +830,136 @@ public class ContentManagement_Page extends BasePage {
 	}
 
 	/**
+	 * To delete data from the published table using Status
+	 */
+	public void DeleteDataUnPublishedTableusingStatus(String Status) {
+		scrollByElement(UnpublishedStatus);
+		Select Types = new Select(UnpublishedStatus);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		Types.selectByVisibleText(Status);
+		clickelement(UnpublishedSearch);
+		waitForElement(UnpublishedTable, 10);
+		scrollByElement(UnpublishedTable);
+		if (driver.findElement(By.xpath("//*[@id='tblUnpublishedItems_info']")).isDisplayed()) {
+			String n = driver
+					.findElement(By
+							.xpath("(//div[@id='tblUnpublishedItems_paginate']//*[@class='pagination']//a)[last()-1]"))
+					.getText();
+			int page = Integer.parseInt(n);
+			System.out.println("Last Page Number of Unpublished Table is : " + page);
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
+			String entiresText = driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']"))
+					.getText();
+			System.out.println("The total entries in a table is :" + entiresText);
+			if (unpaginationNext.isDisplayed()) {
+				Outer: for (int i = 1; i <= page; i++) {
+					scrollByElement(UnpublishedTable);
+					List<WebElement> rows_table = UnpublishedTableRow; // To locate rows of table.
+					int rows_count = rows_table.size(); // To calculate no of rows In table.
+					for (int row = 1; row < rows_count; row++) {
+						String cellText = driver
+								.findElement(
+										By.xpath("(//table[@id='tblUnpublishedItems']//tbody//tr)[" + row + "]//td[6]"))
+								.getText();
+						System.out.println("Type selected is POM :" + cellText);
+						if (driver.findElement(By.xpath(
+								"(//*[@id='tblUnpublishedItems']//button[@class='btn btn-xs btn-danger btn-block btn-delete'])["
+										+ row + "]"))
+								.isDisplayed()) {
+							driver.findElement(By.xpath(
+									"(//*[@id='tblUnpublishedItems']//button[@class='btn btn-xs btn-danger btn-block btn-delete'])["
+											+ row + "]"))
+									.click();
+							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+							clickelement(UnDeleteConfirm);
+							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+							clickelement(UnDeleteSuccess);
+							System.out.println("Deleted");
+							break Outer;
+						}
+					}
+				}
+				if (unpaginationNext.isEnabled()) {
+					scrollByElement(unpaginationNext);
+					unpaginationNext.click();
+					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+				}
+			}
+		} else {
+			System.out.println("No Data Available");
+		}
+	}
+
+	/**
+	 * To delete data from the published table using type and status
+	 */
+	public void DeleteDataUnPublishedTableusingTypenStatus(String Type, String Status) {
+		scrollByElement(UnpublishedType);
+		Select Types = new Select(UnpublishedType);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		Types.selectByVisibleText(Type);
+		Select Stat = new Select(UnpublishedStatus);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		Stat.selectByVisibleText(Status);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		clickelement(UnpublishedSearch);
+		waitForElement(UnpublishedTable, 10);
+		scrollByElement(UnpublishedTable);
+		if (driver.findElement(By.xpath("//*[@id='tblUnpublishedItems_info']")).isDisplayed()) {
+			String n = driver
+					.findElement(By
+							.xpath("(//div[@id='tblUnpublishedItems_paginate']//*[@class='pagination']//a)[last()-1]"))
+					.getText();
+			int page = Integer.parseInt(n);
+			System.out.println("Last Page Number of Unpublished Table is : " + page);
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
+			String entiresText = driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']"))
+					.getText();
+			System.out.println("The total entries in a table is :" + entiresText);
+			if (unpaginationNext.isDisplayed()) {
+				Outer: for (int i = 1; i <= page; i++) {
+					scrollByElement(UnpublishedTable);
+					List<WebElement> rows_table = UnpublishedTableRow; // To locate rows of table.
+					int rows_count = rows_table.size(); // To calculate no of rows In table.
+					for (int row = 1; row < rows_count; row++) {
+						String cellText = driver
+								.findElement(
+										By.xpath("(//table[@id='tblUnpublishedItems']//tbody//tr)[" + row + "]//td[6]"))
+								.getText();
+						System.out.println("Type selected is POM :" + cellText);
+						if (cellText.contains("Post") || cellText.contains("Comment") || cellText.contains("Reply")) {
+							if (driver.findElement(By.xpath(
+									"(//*[@id='tblUnpublishedItems']//button[@class='btn btn-xs btn-danger btn-block btn-delete'])["
+											+ row + "]"))
+									.isDisplayed()) {
+								driver.findElement(By.xpath(
+										"(//*[@id='tblUnpublishedItems']//button[@class='btn btn-xs btn-danger btn-block btn-delete'])["
+												+ row + "]"))
+										.click();
+								driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+								clickelement(UnDeleteConfirm);
+								driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+								clickelement(UnDeleteSuccess);
+								System.out.println("Deleted");
+								break Outer;
+							}
+						}
+					}
+				}
+				if (unpaginationNext.isEnabled()) {
+					scrollByElement(unpaginationNext);
+					unpaginationNext.click();
+					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+				}
+			}
+		} else {
+			System.out.println("No Data Available");
+		}
+	}
+
+	/**
 	 * Test to approve using Type and Status
 	 */
 	public void ApprovePost(String Type, String Status) {
@@ -1211,5 +1340,4 @@ public class ContentManagement_Page extends BasePage {
 			System.out.println("No Data Available");
 		}
 	}
-
 }
