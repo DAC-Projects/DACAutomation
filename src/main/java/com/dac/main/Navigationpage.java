@@ -69,14 +69,20 @@ public class Navigationpage extends BasePage{
 	
 	@FindBy(xpath = "//a[@href='/Dashboard/BingPlacesForBusiness/']/span")
 	private WebElement Bing;
-
-	@FindBy(xpath = "//a[@href='/Dashboard/ESRFrequency/']/span")	
+	
+	@FindBy(xpath = "//a[@href='/Dashboard/ESRFrequency/']/span")   
     private WebElement ESR;
+	
+	@FindBy(xpath = "//a[@href='/Dashboard/LocalReportsScoreChange/']")
+	private WebElement ScoreChange;
+	
+	@FindBy(xpath = "//a[@href='/Dashboard/ReviewsNotification/']")
+	private WebElement ReviewNotification;
 	
 	//------------------------- SA and RRM -------------------------------------
 	
-	@FindBy(xpath = "//a[@href='/Review/ReviewReport/']")
-	private WebElement ReviewReport;
+	@FindBy(xpath = "//a[@href='/Review/ReviewFeed/']")
+	private WebElement ReviewFeed;
 	
 	@FindBy(xpath = "//a[@href='/ReportCard/Index/']/span")
 	private WebElement ReportCard;
@@ -161,7 +167,13 @@ public class Navigationpage extends BasePage{
   //---------------------- TransparenSEE-------------------------------
     @FindBy(id="VA")
 	private WebElement TPSEE_Visibility;
+    
+    /*------------------------------Social---------------------------------------*/
 
+ //   @FindBy(xpath ="//a[@href='/SocialMedia/ContentManagement']/span")
+ //   private WebElement SE_ContentManagement;
+    
+    /*------------------------------Social---------------------------------------*/
     
     // ------------------------- SE ---------------------------------
     
@@ -243,16 +255,7 @@ public class Navigationpage extends BasePage{
     	System.out.println("Waiting for page to load********");
     	waitUntilLoad(driver);
     }
-    public void navigateToESR() {
-	   	
-    	action.moveToElement(Settings).perform();
-    	waitForElement(ESR, 20);
-    	action.moveToElement(ESR).perform();
-    	driver.findElement(By.xpath("//a[@href='/Dashboard/ESRFrequency/']/span")).click();
-    	System.out.println("Waiting for page to load********");
-    	waitUntilLoad(driver);
-    }
-    
+
     
   //---------------------- TransparenSEE-------------------------------
     
@@ -266,6 +269,40 @@ public class Navigationpage extends BasePage{
     public void navigateToBingPlacesForBusiness() {
     	
     	clickelement(Bing);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    public void navigateToESR() {
+        
+        action.moveToElement(Settings).perform();
+        waitForElement(ESR, 20);
+        action.moveToElement(ESR).perform();
+        driver.findElement(By.xpath("//a[@href='/Dashboard/ESRFrequency/']/span")).click();
+        System.out.println("Waiting for page to load********");
+        waitUntilLoad(driver);
+    }
+    
+public void navigateToLocalReportsScoreChange() {
+	   	
+    	action.moveToElement(Settings).perform();
+    	waitForElement(ScoreChange, 20);
+    	action.moveToElement(ScoreChange).perform();
+    	clickelement(ScoreChange);
+    
+    	//action.moveToElement(AllGroups).click().perform();
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+    
+    public void navigateToReviewNotifications() {
+	   	
+    	action.moveToElement(Settings).perform();
+    	waitForElement(ReviewNotification, 20);
+    	action.moveToElement(ReviewNotification).perform();
+    	clickelement(ReviewNotification);
+    
+    	//action.moveToElement(AllGroups).click().perform();
     	System.out.println("Waiting for page to load********");
     	waitUntilLoad(driver);
     }
@@ -326,9 +363,9 @@ public class Navigationpage extends BasePage{
 	/** To click on SA_ReviewReport link in LHS to navigate to SA_ReviewReport page   */
 	public void navigateToSA_ReviewReport() {
 		JSWaiter.waitJQueryAngular();
-		wait.until(ExpectedConditions.visibilityOf(ReviewReport));
-		scrollByElement(ReviewReport);
-		clickelement(ReviewReport);   
+		wait.until(ExpectedConditions.visibilityOf(ReviewFeed));
+		scrollByElement(ReviewFeed);
+		clickelement(ReviewFeed);   
 	      System.out.println("Waiting for page to load**********");
 	}
 
@@ -445,6 +482,9 @@ public class Navigationpage extends BasePage{
 		clickelement(DBLangLink);
 		clickelement(DBLangPopUp);
 	}
+	
+	
+	
      
 
 	/**

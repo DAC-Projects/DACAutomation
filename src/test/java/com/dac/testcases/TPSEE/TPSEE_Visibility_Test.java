@@ -45,7 +45,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
 		public void GetKPIValues() throws Exception {
 			data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-			Thread.sleep(10000);
+			Thread.sleep(50000);
 			score =data.getVisibilityscore();
 			System.out.println(score);
 			location = data.getVisibilityLoc();

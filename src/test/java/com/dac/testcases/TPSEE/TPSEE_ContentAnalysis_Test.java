@@ -64,6 +64,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass{
 	@Test(priority = 3, groups = { "smoke" }, description = "Test for navigating to ContentAnalysis page")
 	public void Verifyscorenloc() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
+		Thread.sleep(3000);
 		double CAscore = data.CAScore();
 		Assert.assertEquals(CAscore, score);
 		int CALoc = data.CALoc();

@@ -160,6 +160,7 @@ public void compareUInExportFaceBook_Score(String chromepath, String IEpath, Str
 	
 	double TotalScore = Facebook_Score();
 	Assert.assertEquals(x, TotalScore , "Count is equal");
+	
 	}
 
 	
@@ -247,6 +248,7 @@ public void compareUInExportFaceBook_Score(String chromepath, String IEpath, Str
 	 */
 	public void DRSTableExportCSV() throws FileNotFoundException, IOException, InterruptedException {				
 			JSWaiter.waitJQueryAngular();
+			scrollByElement(Export1);
 			exportVATable(Export1, Export1_csv);
 			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ ReviewScoreExportCSV));
 			Thread.sleep(5000);
@@ -261,6 +263,7 @@ public void compareUInExportFaceBook_Score(String chromepath, String IEpath, Str
 	 */
 		public void DRSTableExportXLSX() throws FileNotFoundException, IOException, InterruptedException {				
 				JSWaiter.waitJQueryAngular();
+				scrollByElement(Export1);
 				exportVATable(Export1, Export1_xlsx );
 				renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ReviewScoreExportXLSX));
 				Thread.sleep(5000);

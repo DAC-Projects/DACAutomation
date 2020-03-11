@@ -220,7 +220,8 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
           int col = row.getLastCellNum();
           int Last_row = sh.getLastRowNum();
           int col_num = 0;
-          System.out.println(""+col);         
+          System.out.println(""+col);      
+          List<Double> score = new ArrayList<Double>();
           for (int i = 0; i <row.getLastCellNum(); i++) {             
                 if ((row.getCell(i).toString()).equals(Col_Name)) {                
                     col_num = i;                   
@@ -236,30 +237,42 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
                         row = sh.getRow(j);
                         Cell cell = row.getCell(col_num);
                         if (cell != null) {
-                            if(cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                                String cellValue1 = cell.getStringCellValue().toString();
-                                if(cellValue1.contains("N/A")) {
-                                s = cellValue1.replace("N/A", "0");
+                        	if(!(cell.getCellType() == Cell.CELL_TYPE_STRING)) {
+                                String cellValue1 = Double.toString(cell.getNumericCellValue());
+                                System.out.println("Cell VAlue is :" +cellValue1);
+                                if(!cellValue1.contains("N/A")) {
+                                /*s = cellValue1.replace("N/A", "0");
                                 y = Double.parseDouble(s);
                                 System.out.println("\n " +s);
-                                sum = sum+y;
+                                sum = sum+y;*/
+                                	
+                                	double cellValue = Double.parseDouble(cellValue1);
+                                	System.out.println(cellValue);
+                                	score.add(cellValue);
                                 }
-                            }else if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-                                double cellValue2 = cell.getNumericCellValue();
-                                System.out.println("\n " +cellValue2);
-                                sum = sum+cellValue2;
-                                }
-                            System.out.println(""+sum);
-                            average = sum/(Last_row-1);
+                        	}else {
+                        		System.out.println("String Value");
+                        	}
+                            
+                            System.out.println("ArrayList contains :" +score);
+                            
+                            
                             } else {
                                 System.out.println("Smt wrong");
                             }
                         wb.close();
                     }
+                    int sizeOfList = score.size();
+                    System.out.println("Size of List is :" +sizeOfList);
+                    for(int i = 0; i <= sizeOfList - 1; i++) {
+                        sum = sum + score.get(i);
+                    }
+                    System.out.println("Total sum is :"+sum);
+                    average = sum/sizeOfList;
                     BigDecimal bd = BigDecimal.valueOf(average);
                     bd = bd.setScale(1, RoundingMode.HALF_UP);
                     finalaverage = bd.doubleValue();
-                    System.out.println(":" +finalaverage);
+                    System.out.println("Final Average Score:" +finalaverage);
                     return finalaverage;
         }
     
@@ -867,15 +880,20 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		public TPSEE_abstractMethods clickHighchartCriteria(String durationFor) throws Exception {
 			
 			durationFor = durationFor.toLowerCase();
-			scrollByElement(highChartZoom);
+			WebElement x = driver.findElement(By.xpath(" //*[name()='rect' and @class='highcharts-background']"));
+			scrollByElement(x);
+			//scrollByElement(highChartZoom);
 			int days;			
 			if((!durationFor.equalsIgnoreCase("null"))) {				
 				switch(durationFor) {				
 				case "1m"  : 	try{
+									
 									clickelement(highChart_1M);
 									if(eleClicked(highChart_1M)) {
+										scrollByElement(x);
 										days = getNumberofDays();			
 										if(days >= 28 && days<=31 ) {
+											assert(true);
 											System.out.println("1 Month data is displayed");
 										}else {
 											System.out.println("Not 1 Month");
@@ -891,8 +909,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				case "3m"  : 	try{
 									clickelement(highChart_3M);
 									if(eleClicked(highChart_3M)) {
+										scrollByElement(x);
 										days = getNumberofDays();
 										if(days>=90 && days<=92) {
+											assert(true);
 											System.out.println("3 Month data is displayed");
 										}else {
 											System.out.println("Not 3 Month");
@@ -908,8 +928,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				case "6m"  : 	try{
 									clickelement(highChart_6M);
 									if(eleClicked(highChart_6M)) {
+										scrollByElement(x);
 										days = getNumberofDays();
 										if(days>=180 && days<=184) {
+											assert(true);
 											System.out.println("6 Month data is displayed");
 										}else {
 											System.out.println("Not 6 Month");
@@ -925,7 +947,9 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				case "ytd" : 	try{
 									clickelement(highChart_YTD);
 									if(eleClicked(highChart_YTD)) {
+										scrollByElement(x);
 										days = getNumberofDays();
+										assert(true);
 									}else {
 										System.out.println("Element Not clicked");
 										}
@@ -937,8 +961,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				case "1y"  : 	try{
 									clickelement(highChart_1y);
 									if(eleClicked(highChart_1y)) {
+										scrollByElement(x);
 										days = getNumberofDays();
 										if(days>=364 && days<=366) {
+											assert(true);
 											System.out.println("1 Year data is displayed");
 										}else {
 											System.out.println("Not 1 Year");
@@ -955,7 +981,9 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				default    : 	try{
 									clickelement(highChart_All);
 									if(eleClicked(highChart_All)) {
+										scrollByElement(x);
 										days = getNumberofDays();
+										assert(true);
 									}else {
 										System.out.println("Element not clicked");
 										}
@@ -1038,8 +1066,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * To get Number of Locations from Dashboard 
 		 * @return
 		 */
-		public static int getLocations() {
-			int loc = Integer.parseInt(Locations.getText());
+		public int getLocations() {
+			wait.until(ExpectedConditions.visibilityOf(Locations));
+			waitUntilLoad(driver);
+			String s  = Locations.getText();
+			System.out.println("Locations are :" +s);
+			int loc = Integer.parseInt(s);
 			System.out.println(loc);
 			return loc;			
 		}
@@ -1049,7 +1081,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @return
 		 * @throws InterruptedException 
 		 */
-		public  static double getVisibilityscore() throws InterruptedException {	
+		public  double getVisibilityscore() throws InterruptedException {	
 			Thread.sleep(5000);
 			String sc = Visibilityscore.getText();
 			System.out.println(sc);
@@ -1069,7 +1101,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @return
 		 * @throws InterruptedException 
 		 */
-		public  static int getVisibilityLoc() throws InterruptedException {	
+		public  int getVisibilityLoc() throws InterruptedException {	
 			Thread.sleep(5000);
 			int visibilityloc = Integer.parseInt(VisibilityLoc.getText());
 			System.out.println(visibilityloc);
@@ -1113,7 +1145,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @return
 		 * @throws InterruptedException 
 		 */
-		public static double getContentscore() throws InterruptedException {	
+		public double getContentscore() throws InterruptedException {	
 			Thread.sleep(5000);
 			String sc = Contentscore.getText();
 			System.out.println(sc);
@@ -1132,7 +1164,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @return
 		 * @throws InterruptedException 
 		 */
-		public static int getContentLoc() throws InterruptedException {	
+		public int getContentLoc() throws InterruptedException {	
 			Thread.sleep(5000);
 			int contentloc = Integer.parseInt(ContentLoc.getText());
 			System.out.println(contentloc);

@@ -1,4 +1,7 @@
 package com.dac.main.POM_TPSEE;
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -49,7 +52,7 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//span[@id='customerTotal']")
 	private WebElement TotalActions;
 	
-	@FindBy(xpath = " //button[@class='btn btn-primary dropdown-toggle export-dropdown-btn']")
+	@FindBy(xpath = "//button[@class='btn btn-primary dropdown-toggle export-dropdown-btn']")
 	private WebElement export;
 	
 	@FindBy(xpath = "//a[contains(text(), 'Export as CSV')]")
@@ -233,7 +236,6 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		}if(CSVExport.isDisplayed() && CSVExport.isEnabled()) {
 			wait.until(ExpectedConditions.visibilityOf(CSVExport));
 			CSVExport.click();
-			Thread.sleep(5000);
 			System.out.println(""+getLastModifiedFile(Exportpath));
 			}else {
 			System.out.println("No Data Available in GMB");

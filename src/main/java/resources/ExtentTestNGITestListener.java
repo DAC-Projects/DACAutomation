@@ -20,6 +20,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+//import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -38,9 +39,7 @@ import com.selenium.testevidence.EvidenceReport;
 import com.selenium.testevidence.EvidenceType;
 import com.selenium.testevidence.GenerateEvidenceReport;
 import com.selenium.testevidence.SeleniumEvidence;
-
 import io.github.bonigarcia.wdm.Architecture;
-import io.github.bonigarcia.wdm.DriverManagerType;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import net.sf.jasperreports.engine.JasperPrint;
 
@@ -397,18 +396,24 @@ public class ExtentTestNGITestListener
 
     } else if (browser.equalsIgnoreCase("IE")) {
       WebDriverManager.iedriver().architecture(Architecture.X32).setup();
-      DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
-      capabilities.setCapability(InternetExplorerDriver.NATIVE_EVENTS, true);
-      capabilities.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
-      capabilities.setCapability(InternetExplorerDriver.INITIAL_BROWSER_URL,"");
-      capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,true);
-      capabilities.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, false);
-      capabilities.setCapability("ignoreProtectedModeSettings", 1);
-      capabilities.setCapability("IntroduceInstabilityByIgnoringProtectedModeSettings", true);
+      DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();     
+      capabilities.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
+      capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
+      capabilities.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, true);     
+      capabilities.setCapability("requireWindowFocus", true);
+     
       //options.requireWindowFocus();
       String path = System.getProperty("user.dir") + "/downloads";
-      String cmd1 = "REG ADD \"HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\Main\" /F /V \"Default Download Directory\" /T REG_SZ /D "
+      String cmd1 = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\Microsoft\\Internet Explorer\\Main\\FeatureControl\\FEATURE_BFCACHE "
           + path;
+      /*InternetExplorerOptions options = new InternetExplorerOptions();
+      capabilities.setCapability("se:ieOptions", options);
+      options.setCapability("browser.helperApps.neverAsk.saveToDisk" , "application/octet-stream;application/csv;text/csv/xlsx;application/vnd.ms-excel;"); 
+      options.setCapability("browser.helperApps.alwaysAsk.force", false); 
+      options.setCapability("browser.download.manager.showWhenStarting",false); 
+      options.setCapability("browser.download.folderList", 2);
+      options.setCapability("browser.download.dir","e:\\SampleExcel");
+      InternetExplorerDriver(options);*/
 
       try {
         Runtime.getRuntime().exec(cmd1);

@@ -100,7 +100,11 @@ public abstract class BaseClass {
         return IAutoconst.transparenSEE;
         	   //IAutoconst.Fit4LessAccount;
         	   //IAutoconst.neuralTuringTechAccount;
+    case "Social Engagement" :
+    	return IAutoconst.SocialdeepFieldAccount;
         
+    case "Social Automation" :
+    	return IAutoconst.SocialAutomationAccount;
 
     default:
       return IAutoconst.transparenSEE;

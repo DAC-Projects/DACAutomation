@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_AllLocations_Page;
+import com.dac.main.POM_TPSEE.TPSEE_abstractMethods;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -25,17 +26,16 @@ public class TPSEE_AllLocations_Test extends BaseClass{
 	/**
 	 * Test to get dashboard scores
 	 * @throws Exception
-	 */
+	 *//*
 		@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
 		public void GetKPIValues() throws Exception {
 			data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
-			Thread.sleep(10000);
+			Thread.sleep(50000);
 			location = data.getLocations();
-			System.out.println(location);
-			
+			System.out.println(location);			
 			CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 			addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
-		}
+		}*/
 	
 	@Test(priority =2,groups = { "smoke" }, description = "Test for navigating to All Locations page")
 	public void navigateToAllLocationsPage() throws Exception {
@@ -50,7 +50,7 @@ public class TPSEE_AllLocations_Test extends BaseClass{
 	/**
 	 * Test To get overall score and compare with dashboard values 
 	 * @throws Exception
-	 */		
+	 *//*		
 		@Test(priority=3,groups = { "smoke" }, description = "Test for compare KPI Values")
 		public void ovrviewlocscorecompare() throws Exception {
 			data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
@@ -74,8 +74,7 @@ public class TPSEE_AllLocations_Test extends BaseClass{
 			for(int i=1;i<=wb.getRowCount();i++) {
 				System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
 				if(i>1) CurrentState.getDriver().navigate().refresh();
-				s.waitUntilLoad(CurrentState.getDriver());
-		
+				s.waitUntilLoad(CurrentState.getDriver());		
 				String Group = wb.getCellValue(i, wb.seacrh_pattern("Group", 0).get(0).intValue());
 				String CountryCode = wb.getCellValue(i, wb.seacrh_pattern("Country", 0).get(0).intValue());
 				String State = wb.getCellValue(i, wb.seacrh_pattern("State", 0).get(0).intValue());
@@ -91,23 +90,24 @@ public class TPSEE_AllLocations_Test extends BaseClass{
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 	@Test(priority=5, groups = {
 	"smoke" }, description = "Export as csv")
 		public void exportascsv() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.LocationDataTableExportCSV();
+		data.LocationDataTableExportXLSX();
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 }
 	
-	//Test for export and overview report in Content Analysis Page
+	/*//Test for export and overview report in Content Analysis Page
 	@Test(priority=6, groups = {
 					"smoke" }, description = "Test for Location export and export verification")
 		public void verifyTableDataoExport() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.compareExprttoAnalysisSiteLinkData(data.LocationDataTable(), data.getLocationDataTableExport());
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
-	}
+	}*/
 
 }
