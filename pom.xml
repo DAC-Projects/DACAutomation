@@ -47,7 +47,14 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
+<repositories>
+		<repository>
+			<id>Test_Automation_Repository</id>
+			<name>Test Automation Repository</name>
+			<url>file:\\maven_repository</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
 
 
 	<dependencies>
@@ -221,18 +228,35 @@
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
-			<version>3.3.0</version>
-			<scope>test</scope>
+			<version>3.3.0</version>			
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.skyscreamer</groupId>
 			<artifactId>jsonassert</artifactId>
 			<version>1.4.0</version>
 		</dependency>
 
-
-
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<version>2.4.11</version>
+		</dependency>
+<dependency>
+			<groupId>unsorted-libraries</groupId>
+			<artifactId>AHDDF</artifactId>
+			<version>4.1</version>
+		</dependency>
+		<dependency>
+			<groupId>unsorted-libraries.ATU</groupId>
+			<artifactId>ReporterSeleniumtestNG</artifactId>
+			<version>5.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>unsorted-libraries.ATU</groupId>
+			<artifactId>TestRecorder</artifactId>
+			<version>2.1</version>
+		</dependency>
 
 	</dependencies>
 
