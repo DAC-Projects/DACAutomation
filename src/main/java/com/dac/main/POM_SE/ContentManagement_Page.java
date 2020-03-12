@@ -576,13 +576,13 @@ public class ContentManagement_Page extends BasePage {
 							celtext = true;
 							break Outer;
 						}
-					}if (PubpaginationNext.isEnabled()) {
+					}
+					if (PubpaginationNext.isEnabled()) {
 						scrollByElement(PubpaginationNext);
 						PubpaginationNext.click();
 						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					}
 				}
-				
 
 			}
 		} else {
@@ -745,10 +745,12 @@ public class ContentManagement_Page extends BasePage {
 					for (int row = 1; row < rows_count; row++) {
 						boolean flag;
 						if (StatText.equalsIgnoreCase("Pending Approval")) {
-							flag = Eleexists("(//button[@class='btn btn-xs btn-success btn-block btn-approve'])[" + row + "]");	
-							System.out.println("Boolean Value :" +flag);
+							flag = Eleexists(
+									"(//button[@class='btn btn-xs btn-success btn-block btn-approve'])[" + row + "]");
+							System.out.println("Boolean Value :" + flag);
 							assertFalse(flag, "Approve Button is not displayed");
-							flag = Eleexists("(//button[@class='btn btn-xs btn-warning btn-block btn-reject'])[" + row + "]");
+							flag = Eleexists(
+									"(//button[@class='btn btn-xs btn-warning btn-block btn-reject'])[" + row + "]");
 							assertFalse(flag, "Reject Button is not displayed");
 							assertTrue(driver
 									.findElement(By.xpath(
@@ -778,7 +780,8 @@ public class ContentManagement_Page extends BasePage {
 						} else if (StatText.equalsIgnoreCase("Approved Scheduled")) {
 							flag = Eleexists("(//a[@class='btn btn-xs btn-default btn-block link-edit'])[" + row + "]");
 							assertFalse(flag, "Edit Link is not displayed");
-							flag = Eleexists("(//button[@class='btn btn-xs btn-danger btn-block btn-delete'])[" + row + "]");
+							flag = Eleexists(
+									"(//button[@class='btn btn-xs btn-danger btn-block btn-delete'])[" + row + "]");
 							assertFalse(flag, "Delete Button is not displayed");
 						} else if (StatText.equalsIgnoreCase("Rejected")) {
 							assertTrue(driver
@@ -791,7 +794,8 @@ public class ContentManagement_Page extends BasePage {
 									.isDisplayed());
 							System.out.println("Delete Button is displayed");
 						}
-					}if (unpaginationNext.isEnabled()) {
+					}
+					if (unpaginationNext.isEnabled()) {
 						scrollByElement(unpaginationNext);
 						unpaginationNext.click();
 						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -1447,10 +1451,10 @@ public class ContentManagement_Page extends BasePage {
 	public boolean Eleexists(String x) {
 		try {
 			WebElement y = driver.findElement(By.xpath(x));
-			if (!(y == null)) 
+			if (!(y == null))
 				return true;
 		} catch (NoSuchElementException e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 		}
 		return false;
 	}

@@ -10,12 +10,12 @@ import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
 
-public class ContentManagement_Creator_Test extends BaseClass{
-	
+public class ContentManagement_Creator_Test extends BaseClass {
+
 	Navigationpage np;
 	ContentManagement_Page data;
 	ExcelHandler wb;
-	
+
 	/**
 	 * Test to navigate to Content Management Page
 	 * 
@@ -35,12 +35,12 @@ public class ContentManagement_Creator_Test extends BaseClass{
 		data.VerifyTitleText();
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
-	
-/*	*//**
+
+	/**
 	 * Test to search in a table for entered keyword
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 
 	@Test(priority = 3)
 	public void VerifySearchKeywordinUnpublishedTable() throws Exception {
@@ -62,11 +62,11 @@ public class ContentManagement_Creator_Test extends BaseClass{
 		}
 	}
 
-	*//**
+	/**
 	 * Test to verify type exists
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 
 	@Test(priority = 4)
 	public void VerifySearchTypeinUnpublishedTable() throws Exception {
@@ -87,12 +87,12 @@ public class ContentManagement_Creator_Test extends BaseClass{
 			}
 		}
 	}
-	
-	*//**
+
+	/**
 	 * Test to search in a table for entered keyword
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 
 	@Test(priority = 5)
 	public void VerifySearchKeywordinPublishedTable() throws Exception {
@@ -114,11 +114,11 @@ public class ContentManagement_Creator_Test extends BaseClass{
 		}
 	}
 
-	*//**
+	/**
 	 * Test to verify type exists
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 
 	@Test(priority = 6)
 	public void VerifySearchTypeinPublishedTable() throws Exception {
@@ -139,11 +139,11 @@ public class ContentManagement_Creator_Test extends BaseClass{
 			}
 		}
 	}
-	
-	*//**
+
+	/**
 	 * @throws Exception
 	 * 
-	 *//*
+	 */
 
 	@Test(priority = 7)
 	public void UnpublishedTypeTxtSearch() throws Exception {
@@ -167,10 +167,10 @@ public class ContentManagement_Creator_Test extends BaseClass{
 		}
 	}
 
-	*//**
+	/**
 	 * @throws Exception
 	 * 
-	 *//*
+	 */
 
 	@Test(priority = 8)
 	public void PublishedTypeTxtSearch() throws Exception {
@@ -191,7 +191,7 @@ public class ContentManagement_Creator_Test extends BaseClass{
 				CurrentState.getDriver().navigate().refresh();
 			}
 		}
-	}*/
+	}
 
 	/**
 	 * Test to search data with status
@@ -218,11 +218,11 @@ public class ContentManagement_Creator_Test extends BaseClass{
 		}
 	}
 
-/*	*//**
+	/**
 	 * Test to Delete Data using Type in Published Table
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 
 	@Test(priority = 10)
 	public void DeleteDatausingTypePublishedTable() throws Exception {
@@ -243,11 +243,11 @@ public class ContentManagement_Creator_Test extends BaseClass{
 		}
 	}
 
-	*//**
+	/**
 	 * To delete data from Unpublished Table using Type
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 11)
 	public void DeleteDatausingTypeUnPublishedTable() throws Exception {
 		data = new ContentManagement_Page(CurrentState.getDriver());
@@ -263,11 +263,11 @@ public class ContentManagement_Creator_Test extends BaseClass{
 		}
 	}
 
-	*//**
+	/**
 	 * To delete data from Unpublished Table using Type
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 12)
 	public void DeleteDatausingStatusUnPublishedTable() throws Exception {
 		data = new ContentManagement_Page(CurrentState.getDriver());
@@ -283,11 +283,11 @@ public class ContentManagement_Creator_Test extends BaseClass{
 		}
 	}
 
-	*//**
+	/**
 	 * To delete data from Unpublished Table using Type
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 13)
 	public void DeleteDatausingStatusnTypeUnPublishedTable() throws Exception {
 		data = new ContentManagement_Page(CurrentState.getDriver());
@@ -303,6 +303,6 @@ public class ContentManagement_Creator_Test extends BaseClass{
 			addEvidence(CurrentState.getDriver(), "Delete from Published Table", "yes");
 			CurrentState.getDriver().navigate().refresh();
 		}
-	}*/
+	}
 
 }
