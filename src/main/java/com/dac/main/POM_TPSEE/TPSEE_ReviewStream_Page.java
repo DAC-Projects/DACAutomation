@@ -107,7 +107,7 @@ public class TPSEE_ReviewStream_Page extends TPSEE_abstractMethods{
 	//get Review stream table data
 	public List<Map<String, String>> ReviewStreamDataTable(String [][] exceldata ) throws Exception{
 		JSWaiter.waitJQueryAngular();
-		waitForElement(ReviewStreamTable, 40);
+		waitForElement(ReviewStreamTable, 10);
 		//getting into progressbar found listing
 		System.out.println("\n reading table data********************* \n");
 		driver.findElement(By.xpath("(//*[@class='pagination']//a)[2]")).click();
@@ -130,7 +130,7 @@ public class TPSEE_ReviewStream_Page extends TPSEE_abstractMethods{
 //		entiresText = entiresText.substring(entiresText.indexOf("…"));
 //		System.out.println("Total pages:  "+entiresText);
 		
-		waitForElement(paginationNext, 40);
+		waitForElement(paginationNext, 10);
 	    if(paginationNext.isDisplayed()) {
 	    	allpages:// label for break all pages loop
 	    	for(int i=0;i<page;i++) {	//Loop will execute for all records in page
@@ -150,14 +150,14 @@ public class TPSEE_ReviewStream_Page extends TPSEE_abstractMethods{
 
 	    			String reviewdate= Columns_row.get(3).getText();// driver.findElement(By.xpath("//*[@id='table_review']//tr//td[4]")).getText();
 	    			String source=driver.findElement(By.xpath("//table[@id='table_review']//tbody//tr["+ (row+1) +"]//td//a")).getAttribute("href");
-	       			boolean date_exist=ReviewStreamDate(reviewdate);
+	       			System.out.println(reviewdate);
+	    			boolean date_exist=ReviewStreamDate(reviewdate);
 	    			//int column =0;
 	    			if(!source.contains("yelp")) {
 	    				if (date_exist) {
 	    						tableCount++;
 	    						
-	    						
-		    					for (int column = 0; column < columns_count; column++) {	//Loop will execute till the last cell of that specific row.
+	    	 					for (int column = 0; column < columns_count; column++) {	//Loop will execute till the last cell of that specific row.
 			    				//System.out.println("Column is: "+column);
 			    						    			
 				    			String headerText = "" , celtext ="";
@@ -189,7 +189,7 @@ public class TPSEE_ReviewStream_Page extends TPSEE_abstractMethods{
 						
 	    					    										
 		    			}else {
-//		    			System.out.println("Row Number: "+(row+1)+" Review Date: "+reviewdate);
+		    			System.out.println("Row Number: "+(row+1)+" Review Date: "+reviewdate);
 	    				System.out.println("Review date NOT available in the List ");
 	    				break allpages; //exit from all rows and stop
 		    			}
@@ -223,7 +223,7 @@ public class TPSEE_ReviewStream_Page extends TPSEE_abstractMethods{
 			System.out.println("Table count: "+tableCount);
 			
 	    	Assert.assertEquals(tmpExportedcnt,tableCount,"Exported Size Matched");
-//   	Assert.assertTrue(entiresText.contains(""+count+""), "Table Data count matches with total entries count");
+//   		Assert.assertTrue(entiresText.contains(""+count+""), "Table Data count matches with total entries count");
 //	    	System.out.println("Size of Table Map "+tableCellValues.size());
 //	    	tableCellValues.forEach(System.out::println);
 	    	
@@ -232,8 +232,8 @@ public class TPSEE_ReviewStream_Page extends TPSEE_abstractMethods{
 	
 	/*---------Export Review Stream 7 day Report ----------*/
 	public void ReviewStreamDataTableExport() throws FileNotFoundException, IOException, InterruptedException {
-		waitForElement(ReviewStreamTable, 40);
-		waitForElement(exportBtn, 40);
+		waitForElement(ReviewStreamTable, 10);
+		waitForElement(exportBtn, 10);
 		JSWaiter.waitUntilJQueryReady();
 		System.out.println("Clicking Download button");
 		exportBtn.click();

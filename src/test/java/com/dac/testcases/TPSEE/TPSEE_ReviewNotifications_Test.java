@@ -80,7 +80,7 @@ public class TPSEE_ReviewNotifications_Test extends BaseClass {
 							}
 			
 	//Test for Less-than 3 stars Reviews Email Notification
-			@SuppressWarnings("unchecked")
+			/*@SuppressWarnings("unchecked")
 			@Test(dependsOnMethods = { "customAllReviewsNotification"}, groups = {
 											"smoke" }, description = "TC: Less-than 3 stars Reviews Notification from Review Notification")
 			public void customLessThan3ReviewsNotification() throws Exception {
@@ -90,5 +90,5 @@ public class TPSEE_ReviewNotifications_Test extends BaseClass {
 								rn.verifyEmailNotification(xcelInputData, 6);
 								CurrentState.getLogger().log(Status.PASS, "Notification Created");
 								addEvidence(CurrentState.getDriver(), "Less-than 3 stars Review Notification created and verified", "yes");
-							}
+							}*/
 }
