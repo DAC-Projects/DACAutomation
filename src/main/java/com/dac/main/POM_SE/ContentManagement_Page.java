@@ -1,5 +1,6 @@
 package com.dac.main.POM_SE;
 
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.util.List;
@@ -575,13 +576,13 @@ public class ContentManagement_Page extends BasePage {
 							celtext = true;
 							break Outer;
 						}
+					}if (PubpaginationNext.isEnabled()) {
+						scrollByElement(PubpaginationNext);
+						PubpaginationNext.click();
+						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					}
 				}
-				if (PubpaginationNext.isEnabled()) {
-					scrollByElement(PubpaginationNext);
-					PubpaginationNext.click();
-					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-				}
+				
 
 			}
 		} else {
@@ -742,11 +743,13 @@ public class ContentManagement_Page extends BasePage {
 					int rows_count = rows_table.size(); // To calculate no of rows In table.
 					count = count + rows_count;
 					for (int row = 1; row < rows_count; row++) {
+						boolean flag;
 						if (StatText.equalsIgnoreCase("Pending Approval")) {
-							Eleexists("(//button[@class='btn btn-xs btn-success btn-block btn-approve'])[" + row + "]");
-							assertTrue(true, "Approve Button is not displayed");
-							Eleexists("(//button[@class='btn btn-xs btn-warning btn-block btn-reject'])[" + row + "]");
-							assertTrue(true, "Reject Button is not displayed");
+							flag = Eleexists("(//button[@class='btn btn-xs btn-success btn-block btn-approve'])[" + row + "]");	
+							System.out.println("Boolean Value :" +flag);
+							assertFalse(flag, "Approve Button is not displayed");
+							flag = Eleexists("(//button[@class='btn btn-xs btn-warning btn-block btn-reject'])[" + row + "]");
+							assertFalse(flag, "Reject Button is not displayed");
 							assertTrue(driver
 									.findElement(By.xpath(
 											"(//a[@class='btn btn-xs btn-default btn-block link-edit'])[" + row + "]"))
@@ -773,10 +776,10 @@ public class ContentManagement_Page extends BasePage {
 									.isDisplayed());
 							System.out.println("Delete Button is displayed");
 						} else if (StatText.equalsIgnoreCase("Approved Scheduled")) {
-							Eleexists("(//a[@class='btn btn-xs btn-default btn-block link-edit'])[" + row + "]");
-							assertTrue(true, "Edit Link is not displayed");
-							Eleexists("(//button[@class='btn btn-xs btn-danger btn-block btn-delete'])[" + row + "]");
-							assertTrue(true, "Delete Button is not displayed");
+							flag = Eleexists("(//a[@class='btn btn-xs btn-default btn-block link-edit'])[" + row + "]");
+							assertFalse(flag, "Edit Link is not displayed");
+							flag = Eleexists("(//button[@class='btn btn-xs btn-danger btn-block btn-delete'])[" + row + "]");
+							assertFalse(flag, "Delete Button is not displayed");
 						} else if (StatText.equalsIgnoreCase("Rejected")) {
 							assertTrue(driver
 									.findElement(By.xpath(
@@ -788,15 +791,13 @@ public class ContentManagement_Page extends BasePage {
 									.isDisplayed());
 							System.out.println("Delete Button is displayed");
 						}
-					}
-					if (unpaginationNext.isEnabled()) {
+					}if (unpaginationNext.isEnabled()) {
 						scrollByElement(unpaginationNext);
 						unpaginationNext.click();
 						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					}
 				}
 			}
-
 		} else {
 			System.out.println("No Data Available");
 		}
@@ -1446,10 +1447,10 @@ public class ContentManagement_Page extends BasePage {
 	public boolean Eleexists(String x) {
 		try {
 			WebElement y = driver.findElement(By.xpath(x));
-			if (!(y == null))
+			if (!(y == null)) 
 				return true;
 		} catch (NoSuchElementException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return false;
 	}
