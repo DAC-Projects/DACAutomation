@@ -51,7 +51,7 @@
 		<repository>
 			<id>Test_Automation_Repository</id>
 			<name>Test Automation Repository</name>
-			<url>file:\\maven_repository</url>
+			<url>file:${project.basedir}/maven_repository</url>
 			<layout>default</layout>
 		</repository>
 	</repositories>
