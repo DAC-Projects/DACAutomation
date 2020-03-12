@@ -441,13 +441,13 @@ public class BasePage {
 			}
 			rowResults[i] = cellValues;
 
-			System.out.println(Arrays.toString(rowResults[i]));
+			System.out.println("value"+Arrays.toString(rowResults[i]));
 
 
 			i++;
 		}
 		System.out.println("\n");
-		System.out.println("Final Table Print"+Arrays.toString(rowResults));
+		
 		return rowResults;
 	}
 

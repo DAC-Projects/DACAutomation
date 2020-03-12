@@ -67,6 +67,10 @@ public class Navigationpage extends BasePage{
 	@FindBy(xpath = "//a[@href='/Dashboard/ESRFrequency/']/span")	
     private WebElement ESR;
 	
+	
+
+	@FindBy(xpath = "//*[@id='roi_gmb']/a")
+	private WebElement ROI;
 	//------------------------- SA and RRM -------------------------------------
 	
 	@FindBy(xpath = "//a[@href='/Review/ReviewReport/']")
@@ -247,7 +251,11 @@ public class Navigationpage extends BasePage{
     	waitUntilLoad(driver);
     }
     
-    
+    public void navigateToROI() {
+    	clickelement(ROI);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
   //---------------------- TransparenSEE-------------------------------
     
     //-----CA
@@ -352,6 +360,7 @@ public class Navigationpage extends BasePage{
 	}
 	
 	public void navigateToSE_ContentManagement() {
+		System.out.println("testing for content");
 		wait.until(ExpectedConditions.visibilityOf(SE_ContentManagement));
 		scrollByElement(SE_ContentManagement);
 		clickelement(SE_ContentManagement);

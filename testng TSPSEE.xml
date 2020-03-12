@@ -8,7 +8,7 @@
 </listeners>
 
 
- <test name="Competitive Analysis" parallel="tests" group-by-instances="true">
+ <test name="TransparenSEE" parallel="tests" group-by-instances="true">
    <parameter name="Filter" value= "State Farm - Benjamine, Victoria Park ave 1710, North York, Ontario, M1R1R6"/> 
     <parameter name="browser" value="chrome"/> 
     <classes>
@@ -21,8 +21,13 @@
 		<class name= "com.dac.testcases.TPSEE.TPSEE_ReviewStream_Test" /> 
 		<class name= "com.dac.testcases.TPSEE.TPSEE_DisplayedReviewScore_Test" /> 
 		<class name= "com.dac.testcases.SE.CompareReportsData_PostData" /> 
-		<class name= "com.dac.testcases.TPSEE.TPSEE_ESRreports_Test"/>-->
+		<class name= "com.dac.testcases.TPSEE.TPSEE_ESRreports_Test"/>
 		<class name= "com.dac.testcases.CA.CA_Review_Test"/>
+		<class name= "com.dac.testcases.SE.CompareReportsData_PostData" /> 
+		<class name= "com.dac.testcases.SE.CompareReportsData_PostData" /> -->
+				 
+				<class name= "com.dac.testcases.TPSEE.TPSEE_ROI_Test" />
+		
      </classes>
  </test>
 </suite>
