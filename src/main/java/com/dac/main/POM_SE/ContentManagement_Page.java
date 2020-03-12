@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -217,12 +218,13 @@ public class ContentManagement_Page extends BasePage {
 							break OUTER;
 						}
 					}
+					if (unpaginationNext.isEnabled()) {
+						scrollByElement(unpaginationNext);
+						unpaginationNext.click();
+						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					}
 				}
-				if (unpaginationNext.isEnabled()) {
-					scrollByElement(unpaginationNext);
-					unpaginationNext.click();
-					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-				}
+
 			}
 		} else {
 			System.out.println("No Data Available for search criteria");
@@ -359,13 +361,14 @@ public class ContentManagement_Page extends BasePage {
 							break Outer;
 						}
 					}
+					if (PubpaginationNext.isEnabled()) {
+						scrollByElement(PubpaginationNext);
+						PubpaginationNext.click();
+						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					}
 
 				}
-				if (PubpaginationNext.isEnabled()) {
-					scrollByElement(PubpaginationNext);
-					PubpaginationNext.click();
-					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-				}
+
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -509,12 +512,13 @@ public class ContentManagement_Page extends BasePage {
 								;
 						}
 					}
+					if (unpaginationNext.isEnabled()) {
+						scrollByElement(unpaginationNext);
+						unpaginationNext.click();
+						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					}
 				}
-				if (unpaginationNext.isEnabled()) {
-					scrollByElement(unpaginationNext);
-					unpaginationNext.click();
-					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-				}
+
 			}
 		} else {
 			System.out.println("No Data Available for search criteria");
@@ -578,6 +582,7 @@ public class ContentManagement_Page extends BasePage {
 					PubpaginationNext.click();
 					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 				}
+
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -697,11 +702,98 @@ public class ContentManagement_Page extends BasePage {
 							System.out.println("Delete Button is displayed");
 						}
 					}
+					if (unpaginationNext.isEnabled()) {
+						scrollByElement(unpaginationNext);
+						unpaginationNext.click();
+						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					}
 				}
-				if (unpaginationNext.isEnabled()) {
-					scrollByElement(unpaginationNext);
-					unpaginationNext.click();
-					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+			}
+
+		} else {
+			System.out.println("No Data Available");
+		}
+	}
+
+	/**
+	 * Verify Status
+	 */
+	public void VerifyCreatorstatusinTable(String StatText) {
+		waitForElement(UnpublishedTable, 10);
+		scrollByElement(UnpublishedTable);
+		if (driver.findElement(By.xpath("//*[@id='tblUnpublishedItems_info']")).isDisplayed()) {
+			String n = driver
+					.findElement(By
+							.xpath("(//div[@id='tblUnpublishedItems_paginate']//*[@class='pagination']//a)[last()-1]"))
+					.getText();
+			int page = Integer.parseInt(n);
+			System.out.println("Last Page Number of Unpublished Table is : " + page);
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
+			String entiresText = driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']"))
+					.getText();
+			System.out.println("The total entries in a table is :" + entiresText);
+			int count = 0;
+			if (unpaginationNext.isDisplayed()) {
+				for (int i = 1; i <= page; i++) { // Loop will execute till the all the row of table completes.
+					scrollByElement(UnpublishedTable);
+					List<WebElement> rows_table = UnpublishedTableRow; // To locate rows of table.
+					int rows_count = rows_table.size(); // To calculate no of rows In table.
+					count = count + rows_count;
+					for (int row = 1; row < rows_count; row++) {
+						if (StatText.equalsIgnoreCase("Pending Approval")) {
+							Eleexists("(//button[@class='btn btn-xs btn-success btn-block btn-approve'])[" + row + "]");
+							assertTrue(true, "Approve Button is not displayed");
+							Eleexists("(//button[@class='btn btn-xs btn-warning btn-block btn-reject'])[" + row + "]");
+							assertTrue(true, "Reject Button is not displayed");
+							assertTrue(driver
+									.findElement(By.xpath(
+											"(//a[@class='btn btn-xs btn-default btn-block link-edit'])[" + row + "]"))
+									.isDisplayed());
+							System.out.println("Edit Link is displayed");
+							assertTrue(driver.findElement(By.xpath(
+									"(//button[@class='btn btn-xs btn-danger btn-block btn-delete'])[" + row + "]"))
+									.isDisplayed());
+							System.out.println("Delete Button is displayed");
+
+						} else if (StatText.equalsIgnoreCase("Post Error")) {
+							System.out.println("Post Error");
+							assertTrue(driver.findElement(By.xpath(
+									"(//button[@class='btn btn-xs btn-success btn-block btn-resubmit'])[" + row + "]"))
+									.isDisplayed());
+							System.out.println("Resubmit Button is Displayed");
+							assertTrue(driver
+									.findElement(By.xpath(
+											"(//a[@class='btn btn-xs btn-default btn-block link-edit'])[" + row + "]"))
+									.isDisplayed());
+							System.out.println("Edit Link is displayed");
+							assertTrue(driver.findElement(By.xpath(
+									"(//button[@class='btn btn-xs btn-danger btn-block btn-delete'])[" + row + "]"))
+									.isDisplayed());
+							System.out.println("Delete Button is displayed");
+						} else if (StatText.equalsIgnoreCase("Approved Scheduled")) {
+							Eleexists("(//a[@class='btn btn-xs btn-default btn-block link-edit'])[" + row + "]");
+							assertTrue(true, "Edit Link is not displayed");
+							Eleexists("(//button[@class='btn btn-xs btn-danger btn-block btn-delete'])[" + row + "]");
+							assertTrue(true, "Delete Button is not displayed");
+						} else if (StatText.equalsIgnoreCase("Rejected")) {
+							assertTrue(driver
+									.findElement(By.xpath(
+											"(//a[@class='btn btn-xs btn-default btn-block link-edit'])[" + row + "]"))
+									.isDisplayed());
+							System.out.println("Edit Link is displayed");
+							assertTrue(driver.findElement(By.xpath(
+									"(//button[@class='btn btn-xs btn-danger btn-block btn-delete'])[" + row + "]"))
+									.isDisplayed());
+							System.out.println("Delete Button is displayed");
+						}
+					}
+					if (unpaginationNext.isEnabled()) {
+						scrollByElement(unpaginationNext);
+						unpaginationNext.click();
+						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					}
 				}
 			}
 
@@ -757,12 +849,13 @@ public class ContentManagement_Page extends BasePage {
 							break Outer;
 						}
 					}
+					if (PubpaginationNext.isEnabled()) {
+						scrollByElement(PubpaginationNext);
+						PubpaginationNext.click();
+						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					}
 				}
-				if (PubpaginationNext.isEnabled()) {
-					scrollByElement(PubpaginationNext);
-					PubpaginationNext.click();
-					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-				}
+
 			}
 
 		} else {
@@ -817,12 +910,13 @@ public class ContentManagement_Page extends BasePage {
 							break Outer;
 						}
 					}
+					if (unpaginationNext.isEnabled()) {
+						scrollByElement(unpaginationNext);
+						unpaginationNext.click();
+						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					}
 				}
-				if (unpaginationNext.isEnabled()) {
-					scrollByElement(unpaginationNext);
-					unpaginationNext.click();
-					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-				}
+
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -879,12 +973,13 @@ public class ContentManagement_Page extends BasePage {
 							break Outer;
 						}
 					}
+					if (unpaginationNext.isEnabled()) {
+						scrollByElement(unpaginationNext);
+						unpaginationNext.click();
+						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					}
 				}
-				if (unpaginationNext.isEnabled()) {
-					scrollByElement(unpaginationNext);
-					unpaginationNext.click();
-					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-				}
+
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -947,12 +1042,13 @@ public class ContentManagement_Page extends BasePage {
 							}
 						}
 					}
+					if (unpaginationNext.isEnabled()) {
+						scrollByElement(unpaginationNext);
+						unpaginationNext.click();
+						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					}
 				}
-				if (unpaginationNext.isEnabled()) {
-					scrollByElement(unpaginationNext);
-					unpaginationNext.click();
-					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-				}
+
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -1011,12 +1107,13 @@ public class ContentManagement_Page extends BasePage {
 							break Outer;
 						}
 					}
+					if (unpaginationNext.isEnabled()) {
+						scrollByElement(unpaginationNext);
+						unpaginationNext.click();
+						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					}
 				}
-				if (unpaginationNext.isEnabled()) {
-					scrollByElement(unpaginationNext);
-					unpaginationNext.click();
-					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-				}
+
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -1075,12 +1172,13 @@ public class ContentManagement_Page extends BasePage {
 							break Outer;
 						}
 					}
+					if (unpaginationNext.isEnabled()) {
+						scrollByElement(unpaginationNext);
+						unpaginationNext.click();
+						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					}
 				}
-				if (unpaginationNext.isEnabled()) {
-					scrollByElement(unpaginationNext);
-					unpaginationNext.click();
-					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-				}
+
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -1135,12 +1233,13 @@ public class ContentManagement_Page extends BasePage {
 							break Outer;
 						}
 					}
+					if (unpaginationNext.isEnabled()) {
+						scrollByElement(unpaginationNext);
+						unpaginationNext.click();
+						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					}
 				}
-				if (unpaginationNext.isEnabled()) {
-					scrollByElement(unpaginationNext);
-					unpaginationNext.click();
-					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-				}
+
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -1195,12 +1294,13 @@ public class ContentManagement_Page extends BasePage {
 							break Outer;
 						}
 					}
+					if (unpaginationNext.isEnabled()) {
+						scrollByElement(unpaginationNext);
+						unpaginationNext.click();
+						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					}
 				}
-				if (unpaginationNext.isEnabled()) {
-					scrollByElement(unpaginationNext);
-					unpaginationNext.click();
-					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-				}
+
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -1262,12 +1362,13 @@ public class ContentManagement_Page extends BasePage {
 							break Outer;
 						}
 					}
+					if (unpaginationNext.isEnabled()) {
+						scrollByElement(unpaginationNext);
+						unpaginationNext.click();
+						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					}
 				}
-				if (unpaginationNext.isEnabled()) {
-					scrollByElement(unpaginationNext);
-					unpaginationNext.click();
-					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-				}
+
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -1329,15 +1430,27 @@ public class ContentManagement_Page extends BasePage {
 							break Outer;
 						}
 					}
+					if (unpaginationNext.isEnabled()) {
+						scrollByElement(unpaginationNext);
+						unpaginationNext.click();
+						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					}
 				}
-				if (unpaginationNext.isEnabled()) {
-					scrollByElement(unpaginationNext);
-					unpaginationNext.click();
-					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-				}
+
 			}
 		} else {
 			System.out.println("No Data Available");
 		}
+	}
+
+	public boolean Eleexists(String x) {
+		try {
+			WebElement y = driver.findElement(By.xpath(x));
+			if (!(y == null))
+				return true;
+		} catch (NoSuchElementException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

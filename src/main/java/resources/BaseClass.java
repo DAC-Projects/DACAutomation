@@ -95,6 +95,8 @@ public abstract class BaseClass {
         
     case "Social Automation" :
     	return IAutoconst.SocialAutomationAccount;
+    case "Social Automation Creator" :
+    	return IAutoconst.SocialAutomationAccountCreator;
 
     default:
       return IAutoconst.transparenSEE;

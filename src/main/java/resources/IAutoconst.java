@@ -32,6 +32,7 @@ public interface IAutoconst {
 	String[] neuralTuringTechAccount = {baseUrl+"neural-turing-tech-beta", "john.cena@dacgroup.com"};
 	String[] SocialdeepFieldAccount = {baseUrl+"deepfield-software-incorporated-beta","vijayata_201989@yahoo.com"};
 	String[] SocialAutomationAccount = {baseUrl+"social-automation-beta","rohitmenon8055@gmail.com"};
+	String[] SocialAutomationAccountCreator = {baseUrl+"social-automation-beta","vrohitmenon@gmail.com"};
 	String userLocale = "IN";
 	
 }

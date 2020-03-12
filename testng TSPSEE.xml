@@ -36,11 +36,19 @@
 		/> <class name= "com.dac.testcases.SA.SA_Reviews_Test" /> </classes> </test> -->
 
 
-	<test name="Social Automation" parallel="false"
+	<!-- <test name="Social Automation" parallel="false"
 		group-by-instances="true">
 		<parameter name="browser" value="chrome" />
 		<classes>
 			<class name="com.dac.testcases.SE.ContentManagement_Test" />
+		</classes>
+	</test> -->
+	
+	<test name="Social Automation Creator" parallel="false"
+		group-by-instances="true">
+		<parameter name="browser" value="chrome" />
+		<classes>
+			<class name="com.dac.testcases.SE.ContentManagement_Creator_Test" />
 		</classes>
 	</test>
 
