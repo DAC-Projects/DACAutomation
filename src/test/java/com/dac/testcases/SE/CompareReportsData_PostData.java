@@ -71,7 +71,7 @@ public class CompareReportsData_PostData extends BaseClass{
 		 addEvidence(CurrentState.getDriver(), "Create post page", "yes"); 
 		 }}
 	 
-	/* @Test(dependsOnMethods =  "create_PostPage_FB", groups= {"smoke"}, description = "Test for overview export and export verification")
+	/*@Test(dependsOnMethods =  "create_PostPage_FB", groups= {"smoke"}, description = "Test for overview export and export verification")
 	 public void create_PostPage_GMB() throws Exception {
 		 excelvalues=new ArrayList<String>();
 		 data = new SE_Post_Page(CurrentState.getDriver());
