@@ -8,10 +8,13 @@ import org.testng.annotations.Test;
 import com.dac.main.api.ApiBase;
 import com.dac.main.api.*;
 
-import io.restassured.RestAssured;
+import io.restassured.RestAssured.*;
 import io.restassured.http.Method;
+import io.restassured.matcher.RestAssuredMatchers.*;
+import org.hamcrest.Matchers.*;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import static io.restassured.RestAssured.*;
 
 public class ApiTest extends ApiBase{
 	
@@ -36,5 +39,11 @@ public class ApiTest extends ApiBase{
 		getRequest(h.get("URL"), h.get("Status Code"), h.get("Response"));
 	}
 	//
+	
+	
+	public void test2() {
+
+		
+	}
 	
 }
