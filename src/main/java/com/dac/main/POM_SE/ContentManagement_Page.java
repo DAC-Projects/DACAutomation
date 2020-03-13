@@ -41,6 +41,9 @@ public class ContentManagement_Page extends BasePage {
 
 	@FindBy(xpath = "//p[@class = 'lead']")
 	private WebElement PageTitletext;
+	
+	@FindBy(xpath = "//div[@class='social-media-content']//h1")
+	private WebElement PageTitle;
 
 	@FindBy(xpath = "//input[@id='txtSearchTextUnpublished']")
 	private WebElement UnpublishedTextSearch;
@@ -154,9 +157,13 @@ public class ContentManagement_Page extends BasePage {
 	 * To get text and verify title text
 	 */
 	public void VerifyTitleText() {
+		waitForElement(PageTitle, 10);
+		String Title = PageTitle.getText();
+		System.out.println("Page Title is : "+PageTitle);
 		waitForElement(PageTitletext, 10);
 		String TitleText = PageTitletext.getText();
 		System.out.println("The title text for Content Management Page is :" + TitleText);
+		Assert.assertEquals("Content Management", Title);
 		Assert.assertEquals(
 				"This reports on all Pending, Approved, Rejected, Scheduled and Published Posts. Posts can be edited prior to Approval and Publishing. Social Post Approvers will be able to update Posts even after a post has been approved but only prior to publication. Posts can be filtered by Social Platform, Status or by search term/word.",
 				TitleText);
