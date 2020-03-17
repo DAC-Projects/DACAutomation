@@ -203,36 +203,25 @@ public class ContentManagement_Page extends BasePage {
 			int count = 0;
 			boolean celtext = false;
 			if (unpaginationNext.isDisplayed()) {
-				OUTER: for (int i = 1; i <= page; i++) { // Loop will execute till the all the row of table completes.
+				for (int i = 1; i <= page; i++) { // Loop will execute till the all the row of table completes.
 					scrollByElement(UnpublishedTable);
 					List<WebElement> rows_table = UnpublishedTableRow; // To locate rows of table.
 					int rows_count = rows_table.size(); // To calculate no of rows In table.
 					count = count + rows_count;
 					for (int row = 1; row < rows_count; row++) {
-						List<WebElement> Columns_row = rows_table.get(row).findElements(By.tagName("td")); // To locate
-						// columns(cells)
-						// of that
-						// specific
-						// row.
-						int columns_count = Columns_row.size(); // To calculate no of columns (cells). In that specific
-						// row.
-						for (int col = 1; col < columns_count; col++) {
 							if (celtext = driver
 									.findElement(By.xpath(
 											"(//table[@id='tblUnpublishedItems']//tbody//tr)[" + (row) + "]//td"))
 									.getText().contains(Text))
 								;
 							celtext = true;
-							break OUTER;
+						}if (unpaginationNext.isEnabled()) {
+							scrollByElement(unpaginationNext);
+							unpaginationNext.click();
+							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 						}
 					}
-					if (unpaginationNext.isEnabled()) {
-						scrollByElement(unpaginationNext);
-						unpaginationNext.click();
-						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-					}
-				}
-
+					
 			}
 		} else {
 			System.out.println("No Data Available for search criteria");
@@ -983,6 +972,8 @@ public class ContentManagement_Page extends BasePage {
 							clickelement(UnDeleteSuccess);
 							System.out.println("Deleted");
 							break Outer;
+						}else {
+							System.out.println("Delete Button Not Displayed");
 						}
 					}
 					if (unpaginationNext.isEnabled()) {
