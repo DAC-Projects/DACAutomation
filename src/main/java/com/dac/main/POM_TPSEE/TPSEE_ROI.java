@@ -91,8 +91,10 @@ public class TPSEE_ROI extends TPSEE_abstractMethods {
 	
 	@FindBy(xpath="//*[@class='btn btn-primary']")
 	private WebElement close;
-	
-	
+	@FindBy(xpath="//*[@id='page-content']/h1")
+	private WebElement PageTitle;
+	@FindBy(xpath="//*[@id='page-content']/p")
+	private WebElement PageTitletext;
 	 String fromDate = "(//*[@class=\"highcharts-label highcharts-range-input\"][1])";
 		
 	 String toDate = "(//*[@class=\"highcharts-label highcharts-range-input\"][2])";
@@ -125,15 +127,82 @@ public class TPSEE_ROI extends TPSEE_abstractMethods {
 		    private WebElement cus_Dir;
 		    @FindBy(xpath="//*[@id='customerPhonecalls']")
 		    private WebElement cus_pho;
-	 
+		    @FindBy(xpath= "(//*[@class='walkme-icon-image-div'])[1]")
+		    private WebElement tool_1;
+		    @FindBy(xpath= "(//*[@class='walkme-icon-image-div'])[2]")
+		    private WebElement tool_2;
+		    @FindBy(xpath= "(//*[@class='walkme-icon-image-div'])[3]")
+		    private WebElement tool_3;
+		    @FindBy(xpath= "(//*[@class='walkme-icon-image-div'])[4]")
+		    private WebElement tool_4;
+		    @FindBy(xpath="//div[@class='walkme-tooltip-content']")
+		    private WebElement tool_value;
 	ArrayList<String> actualResult = new ArrayList<String>();
 
 	ArrayList<String> expectedResult = new ArrayList<String>();
 	ArrayList<Double> totalResult = new ArrayList<Double>();
-
-	
-
 	double annual_per=2.0/365;
+public void tool1(String t1) throws InterruptedException {
+	scrollByElement(tool_1);
+    tool_1.click();
+    Thread.sleep(1000);
+    String tool_val=tool_value.getText();
+    System.out.println(tool_val);
+    Assert.assertEquals(t1,tool_val);
+
+}
+
+public void tool2(String t2) throws InterruptedException {
+	scrollByElement(tool_2);
+    waitForElement(tool_2, 30);
+    tool_2.click();
+    Thread.sleep(1000);
+    String tool_val2=tool_value.getText();
+    System.out.println(tool_val2);  
+    Assert.assertEquals(t2,tool_val2);
+
+		
+}
+public void tool3(String t3) throws InterruptedException {
+    scrollByElement(tool_3);
+	waitForElement(tool_3, 30);
+    tool_3.click(); 
+    Thread.sleep(1000);
+
+    String tool_val3=tool_value.getText();
+    System.out.println(tool_val3);
+    Assert.assertEquals(t3,tool_val3);
+
+}
+public void tool4(String t4) throws InterruptedException {
+  
+      scrollByElement(tool_4);
+        waitForElement(tool_4, 30);
+        tool_4.click(); 
+        Thread.sleep(1000);
+        String tool_val4=tool_value.getText();
+        System.out.println(tool_val4);
+        Assert.assertEquals(t4,tool_val4);
+
+}
+	public void VerifyTitleText(String Tit, String titText) {
+		
+	           
+	
+	           
+	           waitForElement(PageTitle, 10);
+	            String Title = PageTitle.getText();
+	            System.out.println("Page Title is : "+Title);
+	            waitForElement(PageTitletext, 10);
+	            String TitleText = PageTitletext.getText();
+	            System.out.println("The title text  is :" + TitleText);
+	            Assert.assertEquals(Tit, Title);
+	            Assert.assertEquals(titText,TitleText );
+	            
+
+	                   
+	                   
+	        }
 
 
 	public void ROIvalues() throws InterruptedException {
@@ -147,8 +216,7 @@ public class TPSEE_ROI extends TPSEE_abstractMethods {
 		expectedResult.add(Website_Clicks);
 		expectedResult.add(Rquestfor_Directions);
 		expectedResult.add(phone_Calls);
-		String a=currentYear_DatePicker.getText();
-		System.out.println("ROI"+a);
+		
 		for(int i=0;i<actualResult.size();i++){
 			for(int j=i;j<expectedResult.size();j++){
             if(actualResult.get(j).equals(expectedResult.get(j))){
@@ -273,10 +341,7 @@ public void avg() throws InterruptedException {
 	save_btn.click();
 	close.click();
 	Thread.sleep(5000);
-
-	roi_notes.sendKeys("Updated");
-	save_notes.click();
-close.click();
+	
 actualResult.removeAll(actualResult);
 expectedResult.removeAll(expectedResult);
 totalResult.removeAll(totalResult);
@@ -286,6 +351,7 @@ Thread.sleep(1000);
 }
 
 public void sel_options() throws InterruptedException {
+	
 	scrollByElement(lab);
 	Thread.sleep(1000);
 	Select listbox = new Select(driver.findElement(By.id("currency-select")));
@@ -293,7 +359,10 @@ public void sel_options() throws InterruptedException {
 }
 
 public void Sym_veri() {
-	
+	roi_notes.clear();
+	roi_notes.sendKeys("Updated");
+	save_notes.click();
+close.click();
 	 List<WebElement> elements = driver.findElements(By.xpath("//span[@class='dollar-sign']"));
 	    System.out.println("Number of elements:" +elements.size());
 

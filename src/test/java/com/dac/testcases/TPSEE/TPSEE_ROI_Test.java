@@ -24,22 +24,35 @@ public class TPSEE_ROI_Test  extends BaseClass{
 	@Test(groups = { "smoke" }, description = "Test for navigating to ROI")
 	public void navigateToROI() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
-		//np.navigateToROI();
-		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE ROI");
+		data = new TPSEE_ROI(CurrentState.getDriver());
+		np.navigateToROI();
+		String Tit="ROI Calculator";
+		String titText="The Google My Business ROI Calculator allows users to attribute a monetary value to performance metrics to estimate the ROI of their program.";
+		data.VerifyTitleText(Tit, titText);
+		String t1="This is the annual cost you pay per location (ACV)";
+		String t2="100% is break even. Anything over 100% is profit.";
+		String t3="Use this section to document your decision making process on creating your values.";
+		String t4="Your account representative would be happy to help you define your values based on your business and industry averages.";
+
+
+	data.tool1(t1);
+	data.tool2(t2);
+	data.tool3(t3);
+	data.tool4(t4);
+	CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE ROI");
 		addEvidence(CurrentState.getDriver(), "Navigate to ROI from Dashboard", "yes");
 
 		// Assert.assertFalse( "sample error", true);
 	}
-	@Test(dependsOnMethods = "navigateToROI",/* dataProvider="testData",*/ description = "Getting the ROI values")
-	public void VerifyROIvalues() throws Exception {
+	/*@Test(dependsOnMethods = "navigateToROI", dataProvider="testData", description = "Getting the ROI values")
+	public void VerifyROIvalues(String from_day, String from_month, String from_year, String to_day, String to_month, String to_year) throws Exception {
 		data = new TPSEE_ROI(CurrentState.getDriver());
 		np = new Navigationpage(CurrentState.getDriver());
-	data.Nav_GMB();
+	   data.Nav_GMB();
 		data.GMB();
 		 np.navigateToROI();
 		 data.ROIvalues();
-	}
-		 /* data.val_pass();
+		  data.val_pass();
 		 sum1=data.to();
 		 data.avg();
 		 data.Nav_GMB();
@@ -55,13 +68,13 @@ public class TPSEE_ROI_Test  extends BaseClass{
 		 data.avg();
 		 data.sel_options();
 		 data.Sym_veri();
-	
+		 addEvidence(CurrentState.getDriver(), "Verifying the ROI values", "yes");
 	}
 	 @DataProvider
 		public String[][] testData(){
          String[][] data = null, data1 = null;
          try {
-         ExcelHandler wb = new ExcelHandler("./data/FilterCriteria.xlsx", "Sheet1");
+         ExcelHandler wb = new ExcelHandler("./data/FilterCriteria.xlsx", "Sheet2");
          wb.deleteEmptyRows();
          int rowCount = wb.getRowCount();
          System.out.println("rowCount : "+rowCount);
@@ -103,9 +116,9 @@ public class TPSEE_ROI_Test  extends BaseClass{
 		data = new TPSEE_ROI(CurrentState.getDriver());
 		data.ROIvalues();
 		data.tot(sum2);
-		data.avg();
-		data.sel_options();
-		data.Sym_veri();
+		 addEvidence(CurrentState.getDriver(), "Comparing the ROI values", "yes");
+
+		
+	}*/
 	}
-	*/
-}
+

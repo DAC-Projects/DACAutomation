@@ -31,6 +31,8 @@ public class CompareReportsData_PostData extends BaseClass{
 	ArrayList<String> UIValues;
 	String Location;
 	String word =null;
+	 String text;
+	 String location;
 	@Test(enabled = true)
 	public void navigateToSE_PostPage() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
@@ -47,12 +49,13 @@ public class CompareReportsData_PostData extends BaseClass{
 				ExcelHandler wb = new ExcelHandler("./data/Message.xlsx", "MSG"); wb.deleteEmptyRows();
 				SE_Post_Page s = new SE_Post_Page (CurrentState.getDriver());
 				for(int i=1;i<=wb.getRowCount();i++) {
+					System.out.println(wb.getRowCount());
 					System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
 					if(i>1) CurrentState.getDriver().navigate().refresh();
 					s.waitUntilLoad(CurrentState.getDriver());
 					String site = wb.getCellValue(i, wb.seacrh_pattern("Site Login", 0).get(0).intValue());
-				    String location = wb.getCellValue(i, wb.seacrh_pattern("Location/Brand", 0).get(0).intValue());
-			        String text = wb.getCellValue(i, wb.seacrh_pattern("Content", 0).get(0).intValue());
+				     location = wb.getCellValue(i, wb.seacrh_pattern("Location/Brand", 0).get(0).intValue());
+			         text = wb.getCellValue(i, wb.seacrh_pattern("Content", 0).get(0).intValue());
 			        String creator = wb.getCellValue(i, wb.seacrh_pattern("Creator", 0).get(0).intValue());
 			        String Vendor = wb.getCellValue(i, wb.seacrh_pattern("Vendor", 0).get(0).intValue());
 			        excelvalues.add(site);
@@ -69,15 +72,17 @@ public class CompareReportsData_PostData extends BaseClass{
 				e.printStackTrace();
 			}
 		 addEvidence(CurrentState.getDriver(), "Create post page", "yes"); 
-		 }}
-	 
-	/*@Test(dependsOnMethods =  "create_PostPage_FB", groups= {"smoke"}, description = "Test for overview export and export verification")
+		 }
+		 
+
+
+	@Test(dependsOnMethods =  "create_PostPage_FB", groups= {"smoke"}, description = "Test for overview export and export verification")
 	 public void create_PostPage_GMB() throws Exception {
 		 excelvalues=new ArrayList<String>();
 		 data = new SE_Post_Page(CurrentState.getDriver());
 		 			try {	
 				int count = 1;
-				ExcelHandler wb = new ExcelHandler("./data/Message.xlsx", "MSG1"); wb.deleteEmptyRows();
+				ExcelHandler wb = new ExcelHandler("./data/Message.xlsx", "Sheet1"); wb.deleteEmptyRows();
 				SE_Post_Page s = new SE_Post_Page (CurrentState.getDriver());
 					System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
 					 CurrentState.getDriver().navigate().refresh();
@@ -92,7 +97,7 @@ public class CompareReportsData_PostData extends BaseClass{
 			        String from_year = wb.getCellValue(2, 2);  // from year
 			        String to_day = wb.getCellValue(2, 3);  // to day
 			        String to_month = wb.getCellValue(2, 4);  // to month
-			        String to_year = wb.getCellValue(2, 5);  // to year 
+			        String to_year = wb.getCellValue(2, 5);  // to` year 
 			        excelvalues.add(site);
 			        excelvalues.add(location);
 			        excelvalues.add(text);
@@ -110,18 +115,19 @@ public class CompareReportsData_PostData extends BaseClass{
 	 }
 	 
 	 @Test(dependsOnMethods = { "create_PostPage_GMB"}, groups= {"smoke"}, description = "Test for overview export and export verification")
-	 public void content_Management() throws Exception {
+	 public void content_Management1() throws Exception {
 		 np = new Navigationpage(CurrentState.getDriver());
 		 np.navigateToSE_ContentManagement();
 		 data = new SE_Post_Page(CurrentState.getDriver());
 		 SE_Post_Page s = new SE_Post_Page (CurrentState.getDriver());
 		 UIValues =s.table();
+		 UIValues =s.table1();
 		 for(int i =0;i<=UIValues.size() - 1;i++) {
 			 UIValues.get(i).contains(excelvalues.get(i));
 		 }
 		
 	 }
-	 @Test(dependsOnMethods = { "content_Management"}, groups= {"smoke"}, description = "Test for overview export and export verification" )
+	 @Test(dependsOnMethods = { "content_Management1"}, groups= {"smoke"}, description = "Test for overview export and export verification" )
 	 public void keyword_Search() {
 		 np = new Navigationpage(CurrentState.getDriver());
 		 np.navigateToSE_Post();
@@ -145,7 +151,37 @@ public class CompareReportsData_PostData extends BaseClass{
 			}
 		 addEvidence(CurrentState.getDriver(), "Keywords", "yes"); 		 
 }
-
+	//Test for applying filters to Visibilty Page
+			@Parameters({ "Filter" })
+			@Test(dependsOnMethods = { "keyword_Search" }, groups = {
+					"smoke" }, description = "Verify social page loads after filter applied")
+			public void verifyFilteringReportsSocial() throws Exception {
+				data = new SE_Post_Page(CurrentState.getDriver());
+				try {	
+					int count = 1;
+					ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Sheet1"); wb.deleteEmptyRows();
+					SE_Post_Page s = new SE_Post_Page(CurrentState.getDriver());
+					for(int i=1;i<=wb.getRowCount();i++) {
+						System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
+						if(i>1) CurrentState.getDriver().navigate().refresh();
+						s.waitUntilLoad(CurrentState.getDriver());
+						String Group = wb.getCellValue(i, wb.seacrh_pattern("Group", 0).get(0).intValue());
+						String CountryCode = wb.getCellValue(i, wb.seacrh_pattern("Country", 0).get(0).intValue());
+						String State = wb.getCellValue(i, wb.seacrh_pattern("State", 0).get(0).intValue());
+						String City = wb.getCellValue(i, wb.seacrh_pattern("City", 0).get(0).intValue());
+						 Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
+						s.applyGlobalFilter(Group, CountryCode, State, City, Location);
+						System.out.println(Group+", "+CountryCode+", "+State+", "+City+", "+Location);
+						//s.clickApplyFilterBTN();
+						s.flag();
+						//s.flag1();
+						BaseClass.addEvidence(CurrentState.getDriver(),
+								"Applied global filter: "+Group+", "+CountryCode+", "+State+", "+City+", "+Location+"", "yes");
+					}
+						}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
 	 
 	 @Test(dependsOnMethods = "verifyFilteringReportsSocial", dataProvider="testData")
 	 public void applyDate(String from_day, String from_month, String from_year, String to_day, String to_month, String to_year) throws Exception {
@@ -202,38 +238,19 @@ public class CompareReportsData_PostData extends BaseClass{
 	                }
 	            }
 	
-	//Test for applying filters to Visibilty Page
-		@Parameters({ "Filter" })
-		@Test(dependsOnMethods = { "keyword_Search" }, groups = {
-				"smoke" }, description = "Verify social page loads after filter applied")
-		public void verifyFilteringReportsSocial() throws Exception {
-			data = new SE_Post_Page(CurrentState.getDriver());
-			try {	
-				int count = 1;
-				ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Sheet1"); wb.deleteEmptyRows();
-				SE_Post_Page s = new SE_Post_Page(CurrentState.getDriver());
-				for(int i=1;i<=wb.getRowCount();i++) {
-					System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
-					if(i>1) CurrentState.getDriver().navigate().refresh();
-					s.waitUntilLoad(CurrentState.getDriver());
-					String Group = wb.getCellValue(i, wb.seacrh_pattern("Group", 0).get(0).intValue());
-					String CountryCode = wb.getCellValue(i, wb.seacrh_pattern("Country", 0).get(0).intValue());
-					String State = wb.getCellValue(i, wb.seacrh_pattern("State", 0).get(0).intValue());
-					String City = wb.getCellValue(i, wb.seacrh_pattern("City", 0).get(0).intValue());
-					 Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
-					s.applyGlobalFilter(Group, CountryCode, State, City, Location);
-					System.out.println(Group+", "+CountryCode+", "+State+", "+City+", "+Location);
-					//s.clickApplyFilterBTN();
-					//s.flag();
-					//s.flag1();
-					BaseClass.addEvidence(CurrentState.getDriver(),
-							"Applied global filter: "+Group+", "+CountryCode+", "+State+", "+City+", "+Location+"", "yes");
-				}
-					}catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-	 }
+	
+	 
+@Test(dependsOnMethods = { "applyDate"}, groups= {"smoke"}, description = "Test for overview export and export verification")
+public void content_Management() throws Exception {
+	 np = new Navigationpage(CurrentState.getDriver());
+	 np.navigateToSE_ContentManagement();
+	 Thread.sleep(1000);
+	data.edit_1();
+	 np.navigateToSE_ContentManagement();
+	data.edit_2();
+
+}
+}
 /*	@Test(enabled = true, dataProvider = "testData")
 	public void isReports_PostDataCountEqual(String vendor, String graph_criteria, String from_day, String from_month,
 									         String from_year, String to_day, String to_month, String to_year) {

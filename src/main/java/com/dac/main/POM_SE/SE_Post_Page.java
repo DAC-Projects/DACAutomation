@@ -60,9 +60,9 @@ public class SE_Post_Page extends SE_abstractMethods {
 	
 	String toDate = "(//*[@class = 'datepicker hasDatepicker'])[2]";
 	
-    String StartDate = "(//*[@id='StartDate'])";
+    String StartDate = "(//*[@id='dateFrom'])";
 	
-	String EndDate = "(//*[@id = 'EndDate'])";
+	String EndDate = "(//*[@id = 'dateTo'])";
 	
 	@FindBy(xpath = "//*[@data-handler='prev']")
 	private WebElement prevMonth;
@@ -181,6 +181,9 @@ public class SE_Post_Page extends SE_abstractMethods {
   
    @FindBy(xpath="//*[@id='dateTo']")
 	private WebElement toDate1;
+   
+   @FindBy(xpath="//*[@class='btn btn-xs btn-default btn-block link-edit'][1]")
+    private WebElement edit_btn;
     
    @FindBy(xpath="//img[@src='/Assets/img/envelope-close.png']")
    private WebElement envelopeClose;
@@ -201,12 +204,19 @@ public class SE_Post_Page extends SE_abstractMethods {
     
    @FindBy(xpath="//*[@id=\"wizard-submit-button\"]")
    private WebElement approve;
+   
+   @FindBy(xpath="//span[@id='wizard-submit-button-text-submit']")
+   private WebElement approve1;
+   
+   @FindBy(xpath="//*[@id='btnUnpublished']")
+   private WebElement state_rej;
+
     
     String alertText = "";
 	public void create_PostforFB(String textValue, String text, String Vendor) throws InterruptedException, Exception {
 		waitForElement(createNewPostbutton, 10);
 		clickelement(createNewPostbutton);
-		System.out.println("Ven"+Vendor);
+		
 		waitForElement(step1Next, 10);
 		clickelement(step1Next);
 		Thread.sleep(5000);
@@ -306,6 +316,24 @@ public class SE_Post_Page extends SE_abstractMethods {
 			String text3=driver.findElement(By.xpath("//*[@id='tblPublishedItems']/tbody/tr[1]/td[6]")).getText();
 			tableValues.add(text3);
 			String text4=driver.findElement(By.xpath("//*[@id='tblPublishedItems']/tbody/tr[1]/td[7]")).getText();
+			tableValues.add(text4);
+             System.out.println("name"+ text1);
+		
+		System.out.println(tableValues);
+		return tableValues;
+		
+	}
+	public ArrayList<String> table1() {
+		ArrayList<String> tableValues=new ArrayList<String>();
+		WebElement Table = driver.findElement(By.xpath("//div[@id='tblUnpublishedItems_wrapper']"));
+		
+			String text1=driver.findElement(By.xpath("//*[@id='tblUnpublishedItems']/tbody/tr[1]/td[2]")).getText();
+			tableValues.add(text1);
+			String text2=driver.findElement(By.xpath("//*[@id='tblUnpublishedItems']/tbody/tr[1]/td[3]")).getText();
+			tableValues.add(text2);
+			String text3=driver.findElement(By.xpath("//*[@id='tblUnpublishedItems']/tbody/tr[1]/td[6]")).getText();
+			tableValues.add(text3);
+			String text4=driver.findElement(By.xpath("//*[@id='tblUnpublishedItems']/tbody/tr[1]/td[7]")).getText();
 			tableValues.add(text4);
              System.out.println("name"+ text1);
 		
@@ -653,22 +681,44 @@ public void selectCalender_FromDate1(int day_d, String month_MMM, int year_YYYY)
 		    }
 	 
 	 public String getCurrentfromDate1() throws ParseException, java.text.ParseException {
-		    String currentfromDate = ((JavascriptExecutor)driver).executeScript("return document.getElementById('StartDate').value").toString();
-		    System.out.println(currentfromDate);
+		    String currentStartDate = ((JavascriptExecutor)driver).executeScript("return document.getElementById('StartDate').value").toString();
+		    System.out.println(currentStartDate);
 		    String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
 		    System.out.println("text1 :"+var);
-		    return currentfromDate;
+		    return currentStartDate;
 		}
 	 public String getCurrenttoDate1() throws ParseException, java.text.ParseException {
-		    String currenttoDate = ((JavascriptExecutor)driver).executeScript("return document.getElementById('EndDate').value").toString();
-		    System.out.println(currenttoDate);
+		    String currentEndDate = ((JavascriptExecutor)driver).executeScript("return document.getElementById('EndDate').value").toString();
+		    System.out.println(currentEndDate);
 		    String var1 = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
 		    System.out.println("text2"+var1);
-		    return currenttoDate;
+		    return currentEndDate;
 		    }
 	 
 
+public void edit_1() throws InterruptedException {
+	Select dropdown = new Select(driver.findElement(By.id("ddlStatusUnpublished"))); 
+	dropdown.selectByValue("1");
+	edit_op();
+	
+}
+public void edit_2() throws InterruptedException {
+	Select dropdown = new Select(driver.findElement(By.id("ddlStatusUnpublished"))); 
+	dropdown.selectByValue("3");
+	edit_op();
+	
+}
+public void edit_op() {
+	clickelement(state_rej);
+	clickelement(edit_btn);
+	clickelement(step2Next);
+	WebElement text1=driver.findElement(By.xpath("//*[@id=\"facebook-message-field\"]"));
+	text1.sendKeys("Updated");
+	scrollByElement(approve1);
+	waitForElement(approve1, 100);
+	clickelement(approve1);
+	clickelement(sucessButton);
 
-
+}
 			
 }
