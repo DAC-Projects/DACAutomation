@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -465,4 +466,37 @@ System.out.println(actualResult);
 		// TODO Auto-generated method stub
 		return null;
 	}
+	 public  int getNumberofDays_ROI() throws Exception {
+         int diff = 0;
+         Date init = getCurrentfromDate_ROI();
+         Thread.sleep(5000);
+         Date enddate =  getCurrenttoDate_ROI();
+         Thread.sleep(5000);
+         long difference = Math.abs(init.getTime() - enddate.getTime());
+         long differenceDates = difference / (24 * 60 * 60 * 1000);
+         diff = (int)(long)differenceDates;       
+         System.out.println(diff);   
+         return diff;
+     }   
+    
+	 
+	 public Date getCurrentfromDate_ROI() throws ParseException, java.text.ParseException {
+	        String currentfromDate = ((JavascriptExecutor)driver).executeScript("return document.getElementById('startdatepicker').value").toString();
+	        String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
+	        System.out.println(currentfromDate);
+	        SimpleDateFormat formats = new SimpleDateFormat(var);
+	        System.out.println(formats);
+	        Date finalcurrentdate = formats.parse(currentfromDate);
+	        
+	        System.out.println(finalcurrentdate);
+	        return finalcurrentdate;
+	    }
+	    public Date getCurrenttoDate_ROI() throws ParseException, java.text.ParseException {
+	        String currenttoDate = ((JavascriptExecutor)driver).executeScript("return document.getElementById('enddatepicker').value").toString();
+	        String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
+	        System.out.println(var);
+	        SimpleDateFormat formats = new SimpleDateFormat(var);
+	        Date finaltodate = formats.parse(currenttoDate);
+	        return finaltodate;
+	        }
 }

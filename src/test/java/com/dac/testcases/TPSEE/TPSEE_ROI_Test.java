@@ -35,10 +35,11 @@ public class TPSEE_ROI_Test  extends BaseClass{
 		String t4="Your account representative would be happy to help you define your values based on your business and industry averages.";
 
 
-	data.tool1(t1);
-	data.tool2(t2);
-	data.tool3(t3);
-	data.tool4(t4);
+	//data.tool1(t1);
+	//data.tool2(t2);
+	//data.tool3(t3);
+	//data.tool4(t4);
+	data.getNumberofDays_ROI();
 	CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE ROI");
 		addEvidence(CurrentState.getDriver(), "Navigate to ROI from Dashboard", "yes");
 
