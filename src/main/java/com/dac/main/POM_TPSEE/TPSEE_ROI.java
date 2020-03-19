@@ -42,7 +42,6 @@ public class TPSEE_ROI extends TPSEE_abstractMethods {
 	@FindBy(xpath="//*[@id='website-clicks-value']")
 	private WebElement website_Click_Value;
 	
-
 	@FindBy(xpath="//*[@id='direction-clicks-value']")
 	private WebElement direction_Click_Value;
 	
@@ -70,8 +69,6 @@ public class TPSEE_ROI extends TPSEE_abstractMethods {
 	
 	@FindBy(xpath="//*[@id='number-of-locations']")
 	private WebElement locations;
-	
-	
 			
 	@FindBy(xpath="//*[@id='daily-cost-per-location']")
 	private WebElement daily;
@@ -96,14 +93,10 @@ public class TPSEE_ROI extends TPSEE_abstractMethods {
 	@FindBy(xpath="//*[@id='page-content']/p")
 	private WebElement PageTitletext;
 	 String fromDate = "(//*[@class=\"highcharts-label highcharts-range-input\"][1])";
-		
 	 String toDate = "(//*[@class=\"highcharts-label highcharts-range-input\"][2])";
-	
-
 	 String StartDate = "(//*[@id='startdatepicker'])";
-		
 	 String EndDate = "(//*[@id = 'enddatepicker'])";
-	
+
 		 @FindBy(xpath = "//*[@data-handler='prev']")
 		 private WebElement prevMonth;
 		 
