@@ -73,7 +73,11 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "//div[@id='keywordTableExportDropdown']//a[contains(text(),'Export as XLSX')]")
 	private WebElement Export_xlsx;
 	
-	  
+	@FindBy(xpath = "//*[@id='page-content']//h1")
+	private WebElement Title;
+	
+	@FindBy(xpath = "//p[@class= 'lead']")
+	private WebElement TitleText;
 	
 	@FindBy(xpath = "//table[@id='rankingDetail']")
 	private WebElement RankingTable;
@@ -470,4 +474,16 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 			}
 			return tooltipdata;
 	}			
+	
+	public void VerifyGRText() {
+		  waitForElement(Title, 10);
+          String Titl = Title.getText();
+          System.out.println("Page Title is : "+Titl);
+          waitForElement(TitleText, 10);
+          String TitleTxt = TitleText.getText();
+          System.out.println("The title text for GR Report is :" + TitleTxt);
+          Assert.assertEquals("Google Ranking Report"
+          		+"\n" + "Ranking Info", Titl);
+          Assert.assertEquals("This report shows how a location's Google listing is ranking when potential customers search for keywords in Google Maps.",TitleTxt );
+	}
 	}

@@ -35,7 +35,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass{
 	/**
 	 * Test to get dashboard scores
 	 * @throws Exception
-	 */
+	 *//*
 		@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
 		public void GetKPIValues() throws Exception {
 			data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
@@ -46,7 +46,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass{
 			System.out.println(location);
 			CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 			addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
-		}
+		}*/
 	
 	@Test(priority = 2, groups = { "smoke" }, description = "Test for navigating to Google Ranking page")
 	public void navigateToGoogleRankingPage() throws Exception {
@@ -56,7 +56,15 @@ public class TPSEE_GoogleRanking_Test extends BaseClass{
 		addEvidence(CurrentState.getDriver(), "Navigate to Google Ranking page from Dashboard", "yes");
 	}
 	
-	//GRScorenLoc
+	@Test
+	(priority = 3)
+	public void verifytitle() throws Exception {
+		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
+		data.VerifyGRText();
+		addEvidence(CurrentState.getDriver(), "verification f title", "yes");
+	}
+	
+	/*//GRScorenLoc
 		@Test(priority = 3, groups = { "smoke" }, description = "Test for navigating to ContentAnalysis page")
 		public void Verifyscorenloc() throws Exception {
 			data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
@@ -253,15 +261,15 @@ public class TPSEE_GoogleRanking_Test extends BaseClass{
 			}			
 			
 		
-		/**
+		*//**
 		 * Test to verify Top button functionality
 		 * @throws Exception
-		 */
+		 *//*
 			@Test(priority = 12, groups = {"smoke"},
 				description = "Verify Top Button")
 			public void GetTopBtn() throws Exception {
 				data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 				data.TopButton();
 				addEvidence(CurrentState.getDriver(), "Top Button click verification", "yes");
-			}		
+			}		*/
 }
