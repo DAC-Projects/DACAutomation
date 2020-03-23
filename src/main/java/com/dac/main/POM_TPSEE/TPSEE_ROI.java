@@ -131,13 +131,17 @@ public class TPSEE_ROI extends TPSEE_abstractMethods {
 		    private WebElement tool_4;
 		    @FindBy(xpath="//div[@class='walkme-tooltip-content']")
 		    private WebElement tool_value;
+		    @FindBy(xpath="//*[@id=\"page-content\"]/div[1]/div[2]/ul/li[1]/div/span")
+		    private WebElement dat_count;
 	ArrayList<String> actualResult = new ArrayList<String>();
 
 	ArrayList<String> expectedResult = new ArrayList<String>();
 	ArrayList<Double> totalResult = new ArrayList<Double>();
 	double annual_per=2.0/365;
 public void tool1(String t1) throws InterruptedException {
-	scrollByElement(tool_1);
+	
+    waitForElement(tool_1, 30);
+scrollByElement(tool_1);
     tool_1.click();
     Thread.sleep(1000);
     String tool_val=tool_value.getText();
@@ -147,8 +151,8 @@ public void tool1(String t1) throws InterruptedException {
 }
 
 public void tool2(String t2) throws InterruptedException {
-	scrollByElement(tool_2);
     waitForElement(tool_2, 30);
+	scrollByElement(tool_2);
     tool_2.click();
     Thread.sleep(1000);
     String tool_val2=tool_value.getText();
@@ -468,35 +472,40 @@ System.out.println(actualResult);
 	}
 	 public  int getNumberofDays_ROI() throws Exception {
          int diff = 0;
-         Date init = getCurrentfromDate_ROI();
+	     SimpleDateFormat ad = new SimpleDateFormat("MM/dd/yyyy");
+	     Date init = ad.parse(getCurrentfromDate_ROI());
+	     System.out.println(init);
          Thread.sleep(5000);
-         Date enddate =  getCurrenttoDate_ROI();
+         Date enddate = ad.parse(getCurrenttoDate_ROI());
+         System.out.println(enddate);
          Thread.sleep(5000);
          long difference = Math.abs(init.getTime() - enddate.getTime());
          long differenceDates = difference / (24 * 60 * 60 * 1000);
-         diff = (int)(long)differenceDates;       
-         System.out.println(diff);   
+         diff = (int)(long)differenceDates+1;       
+         System.out.println(diff); 
+         Com_date(diff);
          return diff;
      }   
     
 	 
-	 public Date getCurrentfromDate_ROI() throws ParseException, java.text.ParseException {
+	 public String getCurrentfromDate_ROI() throws ParseException, java.text.ParseException {
 	        String currentfromDate = ((JavascriptExecutor)driver).executeScript("return document.getElementById('startdatepicker').value").toString();
-	        String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
 	        System.out.println(currentfromDate);
-	        SimpleDateFormat formats = new SimpleDateFormat(var);
-	        System.out.println(formats);
-	        Date finalcurrentdate = formats.parse(currentfromDate);
-	        
-	        System.out.println(finalcurrentdate);
-	        return finalcurrentdate;
+	        return currentfromDate;
 	    }
-	    public Date getCurrenttoDate_ROI() throws ParseException, java.text.ParseException {
+	    public String getCurrenttoDate_ROI() throws ParseException, java.text.ParseException {
 	        String currenttoDate = ((JavascriptExecutor)driver).executeScript("return document.getElementById('enddatepicker').value").toString();
-	        String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
-	        System.out.println(var);
-	        SimpleDateFormat formats = new SimpleDateFormat(var);
-	        Date finaltodate = formats.parse(currenttoDate);
-	        return finaltodate;
+	        System.out.println(currenttoDate);
+	        return currenttoDate;
 	        }
+	    
+	    public void Com_date(int diff) {
+	    	String da=dat_count.getText();
+	    	System.out.println(da);
+	    	int da1=Integer.parseInt(da);
+	    	System.out.println(da1);
+	        Assert.assertEquals(diff,da1);
+
+	    	
+	    }
 }

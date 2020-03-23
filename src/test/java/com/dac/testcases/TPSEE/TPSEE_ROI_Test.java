@@ -33,19 +33,15 @@ public class TPSEE_ROI_Test  extends BaseClass{
 		String t2="100% is break even. Anything over 100% is profit.";
 		String t3="Use this section to document your decision making process on creating your values.";
 		String t4="Your account representative would be happy to help you define your values based on your business and industry averages.";
-
-
-	//data.tool1(t1);
-	//data.tool2(t2);
-	//data.tool3(t3);
-	//data.tool4(t4);
-	data.getNumberofDays_ROI();
+		data.tool1(t1);
+		data.tool2(t2);
+		data.tool3(t3);
+		data.tool4(t4);
+		data.getNumberofDays_ROI();
 	CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE ROI");
 		addEvidence(CurrentState.getDriver(), "Navigate to ROI from Dashboard", "yes");
-
-		// Assert.assertFalse( "sample error", true);
 	}
-	/*@Test(dependsOnMethods = "navigateToROI", dataProvider="testData", description = "Getting the ROI values")
+	@Test(dependsOnMethods = "navigateToROI", dataProvider="testData", description = "Getting the ROI values")
 	public void VerifyROIvalues(String from_day, String from_month, String from_year, String to_day, String to_month, String to_year) throws Exception {
 		data = new TPSEE_ROI(CurrentState.getDriver());
 		np = new Navigationpage(CurrentState.getDriver());
@@ -63,6 +59,7 @@ public class TPSEE_ROI_Test  extends BaseClass{
 		 np.navigateToROI();
 		 data.selectCalender_FromDate((int)(Double.parseDouble(from_day)), from_month, (int)(Double.parseDouble(from_year)));
 		 data.selectCalender_ToDate((int)(Double.parseDouble(to_day)), to_month, (int)(Double.parseDouble(to_year)));
+	 	 data.getNumberofDays_ROI();
 		 data.ROIvalues();
 		 data.val_pass();
 		  sum2=data.to();
@@ -120,6 +117,6 @@ public class TPSEE_ROI_Test  extends BaseClass{
 		 addEvidence(CurrentState.getDriver(), "Comparing the ROI values", "yes");
 
 		
-	}*/
+	}
 	}
 
