@@ -22,6 +22,27 @@ ATUReport atu = new ATUReport();
 		jsc.JSONCompare(Response, response.asString(), TestName);
 	}
 	
+	public void getRequest(String TestName, String header, String parameters,String URL, String Statuscode, String Response) {
+		String param[] = parameters.split(",");
+		String headers[] = header.split(",");
+		
+		RestAssured.baseURI =URL; 
+		RequestSpecification request = RestAssured.given();
+
+		Response response = request
+				.header(headers[0], headers[1])				
+				.queryParam(param[0], param[1]) 
+				.get("");
+
+		String jsonString = response.asString();
+		String responseCode = Integer.toString(response.getStatusCode());
+
+
+		verifyResposneCode(TestName, responseCode,  Statuscode);
+		verifyResposnedata(TestName, jsonString, Response);
+	}
+	
+	
 	public void verifyResposneCode(String TestName,String actual, String expected) {
 		
 		if(actual.equals(expected))
