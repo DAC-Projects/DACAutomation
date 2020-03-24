@@ -236,6 +236,29 @@ public class SE_Post_Page extends SE_abstractMethods {
 		//clickelement(approve);
 		
 	}
+	public void create_PostforFB_Cre(String textValue, String text, String Vendor) throws InterruptedException, Exception {
+		waitForElement(createNewPostbutton, 10);
+		clickelement(createNewPostbutton);
+		
+		waitForElement(step1Next, 10);
+		clickelement(step1Next);
+		Thread.sleep(5000);
+		selectlocation(text);
+		Thread.sleep(5000);
+		clickelement(step2Next);
+		WebElement text1=driver.findElement(By.xpath("//*[@id=\"facebook-message-field\"]"));
+		text1.sendKeys(textValue);
+		waitForElement(approve, 100);
+		clickelement(approve);
+
+		//List<WebElement> list = driver.findElements(By.xpath("//*[contains(text(),'" + text + "')]"));
+		//Assert.assertTrue(list.size() > 0);
+		clickelement(sucessButton);
+		//driver.findElement(By.xpath("//*[@id=\"wizard-submit-button\"]")).click();
+		//scrollByElement(approve);
+		//clickelement(approve);
+		
+	}
 	public void create_PostforGMB(String textValue, String location,String from_day, String from_month, String from_year, String to_day, String to_month, String to_year) throws InterruptedException, Exception {
 		waitForElement(createNewPostbutton, 10);
 		clickelement(createNewPostbutton);

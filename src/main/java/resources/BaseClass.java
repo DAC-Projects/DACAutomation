@@ -96,6 +96,9 @@ public abstract class BaseClass {
     	
     case "SE":
     	return IAutoconst.deepfieldAccount_SE;
+    
+    case "SE_AP":
+    	return IAutoconst.deepfieldAccount_SE_app;
 
     case "Sentiment Analysis":
     case "SA":
