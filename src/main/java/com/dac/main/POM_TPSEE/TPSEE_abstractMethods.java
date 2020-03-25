@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,6 +37,7 @@ import org.testng.Assert;
 
 import com.dac.main.BasePage;
 
+import resources.BaseClass;
 import resources.FileHandler;
 import resources.JSWaiter;
 import resources.formatConvert;
@@ -946,17 +948,29 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 							 
 				case "ytd" : 	try{
 									clickelement(highChart_YTD);
-									if(eleClicked(highChart_YTD)) {
-										scrollByElement(x);
-										days = getNumberofDays();
-										assert(true);
-									}else {
-										System.out.println("Element Not clicked");
-										}
-								}catch(Exception e) {
-									e.printStackTrace();
-								}
-								break;
+									 if(eleClicked(highChart_YTD)) {
+	                                        scrollByElement(x);
+	                                        days = getNumberofDays();
+	                                        System.out.println("Days Abi"+days);
+	                                        Date UI_date = getCurrentfromDate();
+	                                        System.out.println("UI"+UI_date);
+	                                        Date VE_Date=getCurrent();
+	                                        System.out.println("VE"+VE_Date);
+
+	 
+
+	                                        Assert.assertEquals(UI_date, VE_Date);
+	                                        System.out.println("1 year data is displayed");
+
+	 
+
+	                                    }else {
+	                                        System.out.println("Element Not clicked");
+	                                        }
+	                                }catch(Exception e) {
+	                                    e.printStackTrace();
+	                                }
+	                                break;
 						     
 				case "1y"  : 	try{
 									clickelement(highChart_1y);
@@ -976,7 +990,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 										e.printStackTrace();
 									}
 								break;
-							 
+								
 				case "all" :
 				default    : 	try{
 									clickelement(highChart_All);
@@ -995,6 +1009,23 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		
 					return this;
 			}	
+		
+		
+		/**
+		 * To get date of 01/01/current year
+		 * @return
+		 * @throws ParseException
+		 */
+		public Date getCurrent() throws ParseException {
+            String ad1="01/01/";
+            String year = Integer.toString(Year.now().getValue());
+            String ad2=ad1.concat(year);
+            System.out.println(ad2);
+            String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
+            SimpleDateFormat formats = new SimpleDateFormat(var);
+            Date finalcurrentdate = formats.parse(ad2);
+            return finalcurrentdate;
+        }
 		
 		/**
 		 * To get difference between two dates

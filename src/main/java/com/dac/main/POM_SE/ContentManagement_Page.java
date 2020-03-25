@@ -196,9 +196,8 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = driver
-					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']"))
-					.getText();
+			String entiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			int count = 0;
 			boolean celtext = false;
@@ -260,9 +259,8 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = driver
-					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']"))
-					.getText();
+			String entiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			int count = 0;
 			if (unpaginationNext.isDisplayed()) {
@@ -329,9 +327,8 @@ public class ContentManagement_Page extends BasePage {
 			System.out.println("Last Page Number of Published Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(
 					By.xpath("//*[@class='container-fluid']//table[@id='tblPublishedItems']")));
-			String entiresText = driver.findElement(By.xpath(
-					"//*[@class='container-fluid']//div[@id='tblPublishedItems_info' and @class='dataTables_info']"))
-					.getText();
+			String entiresText =NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			int count = 0;
 			boolean celtext = false;
@@ -404,9 +401,8 @@ public class ContentManagement_Page extends BasePage {
 			System.out.println("Last Page Number of Published Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(
 					By.xpath("//*[@class='container-fluid']//table[@id='tblPublishedItems']")));
-			String entiresText = driver.findElement(By.xpath(
-					"//*[@class='container-fluid']//div[@id='tblPublishedItems_info' and @class='dataTables_info']"))
-					.getText();
+			String entiresText = NumOfentries(driver.findElement(By.xpath(
+					"//*[@class='container-fluid']//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			int count = 0;
 			if (PubpaginationNext.isDisplayed()) {
@@ -477,9 +473,8 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = driver
-					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']"))
-					.getText();
+			String entiresText = NumOfentries( driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			int count = 0;
 			boolean celtext = false;
@@ -540,9 +535,8 @@ public class ContentManagement_Page extends BasePage {
 			System.out.println("Last Page Number of Published Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(
 					By.xpath("//*[@class='container-fluid']//table[@id='tblPublishedItems']")));
-			String entiresText = driver.findElement(By.xpath(
-					"//*[@class='container-fluid']//div[@id='tblPublishedItems_info' and @class='dataTables_info']"))
-					.getText();
+			String entiresText =  NumOfentries(driver.findElement(By.xpath(
+					"//*[@class='container-fluid']//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			int count = 0;
 			boolean celtext = false;
@@ -631,9 +625,8 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = driver
-					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']"))
-					.getText();
+			String entiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			int count = 0;
 			if (unpaginationNext.isDisplayed()) {
@@ -727,9 +720,8 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = driver
-					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']"))
-					.getText();
+			String entiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			int count = 0;
 			if (unpaginationNext.isDisplayed()) {
@@ -822,9 +814,8 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Published Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblPublishedItems']")));
-			String entiresText = driver
-					.findElement(By.xpath("//div[@id='tblPublishedItems_info' and @class='dataTables_info']"))
-					.getText();
+			String entiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			int count = 0;
 			if (PubpaginationNext.isDisplayed()) {
@@ -883,9 +874,8 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = driver
-					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']"))
-					.getText();
+			String entiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			if (unpaginationNext.isDisplayed()) {
 				Outer: for (int i = 1; i <= page; i++) {
@@ -943,9 +933,8 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = driver
-					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']"))
-					.getText();
+			String entiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			if (unpaginationNext.isDisplayed()) {
 				Outer: for (int i = 1; i <= page; i++) {
@@ -1012,9 +1001,8 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = driver
-					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']"))
-					.getText();
+			String entiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			if (unpaginationNext.isDisplayed()) {
 				Outer: for (int i = 1; i <= page; i++) {
@@ -1083,9 +1071,8 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = driver
-					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']"))
-					.getText();
+			String entiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			if (unpaginationNext.isDisplayed()) {
 				Outer: for (int i = 1; i <= page; i++) {
@@ -1148,9 +1135,8 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = driver
-					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']"))
-					.getText();
+			String entiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			if (unpaginationNext.isDisplayed()) {
 				Outer: for (int i = 1; i <= page; i++) {
@@ -1209,9 +1195,8 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = driver
-					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']"))
-					.getText();
+			String entiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			if (unpaginationNext.isDisplayed()) {
 				Outer: for (int i = 1; i <= page; i++) {
@@ -1270,9 +1255,8 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = driver
-					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']"))
-					.getText();
+			String entiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			if (unpaginationNext.isDisplayed()) {
 				Outer: for (int i = 1; i <= page; i++) {
@@ -1333,9 +1317,8 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = driver
-					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']"))
-					.getText();
+			String entiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			if (unpaginationNext.isDisplayed()) {
 				Outer: for (int i = 1; i <= page; i++) {
@@ -1401,9 +1384,8 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = driver
-					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']"))
-					.getText();
+			String entiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			if (unpaginationNext.isDisplayed()) {
 				Outer: for (int i = 1; i <= page; i++) {
@@ -1455,5 +1437,13 @@ public class ContentManagement_Page extends BasePage {
 			// e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public String NumOfentries(WebElement entry) {
+		String entiresText = entry.getText();
+		System.out.println("The total entries in a table is :" + entiresText);
+		String result = entiresText.substring(entiresText.indexOf("(") + 3, entiresText.indexOf(")") - 7);
+		System.out.println("The number of entries is : " +result);
+		return result;
 	}
 }
