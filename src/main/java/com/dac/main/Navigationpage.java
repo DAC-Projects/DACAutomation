@@ -79,6 +79,9 @@ public class Navigationpage extends BasePage{
 	@FindBy(xpath = "//a[@href='/Dashboard/ReviewsNotification/']")
 	private WebElement ReviewNotification;
 	
+	@FindBy(xpath = "//*[@id='roi_gmb']/a")
+    private WebElement ROI;
+	
 	//------------------------- SA and RRM -------------------------------------
 	
 	@FindBy(xpath = "//a[@href='/Review/ReviewFeed/']")
@@ -284,6 +287,12 @@ public void navigateToLocalReportsScoreChange() {
     	//action.moveToElement(AllGroups).click().perform();
     	System.out.println("Waiting for page to load********");
     	waitUntilLoad(driver);
+    }
+    
+    public void navigateToROI() {
+        clickelement(ROI);
+        System.out.println("Waiting for page to load********");
+        waitUntilLoad(driver);
     }
 
 

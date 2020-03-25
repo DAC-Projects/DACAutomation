@@ -13,7 +13,6 @@ import com.selenium.testevidence.SeleniumEvidence;
 
 public abstract class BaseClass {
 
-
   // **********************for login to auth and then Dashboard
 
   /**
@@ -23,12 +22,17 @@ public abstract class BaseClass {
     LoginAC_Beta lp = new LoginAC_Beta();
     BaseClass.loginAuth(lp);
     BaseClass.navigateToDashboard(lp);
-
+  /*  if(CurrentState.getDriver().findElement(By.xpath("//*[@class='walkme-custom-balloon-button-text' and contains(text(),'Cancel')]")).isDisplayed()) {
+    	CurrentState.getDriver().findElement(By.xpath("//*[@class='walkme-custom-balloon-button-text' and contains(text(),'Cancel')]")).click();
+       }else {
+    	   System.out.println("No Walkme Displayed");
+       }*/
     /*WebDriverWait wait = new WebDriverWait(CurrentState.getDriver(), 10);
     if(!CurrentState.getBrowser().contains("ie")) {
     	wait.until(ExpectedConditions.visibilityOf(CurrentState.getDriver().findElement(By.xpath("//div//button[contains(@class,'walkme-custom-balloon-button walkme-custom-balloon-weak-button walkme-custom-balloon-cancel-button walkme-action-cancel walkme-click-and-hover')]"))));
     	CurrentState.getDriver().findElement(By.xpath("//div//button[contains(@class,'walkme-custom-balloon-button walkme-custom-balloon-weak-button walkme-custom-balloon-cancel-button walkme-action-cancel walkme-click-and-hover')]")).click();
     }*/
+    
   }
 
   /**

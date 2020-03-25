@@ -196,7 +196,7 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = NumOfentries(driver
+			int entiresText = NumOfentries(driver
 					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			int count = 0;
@@ -219,8 +219,7 @@ public class ContentManagement_Page extends BasePage {
 							unpaginationNext.click();
 							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 						}
-					}
-					
+					}					
 			}
 		} else {
 			System.out.println("No Data Available for search criteria");
@@ -259,7 +258,7 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = NumOfentries(driver
+			int entiresText = NumOfentries(driver
 					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			int count = 0;
@@ -327,7 +326,7 @@ public class ContentManagement_Page extends BasePage {
 			System.out.println("Last Page Number of Published Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(
 					By.xpath("//*[@class='container-fluid']//table[@id='tblPublishedItems']")));
-			String entiresText =NumOfentries(driver
+			int entiresText =NumOfentries(driver
 					.findElement(By.xpath("//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			int count = 0;
@@ -360,9 +359,7 @@ public class ContentManagement_Page extends BasePage {
 						PubpaginationNext.click();
 						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					}
-
 				}
-
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -401,7 +398,7 @@ public class ContentManagement_Page extends BasePage {
 			System.out.println("Last Page Number of Published Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(
 					By.xpath("//*[@class='container-fluid']//table[@id='tblPublishedItems']")));
-			String entiresText = NumOfentries(driver.findElement(By.xpath(
+			int entiresText = NumOfentries(driver.findElement(By.xpath(
 					"//*[@class='container-fluid']//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			int count = 0;
@@ -434,8 +431,7 @@ public class ContentManagement_Page extends BasePage {
 						PubpaginationNext.click();
 						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					}
-				}
-
+				}				
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -473,7 +469,7 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = NumOfentries( driver
+			int entiresText = NumOfentries( driver
 					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			int count = 0;
@@ -510,7 +506,6 @@ public class ContentManagement_Page extends BasePage {
 						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					}
 				}
-
 			}
 		} else {
 			System.out.println("No Data Available for search criteria");
@@ -535,7 +530,7 @@ public class ContentManagement_Page extends BasePage {
 			System.out.println("Last Page Number of Published Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(
 					By.xpath("//*[@class='container-fluid']//table[@id='tblPublishedItems']")));
-			String entiresText =  NumOfentries(driver.findElement(By.xpath(
+			int entiresText =  NumOfentries(driver.findElement(By.xpath(
 					"//*[@class='container-fluid']//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			int count = 0;
@@ -573,7 +568,6 @@ public class ContentManagement_Page extends BasePage {
 						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					}
 				}
-
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -625,7 +619,7 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = NumOfentries(driver
+			int entiresText = NumOfentries(driver
 					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			int count = 0;
@@ -697,8 +691,7 @@ public class ContentManagement_Page extends BasePage {
 						unpaginationNext.click();
 						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					}
-				}
-
+				}				
 			}
 
 		} else {
@@ -720,7 +713,7 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = NumOfentries(driver
+			int entiresText = NumOfentries(driver
 					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			int count = 0;
@@ -814,7 +807,7 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Published Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblPublishedItems']")));
-			String entiresText = NumOfentries(driver
+			int entiresText = NumOfentries(driver
 					.findElement(By.xpath("//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			int count = 0;
@@ -847,9 +840,17 @@ public class ContentManagement_Page extends BasePage {
 						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					}
 				}
-
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			int changedentiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
+			System.out.println("The total entries in a table is :" + changedentiresText);
+			int pubchangedentiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
+			System.out.println("The total entries in a table is :" + pubchangedentiresText);
+			if(!(pubchangedentiresText== 0)) {
+				assertTrue(pubchangedentiresText > entiresText);
+				}
 			}
-
 		} else {
 			System.out.println("No Data Available");
 		}
@@ -874,7 +875,7 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = NumOfentries(driver
+			int entiresText = NumOfentries(driver
 					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			if (unpaginationNext.isDisplayed()) {
@@ -907,7 +908,13 @@ public class ContentManagement_Page extends BasePage {
 						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					}
 				}
-
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			int changedentiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
+			System.out.println("The total entries in a table is :" + changedentiresText);
+			if(!(changedentiresText== 0)) {
+				Assert.assertEquals(changedentiresText, entiresText - 1);
+				}
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -933,7 +940,7 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = NumOfentries(driver
+			int entiresText = NumOfentries(driver
 					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			if (unpaginationNext.isDisplayed()) {
@@ -971,7 +978,13 @@ public class ContentManagement_Page extends BasePage {
 						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					}
 				}
-
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			int changedentiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
+			System.out.println("The total entries in a table is :" + changedentiresText);
+			if(!(changedentiresText==0)) {
+				Assert.assertEquals(changedentiresText, entiresText - 1);
+				}
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -1001,7 +1014,7 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = NumOfentries(driver
+			int entiresText = NumOfentries(driver
 					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			if (unpaginationNext.isDisplayed()) {
@@ -1039,7 +1052,13 @@ public class ContentManagement_Page extends BasePage {
 						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					}
 				}
-
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			int changedentiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
+			System.out.println("The total entries in a table is :" + changedentiresText);
+			if(!(changedentiresText==0)) {
+				Assert.assertEquals(changedentiresText, entiresText - 1);
+				}
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -1071,7 +1090,7 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = NumOfentries(driver
+			int entiresText = NumOfentries(driver
 					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			if (unpaginationNext.isDisplayed()) {
@@ -1103,7 +1122,13 @@ public class ContentManagement_Page extends BasePage {
 						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					}
 				}
-
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			int changedentiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
+			System.out.println("The total entries in a table is :" + changedentiresText);
+			if(!(changedentiresText==0)) {
+				Assert.assertEquals(changedentiresText, entiresText - 1);
+				}
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -1135,7 +1160,7 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = NumOfentries(driver
+			int entiresText = NumOfentries(driver
 					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			if (unpaginationNext.isDisplayed()) {
@@ -1167,7 +1192,13 @@ public class ContentManagement_Page extends BasePage {
 						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					}
 				}
-
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			int changedentiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
+			System.out.println("The total entries in a table is :" + changedentiresText);
+			if(!(changedentiresText==0)) {
+				Assert.assertEquals(changedentiresText, entiresText - 1);
+				}
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -1195,7 +1226,7 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = NumOfentries(driver
+			int entiresText = NumOfentries(driver
 					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			if (unpaginationNext.isDisplayed()) {
@@ -1227,7 +1258,20 @@ public class ContentManagement_Page extends BasePage {
 						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					}
 				}
-
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			int changedentiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
+			System.out.println("The total entries in a table is :" + changedentiresText);
+			if(!(changedentiresText==0)) {
+				Assert.assertEquals(changedentiresText, entiresText - 1);
+				}
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			int pubchangedentiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
+			System.out.println("The total entries in a table is :" + pubchangedentiresText);
+			if(!(pubchangedentiresText== 0)) {
+				assertTrue(pubchangedentiresText > entiresText);
+				}
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -1255,7 +1299,7 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = NumOfentries(driver
+			int entiresText = NumOfentries(driver
 					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			if (unpaginationNext.isDisplayed()) {
@@ -1287,7 +1331,20 @@ public class ContentManagement_Page extends BasePage {
 						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					}
 				}
-
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			int changedentiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
+			System.out.println("The total entries in a table is :" + changedentiresText);
+			if(!(changedentiresText==0)) {
+			Assert.assertEquals(changedentiresText, entiresText - 1);
+			}
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			int pubchangedentiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
+			System.out.println("The total entries in a table is :" + pubchangedentiresText);
+			if(!(pubchangedentiresText== 0)) {
+				assertTrue(pubchangedentiresText > entiresText);
+				}
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -1317,7 +1374,7 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = NumOfentries(driver
+			int entiresText = NumOfentries(driver
 					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			if (unpaginationNext.isDisplayed()) {
@@ -1354,7 +1411,20 @@ public class ContentManagement_Page extends BasePage {
 						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					}
 				}
-
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			int changedentiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
+			System.out.println("The total entries in a table is :" + changedentiresText);
+			if(!(changedentiresText==0)) {
+				Assert.assertEquals(changedentiresText, entiresText - 1);
+				}
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			int pubchangedentiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
+			System.out.println("The total entries in a table is :" + pubchangedentiresText);
+			if(!(pubchangedentiresText== 0)) {
+				assertTrue(pubchangedentiresText > entiresText);
+				}
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -1384,7 +1454,7 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Unpublished Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" //table[@id='tblUnpublishedItems']")));
-			String entiresText = NumOfentries(driver
+			int entiresText = NumOfentries(driver
 					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			if (unpaginationNext.isDisplayed()) {
@@ -1421,7 +1491,20 @@ public class ContentManagement_Page extends BasePage {
 						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					}
 				}
-
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			int changedentiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblUnpublishedItems_info' and @class='dataTables_info']")));
+			System.out.println("The total entries in a table is :" + changedentiresText);
+			if(!(changedentiresText==0)) {
+				Assert.assertEquals(changedentiresText, entiresText - 1);
+				}
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			int pubchangedentiresText = NumOfentries(driver
+					.findElement(By.xpath("//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
+			System.out.println("The total entries in a table is :" + pubchangedentiresText);
+			if(!(pubchangedentiresText== 0)) {
+				assertTrue(pubchangedentiresText > entiresText);
+				}
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -1439,11 +1522,18 @@ public class ContentManagement_Page extends BasePage {
 		return false;
 	}
 	
-	public String NumOfentries(WebElement entry) {
+	public int NumOfentries(WebElement entry) {
+		waitForElement(entry, 10);
+		if(entry.isDisplayed()) {
 		String entiresText = entry.getText();
 		System.out.println("The total entries in a table is :" + entiresText);
-		String result = entiresText.substring(entiresText.indexOf("(") + 3, entiresText.indexOf(")") - 7);
-		System.out.println("The number of entries is : " +result);
-		return result;
+		String result = entiresText.substring(entiresText.indexOf("(") + 3, entiresText.indexOf(")") - 7).trim();
+		int finalvalue = Integer.parseInt(result);
+		System.out.println("The number of entries is : " +finalvalue);
+		return finalvalue;
+		}else {
+			System.out.println("No Data available");
+			return 0;
+		}		
 	}
 }

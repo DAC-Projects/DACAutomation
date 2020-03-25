@@ -40,6 +40,7 @@ import com.selenium.testevidence.EvidenceType;
 import com.selenium.testevidence.GenerateEvidenceReport;
 import com.selenium.testevidence.SeleniumEvidence;
 import io.github.bonigarcia.wdm.Architecture;
+import io.github.bonigarcia.wdm.DriverManagerType;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import net.sf.jasperreports.engine.JasperPrint;
 
@@ -344,7 +345,7 @@ public class ExtentTestNGITestListener
     WebDriverManager.chromedriver().version("80.0.3987.16").setup(); 
 
 
-    //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
+   // WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
 
     HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
     		chromePrefs.put("profile.default_content_settings.popups", 0);
