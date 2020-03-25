@@ -198,7 +198,6 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 	public String validdata() {
 		
 		String Isdataavailable = driver.findElement(By.xpath("//*[@class='highcharts-title']")).getText();
-		
 		return Isdataavailable;
 		
 		

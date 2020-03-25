@@ -34,6 +34,11 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 		return null;
 	}
 	/*-------------Locators----------*/
+	@FindBy(xpath="//*[@id=\"page-content\"]//h3[@class=\"page-title\"]")
+	private WebElement PageTitle;
+	
+	@FindBy(xpath="//p[@class='lead']")
+	private WebElement PageTitletext;
 	
 	@FindBy(xpath = "//*[@id='Name']")
 	private WebElement notificationName;

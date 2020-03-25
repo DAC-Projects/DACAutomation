@@ -14,6 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import resources.JSWaiter;
 
@@ -35,6 +36,11 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 	}
 
 	/* ------------------------------Locators---------------------------------------*/
+	@FindBy(xpath="//*[@id='page-content']//h3")
+	private WebElement PageTitle;
+	
+	@FindBy(xpath="//p[@class='lead']")
+	private WebElement PageTitletext;
 
 	@FindBy(xpath = "//*[@id='form-field-groupName']")
 	private WebElement GroupName;
@@ -548,6 +554,20 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 
 		return rules1;
 
+	}
+
+public void VerifyTitleText(String Tit, String titText) {
+		
+		waitForElement(PageTitle, 10);
+		String Title = PageTitle.getText();
+		System.out.println("Page Title is : "+Title);
+		waitForElement(PageTitletext, 10);
+		String TitleText = PageTitletext.getText();
+		System.out.println("The title text  is :" + TitleText);
+		Assert.assertEquals(Tit, Title);
+		Assert.assertEquals(titText,TitleText );
+				
+				
 	}
 
 

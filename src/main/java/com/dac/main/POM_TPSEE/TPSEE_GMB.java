@@ -46,6 +46,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	}
     /*-------------------------------Locators-------------------------------------------------*/
 	
+	@FindBy(xpath="//*[@id='page-content']//h2")
+	private WebElement PageTitle;
+	
+	@FindBy(xpath="//p[@class='lead']")
+	private WebElement PageTitletext;
+	
 	@FindBy(xpath = "//div[@id='customerIndex']")
 	private WebElement CustomerActions;
 	
@@ -764,9 +770,21 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	}
 	
 	
-	public String IsDataAvailable() {
-		
+	public String IsDataAvailable() {		
 		String data = driver.findElement(By.xpath("//*[@class='highcharts-title']")).getText();
 		return data;
 	}
+	
+public void VerifyGMBTitleText(String Tit, String titText) {
+		
+		waitForElement(PageTitle, 10);
+		String Title = PageTitle.getText();
+		System.out.println("Page Title is : "+Title);
+		waitForElement(PageTitletext, 10);
+		String TitleText = PageTitletext.getText();
+		System.out.println("The title text  is :" + TitleText);
+		Assert.assertEquals(Tit, Title);
+		Assert.assertEquals(titText,TitleText );				
+	}
+
 }

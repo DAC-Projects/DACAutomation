@@ -119,11 +119,11 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	
 	/*------------------------ Filter Criteria ------------------------*/
 	
-	@FindBy(xpath="//h1[contains(text(),'')]")
-	private WebElement PageTitle;
-	
-	@FindBy(xpath="//h2[contains(text(),'')]")
-	private WebElement GMBPageTitle;
+	@FindBy(xpath="//*[@id='page-content']//h1")
+    private WebElement PageTitle;
+   
+    @FindBy(xpath="//p[@class='lead']")
+    private WebElement PageTitletext;
 
 	// History graph
 	@FindBy(css = "rect.highcharts-plot-background")
@@ -1433,4 +1433,28 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				}
 					return foundVendors;
 			}
+		
+		public void deletefile() {
+			File path = new File("./downloads");
+		    File[] files = path.listFiles();
+		    for (File file : files) {
+		        System.out.println("Deleted filename :"+ file.getName());
+		        file.delete();
+		    }
+		}
+		
+		public void VerifyTitleText(String Tit, String titText) {
+	           
+            waitForElement(PageTitle, 10);
+            String Title = PageTitle.getText();
+            System.out.println("Page Title is : "+Title);
+        //    waitForElement(PageTitletext, 10);
+            String TitleText = PageTitletext.getText();
+            System.out.println("The title text  is :" + TitleText);
+            Assert.assertEquals(Tit, Title);
+            Assert.assertEquals(titText,TitleText );
+                   
+                   
+        }
+		
 }

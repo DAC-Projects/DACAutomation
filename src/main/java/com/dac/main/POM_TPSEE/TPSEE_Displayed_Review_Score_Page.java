@@ -52,6 +52,13 @@ public class TPSEE_Displayed_Review_Score_Page extends TPSEE_abstractMethods{
 	
 	private String FacebookRating = "*//div[contains(@class,'facebook text')]";
 	
+	@FindBy(xpath="//*[@id='page-content']//h3")
+	private WebElement PageTitle;
+	
+	@FindBy(xpath="//p[@class='lead']")
+	private WebElement PageTitletext;
+
+	
 	/*-------------------------Table Scores-----------------------*/
 	
 
@@ -316,4 +323,19 @@ public void compareUInExportFaceBook_Score(String chromepath, String IEpath, Str
 			}
 			
 		}
+		
+public void VerifyTitleText(String Tit, String titText) {
+			
+			waitForElement(PageTitle, 10);
+			String Title = PageTitle.getText();
+			System.out.println("Page Title is : "+Title);
+			waitForElement(PageTitletext, 10);
+			String TitleText = PageTitletext.getText();
+			System.out.println("The title text  is :" + TitleText);
+			Assert.assertEquals(Tit, Title);
+			Assert.assertEquals(titText,TitleText );
+					
+					
+		}
+
 }

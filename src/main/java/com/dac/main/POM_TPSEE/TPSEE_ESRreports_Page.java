@@ -30,6 +30,9 @@ public class TPSEE_ESRreports_Page extends TPSEE_abstractMethods {
 	Navigationpage np;
 	
 	/* ------------------------------Locators---------------------------------------*/
+	@FindBy(xpath="//*[@id='page-content']//h3[@class='page-title']")
+	private WebElement PageTitle;
+
 	@FindBy(xpath = "//select[@name='freq-select']")
 	private WebElement results;
     
@@ -74,6 +77,17 @@ public class TPSEE_ESRreports_Page extends TPSEE_abstractMethods {
         clickelement(yesButton);
         
 	}
+	
+public void VerifyTitleText(String Tit) {
+		
+		waitForElement(PageTitle, 10);
+		String Title = PageTitle.getText();
+		System.out.println("Page Title is : "+Title);
+		Assert.assertEquals(Tit, Title);
+				
+				
+	}
+
 
 }
 
