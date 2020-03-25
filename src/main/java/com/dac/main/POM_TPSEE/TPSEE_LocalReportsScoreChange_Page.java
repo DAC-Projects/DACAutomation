@@ -106,11 +106,16 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//*[@class='notification-success success modal fade in']//div[1]//div//div[2]/h3")
 	private WebElement SuccessMessage;
 	
+	/*--------------------Confirmation Popup----------------*/
+	@FindBy(xpath = "//button[text()='Yes']")
+	private WebElement btnSuccessOK;
+	@FindBy(xpath = "//button[text()='Ok']")
+	private WebElement btnConfirmOK;
 	
-	
+
 	
 	public void LocalReportScoreChangeNotifiction(String [][] inputData, int excelRow) {
-		WebElement emailAddress;
+		WebElement emailAddress,btnSuccessOK;
 		String strNotificationName=inputData[excelRow][0]; String strEmail=inputData[excelRow][1];
 		String strReportname=inputData[excelRow][2]; String strCondition=inputData[excelRow][3];
 		String strPercentage=inputData[excelRow][4]; 				
@@ -139,11 +144,11 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 				percentage.sendKeys(strPercentage);
 				savedata();
 				
-					
-				waitForElement(successDialogBox, 20);
-				Assert.assertTrue(SuccessMessage.getText().equals("Success! Your request has been completed!"));
+				btnSuccessOK=driver.findElement(By.xpath("//button[text()='Ok']"));
+				waitForElement(btnSuccessOK, 10);
+//				Assert.assertTrue(SuccessMessage.getText().equals("Success! Your request has been completed!"));
 				
-				clickelement(SuccessBtnClose);
+				clickelement(btnSuccessOK);
 				scrollByElement(notificationList);
 				
 			
@@ -169,7 +174,7 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 	private void savedata() {
 		if(btnSave.isDisplayed()) {
 			clickelement(btnSave);
-			waitForElement(successDialogBox, 10);
+//			waitForElement(successDialogBox, 10);
 		}
 	}
 	
@@ -239,22 +244,23 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 	}
 
 	public void deleteEmailNotification(String [][] ExcelData, int excelRow) {
-		WebElement btnDelete,btnConfirmOK;
+		WebElement btnDelete,btnConfirmOK,btnSuccessOK;
 		JSWaiter.waitJQueryAngular();
 		System.out.println("deleteEmailNotification "+ excelRow);
 		
 		btnDelete=getDeleteButtonRow(ExcelData[excelRow][0]);
 		scrollByElement(btnDelete);
 		clickelement(btnDelete);
-		waitForElement(confirmDialogBox, 30);
-		btnConfirmOK=driver.findElement(By.xpath("//*[@class='bootbox modal fade bootbox-confirm in']//div//div[2]//button[2]"));
-		waitForElement(btnConfirmOK, 20);
+		waitForElement(confirmDialogBox, 20);
+		btnConfirmOK=driver.findElement(By.xpath("//button[text()='Yes']"));
+		//btnConfirmOK=driver.findElement(By.xpath("//*[@class='bootbox modal fade bootbox-confirm in']//div//div[2]//button[2]"));
 		scrollByElement(btnConfirmOK);
 		clickelement(btnConfirmOK);
 	
-		waitForElement(successDialogBox,10);
-		Assert.assertTrue(SuccessMessage.getText().equals("Success! Your request has been completed!"));
-		clickelement(SuccessBtnClose);
+//		waitForElement(successDialogBox,10);
+//		Assert.assertTrue(SuccessMessage.getText().equals("Success! Your request has been completed!"));
+		btnSuccessOK=driver.findElement(By.xpath("//button[text()='Ok']"));
+		clickelement(btnSuccessOK);
 		System.out.println("Notification Deleted");
 					
 	}
@@ -299,10 +305,11 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
   
         return str; 
     }
+	
 	private WebElement getDeleteButtonRow(String columnText) {
 		System.out.println("Inside getDeleteButtonRow Method: "+ columnText);
 		
-		WebElement btnRemove=driver.findElement(By.xpath("//td[text()='"+ columnText +"']/..//button[@class='btn btn-xs btn-danger remove-notification fa fa-remove']"));
+		WebElement btnRemove=driver.findElement(By.xpath("//td[text()='"+ columnText +"']/..//*[@class='icon-delete icon-color-danger']"));
 		
 		return btnRemove;
 		
@@ -311,7 +318,7 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 	private WebElement getEditButtonRow(String columnText) {
 		System.out.println("Inside getEditButtonRow Method: "+columnText );
 		
-		WebElement btnRemove=driver.findElement(By.xpath("//td[text()='"+ columnText +"']/..//button[@class='btn btn-xs btn-danger edit-notification fa fa-edit']"));
+		WebElement btnRemove=driver.findElement(By.xpath("//td[text()='"+ columnText +"']/..//*[@class='icon-edit icon-color-primary']"));
 		
 		return btnRemove;
 		

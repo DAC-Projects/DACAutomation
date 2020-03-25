@@ -67,7 +67,7 @@ public class TPSEE_ReviewNotifications_Test extends BaseClass {
 							}
 					
 	//Test for Custom All Reviews Email Notification
-			@SuppressWarnings("unchecked")
+			/*@SuppressWarnings("unchecked")
 			@Test(dependsOnMethods = { "deleteEmailNotification"}, groups = {
 											"smoke" }, description = "TC: All Reviews Notification from Review Notification")
 			public void customAllReviewsNotification() throws Exception {
@@ -77,7 +77,7 @@ public class TPSEE_ReviewNotifications_Test extends BaseClass {
 								rn.verifyEmailNotification(xcelInputData, 5);
 								CurrentState.getLogger().log(Status.PASS, "Notification Created");
 								addEvidence(CurrentState.getDriver(), "All Reviews Notification created and verified", "yes");
-							}
+							}*/
 			
 	//Test for Less-than 3 stars Reviews Email Notification
 			/*@SuppressWarnings("unchecked")
