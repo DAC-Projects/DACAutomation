@@ -28,55 +28,59 @@ public class CompareReportsData_PostData extends BaseClass{
 	ExcelHandler wb ;
 	Navigationpage np = null;
 	ArrayList<String> excelvalues;
-	ArrayList<String> UIValues;
+	ArrayList<String> excelvalues1;
 	String Location;
+	ArrayList<String> UIValues;
+	ArrayList<String> UIValues1;
+	 ArrayList<String> excelvalues_Val;
 	String word =null;
-	 String text;
-	 String location;
+	 
 	@Test(enabled = true)
 	public void navigateToSE_PostPage() throws Exception {
+		 excelvalues_Val=new ArrayList<String>();
+		 ArrayList<String> UIValues_val=new ArrayList<String>();
+		 ArrayList<String> Rej_val=new ArrayList<String>();
+
 		np = new Navigationpage(CurrentState.getDriver());
-		np.navigateToSE_Post();
-        addEvidence(CurrentState.getDriver(), "Navigated to Social Posts Page", "yes");
-	}
+		 SE_Post_Page s = new SE_Post_Page (CurrentState.getDriver());
+		 np.navigateToSE_ContentManagement();
+		 excelvalues_Val=s.excel();
+		 s.appr_user();
+		 Thread.sleep(2000);
+		 np.navigateToSE_ContentManagement();
+		 UIValues_val =s.table();
+		 for(int j =0;j<=UIValues_val.size()-1;j++) 
+		 {
+			 System.out.println(UIValues_val.get(j));
+			 System.out.println(excelvalues_Val.get(j));
+			 UIValues_val.get(j).contains(excelvalues_Val.get(j));
+		 }
+		 np.navigateToSE_ContentManagement();
+
+		 Rej_val= s.appr_Rej();
+		 for(int j =0;j<=Rej_val.size()-1;j++) 
+		 {
+			 System.out.println(Rej_val.get(j));
+			 System.out.println(excelvalues_Val.get(j));
+			 Rej_val.get(j).contains(excelvalues_Val.get(j));
+		 }
+	 			}			
+	
 	
 	 @Test(dependsOnMethods = { "navigateToSE_PostPage"}, groups= {"smoke"}, description = "Test for overview export and export verification")
 	 public void create_PostPage_FB() throws Exception {
+		 np = new Navigationpage(CurrentState.getDriver());
+		 SE_Post_Page s = new SE_Post_Page (CurrentState.getDriver());
+		 np.navigateToSE_Post();
 		 excelvalues=new ArrayList<String>();
 		 data = new SE_Post_Page(CurrentState.getDriver());
-		 			try {	
-				int count = 1;
-				ExcelHandler wb = new ExcelHandler("./data/Message.xlsx", "MSG"); wb.deleteEmptyRows();
-				SE_Post_Page s = new SE_Post_Page (CurrentState.getDriver());
-				for(int i=1;i<=wb.getRowCount();i++) {
-					System.out.println(wb.getRowCount());
-					System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
-					if(i>1) CurrentState.getDriver().navigate().refresh();
-					s.waitUntilLoad(CurrentState.getDriver());
-					String site = wb.getCellValue(i, wb.seacrh_pattern("Site Login", 0).get(0).intValue());
-				     location = wb.getCellValue(i, wb.seacrh_pattern("Location/Brand", 0).get(0).intValue());
-			         text = wb.getCellValue(i, wb.seacrh_pattern("Content", 0).get(0).intValue());
-			        String creator = wb.getCellValue(i, wb.seacrh_pattern("Creator", 0).get(0).intValue());
-			        String Vendor = wb.getCellValue(i, wb.seacrh_pattern("Vendor", 0).get(0).intValue());
-			        excelvalues.add(site);
-			        excelvalues.add(location);
-			        excelvalues.add(text);
-			        excelvalues.add(creator);
-			        System.out.println("Excel"+ excelvalues);
-					s.create_PostforFB(text,location,Vendor);				
-					addEvidence(CurrentState.getDriver(), "", "yes");
-					count++;
-				}			
-				 
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
-		 addEvidence(CurrentState.getDriver(), "Create post page", "yes"); 
+		 data.excel1();
+		 			
 		 }
 		 
 
 
-	@Test(dependsOnMethods =  "create_PostPage_FB", groups= {"smoke"}, description = "Test for overview export and export verification")
+	/*@Test(dependsOnMethods =  "create_PostPage_FB", groups= {"smoke"}, description = "Test for overview export and export verification")
 	 public void create_PostPage_GMB() throws Exception {
 		 excelvalues=new ArrayList<String>();
 		 data = new SE_Post_Page(CurrentState.getDriver());
@@ -112,18 +116,17 @@ public class CompareReportsData_PostData extends BaseClass{
 				e.printStackTrace();
 			}
 		 addEvidence(CurrentState.getDriver(), "Create post page", "yes"); 
-	 }
+	 }*/
 	 
-	 @Test(dependsOnMethods = { "create_PostPage_GMB"}, groups= {"smoke"}, description = "Test for overview export and export verification")
+	 @Test(dependsOnMethods = { "create_PostPage_FB"}, groups= {"smoke"}, description = "Test for overview export and export verification")
 	 public void content_Management1() throws Exception {
 		 np = new Navigationpage(CurrentState.getDriver());
-		 np.navigateToSE_ContentManagement();
-		 data = new SE_Post_Page(CurrentState.getDriver());
-		 SE_Post_Page s = new SE_Post_Page (CurrentState.getDriver());
+			SE_Post_Page s = new SE_Post_Page (CurrentState.getDriver());
+			np.navigateToSE_ContentManagement();
 		 UIValues =s.table();
-		 UIValues =s.table1();
-		 for(int i =0;i<=UIValues.size() - 1;i++) {
-			 UIValues.get(i).contains(excelvalues.get(i));
+System.out.println("Anan"+excelvalues_Val);
+		 for(int j =0;j<=UIValues.size() - 1;j++) {
+			 UIValues.get(j).contains(excelvalues_Val.get(j));
 		 }
 		
 	 }
@@ -169,7 +172,7 @@ public class CompareReportsData_PostData extends BaseClass{
 						String CountryCode = wb.getCellValue(i, wb.seacrh_pattern("Country", 0).get(0).intValue());
 						String State = wb.getCellValue(i, wb.seacrh_pattern("State", 0).get(0).intValue());
 						String City = wb.getCellValue(i, wb.seacrh_pattern("City", 0).get(0).intValue());
-						 Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
+						String Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
 						s.applyGlobalFilter(Group, CountryCode, State, City, Location);
 						System.out.println(Group+", "+CountryCode+", "+State+", "+City+", "+Location);
 						//s.clickApplyFilterBTN();
@@ -245,9 +248,9 @@ public void content_Management() throws Exception {
 	 np = new Navigationpage(CurrentState.getDriver());
 	 np.navigateToSE_ContentManagement();
 	 Thread.sleep(1000);
-	data.edit_1();
+	data.edit_12();
 	 np.navigateToSE_ContentManagement();
-	data.edit_2();
+	data.edit_22();
 
 }
 }

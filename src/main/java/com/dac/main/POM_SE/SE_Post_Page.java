@@ -30,6 +30,7 @@ import com.dac.main.BasePage;
 
 import resources.BaseClass;
 import resources.CurrentState;
+import resources.ExcelHandler;
 import resources.JSWaiter;
 
 public class SE_Post_Page extends SE_abstractMethods {
@@ -207,13 +208,29 @@ public class SE_Post_Page extends SE_abstractMethods {
    
    @FindBy(xpath="//span[@id='wizard-submit-button-text-submit']")
    private WebElement approve1;
+
+   @FindBy(xpath="//span[@id='wizard-submit-button-text-publish']")
+   private WebElement approve2;
    
    @FindBy(xpath="//*[@id='btnUnpublished']")
    private WebElement state_rej;
-
-    
+   @FindBy(xpath="//*[@class='btn btn-xs btn-success btn-block btn-approve']")
+   private WebElement app;
+   @FindBy(xpath="//*[@class='btn btn-success btn-modal-yes']")
+   private WebElement yes;
+   @FindBy(xpath="//*[@class='btn btn-success btn-block']")
+   private WebElement ok;
+   
+   
+   @FindBy(xpath="//*[@class='btn btn-xs btn-warning btn-block btn-reject']")
+   private WebElement Reject;
+  
+   @FindBy(xpath="//*[@class='btn btn-warning btn-modal-yes']")
+   private WebElement Re_yes;
+   @FindBy(xpath="(//*[@class='btn btn-success btn-block'])[2]")
+   private WebElement Re_Okay;
     String alertText = "";
-	public void create_PostforFB(String textValue, String text, String Vendor) throws InterruptedException, Exception {
+	public void create_PostforFB(String textValue, String text) throws InterruptedException, Exception {
 		waitForElement(createNewPostbutton, 10);
 		clickelement(createNewPostbutton);
 		
@@ -331,7 +348,8 @@ public class SE_Post_Page extends SE_abstractMethods {
 	public ArrayList<String> table() {
 		ArrayList<String> tableValues=new ArrayList<String>();
 		WebElement Table = driver.findElement(By.xpath("//div[@id='tblPublishedItems_wrapper']"));
-		
+		scrollByElement(Table);
+		waitForElement(Table, 40);
 			String text1=driver.findElement(By.xpath("//*[@id='tblPublishedItems']/tbody/tr[1]/td[2]")).getText();
 			tableValues.add(text1);
 			String text2=driver.findElement(By.xpath("//*[@id='tblPublishedItems']/tbody/tr[1]/td[3]")).getText();
@@ -340,9 +358,9 @@ public class SE_Post_Page extends SE_abstractMethods {
 			tableValues.add(text3);
 			String text4=driver.findElement(By.xpath("//*[@id='tblPublishedItems']/tbody/tr[1]/td[7]")).getText();
 			tableValues.add(text4);
-             System.out.println("name"+ text1);
+             System.out.println("name"+ text2);
 		
-		System.out.println(tableValues);
+		System.out.println("Table"+tableValues);
 		return tableValues;
 		
 	}
@@ -358,9 +376,9 @@ public class SE_Post_Page extends SE_abstractMethods {
 			tableValues.add(text3);
 			String text4=driver.findElement(By.xpath("//*[@id='tblUnpublishedItems']/tbody/tr[1]/td[7]")).getText();
 			tableValues.add(text4);
-             System.out.println("name"+ text1);
+             System.out.println("name Abii"+ text1);
 		
-		System.out.println(tableValues);
+		System.out.println("ABIII"+tableValues);
 		return tableValues;
 		
 	}
@@ -743,5 +761,146 @@ public void edit_op() {
 	clickelement(sucessButton);
 
 }
-			
+public void edit_12() throws InterruptedException {
+	Select dropdown = new Select(driver.findElement(By.id("ddlStatusUnpublished"))); 
+	dropdown.selectByValue("1");
+	edit_op2();
+	
+}
+public void edit_22() throws InterruptedException {
+	Select dropdown = new Select(driver.findElement(By.id("ddlStatusUnpublished"))); 
+	dropdown.selectByValue("3");
+	edit_op2();
+	
+}
+public void edit_op2() {
+	clickelement(state_rej);
+	clickelement(edit_btn);
+	clickelement(step2Next);
+	WebElement text1=driver.findElement(By.xpath("//*[@id=\"facebook-message-field\"]"));
+	text1.sendKeys("Updated");
+	scrollByElement(approve2);
+	waitForElement(approve2, 100);
+	clickelement(approve2);
+	clickelement(sucessButton);
+
+}		
+
+public void appr_user()
+{
+	
+	System.out.println("Executing");
+	waitForElement(app, 10);
+	clickelement(app);
+	clickelement(yes);
+	clickelement(ok);
+}
+public ArrayList<String>  appr_Rej() throws Exception
+{
+	ArrayList<String> Rejected_values=new ArrayList<String>();
+
+	System.out.println("Executing");
+	waitForElement(Reject, 10);
+	clickelement(Reject);
+	Thread.sleep(1000);
+
+	clickelement(Re_yes);
+	Thread.sleep(1000);
+	clickelement(Re_Okay);
+	Select dropdown = new Select(driver.findElement(By.id("ddlStatusUnpublished"))); 
+	dropdown.selectByValue("3");
+	clickelement(state_rej);
+	Rejected_values=table1();
+	
+	return Rejected_values;
+
+}
+
+public ArrayList<String> excel() throws Exception {
+	ArrayList<String> excelvalues1=new ArrayList<String>();
+
+int count = 1;
+ExcelHandler wb = new ExcelHandler("./data/Message.xlsx", "MSG"); wb.deleteEmptyRows();
+for(int i=1;i<=wb.getRowCount();i++) {	
+	try {
+	System.out.println(wb.getRowCount());
+	System.out.println("*******************  Scenarios for Content "+ count +"Starts ****************************");
+	String site = wb.getCellValue(i, wb.seacrh_pattern("Site Login", 0).get(0).intValue());
+     String location = wb.getCellValue(i, wb.seacrh_pattern("Location/Brand", 0).get(0).intValue());
+    String text = wb.getCellValue(i, wb.seacrh_pattern("Content", 0).get(0).intValue());
+    String creator = wb.getCellValue(i, wb.seacrh_pattern("Creator", 0).get(0).intValue());
+    excelvalues1.add(site);
+    excelvalues1.add(location);
+    excelvalues1.add(text);
+    excelvalues1.add(creator);
+
+	}
+    catch(Exception e) {
+		e.printStackTrace();
+    	
+    }
+
+}
+		
+return excelvalues1;
+}
+public ArrayList<String> excel2() throws Exception {
+	ArrayList<String> excelvalues1=new ArrayList<String>();
+
+int count = 1;
+ExcelHandler wb = new ExcelHandler("./data/Message.xlsx", "MSG"); wb.deleteEmptyRows();
+for(int i=1;i<=wb.getRowCount();i++) {	
+	try {
+	System.out.println(wb.getRowCount());
+	System.out.println("*******************  Scenarios for Content "+ count +"Starts ****************************");
+	String site = wb.getCellValue(i, wb.seacrh_pattern("Site Login", 0).get(0).intValue());
+     String location = wb.getCellValue(i, wb.seacrh_pattern("Location/Brand", 0).get(0).intValue());
+    String text = wb.getCellValue(i, wb.seacrh_pattern("Content", 0).get(0).intValue());
+    String creator = wb.getCellValue(i, wb.seacrh_pattern("Creator", 0).get(0).intValue());
+    excelvalues1.add(site);
+    excelvalues1.add(location);
+    excelvalues1.add(text);
+    excelvalues1.add(creator);
+	create_PostforFB(text,location);				
+
+	}
+    catch(Exception e) {
+		e.printStackTrace();
+    	
+    }
+
+}
+		
+return excelvalues1;
+}
+
+public ArrayList<String> excel1() throws Exception {
+	ArrayList<String> excelvalues1=new ArrayList<String>();
+
+int count = 1;
+ExcelHandler wb = new ExcelHandler("./data/Message.xlsx", "Sheet2"); wb.deleteEmptyRows();
+for(int i=1;i<=wb.getRowCount();i++) {	
+	try {
+	System.out.println(wb.getRowCount());
+	System.out.println("*******************  Scenarios for Content "+ count +"Starts ****************************");
+	String site = wb.getCellValue(i, wb.seacrh_pattern("Site Login", 0).get(0).intValue());
+     String location = wb.getCellValue(i, wb.seacrh_pattern("Location/Brand", 0).get(0).intValue());
+    String text = wb.getCellValue(i, wb.seacrh_pattern("Content", 0).get(0).intValue());
+    String creator = wb.getCellValue(i, wb.seacrh_pattern("Creator", 0).get(0).intValue());
+    excelvalues1.add(site);
+    excelvalues1.add(location);
+    excelvalues1.add(text);
+    excelvalues1.add(creator);
+	create_PostforFB(text,location);				
+
+	}
+    catch(Exception e) {
+		e.printStackTrace();
+    	
+    }
+
+}
+		
+return excelvalues1;
+}
 }
