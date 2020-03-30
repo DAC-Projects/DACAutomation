@@ -442,7 +442,6 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 				}
 				System.out.println("Total number of entries in table : "+count);
 				Assert.assertTrue(entiresText.contains(""+count+""), "Table Data count matches with total enties count");
-
 				scrollByElement(progresstable);
 				System.out.println("UI Table Values :" +tableCellValues);
 				List<Map<String, String>> TableExport = getExporttableDataFound();

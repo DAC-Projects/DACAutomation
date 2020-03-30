@@ -1,6 +1,8 @@
 package com.dac.main.POM_TPSEE;
 
 
+import static org.testng.Assert.assertTrue;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -71,7 +73,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	private WebElement SiteTableHeader;
 	
 	@FindBy(css = "img.logo-img.img-responsive.sourceImg")
-	private WebElement SiteLink;
+	private List<WebElement> SiteLink;
 	
 	@FindBy(xpath ="//img[@class='logo-img img-responsive sourceImg']")
 	private WebElement vendorslist;
@@ -294,13 +296,22 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 		return score;
 	}
 	
-	public List<Map<String, String>> SitelLinkData() throws InterruptedException{
+	public void SitelLinkData() throws Exception{
 		JSWaiter.waitJQueryAngular();
-		waitForElement(siteTable, 40);
-		//getting into progressbar found listing
-		scrollByElement(SiteLink);
-		//clicking on found listing progress bar
-		clickelement(SiteLink);
+		waitForElement(contentsiteTable, 40);
+		scrollByElement(contentsiteTable);
+		int size = SiteLink.size();
+		int newsize;
+		if(size>3) {
+			newsize=3;
+		}
+		else {
+			newsize =size;
+		}
+		System.out.println("The size is :" +size);
+		for(int k = 1; k<=newsize; k++) {
+			driver.findElement(By.xpath("(//*[@class='logo-img img-responsive sourceImg'])["+ k +"]")).click();
+		
 		System.out.println("\n Link clicked \n");
 		waitForElement(SiteLinkTable,40);
 		scrollByElement(SiteLinkTable);
@@ -314,7 +325,6 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 		JSWaiter.waitJQueryAngular();
 		waitForElement(Tableresults,50);
 		String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
-	//	driver.findElement(By.xpath("(//*[@class='pagination']//a)[2]")).click();
 		int page = Integer.parseInt(n);
 		System.out.println("\n"+page);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
@@ -361,6 +371,22 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	    }
 	    	System.out.println("Total number of entries in table : "+count);
 	    	Assert.assertTrue(entiresText.contains(""+count+""), "Table Data count matches with total enties count");
+	    	scrollByElement(Tableresults);
+	    	System.out.println("UI Table Values :" +tableCellValues);
+			List<Map<String, String>> TableExport =	getSiteLinkExporttableData();
+			System.out.println("Excel File Values :" +TableExport);
+			int UISize = tableCellValues.size();
+			System.out.println("UI Table size is :" +UISize);
+			int XLSize = TableExport.size();
+			System.out.println("Excel File size is :" +XLSize);
+			if(UISize == XLSize) {
+				for(int i = 0; i<=UISize; i++) {							
+					assertTrue(tableCellValues.get(i).equals(TableExport.get(i)));
+				}
+			}
+			deletefile();
+			tableCellValues.clear();
+			scrollByElement(contentsiteTable);
 		}else if(driver.findElement(By.className("dataTables_empty")).isDisplayed()) {
 				try {
 					BaseClass.addEvidence(driver, "Data is not available for selected Filter", "yes");
@@ -369,7 +395,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 					e.printStackTrace();
 				}
 			}
-				return tableCellValues;
+		}
 		}
 	
 	
