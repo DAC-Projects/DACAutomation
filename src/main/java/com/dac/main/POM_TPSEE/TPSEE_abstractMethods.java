@@ -300,7 +300,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			if(!Group.equals("None")) {			
 				clickelement(fiterGroup);
 				waitForElement(filterDropDown, 20);
-				group = fiterGroup.findElement(By.xpath("//div[@data-value='"+Group+"']"));
+				group = fiterGroup.findElement(By.xpath("//*[@id = 'myGroups']//div[contains(@class,'item') and contains(text(),'"+Group+"')]"));
 				waitForElement(group, 10);
 				clickelement(group);
 				waitUntilLoad(driver);
@@ -1452,9 +1452,6 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
             String TitleText = PageTitletext.getText();
             System.out.println("The title text  is :" + TitleText);
             Assert.assertEquals(Tit, Title);
-            Assert.assertEquals(titText,TitleText );
-                   
-                   
+            Assert.assertEquals(titText,TitleText );     
         }
-		
 }
