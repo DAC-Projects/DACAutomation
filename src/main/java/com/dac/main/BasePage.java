@@ -37,6 +37,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import bsh.ParseException;
+import resources.BaseClass;
 import resources.CurrentState;
 import resources.DateFormats;
 import resources.JSWaiter;
@@ -44,479 +45,527 @@ import resources.JSWaiter;
 /***/
 public class BasePage {
 
-  public WebDriver driver;
-  public Actions action;
-  public Select select;
-  public WebDriverWait wait;
-  public JavascriptExecutor js;
+	public WebDriver driver;
+	public Actions action;
+	public Select select;
+	public WebDriverWait wait;
+	public JavascriptExecutor js;
 
-  public BasePage(WebDriver driver) {
-    this.driver = driver;
-    wait = new WebDriverWait(driver, 35);
-    action = new Actions(driver);
-    js = (JavascriptExecutor) driver;
-  }
+	public BasePage(WebDriver driver) {
+		this.driver = driver;
+		wait = new WebDriverWait(driver, 35);
+		action = new Actions(driver);
+		js = (JavascriptExecutor) driver;
+	}
 
-  
-  /**
-   * This method is used to wait the execution till web page gets completely loaded but  
-   * in few cases where java script waiting code cannot be work as expected		
-   * 
-   * @param driver : for which driver need to wait till page's script get loaded		*/
-  public void waitUntilLoad(WebDriver driver) {
-	  JSWaiter.waitJQueryAngular();
-    // WebDriverWait wait = new WebDriverWait(driver, 30);
-    try {
-      // wait for jQuery to load
-      ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
-        @Override
-        public Boolean apply(WebDriver driver) {
-          try {
-            return ((Long) ((JavascriptExecutor) driver)
-                .executeScript("return jQuery.active") == 0);
-          } catch (Exception e) {
-            // no jQuery present
-            return true;
-          }
-        }
-      };
+	/**
+	 * This method is used to wait the execution till web page gets completely
+	 * loaded but in few cases where java script waiting code cannot be work as
+	 * expected
+	 * 
+	 * @param driver
+	 *            : for which driver need to wait till page's script get loaded
+	 */
+	public void waitUntilLoad(WebDriver driver) {
+		JSWaiter.waitJQueryAngular();
+		// WebDriverWait wait = new WebDriverWait(driver, 30);
+		try {
+			// wait for jQuery to load
+			ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
+				@Override
+				public Boolean apply(WebDriver driver) {
+					try {
+						return ((Long) ((JavascriptExecutor) driver).executeScript("return jQuery.active") == 0);
+					} catch (Exception e) {
+						// no jQuery present
+						return true;
+					}
+				}
+			};
 
-      // wait for Javascript to load
-      ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
-        @Override
-        public Boolean apply(WebDriver driver) {
-          return ((JavascriptExecutor) driver)
-              .executeScript("return document.readyState").toString()
-              .equals("complete");
-        }
-      };
+			// wait for Javascript to load
+			ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
+				@Override
+				public Boolean apply(WebDriver driver) {
+					return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString()
+							.equals("complete");
+				}
+			};
 
-      wait.until(jQueryLoad);
-      wait.until(jsLoad);
-    } catch (TimeoutException e) {
-      throw new AssertionError("page did not load within specified timeout");
-    }
-  }
+			wait.until(jQueryLoad);
+			wait.until(jsLoad);
+		} catch (TimeoutException e) {
+			throw new AssertionError("page did not load within specified timeout");
+		}
+	}
 
-  /**
-   * This method is used to check whether downloaded file is saved completely in specific directory
-   * 
-   * @param	initialSize : current size of the directory before downloading a file
-   * @param timeout : waiting time to download the file
-   * @param dir : directory where the file will download			 */
-  public void checkFileSizeIncrsd(long initialSize, int timeout, File dir) {
-	  JSWaiter.waitJQueryAngular();
-    WebDriverWait dwnldwait = new WebDriverWait(driver, timeout);
+	/**
+	 * This method is used to check whether downloaded file is saved completely in
+	 * specific directory
+	 * 
+	 * @param initialSize
+	 *            : current size of the directory before downloading a file
+	 * @param timeout
+	 *            : waiting time to download the file
+	 * @param dir
+	 *            : directory where the file will download
+	 */
+	public void checkFileSizeIncrsd(long initialSize, int timeout, File dir) {
+		JSWaiter.waitJQueryAngular();
+		WebDriverWait dwnldwait = new WebDriverWait(driver, timeout);
 
-    ExpectedCondition<Boolean> chkFileDownld = new ExpectedCondition<Boolean>() {
-      public Boolean apply(WebDriver driver) {
+		ExpectedCondition<Boolean> chkFileDownld = new ExpectedCondition<Boolean>() {
+			public Boolean apply(WebDriver driver) {
 
-        return (initialSize < dir.listFiles().length);
-      }
-    };
-    System.out.println("directory size is " + dir.listFiles().length);
+				return (initialSize < dir.listFiles().length);
+			}
+		};
+		System.out.println("directory size is " + dir.listFiles().length);
 
-    if(!dwnldwait.until(chkFileDownld)) {
-    	throw new TimeoutException("File not downloaded within "+timeout+" seconds.");
-    }
-  }
+		if (!dwnldwait.until(chkFileDownld)) {
+			throw new TimeoutException("File not downloaded within " + timeout + " seconds.");
+		}
+	}
 
-  /**
-   * This method used to download the file in any browser.
-   * 
-   * @param browser : On which browser downloading the file
-   * @param downloadBTN : webelement to download the file
-   * @param timeout : waiting time to download the file
-   * @throws InterruptedException
-   */
-  public synchronized void download(String browser, WebElement downloadBTN, int timeout)
-      throws InterruptedException {
-	  	JSWaiter.waitJQueryAngular();
-	  	
+	/**
+	 * This method used to download the file in any browser.
+	 * 
+	 * @param browser
+	 *            : On which browser downloading the file
+	 * @param downloadBTN
+	 *            : webelement to download the file
+	 * @param timeout
+	 *            : waiting time to download the file
+	 * @throws InterruptedException
+	 */
+	public synchronized void download(String browser, WebElement downloadBTN, int timeout) throws InterruptedException {
+		JSWaiter.waitJQueryAngular();
+
 		File dwnldDir = new File("./downloads");
-    long initialSize = dwnldDir.listFiles().length;
-    System.out.println("directory size is " + initialSize);// check file size
+		long initialSize = dwnldDir.listFiles().length;
+		System.out.println("directory size is " + initialSize);// check file size
 
-      try {
-        clickelement(downloadBTN);
-        Thread.sleep(4000);
-        Robot robot = new Robot();
-        robot.setAutoDelay(5000);
-        Thread.sleep(3000);
-        robot.keyPress(KeyEvent.VK_ALT);
-        robot.keyPress(KeyEvent.VK_S);
-        Thread.sleep(1000);
-        robot.keyRelease(KeyEvent.VK_ALT);
-        robot.keyRelease(KeyEvent.VK_S);
-        if ("firefox".equalsIgnoreCase(CurrentState.getBrowser()))
-          robot.keyPress(KeyEvent.VK_ENTER);
+		try {
+			clickelement(downloadBTN);
+			Thread.sleep(4000);
+			Robot robot = new Robot();
+			robot.setAutoDelay(5000);
+			Thread.sleep(3000);
+			robot.keyPress(KeyEvent.VK_ALT);
+			robot.keyPress(KeyEvent.VK_S);
+			Thread.sleep(1000);
+			robot.keyRelease(KeyEvent.VK_ALT);
+			robot.keyRelease(KeyEvent.VK_S);
+			if ("firefox".equalsIgnoreCase(CurrentState.getBrowser()))
+				robot.keyPress(KeyEvent.VK_ENTER);
 
-      } catch (AWTException e) {
-        e.printStackTrace();
-      }
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}
 
-    checkFileSizeIncrsd(initialSize, timeout, dwnldDir);
+		checkFileSizeIncrsd(initialSize, timeout, dwnldDir);
 
-  }
+	}
 
-  /**
-   * files(pdf, Excel, word, image etc) to upload and that file should present
-   * in "FilesToUpload" folder. Before using this method we have to use
-   * "clickElement" of BasePage
-   * 
-   * @param fileNameWithExtension : pass the file name with extension to upload from the project's "FilesToUpload" directory (ex: logo.jpeg)
-   * @throws IOException
-   */
-  public void upload(String fileNameWithExtension) throws IOException {
-    File logoPath = new File(".\\filesToUpload\\" + fileNameWithExtension);
-    String filepath = logoPath.getAbsolutePath();
-    String filepathexe = "./UploadFile.exe";
-    Runtime.getRuntime().exec(filepathexe + " " + filepath);
-  }
+	/**
+	 * files(pdf, Excel, word, image etc) to upload and that file should present in
+	 * "FilesToUpload" folder. Before using this method we have to use
+	 * "clickElement" of BasePage
+	 * 
+	 * @param fileNameWithExtension
+	 *            : pass the file name with extension to upload from the project's
+	 *            "FilesToUpload" directory (ex: logo.jpeg)
+	 * @throws IOException
+	 */
+	public void upload(String fileNameWithExtension) throws IOException {
+		File logoPath = new File(".\\filesToUpload\\" + fileNameWithExtension);
+		String filepath = logoPath.getAbsolutePath();
+		String filepathexe = "./UploadFile.exe";
+		Runtime.getRuntime().exec(filepathexe + " " + filepath);
+	}
 
-  /**
-   * To click on a button using actions class or click() method based on support by the browsers and elements	
-   * 
-   * @param element : element/button to click		*/
-  public void clickelement(WebElement element) {
+	/**
+	 * To click on a button using actions class or click() method based on support
+	 * by the browsers and elements
+	 * 
+	 * @param element
+	 *            : element/button to click
+	 */
+	public void clickelement(WebElement element) {
 
-	  JSWaiter.waitJQueryAngular();
+		JSWaiter.waitJQueryAngular();
 		wait.until(ExpectedConditions.visibilityOf(element));
-     	try {
-    	      if (element.isDisplayed() & element.isEnabled()) {
-    	        try {
-    	          action = new Actions(driver);
-    	          action.moveToElement(element).perform();
-    	          action.moveToElement(element).click(element).perform();
-    	        } catch (WebDriverException e) {
-    	          element.click();
-    	        }
-    	      }
-    	    } catch (NoSuchElementException e) {
-    	      Assert.fail("element" + element + " NOT found");
-    	    }
-     	JSWaiter.waitJQueryAngular();
-    
-  }
+		try {
+			if (element.isDisplayed() & element.isEnabled()) {
+				try {
+					action = new Actions(driver);
+					action.moveToElement(element).perform();
+					action.moveToElement(element).click(element).perform();
+				} catch (WebDriverException e) {
+					element.click();
+				}
+			}
+		} catch (NoSuchElementException e) {
+			Assert.fail("element" + element + " NOT found");
+		}
+		JSWaiter.waitJQueryAngular();
 
-  /**
-   * To get the specific reduced date from today's date in specific format based on the country and language code
-   * 
-   * @return the date in specific date format based on passed contry code and language code
-   * @param langCode : Language code, date format to be in specific format for
-   * 				   English : en , 	 german  : de , 	spanish : es
-   * 				   french  : fr , 	 italian : it ,		swedish : sv
-   * 
-   * @param countryCode : Country code could be case sensitive, date format to be in specific format for
-   * 				      unitedStates    : US ,   german          : DE , 	spanish(Spain) : ES
-   * 				      spanish(Mexico) : MX ,   french(France)  : FR ,   french(Canada) : CA
-   * 				      italian         : IT ,   swedish : SE
-   * 
-   * @param days_Amount : number of days to reduce from today's date 
-   * 				
-   * */
-  public static String minusDays(String langCode, String countryCode,
-      int days_Amount) {
-    Calendar c = Calendar.getInstance();
-    c.add(Calendar.DATE, -days_Amount);
-    String finalDate = DateFormats.dateFormat(langCode, countryCode)
-        .format(c.getTime());
-    return finalDate;
-  }
+	}
 
-  /**
-   * To get the specific add days from today's date in specific format based on the country and language code
-   * 
-   * @return the date in specific date format based on passed contry code and language code
-   * @param langCode : Language code, date format to be in specific format for
-   * 				   English : en , 	 german  : de , 	spanish : es
-   * 				   french  : fr , 	 italian : it ,		swedish : sv
-   * 
-   * @param countryCode : Country code could be case sensitive, date format to be in specific format for
-   * 				      unitedStates    : US ,   german          : DE , 	spanish(Spain) : ES
-   * 				      spanish(Mexico) : MX ,   french(France)  : FR ,   french(Canada) : CA
-   * 				      italian         : IT ,   swedish : SE
-   * 
-   * @param days_Amount : number of days to add to the today's date 
-   * 				
-   * */
-  public static String addDays(String langCode, String countryCode,
-      int days_Amount) {
-    Calendar c = Calendar.getInstance();
-    c.add(Calendar.DATE, days_Amount);
+	/**
+	 * To get the specific reduced date from today's date in specific format based
+	 * on the country and language code
+	 * 
+	 * @return the date in specific date format based on passed contry code and
+	 *         language code
+	 * @param langCode
+	 *            : Language code, date format to be in specific format for English
+	 *            : en , german : de , spanish : es french : fr , italian : it ,
+	 *            swedish : sv
+	 * 
+	 * @param countryCode
+	 *            : Country code could be case sensitive, date format to be in
+	 *            specific format for unitedStates : US , german : DE ,
+	 *            spanish(Spain) : ES spanish(Mexico) : MX , french(France) : FR ,
+	 *            french(Canada) : CA italian : IT , swedish : SE
+	 * 
+	 * @param days_Amount
+	 *            : number of days to reduce from today's date
+	 * 
+	 */
+	public static String minusDays(String langCode, String countryCode, int days_Amount) {
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.DATE, -days_Amount);
+		String finalDate = DateFormats.dateFormat(langCode, countryCode).format(c.getTime());
+		return finalDate;
+	}
 
-    String finalDate = DateFormats.dateFormat(langCode, countryCode)
-        .format(c.getTime());
-    return finalDate;
-  }
+	/**
+	 * To get the specific add days from today's date in specific format based on
+	 * the country and language code
+	 * 
+	 * @return the date in specific date format based on passed contry code and
+	 *         language code
+	 * @param langCode
+	 *            : Language code, date format to be in specific format for English
+	 *            : en , german : de , spanish : es french : fr , italian : it ,
+	 *            swedish : sv
+	 * 
+	 * @param countryCode
+	 *            : Country code could be case sensitive, date format to be in
+	 *            specific format for unitedStates : US , german : DE ,
+	 *            spanish(Spain) : ES spanish(Mexico) : MX , french(France) : FR ,
+	 *            french(Canada) : CA italian : IT , swedish : SE
+	 * 
+	 * @param days_Amount
+	 *            : number of days to add to the today's date
+	 * 
+	 */
+	public static String addDays(String langCode, String countryCode, int days_Amount) {
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.DATE, days_Amount);
 
-  /**
-   * To get and store the value/text of a field even the field is in disabled state.
-   * This method will work even the text value is not present in DOM
-   * 
-   * @param element : pass the WebElement to get the text of it.
-   */
-  public String getClipboardContents(WebElement element)
-      throws UnsupportedFlavorException, IOException {
+		String finalDate = DateFormats.dateFormat(langCode, countryCode).format(c.getTime());
+		return finalDate;
+	}
 
-	  JSWaiter.waitJQueryAngular();
-	  String eleText = "";
-	  if(element.isEnabled()) {
-		  System.out.println("if block starts");
-		  String copy = Keys.chord(Keys.CONTROL, Keys.chord("c"));
-		  element.sendKeys(Keys.CONTROL + "a");
-		  element.sendKeys(copy);
-		  Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-		  Transferable contents = clipboard.getContents(null);
-		  eleText = (String) contents.getTransferData(DataFlavor.stringFlavor);
-		  // System.out.println(eleText);
-	  }
-	  else {
-		  eleText = element.getAttribute("value");
-	  }
-    return eleText;
-  }
+	/**
+	 * To get and store the value/text of a field even the field is in disabled
+	 * state. This method will work even the text value is not present in DOM
+	 * 
+	 * @param element
+	 *            : pass the WebElement to get the text of it.
+	 */
+	public String getClipboardContents(WebElement element) throws UnsupportedFlavorException, IOException {
 
-  /**
-   * This method used to get the last modified file name in a specific folder
-   * 
-   * @param dirPath : pass the directory path in which folder to get the last modified file name	*/
-  public static String getLastModifiedFile(String dirPath)
-      throws InterruptedException {
-    Thread.sleep(4000);
-    File dir = new File(dirPath);
-    File[] files = dir.listFiles();
-    if (files == null || files.length == 0) {
-      return null;
-    }
+		JSWaiter.waitJQueryAngular();
+		String eleText = "";
+		if (element.isEnabled()) {
+			System.out.println("if block starts");
+			String copy = Keys.chord(Keys.CONTROL, Keys.chord("c"));
+			element.sendKeys(Keys.CONTROL + "a");
+			element.sendKeys(copy);
+			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+			Transferable contents = clipboard.getContents(null);
+			eleText = (String) contents.getTransferData(DataFlavor.stringFlavor);
+			// System.out.println(eleText);
+		} else {
+			eleText = element.getAttribute("value");
+		}
+		return eleText;
+	}
 
-    File lastModifiedFile = files[0];
-    for (int i = 1; i < files.length; i++) {
-      if (lastModifiedFile.lastModified() < files[i].lastModified()) {
-        lastModifiedFile = files[i];
-      }
-    }
-    return lastModifiedFile.getName();
-  }
+	/**
+	 * This method used to get the last modified file name in a specific folder
+	 * 
+	 * @param dirPath
+	 *            : pass the directory path in which folder to get the last modified
+	 *            file name
+	 */
+	public static String getLastModifiedFile(String dirPath) throws InterruptedException {
+		Thread.sleep(4000);
+		File dir = new File(dirPath);
+		File[] files = dir.listFiles();
+		if (files == null || files.length == 0) {
+			return null;
+		}
 
-  /**
-   * This method is used to print all the files and directory names present in a specific folder path
-   * and return the last entry file name
-   * 
-   * @param folderPath : pass a folder path(string format) in which to print the files and directory names 		*/
-  public static String getFileNames_Dir(String folderPath) {
-    File folder = new File(folderPath);
-    File[] listOfFiles = folder.listFiles();
-    String fileName = "";
-    for (int i = 0; i < listOfFiles.length; i++) {
-      if (listOfFiles[i].isFile()) {
-        fileName = listOfFiles[i].getName();
-        System.out.println("File " + listOfFiles[i].getName());
-      } else if (listOfFiles[i].isDirectory()) {
-        System.out.println("Directory " + listOfFiles[i].getName());
-      }
-    }
-    return fileName;
-  }
+		File lastModifiedFile = files[0];
+		for (int i = 1; i < files.length; i++) {
+			if (lastModifiedFile.lastModified() < files[i].lastModified()) {
+				lastModifiedFile = files[i];
+			}
+		}
+		return lastModifiedFile.getName();
+	}
 
-  /**
-   * This method is used to verify the text in web page whether it matches with the expected text or not
-   * including the verification of case sensitive
-   * 
-   * Used for weblet testing, tool tip text verification etc. 		*/
-  public void verifyText(WebElement e, String eText) {
+	/**
+	 * This method is used to print all the files and directory names present in a
+	 * specific folder path and return the last entry file name
+	 * 
+	 * @param folderPath
+	 *            : pass a folder path(string format) in which to print the files
+	 *            and directory names
+	 */
+	public static String getFileNames_Dir(String folderPath) {
+		File folder = new File(folderPath);
+		File[] listOfFiles = folder.listFiles();
+		String fileName = "";
+		for (int i = 0; i < listOfFiles.length; i++) {
+			if (listOfFiles[i].isFile()) {
+				fileName = listOfFiles[i].getName();
+				System.out.println("File " + listOfFiles[i].getName());
+			} else if (listOfFiles[i].isDirectory()) {
+				System.out.println("Directory " + listOfFiles[i].getName());
+			}
+		}
+		return fileName;
+	}
 
-	  JSWaiter.waitJQueryAngular();
-	String aText = e.getText().trim();
-    System.out.println(aText);
-    Assert.assertEquals(aText, eText);
-  }
+	/**
+	 * This method is used to verify the text in web page whether it matches with
+	 * the expected text or not including the verification of case sensitive
+	 * 
+	 * Used for weblet testing, tool tip text verification etc.
+	 */
+	public void verifyText(WebElement e, String eText) {
 
-  /**
-   * This method will helps to scroll the web page till the element
-   * 
-   * @param element : to scroll the web page till the specific web element		*/
-  public void scrollByElement(WebElement element) {
+		JSWaiter.waitJQueryAngular();
+		String aText = e.getText().trim();
+		System.out.println(aText);
+		Assert.assertEquals(aText, eText);
+	}
 
-	  JSWaiter.waitJQueryAngular(); 
-	  wait.until(ExpectedConditions.visibilityOf(element));
+	/**
+	 * This method will helps to scroll the web page till the element
+	 * 
+	 * @param element
+	 *            : to scroll the web page till the specific web element
+	 */
+	public void scrollByElement(WebElement element) {
 
-    JavascriptExecutor js = (JavascriptExecutor) driver;
-    int yLoc = element.getLocation().getY() - 10;
-    int xLoc = element.getLocation().getX();
-    js.executeScript("window.scrollTo(" + xLoc + ", " + yLoc + ")");
+		JSWaiter.waitJQueryAngular();
+		wait.until(ExpectedConditions.visibilityOf(element));
 
-  }
-  
- 
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		int yLoc = element.getLocation().getY() - 10;
+		int xLoc = element.getLocation().getX();
+		js.executeScript("window.scrollTo(" + xLoc + ", " + yLoc + ")");
 
-  /**
-   * This method is used to get the today's date in IST format ie. dd-mm-yyyy 		*/
-  public static String getDate() {
-    Date date = new Date();
-    String dateFormat = new SimpleDateFormat("dd-MM-yyyy").format(date);
-    return dateFormat.toString();
-  }
+	}
 
-  /**
-   * This method is used to get the today's date and current execution state time in IST format ie. dd-mm-yyyy HH:mm 		*/
-  public static String getDateNTime() {
-    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-    Date date = new Date();
-    String dateFormat = sdf.format(date);
-    return dateFormat.toString();
-  }
+	/**
+	 * This method is used to get the today's date in IST format ie. dd-mm-yyyy
+	 */
+	public static String getDate() {
+		Date date = new Date();
+		String dateFormat = new SimpleDateFormat("dd-MM-yyyy").format(date);
+		return dateFormat.toString();
+	}
 
-  /**
-   * retrun true if alert is present
-   * 
-   * @return
-   */
-  public boolean isAlertPresent() {
-	  JSWaiter.waitJQueryAngular(); 
-    try {
-      driver.switchTo().alert();
-      return true;
-    } // try
-    catch (NoAlertPresentException Ex) {
-      return false;
-    }
-  }
+	/**
+	 * This method is used to get the today's date and current execution state time
+	 * in IST format ie. dd-mm-yyyy HH:mm
+	 */
+	public static String getDateNTime() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		Date date = new Date();
+		String dateFormat = sdf.format(date);
+		return dateFormat.toString();
+	}
 
-  /**
-   * waits for an element for specified timeout
-   * 
-   * @param elemnt  : element to check whether is it displayed or not in DOM
-   * @param timeSec : pass the waiting time to check whether element is displayed or not up to certain seconds
-   */
-  public boolean waitForElement(WebElement elemnt, int timeSec) {
-    try {
+	/**
+	 * retrun true if alert is present
+	 * 
+	 * @return
+	 */
+	public boolean isAlertPresent() {
+		JSWaiter.waitJQueryAngular();
+		try {
+			driver.switchTo().alert();
+			return true;
+		} // try
+		catch (NoAlertPresentException Ex) {
+			return false;
+		}
+	}
 
-    	JSWaiter.waitJQueryAngular();
-      WebDriverWait wait = new WebDriverWait(driver, timeSec);
-    /*  if ((wait.until(ExpectedConditions.visibilityOf(elemnt)) != null)
-          || (wait.until(ExpectedConditions.visibilityOf(elemnt)) != false) {
-        return true;
-      } else
-        return false;*/
+	/**
+	 * waits for an element for specified timeout
+	 * 
+	 * @param elemnt
+	 *            : element to check whether is it displayed or not in DOM
+	 * @param timeSec
+	 *            : pass the waiting time to check whether element is displayed or
+	 *            not up to certain seconds
+	 */
+	public boolean waitForElement(WebElement elemnt, int timeSec) {
+		try {
 
-       return wait.until(ExpectedConditions.visibilityOf(elemnt)) == elemnt ? true : false;
-    } catch (TimeoutException e) {
-     // Assert.fail("Element did not load in the specified timeout");
-      return false;
-    }
-  }
+			JSWaiter.waitJQueryAngular();
+			WebDriverWait wait = new WebDriverWait(driver, timeSec);
+			/*
+			 * if ((wait.until(ExpectedConditions.visibilityOf(elemnt)) != null) ||
+			 * (wait.until(ExpectedConditions.visibilityOf(elemnt)) != false) { return true;
+			 * } else return false;
+			 */
 
-  /**
-   * This method to print the UI table data in Console of 1st page of pagination only
-   * 
-   * @param table : webelement of UI table for reading the table
-   */
-  public String[][] readTable(WebElement table) {
+			return wait.until(ExpectedConditions.visibilityOf(elemnt)) == elemnt ? true : false;
+		} catch (TimeoutException e) {
+			// Assert.fail("Element did not load in the specified timeout");
+			return false;
+		}
+	}
 
-	  JSWaiter.waitJQueryAngular();
-    driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-    List<WebElement> allRows = table.findElements(By.tagName("tr"));
-    String[][] rowResults = new String[allRows.size()][];
-    int i = 0;
-    String[] cellValues;
-    for (WebElement row : allRows) {
+	/**
+	 * This method to print the UI table data in Console of 1st page of pagination
+	 * only
+	 * 
+	 * @param table
+	 *            : webelement of UI table for reading the table
+	 */
+	public String[][] readTable(WebElement table) {
+		JSWaiter.waitJQueryAngular();
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+		List<WebElement> allRows = table.findElements(By.tagName("tr"));
+		String[][] rowResults = new String[allRows.size()][];
+		int i = 0;
+		String[] cellValues;
+		for (WebElement row : allRows) {
 
-      List<WebElement> cells = row.findElements(By.tagName("td"));
-      if (cells.size() == 0)
-        cells = row.findElements(By.tagName("th"));
+			List<WebElement> cells = row.findElements(By.tagName("td"));
+			if (cells.size() == 0)
+				cells = row.findElements(By.tagName("th"));
 
-      cellValues = new String[cells.size()];
-      int j = 0;
-      for (WebElement cell : cells) {
+			cellValues = new String[cells.size()];
+			int j = 0;
+			for (WebElement cell : cells) {
 
-        if (cell.getText() != null) {
-          cellValues[j] = cell.getText().replaceAll("[^\\p{Print}]", "")
-              .toString();
+				if (cell.getText() != null) {
+					cellValues[j] = cell.getText().replaceAll("[^\\p{Print}]", "").toString();
 
-        } else
-          cellValues[j] = "";
+				} else
+					cellValues[j] = "";
 
-        j++;
-      }
-      rowResults[i] = cellValues;
+				j++;
+			}
+			rowResults[i] = cellValues;
+			
+			System.out.println(Arrays.toString(rowResults[i]));
 
-      System.out.println(Arrays.toString(rowResults[i]));
+			i++;
+		}
+		System.out.println("\n");
+		return rowResults;
+	}
 
-      i++;
-    }
-    System.out.println("\n");
-    return rowResults;
-  }
+	/**
+	 * This method is used to covert Date to any Time zone
+	 */
+	public static String convertTimeZone(String dateFormat, String zone) throws ParseException {
+		SimpleDateFormat FORMATTER = new SimpleDateFormat(dateFormat);
 
+		// I am setting the time zone to EST
+		TimeZone.setDefault(TimeZone.getTimeZone(zone));
+		// Now my default time zone is in EST
+		TimeZone a = TimeZone.getDefault();
+		Date dt = new Date();
+		String tmpdate = FORMATTER.format(new Date());
+		// System.out.println(tmpdate);
 
-/**
-   * This method is used to covert Date to any Time zone */
-    public static  String  convertTimeZone(String dateFormat,String zone ) throws ParseException  {
-          SimpleDateFormat FORMATTER = new SimpleDateFormat(dateFormat);
-            
-            // I am setting the time zone to EST
-          TimeZone.setDefault(TimeZone.getTimeZone(zone));
-                // Now my default time zone is in EST
-          TimeZone a = TimeZone.getDefault();
-          Date dt = new Date();
-          String tmpdate = FORMATTER.format(new Date());
-//          System.out.println(tmpdate);
-   
-        return tmpdate;//return converted date.
-        }
-    
-    /**
-     * This method is used to get days after  
-     * @throws java.text.ParseException */
-  public static String addDays(String oldDate, int amountOfDays, String dateFormat) throws java.text.ParseException, ParseException {
-      //Given Date in String format
-//      System.out.println("Date before Addition: "+oldDate);
-      //Specifying date format that matches the given date
-      SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-      Calendar c = Calendar.getInstance();
-      //Setting the date to the given date
-	 c.setTime(sdf.parse(oldDate));
-        
-      //Number of Days to add
-      c.add(Calendar.DAY_OF_YEAR, amountOfDays);
-      //Date after adding the days to the given date
-      String newDate = sdf.format(c.getTime());
-      //Displaying the new Date after addition of Days
-//      System.out.println("Date after Addition: "+newDate);
-      return newDate;
-  }
-  
-  /**
-   * To get List of dates in between 2 dates with sepcified date format based on Locale(Country Code)  
- * @throws java.text.ParseException */
-public static List<String> getDaysBetweenDates(String strDate,String enDate, String dateFormat) throws ParseException, java.text.ParseException
-{
-    
-    List<String> strADate=new ArrayList<String>();
-    DateFormat formatter ; 
-     
-//    System.out.println("Start date: "+strDate);
-//    System.out.println("End date: "+enDate);
-        
-    formatter = new SimpleDateFormat(dateFormat);
-    Date  startDate = (Date)formatter.parse(strDate); 
-    Date  endDate = (Date)formatter.parse(enDate);
-    
-    //Set calendar to End Date
-    Calendar cal = Calendar.getInstance();
-    cal.setTime(endDate);
-    
-    //Check calendar date is start date; 
-    while (cal.getTime().before(startDate)) {
-        cal.add(Calendar.DATE, 1);                                //+1 Calendar day
-        String tmpDate= formatter.format(cal.getTime());        //Convert Date to String format
-        strADate.add(tmpDate);                                    //Add to List
-    }
+		return tmpdate;// return converted date.
+	}
 
+	/**
+	 * This method is used to get days after
+	 * 
+	 * @throws java.text.ParseException
+	 */
+	public static String addDays(String oldDate, int amountOfDays, String dateFormat)
+			throws java.text.ParseException, ParseException {
+		// Given Date in String format
+		// System.out.println("Date before Addition: "+oldDate);
+		// Specifying date format that matches the given date
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+		Calendar c = Calendar.getInstance();
+		// Setting the date to the given date
+		c.setTime(sdf.parse(oldDate));
 
+		// Number of Days to add
+		c.add(Calendar.DAY_OF_YEAR, amountOfDays);
+		// Date after adding the days to the given date
+		String newDate = sdf.format(c.getTime());
+		// Displaying the new Date after addition of Days
+		// System.out.println("Date after Addition: "+newDate);
+		return newDate;
+	}
 
-//    strADate.forEach(System.out::println);//Print List
-    return strADate;
-}
+	/**
+	 * To get List of dates in between 2 dates with sepcified date format based on
+	 * Locale(Country Code)
+	 * 
+	 * @throws java.text.ParseException
+	 */
+	public static List<String> getDaysBetweenDates(String strDate, String enDate, String dateFormat)
+			throws ParseException, java.text.ParseException {
+
+		List<String> strADate = new ArrayList<String>();
+		DateFormat formatter;
+
+		// System.out.println("Start date: "+strDate);
+		// System.out.println("End date: "+enDate);
+
+		formatter = new SimpleDateFormat(dateFormat);
+		Date startDate = (Date) formatter.parse(strDate);
+		Date endDate = (Date) formatter.parse(enDate);
+
+		// Set calendar to End Date
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(endDate);
+
+		// Check calendar date is start date;
+		while (cal.getTime().before(startDate)) {
+			cal.add(Calendar.DATE, 1); // +1 Calendar day
+			String tmpDate = formatter.format(cal.getTime()); // Convert Date to String format
+			strADate.add(tmpDate); // Add to List
+		}
+
+		// strADate.forEach(System.out::println);//Print List
+		return strADate;
+	}
+	
+	public int NumOfentries(WebElement entry) {
+		waitForElement(entry, 10);
+		if(entry.isDisplayed()) {
+		String entiresText = entry.getText();
+		System.out.println("The total entries in a table is :" + entiresText);
+		String result = entiresText.substring(entiresText.indexOf("(") + 3, entiresText.indexOf(")") - 7).trim();
+		int finalvalue = Integer.parseInt(result);
+		System.out.println("The number of entries is : " +finalvalue);
+		return finalvalue;
+		}else {
+			System.out.println("No Data available");
+			return 0;
+		}		
+	}
 }

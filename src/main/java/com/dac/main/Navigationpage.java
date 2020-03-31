@@ -84,6 +84,9 @@ public class Navigationpage extends BasePage {
 
 	@FindBy(xpath = "//*[@id='roi_gmb']/a")
 	private WebElement ROI;
+	
+	@FindBy(xpath = "//a[@href='/Dashboard/FacebookInsights/']")
+	private WebElement FacebookInsights;
 
 	// ------------------------- SA and RRM -------------------------------------
 
@@ -421,6 +424,22 @@ public class Navigationpage extends BasePage {
 		try {
 			clickNotificationPopUp();
 		} catch (Exception e) {
+			System.out.println("No Notification PopUp displayed");
+		}
+	}
+	
+	public void navigateToFacebookInsights() {
+		clickelement(FacebookInsights);
+		System.out.println("Waiting for page to Load*******");
+		waitUntilLoad(driver);
+		try {
+			clickwalkme();
+		}catch(Exception e) {
+			System.out.println("No Walkme Displayed");
+		}
+		try {
+			clickNotificationPopUp();
+		}catch(Exception e) {
 			System.out.println("No Notification PopUp displayed");
 		}
 	}
