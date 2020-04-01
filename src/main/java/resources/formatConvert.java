@@ -51,6 +51,7 @@ public class formatConvert {
 
 	}
 
+	@SuppressWarnings("resource")
 	private String toExcel(String fileExtension, String newFormat) throws IOException {
 		// create sheet
 		Workbook wb = new XSSFWorkbook();

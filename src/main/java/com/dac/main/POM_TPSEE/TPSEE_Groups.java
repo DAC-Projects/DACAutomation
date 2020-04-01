@@ -185,6 +185,7 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ArrayList<String> view_Group(String Groupname) throws Exception
 	{
 
@@ -329,6 +330,7 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 
 	}
 
+	@SuppressWarnings("unused")
 	public void delete_Group(String Group) throws InterruptedException
 	{
 		JSWaiter.waitJQueryAngular();		
@@ -364,6 +366,7 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 
 
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public ArrayList<String> verification(String Groupname) throws Exception
 	{
 		ArrayList<String> rules1 = new ArrayList();
@@ -422,6 +425,7 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		return con;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public ArrayList<String> BeforeEditverification(String Groupname) throws Exception
 	{
 		ArrayList<String> rules1 = new ArrayList();
@@ -514,6 +518,7 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public ArrayList<String> verification_two_Rule(String Groupname) throws Exception
 	{
 		ArrayList<String> rules1 = new ArrayList();

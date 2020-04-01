@@ -37,7 +37,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import bsh.ParseException;
-import resources.BaseClass;
 import resources.CurrentState;
 import resources.DateFormats;
 import resources.JSWaiter;
@@ -482,6 +481,7 @@ public class BasePage {
 	/**
 	 * This method is used to covert Date to any Time zone
 	 */
+	@SuppressWarnings("unused")
 	public static String convertTimeZone(String dateFormat, String zone) throws ParseException {
 		SimpleDateFormat FORMATTER = new SimpleDateFormat(dateFormat);
 

@@ -5,9 +5,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,6 +102,7 @@ public class TPSEE_ReviewStream_Page extends TPSEE_abstractMethods{
 	}
 	
 	//get Review stream table data
+	@SuppressWarnings("unused")
 	public List<Map<String, String>> ReviewStreamDataTable(String [][] exceldata ) throws Exception{
 		JSWaiter.waitJQueryAngular();
 		waitForElement(ReviewStreamTable, 40);
@@ -231,6 +229,7 @@ public class TPSEE_ReviewStream_Page extends TPSEE_abstractMethods{
 	}
 	
 	/*---------Export Review Stream 7 day Report ----------*/
+	@SuppressWarnings("unused")
 	public void ReviewStreamDataTableExport() throws FileNotFoundException, IOException, InterruptedException {
 		waitForElement(ReviewStreamTable, 40);
 		waitForElement(exportBtn, 40);
@@ -335,6 +334,7 @@ public class TPSEE_ReviewStream_Page extends TPSEE_abstractMethods{
 		return tbl;
 		
 	}
+	@SuppressWarnings("unlikely-arg-type")
 	public boolean verifyUItoExcel(String [][]excelData, String UIData) {
 		return Arrays.asList(excelData).contains(UIData);
 	}

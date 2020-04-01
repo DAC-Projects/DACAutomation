@@ -5,7 +5,6 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_LocalReportsScoreChange_Page;
-import com.dac.main.POM_TPSEE.TPSEE_ReviewStream_Page;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -35,7 +34,6 @@ public class TPSEE_LocalReportsScoreChange_Test extends BaseClass {
 	}
 
 	// Test for Create Email Notification
-	@SuppressWarnings("unchecked")
 	@Test(priority = 3, dependsOnMethods = { "navigateToLocalReportsScoreChange" }, groups = {
 			"smoke" }, description = "TC: Creating New Notification to Local Report Score Change")
 	public void createEmailNotification() throws Exception {
@@ -50,7 +48,6 @@ public class TPSEE_LocalReportsScoreChange_Test extends BaseClass {
 	}
 
 	// Test for Edit Email Notification
-	@SuppressWarnings("unchecked")
 	@Test(dependsOnMethods = { "createEmailNotification" }, groups = {
 			"smoke" }, description = "TC: Updating Notification to Local Report Score Change")
 	public void editEmailNotification() throws Exception {
@@ -63,7 +60,6 @@ public class TPSEE_LocalReportsScoreChange_Test extends BaseClass {
 	}
 
 	// Test for Edit Email Notification
-	@SuppressWarnings("unchecked")
 	@Test(dependsOnMethods = { "editEmailNotification" }, groups = {
 			"smoke" }, description = "TC: Deleting Notification to Local Report Score Change")
 	public void deleteEmailNotification() throws Exception {

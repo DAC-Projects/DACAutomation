@@ -35,7 +35,6 @@ public class TPSEE_ReviewNotifications_Test extends BaseClass {
 	}
 
 	// Test for Create Email Notification
-	@SuppressWarnings("unchecked")
 	@Test(dependsOnMethods = { "navigateReviewNotifications" }, groups = {
 			"smoke" }, description = "TC: Creating New Review Notification")
 	public void createEmailNotification() throws Exception {
@@ -50,7 +49,6 @@ public class TPSEE_ReviewNotifications_Test extends BaseClass {
 	}
 
 	// Test for Edit Email Notification
-	@SuppressWarnings("unchecked")
 	@Test(dependsOnMethods = { "createEmailNotification" }, groups = {
 			"smoke" }, description = "TC: Updating Review Notification")
 	public void editEmailNotification() throws Exception {
@@ -63,7 +61,6 @@ public class TPSEE_ReviewNotifications_Test extends BaseClass {
 	}
 
 	// Test for Edit Email Notification
-	@SuppressWarnings("unchecked")
 	@Test(dependsOnMethods = { "editEmailNotification" }, groups = {
 			"smoke" }, description = "TC: Deleting Notification from Review Notification")
 	public void deleteEmailNotification() throws Exception {
@@ -74,7 +71,6 @@ public class TPSEE_ReviewNotifications_Test extends BaseClass {
 	}
 
 	// Test for Custom All Reviews Email Notification
-	@SuppressWarnings("unchecked")
 	@Test(dependsOnMethods = { "deleteEmailNotification" }, groups = {
 			"smoke" }, description = "TC: All Reviews Notification from Review Notification")
 	public void customAllReviewsNotification() throws Exception {
@@ -87,7 +83,6 @@ public class TPSEE_ReviewNotifications_Test extends BaseClass {
 	}
 
 	// Test for Less-than 3 stars Reviews Email Notification
-	@SuppressWarnings("unchecked")
 	@Test(dependsOnMethods = { "customAllReviewsNotification" }, groups = {
 			"smoke" }, description = "TC: Less-than 3 stars Reviews Notification from Review Notification")
 	public void customLessThan3ReviewsNotification() throws Exception {

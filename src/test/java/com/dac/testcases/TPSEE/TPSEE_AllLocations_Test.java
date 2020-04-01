@@ -9,7 +9,6 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_AllLocations_Page;
-import com.dac.main.POM_TPSEE.TPSEE_abstractMethods;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -30,7 +29,6 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
 	public void GetKPIValues() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
-		Thread.sleep(50000);
 		location = data.getLocations();
 		System.out.println(location);
 		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
@@ -50,7 +48,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	@Test(priority = 3)
 	public void verifyText() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
-		data.VerifyTitleText("Locations",
+		data.VerifyLocationsTitleText("Locations",
 				"This is where all the locations currently associated to your account are listed.");
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 
@@ -107,7 +105,6 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	public void exportascsv() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.LocationDataTableExportCSV();
-		data.LocationDataTableExportXLSX();
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}
 

@@ -186,6 +186,7 @@ public class ContentManagement_Page extends BasePage {
 	 * @param Text
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unused")
 	public void SearchUnpublishedKeyinTable(String Text) throws Exception {
 		scrollByElement(UnpublishedTable);
 		if (driver.findElement(By.xpath("//*[@id='tblUnpublishedItems_info']")).isDisplayed()) {
@@ -315,6 +316,7 @@ public class ContentManagement_Page extends BasePage {
 	 * @param Text
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unused")
 	public void SearchPublishedKeyinTable(String Text) throws Exception {
 		scrollByElement(PublishedTable);
 		if (driver.findElement(By.xpath("//*[@id='tblPublishedItems_info']")).isDisplayed()) {
@@ -459,6 +461,7 @@ public class ContentManagement_Page extends BasePage {
 		SearchTextnType(UnpublishedTextSearch, UnpublishedType, UnpublishedSearch, Text, Type);
 	}
 
+	@SuppressWarnings("unused")
 	public void SearchUnpublishedKeynTypeinTable(String Text, String Type) throws Exception {
 		scrollByElement(UnpublishedTable);
 		if (driver.findElement(By.xpath("//*[@id='tblUnpublishedItems_info']")).isDisplayed()) {
@@ -519,6 +522,7 @@ public class ContentManagement_Page extends BasePage {
 		SearchTextnType(PublishedTextSearch, PublishedType, PublishedSearch, Text, Type);
 	}
 
+	@SuppressWarnings("unused")
 	public void SearchPublishedKeynTypeinTable(String Text, String Type) throws Exception {
 		scrollByElement(PublishedTable);
 		if (driver.findElement(By.xpath("//*[@id='tblPublishedItems_info']")).isDisplayed()) {

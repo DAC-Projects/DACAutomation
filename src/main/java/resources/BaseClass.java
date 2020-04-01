@@ -7,12 +7,10 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.dac.main.LoginAC_Beta;
-import com.dac.main.Navigationpage;
 import com.selenium.testevidence.SeleniumEvidence;
 
 public abstract class BaseClass {
@@ -38,17 +36,6 @@ public abstract class BaseClass {
 		LoginAC_Beta lp = new LoginAC_Beta();
 		BaseClass.loginAuth(lp);
 		BaseClass.navigateToDashboard(lp);
-		try {
-			clickwalkme();
-		} catch (Exception e) {
-			System.out.println("No Walkme Displayed");
-		}
-		try {
-			clickNotificationPopUp();
-		} catch (Exception e) {
-			System.out.println("No Notification PopUp displayed");
-		}
-
 	}
 
 	/**
@@ -67,6 +54,7 @@ public abstract class BaseClass {
 		System.out.println("logged to Auth center");
 	}
 
+	@SuppressWarnings("unused")
 	private static void navigateToDashboard(LoginAC_Beta lp) {
 		System.out.println("navigating to dashboard");
 		String firstWindowHandle = CurrentState.getDriver().getWindowHandle();
@@ -91,6 +79,22 @@ public abstract class BaseClass {
 		CurrentState.getDriver().manage().window().maximize();
 		System.out.println("navigted to Dashboard");
 
+		try {
+			
+			if(CurrentState.getDriver().findElement(By.xpath("//button[@class='//span[@class='walkme-custom-balloon-button-text' and contains(text(),'Cancel')]")).isDisplayed()) {
+				CurrentState.getDriver().findElement(By.xpath("//button[@class='//span[@class='walkme-custom-balloon-button-text' and contains(text(),'Cancel')]")).click();
+			}
+			}catch(Exception e) {
+				System.out.println("Walkme Not displayed");
+			}
+			
+			try {
+				if(CurrentState.getDriver().findElement(By.xpath("//span[@class= 'walkme-action-destroy-0 wm-close-link' and contains(text(),'Okay')]")).isDisplayed()) {
+					CurrentState.getDriver().findElement(By.xpath("//span[@class= 'walkme-action-destroy-0 wm-close-link' and contains(text(),'Okay')]")).click();
+				}
+			}catch(Exception e) {
+				System.out.println("Notification PopUp Not displayed");
+			}
 	}
 
 	private static String[] getAccount() {
@@ -138,6 +142,7 @@ public abstract class BaseClass {
 	 *                 user wants to take a screen shot then, he/she can give as
 	 *                 "yes" otherwise "no"
 	 */
+	@SuppressWarnings("unchecked")
 	public static void addEvidence(WebDriver driver, String testStep, String isImageNeeded) throws Exception {
 
 		if (isImageNeeded.equals("yes")) {
@@ -152,24 +157,24 @@ public abstract class BaseClass {
 	/**
 	 * To Click on Cancel Walkme Snippet
 	 */
-	public static void clickwalkme() {
+	/*public static void clickwalkme() {
 		JSWaiter.waitJQueryAngular();
 		if (WalkMeCancel.isDisplayed()) {
 			WalkMeCancel.click();
 		} else {
 			System.out.println("No Walkme Displayed");
 		}
-	}
+	}*/
 
 	/**
 	 * To Click on Okay Notification PopUp
 	 */
-	public static void clickNotificationPopUp() {
+	/*public static void clickNotificationPopUp() {
 		JSWaiter.waitJQueryAngular();
 		if (NotificationPopUp.isDisplayed()) {
 			NotificationPopUp.click();
 		} else {
 			System.out.println("No Notification Displayed");
 		}
-	}
+	}*/
 }

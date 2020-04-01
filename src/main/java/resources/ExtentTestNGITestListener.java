@@ -40,7 +40,6 @@ import com.selenium.testevidence.EvidenceType;
 import com.selenium.testevidence.GenerateEvidenceReport;
 import com.selenium.testevidence.SeleniumEvidence;
 import io.github.bonigarcia.wdm.Architecture;
-import io.github.bonigarcia.wdm.DriverManagerType;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import net.sf.jasperreports.engine.JasperPrint;
 
@@ -48,9 +47,12 @@ public class ExtentTestNGITestListener
     implements ITestListener, IClassListener, IAutoconst, ISuiteListener {
 
   private static ExtentReports extent = ExtentManager.getInstance();
-  private static ThreadLocal parentTest = new ThreadLocal();
-  private static ThreadLocal test = new ThreadLocal();
-  private static ThreadLocal<ArrayList<JasperPrint>> printList =new ThreadLocal();
+  @SuppressWarnings("rawtypes")
+private static ThreadLocal parentTest = new ThreadLocal();
+  @SuppressWarnings("rawtypes")
+private static ThreadLocal test = new ThreadLocal();
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+private static ThreadLocal<ArrayList<JasperPrint>> printList =new ThreadLocal();
     
   
   /**
@@ -90,7 +92,8 @@ public class ExtentTestNGITestListener
    * Set parent "node" for extent reports store "browser" and "test name" from testng.xml
    * 
    * @see org.testng.ITestListener#onStart(org.testng.ITestContext)		*/
-  @Override
+  @SuppressWarnings("unchecked")
+@Override
   public synchronized void onStart(ITestContext context) {
 	 
     CurrentState
@@ -130,7 +133,8 @@ public class ExtentTestNGITestListener
    * 
    * @see org.testng.ITestListener#onTestStart(org.testng.ITestResult)
    */
-  @Override
+  @SuppressWarnings("unchecked")
+@Override
   public synchronized void onTestStart(ITestResult result) {
     ExtentTest child = ((ExtentTest) parentTest.get()).createNode(getTestname(result));
     child.assignCategory(
@@ -157,7 +161,7 @@ public class ExtentTestNGITestListener
    * This method is used to execute when the @Test method is successfully executed		
    * 
    * @see org.testng.IClassListener#onTestSuccess(org.testng.ITestResult)		*/
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public synchronized void onTestSuccess(ITestResult result) {
     ((ExtentTest) test.get()).pass("Test Case Success and Verified");
@@ -210,7 +214,8 @@ public class ExtentTestNGITestListener
    * as those method may depends on stats of another test method		
    * 
    * @see org.testng.IClassListener#onTestSkipped(org.testng.ITestResult)		*/
-  @Override
+  @SuppressWarnings("unchecked")
+@Override
   public synchronized void onTestSkipped(ITestResult result) {
     String description = (result.getMethod().getDescription() != null)
         ? result.getMethod().getDescription()
@@ -329,7 +334,8 @@ public class ExtentTestNGITestListener
    * @param browser
    * @return the driver in which user going to execute among chrome/firefox/ie.
    * @throws IOException	   */
-  public WebDriver openBrowser(String browser) throws IOException {
+  @SuppressWarnings({ "unused", "deprecation" })
+public WebDriver openBrowser(String browser) throws IOException {
 	  WebDriverWait wait;
     WebDriver driver = null;
 

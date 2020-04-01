@@ -267,7 +267,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	    		for (int row = 0; row < rows_count; row++) { 
 	    			List < WebElement > Columns_row = rows_table.get(row).findElements(By.tagName("div"));	//To locate columns(cells) of that specific row.
 	    			int columns_count = Columns_row.size();		//To calculate no of columns (cells). In that specific row.
-	    			int noOfRows=row+1;
+	    			
 	    			//System.out.println("Number of cells In Row " + noOfRows + " are " + columns_count);
 	    			for (int column = 0; column < columns_count; column++) {	//Loop will execute till the last cell of that specific row.
 	    				List<WebElement> headerTableRow=RankingTableHeader.findElements(By.tagName("th"));

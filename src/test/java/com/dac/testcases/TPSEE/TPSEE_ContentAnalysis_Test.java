@@ -11,7 +11,6 @@ import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
-import com.dac.main.POM_TPSEE.TPSEE_Accuracy_Page;
 import com.dac.main.POM_TPSEE.TPSEE_ContentAnalysis_Page;
 
 import resources.BaseClass;
@@ -37,7 +36,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	 * Test to get dashboard scores
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
 	public void GetKPIValues() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
@@ -48,7 +47,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		System.out.println(location);
 		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
-	}*/
+	}
 
 	@Test(priority = 2, groups = { "smoke" }, description = "Test for navigating to ContentAnalysis page")
 	public void navigateToContentAnalysisPage() throws Exception {
@@ -58,7 +57,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to ContentAnalysis page from Dashboard", "yes");
 	}
 
-/*	@Test(priority = 3)
+	@Test(priority = 3)
 	public void verifyText() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		data.VerifyTitleText("Content Analysis Report",
@@ -83,31 +82,55 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	@Test(priority = 5, groups = { "smoke" }, description = "Verify Zoom Functionality")
 	public void gethighchartsdate() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
-		String OneMonth = "1m";
-		data.clickHighchartCriteria(OneMonth);
-		addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
-		Thread.sleep(5000);
-		String ThreeMonths = "3m";
-		data.clickHighchartCriteria(ThreeMonths);
-		addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
-		Thread.sleep(5000);
-		String SixMonths = "6m";
-		data.clickHighchartCriteria(SixMonths);
-		addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
-		Thread.sleep(5000);
-		String OneYear = "1y";
-		data.clickHighchartCriteria(OneYear);
-		addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
-		Thread.sleep(5000);
-		String YearToDate = "ytd";
-		data.clickHighchartCriteria(YearToDate);
-		addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
-		Thread.sleep(5000);
-		String ALLDATA = "all";
-		data.clickHighchartCriteria(ALLDATA);
-		addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
+		try {
+			try {
+				String OneMonth = "1m";
+				data.clickHighchartCriteria(OneMonth);
+				addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				String ThreeMonths = "3m";
+				data.clickHighchartCriteria(ThreeMonths);
+				addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				String SixMonths = "6m";
+				data.clickHighchartCriteria(SixMonths);
+				addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				String OneYear = "1y";
+				data.clickHighchartCriteria(OneYear);
+				addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				String YearToDate = "ytd";
+				data.clickHighchartCriteria(YearToDate);
+				addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				String ALLDATA = "all";
+				data.clickHighchartCriteria(ALLDATA);
+				addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
+	@SuppressWarnings("unused")
 	@Test(priority = 6, enabled = true, dataProvider = "testData")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
@@ -160,10 +183,9 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}*/
+	}
 
-/*	// Test for export and overview report in Content Analysis Page
-	@SuppressWarnings("unchecked")
+	// Test for export and overview report in Content Analysis Page
 	@Test(priority = 8, groups = { "smoke" }, description = "Test for overview export and export verification")
 	public void verifyOverviewReportnExportContentAnalysis() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
@@ -172,7 +194,6 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	}
 
 	// Test for Tooltip and overview report in Content Analysis Page
-	@SuppressWarnings("unchecked")
 	@Test(priority = 9, groups = { "smoke" }, description = "Test to compare ToolTip Value and Overall Analysis Score")
 	public void verifyOverviewReportnTooltipContentAnalysis() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
@@ -180,6 +201,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Tooltip values verified from Overview Content Analysis report", "yes");
 	}
 
+	@SuppressWarnings("finally")
 	@DataProvider
 	public String[][] testData() {
 		String[][] data = null, data1 = null;
@@ -217,19 +239,20 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		} finally {
 			return data;
 		}
-	}*/
+	}
 
 	// Test for export and overview report in Content Analysis Page
 	@Test(priority = 10, groups = { "smoke" }, description = "Test for overview export and export verification")
 	public void verifyTableDataoExport() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		data.SitelLinkData();
-		//data.compareexporttableDatannumberofentries(data.SitelLinkData(), data.getSiteLinkExporttableData());
+		// data.compareexporttableDatannumberofentries(data.SitelLinkData(),
+		// data.getSiteLinkExporttableData());
 		addEvidence(CurrentState.getDriver(), "Verified overview export for Accuracy report", "yes");
 	}
 
 	/*
-	 * //Test to compare vendors in the application in Visibility Page
+	 * * //Test to compare vendors in the application in Visibility Page
 	 * 
 	 * @SuppressWarnings("unchecked")
 	 * 
@@ -247,11 +270,11 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	/*@Test(priority = 11, groups = { "smoke" }, description = "Verify Top Button")
+	@Test(priority = 11, groups = { "smoke" }, description = "Verify Top Button")
 	public void GetTopBtn() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		data.TopButton();
 		addEvidence(CurrentState.getDriver(), "Top Button click verification", "yes");
-	}*/
+	}
 
 }

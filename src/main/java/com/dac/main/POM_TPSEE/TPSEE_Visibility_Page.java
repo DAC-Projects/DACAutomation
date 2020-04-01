@@ -2,7 +2,6 @@ package com.dac.main.POM_TPSEE;
 
 import static org.testng.Assert.assertTrue;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,7 +11,6 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -376,6 +374,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * @return
 	 * @throws Exception 
 	 */
+	@SuppressWarnings("unused")
 	public void DataTablefound() throws Exception{
 		JSWaiter.waitJQueryAngular();
 		waitForElement(siteTable, 40);
@@ -421,7 +420,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 						for (int row = 0; row < rows_count; row++) { 
 							List < WebElement > Columns_row = rows_table.get(row).findElements(By.tagName("td"));	//To locate columns(cells) of that specific row.
 							int columns_count = Columns_row.size();		//To calculate no of columns (cells). In that specific row.
-							int noOfRows=row+1;
+							
 							for (int column = 0; column < columns_count; column++) {	//Loop will execute till the last cell of that specific row.
 								List<WebElement> headerTableRow=titlehead.findElements(By.tagName("th"));
 								String headerText = headerTableRow.get(column).getText(), celtext ="";    				
@@ -473,6 +472,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * @return
 	 * @throws Exception 
 	 */
+	@SuppressWarnings("unused")
 	public void DataTableNotfound() throws Exception{
 		JSWaiter.waitJQueryAngular();
 		waitForElement(siteTable, 40);
@@ -518,7 +518,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 						for (int row = 0; row < rows_count; row++) { 
 							List < WebElement > Columns_row = rows_table.get(row).findElements(By.tagName("td"));	//To locate columns(cells) of that specific row.
 							int columns_count = Columns_row.size();		//To calculate no of columns (cells). In that specific row.
-							int noOfRows=row+1;
+							
 							for (int column = 0; column < columns_count; column++) {	//Loop will execute till the last cell of that specific row.
 								List<WebElement> headerTableRow=titlehead.findElements(By.tagName("th"));
 								String headerText = headerTableRow.get(column).getText(), celtext ="";
@@ -603,6 +603,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unused")
 	public List<Map<String, String>> getExporttableDataFound() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		exporttablefoundXLSX();
@@ -660,6 +661,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unused")
 	public List<Map<String, String>> getExporttableDataNotFound() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		exporttableNotfoundXLSX();

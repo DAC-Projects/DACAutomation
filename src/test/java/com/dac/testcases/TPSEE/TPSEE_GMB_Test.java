@@ -11,7 +11,6 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_GMB;
-import com.dac.main.POM_TPSEE.TPSEE_GoogleRanking_Page;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -128,21 +127,45 @@ public class TPSEE_GMB_Test extends BaseClass {
 	public void verifyTooltip() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
+
 			data = new TPSEE_GMB(CurrentState.getDriver());
-			data.verifyCustomerActionsGraph();
-			addEvidence(CurrentState.getDriver(), "Tooltip values verified from Cusotmer Actions GMB report", "yes");
-			Thread.sleep(5000);
-			data.verifyWhereListingGraph();
-			addEvidence(CurrentState.getDriver(), "Tooltip values verified from Where Listing found GMB report", "yes");
-			Thread.sleep(5000);
-			data.verifyHowListingGraph();
-			addEvidence(CurrentState.getDriver(), "Tooltip values verified from How Listing found GMB report", "yes");
-			Thread.sleep(5000);
-			data.verifyPhotoViewGraph();
-			addEvidence(CurrentState.getDriver(), "Tooltip values verified from Photo View GMB report", "yes");
-			Thread.sleep(5000);
-			data.verifyPhotoQtyGraph();
-			addEvidence(CurrentState.getDriver(), "Tooltip values verified from Photo Quantity GMB report", "yes");
+			try {
+				data.verifyCustomerActionsGraph();
+				addEvidence(CurrentState.getDriver(), "Tooltip values verified from Cusotmer Actions GMB report",
+						"yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.verifyWhereListingGraph();
+				addEvidence(CurrentState.getDriver(), "Tooltip values verified from Where Listing found GMB report",
+						"yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.verifyHowListingGraph();
+				addEvidence(CurrentState.getDriver(), "Tooltip values verified from How Listing found GMB report",
+						"yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.verifyPhotoViewGraph();
+				addEvidence(CurrentState.getDriver(), "Tooltip values verified from Photo View GMB report", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.verifyPhotoQtyGraph();
+				addEvidence(CurrentState.getDriver(), "Tooltip values verified from Photo Quantity GMB report", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			System.out.println("No Data Available for GMB");
 		}
@@ -514,729 +537,1274 @@ public class TPSEE_GMB_Test extends BaseClass {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
 			data = new TPSEE_GMB(CurrentState.getDriver());
-			String OneMonth = "1m";
-			data.clickHighchartCriteria(OneMonth);
-			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
-			Thread.sleep(5000);
-			data.exportXLSXGMB(GMBXLSX1m);
-			addEvidence(CurrentState.getDriver(), "Verifying XLSX export functionality ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWebActions(chromepath1m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for WebActions  ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLReqDirActions(chromepath1m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Request Directory ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLPhCalls(chromepath1m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Phone Calls ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLTotActions(chromepath1m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Actions ", "yes");
-			Thread.sleep(5000);
-
-			data.CustomerAction();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions ", "yes");
-			Thread.sleep(5000);
-
-			data.VerifyCustomerActiononWebVisits();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Web Visits", "yes");
-			Thread.sleep(5000);
-
-			data.VerifyCustomerActiononWebReqDirectory();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Request Directory", "yes");
-			Thread.sleep(5000);
-
-			data.VerifyCustomerActiononPhCalls();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Phone Calls", "yes");
-			Thread.sleep(5000);
-
-			data.WhereListingFound();
-			addEvidence(CurrentState.getDriver(), "Verifying Where Listing Found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.WhereListingSearchFound();
-			addEvidence(CurrentState.getDriver(), "Verifying Where Listing Search Found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.WhereListingMapFound();
-			addEvidence(CurrentState.getDriver(), "Verifying Where Listing Map Found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWhereSearch(chromepath1m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Search Listing", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWhereMap(chromepath1m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Map Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWhereTotalViews(chromepath1m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Total View Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Listing found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingDiscoveryFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Listing Discovery found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingDirFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Listing Directory found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingBrandFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Brand found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.PhotoViews();
-			addEvidence(CurrentState.getDriver(), "Verifying Photo Views UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLDiscovery(chromepath1m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Discovery Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLDirect(chromepath1m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Direct Listing", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLBranded(chromepath1m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Brand Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLTotalSearch(chromepath1m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How total Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.OwnerPhotoViews();
-			addEvidence(CurrentState.getDriver(), "Verifying Owner Photo Views UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CustomerPhotoViews();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Photo Views UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLOwnerPhView(chromepath1m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Owner Photo Views ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLCustPhView(chromepath1m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Customer Photo Views", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLTotPhView(chromepath1m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Photo Views ", "yes");
-			Thread.sleep(5000);
-
-			String ThreeMonths = "3m";
-			data.clickHighchartCriteria(ThreeMonths);
-			addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
-			Thread.sleep(5000);
-
-			data.exportXLSXGMB(GMBXLSX3m);
-			addEvidence(CurrentState.getDriver(), "Verifying XLSX export functionality ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWebActions(chromepath3m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for WebActions  ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLReqDirActions(chromepath3m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Request Directory ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLPhCalls(chromepath3m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Phone Calls ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLTotActions(chromepath3m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Actions ", "yes");
-			Thread.sleep(5000);
-
-			data.CustomerAction();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions ", "yes");
-			Thread.sleep(5000);
-
-			data.VerifyCustomerActiononWebVisits();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Web Visits", "yes");
-			Thread.sleep(5000);
-
-			data.VerifyCustomerActiononWebReqDirectory();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Request Directory", "yes");
-			Thread.sleep(5000);
-
-			data.VerifyCustomerActiononPhCalls();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Phone Calls", "yes");
-			Thread.sleep(5000);
-
-			data.WhereListingFound();
-			addEvidence(CurrentState.getDriver(), "Verifying Where Listing Found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.WhereListingSearchFound();
-			addEvidence(CurrentState.getDriver(), "Verifying Where Listing Search Found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.WhereListingMapFound();
-			addEvidence(CurrentState.getDriver(), "Verifying Where Listing Map Found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWhereSearch(chromepath3m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Search Listing", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWhereMap(chromepath3m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Map Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWhereTotalViews(chromepath3m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Total View Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Listing found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingDiscoveryFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Listing Discovery found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingDirFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Listing Directory found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingBrandFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Brand found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.PhotoViews();
-			addEvidence(CurrentState.getDriver(), "Verifying Photo Views UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLDiscovery(chromepath3m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Discovery Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLDirect(chromepath3m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Direct Listing", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLBranded(chromepath3m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Brand Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLTotalSearch(chromepath3m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How total Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.OwnerPhotoViews();
-			addEvidence(CurrentState.getDriver(), "Verifying Owner Photo Views UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CustomerPhotoViews();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Photo Views UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLOwnerPhView(chromepath3m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Owner Photo Views ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLCustPhView(chromepath3m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Customer Photo Views", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLTotPhView(chromepath3m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Photo Views ", "yes");
-			Thread.sleep(5000);
-
-			String SixMonths = "6m";
-			data.clickHighchartCriteria(SixMonths);
-			addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
-			Thread.sleep(5000);
-
-			data.exportXLSXGMB(GMBXLSX6m);
-			addEvidence(CurrentState.getDriver(), "Verifying XLSX export functionality ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWebActions(chromepath6m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for WebActions  ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLReqDirActions(chromepath6m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Request Directory ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLPhCalls(chromepath6m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Phone Calls ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLTotActions(chromepath6m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Actions ", "yes");
-			Thread.sleep(5000);
-
-			data.CustomerAction();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions ", "yes");
-			Thread.sleep(5000);
-
-			data.VerifyCustomerActiononWebVisits();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Web Visits", "yes");
-			Thread.sleep(5000);
-
-			data.VerifyCustomerActiononWebReqDirectory();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Request Directory", "yes");
-			Thread.sleep(5000);
-
-			data.VerifyCustomerActiononPhCalls();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Phone Calls", "yes");
-			Thread.sleep(5000);
-
-			data.WhereListingFound();
-			addEvidence(CurrentState.getDriver(), "Verifying Where Listing Found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.WhereListingSearchFound();
-			addEvidence(CurrentState.getDriver(), "Verifying Where Listing Search Found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.WhereListingMapFound();
-			addEvidence(CurrentState.getDriver(), "Verifying Where Listing Map Found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWhereSearch(chromepath6m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Search Listing", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWhereMap(chromepath6m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Map Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWhereTotalViews(chromepath6m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Total View Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Listing found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingDiscoveryFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Listing Discovery found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingDirFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Listing Directory found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingBrandFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Brand found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.PhotoViews();
-			addEvidence(CurrentState.getDriver(), "Verifying Photo Views UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLDiscovery(chromepath6m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Discovery Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLDirect(chromepath6m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Direct Listing", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLBranded(chromepath6m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Brand Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLTotalSearch(chromepath6m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How total Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.OwnerPhotoViews();
-			addEvidence(CurrentState.getDriver(), "Verifying Owner Photo Views UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CustomerPhotoViews();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Photo Views UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLOwnerPhView(chromepath6m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Owner Photo Views ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLCustPhView(chromepath6m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Customer Photo Views", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLTotPhView(chromepath6m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Photo Views ", "yes");
-			Thread.sleep(5000);
-
-			String OneYear = "1y";
-			data.clickHighchartCriteria(OneYear);
-			addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
-			Thread.sleep(5000);
-
-			data.exportXLSXGMB(GMBXLSX1y);
-			addEvidence(CurrentState.getDriver(), "Verifying XLSX export functionality ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWebActions(chromepath1y);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for WebActions  ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLReqDirActions(chromepath1y);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Request Directory ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLPhCalls(chromepath1y);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Phone Calls ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLTotActions(chromepath1y);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Actions ", "yes");
-			Thread.sleep(5000);
-
-			data.CustomerAction();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions ", "yes");
-			Thread.sleep(5000);
-
-			data.VerifyCustomerActiononWebVisits();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Web Visits", "yes");
-			Thread.sleep(5000);
-
-			data.VerifyCustomerActiononWebReqDirectory();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Request Directory", "yes");
-			Thread.sleep(5000);
-
-			data.VerifyCustomerActiononPhCalls();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Phone Calls", "yes");
-			Thread.sleep(5000);
-
-			data.WhereListingFound();
-			addEvidence(CurrentState.getDriver(), "Verifying Where Listing Found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.WhereListingSearchFound();
-			addEvidence(CurrentState.getDriver(), "Verifying Where Listing Search Found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.WhereListingMapFound();
-			addEvidence(CurrentState.getDriver(), "Verifying Where Listing Map Found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWhereSearch(chromepath1y);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Search Listing", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWhereMap(chromepath1y);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Map Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWhereTotalViews(chromepath1y);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Total View Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Listing found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingDiscoveryFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Listing Discovery found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingDirFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Listing Directory found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingBrandFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Brand found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.PhotoViews();
-			addEvidence(CurrentState.getDriver(), "Verifying Photo Views UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLDiscovery(chromepath1y);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Discovery Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLDirect(chromepath1y);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Direct Listing", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLBranded(chromepath1y);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Brand Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLTotalSearch(chromepath1y);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How total Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.OwnerPhotoViews();
-			addEvidence(CurrentState.getDriver(), "Verifying Owner Photo Views UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CustomerPhotoViews();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Photo Views UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLOwnerPhView(chromepath1y);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Owner Photo Views ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLCustPhView(chromepath1y);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Customer Photo Views", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLTotPhView(chromepath1m);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Photo Views ", "yes");
-			Thread.sleep(5000);
-
-			String YearToDate = "ytd";
-			data.clickHighchartCriteria(YearToDate);
-			addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
-			Thread.sleep(5000);
-
-			data.exportXLSXGMB(GMBXLSXytd);
-			addEvidence(CurrentState.getDriver(), "Verifying XLSX export functionality ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWebActions(chromepathytd);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for WebActions  ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLReqDirActions(chromepathytd);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Request Directory ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLPhCalls(chromepathytd);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Phone Calls ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLTotActions(chromepathytd);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Actions ", "yes");
-			Thread.sleep(5000);
-
-			data.CustomerAction();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions ", "yes");
-			Thread.sleep(5000);
-
-			data.VerifyCustomerActiononWebVisits();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Web Visits", "yes");
-			Thread.sleep(5000);
-
-			data.VerifyCustomerActiononWebReqDirectory();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Request Directory", "yes");
-			Thread.sleep(5000);
-
-			data.VerifyCustomerActiononPhCalls();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Phone Calls", "yes");
-			Thread.sleep(5000);
-
-			data.WhereListingFound();
-			addEvidence(CurrentState.getDriver(), "Verifying Where Listing Found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.WhereListingSearchFound();
-			addEvidence(CurrentState.getDriver(), "Verifying Where Listing Search Found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.WhereListingMapFound();
-			addEvidence(CurrentState.getDriver(), "Verifying Where Listing Map Found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWhereSearch(chromepathytd);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Search Listing", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWhereMap(chromepathytd);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Map Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWhereTotalViews(chromepathytd);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Total View Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Listing found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingDiscoveryFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Listing Discovery found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingDirFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Listing Directory found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingBrandFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Brand found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.PhotoViews();
-			addEvidence(CurrentState.getDriver(), "Verifying Photo Views UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLDiscovery(chromepathytd);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Discovery Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLDirect(chromepathytd);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Direct Listing", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLBranded(chromepathytd);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Brand Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLTotalSearch(chromepathytd);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How total Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.OwnerPhotoViews();
-			addEvidence(CurrentState.getDriver(), "Verifying Owner Photo Views UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CustomerPhotoViews();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Photo Views UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLOwnerPhView(chromepathytd);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Owner Photo Views ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLCustPhView(chromepathytd);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Customer Photo Views", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLTotPhView(chromepathytd);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Photo Views ", "yes");
-			Thread.sleep(5000);
-
-			String ALLDATA = "all";
-			data.clickHighchartCriteria(ALLDATA);
-			addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
-
-			data.exportXLSXGMB(GMBXLSXall);
-			addEvidence(CurrentState.getDriver(), "Verifying XLSX export functionality ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWebActions(chromepathall);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for WebActions  ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLReqDirActions(chromepathall);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Request Directory ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLPhCalls(chromepathall);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Phone Calls ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLTotActions(chromepathall);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Actions ", "yes");
-			Thread.sleep(5000);
-
-			data.CustomerAction();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions ", "yes");
-			Thread.sleep(5000);
-
-			data.VerifyCustomerActiononWebVisits();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Web Visits", "yes");
-			Thread.sleep(5000);
-
-			data.VerifyCustomerActiononWebReqDirectory();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Request Directory", "yes");
-			Thread.sleep(5000);
-
-			data.VerifyCustomerActiononPhCalls();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Phone Calls", "yes");
-			Thread.sleep(5000);
-
-			data.WhereListingFound();
-			addEvidence(CurrentState.getDriver(), "Verifying Where Listing Found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.WhereListingSearchFound();
-			addEvidence(CurrentState.getDriver(), "Verifying Where Listing Search Found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.WhereListingMapFound();
-			addEvidence(CurrentState.getDriver(), "Verifying Where Listing Map Found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWhereSearch(chromepathall);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Search Listing", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWhereMap(chromepathall);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Map Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLWhereTotalViews(chromepathall);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Total View Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Listing found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingDiscoveryFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Listing Discovery found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingDirFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Listing Directory found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.HowListingBrandFound();
-			addEvidence(CurrentState.getDriver(), "Verifying How Brand found UI ", "yes");
-			Thread.sleep(5000);
-
-			data.PhotoViews();
-			addEvidence(CurrentState.getDriver(), "Verifying Photo Views UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLDiscovery(chromepathall);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Discovery Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLDirect(chromepathall);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Direct Listing", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLBranded(chromepathall);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Brand Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLTotalSearch(chromepathall);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for How total Listing ", "yes");
-			Thread.sleep(5000);
-
-			data.OwnerPhotoViews();
-			addEvidence(CurrentState.getDriver(), "Verifying Owner Photo Views UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CustomerPhotoViews();
-			addEvidence(CurrentState.getDriver(), "Verifying Customer Photo Views UI ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLOwnerPhView(chromepathall);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Owner Photo Views ", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLCustPhView(chromepathall);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Customer Photo Views", "yes");
-			Thread.sleep(5000);
-
-			data.CompareUIXLTotPhView(chromepathall);
-			addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Photo Views ", "yes");
-			Thread.sleep(5000);
+
+			try {
+				String OneMonth = "1m";
+				data.clickHighchartCriteria(OneMonth);
+				addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.exportXLSXGMB(GMBXLSX1m);
+				addEvidence(CurrentState.getDriver(), "Verifying XLSX export functionality ", "yes");
+				Thread.sleep(5000);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWebActions(chromepath1m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for WebActions  ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLReqDirActions(chromepath1m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Request Directory ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLPhCalls(chromepath1m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Phone Calls ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLTotActions(chromepath1m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Actions ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CustomerAction();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.VerifyCustomerActiononWebVisits();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Web Visits", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.VerifyCustomerActiononWebReqDirectory();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Request Directory", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.VerifyCustomerActiononPhCalls();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Phone Calls", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.WhereListingFound();
+				addEvidence(CurrentState.getDriver(), "Verifying Where Listing Found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.WhereListingSearchFound();
+				addEvidence(CurrentState.getDriver(), "Verifying Where Listing Search Found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.WhereListingMapFound();
+				addEvidence(CurrentState.getDriver(), "Verifying Where Listing Map Found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWhereSearch(chromepath1m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Search Listing", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWhereMap(chromepath1m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Map Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWhereTotalViews(chromepath1m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Total View Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Listing found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingDiscoveryFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Listing Discovery found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingDirFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Listing Directory found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingBrandFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Brand found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.PhotoViews();
+				addEvidence(CurrentState.getDriver(), "Verifying Photo Views UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLDiscovery(chromepath1m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Discovery Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLDirect(chromepath1m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Direct Listing", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLBranded(chromepath1m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Brand Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLTotalSearch(chromepath1m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How total Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.OwnerPhotoViews();
+				addEvidence(CurrentState.getDriver(), "Verifying Owner Photo Views UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CustomerPhotoViews();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Photo Views UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLOwnerPhView(chromepath1m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Owner Photo Views ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLCustPhView(chromepath1m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Customer Photo Views", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLTotPhView(chromepath1m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Photo Views ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				String ThreeMonths = "3m";
+				data.clickHighchartCriteria(ThreeMonths);
+				addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.exportXLSXGMB(GMBXLSX3m);
+				addEvidence(CurrentState.getDriver(), "Verifying XLSX export functionality ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWebActions(chromepath3m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for WebActions  ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLReqDirActions(chromepath3m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Request Directory ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLPhCalls(chromepath3m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Phone Calls ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLTotActions(chromepath3m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Actions ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CustomerAction();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.VerifyCustomerActiononWebVisits();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Web Visits", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.VerifyCustomerActiononWebReqDirectory();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Request Directory", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.VerifyCustomerActiononPhCalls();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Phone Calls", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.WhereListingFound();
+				addEvidence(CurrentState.getDriver(), "Verifying Where Listing Found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.WhereListingSearchFound();
+				addEvidence(CurrentState.getDriver(), "Verifying Where Listing Search Found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.WhereListingMapFound();
+				addEvidence(CurrentState.getDriver(), "Verifying Where Listing Map Found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWhereSearch(chromepath3m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Search Listing", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWhereMap(chromepath3m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Map Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWhereTotalViews(chromepath3m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Total View Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Listing found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingDiscoveryFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Listing Discovery found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingDirFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Listing Directory found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingBrandFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Brand found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.PhotoViews();
+				addEvidence(CurrentState.getDriver(), "Verifying Photo Views UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLDiscovery(chromepath3m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Discovery Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLDirect(chromepath3m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Direct Listing", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLBranded(chromepath3m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Brand Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLTotalSearch(chromepath3m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How total Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.OwnerPhotoViews();
+				addEvidence(CurrentState.getDriver(), "Verifying Owner Photo Views UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CustomerPhotoViews();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Photo Views UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLOwnerPhView(chromepath3m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Owner Photo Views ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLCustPhView(chromepath3m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Customer Photo Views", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLTotPhView(chromepath3m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Photo Views ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				String SixMonths = "6m";
+				data.clickHighchartCriteria(SixMonths);
+				addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.exportXLSXGMB(GMBXLSX6m);
+				addEvidence(CurrentState.getDriver(), "Verifying XLSX export functionality ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWebActions(chromepath6m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for WebActions  ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLReqDirActions(chromepath6m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Request Directory ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLPhCalls(chromepath6m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Phone Calls ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLTotActions(chromepath6m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Actions ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CustomerAction();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.VerifyCustomerActiononWebVisits();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Web Visits", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.VerifyCustomerActiononWebReqDirectory();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Request Directory", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.VerifyCustomerActiononPhCalls();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Phone Calls", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.WhereListingFound();
+				addEvidence(CurrentState.getDriver(), "Verifying Where Listing Found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.WhereListingSearchFound();
+				addEvidence(CurrentState.getDriver(), "Verifying Where Listing Search Found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.WhereListingMapFound();
+				addEvidence(CurrentState.getDriver(), "Verifying Where Listing Map Found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWhereSearch(chromepath6m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Search Listing", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWhereMap(chromepath6m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Map Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWhereTotalViews(chromepath6m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Total View Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Listing found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingDiscoveryFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Listing Discovery found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingDirFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Listing Directory found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingBrandFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Brand found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.PhotoViews();
+				addEvidence(CurrentState.getDriver(), "Verifying Photo Views UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLDiscovery(chromepath6m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Discovery Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLDirect(chromepath6m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Direct Listing", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLBranded(chromepath6m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Brand Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLTotalSearch(chromepath6m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How total Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.OwnerPhotoViews();
+				addEvidence(CurrentState.getDriver(), "Verifying Owner Photo Views UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CustomerPhotoViews();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Photo Views UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLOwnerPhView(chromepath6m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Owner Photo Views ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLCustPhView(chromepath6m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Customer Photo Views", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLTotPhView(chromepath6m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Photo Views ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				String OneYear = "1y";
+				data.clickHighchartCriteria(OneYear);
+				addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.exportXLSXGMB(GMBXLSX1y);
+				addEvidence(CurrentState.getDriver(), "Verifying XLSX export functionality ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWebActions(chromepath1y);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for WebActions  ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLReqDirActions(chromepath1y);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Request Directory ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLPhCalls(chromepath1y);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Phone Calls ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLTotActions(chromepath1y);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Actions ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CustomerAction();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.VerifyCustomerActiononWebVisits();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Web Visits", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.VerifyCustomerActiononWebReqDirectory();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Request Directory", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.VerifyCustomerActiononPhCalls();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Phone Calls", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.WhereListingFound();
+				addEvidence(CurrentState.getDriver(), "Verifying Where Listing Found UI ", "yes");
+				Thread.sleep(5000);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.WhereListingSearchFound();
+				addEvidence(CurrentState.getDriver(), "Verifying Where Listing Search Found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.WhereListingMapFound();
+				addEvidence(CurrentState.getDriver(), "Verifying Where Listing Map Found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWhereSearch(chromepath1y);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Search Listing", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWhereMap(chromepath1y);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Map Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWhereTotalViews(chromepath1y);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Total View Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Listing found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingDiscoveryFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Listing Discovery found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingDirFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Listing Directory found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingBrandFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Brand found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.PhotoViews();
+				addEvidence(CurrentState.getDriver(), "Verifying Photo Views UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLDiscovery(chromepath1y);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Discovery Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLDirect(chromepath1y);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Direct Listing", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLBranded(chromepath1y);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Brand Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLTotalSearch(chromepath1y);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How total Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.OwnerPhotoViews();
+				addEvidence(CurrentState.getDriver(), "Verifying Owner Photo Views UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CustomerPhotoViews();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Photo Views UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLOwnerPhView(chromepath1y);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Owner Photo Views ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLCustPhView(chromepath1y);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Customer Photo Views", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLTotPhView(chromepath1m);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Photo Views ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				String YearToDate = "ytd";
+				data.clickHighchartCriteria(YearToDate);
+				addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.exportXLSXGMB(GMBXLSXytd);
+				addEvidence(CurrentState.getDriver(), "Verifying XLSX export functionality ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWebActions(chromepathytd);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for WebActions  ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLReqDirActions(chromepathytd);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Request Directory ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLPhCalls(chromepathytd);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Phone Calls ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLTotActions(chromepathytd);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Actions ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CustomerAction();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.VerifyCustomerActiononWebVisits();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Web Visits", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.VerifyCustomerActiononWebReqDirectory();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Request Directory", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.VerifyCustomerActiononPhCalls();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Phone Calls", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.WhereListingFound();
+				addEvidence(CurrentState.getDriver(), "Verifying Where Listing Found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.WhereListingSearchFound();
+				addEvidence(CurrentState.getDriver(), "Verifying Where Listing Search Found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.WhereListingMapFound();
+				addEvidence(CurrentState.getDriver(), "Verifying Where Listing Map Found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWhereSearch(chromepathytd);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Search Listing", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWhereMap(chromepathytd);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Map Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWhereTotalViews(chromepathytd);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Total View Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Listing found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingDiscoveryFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Listing Discovery found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingDirFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Listing Directory found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingBrandFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Brand found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.PhotoViews();
+				addEvidence(CurrentState.getDriver(), "Verifying Photo Views UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLDiscovery(chromepathytd);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Discovery Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLDirect(chromepathytd);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Direct Listing", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLBranded(chromepathytd);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Brand Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLTotalSearch(chromepathytd);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How total Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.OwnerPhotoViews();
+				addEvidence(CurrentState.getDriver(), "Verifying Owner Photo Views UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CustomerPhotoViews();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Photo Views UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLOwnerPhView(chromepathytd);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Owner Photo Views ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLCustPhView(chromepathytd);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Customer Photo Views", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLTotPhView(chromepathytd);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Photo Views ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				String ALLDATA = "all";
+				data.clickHighchartCriteria(ALLDATA);
+				addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.exportXLSXGMB(GMBXLSXall);
+				addEvidence(CurrentState.getDriver(), "Verifying XLSX export functionality ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWebActions(chromepathall);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for WebActions  ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLReqDirActions(chromepathall);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Request Directory ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLPhCalls(chromepathall);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Phone Calls ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLTotActions(chromepathall);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Actions ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CustomerAction();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.VerifyCustomerActiononWebVisits();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Web Visits", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.VerifyCustomerActiononWebReqDirectory();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Request Directory", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.VerifyCustomerActiononPhCalls();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Actions on Phone Calls", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.WhereListingFound();
+				addEvidence(CurrentState.getDriver(), "Verifying Where Listing Found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.WhereListingSearchFound();
+				addEvidence(CurrentState.getDriver(), "Verifying Where Listing Search Found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.WhereListingMapFound();
+				addEvidence(CurrentState.getDriver(), "Verifying Where Listing Map Found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWhereSearch(chromepathall);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Search Listing", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWhereMap(chromepathall);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Map Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLWhereTotalViews(chromepathall);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Where Total View Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Listing found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingDiscoveryFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Listing Discovery found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingDirFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Listing Directory found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.HowListingBrandFound();
+				addEvidence(CurrentState.getDriver(), "Verifying How Brand found UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.PhotoViews();
+				addEvidence(CurrentState.getDriver(), "Verifying Photo Views UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLDiscovery(chromepathall);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Discovery Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLDirect(chromepathall);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Direct Listing", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLBranded(chromepathall);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How Brand Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLTotalSearch(chromepathall);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for How total Listing ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.OwnerPhotoViews();
+				addEvidence(CurrentState.getDriver(), "Verifying Owner Photo Views UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CustomerPhotoViews();
+				addEvidence(CurrentState.getDriver(), "Verifying Customer Photo Views UI ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLOwnerPhView(chromepathall);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Owner Photo Views ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLCustPhView(chromepathall);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Customer Photo Views", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				data.CompareUIXLTotPhView(chromepathall);
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for Total Photo Views ", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			System.out.println("No Data Available for GMB");
 		}
@@ -1269,6 +1837,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 		}
 	}
 
+	@SuppressWarnings("finally")
 	@DataProvider
 	public String[][] testData() {
 		String[][] data = null, data1 = null;

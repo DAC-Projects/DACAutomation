@@ -1,7 +1,6 @@
 package com.dac.testcases.TPSEE;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +46,6 @@ public class TPSEE_Groups_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test(priority = 3, groups = { "smoke" }, description = "Test to delete group")
 	public void InitialDeleteTable() throws Exception {
 		data = new TPSEE_Groups(CurrentState.getDriver());
@@ -65,7 +63,7 @@ public class TPSEE_Groups_Test extends BaseClass {
 	}
 
 	// Creating a Group with 1 rule
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unused")
 	@Test(priority = 4, groups = { "smoke" }, description = "Test to create group")
 	public void CreateTable() throws Exception {
 		data = new TPSEE_Groups(CurrentState.getDriver());
@@ -92,10 +90,13 @@ public class TPSEE_Groups_Test extends BaseClass {
 	}
 
 	// Viewing and Verification of Group with 1 Rule
+	@SuppressWarnings("unchecked")
 	@Test(priority = 5, groups = { "smoke" }, description = "Test to view group")
 	public void ViewTable() throws Exception {
 		data = new TPSEE_Groups(CurrentState.getDriver());
+		@SuppressWarnings("rawtypes")
 		ArrayList<String> UIRules = new ArrayList();
+		@SuppressWarnings("rawtypes")
 		ArrayList<String> Rules = new ArrayList();
 		wb = new ExcelHandler("./data/Groups.xlsx", "Sheet1");
 		wb.deleteEmptyRows();
@@ -123,7 +124,6 @@ public class TPSEE_Groups_Test extends BaseClass {
 	}
 
 	// Deleting a Group with 1 Rule
-	@SuppressWarnings("unchecked")
 	@Test(priority = 6, groups = { "smoke" }, description = "Test to delete group")
 	public void DeleteTable() throws Exception {
 		data = new TPSEE_Groups(CurrentState.getDriver());
@@ -168,9 +168,11 @@ public class TPSEE_Groups_Test extends BaseClass {
 	}
 
 	// Verification of group with 2 rules
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test(priority = 8, groups = { "smoke" }, description = "Test to verify two criteria")
 	public void Verification_two_Rule() throws Exception {
 		data = new TPSEE_Groups(CurrentState.getDriver());
+		@SuppressWarnings({ })
 		ArrayList<String> UIRules2 = new ArrayList();
 		ArrayList<String> Rules2 = new ArrayList();
 		wb = new ExcelHandler("./data/Groups.xlsx", "Sheet1");
@@ -210,7 +212,6 @@ public class TPSEE_Groups_Test extends BaseClass {
 	}
 
 	// Deletion of Group with 2 Rules
-	@SuppressWarnings("unchecked")
 	@Test(priority = 9, groups = { "smoke" }, description = "Test to delete group")
 	public void Delete_two_Rules() throws Exception {
 		data = new TPSEE_Groups(CurrentState.getDriver());
@@ -256,6 +257,7 @@ public class TPSEE_Groups_Test extends BaseClass {
 	}
 
 	// Verification of Group with 3 Rules
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test(priority = 11, groups = { "smoke" }, description = "Test to verify multiple criteria with 3 rules")
 	public void VerificationTable() throws Exception {
 		data = new TPSEE_Groups(CurrentState.getDriver());
@@ -340,10 +342,13 @@ public class TPSEE_Groups_Test extends BaseClass {
 	}
 
 	// Verification of Group with 3 Rules after editing
+	@SuppressWarnings("rawtypes")
 	@Test(priority = 13, groups = { "smoke" }, description = "Test to verify multiple criteria with 3 rules")
 	public void VerificationTableAfterEdit() throws Exception {
 		data = new TPSEE_Groups(CurrentState.getDriver());
+		@SuppressWarnings("unchecked")
 		ArrayList<String> UIRules1 = new ArrayList();
+		@SuppressWarnings("unchecked")
 		ArrayList<String> Rules1 = new ArrayList();
 		wb = new ExcelHandler("./data/Groups.xlsx", "Sheet2");
 		wb.deleteEmptyRows();
@@ -391,7 +396,6 @@ public class TPSEE_Groups_Test extends BaseClass {
 	}
 
 	// Deleting Group with 3 Rules
-	@SuppressWarnings("unchecked")
 	@Test(priority = 14, groups = { "smoke" }, description = "Test to delete group")
 	public void DeleteTableThreeRules() throws Exception {
 		data = new TPSEE_Groups(CurrentState.getDriver());

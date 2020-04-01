@@ -181,6 +181,7 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 		
 	}
 	
+	@SuppressWarnings("unused")
 	public void CreateReviewNotification(String [][] inputData, int excelRow) throws InterruptedException {
 
 		String strNotificationName=inputData[excelRow][0]; String strDesc=inputData[excelRow][1];

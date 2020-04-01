@@ -1,6 +1,5 @@
 package com.selenium.testevidence;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -13,7 +12,6 @@ import java.util.Properties;
 import javax.imageio.ImageIO;
 
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -22,12 +20,8 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.export.JRPdfExporterParameter;
 import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRDocxExporterParameter;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
-import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 import resources.CurrentState;
 
 /**
@@ -35,6 +29,7 @@ import resources.CurrentState;
  * 
  * @author Elias Nogueira <elias.nogueira@gmail.com>
  */
+@SuppressWarnings("deprecation")
 public class GenerateEvidenceReport {
 
 	/**
@@ -257,7 +252,6 @@ public class GenerateEvidenceReport {
 		return dirExists;
 	}
 
-	@SuppressWarnings("deprecation")
 	public static void exportReport(List<JasperPrint> printList, String reportName) {
 
 		Properties properties = null;

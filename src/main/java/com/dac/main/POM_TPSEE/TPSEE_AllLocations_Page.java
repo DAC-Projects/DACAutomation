@@ -88,6 +88,12 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "(//*[@class='pagination']//a)[last()]")
 	private List<WebElement> paginationLast;
 	
+	@FindBy(xpath = "//*[@id='page-content']//h3")
+	private WebElement PageTitle;
+	
+	@FindBy(xpath = "//p[@class='lead']")
+	private WebElement PageTitletext;
+	
 	/*-------------------------Pagination-----------------------*/
 	
 	/* ------------------------------Locators---------------------------------------*/
@@ -144,7 +150,6 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods{
 	    		for (int row = 0; row < rows_count; row++) { 
 	    			List < WebElement > Columns_row = rows_table.get(row).findElements(By.tagName("td"));	//To locate columns(cells) of that specific row.
 	    			int columns_count = Columns_row.size();		//To calculate no of columns (cells). In that specific row.
-	    			int noOfRows=row+1;
 	    			//System.out.println("Number of cells In Row " + noOfRows + " are " + columns_count);
 	    			for (int column = 0; column < columns_count; column++) {	//Loop will execute till the last cell of that specific row.
 	    				List<WebElement> headerTableRow=LocationTableHeader	.findElements(By.tagName("th"));
@@ -210,8 +215,7 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods{
 	 * @throws Exception 
 	 */
 		public void LocationDataTableExportXLSX() throws Exception {				
-				JSWaiter.waitJQueryAngular();
-				
+				JSWaiter.waitJQueryAngular();				
 				try {
 						exportVATable(Export, Export_xlsx );
 				        Thread.sleep(4000);
@@ -311,5 +315,16 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods{
 		return totloc;
 	}
 	
+	
+	public void VerifyLocationsTitleText(String Tit, String titText) {
+        
+        waitForElement(PageTitle, 10);
+        String Title = PageTitle.getText();
+        System.out.println("Page Title is : "+Title);
+        String TitleText = PageTitletext.getText();
+        System.out.println("The title text  is :" + TitleText);
+        Assert.assertEquals(Tit, Title);
+        Assert.assertEquals(titText,TitleText );     
+    }
 	
 }

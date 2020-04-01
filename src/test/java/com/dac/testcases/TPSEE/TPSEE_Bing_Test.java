@@ -159,89 +159,138 @@ public class TPSEE_Bing_Test extends BaseClass {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		String Isdataavailable = data.validdata();
 		if (!Isdataavailable.equals("There is currently not enough data from Bing to display this report")) {
+			try {
+				try {
+					String OneMonth = "1m";
+					data.clickHighchartCriteria(OneMonth);
+					addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					BingCSVExport();
+					addEvidence(CurrentState.getDriver(), "CSVExport", "yes");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					data.exportXLSXBing(BingXLSX1m);
+					addEvidence(CurrentState.getDriver(), "XLSXExport", "yes");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					data.compareUInExportImpressions(chromepath1m, IEpath1m, FFpath1m);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
-			String OneMonth = "1m";
-			data.clickHighchartCriteria(OneMonth);
-			addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
-			Thread.sleep(5000);
-			BingCSVExport();
-			Thread.sleep(5000);
-			addEvidence(CurrentState.getDriver(), "CSVExport", "yes");
-			Thread.sleep(5000);
-			data.exportXLSXBing(BingXLSX1m);
-			Thread.sleep(5000);
-			addEvidence(CurrentState.getDriver(), "XLSXExport", "yes");
-			Thread.sleep(5000);
-			data.compareUInExportImpressions(chromepath1m, IEpath1m, FFpath1m);
-			Thread.sleep(5000);
+				try {
+					String ThreeMonths = "3m";
+					data.clickHighchartCriteria(ThreeMonths);
+					addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					data.exportXLSXBing(BingXLSX3m);
+					addEvidence(CurrentState.getDriver(), "XLSXExport", "yes");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					data.compareUInExportImpressions(chromepath3m, IEpath3m, FFpath3m);
+					addEvidence(CurrentState.getDriver(), "Impression", "yes");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
-			String ThreeMonths = "3m";
-			data.clickHighchartCriteria(ThreeMonths);
-			addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
-			Thread.sleep(5000);
-			data.exportXLSXBing(BingXLSX3m);
-			Thread.sleep(5000);
-			addEvidence(CurrentState.getDriver(), "XLSXExport", "yes");
-			Thread.sleep(5000);
-			data.compareUInExportImpressions(chromepath3m, IEpath3m, FFpath3m);
-			Thread.sleep(5000);
-			addEvidence(CurrentState.getDriver(), "Impression", "yes");
-			Thread.sleep(5000);
+				try {
+					String SixMonths = "6m";
+					data.clickHighchartCriteria(SixMonths);
+					addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					data.exportXLSXBing(BingXLSX6m);
+					addEvidence(CurrentState.getDriver(), "XLSXExport", "yes");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					data.compareUInExportImpressions(chromepath6m, IEpath6m, FFpath6m);
+					addEvidence(CurrentState.getDriver(), "Impression", "yes");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
-			String SixMonths = "6m";
-			data.clickHighchartCriteria(SixMonths);
-			addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
-			Thread.sleep(5000);
-			data.exportXLSXBing(BingXLSX6m);
-			Thread.sleep(5000);
-			addEvidence(CurrentState.getDriver(), "XLSXExport", "yes");
-			Thread.sleep(5000);
-			data.compareUInExportImpressions(chromepath6m, IEpath6m, FFpath6m);
-			Thread.sleep(5000);
-			addEvidence(CurrentState.getDriver(), "Impression", "yes");
-			Thread.sleep(5000);
+				try {
+					String OneYear = "1y";
+					data.clickHighchartCriteria(OneYear);
+					addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					data.exportXLSXBing(BingXLSX1y);
+					addEvidence(CurrentState.getDriver(), "XLSXExport", "yes");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					data.compareUInExportImpressions(chromepath1y, IEpath1y, FFpath1y);
+					addEvidence(CurrentState.getDriver(), "Impression", "yes");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
-			String OneYear = "1y";
-			data.clickHighchartCriteria(OneYear);
-			addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
-			Thread.sleep(5000);
-			data.exportXLSXBing(BingXLSX1y);
-			Thread.sleep(5000);
-			addEvidence(CurrentState.getDriver(), "XLSXExport", "yes");
-			Thread.sleep(5000);
-			data.compareUInExportImpressions(chromepath1y, IEpath1y, FFpath1y);
-			Thread.sleep(5000);
-			addEvidence(CurrentState.getDriver(), "Impression", "yes");
-			Thread.sleep(5000);
+				try {
+					String YearToDate = "ytd";
+					data.clickHighchartCriteria(YearToDate);
+					addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					data.exportXLSXBing(BingXLSXytd);
+					addEvidence(CurrentState.getDriver(), "XLSXExport", "yes");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					data.compareUInExportImpressions(chromepathytd, IEpathytd, FFpathytd);
+					addEvidence(CurrentState.getDriver(), "Impression", "yes");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
-			String YearToDate = "ytd";
-			data.clickHighchartCriteria(YearToDate);
-			addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
-			Thread.sleep(5000);
-			data.exportXLSXBing(BingXLSXytd);
-			Thread.sleep(5000);
-			addEvidence(CurrentState.getDriver(), "XLSXExport", "yes");
-			Thread.sleep(5000);
-			data.compareUInExportImpressions(chromepathytd, IEpathytd, FFpathytd);
-			Thread.sleep(5000);
-			addEvidence(CurrentState.getDriver(), "Impression", "yes");
-			Thread.sleep(5000);
-
-			String ALLDATA = "all";
-			data.clickHighchartCriteria(ALLDATA);
-			addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
-			Thread.sleep(5000);
-			data.exportXLSXBing(BingXLSXall);
-			Thread.sleep(5000);
-			addEvidence(CurrentState.getDriver(), "XLSXExport", "yes");
-			Thread.sleep(5000);
-			data.compareUInExportImpressions(chromepathall, IEpathall, FFpathall);
-			Thread.sleep(5000);
-			addEvidence(CurrentState.getDriver(), "Impression", "yes");
-			Thread.sleep(5000);
+				try {
+					String ALLDATA = "all";
+					data.clickHighchartCriteria(ALLDATA);
+					addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					data.exportXLSXBing(BingXLSXall);
+					addEvidence(CurrentState.getDriver(), "XLSXExport", "yes");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					data.compareUInExportImpressions(chromepathall, IEpathall, FFpathall);
+					addEvidence(CurrentState.getDriver(), "Impression", "yes");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
+	@SuppressWarnings("unused")
 	@Test(priority = 10, dataProvider = "testData")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
@@ -274,6 +323,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 		}
 	}
 
+	@SuppressWarnings("finally")
 	@DataProvider
 	public String[][] testData() {
 		String[][] data = null, data1 = null;

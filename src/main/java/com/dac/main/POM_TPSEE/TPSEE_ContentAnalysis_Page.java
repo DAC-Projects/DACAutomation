@@ -48,14 +48,14 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	
 	/* ------------------------------Locators---------------------------------------*/
 	
-//	@FindBy(xpath = "//div[contains(@class,'progress progress-striped pos-rel')]")
+
 	@FindBy(css = "div.progress.progress-striped.pos-rel")
 	private WebElement Progress;
 	
 	@FindBy(xpath ="//*[@id='table_review']")
 	private WebElement contentsiteTable;
-	//@FindBy(css = "div.progress")
-	String Progressbar = "//div[contains(@class,'progress progress-striped pos-rel')]"; //*[@id="page-content"]/div[1]/div
+
+	String Progressbar = "//div[contains(@class,'progress progress-striped pos-rel')]"; 
 	
 	@FindBy(xpath="//div[@id='completenessTableExportDropdown']//button" )
 	private WebElement export1;
@@ -233,6 +233,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	}
 	
 	
+	@SuppressWarnings("unused")
 	public List<Map<String, String>> AnalysisSiteData() throws InterruptedException {
 		JSWaiter.waitJQueryAngular();
 		if(contentsiteTable.isDisplayed()){
@@ -249,7 +250,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	    		for (int row = 0; row < rows_count; row++) { 
 	    			List < WebElement > Columns_row = rows_table.get(row).findElements(By.tagName("td"));//To locate columns(cells) of that specific row.
 	    			int columns_count = Columns_row.size();		//To calculate no of columns (cells). In that specific row.
-	    			int noOfRows=row+1;
+	    			
 	    			//System.out.println("Number of cells In Row " + noOfRows + " are " + columns_count);
 	    			for (int column = 0; column < columns_count; column++) {	//Loop will execute till the last cell of that specific row.
 	    				List<WebElement> headerTableRow=SiteTableHeader.findElements(By.tagName("th"));
@@ -345,7 +346,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	    		for (int row = 0; row < rows_count; row++) { 
 	    			List < WebElement > Columns_row = rows_table.get(row).findElements(By.tagName("td"));	//To locate columns(cells) of that specific row.
 	    			int columns_count = Columns_row.size();		//To calculate no of columns (cells). In that specific row.
-	    			int noOfRows=row+1;
+	    			
 	    			//System.out.println("Number of cells In Row " + noOfRows + " are " + columns_count);
 	    			for (int column = 1; column < columns_count; column++) {	//Loop will execute till the last cell of that specific row.
 	    				List<WebElement> headerTableRow=SiteLinkTableHeader.findElements(By.tagName("th"));

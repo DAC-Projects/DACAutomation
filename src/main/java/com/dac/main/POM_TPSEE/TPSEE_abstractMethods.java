@@ -1,5 +1,8 @@
 package com.dac.main.POM_TPSEE;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -37,7 +40,7 @@ import org.testng.Assert;
 
 import com.dac.main.BasePage;
 
-import resources.BaseClass;
+import resources.CurrentState;
 import resources.FileHandler;
 import resources.JSWaiter;
 import resources.formatConvert;
@@ -214,7 +217,8 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
      * @return
      * @throws Exception
      */
-    public double GetDRSDataUsingColName(String PathofXL, String Col_Name) throws Exception {         
+    @SuppressWarnings({ "unused", "deprecation" })
+	public double GetDRSDataUsingColName(String PathofXL, String Col_Name) throws Exception {         
           FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
           Workbook wb = new XSSFWorkbook(excelFilePath);
           Sheet sh = wb.getSheetAt(0);    
@@ -543,6 +547,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @return
 		 * @throws Exception
 		 */
+		@SuppressWarnings("deprecation")
 		public int GetDataUsingColName(String PathofXL, String Col_Name) throws Exception {		  
 			  FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
 		      Workbook wb = new XSSFWorkbook(excelFilePath);
@@ -597,6 +602,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @return
 		 * @throws Exception
 		 */ 
+		@SuppressWarnings("deprecation")
 		public ArrayList<String> GetSiteDataUsingColName(String PathofXL, String Col_Name) throws Exception {		  
 			  FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
 		      Workbook wb = new XSSFWorkbook(excelFilePath);
@@ -1448,10 +1454,26 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
             waitForElement(PageTitle, 10);
             String Title = PageTitle.getText();
             System.out.println("Page Title is : "+Title);
-        //    waitForElement(PageTitletext, 10);
             String TitleText = PageTitletext.getText();
             System.out.println("The title text  is :" + TitleText);
             Assert.assertEquals(Tit, Title);
             Assert.assertEquals(titText,TitleText );     
         }
+		
+		public void Download(WebElement ExportBtn, WebElement ExportType) throws FileNotFoundException, InterruptedException, IOException {
+			try {
+				exportVATable(ExportBtn, ExportType );
+		        Robot robot = new Robot();
+		        robot.setAutoDelay(5000);
+		        robot.keyPress(KeyEvent.VK_ALT);
+		        robot.keyPress(KeyEvent.VK_S);
+		        robot.keyRelease(KeyEvent.VK_ALT);
+		        robot.keyRelease(KeyEvent.VK_S);
+		        if ("firefox".equalsIgnoreCase(CurrentState.getBrowser()))
+		          robot.keyPress(KeyEvent.VK_ENTER);
+
+		      } catch (AWTException e) {
+		        e.printStackTrace();
+		      }
+		}
 }

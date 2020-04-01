@@ -1,13 +1,11 @@
 package com.dac.main.POM_TPSEE;
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,6 +15,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -827,6 +826,7 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 	public void VerifyGMBTitleText(String Tit, String titText) {
 
+		SoftAssert soft = new SoftAssert();
 		waitForElement(PageTitle, 10);
 		String Title = PageTitle.getText();
 		System.out.println("Page Title is : " + Title);
@@ -835,6 +835,7 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		System.out.println("The title text  is :" + TitleText);
 		Assert.assertEquals(Tit, Title);
 		Assert.assertEquals(titText, TitleText);
+		soft.assertAll();
 	}
 
 	public void GetHoverText(String Tet, WebElement e) {
@@ -848,71 +849,136 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	}
 
 	public void verifyMouseHoverText() throws Exception {
-		GetHoverText(
-				"The number of clicks to your business’s website from local search results in Google Maps, Search, and Maps for Mobile.",
-				customerWebsite_MousehoverText);
-		BaseClass.addEvidence(CurrentState.getDriver(), "WebsiteVisitHoverText", "yes");
+		try {
+			GetHoverText(
+					"The number of clicks to your business’s website from local search results in Google Maps, Search, and Maps for Mobile.",
+					customerWebsite_MousehoverText);
+			BaseClass.addEvidence(CurrentState.getDriver(), "WebsiteVisitHoverText", "yes");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		GetHoverText(
-				" The number of clicks for driving directions from a local search result in Google Maps, Search, and Maps for Mobile.",
-				customerDirections_MousehoverText);
-		BaseClass.addEvidence(CurrentState.getDriver(), "ReqDirHoverText", "yes");
+		try {
+			GetHoverText(
+					" The number of clicks for driving directions from a local search result in Google Maps, Search, and Maps for Mobile.",
+					customerDirections_MousehoverText);
+			BaseClass.addEvidence(CurrentState.getDriver(), "ReqDirHoverText", "yes");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		GetHoverText(
-				"The number of clicks for phone calls from a local search result in Google Maps, Search, and Maps for Mobile.",
-				customerPhonecalls_MousehoverText);
-		BaseClass.addEvidence(CurrentState.getDriver(), "PhCallHoverText", "yes");
+		try {
+			GetHoverText(
+					"The number of clicks for phone calls from a local search result in Google Maps, Search, and Maps for Mobile.",
+					customerPhonecalls_MousehoverText);
+			BaseClass.addEvidence(CurrentState.getDriver(), "PhCallHoverText", "yes");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		GetHoverText("The combined total of website visits, direction requests, and phone calls",
-				TotalActionsMousehoverText);
-		BaseClass.addEvidence(CurrentState.getDriver(), "TotalActionHoverText", "yes");
+		try {
+			GetHoverText("The combined total of website visits, direction requests, and phone calls",
+					TotalActionsMousehoverText);
+			BaseClass.addEvidence(CurrentState.getDriver(), "TotalActionHoverText", "yes");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		GetHoverText(
-				"This section shows how many customers found you via Google Search. Total Listing on Search for a selected date range",
-				whereSearch_MousehoverText);
-		BaseClass.addEvidence(CurrentState.getDriver(), "SearchHoverText", "yes");
+		try {
+			GetHoverText(
+					"This section shows how many customers found you via Google Search. Total Listing on Search for a selected date range",
+					whereSearch_MousehoverText);
+			BaseClass.addEvidence(CurrentState.getDriver(), "SearchHoverText", "yes");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		GetHoverText(
-				"This section shows how many customers found you via Google Maps. Total Listing on Map for a selected date range",
-				whereMaps_MousehoverText);
-		BaseClass.addEvidence(CurrentState.getDriver(), "MapsHoverText", "yes");
+		try {
+			GetHoverText(
+					"This section shows how many customers found you via Google Maps. Total Listing on Map for a selected date range",
+					whereMaps_MousehoverText);
+			BaseClass.addEvidence(CurrentState.getDriver(), "MapsHoverText", "yes");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		GetHoverText(
-				"Total number of Listing on Search and Total number of Listing on Maps for the selected date range",
-				Totalviews_MousehoverText);
-		BaseClass.addEvidence(CurrentState.getDriver(), "TotalViewsHoverText", "yes");
+		try {
+			GetHoverText(
+					"Total number of Listing on Search and Total number of Listing on Maps for the selected date range",
+					Totalviews_MousehoverText);
+			BaseClass.addEvidence(CurrentState.getDriver(), "TotalViewsHoverText", "yes");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		GetHoverText("Customers who found your listing searching for a category, product, or service.",
-				howDiscoveryMousehoverText);
-		BaseClass.addEvidence(CurrentState.getDriver(), "DiscoveryHoverText", "yes");
+		try {
+			GetHoverText("Customers who found your listing searching for a category, product, or service.",
+					howDiscoveryMousehoverText);
+			BaseClass.addEvidence(CurrentState.getDriver(), "DiscoveryHoverText", "yes");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		GetHoverText("Customers who found your listing searching for your business name or address.",
-				howDirect_MousehoverText);
-		BaseClass.addEvidence(CurrentState.getDriver(), "DirectHoverText", "yes");
+		try {
+			GetHoverText("Customers who found your listing searching for your business name or address.",
+					howDirect_MousehoverText);
+			BaseClass.addEvidence(CurrentState.getDriver(), "DirectHoverText", "yes");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		GetHoverText("Customers who find your listing searching for a brand related to your business.",
-				howBranded_MousehoverText);
-		BaseClass.addEvidence(CurrentState.getDriver(), "BrandedHoverText", "yes");
+		try {
+			GetHoverText("Customers who find your listing searching for a brand related to your business.",
+					howBranded_MousehoverText);
+			BaseClass.addEvidence(CurrentState.getDriver(), "BrandedHoverText", "yes");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		GetHoverText("Total Discovery and Total Direct based on the selected date range.",
-				TotalSearches_MousehoverText);
-		BaseClass.addEvidence(CurrentState.getDriver(), "TotalSearchesHoverText", "yes");
+		try {
+			GetHoverText("Total Discovery and Total Direct based on the selected date range.",
+					TotalSearches_MousehoverText);
+			BaseClass.addEvidence(CurrentState.getDriver(), "TotalSearchesHoverText", "yes");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		GetHoverText("How many times photos uploaded by the business owner were viewed.",
-				photoViewsOwner_MousehoverText);
-		BaseClass.addEvidence(CurrentState.getDriver(), "PhotoViewsOwnerHoverText", "yes");
+		try {
+			GetHoverText("How many times photos uploaded by the business owner were viewed.",
+					photoViewsOwner_MousehoverText);
+			BaseClass.addEvidence(CurrentState.getDriver(), "PhotoViewsOwnerHoverText", "yes");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		GetHoverText("How many times photos uploaded by a customer were viewed.", photoViewsCustomer_MousehoverText);
-		BaseClass.addEvidence(CurrentState.getDriver(), "PhotoViewCustomerHoverText", "yes");
+		try {
+			GetHoverText("How many times photos uploaded by a customer were viewed.",
+					photoViewsCustomer_MousehoverText);
+			BaseClass.addEvidence(CurrentState.getDriver(), "PhotoViewCustomerHoverText", "yes");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		GetHoverText("Total photo views", photoviewtotalcount_MousehoverText);
-		BaseClass.addEvidence(CurrentState.getDriver(), "TotalPhotoViewHoverText", "yes");
+		try {
+			GetHoverText("Total photo views", photoviewtotalcount_MousehoverText);
+			BaseClass.addEvidence(CurrentState.getDriver(), "TotalPhotoViewHoverText", "yes");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		GetHoverText("Number of photos added by the business owner.", photoCountOwner_MousehoverText);
-		BaseClass.addEvidence(CurrentState.getDriver(), "PhQtyOwnerHoverText", "yes");
+		try {
+			GetHoverText("Number of photos added by the business owner.", photoCountOwner_MousehoverText);
+			BaseClass.addEvidence(CurrentState.getDriver(), "PhQtyOwnerHoverText", "yes");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		GetHoverText("Number of photos added by customers.", photoCountCustomer_MousehoverText);
-		BaseClass.addEvidence(CurrentState.getDriver(), "PhQtyCusomerHoverText", "yes");
+		try {
+			GetHoverText("Number of photos added by customers.", photoCountCustomer_MousehoverText);
+			BaseClass.addEvidence(CurrentState.getDriver(), "PhQtyCusomerHoverText", "yes");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -75,6 +75,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
 
+	@SuppressWarnings("unused")
 	@Test(priority = 6, enabled = true, dataProvider = "testData")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
@@ -124,29 +125,52 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	@Test(priority = 5, groups = { "smoke" }, description = "Verify Zoom Functionality")
 	public void gethighchartsdate() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-		String OneMonth = "1m";
-		data.clickHighchartCriteria(OneMonth);
-		addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
-		Thread.sleep(5000);
-		String ThreeMonths = "3m";
-		data.clickHighchartCriteria(ThreeMonths);
-		addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
-		Thread.sleep(5000);
-		String SixMonths = "6m";
-		data.clickHighchartCriteria(SixMonths);
-		addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
-		Thread.sleep(5000);
-		String OneYear = "1y";
-		data.clickHighchartCriteria(OneYear);
-		addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
-		Thread.sleep(5000);
-		String YearToDate = "ytd";
-		data.clickHighchartCriteria(YearToDate);
-		addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
-		Thread.sleep(5000);
-		String ALLDATA = "all";
-		data.clickHighchartCriteria(ALLDATA);
-		addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
+		try {
+			try {
+				String OneMonth = "1m";
+				data.clickHighchartCriteria(OneMonth);
+				addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				String ThreeMonths = "3m";
+				data.clickHighchartCriteria(ThreeMonths);
+				addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				String SixMonths = "6m";
+				data.clickHighchartCriteria(SixMonths);
+				addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				String OneYear = "1y";
+				data.clickHighchartCriteria(OneYear);
+				addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				String YearToDate = "ytd";
+				data.clickHighchartCriteria(YearToDate);
+				addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				String ALLDATA = "all";
+				data.clickHighchartCriteria(ALLDATA);
+				addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -321,6 +345,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		data.exporttableNotfoundCSV();
 	}
 
+	@SuppressWarnings("finally")
 	@DataProvider
 	public String[][] testData() {
 		String[][] data = null, data1 = null;

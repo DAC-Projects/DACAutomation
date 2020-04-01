@@ -1,25 +1,17 @@
 package com.dac.testcases.TPSEE;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.Status;
-import com.dac.main.BasePage;
 import com.dac.main.Navigationpage;
-import com.dac.main.POM_TPSEE.TPSEE_Accuracy_Page;
-import com.dac.main.POM_TPSEE.TPSEE_AllLocations_Page;
 import com.dac.main.POM_TPSEE.TPSEE_ReviewStream_Page;
 import com.selenium.testevidence.SeleniumEvidence;
 
 import resources.BaseClass;
 import resources.CurrentState;
-import resources.DateFormats;
-import resources.IAutoconst;
 
 public class TPSEE_ReviewStream_Test extends BaseClass{
 	
@@ -41,7 +33,6 @@ public class TPSEE_ReviewStream_Test extends BaseClass{
 	}
 
 //Test for export 7 days data
-		@SuppressWarnings("unchecked")
 		@Test(dependsOnMethods = { "navigateToReviewStreamPage"}, groups = {
 						"smoke" }, description = "TC: export 7 day Review Stream data")
 			public void verifyReviewStreamReportExport() throws Exception {
