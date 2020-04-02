@@ -52,7 +52,7 @@ public class CompareReportsData_PostData extends BaseClass{
 		 for(int j =0;j<=UIValues_val.size()-1;j++) 
 		 {
 			 System.out.println(UIValues_val.get(j));
-			 System.out.println(excelvalues_Val.get(j));
+			 System.out.println("Time"+excelvalues_Val.get(j));
 			 UIValues_val.get(j).contains(excelvalues_Val.get(j));
 		 }
 		 np.navigateToSE_ContentManagement();
@@ -74,13 +74,14 @@ public class CompareReportsData_PostData extends BaseClass{
 		 np.navigateToSE_Post();
 		 excelvalues=new ArrayList<String>();
 		 data = new SE_Post_Page(CurrentState.getDriver());
+		 data.time_get();
 		 data.excel1();
 		 			
 		 }
 		 
 
 
-	/*@Test(dependsOnMethods =  "create_PostPage_FB", groups= {"smoke"}, description = "Test for overview export and export verification")
+	@Test(dependsOnMethods =  "create_PostPage_FB", groups= {"smoke"}, description = "Test for overview export and export verification")
 	 public void create_PostPage_GMB() throws Exception {
 		 excelvalues=new ArrayList<String>();
 		 data = new SE_Post_Page(CurrentState.getDriver());
@@ -116,7 +117,7 @@ public class CompareReportsData_PostData extends BaseClass{
 				e.printStackTrace();
 			}
 		 addEvidence(CurrentState.getDriver(), "Create post page", "yes"); 
-	 }*/
+	 }
 	 
 	 @Test(dependsOnMethods = { "create_PostPage_FB"}, groups= {"smoke"}, description = "Test for overview export and export verification")
 	 public void content_Management1() throws Exception {

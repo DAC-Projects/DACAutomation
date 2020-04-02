@@ -229,6 +229,9 @@ public class SE_Post_Page extends SE_abstractMethods {
    private WebElement Re_yes;
    @FindBy(xpath="(//*[@class='btn btn-success btn-block'])[2]")
    private WebElement Re_Okay;
+   
+   public static String time_Stamp;
+
     String alertText = "";
 	public void create_PostforFB(String textValue, String text) throws InterruptedException, Exception {
 		waitForElement(createNewPostbutton, 10);
@@ -798,12 +801,10 @@ public void appr_user()
 public ArrayList<String>  appr_Rej() throws Exception
 {
 	ArrayList<String> Rejected_values=new ArrayList<String>();
-
 	System.out.println("Executing");
 	waitForElement(Reject, 10);
 	clickelement(Reject);
 	Thread.sleep(1000);
-
 	clickelement(Re_yes);
 	Thread.sleep(1000);
 	clickelement(Re_Okay);
@@ -818,10 +819,9 @@ public ArrayList<String>  appr_Rej() throws Exception
 
 public ArrayList<String> excel() throws Exception {
 	ArrayList<String> excelvalues1=new ArrayList<String>();
-
-int count = 1;
-ExcelHandler wb = new ExcelHandler("./data/Message.xlsx", "MSG"); wb.deleteEmptyRows();
-for(int i=1;i<=wb.getRowCount();i++) {	
+	int count = 1;
+	ExcelHandler wb = new ExcelHandler("./data/Message.xlsx", "MSG"); wb.deleteEmptyRows();
+	for(int i=1;i<=wb.getRowCount();i++) {	
 	try {
 	System.out.println(wb.getRowCount());
 	System.out.println("*******************  Scenarios for Content "+ count +"Starts ****************************");
@@ -831,7 +831,7 @@ for(int i=1;i<=wb.getRowCount();i++) {
     String creator = wb.getCellValue(i, wb.seacrh_pattern("Creator", 0).get(0).intValue());
     excelvalues1.add(site);
     excelvalues1.add(location);
-    excelvalues1.add(text);
+    excelvalues1.add(text+time_Stamp);
     excelvalues1.add(creator);
 
 	}
@@ -844,12 +844,17 @@ for(int i=1;i<=wb.getRowCount();i++) {
 		
 return excelvalues1;
 }
+
+public void time_get() {
+	time_Stamp=timeStamp();
+	System.out.println("Getting time"+time_Stamp);
+}
+
 public ArrayList<String> excel2() throws Exception {
 	ArrayList<String> excelvalues1=new ArrayList<String>();
-
-int count = 1;
-ExcelHandler wb = new ExcelHandler("./data/Message.xlsx", "MSG"); wb.deleteEmptyRows();
-for(int i=1;i<=wb.getRowCount();i++) {	
+	int count = 1;
+	ExcelHandler wb = new ExcelHandler("./data/Message.xlsx", "MSG"); wb.deleteEmptyRows();
+	for(int i=1;i<=wb.getRowCount();i++) {	
 	try {
 	System.out.println(wb.getRowCount());
 	System.out.println("*******************  Scenarios for Content "+ count +"Starts ****************************");
@@ -859,9 +864,10 @@ for(int i=1;i<=wb.getRowCount();i++) {
     String creator = wb.getCellValue(i, wb.seacrh_pattern("Creator", 0).get(0).intValue());
     excelvalues1.add(site);
     excelvalues1.add(location);
-    excelvalues1.add(text);
+    excelvalues1.add(text+time_Stamp);
     excelvalues1.add(creator);
-	create_PostforFB(text,location);				
+	create_PostforFB(text+time_Stamp,location);	
+	
 
 	}
     catch(Exception e) {
@@ -889,9 +895,11 @@ for(int i=1;i<=wb.getRowCount();i++) {
     String creator = wb.getCellValue(i, wb.seacrh_pattern("Creator", 0).get(0).intValue());
     excelvalues1.add(site);
     excelvalues1.add(location);
-    excelvalues1.add(text);
+    excelvalues1.add(text+time_Stamp);
     excelvalues1.add(creator);
-	create_PostforFB(text,location);				
+	create_PostforFB(text+time_Stamp,location);
+	
+
 
 	}
     catch(Exception e) {

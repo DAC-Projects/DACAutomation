@@ -254,5 +254,13 @@ public class SE_abstractMethods extends BasePage {
 			Thread.sleep(3000);
 		}
 	}
+	public String timeStamp() {
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
+		String formattedDate = sdf.format(date);
+		System.out.println("Abi Time"+formattedDate);
+		return formattedDate;
+		
+	}
 
 }

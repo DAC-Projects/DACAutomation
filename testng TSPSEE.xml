@@ -6,13 +6,13 @@
 <!-- <listener class-name="resources.IntegrationTestListener"></listener> -->
 <listener class-name="resources.ExtentTestNGITestListener"></listener>
 </listeners>
-<!--  <test name="SE" parallel="false"
+   <test name="SE" parallel="false"
 		group-by-instances="true">
 		<parameter name="browser" value="chrome" />
 		<classes>
 			<class name="com.dac.testcases.SE.PostdataforCreator" />
 		</classes>
-	</test> -->
+	</test>
 	  
  <test name="SE_AP" parallel="false"
 		group-by-instances="true">
@@ -20,7 +20,7 @@
 		<classes>
 			<class name="com.dac.testcases.SE.CompareReportsData_PostData" />
 		</classes>
-	</test>
+	</test> 
 	
 	 
 	
