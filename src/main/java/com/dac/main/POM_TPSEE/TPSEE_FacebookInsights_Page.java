@@ -2,9 +2,13 @@ package com.dac.main.POM_TPSEE;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -29,7 +33,7 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 
 	@Override
 	public List<Map<String, String>> getOverviewReport() {
-		
+
 		return null;
 	}
 
@@ -109,20 +113,38 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//span[@id='actionPhone']")
 	private WebElement PhCalls;
 
-	@FindBy(xpath = "(//*[contains(@class,'highcharts-label highcharts-tooltip-box highcharts-color-none')])[1]")
+	@FindBy(xpath = "(//div[contains(@class,'highcharts-label highcharts-tooltip-box highcharts-color-none')])[1]//div//span[1]")
 	private WebElement PageImpressionGrph;
 
-	@FindBy(xpath = "(//*[contains(@class,'highcharts-label highcharts-tooltip-box highcharts-color-none')])[3]")
+	@FindBy(xpath = "(//div[contains(@class,'highcharts-label highcharts-tooltip-box highcharts-color-none')])[2]//div//span[1]")
 	private WebElement PostEngageGrph;
 
-	@FindBy(xpath = "(//*[contains(@class,'highcharts-label highcharts-tooltip-box highcharts-color-none')])[5]")
-	private WebElement PageAction;
+	@FindBy(xpath = "(//div[contains(@class,'highcharts-label highcharts-tooltip-box highcharts-color-none')])[3]//div//span[1]")
+	private WebElement PageActionGrph;
 
-	@FindBy(xpath = "(//*[contains(@class,'highcharts-label highcharts-tooltip-box highcharts-color-none')])[7]")
+	@FindBy(xpath = "(//div[contains(@class,'highcharts-label highcharts-tooltip-box highcharts-color-none')])[4]//div//span[1]")
 	private WebElement FansGrph;
 
-	@FindBy(xpath = "(//*[contains(@class,'highcharts-label highcharts-tooltip-box highcharts-color-none')])[9]")
+	@FindBy(xpath = "(//div[contains(@class,'highcharts-label highcharts-tooltip-box highcharts-color-none')])[5]//div//span[1]")
 	private WebElement CheckInsGrph;
+
+	@FindBy(xpath = "//*[name()='rect' and @class='highcharts-plot-background']")
+	private List<WebElement> GrphSection;
+
+	@FindBy(xpath = "(//*[name()='rect' and @class='highcharts-plot-background'])[2]")
+	private WebElement PageImpressionGrphSec;
+
+	@FindBy(xpath = "(//*[name()='rect' and @class='highcharts-plot-background'])[3]")
+	private WebElement PostEngageGraphSec;
+
+	@FindBy(xpath = "(//*[name()='rect' and @class='highcharts-plot-background'])[4]")
+	private WebElement PageActionGraphSec;
+
+	@FindBy(xpath = "(//*[name()='rect' and @class='highcharts-plot-background'])[5]")
+	private WebElement FansGraphSec;
+
+	@FindBy(xpath = "(//*[name()='rect' and @class='highcharts-plot-background'])[6]")
+	private WebElement CheckInsGraphSec;
 
 	String path = "./downloads/chromeFacebookExportXLSX.xlsx";
 
@@ -323,44 +345,41 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 	public void PageAction() throws Exception {
 		boolean datavalidation = IsDataAvailable();
 		if (!datavalidation == true) {
+
+			int UIWeb = 0, UIReqDir = 0, UIPhCalls = 0;
 			try {
-				int UIWeb = 0, UIReqDir = 0, UIPhCalls = 0;
-				try {
-					UIWeb = WebsiteVists();
-					System.out.println("Web Visits :" + UIWeb);
-					int XLWebvisits = GetDataUsingColName(path, "Website Visits");
-					System.out.println("Number of Posts in XL :" + XLWebvisits);
-					Assert.assertEquals(UIWeb, XLWebvisits);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				try {
-					UIReqDir = RequestDir();
-					System.out.println("UI Request Directories :" + UIReqDir);
-					int XLReqDir = GetDataUsingColName(path, "Request Directions");
-					System.out.println("Number of Posts in XL :" + XLReqDir);
-					Assert.assertEquals(UIReqDir, XLReqDir);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				try {
-					UIPhCalls = PhCalls();
-					System.out.println("Number of Ph Calls :" + UIPhCalls);
-					int XLPhCall = GetDataUsingColName(path, "Phone Calls");
-					System.out.println("Number of Posts in XL :" + XLPhCall);
-					Assert.assertEquals(UIPhCalls, XLPhCall);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				try {
-					int PageActions = getNumber(PageActionTxt, PageActionNum);
-					System.out.println("Number of actions on Page :" + PageActions);
-					int totalAction = UIWeb + UIReqDir + UIPhCalls;
-					System.out.println("The total Actions on Page is :" + totalAction);
-					Assert.assertEquals(PageActions, totalAction);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				UIWeb = WebsiteVists();
+				System.out.println("Web Visits :" + UIWeb);
+				int XLWebvisits = GetDataUsingColName(path, "Website Visits");
+				System.out.println("Number of Posts in XL :" + XLWebvisits);
+				Assert.assertEquals(UIWeb, XLWebvisits);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				UIReqDir = RequestDir();
+				System.out.println("UI Request Directories :" + UIReqDir);
+				int XLReqDir = GetDataUsingColName(path, "Request Directions");
+				System.out.println("Number of Posts in XL :" + XLReqDir);
+				Assert.assertEquals(UIReqDir, XLReqDir);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				UIPhCalls = PhCalls();
+				System.out.println("Number of Ph Calls :" + UIPhCalls);
+				int XLPhCall = GetDataUsingColName(path, "Phone Calls");
+				System.out.println("Number of Posts in XL :" + XLPhCall);
+				Assert.assertEquals(UIPhCalls, XLPhCall);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				int PageActions = getNumber(PageActionTxt, PageActionNum);
+				System.out.println("Number of actions on Page :" + PageActions);
+				int totalAction = UIWeb + UIReqDir + UIPhCalls;
+				System.out.println("The total Actions on Page is :" + totalAction);
+				Assert.assertEquals(PageActions, totalAction);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -455,4 +474,97 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 		}
 	}
 
+	/**
+	 * To get date from each graph
+	 * 
+	 * @param Graphs
+	 * @param GraphLoc
+	 * @return
+	 * @throws Exception
+	 */
+	public Date verifyFBHistorygraph(WebElement Graphs, WebElement GraphLoc) throws Exception {
+		scrollByElement(GraphLoc);
+		String var = null;
+		var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
+				.toString();
+		System.out.println(var);
+		Date endtDate = null;
+		waitForElement(GraphLoc, 30);
+		scrollByElement(GraphLoc);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		action.moveToElement(GraphLoc).moveByOffset((GraphLoc.getSize().getWidth()) / 2 - 2, 0).click().perform();
+		String finaltooltipvalue = Graphs.getText();
+		System.out.println("\n Reading tooltipdata ********** \n");
+		System.out.println("\n tooltipvalue is \n" + finaltooltipvalue);
+		String finaldate = finaltooltipvalue.substring(2, 12);
+		System.out.println(finaldate);
+		SimpleDateFormat formats = new SimpleDateFormat(var);
+		endtDate = formats.parse(finaldate);
+		System.out.println("The final date is :" + endtDate);
+		return endtDate;
+	}
+
+	/**
+	 * To verify date in graph and calendar
+	 * 
+	 * @throws Exception
+	 */
+	public void getGraphDatenVerify() throws Exception {
+		boolean datavalidation = IsDataAvailable();
+		if (!datavalidation == true) {
+			try {
+				Date ImpressionDate = verifyFBHistorygraph(PageImpressionGrph, PageImpressionGrphSec);
+				System.out.println("Impression Date is :" + ImpressionDate);
+				Date CalDate = getCurrenttoDate();
+				System.out.println("Calender Date is :" + CalDate);
+				Assert.assertEquals(ImpressionDate, CalDate);
+				BaseClass.addEvidence(CurrentState.getDriver(), "To Verify Impression Graph Date", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				Date PostEngagementDate = verifyFBHistorygraph(PostEngageGrph, PostEngageGraphSec);
+				System.out.println("Post Engagement Date is :" + PostEngagementDate);
+				Date CalDate = getCurrenttoDate();
+				System.out.println("Calender Date is :" + CalDate);
+				Assert.assertEquals(PostEngagementDate, CalDate);
+				BaseClass.addEvidence(CurrentState.getDriver(), "To Verify Post Engagement Graph Date", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				Date ActionDate = verifyFBHistorygraph(PageActionGrph, PageActionGraphSec);
+				System.out.println("Action Page Date is :" + ActionDate);
+				Date CalDate = getCurrenttoDate();
+				System.out.println("Calender Date is :" + CalDate);
+				Assert.assertEquals(ActionDate, CalDate);
+				BaseClass.addEvidence(CurrentState.getDriver(), "To Verify Actions on Page Graph Date", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				Date FansDate = verifyFBHistorygraph(FansGrph, FansGraphSec);
+				System.out.println("Fans Date is :" + FansDate);
+				Date CalDate = getCurrenttoDate();
+				System.out.println("Calender Date is :" + CalDate);
+				Assert.assertEquals(FansDate, CalDate);
+				BaseClass.addEvidence(CurrentState.getDriver(), "To Verify Fans Graph Date", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				Date CheckInDate = verifyFBHistorygraph(CheckInsGrph, CheckInsGraphSec);
+				System.out.println("CheckIn Date is :" + CheckInDate);
+				Date CalDate = getCurrenttoDate();
+				System.out.println("Calender Date is :" + CalDate);
+				Assert.assertEquals(CheckInDate, CalDate);
+				BaseClass.addEvidence(CurrentState.getDriver(), "To Verify Check Ins Graph Date", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("No Data Available");
+		}
+
+	}
 }

@@ -961,15 +961,9 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	                                        Date UI_date = getCurrentfromDate();
 	                                        System.out.println("UI"+UI_date);
 	                                        Date VE_Date=getCurrent();
-	                                        System.out.println("VE"+VE_Date);
-
-	 
-
+	                                        System.out.println("VE"+VE_Date);	                                        
 	                                        Assert.assertEquals(UI_date, VE_Date);
 	                                        System.out.println("1 year data is displayed");
-
-	 
-
 	                                    }else {
 	                                        System.out.println("Element Not clicked");
 	                                        }
