@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -16,6 +18,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.ddf.EscherColorRef.SysIndexSource;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -179,6 +182,38 @@ public class ExcelHandler {
 			e.printStackTrace();
 		}
 		return value;
+	}
+	public String getCellValue1(int rowNum,int column) {
+		String value="";
+		String a="null";
+		Double ad;
+		try {
+			//System.out.println("row num: "+rowNum+"\n cellNum :"+column);
+			cell=sheet.getRow(rowNum).getCell(column);
+			if(cell!=null) {
+				
+				
+				value=cell.toString().replace("?", "");//.replaceAll("[^\\p{Print}]", "");
+				 System.out.println(value);
+				  ad = Double.valueOf(value);
+				    NumberFormat formatter = new DecimalFormat("#");
+				    System.out.println(value);
+				     a=formatter.format(ad);
+				    System.out.println(a);
+
+			}
+			/*fis.close(); //Close the InputStream
+            FileOutputStream output_file =new FileOutputStream(new File(filePath));  //Open FileOutputStream to write updates
+            workbook.write(output_file); //write changes
+            output_file.close();  //close the stream 
+*/		}
+		catch(NullPointerException e) {
+			System.out.println("current cell value is null");
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return a;
 	}
 	
 	public void getAllCellsData() throws Exception {
