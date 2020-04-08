@@ -83,9 +83,12 @@ public class Navigationpage extends BasePage {
 
 	@FindBy(xpath = "//*[@id='roi_gmb']/a")
 	private WebElement ROI;
-	
+
 	@FindBy(xpath = "//a[@href='/Dashboard/FacebookInsights/']")
 	private WebElement FacebookInsights;
+
+	@FindBy(xpath = "//a[@href='/Dashboard/DuplicateManagement/']/span")
+	private WebElement DupManagement;
 
 	// ------------------------- SA and RRM -------------------------------------
 
@@ -190,6 +193,9 @@ public class Navigationpage extends BasePage {
 
 	/*--------------------------Walkme Snippet-----------------------------------*/
 
+	/**
+	 * To Navigate to visbility page
+	 */
 	public void navigateTPSEE_Visibility() {
 		clickelement(TPSEE_Visibility);
 		System.out.println("Waiting for page to load**********");
@@ -206,6 +212,9 @@ public class Navigationpage extends BasePage {
 		}
 	}
 
+	/**
+	 * To navigate to accuracy Report
+	 */
 	public void navigateTPSEE_Accuracy() {
 		clickelement(Accuracy);
 		System.out.println("Waiting for page to load**********");
@@ -222,6 +231,9 @@ public class Navigationpage extends BasePage {
 		}
 	}
 
+	/**
+	 * To navigate to Content Analysis Page
+	 */
 	public void navigateToContentAnalysis() {
 		clickelement(Analysis);
 		System.out.println("Waiting for page to load********");
@@ -238,6 +250,9 @@ public class Navigationpage extends BasePage {
 		}
 	}
 
+	/**
+	 * To Navigate to GR Page
+	 */
 	public void navigateToGoogleRanking() {
 		clickelement(GoogleRanking);
 		System.out.println("Waiting for page to load********");
@@ -254,6 +269,9 @@ public class Navigationpage extends BasePage {
 		}
 	}
 
+	/**
+	 * To navigate to All Locations Page
+	 */
 	public void navigateToAllLocations() {
 		clickelement(AllLocations);
 		System.out.println("Waiting for page to load********");
@@ -270,6 +288,9 @@ public class Navigationpage extends BasePage {
 		}
 	}
 
+	/**
+	 * To Navigate to All Groups Page
+	 */
 	public void navigateToAllGroups() {
 		action.moveToElement(Settings).perform();
 		waitForElement(Group, 20);
@@ -289,6 +310,9 @@ public class Navigationpage extends BasePage {
 		}
 	}
 
+	/**
+	 * To Navigate to Review Stream Page
+	 */
 	public void navigateToReviewStream() {
 		clickelement(ReviewStream);
 		System.out.println("Waiting for page to load********");
@@ -305,6 +329,9 @@ public class Navigationpage extends BasePage {
 		}
 	}
 
+	/**
+	 * To Navigate to DRS Page
+	 */
 	public void navigateToDisplayedReviewScore() {
 		clickelement(DisplayedReviewScore);
 		System.out.println("Waiting for page to load********");
@@ -321,6 +348,9 @@ public class Navigationpage extends BasePage {
 		}
 	}
 
+	/**
+	 * To Navigate to GMB Page
+	 */
 	public void navigateToGoogleMyBusiness() {
 		clickelement(GMB);
 		System.out.println("Waiting for page to load********");
@@ -337,6 +367,9 @@ public class Navigationpage extends BasePage {
 		}
 	}
 
+	/**
+	 * To Navigate to Bing Page
+	 */
 	public void navigateToBingPlacesForBusiness() {
 
 		clickelement(Bing);
@@ -354,6 +387,9 @@ public class Navigationpage extends BasePage {
 		}
 	}
 
+	/**
+	 * To Navigate to ESR Page
+	 */
 	public void navigateToESR() {
 		action.moveToElement(Settings).perform();
 		waitForElement(ESR, 20);
@@ -373,6 +409,9 @@ public class Navigationpage extends BasePage {
 		}
 	}
 
+	/**
+	 * To Navigate to Local Report Score Change Page
+	 */
 	public void navigateToLocalReportsScoreChange() {
 		action.moveToElement(Settings).perform();
 		waitForElement(ScoreChange, 20);
@@ -392,6 +431,9 @@ public class Navigationpage extends BasePage {
 		}
 	}
 
+	/**
+	 * To Navigate to RN Page
+	 */
 	public void navigateToReviewNotifications() {
 		action.moveToElement(Settings).perform();
 		waitForElement(ReviewNotification, 20);
@@ -411,6 +453,9 @@ public class Navigationpage extends BasePage {
 		}
 	}
 
+	/**
+	 * To Navigate to ROI Page
+	 */
 	public void navigateToROI() {
 		clickelement(ROI);
 		System.out.println("Waiting for page to load********");
@@ -426,19 +471,41 @@ public class Navigationpage extends BasePage {
 			System.out.println("No Notification PopUp displayed");
 		}
 	}
-	
+
+	/**
+	 * To Navigate to Facebook Page
+	 */
 	public void navigateToFacebookInsights() {
 		clickelement(FacebookInsights);
 		System.out.println("Waiting for page to Load*******");
 		waitUntilLoad(driver);
 		try {
 			clickwalkme();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println("No Walkme Displayed");
 		}
 		try {
 			clickNotificationPopUp();
-		}catch(Exception e) {
+		} catch (Exception e) {
+			System.out.println("No Notification PopUp displayed");
+		}
+	}
+
+	/**
+	 * To Navigate to Duplicate Management Page
+	 */
+	public void navigateToDuplicateManagement() {
+		clickelement(DupManagement);
+		System.out.println("Waiting for page to Load*******");
+		waitUntilLoad(driver);
+		try {
+			clickwalkme();
+		} catch (Exception e) {
+			System.out.println("No Walkme Displayed");
+		}
+		try {
+			clickNotificationPopUp();
+		} catch (Exception e) {
 			System.out.println("No Notification PopUp displayed");
 		}
 	}
