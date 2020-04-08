@@ -191,6 +191,7 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 									driver.findElement(By.xpath("(//input[@type='button'])[" + row + "]")).click();
 									System.out.println("Clicked on Radio");
 									Search_Dup_Form.sendKeys(URL);
+									driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 									clickelement(Form_Submit_Btn);
 									System.out.println("Clicked on Submit Button");
 									waitUntilLoad(driver);
@@ -274,7 +275,15 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		return LocationNumber;
 	}
 
-	public void TakeAction(String PhNumber, String action) throws InterruptedException {
+	/**
+	 * To take an action on duplicate listing
+	 * 
+	 * @param PhNumber
+	 * @param action
+	 * @throws InterruptedException
+	 */
+	public void TakeAction(String PhNumber, String action) throws InterruptedException { // action should be 1=Ignore or
+																							// 2=Fix
 		String LocNumber = getLocationNumber(PhNumber);
 		System.out.println("The Location Number found is :" + LocNumber);
 		Outer: if (Dup_Table_Info.isDisplayed()) {
@@ -283,8 +292,7 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 			System.out.println("Last PageNumber in String is :" + n);
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number is :" + page);
-			String entiresText = Dup_Table_Info.getText();
-			entiresText = entiresText.substring(entiresText.indexOf("(") + 3, entiresText.indexOf(")") - 7).trim();
+			int entiresText = NumOfentries(Dup_Table_Info);
 			int count = 0;
 			if (Page_Next.isDisplayed()) {
 				for (int i = 1; i <= page; i++) {
@@ -299,19 +307,27 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 								.getText();
 						System.out.println("The celText is :" + celtext);
 						if (celtext.contains(PhNumber)) {
-							WebElement s =driver.findElement(By.xpath(
+							WebElement s = driver.findElement(By.xpath(
 									"(//div[@class ='ui dropdown duplicate-dropdown selection'])[" + (row + 1) + "]"));
 							s.click();
-						WebElement v =	s.findElement(By.xpath("(//div[@class ='ui dropdown duplicate-dropdown selection'])["+(row+1)+"]//div[contains(@class,'item') and contains(text(),'"+action+"')]"));
-						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-						clickelement(v);
-						System.out.println("Selected action is :" + action);
-							if (action.equalsIgnoreCase("Ignore")) {
+							WebElement v = driver.findElement(By.xpath(
+									"(//table[@id='duplicate-table']//div[contains(@class,'item') and @data-value='"
+											+ action + "'])[" + (row + 1) + "]"));
+							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+							clickelement(v);
+							System.out.println("Selected action is :" + action);
+							waitUntilLoad(driver);
+							if (action.equals("1")) {
+								waitForElement(Ignore_Confirmation, 10);
 								clickelement(Ignore_Confirmation);
-								System.out.println("Action Performed is : " + action);
+								System.out.println("Action Performed is : Ignore");
+								int entiresText1 = NumOfentries(Dup_Table_Info);
+								System.out.println("Final entries in Table is :" + entiresText1);
+								Assert.assertEquals(entiresText1, entiresText - 1);
 							} else {
-								System.out.println("Action Performed is : " + action);
+								System.out.println("Action Performed is : Fix");
 							}
+							waitUntilLoad(driver);
 							break Outer;
 						}
 					}
