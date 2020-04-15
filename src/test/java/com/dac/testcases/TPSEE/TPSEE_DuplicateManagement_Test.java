@@ -53,9 +53,10 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		System.out.println("The Phone Number is :" + PhNumber);
 		String Url = wb.getCellValue(1, wb.seacrh_pattern("URL", 0).get(0).intValue());
 		System.out.println("The URL Provided is :" + Url);
-		data.AddPotentialDuplicate(PhNumber,"https://www.google.com/maps/place/?q=place_id:ChIJrTehGtCVwokRrYtNXQff1NI");
+		data.AddPotentialDuplicate(PhNumber,
+				"https://www.google.com/maps/place/?q=place_id:ChIJrTehGtCVwokRrYtNXQff1NI");
 		addEvidence(CurrentState.getDriver(), "To Add Duplicate Listing", "yes");
-		//"https://www.google.com/maps/place/?q=place_id:ChIJs_rLcTsLw4kRTN54JG-Mt5c"
+		// "https://www.google.com/maps/place/?q=place_id:ChIJs_rLcTsLw4kRTN54JG-Mt5c"
 	}
 
 	/**

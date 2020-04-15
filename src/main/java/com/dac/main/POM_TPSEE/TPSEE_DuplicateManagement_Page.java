@@ -12,7 +12,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -94,7 +93,7 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//*[@id='duplicate-table_info']")
 	private WebElement Dup_Table_Info;
-	
+
 	@FindBy(xpath = "//*[@id='duplicate-table']")
 	private WebElement Dup_Table;
 
@@ -130,9 +129,9 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//button[@id ='btn_ignore_potential_duplicate']")
 	private WebElement Ignore_Confirmation;
-	
-	//@FindBy(xpath = "(//*[@class='duplicate-notes-show-more'])")
-	String ClickMore = "(//*[@class='duplicate-notes-show-more'])" ;
+
+	// @FindBy(xpath = "(//*[@class='duplicate-notes-show-more'])")
+	String ClickMore = "(//*[@class='duplicate-notes-show-more'])";
 
 	/*---------------------------------------Locators-----------------------------------------------------------*/
 
@@ -225,7 +224,7 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 	}
 
 	/**
-	 * To Get the Location Number from the UI Table.
+	 * To Get the Location Number from Pending Tab in the UI Table.
 	 * 
 	 * @param PhNumber
 	 * @return
@@ -360,6 +359,8 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 	 * @throws InterruptedException
 	 */
 	public void verifyCompleteTab(String PhNumber, String Text) throws InterruptedException {
+		String LocNum = getLocationNumberComp(PhNumber);
+		System.out.println("Location Number of Complete Tab is :" + LocNum);
 		waitForElement(CompletedTab, 10);
 		clickelement(CompletedTab);
 		Outer: if (Dup_Table_Info.isDisplayed()) {
@@ -379,20 +380,20 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 					count = count + rows_count;
 					for (int row = 0; row < rows_count; row++) {
 						String celtext = driver
-								.findElement(By
-										.xpath("//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[2]/div/div"))
+								.findElement(
+										By.xpath("//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[2]/div"))
 								.getText();
 						System.out.println("The celText is :" + celtext);
-						if (celtext.contains(PhNumber)) {
+						if (celtext.contains(LocNum)) {
 							String StatusText = driver
 									.findElement(By.xpath(
 											"//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[4]/div/div[3]"))
 									.getText();
 							assertTrue(StatusText.contains(Text));
-							if(driver.findElement(By.xpath(ClickMore + "["+(row +1)+"]")).isDisplayed()) {
-								driver.findElement(By.xpath(ClickMore + "["+(row +1)+"]")).click();
+							if (driver.findElement(By.xpath(ClickMore + "[" + (row + 1) + "]")).isDisplayed()) {
+								driver.findElement(By.xpath(ClickMore + "[" + (row + 1) + "]")).click();
 								System.out.println();
-							}else {
+							} else {
 								System.out.println("No More Link displayed");
 							}
 							break Outer;
@@ -408,5 +409,64 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		} else {
 			System.out.println("No Data Available");
 		}
+	}
+
+	/**
+	 * To get location number from complete tab
+	 * 
+	 * @param PhNumber
+	 * @return
+	 * @throws InterruptedException
+	 */
+	public String getLocationNumberComp(String PhNumber) throws InterruptedException {
+		String LocationNumber = null;
+		clickelement(CompletedTab);
+		Outer: if (Dup_Table_Info.isDisplayed()) {
+			scrollByElement(Last_Page);
+			String n = Last_Page.getText();
+			System.out.println("Last PageNumber in String is :" + n);
+			int page = Integer.parseInt(n);
+			System.out.println("Last Page Number is :" + page);
+			String entiresText = Dup_Table_Info.getText();
+			entiresText = entiresText.substring(entiresText.indexOf("("));
+			int count = 0;
+			if (Page_Next.isDisplayed()) {
+				for (int i = 1; i <= page; i++) {
+					scrollByElement(DupTable);
+					List<WebElement> rows_table = Dup_TableRow;
+					int rows_count = rows_table.size(); // To calculate no of rows In table.
+					count = count + rows_count;
+					for (int row = 0; row < rows_count; row++) {
+						String celtext = driver
+								.findElement(By
+										.xpath("//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[2]/div/div"))
+								.getText();
+						System.out.println("The celText is :" + celtext);
+						if (celtext.contains(PhNumber)) {
+							LocationNumber = driver
+									.findElement(By
+											.xpath("//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[2]/div"))
+									.getText();
+							System.out.println("The Location Number is :" + LocationNumber);
+							LocationNumber = LocationNumber.substring(LocationNumber.lastIndexOf(":"));
+							LocationNumber = LocationNumber.replace(":", "");
+							LocationNumber = LocationNumber.trim();
+							System.out.println("The Location Number after is :" + LocationNumber);
+							break Outer;
+						} else {
+							System.out.println("\n Phone Number given not found");
+						}
+					}
+					if (Page_Next.isEnabled()) {
+						scrollByElement(Page_Next);
+						Page_Next.click();
+						Thread.sleep(4000);
+					}
+				}
+			} else {
+				System.out.println("No Data Available in the table");
+			}
+		}
+		return LocationNumber;
 	}
 }
