@@ -1,5 +1,7 @@
 package com.dac.main.POM_TPSEE;
 
+import static org.testng.Assert.assertTrue;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -92,6 +94,9 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//*[@id='duplicate-table_info']")
 	private WebElement Dup_Table_Info;
+	
+	@FindBy(xpath = "//*[@id='duplicate-table']")
+	private WebElement Dup_Table;
 
 	@FindBy(xpath = "//table[@id='duplicate-table']//tbody//tr")
 	private List<WebElement> Dup_TableRow;
@@ -125,6 +130,9 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//button[@id ='btn_ignore_potential_duplicate']")
 	private WebElement Ignore_Confirmation;
+	
+	//@FindBy(xpath = "(//*[@class='duplicate-notes-show-more'])")
+	String ClickMore = "(//*[@class='duplicate-notes-show-more'])" ;
 
 	/*---------------------------------------Locators-----------------------------------------------------------*/
 
@@ -191,12 +199,12 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 									driver.findElement(By.xpath("(//input[@type='button'])[" + row + "]")).click();
 									System.out.println("Clicked on Radio");
 									Search_Dup_Form.sendKeys(URL);
-									driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+									Thread.sleep(10000);
 									clickelement(Form_Submit_Btn);
 									System.out.println("Clicked on Submit Button");
+									Thread.sleep(30000);
 									waitUntilLoad(driver);
-									wait.until(ExpectedConditions.visibilityOf(Dup_Table_Info));
-									System.out.println("Duplicate Listing Table Displayed");
+									assertTrue(Dup_Table.isDisplayed());
 									break Outer;
 								} else {
 									System.out.println("No Given Text Found");
@@ -282,8 +290,9 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 	 * @param action
 	 * @throws InterruptedException
 	 */
-	public void TakeAction(String PhNumber, String action) throws InterruptedException { // action should be 1=Ignore or
-																							// 2=Fix
+	public void TakeAction(String PhNumber, String action) throws InterruptedException { // action should be given in
+		// Number 1=Ignore or
+		// 2=Fix
 		String LocNumber = getLocationNumber(PhNumber);
 		System.out.println("The Location Number found is :" + LocNumber);
 		Outer: if (Dup_Table_Info.isDisplayed()) {
@@ -340,6 +349,64 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 			} else {
 				System.out.println("No Data Available in the table");
 			}
+		}
+	}
+
+	/**
+	 * To verify the status of the location
+	 * 
+	 * @param PhNumber
+	 * @param Text
+	 * @throws InterruptedException
+	 */
+	public void verifyCompleteTab(String PhNumber, String Text) throws InterruptedException {
+		waitForElement(CompletedTab, 10);
+		clickelement(CompletedTab);
+		Outer: if (Dup_Table_Info.isDisplayed()) {
+			scrollByElement(Last_Page);
+			String n = Last_Page.getText();
+			System.out.println("Last PageNumber in String is :" + n);
+			int page = Integer.parseInt(n);
+			System.out.println("Last Page Number is :" + page);
+			int entiresText = NumOfentries(Dup_Table_Info);
+			System.out.println("Total Entries are :" + entiresText);
+			int count = 0;
+			if (Page_Next.isDisplayed()) {
+				for (int i = 1; i <= page; i++) {
+					scrollByElement(DupTable);
+					List<WebElement> rows_table = Dup_TableRow;
+					int rows_count = rows_table.size(); // To calculate no of rows In table.
+					count = count + rows_count;
+					for (int row = 0; row < rows_count; row++) {
+						String celtext = driver
+								.findElement(By
+										.xpath("//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[2]/div/div"))
+								.getText();
+						System.out.println("The celText is :" + celtext);
+						if (celtext.contains(PhNumber)) {
+							String StatusText = driver
+									.findElement(By.xpath(
+											"//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[4]/div/div[3]"))
+									.getText();
+							assertTrue(StatusText.contains(Text));
+							if(driver.findElement(By.xpath(ClickMore + "["+(row +1)+"]")).isDisplayed()) {
+								driver.findElement(By.xpath(ClickMore + "["+(row +1)+"]")).click();
+								System.out.println();
+							}else {
+								System.out.println("No More Link displayed");
+							}
+							break Outer;
+						}
+					}
+				}
+				if (Page_Next.isEnabled()) {
+					scrollByElement(Page_Next);
+					Page_Next.click();
+					Thread.sleep(4000);
+				}
+			}
+		} else {
+			System.out.println("No Data Available");
 		}
 	}
 }

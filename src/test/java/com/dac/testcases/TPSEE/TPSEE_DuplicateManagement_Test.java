@@ -53,8 +53,9 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		System.out.println("The Phone Number is :" + PhNumber);
 		String Url = wb.getCellValue(1, wb.seacrh_pattern("URL", 0).get(0).intValue());
 		System.out.println("The URL Provided is :" + Url);
-		data.AddPotentialDuplicate(PhNumber, Url);
+		data.AddPotentialDuplicate(PhNumber,"https://www.google.com/maps/place/?q=place_id:ChIJrTehGtCVwokRrYtNXQff1NI");
 		addEvidence(CurrentState.getDriver(), "To Add Duplicate Listing", "yes");
+		//"https://www.google.com/maps/place/?q=place_id:ChIJs_rLcTsLw4kRTN54JG-Mt5c"
 	}
 
 	/**
@@ -62,7 +63,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 4, dependsOnMethods = { "AddDupList" })
+	@Test(priority = 4)
 	public void GetLocationNumber() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
@@ -87,5 +88,22 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		System.out.println("The action preformed is : " + Action);
 		data.TakeAction(PhNumber, Action);
 		addEvidence(CurrentState.getDriver(), "To take action on listing URL's", "yes");
+	}
+
+	/**
+	 * Test to verify status
+	 * 
+	 * @throws Exception
+	 */
+	@Test(priority = 6)
+	public void verifyStatus() throws Exception {
+		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
+		String PhNumber = wb.getCellValue(1, wb.seacrh_pattern("Phone Number ", 0).get(0).intValue());
+		System.out.println("The Phone Number is :" + PhNumber);
+		String Status = wb.getCellValue(1, wb.seacrh_pattern("Status Text", 0).get(0).intValue());
+		System.out.println("The Status is :" + Status);
+		data.verifyCompleteTab(PhNumber, Status);
+		addEvidence(CurrentState.getDriver(), "To Verify Status", "yes");
 	}
 }
