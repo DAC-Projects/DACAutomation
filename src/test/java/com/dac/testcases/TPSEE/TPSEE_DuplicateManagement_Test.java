@@ -56,22 +56,6 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		data.AddPotentialDuplicate(PhNumber,
 				"https://www.google.com/maps/place/?q=place_id:ChIJrTehGtCVwokRrYtNXQff1NI");
 		addEvidence(CurrentState.getDriver(), "To Add Duplicate Listing", "yes");
-		// "https://www.google.com/maps/place/?q=place_id:ChIJs_rLcTsLw4kRTN54JG-Mt5c"
-	}
-
-	/**
-	 * To Get Location Number from UI Table
-	 * 
-	 * @throws Exception
-	 */
-	@Test(priority = 4)
-	public void GetLocationNumber() throws Exception {
-		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
-		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
-		String PhNumber = wb.getCellValue(1, wb.seacrh_pattern("Phone Number ", 0).get(0).intValue());
-		System.out.println("The Phone Number is :" + PhNumber);
-		data.getLocationNumber(PhNumber);
-		addEvidence(CurrentState.getDriver(), "To Get Location Number from the table", "yes");
 	}
 
 	/**
@@ -79,7 +63,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 5)
+	@Test(priority = 4)
 	public void TakeActiononDupList() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
@@ -96,7 +80,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 6)
+	@Test(priority = 5)
 	public void verifyStatus() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
@@ -106,5 +90,36 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		System.out.println("The Status is :" + Status);
 		data.verifyCompleteTab(PhNumber, Status);
 		addEvidence(CurrentState.getDriver(), "To Verify Status", "yes");
+	}
+
+	/**
+	 * Test to verify Ignore Scenario in Pot_Dup Tab
+	 * 
+	 * @throws Exception
+	 */
+	@Test(priority = 6)
+	public void verifyPotentialDup() throws Exception {
+		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
+		String LocationNumber = wb.getCellValue(1, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
+		System.out.println("The Location Number is :" + LocationNumber);
+		data.Pot_Dup(LocationNumber);
+		addEvidence(CurrentState.getDriver(), "To take action on Potential Duplicate Tab", "yes");
+
+	}
+
+	/**
+	 * Test to verify Fix in Pot_Dup and Ignore the same with Pending Tab
+	 * 
+	 * @throws Exception
+	 */
+	@Test(priority = 7)
+	public void PendingTabVerification() throws Exception {
+		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
+		String LocationNumber = wb.getCellValue(1, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
+		System.out.println("The Location Number is :" + LocationNumber);
+		data.VerifyIgnore_PendingTab(LocationNumber);
+		addEvidence(CurrentState.getDriver(), "To verify potential duplicate in Pending Tab", "yes");
 	}
 }

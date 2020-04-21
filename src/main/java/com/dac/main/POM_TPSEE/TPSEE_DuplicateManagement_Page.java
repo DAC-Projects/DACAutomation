@@ -230,9 +230,9 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 	 * @return
 	 * @throws InterruptedException
 	 */
-	public String getLocationNumber(String PhNumber) throws InterruptedException {
+	public String getLocationNumber(String PhNumber, WebElement Tab) throws InterruptedException {
 		String LocationNumber = null;
-		clickelement(PendingTab);
+		clickelement(Tab);
 		Outer: if (Dup_Table_Info.isDisplayed()) {
 			scrollByElement(Last_Page);
 			String n = Last_Page.getText();
@@ -292,7 +292,7 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 	public void TakeAction(String PhNumber, String action) throws InterruptedException { // action should be given in
 		// Number 1=Ignore or
 		// 2=Fix
-		String LocNumber = getLocationNumber(PhNumber);
+		String LocNumber = getLocationNumber(PhNumber, PendingTab);
 		System.out.println("The Location Number found is :" + LocNumber);
 		Outer: if (Dup_Table_Info.isDisplayed()) {
 			scrollByElement(Last_Page);
@@ -359,7 +359,7 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 	 * @throws InterruptedException
 	 */
 	public void verifyCompleteTab(String PhNumber, String Text) throws InterruptedException {
-		String LocNum = getLocationNumberComp(PhNumber);
+		String LocNum = getLocationNumber(PhNumber, CompletedTab);
 		System.out.println("Location Number of Complete Tab is :" + LocNum);
 		waitForElement(CompletedTab, 10);
 		clickelement(CompletedTab);
@@ -468,5 +468,187 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 			}
 		}
 		return LocationNumber;
+	}
+
+	/**
+	 * To ignore a potential duplicate in the table
+	 * 
+	 * @param LocationNumber
+	 * @throws InterruptedException
+	 */
+	public void Pot_Dup(String LocationNumber) throws InterruptedException {
+		clickelement(PotentialDupTab);
+		waitForElement(DupTable, 10);
+		Outer: if (Dup_Table_Info.isDisplayed()) {
+			scrollByElement(Last_Page);
+			String n = Last_Page.getText();
+			System.out.println("Last PageNumber in String is :" + n);
+			int page = Integer.parseInt(n);
+			System.out.println("Last Page Number is :" + page);
+			int entiresText = NumOfentries(Dup_Table_Info);
+			System.out.println("Total Entries are :" + entiresText);
+			int count = 0;
+			if (Page_Next.isDisplayed()) {
+				for (int i = 1; i <= page; i++) {
+					scrollByElement(DupTable);
+					List<WebElement> rows_table = Dup_TableRow;
+					int rows_count = rows_table.size(); // To calculate no of rows In table.
+					count = count + rows_count;
+					for (int row = 0; row < rows_count; row++) {
+						String celtext = driver
+								.findElement(
+										By.xpath("//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[2]/div"))
+								.getText();
+						System.out.println("The celText is :" + celtext);
+						if (celtext.contains(LocationNumber)) {
+							WebElement s = driver.findElement(By.xpath(
+									"(//div[@class ='ui dropdown duplicate-dropdown selection'])[" + (row + 1) + "]"));
+							s.click();
+							WebElement v = driver.findElement(By.xpath(
+									"(//table[@id='duplicate-table']//div[contains(@class,'item') and @data-value='1'])["
+											+ (row + 1) + "]"));
+							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+							clickelement(v);
+							System.out.println("Selected action is :" + action);
+							waitUntilLoad(driver);
+							waitForElement(Ignore_Confirmation, 10);
+							clickelement(Ignore_Confirmation);
+							System.out.println("Action Performed is : Ignore");
+							int entiresText1 = NumOfentries(Dup_Table_Info);
+							System.out.println("Final entries in Table is :" + entiresText1);
+							Assert.assertEquals(entiresText1, entiresText - 1);
+							break Outer;
+						}
+					}
+				}
+				if (Page_Next.isEnabled()) {
+					scrollByElement(Page_Next);
+					Page_Next.click();
+					Thread.sleep(4000);
+				}
+			}
+		} else {
+			System.out.println("No Data Available");
+		}
+	}
+
+	/**
+	 * To Fix the potential duplicate in the table
+	 * 
+	 * @param LocationNumber
+	 * @throws InterruptedException
+	 */
+	public void verifyfixPot_Dup(String LocationNumber) throws InterruptedException {
+		clickelement(PotentialDupTab);
+		waitForElement(DupTable, 10);
+		Outer: if (Dup_Table_Info.isDisplayed()) {
+			scrollByElement(Last_Page);
+			String n = Last_Page.getText();
+			System.out.println("Last PageNumber in String is :" + n);
+			int page = Integer.parseInt(n);
+			System.out.println("Last Page Number is :" + page);
+			int entiresText = NumOfentries(Dup_Table_Info);
+			System.out.println("Total Entries are :" + entiresText);
+			int count = 0;
+			if (Page_Next.isDisplayed()) {
+				for (int i = 1; i <= page; i++) {
+					scrollByElement(DupTable);
+					List<WebElement> rows_table = Dup_TableRow;
+					int rows_count = rows_table.size(); // To calculate no of rows In table.
+					count = count + rows_count;
+					for (int row = 0; row < rows_count; row++) {
+						String celtext = driver
+								.findElement(
+										By.xpath("//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[2]/div"))
+								.getText();
+						System.out.println("The celText is :" + celtext);
+						if (celtext.contains(LocationNumber)) {
+							WebElement s = driver.findElement(By.xpath(
+									"(//div[@class ='ui dropdown duplicate-dropdown selection'])[" + (row + 1) + "]"));
+							s.click();
+							WebElement v = driver.findElement(By.xpath(
+									"(//table[@id='duplicate-table']//div[contains(@class,'item') and @data-value='2'])["
+											+ (row + 1) + "]"));
+							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+							clickelement(v);
+							waitUntilLoad(driver);
+							System.out.println("Action Performed is : Fix");
+							break Outer;
+						}
+					}
+				}
+				if (Page_Next.isEnabled()) {
+					scrollByElement(Page_Next);
+					Page_Next.click();
+					Thread.sleep(4000);
+				}
+			}
+		} else {
+			System.out.println("No Data Available");
+		}
+	}
+
+	/**
+	 * To ignore the added potential Duplicate from the pending tab
+	 * 
+	 * @param LocNum
+	 * @throws InterruptedException
+	 */
+	public void VerifyIgnore_PendingTab(String LocNum) throws InterruptedException {
+		verifyfixPot_Dup(LocNum);
+		clickelement(PendingTab);
+		waitForElement(DupTable, 10);
+		Outer: if (Dup_Table_Info.isDisplayed()) {
+			scrollByElement(Last_Page);
+			String n = Last_Page.getText();
+			System.out.println("Last PageNumber in String is :" + n);
+			int page = Integer.parseInt(n);
+			System.out.println("Last Page Number is :" + page);
+			int entiresText = NumOfentries(Dup_Table_Info);
+			System.out.println("Total Entries are :" + entiresText);
+			int count = 0;
+			if (Page_Next.isDisplayed()) {
+				for (int i = 1; i <= page; i++) {
+					scrollByElement(DupTable);
+					List<WebElement> rows_table = Dup_TableRow;
+					int rows_count = rows_table.size(); // To calculate no of rows In table.
+					count = count + rows_count;
+					for (int row = 0; row < rows_count; row++) {
+						String celtext = driver
+								.findElement(
+										By.xpath("//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[2]/div"))
+								.getText();
+						System.out.println("The celText is :" + celtext);
+						if (celtext.contains(LocNum)) {
+							WebElement s = driver.findElement(By.xpath(
+									"(//div[@class ='ui dropdown duplicate-dropdown selection'])[" + (row + 1) + "]"));
+							s.click();
+							WebElement v = driver.findElement(By.xpath(
+									"(//table[@id='duplicate-table']//div[contains(@class,'item') and @data-value='1'])["
+											+ (row + 1) + "]"));
+							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+							clickelement(v);
+							waitUntilLoad(driver);
+							waitForElement(Ignore_Confirmation, 10);
+							clickelement(Ignore_Confirmation);
+							System.out.println("Action Performed is : Ignore");
+							int entiresText1 = NumOfentries(Dup_Table_Info);
+							System.out.println("Final entries in Table is :" + entiresText1);
+							Assert.assertEquals(entiresText1, entiresText - 1);
+							break Outer;
+						} else {
+							System.out.println("Location Number doesn't exist");
+						}
+					}
+				}
+				if (Page_Next.isEnabled()) {
+					scrollByElement(Page_Next);
+					Page_Next.click();
+					Thread.sleep(4000);
+				}
+			}
+		} else {
+			System.out.println("No Data Available");
+		}
 	}
 }
