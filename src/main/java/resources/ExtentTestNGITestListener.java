@@ -146,9 +146,16 @@ public class ExtentTestNGITestListener
    * This method return the description of @Test method if provided 
    * otherwise will return the test method name 	*/
   private String getTestname(ITestResult result){
-    String description = (result.getMethod().getDescription() != null)
-        ? result.getMethod().getDescription()
-        : result.getMethod().getMethodName();
+	  String description;
+	  if(!result.getMethod().getDescription().isEmpty()) {
+		
+		   description = result.getMethod().getDescription();
+		   System.err.println("description not null and value "+description);
+	  }
+	  else {
+		  description = result.getMethod().getMethodName();
+		  System.err.println("description  null and method name value "+description);
+	  }
     return description;
   }
 
