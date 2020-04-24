@@ -359,6 +359,7 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 	 * @throws InterruptedException
 	 */
 	public void verifyCompleteTab(String PhNumber, String Text) throws InterruptedException {
+		driver.navigate().refresh();
 		String LocNum = getLocationNumber(PhNumber, CompletedTab);
 		System.out.println("Location Number of Complete Tab is :" + LocNum);
 		waitForElement(CompletedTab, 10);
