@@ -78,7 +78,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 		// Assert.assertFalse( "sample error", true);
 	}
 
-	@Test(priority = 2)
+	@Test(priority = 2, groups = {"smoke" }, description = "Test for verifying title and description of report")
 	public void verifyText() throws Exception {
 		data = new TPSEE_GMB(CurrentState.getDriver());
 		data.VerifyGMBTitleText("Google My Business",
@@ -87,7 +87,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
 
-	@Test(priority = 3)
+	@Test(priority = 3, groups = { "smoke" }, description = "Test for verify hover text")
 	public void verifyHoverText() throws Exception {
 		data = new TPSEE_GMB(CurrentState.getDriver());
 		data.verifyMouseHoverText();
@@ -1810,7 +1810,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 		}
 	}
 
-	@Test(priority = 37, enabled = true, dataProvider = "testData")
+	@Test(priority = 37, enabled = true, dataProvider = "testData", description = "Test for Manual date selection")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		String UIdat = data.IsDataAvailable();

@@ -75,7 +75,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Bing page from Dashboard", "yes");
 	}
 
-	@Test(priority = 2)
+	@Test(priority = 2, groups = { "smoke" }, description = "Test for verify title and description")
 	public void verifyText() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		data.VerifyTitleText("Bing Places for Business",
@@ -84,7 +84,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
 
-	@Test(priority = 3)
+	@Test(priority = 3, groups = { "smoke" }, description = "Test for verify hover text")
 	public void verifyHoverText() {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		data.GetHoverText("Total Impressions based on the selected weekly range. ");
@@ -96,7 +96,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		try {
 			int count = 1;
-			ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+			ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Bing");
 			wb.deleteEmptyRows();
 			TPSEE_Bing_Page s = new TPSEE_Bing_Page(CurrentState.getDriver());
 
@@ -291,7 +291,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 	}
 
 	@SuppressWarnings("unused")
-	@Test(priority = 10, dataProvider = "testData")
+	@Test(priority = 10, dataProvider = "testData",description = "Verify manual date Selection")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 

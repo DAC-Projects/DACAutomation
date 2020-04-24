@@ -33,7 +33,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 2)
+	@Test(priority = 2, groups = {"smoke" }, description = "Test for verifying title and description of report")
 	public void VerifyTitleTxt() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		data.VerifyTitlenText();

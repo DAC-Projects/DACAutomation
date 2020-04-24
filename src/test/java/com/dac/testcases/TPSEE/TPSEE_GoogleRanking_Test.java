@@ -58,7 +58,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Google Ranking page from Dashboard", "yes");
 	}
 
-	@Test(priority = 3)
+	@Test(priority = 3, groups = {"smoke" }, description = "Test for verifying title and description of report")
 	public void verifytitle() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.VerifyGRText();
@@ -130,7 +130,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	}
 
 	@SuppressWarnings("unused")
-	@Test(priority = 5, enabled = true, dataProvider = "testData")
+	@Test(priority = 5, enabled = true, dataProvider = "testData", description = "Test for Manual date selection")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 
