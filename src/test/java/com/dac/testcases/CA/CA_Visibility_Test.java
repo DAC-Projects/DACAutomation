@@ -99,7 +99,7 @@ public class CA_Visibility_Test extends BaseClass {
 	}
 
 	@SuppressWarnings("unchecked")
-//  @Test(dependsOnMethods = { "navigateToVisibilityPage" }, groups= {"smoke"}, description = "Test for overview report and tooltip")
+  @Test(dependsOnMethods = { "navigateToVisibilityPage" }, groups= {"smoke"}, description = "Test for overview report and tooltip")
 	public void verifyOverviewReportnTooltipVisibility() throws Exception {
 		data = new CA_Visibility_Page(CurrentState.getDriver());
 		data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());  
@@ -107,13 +107,13 @@ public class CA_Visibility_Test extends BaseClass {
 	}
 
 	@SuppressWarnings("unchecked")
-//  @Test(dependsOnMethods = { "navigateToVisibilityPage", "verifyOverviewReportnExportVisibility" }, groups= {"smoke"},description = "Test for comparing export and table")
+  @Test(dependsOnMethods = { "navigateToVisibilityPage", "verifyOverviewReportnExportVisibility" }, groups= {"smoke"},description = "Test for comparing export and table")
 	public void verifySiteTablenExportVisibility() throws Exception {
 		data = new CA_Visibility_Page(CurrentState.getDriver());
 		data.compareExportnTable(export, data.verifySitetable());
 		Thread.sleep(5000);
-		//data.compareList(data.total(), data.getOverviewReport1());
-		data.total();
+		data.compareList(data.total(), data.getOverviewReport1());
+		//data.total();
 		
     addEvidence(CurrentState.getDriver(), "Site level scores in Visibility site table  and overview visibility export found matching", "yes");   
 	}

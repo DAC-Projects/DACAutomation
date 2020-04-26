@@ -75,7 +75,7 @@ public class CA_Accuracy_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified overview export for Accuracy report", "yes"); 
 	}
 
-	@Test(dependsOnMethods = { "verifyOverviewReportnExportAccuracy" })
+	@Test(dependsOnMethods = { "verifyOverviewReportnExportAccuracy" }, groups= {"smoke"}, description = "Test for calculation")
 	public void calculation() throws Exception {
 
 		data = new CA_Accuracy_Page(CurrentState.getDriver());

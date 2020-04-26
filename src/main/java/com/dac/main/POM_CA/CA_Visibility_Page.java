@@ -271,8 +271,8 @@ public List<Double> getOverviewReport1() {
     return actmenu;
 	}*/
 	public void compareList(List<Double> total ,List<Double> getOverviewReport1 ) {
-		/*System.out.println(list1);
-		System.out.println(list2);*/
+		System.out.println("list 1"+list1);
+		System.out.println("list 2"+list2);
 		//Assert.assertEquals(list1, list2 , "Comparing overview and table");
 		Assert.assertEquals(list1.equals(list2), true);
 	}

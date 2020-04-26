@@ -6,6 +6,8 @@ import static org.testng.Assert.fail;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -139,7 +141,8 @@ public class CA_ContentAnalysis_Page extends CA_abstractMethods {
 		double[] FinScore = new double[table[0].length-1];		
 		double[] score = new double[table.length-2];
 		int counter;
-
+		DecimalFormat df = new DecimalFormat("#.##");
+		df.setRoundingMode(RoundingMode.FLOOR);
 		for (int j=0;j<table[0].length-1;j++) {
 			double totScore = 0;
 			counter = 0;
@@ -148,8 +151,11 @@ public class CA_ContentAnalysis_Page extends CA_abstractMethods {
 				if(score[i]!=0.0) {
 					counter = counter+1;
 				}
-				totScore = totScore + score[i];	
+				totScore = totScore + score[i];				
+				System.out.println("Total score ="+totScore);
 			}
+			totScore=Double.parseDouble(df.format(totScore));
+			System.out.println(" Rounded totscore "+totScore);
 			if(j==0) {
 				FinScore[j] = Math.round((totScore/score.length)*100.0)/100.0;
 				System.out.println("double array value"+j+":" + Arrays.toString(score) );
@@ -158,7 +164,7 @@ public class CA_ContentAnalysis_Page extends CA_abstractMethods {
 				FinScore[j] = Math.round((totScore/counter)*100.0)/100.0;
 			}
 		}
-		System.out.println(Arrays.toString(FinScore));
+		System.out.println("Finalscore "+Arrays.toString(FinScore));
 		for(int i=0;i<table.length-2;i++) {		
 			Assert.assertEquals(FinScore[i], Double.parseDouble(table[1][i+1]));
 		}
@@ -191,7 +197,7 @@ public class CA_ContentAnalysis_Page extends CA_abstractMethods {
 				}		
 				Finscore =  Math.round((score/counter)*100.0)/100.0;		 	
 			}
-			System.out.println("FinScore "+Finscore);	
+		
 			if(counter == 0)
 			{
 				assertEquals(avgScore.get(j-1).getText(), "N/A");

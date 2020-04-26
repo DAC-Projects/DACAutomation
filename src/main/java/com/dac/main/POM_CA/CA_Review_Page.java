@@ -127,9 +127,9 @@ public class CA_Review_Page extends CA_abstractMethods {
 		download(CurrentState.getBrowser(), exportlocation, 20);
 
 		//	convertExports(getLastModifiedFile(Exportpath), ReviewLocationCompetitorExport);
-		//renamefile(getLastModifiedFile(Exportpath), ReviewLocationCompetitorExport); 
+		renamefile(getLastModifiedFile(Exportpath), ReviewLocationCompetitorExport); 
 
-		convertExports(getLastModifiedFile(Exportpath), ReviewLocationCompetitorExport);
+		//convertExports(getLastModifiedFile(Exportpath), ReviewLocationCompetitorExport);
 
 	}
 
@@ -368,7 +368,7 @@ System.out.println("i,j:"+i+","+j+" Actual , expected "+siteTableData[i][j]+","+
 
 	
 	public ArrayList<String> getExportDataLocationover() throws Exception {
-		exportlocationset();
+		//exportlocationset();
 
 		ArrayList<String> table = new ExcelHandler(Exportpath + ReviewLocationCompetitorExport, "CA_LocalReview").getExcelTablewith();
 		System.out.println("get excel values:" +table);

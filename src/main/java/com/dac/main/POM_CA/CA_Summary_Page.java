@@ -213,7 +213,7 @@ public class CA_Summary_Page extends CA_abstractMethods{
                 public List<Map<String, String>> getExportData() throws Exception {
                                 exportaccuracyReport();
 
-                                String[][] table = new ExcelHandler(Exportpath + AccuracyExport, "Sheet0").getExcelTable();
+                                String[][] table = new ExcelHandler(Exportpath + SummaryExport, "Sheet0").getExcelTable();
                                 List<Map<String, String>> exportData = new ArrayList<Map<String, String>>();
                                 int colSize = table[0].length;
                                 for (int col = 1; col < colSize; col++) {
