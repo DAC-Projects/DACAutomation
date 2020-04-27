@@ -8,11 +8,11 @@
 	</listeners>
 
 
-	<test name="TransparenSEE" parallel="tests"
+	<test name="TransparenSEE" parallel="none"
 	group-by-instances="true">
 	<parameter name="browser" value="chrome" />
 	<classes>
-	<class name="com.dac.testcases.TPSEE.TPSEE_DuplicateManagement_Test" />
+		<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
 		<!-- <class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />
 		<class name="com.dac.testcases.TPSEE.TPSEE_ReviewStream_Test" />
 		<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
@@ -29,7 +29,8 @@
 		<class name="com.dac.testcases.TPSEE.TPSEE_Groups_Test" />
 		<class name="com.dac.testcases.TPSEE.TPSEE_ROI_Test"/> 
 		<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" />
-		<class name="com.dac.testcases.TPSEE.TPSEE_DuplicateManagement_Test" />-->
+		<class name="com.dac.testcases.TPSEE.TPSEE_DuplicateManagement_Test" />
+		<class name="com.dac.testcases.TPSEE.TPSEE_Syndication_Status_Test" />-->
 	</classes>
 	</test>
 
