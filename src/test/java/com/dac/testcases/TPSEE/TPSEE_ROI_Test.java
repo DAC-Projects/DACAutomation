@@ -25,7 +25,9 @@ public class TPSEE_ROI_Test  extends BaseClass{
 	public void navigateToROI() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		data = new TPSEE_ROI(CurrentState.getDriver());
-		np.navigateToROI();
+		np.navigateToROI();		 
+		data.notificationHandle();
+
 		String Tit="ROI Calculator";
 		String titText="The Google My Business ROI Calculator allows users to attribute a monetary value to performance metrics to estimate the ROI of their program.";
 		data.VerifyTitleText(Tit, titText);
@@ -45,24 +47,31 @@ public class TPSEE_ROI_Test  extends BaseClass{
 	public void VerifyROIvalues(String from_day, String from_month, String from_year, String to_day, String to_month, String to_year) throws Exception {
 		data = new TPSEE_ROI(CurrentState.getDriver());
 		np = new Navigationpage(CurrentState.getDriver());
-	   data.Nav_GMB();
+	 data.Nav_GMB();
+		
 		data.GMB();
 		 np.navigateToROI();
+		
+
 		 data.ROIvalues();
 		  data.val_pass();
 		 sum1=data.to();
 		 data.avg();
 		 data.Nav_GMB();
+
 		 data.selectCalender_FromDate1((int)(Double.parseDouble(from_day)), from_month, (int)(Double.parseDouble(from_year)));
 		 data.selectCalender_ToDate1((int)(Double.parseDouble(to_day)), to_month, (int)(Double.parseDouble(to_year)));	
 		 data.GMB();
+
 		 np.navigateToROI();
+
 		 data.selectCalender_FromDate((int)(Double.parseDouble(from_day)), from_month, (int)(Double.parseDouble(from_year)));
 		 data.selectCalender_ToDate((int)(Double.parseDouble(to_day)), to_month, (int)(Double.parseDouble(to_year)));
 	 	 data.getNumberofDays_ROI();
 		 data.ROIvalues();
 		 data.val_pass();
 		  sum2=data.to();
+		  System.out.println("ASD"+sum2);
 		 data.avg();
 		 data.sel_options();
 		 data.Sym_veri();
@@ -110,10 +119,10 @@ public class TPSEE_ROI_Test  extends BaseClass{
 	"smoke" }, description = "Getting the ROI values")
 	public void navigateToROI_Verify() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
-		//np.navigateToROI();
+		np.navigateToROI();
 		data = new TPSEE_ROI(CurrentState.getDriver());
 		data.ROIvalues();
-		data.tot(sum2);
+		data.tot(sum1);
 		 addEvidence(CurrentState.getDriver(), "Comparing the ROI values", "yes");
 
 		
