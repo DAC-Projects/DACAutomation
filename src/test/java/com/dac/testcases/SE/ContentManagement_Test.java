@@ -410,4 +410,46 @@ public class ContentManagement_Test extends BaseClass {
 			}
 		}
 	}
+
+	/**
+	 * To delete data from Unpublished Table using Type
+	 * 
+	 * @throws Exception
+	 */
+	@Test(priority = 18)
+	public void DeleteDatausingStatusUnPublishedTable() throws Exception {
+		data = new ContentManagement_Page(CurrentState.getDriver());
+		wb = new ExcelHandler("./data/Social_Engagement.xlsx", "SE");
+		wb.deleteEmptyRows();
+		int row;
+		for (row = 1; row <= wb.getRowCount(); row++) {
+			String Status = wb.getCellValue(row, wb.seacrh_pattern("Unpublished Status", 0).get(0).intValue());
+			System.out.println("The Type selected is :" + Status);
+			data.DeleteDataUnPublishedTableusingStatus(Status);
+			addEvidence(CurrentState.getDriver(), "Delete from Published Table", "yes");
+			CurrentState.getDriver().navigate().refresh();
+		}
+	}
+
+	/**
+	 * To delete data from Unpublished Table using Type
+	 * 
+	 * @throws Exception
+	 */
+	@Test(priority = 19)
+	public void DeleteDatausingStatusnTypeUnPublishedTable() throws Exception {
+		data = new ContentManagement_Page(CurrentState.getDriver());
+		wb = new ExcelHandler("./data/Social_Engagement.xlsx", "SE");
+		wb.deleteEmptyRows();
+		int row;
+		for (row = 1; row <= wb.getRowCount(); row++) {
+			String Type = wb.getCellValue(row, wb.seacrh_pattern("Unpublished Type", 0).get(0).intValue());
+			System.out.println("The Type Selected is :" + Type);
+			String Status = wb.getCellValue(row, wb.seacrh_pattern("Unpublished Status", 0).get(0).intValue());
+			System.out.println("The Status selected is :" + Status);
+			data.DeleteDataUnPublishedTableusingTypenStatus(Type, Status);
+			addEvidence(CurrentState.getDriver(), "Delete from Published Table", "yes");
+			CurrentState.getDriver().navigate().refresh();
+		}
+	}
 }
