@@ -106,6 +106,9 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "//div[@id='incomplete_results_info']")
 	private WebElement entiresText;
 	
+	@FindBy(xpath = "//div[@class='highcharts-label highcharts-tooltip-box highcharts-color-none']//span")
+	private WebElement NumOfLocations;
+	
 	/*-------------------------SiteTableData-----------------------*/
 	
 	/*-------------------------Pagination-----------------------*/
@@ -537,10 +540,12 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 			scrollByElement(hstryGrph);
 			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 			action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 -2, 0).click().perform();
-			String tooltipvalue = grphtooltip.getText();
+			String tooltipvalue = NumOfLocations.getText();
 			System.out.println("\n Reading tooltipdata ********** \n");
 			System.out.println("\n tooltipvalue is \n" +tooltipvalue);	
-			double score =  Double.parseDouble(tooltipvalue.substring(46, 51));
+		String score1 =	tooltipvalue.substring(tooltipvalue.lastIndexOf(":") + 1);
+		//	double score =  Double.parseDouble(tooltipvalue.substring(46, 51));
+			double score = Double.parseDouble(score1);
 			System.out.println(score);
 			return score;			
 		}
@@ -550,10 +555,12 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 			scrollByElement(hstryGrph);
 			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 			action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 -2, 0).click().perform();
-			String tooltipvalue = grphtooltip.getText();
+			String tooltipvalue = NumOfLocations.getText();
 			System.out.println("\n Reading tooltipdata ********** \n");
 			System.out.println("\n tooltipvalue is \n" +tooltipvalue);
-			int numberoflocations = Integer.parseInt(tooltipvalue.substring(31, 33));
+			//int numberoflocations = Integer.parseInt(tooltipvalue.substring(31, 33));
+			String NumOfLocations =	tooltipvalue.substring(tooltipvalue.indexOf(":") + 1, tooltipvalue.indexOf("S") - 1);
+			int numberoflocations = Integer.parseInt(NumOfLocations);
 			System.out.println(numberoflocations);
 			return numberoflocations;	
 		}

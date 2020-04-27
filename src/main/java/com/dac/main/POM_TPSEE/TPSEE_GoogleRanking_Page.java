@@ -139,6 +139,12 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	@FindBy(css = "g.highcharts-label.highcharts-tooltip-box.highcharts-color-none")
 	private WebElement grphtooltip; 
 	
+	@FindBy(xpath = "(//*[@class='highcharts-label highcharts-tooltip-box highcharts-color-none']//*[name()='text']//*[name()='tspan'])[3]")
+	private WebElement GRScore;
+	
+	@FindBy(xpath = "(//*[@class='highcharts-label highcharts-tooltip-box highcharts-color-none']//*[name()='text']//*[name()='tspan'])[2]")
+	private WebElement GRLoc;
+	
 	/* ------------------------------End of Locators---------------------------------------*/
 	@Override
 	public List<Map<String, String>> getOverviewReport() {
@@ -430,10 +436,18 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 		scrollByElement(hstryGrph);
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 -2, 0).click().perform();
-		String tooltipvalue = grphtooltip.getText();
+		String tooltipvalue = GRScore.getText();
 		System.out.println("\n Reading tooltipdata ********** \n");
 		System.out.println("\n tooltipvalue is \n" +tooltipvalue);	
-		double score =  Double.parseDouble(tooltipvalue.substring(44 , 48));
+		String Score = tooltipvalue.substring(tooltipvalue.lastIndexOf(":") + 1);
+		double score;
+		if(Score.contains(">")) {
+			Score = Score.replace(">", "");
+			Score = Score.trim();
+			score = Double.parseDouble(Score);
+		}else {
+			score = Double.parseDouble(Score);
+		}
 		System.out.println(score);
 		return score;			
 	}
@@ -443,10 +457,10 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 		scrollByElement(hstryGrph);
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 -2, 0).click().perform();
-		String tooltipvalue = grphtooltip.getText();
+		String tooltipvalue = GRLoc.getText();
 		System.out.println("\n Reading tooltipdata ********** \n");
 		System.out.println("\n tooltipvalue is \n" +tooltipvalue);
-		int numberoflocations = Integer.parseInt(tooltipvalue.substring(31 , 32));
+		int numberoflocations = Integer.parseInt(tooltipvalue.substring(tooltipvalue.lastIndexOf(":") + 1));
 		System.out.println(numberoflocations);
 		return numberoflocations;	
 	}

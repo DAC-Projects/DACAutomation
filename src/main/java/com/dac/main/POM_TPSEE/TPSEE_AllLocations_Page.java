@@ -127,18 +127,12 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods{
 		waitForElement(LocationTable, 40);
 		//getting into progressbar found listing
 		System.out.println("\n reading table data********************* \n");
-		driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()]")).click();
-		String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-2]")).getText();
+		String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
 		int page = Integer.parseInt(n);
 		System.out.println("\n"+page);
-		driver.findElement(By.xpath("//a[@id='firstPage']")).click();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("col-md-4")));
 		String entiresText = driver.findElement(By.className("col-md-4")).getText();
 		entiresText = entiresText.substring(entiresText.indexOf("("));
-		//WebElement TableTitle = driver.findElement(By.xpath("//div[@id='keyword_table_title']"));
-		//scrollByElement(TableTitle);
-		//WebElement locationsText = driver.findElement(By.xpath("//table[@id='rankingDetail']//tbody//tr"));
-		//scrollByElement(locationsText);
 		int count = 0;
 	    if(paginationNext.isDisplayed()) {
 	    	for(int i=1;i<=page;i++) {	//Loop will execute till the all the row of table completes.
