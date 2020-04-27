@@ -201,7 +201,7 @@ public void compareUInExportFaceBook_Score(String chromepath, String IEpath, Str
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 		String entiresText = driver.findElement(By.className("dataTables_info")).getText();
 		entiresText = entiresText.substring(entiresText.indexOf("("));
-		WebElement TableTitle = driver.findElement(By.xpath("//*[@id='reviewscore_wrapper']//*[@class='heading-title']"));
+		WebElement TableTitle = driver.findElement(By.xpath("//*[@id='reviewscore_wrapper']//*[@class='table-header']"));
 		scrollByElement(TableTitle);
 		int count = 0;
 	    if(paginationNext.isDisplayed()) {
