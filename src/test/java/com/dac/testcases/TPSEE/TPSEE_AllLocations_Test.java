@@ -45,7 +45,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		// Assert.assertFalse( "sample error", true);
 	}
 
-	@Test(priority = 3)
+	@Test(priority = 3, groups = { "smoke" }, description = "Test for verify title and description")
 	public void verifyText() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.VerifyLocationsTitleText("Locations",

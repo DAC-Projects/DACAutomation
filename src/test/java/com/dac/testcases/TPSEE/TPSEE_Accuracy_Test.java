@@ -87,7 +87,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Accuracy page from Dashboard", "yes");
 	}
 
-	@Test(priority = 5)
+	@Test(priority = 5, groups = { "smoke" }, description = "Test for verify title and description")
 	public void verifyText() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.VerifyTitleText("Accuracy Report",
@@ -128,7 +128,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	}
 
 	@SuppressWarnings("unused")
-	@Test(priority = 9, enabled = true, dataProvider = "testData")
+	@Test(priority = 9, enabled = true, dataProvider = "testData",description = "Test for manual date selection" )
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 

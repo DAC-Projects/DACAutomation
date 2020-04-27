@@ -26,7 +26,7 @@ public class TPSEE_ReviewNotifications_Test extends BaseClass {
 		// Assert.assertFalse( "sample error", true);
 	}
 
-	@Test(priority = 2)
+	@Test(priority = 2, groups = {"smoke" }, description = "Test for verifying title and description of report")
 	public void verifyText() throws Exception {
 		rn = new TPSEE_ReviewNotifications_Page(CurrentState.getDriver());
 		rn.VerifyTitleText("Review Notifications",

@@ -38,7 +38,7 @@ public class TPSEE_Groups_Test extends BaseClass {
 		// Assert.assertFalse( "sample error", true);
 	}
 
-	@Test(priority = 2)
+	@Test(priority = 2, groups = {"smoke" }, description = "Test for verifying title and description of report")
 	public void verifyText() throws Exception {
 		data = new TPSEE_Groups(CurrentState.getDriver());
 		data.VerifyTitleText("Groups",

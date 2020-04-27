@@ -25,7 +25,7 @@ public class TPSEE_LocalReportsScoreChange_Test extends BaseClass {
 		// Assert.assertFalse( "sample error", true);
 	}
 
-	@Test(priority = 2)
+	@Test(priority = 2, groups = {"smoke" }, description = "Test for verifying title and description of report")
 	public void verifyText() throws Exception {
 		notification = new TPSEE_LocalReportsScoreChange_Page(CurrentState.getDriver());
 		notification.VerifyTitleText("Local Reports Score Change",

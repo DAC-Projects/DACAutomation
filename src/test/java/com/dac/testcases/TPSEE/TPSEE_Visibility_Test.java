@@ -67,7 +67,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
 	}
 
-	@Test(priority = 3)
+	@Test(priority = 3, groups = {"smoke" }, description = "Test for verifying title and description of report")
 	public void verifyText() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.VerifyTitleText("Visibility Report",
@@ -76,7 +76,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	}
 
 	@SuppressWarnings("unused")
-	@Test(priority = 6, enabled = true, dataProvider = "testData")
+	@Test(priority = 6, enabled = true, dataProvider = "testData", description = "Manual date selection")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 
