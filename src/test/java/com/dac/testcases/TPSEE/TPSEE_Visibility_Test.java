@@ -67,7 +67,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
 	}
 
-	@Test(priority = 3, groups = {"smoke" }, description = "Test for verifying title and description of report")
+	@Test(priority = 3, groups = { "smoke" }, description = "Test for verifying title and description of report")
 	public void verifyText() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.VerifyTitleText("Visibility Report",
