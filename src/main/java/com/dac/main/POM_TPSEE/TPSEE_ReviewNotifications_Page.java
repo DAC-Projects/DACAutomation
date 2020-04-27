@@ -255,10 +255,9 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 				    siteListSelectedItem.click();
 				}
 				
-				emailAddressEmpty.sendKeys(strEmail);
-				emailAddressEmpty.sendKeys(Keys.ENTER);
+
 				
-				GroupFilter.click();
+				clickelement(GroupFilter);
 				driver.findElement(By.xpath("//li[contains(text(),'" + strFilter1 + "')]")).click();
 				
 				SiteFilter.click();
@@ -268,6 +267,9 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 				selectValue(selectFrequencyFilter, strFrequency);
 				
 				selectValue(selectConditionFilter, strCondition);
+				
+				emailAddressEmpty.sendKeys(strEmail);
+				emailAddressEmpty.sendKeys(Keys.ENTER);
 				
 				setRating(strRating.toString());
 				
@@ -318,19 +320,21 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 		
 	}
 	public void deleteEmailNotification(String [][] ExcelData, int excelRow) {
-		WebElement btnDelete,btnConfirmOK;
+		WebElement btnDelete,btnConfirmOK,successOK;
 		JSWaiter.waitJQueryAngular();
 		System.out.println("deleteEmailNotification "+ excelRow);
 		
 		btnDelete=getDeleteButtonRow(ExcelData[excelRow][0]);
 		scrollByElement(btnDelete);
 		clickelement(btnDelete);
-		waitForElement(confirmDialogBox, 30);
-		btnConfirmOK=driver.findElement(By.xpath("//*[@class='bootbox modal fade bootbox-confirm in']//div//div[2]//button[2]"));
-		waitForElement(btnConfirmOK, 20);
+		waitForElement(confirmDialogBox, 20);
+		btnConfirmOK=driver.findElement(By.xpath("//button[text()='Yes']"));
+		
+		
 		scrollByElement(btnConfirmOK);
 		clickelement(btnConfirmOK);
-	
+		successOK=driver.findElement(By.xpath("//button[text()='Ok']"));
+		clickelement(successOK);
 		System.out.println("Notification Deleted");
 					
 	}
@@ -338,7 +342,7 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 	private WebElement getDeleteButtonRow(String columnText) {
 		System.out.println("Inside getDeleteButtonRow Method: "+ columnText);
 		
-		WebElement btnRemove=driver.findElement(By.xpath("//td[text()='"+ columnText +"']/..//button[@class='btn btn-xs btn-danger remove-notification fa fa-remove']"));
+		WebElement btnRemove=driver.findElement(By.xpath("//td[text()='"+ columnText +"']/..//*[@class='icon-delete icon-color-danger']"));
 		
 		return btnRemove;
 		
@@ -347,7 +351,7 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 	private WebElement getEditButtonRow(String columnText) {
 		System.out.println("Inside getEditButtonRow Method: "+columnText );
 		
-		WebElement btnRemove=driver.findElement(By.xpath("//td[text()='"+ columnText +"']/..//button[@class='btn btn-xs btn-danger edit-notification fa fa-edit']"));
+		WebElement btnRemove=driver.findElement(By.xpath("//td[text()='"+ columnText +"']/..//*[@class='icon-edit icon-color-primary']"));
 		
 		return btnRemove;
 		

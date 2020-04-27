@@ -227,7 +227,13 @@ public class CA_Accuracy_Page extends CA_abstractMethods{
 				}
 				System.out.println("double array value"+i+":" + Arrays.toString(score) );
 
+				try {
 				totScore = totScore + visScore[j][i]*score[i];
+				}
+				catch (Exception e) {
+					System.err.println("Please check Visibility report is executed as a precondition for Claculation");
+				}
+				
 				sum = sum + visScore[j][i];
 				
 				System.err.println("Total score" +j+totScore+" Sum ="+sum);

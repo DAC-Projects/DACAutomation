@@ -221,7 +221,7 @@ public class CA_Visibility_Page extends CA_abstractMethods {
 		
 	}
 	public  List<Double> total() throws Exception {
-		for(int i=2;i<10;i++) {
+		for(int i=2;i<8;i++) {
 		System.out.println("Executing");
 		List<Double> d = Tablevalues("//*[@id='compIntVisibilitySitesTable']/tbody/tr/td[" + i + "]");
 		System.out.println("exe"+ d);	
