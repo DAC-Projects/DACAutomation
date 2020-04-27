@@ -71,6 +71,10 @@ public class Navigationpage extends BasePage{
 
 	@FindBy(xpath = "//*[@id='roi_gmb']/a")
 	private WebElement ROI;
+
+@FindBy(xpath = "//a[@href='/Dashboard/DuplicateManagement/']/span")
+       private WebElement DupManagement;
+
 	//------------------------- SA and RRM -------------------------------------
 	
 	@FindBy(xpath = "//a[@href='/Review/ReviewReport/']")
@@ -256,6 +260,13 @@ public class Navigationpage extends BasePage{
     	System.out.println("Waiting for page to load********");
     	waitUntilLoad(driver);
     }
+    public void navigateToDuplicateManagement() {
+        clickelement(DupManagement);
+        System.out.println("Waiting for page to Load*******");
+        waitUntilLoad(driver);
+ }
+
+
   //---------------------- TransparenSEE-------------------------------
     
     //-----CA
