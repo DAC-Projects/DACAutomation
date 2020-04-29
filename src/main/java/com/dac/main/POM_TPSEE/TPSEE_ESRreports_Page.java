@@ -33,7 +33,7 @@ public class TPSEE_ESRreports_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//select[@name='freq-select']")
 	private WebElement results;
     
-	@FindBy(xpath="//*[@class='btn btn-primary save-email-frequency']")
+	@FindBy(xpath="//*[@class='btn btn-primary btn-width-xs save-email-frequency']")
 	private WebElement save;
 	
 	@FindBy(xpath= "//*[@id='sendReportNow']")
