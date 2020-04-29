@@ -42,7 +42,7 @@ public class TPSEE_ESRreports_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath="//*[@class='form-control']")
 	private WebElement textValue;
 	
-	@FindBy(xpath="//*[@class='btn btn-primary btn-md']")
+	@FindBy(xpath="//*[@class='btn btn-width-sm btn-primary']")
 	private WebElement yesButton;
 	
 	
