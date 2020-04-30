@@ -15,7 +15,7 @@ import com.dac.main.POM_LPAD.Page_LocationBasicInfoTab;
 import com.dac.main.POM_LPAD.Page_LocationBusinessInfoTab;
 import com.dac.main.POM_LPAD.Page_LocationManageProductsTab;
 import com.dac.main.POM_LPAD.Page_LocationNavigationTabList;
-import com.dac.main.POM_LPAD.Page_ManageLocations;
+import com.dac.main.POM_LPAD.Page_LocationsListPage;
 
 
 public class Test_CreateLocation extends LaunchLPAD {
@@ -48,7 +48,7 @@ public void TC_NavigateToLocationsPage() {
 @Test(dependsOnMethods= {"TC_NavigateToLocationsPage"})
 public void TC_CreateLocations() {
 	System.out.println("Step2: Click on [Create Location] Button");
-	Page_ManageLocations locations=new Page_ManageLocations(driver);
+	Page_LocationsListPage locations=new Page_LocationsListPage(driver);
 	locations.NaviagteToCreateLocation();
 }
 

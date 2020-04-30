@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="QA_Beta">
+
+<test name="CovergenSEE">
+ <classes>
+
+
+
+ 
+<class name="com.dac.testcases.LPAD.Test_LoginToLPAD" /> 
+<class name="com.dac.testcases.LPAD.Test_CreateLocation" /> 
+
+<!-- 
+
+<class name="com.dac.csee.Test_ImpersonateToTSEE" /> 
+<class name="com.dac.csee.LPAD_ImpersonateToTSEE_test" /> 
+
+-->
+
+</classes>
+</test>
+
+<!-- <test name="DTC">
+<classes>
+
+<class name="com.dac.dtcTest.DTCLoginPage_TC" /> 
+<class name="com.dac.dtcTest.DTCAPITransmission_TC" /> 
+
+</classes>
+
+</test>-->
+</suite>
