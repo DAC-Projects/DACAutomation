@@ -124,7 +124,7 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 	/*@FindBy(xpath = "//td[text()='country_group_F']/..//*[@class='edit-group']")
 	private WebElement Delete_btn;*/
 
-	@FindBy(xpath="//button[@data-bb-handler='confirm']")
+	@FindBy(xpath="//button[contains(text(),'Yes')]")
 	private WebElement Ok_btn;
 	/*-------------------------To Delete-----------------------*/
 

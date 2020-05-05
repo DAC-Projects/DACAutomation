@@ -89,6 +89,9 @@ public class Navigationpage extends BasePage {
 
 	@FindBy(xpath = "//a[@href='/Dashboard/DuplicateManagement/']/span")
 	private WebElement DupManagement;
+	
+	@FindBy(xpath = "//a[@href='/Dashboard/SyndicationStatus']/span")
+	private WebElement DataSyndication;
 
 	// ------------------------- SA and RRM -------------------------------------
 
@@ -510,6 +513,24 @@ public class Navigationpage extends BasePage {
 		}
 	}
 
+	/**
+	 * To Navigate to Syndication Status Page
+	 */
+	public void navigateToSyndicationStatus() {
+		clickelement(DataSyndication);
+		System.out.println("Waiting for page to Load*******");
+		waitUntilLoad(driver);
+		try {
+			clickwalkme();
+		} catch (Exception e) {
+			System.out.println("No Walkme Displayed");
+		}
+		try {
+			clickNotificationPopUp();
+		} catch (Exception e) {
+			System.out.println("No Notification PopUp displayed");
+		}
+	}
 	// -----CA
 
 	/** To click on CA_Visibility link in LHS to navigate to CA_Visibility page */

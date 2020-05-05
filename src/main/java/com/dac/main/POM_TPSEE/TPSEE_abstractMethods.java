@@ -557,7 +557,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		      int Last_row = sh.getLastRowNum();
 		      int col_num = 0;
 		      System.out.println(""+col);	      
-		      for (int i = 0; i <row.getLastCellNum(); i++) {	    	  
+		      for (int i = 0; i <=row.getLastCellNum(); i++) {	    	  
 		    	    if ((row.getCell(i).toString()).equals(Col_Name)) {	        	 
 		    	    	col_num = i;	    	    	
 		    	    	System.out.println(""+col_num);	
@@ -567,7 +567,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		            	int cellValue = 0;
 		            	int y = 0;
 		            	int sum = 0;	
-		            	for(int j =1;j<Last_row; j++) {
+		            	for(int j =1;j<=Last_row; j++) {
 		            		row = sh.getRow(j);
 		            		Cell cell = row.getCell(col_num);
 		            		if (cell != null) {
@@ -613,7 +613,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		      int col_num = 0;
 		      System.out.println(""+col);	
 		      ArrayList<String> sites  = new ArrayList<String>();
-		      for (int i = 0; i <row.getLastCellNum(); i++) {	    	  
+		      for (int i = 0; i <=row.getLastCellNum(); i++) {	    	  
 		    	    if ((row.getCell(i).toString()).equals(Col_Name)) {	        	 
 		    	    	col_num = i;	    	    	
 		    	    	System.out.println(""+col_num);	

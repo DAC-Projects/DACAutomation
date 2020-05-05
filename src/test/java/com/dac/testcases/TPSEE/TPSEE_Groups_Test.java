@@ -130,13 +130,15 @@ public class TPSEE_Groups_Test extends BaseClass {
 		wb = new ExcelHandler("./data/Groups.xlsx", "Sheet1");
 		wb.deleteEmptyRows();
 		TPSEE_Groups s = new TPSEE_Groups(CurrentState.getDriver());
-
 		s.waitUntilLoad(CurrentState.getDriver());
-		// String Group = wb.getCellValue(i, wb.seacrh_pattern("Group",
-		// 0).get(0).intValue());
+		/*for (int i = 1; i <= wb.getRowCount(); i++) {
+		 String Group = wb.getCellValue(i, wb.seacrh_pattern("Group",
+		 0).get(0).intValue());*/
 		System.out.println(Group);
 		data.delete_Group(Group);
 		addEvidence(CurrentState.getDriver(), "Verified Table Data", "yes");
+		CurrentState.getDriver().navigate().refresh();
+		//}
 
 	}
 
