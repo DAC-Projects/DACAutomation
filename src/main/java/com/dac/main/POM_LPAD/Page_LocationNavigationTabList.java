@@ -112,11 +112,14 @@ public class Page_LocationNavigationTabList extends LaunchLPAD {
 			System.out.println("Submit Button is Enabled");
 			actions.moveToElement(btnSubmit).click().build().perform();
 			wait.until(ExpectedConditions.visibilityOf(BtnLocationSuccessMessage));//for warning message popup
-			BtnLocationSuccessMessage.click();//for warning message popup
+			actions.moveToElement(BtnLocationSuccessMessage).click().build().perform();
+//			BtnLocationSuccessMessage.click();//for warning message popup
 			Thread.sleep(2000);
 			if(btnIncompleteWarningOK.isDisplayed()) {
 				Thread.sleep(2000);
 				btnIncompleteWarningOK.click();
+			}else {
+				
 			}
 			wait.until(ExpectedConditions.visibilityOf(BtnLocationSuccessMessage));//for success message popup
 			BtnLocationSuccessMessage.click();//for success message popup

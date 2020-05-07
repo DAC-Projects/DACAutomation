@@ -20,15 +20,19 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTAutoFilter;
+
+import net.sf.jasperreports.engine.export.oasis.CellStyle;
 /*import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTFilterColumn;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTFilters;*/
 
@@ -153,9 +157,16 @@ public class ExcelHandler {
 	}
 	
 	
-	private void setCellValue(int rownum, int colNum, String newValue) {
-		cell=workbook.getSheet(sheetName).getRow(rownum).getCell(colNum);
-		cell.setCellValue(newValue);
+	public void setCellValue(int rownum, int colNum, String newValue) throws Exception {
+		cell=sheet.getRow(rownum).createCell(colNum);
+		System.out.println("new value "+newValue);
+		cell.setCellValue((String)newValue);
+		
+		fis.close(); //Close the InputStream
+        FileOutputStream output_file =new FileOutputStream(new File(filePath));  //Open FileOutputStream to write updates
+        workbook.write(output_file); //write changes
+//        workbook.close();
+        output_file.close();
 	}
 	
 	

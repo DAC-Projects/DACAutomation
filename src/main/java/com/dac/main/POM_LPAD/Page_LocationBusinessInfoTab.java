@@ -59,8 +59,9 @@ public class Page_LocationBusinessInfoTab extends LaunchLPAD {
 		btnAddCategory.click();
 	}
 	
-	public void fillBusinessInfoData(int excelRow) throws Exception {
+	public void fillBusinessInfoData() throws Exception {
 		String [][] inputData=new ExcelHandler(LocationDataExcelPath, "BusinessInfo").getExcelTable();
+		int excelRow=1;
 		wait = new WebDriverWait(driver, 30);
 		String strcategory=inputData[excelRow][0];		System.out.println(strcategory);
 		wait.until(ExpectedConditions.visibilityOf(btnAddCategory));

@@ -38,7 +38,7 @@ public void readLocationData() {
 }*/
 	
 @Test(dependsOnMethods = "com.dac.testcases.LPAD.Test_LoginToLPAD.TC_Login_LPAD")
-public void TC_NavigateToLocationsPage() {
+public void TC_NavigateToLocationsPage() throws InterruptedException {
 	System.out.println("Step1: Navigate To Locations Page ");
 	Page_LPADHome home=new Page_LPADHome(driver);
 	home.NavigateToLocations();
@@ -72,7 +72,7 @@ public void TC_EnterBusinessInfoData() throws Exception {
 	
 	tabs.navigateBusinessInfoTab();
 	Thread.sleep(1000);
-	businessInfo.fillBusinessInfoData(1);
+	businessInfo.fillBusinessInfoData();
 	
 	System.out.println("Business Info Data Insertion Completed.....");
 }

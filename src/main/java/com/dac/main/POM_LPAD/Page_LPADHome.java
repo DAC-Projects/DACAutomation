@@ -1,6 +1,11 @@
 package com.dac.main.POM_LPAD;
 
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -8,11 +13,14 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class Page_LPADHome {
+import com.dac.main.BasePage;
+
+public class Page_LPADHome{
 
 	WebDriver driver;
 	Actions action; 
 	WebDriverWait wait;
+	JavascriptExecutor js;
 	
 	/*----------------Locators Start------------*/
 	
@@ -102,8 +110,14 @@ public class Page_LPADHome {
 		System.out.println("Result: Navigated to Contacts Page");
 		}
 	
-	public void NavigateToLocations() {
+	public void NavigateToLocations() throws InterruptedException {
 		action = new Actions(driver);
+		js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollTo(0, -document.body.scrollHeight);");
+//		js.executeScript("arguments[0].scrollIntoView(true);", Locations);
+		
+//		js.executeScript("arguments[0].click();",CheckBoxLPM);
+		Thread.sleep(2000);
 		action.moveToElement(Locations).click().perform();
 		System.out.println("Result: Navigated to Locations Page");
 		}
@@ -119,5 +133,11 @@ public class Page_LPADHome {
 		action.moveToElement(Reports).click().perform();
 		System.out.println("Result: Navigated to Reports Page");
 		}
-
+	public void writeToNotepad(String inputText) throws IOException {
+		FileWriter fr=new FileWriter("./data/Locations.txt");
+		BufferedWriter br=new BufferedWriter(fr);
+		br.newLine();
+		br.append(inputText);
+		br.close();
+	}
 }
