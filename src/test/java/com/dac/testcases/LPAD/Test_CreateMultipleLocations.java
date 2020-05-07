@@ -64,7 +64,6 @@ public void TC_EnterLocationData() throws Exception {
 	System.out.println("Step4: Enter Location Data");
 	wait=new WebDriverWait(driver, 30);
 	wb = new ExcelHandler(LocationDataExcelPath, "BasicInfo");
-	newlocations = new ExcelHandler(NewLocationsExcelPath, "Locations");
 	
 	basicInfoData = wb.getExcelTable();
 	int TotalRow=basicInfoData.length-1;
