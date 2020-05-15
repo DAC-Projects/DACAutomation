@@ -60,12 +60,15 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "(//*[@class='pagination']//a)[last()]")
 	private WebElement Page_Next;
-	
+
 	@FindBy(xpath = "(//*[@class='pagination']//a)[2]")
 	private WebElement Page_First;
 
 	@FindBy(xpath = "//div[@id='syndication-table_info']")
 	private WebElement SyndTableInfo;
+	
+	@FindBy(xpath = "//*[@id='syndication-table_info']")
+	private WebElement TotalEntries;
 
 	/**
 	 * To verify title and title text
@@ -89,6 +92,9 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 		String Locations = NumOfLoc.getText();
 		int TotalLocations = Integer.parseInt(Locations);
 		System.out.println("The total Locations are:" + TotalLocations);
+		int NumOflocations = NumOfentries(TotalEntries);
+		System.out.println("The Number of Locations is:" +NumOflocations);
+		Assert.assertEquals(TotalLocations, NumOflocations);
 	}
 
 	/**
@@ -137,68 +143,77 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 					scrollByElement(SyndicationLocTable);
 					List<WebElement> rows_table = SyndicationLocTableRow;
 					int rows_count = rows_table.size();
-					for (int row = 0; row < rows_count; row++) {
+					System.out.println("Number of rows :" + rows_count);
+					for (int row = 1; row <= 10; row++) {
 						String celText = driver
-								.findElement(By
-										.xpath("//table[@id='syndication-table']//tbody//tr[" + (row + 1) + "]//td[1]"))
+								.findElement(
+										By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row) + "]//td[1]"))
 								.getText();
 						if (celText.contains(LocationNumber)) {
 							WebElement s = driver.findElement(
-									By.xpath("(//table[@id='syndication-table']//a[@class='anchor-slide'])[" + (row + 1)
+									By.xpath("(//table[@id='syndication-table']//a[@class='anchor-slide'])[" + (row)
 											+ "]//span"));
 							if (s.isDisplayed()) {
 								s.click();
 								List<WebElement> vendortablerow = driver
-										.findElements(By.xpath("//table[@id='syndication-table']//tbody//tr["
-												+ (row + 1) + "]//div[@class='table-listing-details']//tbody//tr"));
+										.findElements(By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row)
+												+ "]//div[@class='table-listing-details']//tbody//tr"));
 								int size = vendortablerow.size();
-								for (int j = 1; j <= size; j++) {
+								System.out.println("The size is :" + size);
+								for (int j = 2; j <= size; j++) {
+									System.out.println("The table row number is:" + row);
+									System.out.println("The vendor row number is:" + j);
 									String Vendor = driver
-											.findElement(By.xpath("//table[@id='syndication-table']//tbody//tr["
-													+ (row + 1) + "]//div[@class='table-listing-details']//tbody//tr["
-													+ (j + 1) + "]//td[1]"))
-											.getText();
+											.findElement(By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row)
+													+ "]//div[@class='table-listing-details']//tbody//tr[" + (j)
+													+ "]//td[1]"))
+											.getAttribute("innerText");
+									System.out.println("//table[@id='syndication-table']//tbody//tr[" + (row)
+											+ "]//div[@class='table-listing-details']//tbody//tr[" + (j) + "]//td[1]");
 									System.out.println("The vendor is :" + Vendor);
 									VendorList.add(Vendor);
 									String Status = driver
-											.findElement(By.xpath("//table[@id='syndication-table']//tbody//tr["
-													+ (row + 1) + "]//div[@class='table-listing-details']//tbody//tr["
-													+ (j + 1) + "]//td[2]"))
-											.getText();
+											.findElement(By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row)
+													+ "]//div[@class='table-listing-details']//tbody//tr[" + (j)
+													+ "]//td[2]//b"))
+											.getAttribute("innerText");
+									;
+									System.out.println("//table[@id='syndication-table']//tbody//tr[" + (row)
+											+ "]//div[@class='table-listing-details']//tbody//tr[" + (j) + "]//td[2]");
 									System.out.println("The status of the vendor is :" + Status);
 									Assert.assertEquals(Status, "In Progress");
 									if (Vendor.equals("HERE") || Vendor.equals("Factual")) {
-										String Notes = driver.findElement(
-												By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row + 1)
-														+ "]//div[@class='table-listing-details']//tbody//tr[" + (j + 1)
-														+ "]//td[4]"))
-												.getText();
+										String Notes = driver
+												.findElement(By.xpath("//table[@id='syndication-table']//tbody//tr["
+														+ (row) + "]//div[@class='table-listing-details']//tbody//tr["
+														+ (j) + "]//td[4]"))
+												.getAttribute("innerText");
 										System.out.println("The Notes is :" + Notes);
 										Assert.assertEquals(Notes, "Monthly Submissions");
 									} else if (Vendor.equals("TomTom")) {
-										String Notes = driver.findElement(
-												By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row + 1)
-														+ "]//div[@class='table-listing-details']//tbody//tr[" + (j + 1)
-														+ "]//td[4]"))
-												.getText();
+										String Notes = driver
+												.findElement(By.xpath("//table[@id='syndication-table']//tbody//tr["
+														+ (row) + "]//div[@class='table-listing-details']//tbody//tr["
+														+ (j) + "]//td[4]"))
+												.getAttribute("innerText");
 										System.out.println("The Notes is :" + Notes);
 										Assert.assertEquals(Notes, "Quarterly Submissions");
 									} else if (Vendor.equals("Zomato")) {
-										String Notes = driver.findElement(
-												By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row + 1)
-														+ "]//div[@class='table-listing-details']//tbody//tr[" + (j + 1)
-														+ "]//td[4]"))
-												.getText();
+										String Notes = driver
+												.findElement(By.xpath("//table[@id='syndication-table']//tbody//tr["
+														+ (row) + "]//div[@class='table-listing-details']//tbody//tr["
+														+ (j) + "]//td[4]"))
+												.getAttribute("innerText");
 										System.out.println("The Notes is :" + Notes);
 										Assert.assertEquals(Notes, "Weekly Submissions");
 										break Outer;
 									}
-								}if (Page_Next.isEnabled()) {
+								}
+								if (Page_Next.isEnabled()) {
 									scrollByElement(Page_Next);
 									Page_Next.click();
 									Thread.sleep(4000);
 								}
-								
 							}
 						}
 					}
@@ -228,35 +243,33 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 			if (Page_Next.isDisplayed()) {
 				for (int i = 1; i <= page; i++) {
 					scrollByElement(SyndicationLocTable);
-					List<WebElement> rows_table = SyndicationLocTableRow;
-					int rows_count = rows_table.size();
-					for (int row = 0; row < rows_count; row++) {
+					for (int row = 1; row <= 10; row++) {
 						String celText = driver
-								.findElement(By
-										.xpath("//table[@id='syndication-table']//tbody//tr[" + (row + 1) + "]//td[1]"))
+								.findElement(
+										By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row) + "]//td[1]"))
 								.getText();
 						if (celText.contains(LocationNumber)) {
 							WebElement s = driver.findElement(
-									By.xpath("(//table[@id='syndication-table']//a[@class='anchor-slide'])[" + (row + 1)
+									By.xpath("(//table[@id='syndication-table']//a[@class='anchor-slide'])[" + (row)
 											+ "]//span"));
 							if (s.isDisplayed()) {
 								s.click();
 								List<WebElement> vendortablerow = driver
-										.findElements(By.xpath("//table[@id='syndication-table']//tbody//tr["
-												+ (row + 1) + "]//div[@class='table-listing-details']//tbody//tr"));
+										.findElements(By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row)
+												+ "]//div[@class='table-listing-details']//tbody//tr"));
 								int size = vendortablerow.size();
-								for (int j = 1; j <= size; j++) {
+								for (int j = 2; j <= size; j++) {
 									String Vendor = driver
-											.findElement(By.xpath("//table[@id='syndication-table']//tbody//tr["
-													+ (row + 1) + "]//div[@class='table-listing-details']//tbody//tr["
-													+ (j + 1) + "]//td[1]"))
-											.getText();
+											.findElement(By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row)
+													+ "]//div[@class='table-listing-details']//tbody//tr[" + (j)
+													+ "]//td[1]"))
+											.getAttribute("innerText");
 									System.out.println("The vendor is :" + Vendor);
 									String Status = driver
-											.findElement(By.xpath("//table[@id='syndication-table']//tbody//tr["
-													+ (row + 1) + "]//div[@class='table-listing-details']//tbody//tr["
-													+ (j + 1) + "]//td[2]"))
-											.getText();
+											.findElement(By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row)
+													+ "]//div[@class='table-listing-details']//tbody//tr[" + (j)
+													+ "]//td[2]"))
+											.getAttribute("innerText");
 									System.out.println("The status of the vendor is :" + Status);
 									if (Vendor.equals("Bing") || Vendor.equals("Facebook") || Vendor.equals("Factual")
 											|| Vendor.equals("Foursquare") || Vendor.equals("Google")
@@ -273,11 +286,11 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 										System.out.println(today);
 										Date todaydate = formats.parse(today);
 										System.out.println(todaydate);
-										String date = driver.findElement(
-												By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row + 1)
-														+ "]//div[@class='table-listing-details']//tbody//tr[" + (j + 1)
-														+ "]//td[3]"))
-												.getText();
+										String date = driver
+												.findElement(By.xpath("//table[@id='syndication-table']//tbody//tr["
+														+ (row) + "]//div[@class='table-listing-details']//tbody//tr["
+														+ (j) + "]//td[3]"))
+												.getAttribute("innerText");
 										System.out.println("Date is :" + date);
 										Date UIDate = formats.parse(date);
 										System.out.println("UI Date is :" + UIDate);
@@ -287,32 +300,33 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 										Assert.assertEquals(Status, "In Progress");
 									}
 									if (Vendor.equals("HERE") || Vendor.equals("Factual")) {
-										String Notes = driver.findElement(
-												By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row + 1)
-														+ "]//div[@class='table-listing-details']//tbody//tr[" + (j + 1)
-														+ "]//td[4]"))
-												.getText();
+										String Notes = driver
+												.findElement(By.xpath("//table[@id='syndication-table']//tbody//tr["
+														+ (row) + "]//div[@class='table-listing-details']//tbody//tr["
+														+ (j) + "]//td[4]"))
+												.getAttribute("innerText");
 										System.out.println("The Notes is :" + Notes);
 										Assert.assertEquals(Notes, "Monthly Submissions");
 									} else if (Vendor.equals("TomTom")) {
-										String Notes = driver.findElement(
-												By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row + 1)
-														+ "]//div[@class='table-listing-details']//tbody//tr[" + (j + 1)
-														+ "]//td[4]"))
-												.getText();
+										String Notes = driver
+												.findElement(By.xpath("//table[@id='syndication-table']//tbody//tr["
+														+ (row) + "]//div[@class='table-listing-details']//tbody//tr["
+														+ (j) + "]//td[4]"))
+												.getAttribute("innerText");
 										System.out.println("The Notes is :" + Notes);
 										Assert.assertEquals(Notes, "Quarterly Submissions");
 									} else if (Vendor.equals("Zomato")) {
-										String Notes = driver.findElement(
-												By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row + 1)
-														+ "]//div[@class='table-listing-details']//tbody//tr[" + (j + 1)
-														+ "]//td[4]"))
-												.getText();
+										String Notes = driver
+												.findElement(By.xpath("//table[@id='syndication-table']//tbody//tr["
+														+ (row) + "]//div[@class='table-listing-details']//tbody//tr["
+														+ (j) + "]//td[4]"))
+												.getAttribute("innerText");
 										System.out.println("The Notes is :" + Notes);
 										Assert.assertEquals(Notes, "Weekly Submissions");
 										break Outer;
 									}
-								}if (Page_Next.isEnabled()) {
+								}
+								if (Page_Next.isEnabled()) {
 									scrollByElement(Page_Next);
 									Page_Next.click();
 									Thread.sleep(4000);
@@ -347,36 +361,34 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 			if (Page_Next.isDisplayed()) {
 				for (int i = 1; i <= page; i++) {
 					scrollByElement(SyndicationLocTable);
-					List<WebElement> rows_table = SyndicationLocTableRow;
-					int rows_count = rows_table.size();
-					for (int row = 0; row < rows_count; row++) {
+					for (int row = 1; row <= 10; row++) {
 						String celText = driver
-								.findElement(By
-										.xpath("//table[@id='syndication-table']//tbody//tr[" + (row + 1) + "]//td[1]"))
-								.getText();
+								.findElement(
+										By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row) + "]//td[1]"))
+								.getAttribute("innerText");
 						if (celText.contains(LocationNumber)) {
 							WebElement s = driver.findElement(
-									By.xpath("(//table[@id='syndication-table']//a[@class='anchor-slide'])[" + (row + 1)
+									By.xpath("(//table[@id='syndication-table']//a[@class='anchor-slide'])[" + (row)
 											+ "]//span"));
 							if (s.isDisplayed()) {
 								s.click();
 								List<WebElement> vendortablerow = driver
-										.findElements(By.xpath("//table[@id='syndication-table']//tbody//tr["
-												+ (row + 1) + "]//div[@class='table-listing-details']//tbody//tr"));
+										.findElements(By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row)
+												+ "]//div[@class='table-listing-details']//tbody//tr"));
 								int size = vendortablerow.size();
 								System.out.println("The size of vendor table is :" + size);
-								for (int j = 1; j <= size - 1; j++) {
+								for (int j = 2; j <= size; j++) {
 									String Vendor = driver
-											.findElement(By.xpath("//table[@id='syndication-table']//tbody//tr["
-													+ (row + 1) + "]//div[@class='table-listing-details']//tbody//tr["
-													+ (j + 1) + "]//td[1]"))
-											.getText();
+											.findElement(By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row)
+													+ "]//div[@class='table-listing-details']//tbody//tr[" + (j)
+													+ "]//td[1]"))
+											.getAttribute("innerText");
 									System.out.println("The vendor is :" + Vendor);
 									String Status = driver
-											.findElement(By.xpath("//table[@id='syndication-table']//tbody//tr["
-													+ (row + 1) + "]//div[@class='table-listing-details']//tbody//tr["
-													+ (j + 1) + "]//td[2]"))
-											.getText();
+											.findElement(By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row)
+													+ "]//div[@class='table-listing-details']//tbody//tr[" + (j)
+													+ "]//td[2]"))
+											.getAttribute("innerText");
 									System.out.println("The status of the vendor is :" + Status);
 									if (Vendor.equals(vendor)) {
 										Assert.assertEquals(Status, "Submitted");
@@ -391,18 +403,19 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 										System.out.println(today);
 										Date todaydate = formats.parse(today);
 										System.out.println(todaydate);
-										String date = driver.findElement(
-												By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row + 1)
-														+ "]//div[@class='table-listing-details']//tbody//tr[" + (j + 1)
-														+ "]//td[3]"))
-												.getText();
+										String date = driver
+												.findElement(By.xpath("//table[@id='syndication-table']//tbody//tr["
+														+ (row) + "]//div[@class='table-listing-details']//tbody//tr["
+														+ (j) + "]//td[3]"))
+												.getAttribute("innerText");
 										System.out.println("Date is :" + date);
 										Date UIDate = formats.parse(date);
 										System.out.println("UI Date is :" + UIDate);
 										Assert.assertEquals(todaydate, UIDate);
 										break Outer;
 									}
-								}if (Page_Next.isEnabled()) {
+								}
+								if (Page_Next.isEnabled()) {
 									scrollByElement(Page_Next);
 									Page_Next.click();
 									Thread.sleep(4000);
@@ -412,9 +425,118 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 							System.out.println("Vendor not displayed");
 						}
 					}
-					
 				}
 			}
+		}
+	}
+
+	public void verifyStatus(String Vendor, String Status, int row) {
+		List<WebElement> vendortablerow = driver
+				.findElements(By.xpath("(//div[@class='table-listing-details']//tbody//tr)["+row+"]"));
+		int size = vendortablerow.size();
+		System.out.println("The size of vendor table is :" + size);
+		for (int j = 2; j <= size; j++) {
+			WebElement x = driver
+					.findElement(By.xpath("(//div[@class='table-listing-details']//tbody//td[contains(text(),'" + Vendor + "')])["+row+"]"));
+			if (x.isDisplayed()) {
+				String status = driver
+						.findElement(By.xpath("(//div[@class='table-listing-details']//tbody//td[contains(text(),'"+Vendor+"')]//following-sibling::td[1])["+row+"]"))
+						.getAttribute("innerText");
+				Assert.assertEquals(status, Status);
+			} else {
+				System.out.println("Vendor is not displayed");
+				Assert.assertFalse(true, "Vendor is not available");
+			}
+		}
+	}
+	public int getLocationNumberRowNum(String LocationNumber)
+			throws ParseException, InterruptedException {
+		int row = 0;
+		if (SyndicationLocTable.isDisplayed()) {
+			scrollByElement(Last_Page);
+			String n = Last_Page.getText();
+			System.out.println("Last PageNumber in String is :" + n);
+			int page = Integer.parseInt(n);
+			System.out.println("Last Page Number is :" + page);
+			String entriesText = SyndTableInfo.getText();
+			entriesText = entriesText.substring(entriesText.indexOf("("));
+			clickelement(Page_First);
+			if (Page_Next.isDisplayed()) {
+				for (int i = 1; i <= page; i++) {
+					scrollByElement(SyndicationLocTable);
+					for (row = 1; row <= 10; row++) {
+						String celText = driver
+								.findElement(
+										By.xpath("//table[@id='syndication-table']//tbody//tr[" + (row) + "]//td[1]"))
+								.getAttribute("innerText");
+						if (celText.contains(LocationNumber)) {
+							WebElement s = driver.findElement(
+									By.xpath("(//table[@id='syndication-table']//a[@class='anchor-slide'])[" + (row)
+											+ "]//span"));
+							if (s.isDisplayed()) {
+								s.click();
+								if (Page_Next.isEnabled()) {
+									scrollByElement(Page_Next);
+									Page_Next.click();
+									Thread.sleep(4000);
+								}
+							}
+						}
+					}
+				}
+			}
+		} else {
+			System.out.println("Location Number is not available");
+			Assert.assertFalse(true, "Location Number is not available");
+		}
+		System.out.println("The row number is: " + row);
+		return row;
+	}
+
+	public void verifydatesumbitted(int row, String Vendor) throws ParseException {
+		String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
+				.toString();
+		SimpleDateFormat formats = new SimpleDateFormat(var);
+		System.out.println(var);
+		String today = ((JavascriptExecutor) driver)
+				.executeScript("return moment().format(window.dateFormat.shortTemplate.PlainHtml.toUpperCase())")
+				.toString();
+		System.out.println(today);
+		Date todaydate = formats.parse(today);
+		System.out.println(todaydate);
+		String date = driver
+				.findElement(
+						By.xpath("(//div[@class='table-listing-details']//tbody//td[contains(text(),'"+Vendor+"')]//following-sibling::td[2])[" + row + "]"))
+				.getAttribute("innerText");
+		System.out.println("Date is :" + date);
+		Date UIDate = formats.parse(date);
+		System.out.println("UI Date is :" + UIDate);
+		Assert.assertEquals(todaydate, UIDate);
+	}
+
+	public void verifyNotes(String Vendor, int row) {
+		String Notes;
+		if (Vendor.equals("HERE") || Vendor.equals("Factual")) {
+			Notes = driver
+					.findElement(By.xpath(
+							"(//div[@class='table-listing-details']//tbody//td[contains(text(),'"+Vendor+"')]//following-sibling::td[3])[" + row + "]"))
+					.getAttribute("innerText");
+			System.out.println("The Notes is :" + Notes);
+			Assert.assertEquals(Notes, "Monthly Submissions");
+		} else if (Vendor.equals("TomTom")) {
+			Notes = driver
+					.findElement(By.xpath(
+							"(//div[@class='table-listing-details']//tbody//td[contains(text(),'"+Vendor+"')]//following-sibling::td[3])[" + row + "]"))
+					.getAttribute("innerText");
+			System.out.println("The Notes is :" + Notes);
+			Assert.assertEquals(Notes, "Quarterly Submissions");
+		} else if (Vendor.equals("Zomato")) {
+			Notes = driver
+					.findElement(By.xpath(
+							"(//div[@class='table-listing-details']//tbody//td[contains(text(),'"+Vendor+"')]//following-sibling::td[3])[" + row + "]"))
+					.getAttribute("innerText");
+			System.out.println("The Notes is :" + Notes);
+			Assert.assertEquals(Notes, "Weekly Submissions");
 		}
 	}
 }
