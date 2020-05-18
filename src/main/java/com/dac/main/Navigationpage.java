@@ -169,6 +169,8 @@ public class Navigationpage extends BasePage{
     @FindBy(xpath="//*[@href='/SocialMediaReports/']")
     private WebElement SE_Reports;
     
+    @FindBy(id="ManageBrands")
+    private WebElement SE_Brand;
     
   //---------------------- TransparenSEE-------------------------------
     
@@ -542,5 +544,13 @@ public class Navigationpage extends BasePage{
 			}
 	}
 
+	/** To click on TSEE_Visibility link in LHS to navigate to TSEE_Visibility page   */
+	public void navigateToSE_Brand() {
+		//clickelement(Settings);
+		Settings.click();
+		SE_Brand.click();
+	    System.out.println("Waiting for page to load**********");
+	    waitUntilLoad(driver);
+	}
 
 }

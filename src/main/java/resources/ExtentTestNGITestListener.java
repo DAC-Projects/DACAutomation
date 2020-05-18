@@ -341,7 +341,7 @@ public class ExtentTestNGITestListener
 
     if (browser.equalsIgnoreCase("Chrome")) {
 
-     WebDriverManager.chromedriver().version("79.0.3945.36").setup(); 
+     WebDriverManager.chromedriver().version("81.0.4044.138").setup(); 
 
 
      //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
@@ -349,6 +349,9 @@ public class ExtentTestNGITestListener
       HashMap<String, Object> chromePref = new HashMap<>();
       chromePref.put("download.default_directory", downloadFolder);
       chromePref.put("download.prompt_for_download", "false");
+  //    chromePref.put("CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR", "UnexpectedAlertBehaviour.IGNORE");
+     
+      
       ChromeOptions options = new ChromeOptions();
       options.addArguments("disable-infobars");
       options.setExperimentalOption("prefs", chromePref);
