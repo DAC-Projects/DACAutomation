@@ -12,7 +12,11 @@
 	group-by-instances="true">
 	<parameter name="browser" value="chrome" />
 	<classes>
-		<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
+	<!-- <class name="com.dac.testcases.LPAD.Test_LoginToLPAD" /> 
+	<class name="com.dac.testcases.LPAD.Test_CreateLocation" /> -->
+	<!-- <class name="com.dac.testcases.TPSEE.TPSEE_Syndication_Status_DTCVerification" /> -->
+	<class name="com.dac.testcases.TPSEE.TPSEE_Syndication_Status_DTC_VendorsVerification" /> 
+	
 		<!-- <class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />
 		<class name="com.dac.testcases.TPSEE.TPSEE_ReviewStream_Test" />
 		<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
@@ -33,7 +37,6 @@
 		<class name="com.dac.testcases.TPSEE.TPSEE_Syndication_Status_Test" />-->
 	</classes>
 	</test>
-
 
 	<!-- <test name="Competitive Analysis"> <parameter name="browser" value="chrome"/> 
 		<parameter name="Filter" value= "US,Illinois,Chicago,53 W Jackson Blvd Ste 
