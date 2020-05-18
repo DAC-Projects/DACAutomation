@@ -54,7 +54,6 @@ public class TPSEE_ESRreports_Page extends TPSEE_abstractMethods {
 
 	public void clicksendReport( String ESRFrequency, String Email) throws Exception   {
 		np = new Navigationpage(CurrentState.getDriver());
-		
 		Select select = new Select(driver.findElement(By.xpath("//select[@name='freq-select']")));
 		select.selectByValue(ESRFrequency);
 		waitForElement(save, 40);
