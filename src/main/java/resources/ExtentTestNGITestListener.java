@@ -331,10 +331,9 @@ public class ExtentTestNGITestListener
    * @throws IOException	   */
   public WebDriver openBrowser(String browser) throws IOException {
 	  WebDriverWait wait;
-    WebDriver driver = null;
-
-    File file = new File(".\\downloads");
-    if (!file.exists())
+	  WebDriver driver = null;
+	  File file = new File(".\\downloads");
+	  if (!file.exists())
       file.mkdirs();
 
     String downloadFolder = System.getProperty("user.dir") + "\\downloads";
@@ -342,7 +341,7 @@ public class ExtentTestNGITestListener
     if (browser.equalsIgnoreCase("Chrome")) {
 
 
-     WebDriverManager.chromedriver().version("80.0.3987.16").setup(); 
+     WebDriverManager.chromedriver().version("81.0.4044.69").setup(); 
 
 
      //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();

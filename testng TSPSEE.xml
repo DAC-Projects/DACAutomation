@@ -2,26 +2,42 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" parallel="false">
  
-<listeners>
-<!-- <listener class-name="resources.IntegrationTestListener"></listener> -->
+<!-- <listener class-name="resources.IntegrationTestListener"></listener>
+ 	<listeners>
 <listener class-name="resources.ExtentTestNGITestListener"></listener>
 </listeners>
-   <test name="SE" parallel="false"
+ 
+   <test name="TrasnspernsEE" parallel="false"
 		group-by-instances="true">
 		<parameter name="browser" value="chrome" />
 		<classes>
-			<class name="com.dac.testcases.SE.PostdataforCreator" />
+			<class name="com.dac.testcases.TPSEE.TPSEE_ESRreports_Test" />
 		</classes>
 	</test>
 	  
- <test name="SE_AP" parallel="false"
+   <test name="SE_AP" parallel="false"
 		group-by-instances="true">
 		<parameter name="browser" value="chrome" />
 		<classes>
 			<class name="com.dac.testcases.SE.CompareReportsData_PostData" />
 		</classes>
-	</test> 
+	</test> -->
 	
-	 
-	
+		<!--<test name="DTC">
+		<classes>
+			<class name="com.dac.testcases.DTC.Create_Transmission" />
+		</classes>
+	</test>--> 
+ 
+ 		  <test name="DTC">
+		 <classes>
+			<class name="com.dac.testcases.DTC.VerifytheStatus_Manual" />
+		</classes>
+		</test> 
+		
+	 <!--<test name="DTC">
+		 <classes>
+			<class name="com.dac.testcases.DTC.DateSubmitted" />
+		</classes>
+		</test>--> 
 </suite>

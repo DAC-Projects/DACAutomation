@@ -41,7 +41,7 @@ public class ExcelHandler {
 
 	private  FileInputStream fis = null;
 	private  XSSFWorkbook workbook = null;
-	private  XSSFSheet sheet;// = null;
+	private  XSSFSheet sheet; // = null;
 	private  XSSFRow row = null;
 	private  XSSFCell cell = null;
 	
@@ -156,9 +156,15 @@ public class ExcelHandler {
 	}
 	
 	
-	private void setCellValue(int rownum, int colNum, String newValue) {
-		cell=workbook.getSheet(sheetName).getRow(rownum).getCell(colNum);
-		cell.setCellValue(newValue);
+    public void setCellValue(int rownum, int colNum, String newValue) throws Exception {
+    	//row=sheet.createRow(rownum);
+        cell=sheet.getRow(rownum).createCell(colNum);
+        System.out.println("new value "+newValue);
+		    cell.setCellValue((String)newValue);
+		    fis.close(); //Close the InputStream
+		    FileOutputStream output_file =new FileOutputStream(new File(filePath));  //Open FileOutputStream to write updates
+		    workbook.write(output_file); //write changes
+		    output_file.close();
 	}
 	
 	

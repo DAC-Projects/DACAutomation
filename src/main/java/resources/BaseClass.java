@@ -22,12 +22,15 @@ public abstract class BaseClass {
 
 
   // **********************for login to auth and then Dashboard
-
+	public static WebDriver driver;
   /**
    * This method is to navigate to TSEE dashboard page from AC1 Beta	
  * @throws InterruptedException */
   public static void navigateToBasePage() {
-    LoginAC_Beta lp = new LoginAC_Beta();
+	  String url="https://beta-dtc-web.azurewebsites.net/";
+	  driver.get(url);
+	  
+    /*LoginAC_Beta lp = new LoginAC_Beta();
     BaseClass.loginAuth(lp);
     BaseClass.navigateToDashboard(lp);
 
@@ -38,7 +41,7 @@ public abstract class BaseClass {
 
            //wait.until(ExpectedConditions.visibilityOf(CurrentState.getDriver().findElement(By.xpath("//div//button[contains(@class,'walkme-custom-balloon-button walkme-custom-balloon-weak-button walkme-custom-balloon-cancel-button walkme-action-cancel walkme-click-and-hover')]"))));
            //CurrentState.getDriver().findElement(By.xpath("//div//button[contains(@class,'walkme-custom-balloon-button walkme-custom-balloon-weak-button walkme-custom-balloon-cancel-button walkme-action-cancel walkme-click-and-hover')]")).click();        
-       }
+       }*/
  }
 
   /**
