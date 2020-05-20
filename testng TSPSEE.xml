@@ -23,17 +23,17 @@
 		</classes>
 	</test> -->
 	
-		<!--<test name="DTC">
+	 	<!--<test name="DTC">
 		<classes>
 			<class name="com.dac.testcases.DTC.Create_Transmission" />
 		</classes>
-	</test>--> 
+	</test>-->  
  
- 		  <test name="DTC">
+ 		 <test name="DTC">
 		 <classes>
 			<class name="com.dac.testcases.DTC.VerifytheStatus_Manual" />
 		</classes>
-		</test> 
+		</test>
 		
 	 <!--<test name="DTC">
 		 <classes>
