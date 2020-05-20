@@ -2,11 +2,15 @@ package com.dac.main.POM_TPSEE;
 
 import static org.testng.Assert.assertTrue;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -357,11 +361,17 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 	 * @param PhNumber
 	 * @param Text
 	 * @throws InterruptedException
+	 * @throws ParseException
 	 */
-	public void verifyCompleteTab(String PhNumber, String Text) throws InterruptedException {
+	public void verifyCompleteTab(String PhNumber, String Text) throws InterruptedException, ParseException {
 		driver.navigate().refresh();
+		String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
+				.toString();
+		SimpleDateFormat formats = new SimpleDateFormat(var);
+		System.out.println(var);
 		String LocNum = getLocationNumber(PhNumber, CompletedTab);
 		System.out.println("Location Number of Complete Tab is :" + LocNum);
+		if(!LocNum.equals("null")) {
 		waitForElement(CompletedTab, 10);
 		clickelement(CompletedTab);
 		Outer: if (Dup_Table_Info.isDisplayed()) {
@@ -386,16 +396,28 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 								.getText();
 						System.out.println("The celText is :" + celtext);
 						if (celtext.contains(LocNum)) {
-							String StatusText = driver
-									.findElement(By.xpath(
-											"//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[4]/div/div[3]"))
-									.getText();
-							assertTrue(StatusText.contains(Text));
-							if (driver.findElement(By.xpath(ClickMore + "[" + (row + 1) + "]")).isDisplayed()) {
-								driver.findElement(By.xpath(ClickMore + "[" + (row + 1) + "]")).click();
-								System.out.println();
-							} else {
-								System.out.println("No More Link displayed");
+							Date todaysDate = getTodaysDate();
+							System.out.println("Today's Date is :" + todaysDate);
+							String date = driver.findElement(By.xpath("(//*[@id='duplicate-table']/tbody/tr["
+									+ (row + 1)
+									+ "]/td[2]/div/../preceding-sibling::td//div//span[@class='oblique muteText'])["
+									+ (row + 1) + "]")).getText();
+							System.out.println("Date displayed is :" + date);
+							String finalDate = date.substring(date.lastIndexOf("d") + 1);
+							System.out.println("Final Date is :" + finalDate);
+							Date displayeddate = formats.parse(finalDate);
+							System.out.println("Displayed Date is : " + displayeddate);
+							if (todaysDate.equals(displayeddate)) {
+								String StatusText = driver.findElement(By.xpath(
+										"//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[4]/div/div[3]"))
+										.getText();
+								assertTrue(StatusText.contains(Text));
+								if (driver.findElement(By.xpath(ClickMore + "[" + (row + 1) + "]")).isDisplayed()) {
+									driver.findElement(By.xpath(ClickMore + "[" + (row + 1) + "]")).click();
+									System.out.println();
+								} else {
+									System.out.println("No More Link displayed");
+								}
 							}
 							break Outer;
 						}
@@ -409,6 +431,9 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 			}
 		} else {
 			System.out.println("No Data Available");
+		}
+		}else {
+			System.out.println("Location Number not found");
 		}
 	}
 
@@ -510,7 +535,6 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 											+ (row + 1) + "]"));
 							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 							clickelement(v);
-							System.out.println("Selected action is :" + action);
 							waitUntilLoad(driver);
 							waitForElement(Ignore_Confirmation, 10);
 							clickelement(Ignore_Confirmation);
@@ -651,5 +675,19 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		} else {
 			System.out.println("No Data Available");
 		}
+	}
+
+	public Date getTodaysDate() throws ParseException {
+		String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
+				.toString();
+		SimpleDateFormat formats = new SimpleDateFormat(var);
+		System.out.println(var);
+		String today = ((JavascriptExecutor) driver)
+				.executeScript("return moment().format(window.dateFormat.shortTemplate.PlainHtml.toUpperCase())")
+				.toString();
+		System.out.println(today);
+		Date todaydate = formats.parse(today);
+		System.out.println(todaydate);
+		return todaydate;
 	}
 }

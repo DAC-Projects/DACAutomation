@@ -36,5 +36,13 @@ public interface IAutoconst {
 	String[] SocialAutomationAccount = {baseUrl+"social-automation-beta","rohitmenon8055@gmail.com"};
 	String[] SocialAutomationAccountCreator = {baseUrl+"social-automation-beta","vrohitmenon@gmail.com"};
 	String userLocale = "IN";
+	/*----------------LPAD Variables----------------*/
+    String LPADUrlBeta="https://dac-map-beta.azurewebsites.net/";
+    String ResellerAdmin="AutomationResellerAdmin";
+    String ResellerPassword="111111";
+    String LocationDataExcelPath="./data/LocationSampleData.xlsx";
+    String AddressFormatExcelPath="./data/AddressFormats.xlsx";
+    String LpadAccountName="SA Test DRS";
+    String LpadContact="TestAcccountOwner4";
 	
 }

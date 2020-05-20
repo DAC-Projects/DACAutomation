@@ -94,7 +94,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 */
 	@Test(priority = 5)
 	public void launchBrowser() throws Exception {
-		WebDriverManager.chromedriver().version("79.0.3945.36").setup();
+		WebDriverManager.chromedriver().version("80.0.3987.16").setup();
 		driver = new ChromeDriver();
 		driver.get(url);
 		driver.manage().window().maximize();
@@ -149,9 +149,9 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	public void verifyStatus_Merged() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
-		String PhNumber = wb.getCellValue(2, wb.seacrh_pattern("Phone Number ", 0).get(0).intValue());
+		String PhNumber = wb.getCellValue(1, wb.seacrh_pattern("Phone Number ", 0).get(0).intValue());
 		System.out.println("The Phone Number is :" + PhNumber);
-		String Status = wb.getCellValue(2, wb.seacrh_pattern("Status Text", 0).get(0).intValue());
+		String Status = wb.getCellValue(2, wb.seacrh_pattern("Status", 0).get(0).intValue());
 		System.out.println("The Status is :" + Status);
 		data.verifyCompleteTab(PhNumber, Status);
 		addEvidence(CurrentState.getDriver(), "To Verify Merged Status", "yes");
@@ -183,9 +183,9 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	public void verifyStatus_Suppressed() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
-		String PhNumber = wb.getCellValue(3, wb.seacrh_pattern("Phone Number ", 0).get(0).intValue());
+		String PhNumber = wb.getCellValue(1, wb.seacrh_pattern("Phone Number ", 0).get(0).intValue());
 		System.out.println("The Phone Number is :" + PhNumber);
-		String Status = wb.getCellValue(3, wb.seacrh_pattern("Status Text", 0).get(0).intValue());
+		String Status = wb.getCellValue(3, wb.seacrh_pattern("Status", 0).get(0).intValue());
 		System.out.println("The Status is :" + Status);
 		data.verifyCompleteTab(PhNumber, Status);
 		addEvidence(CurrentState.getDriver(), "To Verify Suppressed Status", "yes");
@@ -217,9 +217,9 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	public void verifyStatus_Notaduplicate() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
-		String PhNumber = wb.getCellValue(4, wb.seacrh_pattern("Phone Number ", 0).get(0).intValue());
+		String PhNumber = wb.getCellValue(1, wb.seacrh_pattern("Phone Number ", 0).get(0).intValue());
 		System.out.println("The Phone Number is :" + PhNumber);
-		String Status = wb.getCellValue(4, wb.seacrh_pattern("Status Text", 0).get(0).intValue());
+		String Status = wb.getCellValue(4, wb.seacrh_pattern("Status", 0).get(0).intValue());
 		System.out.println("The Status is :" + Status);
 		data.verifyCompleteTab(PhNumber, Status);
 		addEvidence(CurrentState.getDriver(), "To Verify Not a Duplicate Status", "yes");
@@ -251,9 +251,9 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	public void verifyStatus_Unabletoprocess() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
-		String PhNumber = wb.getCellValue(4, wb.seacrh_pattern("Phone Number ", 0).get(0).intValue());
+		String PhNumber = wb.getCellValue(1, wb.seacrh_pattern("Phone Number ", 0).get(0).intValue());
 		System.out.println("The Phone Number is :" + PhNumber);
-		String Status = wb.getCellValue(4, wb.seacrh_pattern("Status Text", 0).get(0).intValue());
+		String Status = wb.getCellValue(5, wb.seacrh_pattern("Status", 0).get(0).intValue());
 		System.out.println("The Status is :" + Status);
 		data.verifyCompleteTab(PhNumber, Status);
 		addEvidence(CurrentState.getDriver(), "To Verify Status Unable to 'process", "yes");
@@ -308,13 +308,23 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "To take action on Potential Duplicate Tab", "yes");
 
 	}
+	
+	@Test(priority = 18)
+	public void verifyPotentialFix() throws Exception {
+		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
+		String LocationNumber = wb.getCellValue(1, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
+		System.out.println("The Location Number is :" + LocationNumber);
+		data.verifyfixPot_Dup(LocationNumber);
+		addEvidence(CurrentState.getDriver(), "To take action on Potential Duplicate Tab", "yes");
+	}
 
 	/**
 	 * Test to verify Fix in Pot_Dup and Ignore the same with Pending Tab
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 18)
+	@Test(priority = 19)
 	public void PendingTabVerification() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
@@ -329,7 +339,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 19)
+	@Test(priority = 20)
 	public void DTC_Merged_Pot_Dup() throws Exception {
 		DTC_Duplicate_Management dtcLogin = new DTC_Duplicate_Management(driver);
 		DTC_Navigation navi = new DTC_Navigation(driver);
@@ -350,9 +360,9 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	public void verifyStatus_Merged_Pot_Dup() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
-		String PhNumber = wb.getCellValue(2, wb.seacrh_pattern("Phone Number ", 0).get(0).intValue());
+		String PhNumber = wb.getCellValue(1, wb.seacrh_pattern("Phone Number", 0).get(0).intValue());
 		System.out.println("The Phone Number is :" + PhNumber);
-		String Status = wb.getCellValue(2, wb.seacrh_pattern("Status Text", 0).get(0).intValue());
+		String Status = wb.getCellValue(2, wb.seacrh_pattern("Status", 0).get(0).intValue());
 		System.out.println("The Status is :" + Status);
 		data.verifyCompleteTab(PhNumber, Status);
 		addEvidence(CurrentState.getDriver(), "To Verify Status Merged", "yes");
@@ -384,9 +394,9 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	public void verifyStatus_Suppressed_Pot_Dup() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
-		String PhNumber = wb.getCellValue(3, wb.seacrh_pattern("Phone Number ", 0).get(0).intValue());
+		String PhNumber = wb.getCellValue(1, wb.seacrh_pattern("Phone Number", 0).get(0).intValue());
 		System.out.println("The Phone Number is :" + PhNumber);
-		String Status = wb.getCellValue(3, wb.seacrh_pattern("Status Text", 0).get(0).intValue());
+		String Status = wb.getCellValue(3, wb.seacrh_pattern("Status", 0).get(0).intValue());
 		System.out.println("The Status is :" + Status);
 		data.verifyCompleteTab(PhNumber, Status);
 		addEvidence(CurrentState.getDriver(), "To Verify Status Suppressed", "yes");
@@ -418,9 +428,9 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	public void verifyStatus_Notaduplicate_Pot_Dup() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
-		String PhNumber = wb.getCellValue(4, wb.seacrh_pattern("Phone Number ", 0).get(0).intValue());
+		String PhNumber = wb.getCellValue(1, wb.seacrh_pattern("Phone Number", 0).get(0).intValue());
 		System.out.println("The Phone Number is :" + PhNumber);
-		String Status = wb.getCellValue(4, wb.seacrh_pattern("Status Text", 0).get(0).intValue());
+		String Status = wb.getCellValue(4, wb.seacrh_pattern("Status", 0).get(0).intValue());
 		System.out.println("The Status is :" + Status);
 		data.verifyCompleteTab(PhNumber, Status);
 		addEvidence(CurrentState.getDriver(), "To Verify Status Not a Duplicate", "yes");
@@ -452,9 +462,9 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	public void verifyStatus_Unabletoprocess_Pot_Dup() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
-		String PhNumber = wb.getCellValue(4, wb.seacrh_pattern("Phone Number ", 0).get(0).intValue());
+		String PhNumber = wb.getCellValue(1, wb.seacrh_pattern("Phone Number", 0).get(0).intValue());
 		System.out.println("The Phone Number is :" + PhNumber);
-		String Status = wb.getCellValue(4, wb.seacrh_pattern("Status Text", 0).get(0).intValue());
+		String Status = wb.getCellValue(5, wb.seacrh_pattern("Status", 0).get(0).intValue());
 		System.out.println("The Status is :" + Status);
 		data.verifyCompleteTab(PhNumber, Status);
 		addEvidence(CurrentState.getDriver(), "To Verify Status Unable to Process", "yes");
@@ -492,6 +502,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		navi.excel(i);
 		System.out.println(pageTitle);
 		addEvidence(driver, "Change status to In Progress", "yes");
+		driver.close();
 	}
 
 }
