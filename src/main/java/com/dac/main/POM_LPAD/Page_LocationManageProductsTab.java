@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.dac.main.BasePage;
 import com.dac.testcases.LPAD.LaunchLPAD;
 
 import resources.ExcelHandler;
@@ -27,37 +28,47 @@ public class Page_LocationManageProductsTab extends LaunchLPAD {
 	WebDriverWait wait;
 	JavascriptExecutor js;
 	String xcelInputData[][];
+	String LocatorDataSyndication="LPM|DataSyndication|1|1";//Locator for identify the Options Popup
 	
 	//---------------PFO------------------//
-	@FindBy(xpath="//*[@id='rdioDiv']/div[4]/div/div[1]/div[3]/div/b[1]")
+	@FindBy(xpath="//div[@class='toggle-sw t-SocialEngagement']")
 	private WebElement ToggleBoxSE;
 	
 	//-----------For enable Data syndication on LPM(Only for DAC Group Reseller)---------//
-	@FindBy(xpath="//*[@id='rdioDiv']/div[5]/div/div[1]/div[3]/div/b[1]")
+	@FindBy(xpath="//div[@class='toggle-sw t-LPM']")
 	private WebElement ToggleBoxLPM;
-	
-	@FindBy(xpath="//*[@id='rdioDiv']/div[5]/div/div[1]/div[3]/div/b[1]/../input")
+
+	@FindBy(xpath="//input[@class='check-stat sw-LPM']")
 	private WebElement CheckBoxLPM;
 	
-	@FindBy(xpath="//*[@id='8LPM']/div[1]/input")
+	@FindBy(xpath="//*[@id='mark_LPM']")
+	private WebElement TickMarkLPM;
+	
+	@FindBy(xpath="//input[@id='LPM_SyndicationStatusReport']/../../span")
+	private WebElement TickMarkSyndicationStatus;
+	
+	
+	@FindBy(xpath="//input[@id='LPM_DataSyndication']")
 	private WebElement CheckBoxDataSyndication;
 	
-	@FindBy(xpath="//*[@id='1LPM']/div[1]")
+	//*[@id='8LPM']/div[1]/input
+	@FindBy(xpath="//input[@id='LPM_SyndicationStatusReport']")
 	private WebElement ToggleSyndicationStatus;
+	//*[@id='1LPM']/div[1]
 	
-	@FindBy(xpath="//*[@id='8LPM']/div[3]/a")
+	@FindBy(xpath="//a[@id='LPM_DataSyndication_options']")
 	private WebElement OptionsDataSyndication;
+	//*[@id='8LPM']/div[3]/a
 	
-	@FindBy(xpath="//div[@class='modal-body']//*[contains(text(),'Apple')]/../input")
-	private WebElement CheckBoxOptionValue;
 	
-	@FindBy(xpath="//div[@prefix='LPM|DataSyndication|2|1']//a[contains(text(),'OK')]")
+	//This locators only working with "Domain N" only
+	@FindBy(xpath="//div[@prefix='LPM|DataSyndication|1|1']//a[contains(text(),'OK')]")
 	private WebElement OKButtonOption;
 	
-	@FindBy(xpath="//div[@prefix='LPM|DataSyndication|2|1']//h4")
+	@FindBy(xpath="//div[@prefix='LPM|DataSyndication|1|1']//h4")
 	private WebElement OptionsHeading;
 	
-	@FindBy(xpath = "//div[@prefix='LPM|DataSyndication|2|1']//input[@type='checkbox']")
+	@FindBy(xpath = "//div[@prefix='LPM|DataSyndication|1|1']//input[@type='checkbox']")
 	private List<WebElement> allvendors;
 	
 	
@@ -74,45 +85,74 @@ public class Page_LocationManageProductsTab extends LaunchLPAD {
 		
 		
 	}
-	private boolean verifyElementEnabled(WebElement element) {
-		if(element.isEnabled()) {
-			return true;
-		}else {
-			return false;
-		}
-	}
-	private void enableLPM() throws InterruptedException {
-		
-		
-	}
-	
-	private void enableDataSyndication() throws InterruptedException {
-	
-		
-	}
-	public void clickOnDSOptions() throws Exception {
+	private void clickOnLPM() throws InterruptedException {
 		js = (JavascriptExecutor) driver;
 		wait=new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.visibilityOf(headingProductsTab));
-		
 		System.out.println("Clicking on LPM");
-		js.executeScript("arguments[0].scrollIntoView(true);", ToggleBoxSE);
+		js.executeScript("arguments[0].scrollIntoView(true);", ToggleBoxSE);//ToggleBoxLPM
 		js.executeScript("arguments[0].click();",CheckBoxLPM);
 		Thread.sleep(2000);
-
-		System.out.println("Clicking on DS");
+	}
+	private void clickOnDS() throws InterruptedException {
+		js = (JavascriptExecutor) driver;
+		wait=new WebDriverWait(driver, 30);
+		System.out.println("Clicking on Data Syndication");
 		js.executeScript("arguments[0].scrollIntoView(true);", ToggleSyndicationStatus);
 		js.executeScript("arguments[0].click();",CheckBoxDataSyndication);
 		Thread.sleep(2000);
-		
-		System.out.println("Clicking on Options");
-		OptionsDataSyndication.click();
+	}
+	private void clickOnSSyndicationStatus() throws InterruptedException {
+		js = (JavascriptExecutor) driver;
+		wait=new WebDriverWait(driver, 30);
+		System.out.println("Clicking on Syndication Status Report");
+		js.executeScript("arguments[0].scrollIntoView(true);", CheckBoxLPM);
+		js.executeScript("arguments[0].click();",ToggleSyndicationStatus);
 		Thread.sleep(2000);
+	}
+	
+	public void clickOnDSOptions(String type) throws Exception {
+		js = (JavascriptExecutor) driver;
+		wait=new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.visibilityOf(headingProductsTab));
+		if (type.equalsIgnoreCase("CREATE")) {
+			xcelInputData = new ExcelHandler(LocationDataExcelPath, "Products").getExcelTable();
+			enableLPM();
+//			System.out.println("Clicking on LPM");
+//			js.executeScript("arguments[0].scrollIntoView(true);", ToggleBoxSE);
+//			js.executeScript("arguments[0].click();",CheckBoxLPM);
+//			Thread.sleep(2000);
+			enableSyndicationStatus();
+			clickOnDS();
+//			System.out.println("Clicking on DS");
+//			js.executeScript("arguments[0].scrollIntoView(true);", ToggleSyndicationStatus);
+//			js.executeScript("arguments[0].click();",CheckBoxDataSyndication);
+//			Thread.sleep(2000);
+			System.out.println("Clicking on Options");
+			js.executeScript("arguments[0].scrollIntoView(true);", OptionsDataSyndication);
+			js.executeScript("arguments[0].scrollIntoView(true);", ToggleBoxLPM);
+			OptionsDataSyndication.click();
+			Thread.sleep(2000);
+		}else if (type.equalsIgnoreCase("MANAGE")) {
+			xcelInputData = new ExcelHandler(LocationDataExcelPath, "UpdateOptions").getExcelTable();
+			System.out.println("Clicking on Options");
+			js.executeScript("arguments[0].scrollIntoView(true);", ToggleSyndicationStatus);
+			js.executeScript("arguments[0].scrollIntoView(true);", ToggleBoxLPM);
+			OptionsDataSyndication.click();
+			Thread.sleep(2000);
+		}else {
+			System.out.println("Not matching");
+		}
+		
 		deselectAllVendors();
-		xcelInputData = new ExcelHandler(LocationDataExcelPath, "Products").getExcelTable();
 		selectOption(xcelInputData);
 	}
 	
+	public void clickOnSyndicationStatusReport() throws InterruptedException {
+		js = (JavascriptExecutor) driver;
+		wait=new WebDriverWait(driver, 30);
+		enableSyndicationStatus();
+		Thread.sleep(2000);
+	}
 	private void deselectAllVendors() throws InterruptedException {
 		List < WebElement > vendors = allvendors;
 		int vendors_count = vendors.size();	
@@ -121,7 +161,7 @@ public class Page_LocationManageProductsTab extends LaunchLPAD {
 			
 			WebElement elementVendor = null;
 			String strChecked=null;
-			elementVendor=driver.findElement(By.xpath("//div[@prefix='LPM|DataSyndication|2|1']//input[@type='checkbox']["+i+"]"));
+			elementVendor=driver.findElement(By.xpath("//div[@prefix='"+LocatorDataSyndication+"']//input[@type='checkbox']["+i+"]"));
 			Thread.sleep(1000);
 			strChecked=elementVendor.getAttribute("checked");
 			if (strChecked==null) {
@@ -138,12 +178,12 @@ public class Page_LocationManageProductsTab extends LaunchLPAD {
 	}
 	private void selectOption(String [][] optionValue) throws InterruptedException {
 		js = (JavascriptExecutor) driver;
-		int TotalRow=optionValue.length-1;
+		int TotalRow=optionValue.length-1,column=1;
 		for (int i=1;i<=TotalRow;i++) {
 			
 			WebElement elementOption = null;
 			String strChecked=null;
-			elementOption=driver.findElement(By.xpath("//div[@prefix='LPM|DataSyndication|2|1']//input[@value='"+ optionValue[i][1] +"']"));
+			elementOption=driver.findElement(By.xpath("//div[@prefix='"+LocatorDataSyndication+"']//input[@value='"+ optionValue[i][column] +"']"));
 //			System.out.println("Vendor name is: "+optionValue[i][0]+": ID is>> "+ optionValue[i][1]+" Selected");
 			Thread.sleep(2000);
 			strChecked=elementOption.getAttribute("checked");
@@ -159,6 +199,46 @@ public class Page_LocationManageProductsTab extends LaunchLPAD {
 		}
 			
 		OKButtonOption.click();
+	}
+	public boolean disableLPM() throws InterruptedException {
+		String value= TickMarkLPM.getAttribute("style");
+//		System.out.println(value);
+		if (value.contains("inline")) {
+//			 System.out.println("Product ON");
+			 clickOnLPM();
+			 System.out.println("Product: ON >> OFF");
+			 return true;
+		}else {
+			System.out.println("Product Already OFF");
+			return false;
+		}
+	}
+	
+	public boolean enableLPM() throws InterruptedException {
+		String value= TickMarkLPM.getAttribute("style");
+//		System.out.println(value);
+		if (!value.contains("inline")) {
+//			 System.out.println("Product OFF");
+			 clickOnLPM();
+			 System.out.println("Product: OFF >> ON");
+			 return true;
+		}else {
+			System.out.println("Product Already ON");
+			return false;
+		}
+	}
+	public boolean enableSyndicationStatus() throws InterruptedException {
+		String value= TickMarkSyndicationStatus.getAttribute("style");
+//		System.out.println(value);
+		if (!value.contains("inline")) {
+//			 System.out.println("Product OFF");
+			 clickOnSSyndicationStatus();
+			 System.out.println("Product: OFF >> ON");
+			 return true;
+		}else {
+			System.out.println("Product Already ON");
+			return false;
+		}
 	}
 	/*private void deSelectOption(String option) throws InterruptedException {
 		js = (JavascriptExecutor) driver;

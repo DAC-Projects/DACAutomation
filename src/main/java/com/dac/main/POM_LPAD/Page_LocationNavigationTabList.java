@@ -37,16 +37,18 @@ public class Page_LocationNavigationTabList extends LaunchLPAD {
 	@FindBy(xpath="//ul[@class='nav nav-tabs']//li//a[@id='liStep4']")
 	private WebElement customInfoTab;
 	
-	@FindBy(xpath="//ul[@class='nav nav-tabs']//li//a[@id='liStep5']")
+	@FindBy(xpath="//label[text()='Manage Products']")
 	private WebElement productsTab;
+	
+	@FindBy(xpath="//label[text()='Site Specific Info']")
+	private WebElement siteSpecificInfoTab;
 	
 	@FindBy(xpath="//ul[@class='nav nav-tabs']//li//a[@id='liStep6']")
 	private WebElement summaryTab;
-	
 		
 	//-----Buttons-----------
 	
-	@FindBy(xpath="//form[@class='form-horizontal']//input[@id='btn_save']")
+	@FindBy(xpath="//input[@id='btn_save']")
 	private WebElement btnSubmit;
 	
 	@FindBy(xpath="//div[@class='bootbox modal fade saveProNew in']//button[@data-bb-handler='Ok']")
@@ -58,8 +60,8 @@ public class Page_LocationNavigationTabList extends LaunchLPAD {
 	@FindBy(xpath="//div[@class='bootbox modal fade in']/div/div/div[@class='modal-body']/div")
 	private WebElement LocationSuccessMessage;
 	
-	@FindBy(xpath="//div[@class='bootbox modal fade in']/div/div/div[@class='modal-footer']/button")
-	private WebElement BtnLocationSuccessMessage;
+	@FindBy(xpath="//div[@class='bootbox modal fade in']//button[contains(text(),'OK')]")
+	private WebElement btnOK;
 	
 	public Page_LocationNavigationTabList(WebDriver driver) {
 		this.driver=driver;
@@ -103,6 +105,17 @@ public class Page_LocationNavigationTabList extends LaunchLPAD {
 		actions.moveToElement(productsTab).perform();
 		actions.moveToElement(productsTab).doubleClick(productsTab).build().perform();
 	}
+	
+	public void navigateSiteSpecificInfoTab() throws InterruptedException {
+		wait = new WebDriverWait(driver, 30);
+		js = (JavascriptExecutor) driver;
+		Thread.sleep(3000);
+		js.executeScript("window.scrollTo(0, -document.body.scrollHeight);");
+		wait.until(ExpectedConditions.elementToBeClickable(siteSpecificInfoTab));
+		System.out.println("-------------clicking siteSpecificInfoTab");
+		actions.moveToElement(siteSpecificInfoTab).perform();
+		actions.moveToElement(siteSpecificInfoTab).doubleClick(siteSpecificInfoTab).build().perform();
+	}
 	public void submitLocation() throws InterruptedException {
 		js = (JavascriptExecutor) driver;
 		wait = new WebDriverWait(driver, 30);
@@ -111,24 +124,46 @@ public class Page_LocationNavigationTabList extends LaunchLPAD {
 		if (btnSubmit.isEnabled()) {
 			System.out.println("Submit Button is Enabled");
 			actions.moveToElement(btnSubmit).click().build().perform();
-			wait.until(ExpectedConditions.visibilityOf(BtnLocationSuccessMessage));//for warning message popup
-			actions.moveToElement(BtnLocationSuccessMessage).click().build().perform();
-//			BtnLocationSuccessMessage.click();//for warning message popup
-			Thread.sleep(2000);
-			if(btnIncompleteWarningOK.isDisplayed()) {
-				Thread.sleep(2000);
-				btnIncompleteWarningOK.click();
-			}else {
-				
+			wait.until(ExpectedConditions.visibilityOf(btnOK));//for warning message popup
+			actions.moveToElement(btnOK).click().build().perform();//confirm purchase
+			Thread.sleep(1000);
+			if(btnOK.isDisplayed()) {
+				btnOK.click();//incomplete waring
+				Thread.sleep(1000);
 			}
-			wait.until(ExpectedConditions.visibilityOf(BtnLocationSuccessMessage));//for success message popup
-			BtnLocationSuccessMessage.click();//for success message popup
+//			wait.until(ExpectedConditions.visibilityOf(btnOK));//for success message popup
+//			btnOK.click();
+//			btnOK.click();
 //			js.executeScript("window.scrollTo(0, -document.body.scrollHeight);");
 		}else {
 			System.out.println("Submit Button Not enabled");
 		}
 	}
 	
-	
+	public void updateLocation() throws InterruptedException {
+		js = (JavascriptExecutor) driver;
+		wait = new WebDriverWait(driver, 30);
+		js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+		Thread.sleep(3000);
+		if (btnSubmit.isEnabled()) {
+			System.out.println("Submit Button is Enabled");
+			actions.moveToElement(btnSubmit).click().build().perform();
+//			wait.until(ExpectedConditions.visibilityOf(LocationSuccessMessage));//for warning message popup
+//			actions.moveToElement(BtnOK).click().build().perform();
+//			BtnLocationSuccessMessage.click();//for warning message popup
+			Thread.sleep(2000);
+			if(btnOK.isDisplayed()) {
+				Thread.sleep(1000);
+				btnOK.click();
+			}else {
+				
+			}
+//			wait.until(ExpectedConditions.visibilityOf(btnOK));//for success message popup
+//			btnOK.click();//for success message popup
+//			js.executeScript("window.scrollTo(0, -document.body.scrollHeight);");
+		}else {
+			System.out.println("Submit Button Not enabled");
+		}
+	}
 	
 }

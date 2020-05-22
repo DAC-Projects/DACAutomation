@@ -4,7 +4,9 @@ package com.dac.main.POM_LPAD;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
+import org.apache.lucene.analysis.miscellaneous.TrimFilter;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,8 +14,11 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import com.dac.main.BasePage;
+
+import junit.framework.AssertionFailedError;
 
 public class Page_LPADHome{
 
@@ -23,6 +28,22 @@ public class Page_LPADHome{
 	JavascriptExecutor js;
 	
 	/*----------------Locators Start------------*/
+	/*----------------Title Bar-----------------*/
+	
+	@FindBy(xpath="//li[@id='fontcolor']/a/span/span[2]/label")
+	private WebElement profile;
+	
+	@FindBy(xpath="//li[@id='fontcolor']")
+	private WebElement profileLink;
+	
+	@FindBy(xpath="//a[text()='Switch Domain']")
+	private WebElement linkSwitchDomain;
+	
+	@FindBy(xpath="//a[text()='OK']")
+	private WebElement btnOK;
+
+	@FindBy(xpath = "//div[@id='div_Domain']/input")
+	private List<WebElement> allDomains;
 	
 	@FindBy(xpath="//a[text()='Extract PFO Country Setup']")
 	private WebElement btnExtractPFOSetup;
@@ -133,6 +154,51 @@ public class Page_LPADHome{
 		action.moveToElement(Reports).click().perform();
 		System.out.println("Result: Navigated to Reports Page");
 		}
+	private String getDomain() {
+		String Username= profile.getText();
+		String domain=Username.substring(Username.indexOf("-") + 1, Username.length());
+		return domain;
+	}
+	public void switchToDomain(String domain) {
+		String CurrentDomain=getDomain();
+		CurrentDomain=CurrentDomain.trim();
+		if (!domain.equalsIgnoreCase(CurrentDomain)) {
+			System.out.println("Required Switch To Domain");
+			profileLink.click();
+			linkSwitchDomain.click();
+			boolean bind=searchDomain(domain);
+			if(bind) {
+				btnOK.click();
+				System.out.println("Switch To Domain Completed");
+			}else{
+				btnOK.click();
+				Assert.fail("Switch To Domain Failed: Domain Not Binded with user");
+			}
+			
+
+		 }else{
+			 System.out.println("In the Same Domain");
+		 }
+		
+	}
+	private boolean searchDomain(String Domain) {
+		List < WebElement > domains = allDomains;
+		String reseller="";boolean flag=false;
+		int domainCount=domains.size();
+		for(int i=0;i<domainCount;i++) {
+			reseller=allDomains.get(i).getAttribute("alt");
+			if (reseller.equalsIgnoreCase(Domain)) {
+				System.out.println(reseller);
+				allDomains.get(i).click();
+				flag=true;
+			}else {
+				reseller=null;
+				flag=false;
+			}
+		}
+		return flag;
+		
+	}
 	public void writeToNotepad(String inputText) throws IOException {
 		FileWriter fr=new FileWriter("./data/Locations.txt");
 		BufferedWriter br=new BufferedWriter(fr);

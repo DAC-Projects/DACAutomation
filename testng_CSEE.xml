@@ -12,8 +12,8 @@
 <class name="com.dac.testcases.LPAD.Test_LoginToLPAD" /> 
 
 <class name="com.dac.testcases.LPAD.Test_CreateMultipleLocations" /> 
-
 <!-- 
+<class name="com.dac.testcases.LPAD.Test_ManageLocation" /> 
 <class name="com.dac.testcases.LPAD.Test_CreateLocation" /> 
 <class name="com.dac.csee.Test_ImpersonateToTSEE" /> 
 <class name="com.dac.csee.LPAD_ImpersonateToTSEE_test" /> 

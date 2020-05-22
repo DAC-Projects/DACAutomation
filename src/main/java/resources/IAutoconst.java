@@ -33,10 +33,12 @@ public interface IAutoconst {
 	
 	
 	String userLocale="IN";
+	
 	/*----------------LPAD Variables----------------*/
 	String LPADUrlBeta="https://dac-map-beta.azurewebsites.net/";
-	String ResellerAdmin="AutomationResellerAdmin";
+	String ResellerAdmin="CSEE_External_reseller";
 	String ResellerPassword="111111";
+	String Reseller="Domain N";
 	String LocationDataExcelPath="./data/LocationSampleData.xlsx";
 	String AddressFormatExcelPath="./data/AddressFormats.xlsx";
 	String LpadAccountName="SA Test DRS";

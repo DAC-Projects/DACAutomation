@@ -84,7 +84,7 @@ public void TC_EnterPFOData() throws Exception {
 	wait=new WebDriverWait(driver, 30);
 	tabs.navigateProductsTab();
 //	Thread.sleep(2000);
-	products.clickOnDSOptions();
+	products.clickOnDSOptions("CREATE");
 	System.out.println("PFO Data Insertion Completed.....");
 }
 @Test(dependsOnMethods= {"TC_EnterBusinessInfoData"})
@@ -93,9 +93,9 @@ public void TC_SubmitLocation() throws Exception {
 	tabs=new Page_LocationNavigationTabList(driver);
 	basicInfo=new Page_LocationBasicInfoTab(driver);
 	tabs.submitLocation();
-//	tabs.navigateBasicInfoTab();
-	locationNumber=basicInfo.getLocationNumber();
-	System.out.println("Location Number is: "+locationNumber);
+	tabs.navigateBasicInfoTab();
+	NewlocationNumber=basicInfo.getLocationNumber();
+	System.out.println("Location Number is: "+NewlocationNumber);
 	System.out.println("Location Data Submission completed.....");
 	
 }

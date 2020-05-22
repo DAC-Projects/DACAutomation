@@ -28,7 +28,7 @@ public class Page_LocationBusinessInfoTab extends LaunchLPAD {
 	@FindBy(xpath="//*[@id=\"main-wrapper\"]/section/div[1]/h1")
 	private WebElement header;
 	
-	@FindBy(id="CateAdd")
+	@FindBy(xpath="//*[@id='CateAdd']")
 	private WebElement btnAddCategory;
 	
 	@FindBy(xpath="//*[@id='s2id_selectCategoryData']")
@@ -37,9 +37,15 @@ public class Page_LocationBusinessInfoTab extends LaunchLPAD {
 	@FindBy(xpath="//*[@id='selectCategoryData']")
 	private WebElement selectCategoryList;
 	
-	@FindBy(xpath="//*[@class=\"select2-input\"]")
+	@FindBy(xpath="//*[@class='select2-input']")
 	private WebElement Category;
-
+	
+	@FindBy(xpath="//*[@id='ChainName']")
+	private WebElement ChainName;
+	
+	@FindBy(xpath="//*[@id='BusinessDesc']")
+	private WebElement shorBusinessDesc;
+	
 	
 	public Page_LocationBusinessInfoTab(WebDriver driver) {
 		this.driver=driver;
@@ -67,6 +73,9 @@ public class Page_LocationBusinessInfoTab extends LaunchLPAD {
 		wait.until(ExpectedConditions.visibilityOf(btnAddCategory));
 		setCategory(strcategory);
 		clickOnAddCategoryBtn();
+		Thread.sleep(2000);
+		ChainName.sendKeys(inputData[excelRow][1]);System.out.println(inputData[excelRow][1]);
+		shorBusinessDesc.sendKeys(inputData[excelRow][2]);System.out.println(inputData[excelRow][2]);
 		
 	}
 }

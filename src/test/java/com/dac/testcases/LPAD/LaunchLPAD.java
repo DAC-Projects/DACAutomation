@@ -4,6 +4,7 @@ package com.dac.testcases.LPAD;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -28,7 +29,7 @@ import resources.IAutoconst;
 public abstract class LaunchLPAD
 {
 	public static WebDriver driver;
-	public static String UserName, Password, url, LocationDataExcelPath, Browser, AddressFormatExcelPath,locationNumber;
+	public static String UserName, Password, url, LocationDataExcelPath, Browser, AddressFormatExcelPath,NewlocationNumber,Reseller;
 	@BeforeSuite
 	public void ReadProperties() {
 		 System.out.println("Before Test....Reading LPAD Credentials file");
@@ -38,6 +39,7 @@ public abstract class LaunchLPAD
 	UserName=IAutoconst.ResellerAdmin;
 	Password=IAutoconst.ResellerPassword;
 	LocationDataExcelPath=IAutoconst.LocationDataExcelPath;
+	Reseller=IAutoconst.Reseller;
 	
 	}
 	@BeforeTest
@@ -49,6 +51,7 @@ public abstract class LaunchLPAD
 //			 WebDriverManager.chromedriver().version("80.0.3987.16").setup();
 			 driver=new ChromeDriver();
 	    	 System.setProperty("webdriver.chrome.driver", "./Driver/chromedriver.exe");
+	    	
 	    	 break;
 		case "Firefox":
 			 System.setProperty("webdriver.gecko.driver", "./Driver/geckodriver.exe");
@@ -67,6 +70,7 @@ public abstract class LaunchLPAD
         driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
         driver.get(url);
         driver.manage().window().maximize();
+//        ((JavascriptExecutor)driver).executeScript("document.body.style.zoom='80%';");
         System.out.println("LPAD Portal Launched....");
      }
 	
