@@ -1470,19 +1470,4 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		        e.printStackTrace();
 		      }
 		}
-		
-		public int NumOfentries(WebElement entry) {
-			waitForElement(entry, 10);
-			if(entry.isDisplayed()) {
-			String entiresText = entry.getText();
-			System.out.println("The total entries in a table is :" + entiresText);
-			String result = entiresText.substring(entiresText.indexOf("(") + 3, entiresText.indexOf(")") - 7).trim();
-			int finalvalue = Integer.parseInt(result);
-			System.out.println("The number of entries is : " +finalvalue);
-			return finalvalue;
-			}else {
-				System.out.println("No Data available");
-				return 0;
-			}		
-		}
 }

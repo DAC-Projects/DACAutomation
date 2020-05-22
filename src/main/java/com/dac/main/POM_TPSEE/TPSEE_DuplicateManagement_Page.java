@@ -24,6 +24,7 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
+	
 
 	public TPSEE_DuplicateManagement_Page(WebDriver driver) {
 		super(driver);
@@ -61,9 +62,15 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//input[@class='form-control input-sm']")
 	private WebElement SearchBox;
-
+	
 	@FindBy(xpath = "//div[@class='c-search-input']//button")
 	private WebElement SearchBtn;
+	
+	@FindBy(xpath = "//*[@id='duplicate-table_filter']//div//input")
+	private WebElement ComPenSearchbox;
+	
+	@FindBy(xpath = "//*[@id='duplicate-table_filter']//div//button")
+	private WebElement ComPenSearchBtn;
 
 	@FindBy(xpath = "//table[@id='duplicate-table']")
 	private WebElement DupTable;
@@ -238,6 +245,11 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		String LocationNumber = null;
 		clickelement(Tab);
 		Outer: if (Dup_Table_Info.isDisplayed()) {
+			scrollByElement(ComPenSearchbox);
+			clickelement(ComPenSearchbox);
+			ComPenSearchbox.sendKeys(PhNumber);
+			clickelement(ComPenSearchBtn);
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			scrollByElement(Last_Page);
 			String n = Last_Page.getText();
 			System.out.println("Last PageNumber in String is :" + n);
@@ -283,6 +295,8 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 				System.out.println("No Data Available in the table");
 			}
 		}
+		ComPenSearchbox.click();
+		ComPenSearchbox.clear();
 		return LocationNumber;
 	}
 
@@ -299,6 +313,11 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		String LocNumber = getLocationNumber(PhNumber, PendingTab);
 		System.out.println("The Location Number found is :" + LocNumber);
 		Outer: if (Dup_Table_Info.isDisplayed()) {
+			scrollByElement(ComPenSearchbox);
+			clickelement(ComPenSearchbox);
+			ComPenSearchbox.sendKeys(PhNumber);
+			clickelement(ComPenSearchBtn);
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			scrollByElement(Last_Page);
 			String n = Last_Page.getText();
 			System.out.println("Last PageNumber in String is :" + n);
@@ -353,6 +372,8 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 				System.out.println("No Data Available in the table");
 			}
 		}
+		ComPenSearchbox.click();
+		ComPenSearchbox.clear();
 	}
 
 	/**
@@ -363,7 +384,7 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	public void verifyCompleteTab(String PhNumber, String Text) throws InterruptedException, ParseException {
+	public void verifyCompleteTab(String PhNumber, String Text, String timestamp) throws InterruptedException, ParseException {
 		driver.navigate().refresh();
 		String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
 				.toString();
@@ -371,70 +392,83 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		System.out.println(var);
 		String LocNum = getLocationNumber(PhNumber, CompletedTab);
 		System.out.println("Location Number of Complete Tab is :" + LocNum);
-		if(!LocNum.equals("null")) {
-		waitForElement(CompletedTab, 10);
-		clickelement(CompletedTab);
-		Outer: if (Dup_Table_Info.isDisplayed()) {
-			scrollByElement(Last_Page);
-			String n = Last_Page.getText();
-			System.out.println("Last PageNumber in String is :" + n);
-			int page = Integer.parseInt(n);
-			System.out.println("Last Page Number is :" + page);
-			int entiresText = NumOfentries(Dup_Table_Info);
-			System.out.println("Total Entries are :" + entiresText);
-			int count = 0;
-			if (Page_Next.isDisplayed()) {
-				for (int i = 1; i <= page; i++) {
-					scrollByElement(DupTable);
-					List<WebElement> rows_table = Dup_TableRow;
-					int rows_count = rows_table.size(); // To calculate no of rows In table.
-					count = count + rows_count;
-					for (int row = 0; row < rows_count; row++) {
-						String celtext = driver
-								.findElement(
-										By.xpath("//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[2]/div"))
-								.getText();
-						System.out.println("The celText is :" + celtext);
-						if (celtext.contains(LocNum)) {
-							Date todaysDate = getTodaysDate();
-							System.out.println("Today's Date is :" + todaysDate);
-							String date = driver.findElement(By.xpath("(//*[@id='duplicate-table']/tbody/tr["
-									+ (row + 1)
-									+ "]/td[2]/div/../preceding-sibling::td//div//span[@class='oblique muteText'])["
-									+ (row + 1) + "]")).getText();
-							System.out.println("Date displayed is :" + date);
-							String finalDate = date.substring(date.lastIndexOf("d") + 1);
-							System.out.println("Final Date is :" + finalDate);
-							Date displayeddate = formats.parse(finalDate);
-							System.out.println("Displayed Date is : " + displayeddate);
-							if (todaysDate.equals(displayeddate)) {
-								String StatusText = driver.findElement(By.xpath(
-										"//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[4]/div/div[3]"))
-										.getText();
-								assertTrue(StatusText.contains(Text));
-								if (driver.findElement(By.xpath(ClickMore + "[" + (row + 1) + "]")).isDisplayed()) {
-									driver.findElement(By.xpath(ClickMore + "[" + (row + 1) + "]")).click();
-									System.out.println();
-								} else {
-									System.out.println("No More Link displayed");
+		if (!LocNum.equals("null")) {
+			waitForElement(CompletedTab, 10);
+			clickelement(CompletedTab);
+			Outer: if (Dup_Table_Info.isDisplayed()) {
+				scrollByElement(ComPenSearchbox);
+				clickelement(ComPenSearchbox);
+				ComPenSearchbox.sendKeys(LocNum);
+				clickelement(ComPenSearchBtn);
+				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+				clickelement(SearchBtn);
+				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+				scrollByElement(Last_Page);
+				String n = Last_Page.getText();
+				System.out.println("Last PageNumber in String is :" + n);
+				int page = Integer.parseInt(n);
+				System.out.println("Last Page Number is :" + page);
+				int entiresText = NumOfentries(Dup_Table_Info);
+				System.out.println("Total Entries are :" + entiresText);
+				int count = 0;
+				if (Page_Next.isDisplayed()) {
+					for (int i = 1; i <= page; i++) {
+						scrollByElement(DupTable);
+						List<WebElement> rows_table = Dup_TableRow;
+						int rows_count = rows_table.size(); // To calculate no of rows In table.
+						count = count + rows_count;
+						for (int row = 0; row < rows_count; row++) {
+							String celtext = driver
+									.findElement(By
+											.xpath("//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[2]/div"))
+									.getText();
+							System.out.println("The celText is :" + celtext);
+							if (celtext.contains(LocNum)) {
+								Date todaysDate = getTodaysDate();
+								System.out.println("Today's Date is :" + todaysDate);
+								String date = driver.findElement(By.xpath("(//*[@id='duplicate-table']/tbody/tr["
+										+ (row + 1)
+										+ "]/td[2]/div/../preceding-sibling::td//div//span[@class='oblique muteText'])["
+										+ (row + 1) + "]")).getText();
+								System.out.println("Date displayed is :" + date);
+								String finalDate = date.substring(date.lastIndexOf("d") + 1);
+								System.out.println("Final Date is :" + finalDate);
+								Date displayeddate = formats.parse(finalDate);
+								System.out.println("Displayed Date is : " + displayeddate);
+								if (todaysDate.equals(displayeddate)) {
+									String ExtNotes = driver.findElement(By.xpath("(//*[@id='duplicate-table']/tbody/tr["+row+"]/td[2]/div/parent::*/following-sibling::td[2]//div[@class='duplicate-note']//span)[1]")).getText();
+									System.out.println("External Notes is :" +ExtNotes);
+									if(ExtNotes.equalsIgnoreCase(timestamp)) {
+									String StatusText = driver.findElement(By.xpath(
+											"//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[4]/div/div[3]"))
+											.getText();
+									assertTrue(StatusText.contains(Text));
+									if (driver.findElement(By.xpath(ClickMore + "[" + (row + 1) + "]")).isDisplayed()) {
+										driver.findElement(By.xpath(ClickMore + "[" + (row + 1) + "]")).click();
+										System.out.println();
+									} else {
+										System.out.println("No More Link displayed");
+									}
+									}
 								}
+								break Outer;
 							}
-							break Outer;
 						}
 					}
+					if (Page_Next.isEnabled()) {
+						scrollByElement(Page_Next);
+						Page_Next.click();
+						Thread.sleep(4000);
+					}
 				}
-				if (Page_Next.isEnabled()) {
-					scrollByElement(Page_Next);
-					Page_Next.click();
-					Thread.sleep(4000);
-				}
+			} else {
+				System.out.println("No Data Available");
 			}
 		} else {
-			System.out.println("No Data Available");
-		}
-		}else {
 			System.out.println("Location Number not found");
 		}
+		ComPenSearchbox.click();
+		ComPenSearchbox.clear();
 	}
 
 	/**
@@ -448,6 +482,11 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		String LocationNumber = null;
 		clickelement(CompletedTab);
 		Outer: if (Dup_Table_Info.isDisplayed()) {
+			scrollByElement(ComPenSearchbox);
+			clickelement(ComPenSearchbox);
+			ComPenSearchbox.sendKeys(PhNumber);
+			clickelement(ComPenSearchBtn);
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			scrollByElement(Last_Page);
 			String n = Last_Page.getText();
 			System.out.println("Last PageNumber in String is :" + n);
@@ -493,6 +532,8 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 				System.out.println("No Data Available in the table");
 			}
 		}
+		ComPenSearchbox.click();
+		ComPenSearchbox.clear();
 		return LocationNumber;
 	}
 
@@ -506,6 +547,11 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		clickelement(PotentialDupTab);
 		waitForElement(DupTable, 10);
 		Outer: if (Dup_Table_Info.isDisplayed()) {
+			scrollByElement(ComPenSearchbox);
+			clickelement(ComPenSearchbox);
+			ComPenSearchbox.sendKeys(LocationNumber);
+			clickelement(ComPenSearchBtn);
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			scrollByElement(Last_Page);
 			String n = Last_Page.getText();
 			System.out.println("Last PageNumber in String is :" + n);
@@ -517,6 +563,7 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 			if (Page_Next.isDisplayed()) {
 				for (int i = 1; i <= page; i++) {
 					scrollByElement(DupTable);
+					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 					List<WebElement> rows_table = Dup_TableRow;
 					int rows_count = rows_table.size(); // To calculate no of rows In table.
 					count = count + rows_count;
@@ -555,6 +602,8 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		} else {
 			System.out.println("No Data Available");
 		}
+		SearchBox.click();
+		SearchBox.clear();
 	}
 
 	/**
@@ -567,6 +616,11 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		clickelement(PotentialDupTab);
 		waitForElement(DupTable, 10);
 		Outer: if (Dup_Table_Info.isDisplayed()) {
+			scrollByElement(ComPenSearchbox);
+			clickelement(ComPenSearchbox);
+			ComPenSearchbox.sendKeys(LocationNumber);
+			clickelement(ComPenSearchBtn);
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			scrollByElement(Last_Page);
 			String n = Last_Page.getText();
 			System.out.println("Last PageNumber in String is :" + n);
@@ -611,6 +665,8 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		} else {
 			System.out.println("No Data Available");
 		}
+		ComPenSearchbox.click();
+		ComPenSearchbox.clear();
 	}
 
 	/**
@@ -624,6 +680,11 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		clickelement(PendingTab);
 		waitForElement(DupTable, 10);
 		Outer: if (Dup_Table_Info.isDisplayed()) {
+			scrollByElement(ComPenSearchbox);
+			clickelement(ComPenSearchbox);
+			ComPenSearchbox.sendKeys(LocNum);
+			clickelement(ComPenSearchBtn);
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			scrollByElement(Last_Page);
 			String n = Last_Page.getText();
 			System.out.println("Last PageNumber in String is :" + n);
@@ -675,6 +736,83 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		} else {
 			System.out.println("No Data Available");
 		}
+		ComPenSearchbox.click();
+		ComPenSearchbox.clear();
+	}
+
+	public void VerifyFix_PendingTab(String LocNum, String Status, String timestamp) throws InterruptedException, ParseException {
+		String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
+				.toString();
+		SimpleDateFormat formats = new SimpleDateFormat(var);
+		verifyfixPot_Dup(LocNum);
+		clickelement(PendingTab);
+		waitForElement(DupTable, 10);
+		Outer: if (Dup_Table_Info.isDisplayed()) {
+			scrollByElement(ComPenSearchbox);
+			clickelement(ComPenSearchbox);
+			ComPenSearchbox.sendKeys(LocNum);
+			clickelement(ComPenSearchBtn);
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			scrollByElement(Last_Page);
+			String n = Last_Page.getText();
+			System.out.println("Last PageNumber in String is :" + n);
+			int page = Integer.parseInt(n);
+			System.out.println("Last Page Number is :" + page);
+			int entiresText = NumOfentries(Dup_Table_Info);
+			System.out.println("Total Entries are :" + entiresText);
+			int count = 0;
+			if (Page_Next.isDisplayed()) {
+				for (int i = 1; i <= page; i++) {
+					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+					List<WebElement> rows_table = Dup_TableRow;
+					int rows_count = rows_table.size(); // To calculate no of rows In table.
+					count = count + rows_count;
+					for (int row = 0; row < rows_count; row++) {
+						String celtext = driver
+								.findElement(
+										By.xpath("//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[2]/div"))
+								.getText();
+						System.out.println("The celText is :" + celtext);
+						if (celtext.contains(LocNum)) {
+							Date todaysDate = getTodaysDate();
+							System.out.println("Today's Date is :" + todaysDate);
+							String date = driver.findElement(By.xpath("(//*[@id='duplicate-table']/tbody/tr["
+									+ (row + 1) + "]/td[2]/div/parent::*/following-sibling::td//div//span)[1]"))
+									.getText();
+							System.out.println("Date displayed is :" + date);
+							String finalDate = date.substring(date.lastIndexOf(":") + 1);
+							System.out.println("Final Date is :" + finalDate);
+							Date displayeddate = formats.parse(finalDate);
+							System.out.println("Displayed Date is : " + displayeddate);
+							if (todaysDate.equals(displayeddate)) {
+								int entiresText1 = NumOfentries(Dup_Table_Info);
+								System.out.println("Final entries in Table is :" + entiresText1);
+								String ExtNotes = driver.findElement(By.xpath("(//*[@id='duplicate-table']/tbody/tr["+row+"]/td[2]/div/parent::*/following-sibling::td[2]//div[@class='duplicate-note']//span)[1]")).getText();
+								System.out.println("External Notes is :" +ExtNotes);
+								if(ExtNotes.equalsIgnoreCase(timestamp)) {
+								if (!Status.equals("New") || !Status.equals("In Progress")) {
+									Assert.assertEquals(entiresText1, entiresText - 1);
+								} else {
+									Assert.assertEquals(entiresText1, entiresText);
+								}
+								}
+								break Outer;
+							} else {
+								System.out.println("Location Number doesn't exist");
+							}
+						}
+					} if (Page_Next.isEnabled()) {
+						scrollByElement(Page_Next);
+						Page_Next.click();
+						Thread.sleep(4000);
+					}
+				}
+			}
+		} else {
+			System.out.println("No Data Available");
+		}
+		ComPenSearchbox.click();
+		ComPenSearchbox.clear();
 	}
 
 	public Date getTodaysDate() throws ParseException {
