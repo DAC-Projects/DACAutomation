@@ -184,4 +184,31 @@ public class DTC_Navigation {
 			e.printStackTrace();
 		}
 	}
+	
+	int i;
+    public void Count_check(String lo_Number) throws InterruptedException {
+        String lo=String.valueOf(lo_Number);
+        location_number.sendKeys(lo);
+        apply.click();
+        Thread.sleep(5000);
+        String ad=driver.findElement(By.xpath("//*[@id=\"duplicatelistTable_info\"]")).getText();
+        String ad1=ad.substring(19, 21);
+        i=Integer.parseInt(ad1);  
+        System.out.println(i);
+        System.out.println("abi"+ad1);
+        Thread.sleep(1000);
+        Clear_button.click();
+    }
+    
+    public void Count_check_ignore(String lo_Number) throws InterruptedException {
+        String lo=String.valueOf(lo_Number);
+        location_number.sendKeys(lo);
+        apply.click();
+        Thread.sleep(5000);
+        String ad=driver.findElement(By.xpath("//*[@id=\"duplicatelistTable_info\"]")).getText();
+        String ad1=ad.substring(19, 21);
+        int j=Integer.parseInt(ad1)-1;  
+        System.out.println(j);
+        Assert.assertEquals(i, j);   
+    }
 }

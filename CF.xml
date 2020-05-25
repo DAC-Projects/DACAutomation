@@ -3,29 +3,16 @@
 <suite name="Suite" >
  
 <listeners>
-<listener class-name="resources.IntegrationTestListener"></listener>
+<listener class-name="resources.ExtentTestNGITestListener"></listener>
 </listeners>
 
  
 
 <test name="Customer_FeedBack">
-<parameter name="testcasesfile" value="Customer_FeedBack.json"></parameter>
   <parameter name="browser" value="Chrome"/>
     <classes>
-  		<class name= "com.dac.testcases.CF.Verify_CreateBrandCampaign" />
-    <!--	<class name= "com.dac.testcases.CF.Verify_CreateLocCampaign" />
-    	<class name= "com.dac.testcases.CF.Verify_CreateMLCCampaign" /> 	
-	     <class name= "com.dac.testcases.CF.VerifyCampResponsesData" />
-    	 <class name= "com.dac.testcases.CF.Verify_CreateLocCampaign" />
-    	<class name= "com.dac.testcases.CF.Verify_BrandLivePreviewN_DeleteCamp" />
-    	<class name= "com.dac.testcases.CF.Verify_LocLivePreviewN_DeleteCamp" />
-    	<class name= "com.dac.testcases.CF.VerifyCreate_DraftBrandCamp" />
-    	<class name= "com.dac.testcases.CF.VerifyCreate_DraftLocCamp" />  -->
+  		<class name="com.dac.testcases.CF.CF_Create_Campaigns_Test" />
     </classes>
   </test> 
-  
-
-
-
   
 </suite>

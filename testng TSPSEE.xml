@@ -15,9 +15,9 @@
 	<!-- <class name="com.dac.testcases.LPAD.Test_LoginToLPAD" /> 
 	<class name="com.dac.testcases.LPAD.Test_CreateLocation" /> -->
 	<!-- <class name="com.dac.testcases.TPSEE.TPSEE_Syndication_Status_DTCVerification" /> -->
-	<!-- <class name="com.dac.testcases.TPSEE.TPSEE_Syndication_Status_LPAD" /> -->
+	<class name="com.dac.testcases.TPSEE.TPSEE_Syndication_Status_LPAD" />
 	<!-- <class name="com.dac.testcases.TPSEE.TPSEE_Syndication_Status_DTC_VendorsVerification" />  -->
-	<class name="com.dac.testcases.TPSEE.TPSEE_DuplicateManagement_Test" />
+	<!-- <class name="com.dac.testcases.TPSEE.TPSEE_DuplicateManagement_Test" /> -->
 		<!-- <class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />
 		<class name="com.dac.testcases.TPSEE.TPSEE_ReviewStream_Test" />
 		<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />

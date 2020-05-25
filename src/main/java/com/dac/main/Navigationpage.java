@@ -160,6 +160,15 @@ public class Navigationpage extends BasePage {
 
 	@FindBy(xpath = "//li[@id='report']//span")
 	private WebElement CF_ReportsLink;
+	
+	@FindBy(xpath = "//a[@href='/Dashboard/Campaigns/']//span")
+	private WebElement CampaignsPage;
+	
+	@FindBy(xpath = "//a[@href='/Dashboard/CfResponses/']//span")
+	private WebElement ResponsesPage;
+	
+	@FindBy(xpath = "//a[@href='/Dashboard/CfReports/']//span")
+	private WebElement CF_Reports;
 
 	// ---------------------- CA-------------------------------
 
@@ -195,6 +204,25 @@ public class Navigationpage extends BasePage {
 	private WebElement NotificationPopUp;
 
 	/*--------------------------Walkme Snippet-----------------------------------*/
+	
+	/**
+	 * To Navigate to Campaigns Page
+	 */
+	public void navigateToCampaignsPage() {
+		clickelement(CampaignsPage);
+		System.out.println("Waiting for page to load******");
+		waitUntilLoad(driver);
+		try {
+			clickwalkme();
+		} catch (Exception e) {
+			System.out.println("");
+		}
+		try {
+			clickNotificationPopUp();
+		} catch (Exception e) {
+			System.out.println("");
+		}
+	}
 
 	/**
 	 * To Navigate to visbility page

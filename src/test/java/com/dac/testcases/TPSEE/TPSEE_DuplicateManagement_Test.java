@@ -116,9 +116,6 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		dtcLogin.pressYesKey();
 		String pageTitle = dtcLogin.getTitle(driver);
 		navi.Dup();
-		/*time_Stamp = timeStamp();
-		int i = 1;
-		navi.excel(i,time_Stamp);*/
 		System.out.println(pageTitle);
 		addEvidence(driver, "Test to Login to DTC", "yes");
 	}
@@ -140,25 +137,13 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		System.out.println(pageTitle);
 		addEvidence(driver, "Change status to new", "yes");
 	}
-	
-	@Test(priority = 7)
-	public void verifyNewPendingTab() throws Exception {
-		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
-		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
-		String LocNum = wb.getCellValue(1, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
-		System.out.println("The Location Number is :" +LocNum);
-		String Status = wb.getCellValue(1, wb.seacrh_pattern("Status", 0).get(0).intValue());
-		System.out.println("The status is : "+Status);
-		data.VerifyFix_PendingTab(LocNum, Status,time_Stamp);
-		addEvidence(CurrentState.getDriver(), "To verify New Status of Location in Pending Tab", "yes");
-	}
 
 	/**
 	 * Test to change the status to In progress in DTC
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 8)
+	@Test(priority = 7)
 	public void DTC_Inprogress() throws Exception {
 		DTC_Duplicate_Management dtcLogin = new DTC_Duplicate_Management(driver);
 		DTC_Navigation navi = new DTC_Navigation(driver);
@@ -171,7 +156,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		addEvidence(driver, "change status to In Progress", "yes");
 	}
 
-	@Test(priority = 9)
+	@Test(priority = 8)
 	public void verifyInProgressPendingTab() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
@@ -189,7 +174,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * @throws Exception
 	 */
 
-	@Test(priority = 10)
+	@Test(priority = 9)
 	public void DTC_Merged() throws Exception {
 		DTC_Duplicate_Management dtcLogin = new DTC_Duplicate_Management(driver);
 		DTC_Navigation navi = new DTC_Navigation(driver);
@@ -207,7 +192,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 11)
+	@Test(priority = 10)
 	public void verifyStatus_Merged() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
@@ -224,7 +209,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 12)
+	@Test(priority = 11)
 	public void DTC_Suppressed() throws Exception {
 		DTC_Duplicate_Management dtcLogin = new DTC_Duplicate_Management(driver);
 		DTC_Navigation navi = new DTC_Navigation(driver);
@@ -242,7 +227,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 13)
+	@Test(priority = 12)
 	public void verifyStatus_Suppressed() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
@@ -259,7 +244,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 14)
+	@Test(priority = 13)
 	public void DTC_Notaduplicate() throws Exception {
 		DTC_Duplicate_Management dtcLogin = new DTC_Duplicate_Management(driver);
 		DTC_Navigation navi = new DTC_Navigation(driver);
@@ -277,7 +262,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 15)
+	@Test(priority = 14)
 	public void verifyStatus_Notaduplicate() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
@@ -294,7 +279,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 16)
+	@Test(priority = 15)
 	public void DTC_Unabletoprocess() throws Exception {
 		DTC_Duplicate_Management dtcLogin = new DTC_Duplicate_Management(driver);
 		DTC_Navigation navi = new DTC_Navigation(driver);
@@ -312,7 +297,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 17)
+	@Test(priority = 16)
 	public void verifyStatus_Unabletoprocess() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
@@ -324,7 +309,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "To Verify Status Unable to 'process", "yes");
 	}
 	
-	@Test(priority = 18)
+	@Test(priority = 17)
 	public void DTC_Delete() throws Exception {
 		DTC_Duplicate_Management dtcLogin = new DTC_Duplicate_Management(driver);
 		DTC_Navigation navi = new DTC_Navigation(driver);
@@ -337,7 +322,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		addEvidence(driver, "To change the status to Unable to process", "yes");
 	}
 	
-	@Test(priority = 19)
+	@Test(priority = 18)
 	public void verifyStatus_Deleted() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
@@ -348,21 +333,41 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		data.verifyCompleteTab(PhNumber, Status,time_Stamp);
 		addEvidence(CurrentState.getDriver(), "To Verify Status Unable to 'process", "yes");
 	}
-
+	
 	/**
-	 * Test to verify Ignore Scenario in Pot_Dup Tab
+	 * To Add Potential Duplicate manually
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 20)
-	public void verifyPotentialDup() throws Exception {
+	@Test(priority = 19)
+	public void AddDupList_Toverify_Ignore() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
-		String LocationNumber = wb.getCellValue(1, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
-		System.out.println("The Location Number is :" + LocationNumber);
-		data.Pot_Dup(LocationNumber);
-		addEvidence(CurrentState.getDriver(), "To take action on Potential Duplicate Tab", "yes");
-
+		String PhNumber = wb.getCellValue(1, wb.seacrh_pattern("Phone Number ", 0).get(0).intValue());
+		System.out.println("The Phone Number is :" + PhNumber);
+		String Url = wb.getCellValue(1, wb.seacrh_pattern("URL", 0).get(0).intValue());
+		System.out.println("The URL Provided is :" + Url);
+		data.AddPotentialDuplicate(PhNumber,
+				"https://www.google.com/maps/place/?q=place_id:ChIJrTehGtCVwokRrYtNXQff1NI");
+		addEvidence(CurrentState.getDriver(), "To Add Duplicate Listing", "yes");
+	}
+	
+	
+	@Test(priority = 20)
+	public void verifyIgnore_PendingTab() throws Exception {
+		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
+		DTC_Navigation navi = new DTC_Navigation(driver);
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
+		String LocNum = wb.getCellValue(1, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
+		System.out.println("The Location Number is :" + LocNum);
+		String Status = wb.getCellValue(7, wb.seacrh_pattern("Status", 0).get(0).intValue());
+		System.out.println("The Status is :" + Status);	
+		navi.Count_check(LocNum);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		data.VerifyIgnore_PendingTab(LocNum);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		navi.Count_check_ignore(LocNum);
+		addEvidence(CurrentState.getDriver(), "To verify ignore scenario", "yes");
 	}
 	
 	@Test(priority = 21)
@@ -393,24 +398,12 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		addEvidence(driver, "Change status to new", "yes");
 	}
 	
-	@Test(priority = 23)
-	public void verify_PotNewPendingTab() throws Exception {
-		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
-		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
-		String LocNum = wb.getCellValue(1, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
-		System.out.println("The Location Number is :" +LocNum);
-		String Status = wb.getCellValue(1, wb.seacrh_pattern("Status", 0).get(0).intValue());
-		System.out.println("The status is : "+Status);
-		data.VerifyFix_PendingTab(LocNum, Status,time_Stamp);
-		addEvidence(CurrentState.getDriver(), "To verify New Status of Location in Pending Tab", "yes");
-	}
-
 	/**
 	 * Test to change the status to In progress in DTC
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 24)
+	@Test(priority = 23)
 	public void DTC__Pot_Inprogress() throws Exception {
 		DTC_Duplicate_Management dtcLogin = new DTC_Duplicate_Management(driver);
 		DTC_Navigation navi = new DTC_Navigation(driver);
@@ -423,7 +416,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		addEvidence(driver, "change status to In Progress", "yes");
 	}
 
-	@Test(priority = 25)
+	@Test(priority = 24)
 	public void verify__Pot_InProgressPendingTab() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
@@ -441,7 +434,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * @throws Exception
 	 */
 
-	@Test(priority = 26)
+	@Test(priority = 25)
 	public void DTC__Pot__Merged() throws Exception {
 		DTC_Duplicate_Management dtcLogin = new DTC_Duplicate_Management(driver);
 		DTC_Navigation navi = new DTC_Navigation(driver);
@@ -459,7 +452,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 27)
+	@Test(priority = 26)
 	public void verify__Pot_Status_Merged() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
@@ -476,7 +469,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 28)
+	@Test(priority = 27)
 	public void DTC_Pot_Suppressed() throws Exception {
 		DTC_Duplicate_Management dtcLogin = new DTC_Duplicate_Management(driver);
 		DTC_Navigation navi = new DTC_Navigation(driver);
@@ -494,7 +487,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 29)
+	@Test(priority = 28)
 	public void verify_Pot_Status_Suppressed() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
@@ -511,7 +504,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 30)
+	@Test(priority = 29)
 	public void DTC_Pot_Notaduplicate() throws Exception {
 		DTC_Duplicate_Management dtcLogin = new DTC_Duplicate_Management(driver);
 		DTC_Navigation navi = new DTC_Navigation(driver);
@@ -529,7 +522,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 31)
+	@Test(priority = 30)
 	public void verify_Pot_Status_Notaduplicate() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
@@ -546,7 +539,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 32)
+	@Test(priority = 31)
 	public void DTC_Pot_Unabletoprocess() throws Exception {
 		DTC_Duplicate_Management dtcLogin = new DTC_Duplicate_Management(driver);
 		DTC_Navigation navi = new DTC_Navigation(driver);
@@ -564,7 +557,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 33)
+	@Test(priority = 32)
 	public void verify_Pot_Status_Unabletoprocess() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
@@ -576,7 +569,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "To Verify Status Unable to 'process", "yes");
 	}
 	
-	@Test(priority = 34)
+	@Test(priority = 33)
 	public void DTC_Pot__Delete() throws Exception {
 		DTC_Duplicate_Management dtcLogin = new DTC_Duplicate_Management(driver);
 		DTC_Navigation navi = new DTC_Navigation(driver);
@@ -591,7 +584,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		driver.quit();
 	}
 	
-	@Test(priority = 35)
+	@Test(priority = 34)
 	public void verify_Pot_Status_Deleted() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
@@ -601,5 +594,20 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		System.out.println("The Status is :" + Status);
 		data.verifyCompleteTab(PhNumber, Status,time_Stamp);
 		addEvidence(CurrentState.getDriver(), "To Verify Status Unable to 'process", "yes");
+	}
+	
+	@Test(priority = 35)
+	public void verifyPotentialDup() throws Exception {
+		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
+		DTC_Navigation navi = new DTC_Navigation(driver);
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
+		String LocationNumber = wb.getCellValue(1, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
+		System.out.println("The Location Number is :" + LocationNumber);
+		navi.Count_check(LocationNumber);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		data.Pot_Dup(LocationNumber);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		navi.Count_check_ignore(LocationNumber);
+		addEvidence(CurrentState.getDriver(), "To take action on Potential Duplicate Tab", "yes");
 	}
 }

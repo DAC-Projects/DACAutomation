@@ -144,7 +144,7 @@ public class ExcelHandler {
 	}
 	
 	
-	private void setCellValue(int rownum, int colNum, String newValue) {
+	public void setCellValue(int rownum, int colNum, String newValue) {
 		cell=workbook.getSheet(sheetName).getRow(rownum).getCell(colNum);
 		cell.setCellValue(newValue);
 	}

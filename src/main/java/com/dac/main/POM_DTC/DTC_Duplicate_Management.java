@@ -2,12 +2,14 @@ package com.dac.main.POM_DTC;
 
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 
 public class DTC_Duplicate_Management{
@@ -35,6 +37,14 @@ public class DTC_Duplicate_Management{
 	
 	@FindBy(xpath="//*[@id=\"idA_PWD_ForgotPassword\"]")
 	private WebElement txtFGTPassword;
+	
+	@FindBy(xpath="//*[@id='btnfilter5']")
+    private WebElement apply;
+	
+	@FindBy(xpath="//*[@id='btnclrfilter12']")
+    private WebElement Clear_button;
+	
+	
 	
 	//*[@id="idA_PWD_ForgotPassword"]
 	
@@ -82,5 +92,4 @@ public class DTC_Duplicate_Management{
 	public String getTitle(WebDriver driver) {
 		return driver.getTitle();
 	}
-	
 }

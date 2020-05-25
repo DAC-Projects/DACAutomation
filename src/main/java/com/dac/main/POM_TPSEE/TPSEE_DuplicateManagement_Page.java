@@ -291,91 +291,17 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 						Thread.sleep(4000);
 					}
 				}
-			} else {
-				System.out.println("No Data Available in the table");
 			}
+		}else {
+			System.out.println("No Data Available in the table");
+			return null;
 		}
 		ComPenSearchbox.click();
 		ComPenSearchbox.clear();
 		return LocationNumber;
 	}
-
-	/**
-	 * To take an action on duplicate listing
-	 * 
-	 * @param PhNumber
-	 * @param action
-	 * @throws InterruptedException
-	 */
-	public void TakeAction(String PhNumber, String action) throws InterruptedException { // action should be given in
-		// Number 1=Ignore or
-		// 2=Fix
-		String LocNumber = getLocationNumber(PhNumber, PendingTab);
-		System.out.println("The Location Number found is :" + LocNumber);
-		Outer: if (Dup_Table_Info.isDisplayed()) {
-			scrollByElement(ComPenSearchbox);
-			clickelement(ComPenSearchbox);
-			ComPenSearchbox.sendKeys(PhNumber);
-			clickelement(ComPenSearchBtn);
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			scrollByElement(Last_Page);
-			String n = Last_Page.getText();
-			System.out.println("Last PageNumber in String is :" + n);
-			int page = Integer.parseInt(n);
-			System.out.println("Last Page Number is :" + page);
-			int entiresText = NumOfentries(Dup_Table_Info);
-			int count = 0;
-			if (Page_Next.isDisplayed()) {
-				for (int i = 1; i <= page; i++) {
-					scrollByElement(DupTable);
-					List<WebElement> rows_table = Dup_TableRow;
-					int rows_count = rows_table.size(); // To calculate no of rows In table.
-					count = count + rows_count;
-					for (int row = 0; row < rows_count; row++) {
-						String celtext = driver
-								.findElement(By
-										.xpath("//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[2]/div/div"))
-								.getText();
-						System.out.println("The celText is :" + celtext);
-						if (celtext.contains(PhNumber)) {
-							WebElement s = driver.findElement(By.xpath(
-									"(//div[@class ='ui dropdown duplicate-dropdown selection'])[" + (row + 1) + "]"));
-							s.click();
-							WebElement v = driver.findElement(By.xpath(
-									"(//table[@id='duplicate-table']//div[contains(@class,'item') and @data-value='"
-											+ action + "'])[" + (row + 1) + "]"));
-							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-							clickelement(v);
-							System.out.println("Selected action is :" + action);
-							waitUntilLoad(driver);
-							if (action.equals("1")) {
-								waitForElement(Ignore_Confirmation, 10);
-								clickelement(Ignore_Confirmation);
-								System.out.println("Action Performed is : Ignore");
-								int entiresText1 = NumOfentries(Dup_Table_Info);
-								System.out.println("Final entries in Table is :" + entiresText1);
-								Assert.assertEquals(entiresText1, entiresText - 1);
-							} else {
-								System.out.println("Action Performed is : Fix");
-							}
-							waitUntilLoad(driver);
-							break Outer;
-						}
-					}
-					if (Page_Next.isEnabled()) {
-						scrollByElement(Page_Next);
-						Page_Next.click();
-						Thread.sleep(4000);
-					}
-				}
-			} else {
-				System.out.println("No Data Available in the table");
-			}
-		}
-		ComPenSearchbox.click();
-		ComPenSearchbox.clear();
-	}
-
+	
+	
 	/**
 	 * To verify the status of the location
 	 * 
@@ -453,12 +379,11 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 								}
 								break Outer;
 							}
+						} if (Page_Next.isEnabled()) {
+							scrollByElement(Page_Next);
+							Page_Next.click();
+							Thread.sleep(4000);
 						}
-					}
-					if (Page_Next.isEnabled()) {
-						scrollByElement(Page_Next);
-						Page_Next.click();
-						Thread.sleep(4000);
 					}
 				}
 			} else {
@@ -528,9 +453,9 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 						Thread.sleep(4000);
 					}
 				}
-			} else {
-				System.out.println("No Data Available in the table");
 			}
+		} else {
+			System.out.println("No Data Available in the table");
 		}
 		ComPenSearchbox.click();
 		ComPenSearchbox.clear();
@@ -586,17 +511,17 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 							waitForElement(Ignore_Confirmation, 10);
 							clickelement(Ignore_Confirmation);
 							System.out.println("Action Performed is : Ignore");
+							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 							int entiresText1 = NumOfentries(Dup_Table_Info);
 							System.out.println("Final entries in Table is :" + entiresText1);
 							Assert.assertEquals(entiresText1, entiresText - 1);
 							break Outer;
 						}
+					} if (Page_Next.isEnabled()) {
+						scrollByElement(Page_Next);
+						Page_Next.click();
+						Thread.sleep(4000);
 					}
-				}
-				if (Page_Next.isEnabled()) {
-					scrollByElement(Page_Next);
-					Page_Next.click();
-					Thread.sleep(4000);
 				}
 			}
 		} else {
@@ -604,6 +529,7 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		}
 		SearchBox.click();
 		SearchBox.clear();
+		driver.navigate().refresh();
 	}
 
 	/**
@@ -654,12 +580,11 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 							System.out.println("Action Performed is : Fix");
 							break Outer;
 						}
+					} if (Page_Next.isEnabled()) {
+						scrollByElement(Page_Next);
+						Page_Next.click();
+						Thread.sleep(4000);
 					}
-				}
-				if (Page_Next.isEnabled()) {
-					scrollByElement(Page_Next);
-					Page_Next.click();
-					Thread.sleep(4000);
 				}
 			}
 		} else {
@@ -676,7 +601,6 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 	 * @throws InterruptedException
 	 */
 	public void VerifyIgnore_PendingTab(String LocNum) throws InterruptedException {
-		verifyfixPot_Dup(LocNum);
 		clickelement(PendingTab);
 		waitForElement(DupTable, 10);
 		Outer: if (Dup_Table_Info.isDisplayed()) {
@@ -718,6 +642,7 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 							waitForElement(Ignore_Confirmation, 10);
 							clickelement(Ignore_Confirmation);
 							System.out.println("Action Performed is : Ignore");
+							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 							int entiresText1 = NumOfentries(Dup_Table_Info);
 							System.out.println("Final entries in Table is :" + entiresText1);
 							Assert.assertEquals(entiresText1, entiresText - 1);
@@ -725,13 +650,13 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 						} else {
 							System.out.println("Location Number doesn't exist");
 						}
+					}if (Page_Next.isEnabled()) {
+						scrollByElement(Page_Next);
+						Page_Next.click();
+						Thread.sleep(4000);
 					}
 				}
-				if (Page_Next.isEnabled()) {
-					scrollByElement(Page_Next);
-					Page_Next.click();
-					Thread.sleep(4000);
-				}
+				
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -787,7 +712,7 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 							if (todaysDate.equals(displayeddate)) {
 								int entiresText1 = NumOfentries(Dup_Table_Info);
 								System.out.println("Final entries in Table is :" + entiresText1);
-								String ExtNotes = driver.findElement(By.xpath("(//*[@id='duplicate-table']/tbody/tr["+row+"]/td[2]/div/parent::*/following-sibling::td[2]//div[@class='duplicate-note']//span)[1]")).getText();
+								String ExtNotes = driver.findElement(By.xpath("(//*[@id='duplicate-table']/tbody/tr["+(row+1)+"]/td[2]/div/parent::*/following-sibling::td[2]//div[@class='duplicate-note']//span)[1]")).getText();
 								System.out.println("External Notes is :" +ExtNotes);
 								if(ExtNotes.equalsIgnoreCase(timestamp)) {
 								if (!Status.equals("New") || !Status.equals("In Progress")) {

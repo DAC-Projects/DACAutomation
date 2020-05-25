@@ -1,10 +1,7 @@
 package com.dac.testcases.TPSEE;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
@@ -18,7 +15,9 @@ public class TPSEE_Syndication_Status_DTCVerification extends BaseClass {
 
 	TPSEE_Syndication_Status_Page data;
 	Navigationpage np;
-	List<String> VendorList = new ArrayList<String>();
+	String[] VendorList;
+	String[] StatusList;
+	SoftAssert soft = new SoftAssert();
 
 	/**
 	 * Test to navigate to Syndication Status Page
@@ -46,7 +45,7 @@ public class TPSEE_Syndication_Status_DTCVerification extends BaseClass {
 		data.VerifyTitlenText();
 		addEvidence(CurrentState.getDriver(), "To Verify Title and Title Text", "yes");
 	}
-	
+
 	/**
 	 * Test to apply filters
 	 * 
@@ -88,9 +87,63 @@ public class TPSEE_Syndication_Status_DTCVerification extends BaseClass {
 	}
 
 	@Test(priority = 4, description = "To verify Status of vendor after DTC transmission")
-	public void verifyDTCManualApi() throws Exception {
+	public void verifyDTCManual() throws Exception {
 		data = new TPSEE_Syndication_Status_Page(CurrentState.getDriver());
-		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Syndication DTCManualApi");
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Syndication DTCManual");
+		wb.deleteEmptyRows();
+		int row = 0;
+		String XLVendor, XLStatus;
+		for (int k = 1; k <= wb.getRowCount(); k++) {
+			String LocNum = wb.getCellValue(k, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
+			System.out.println("The Location Number is :" + LocNum);
+			row = data.getLocationNumberRowNum(LocNum);
+			System.out.println("The row number is :" +row);
+			String vendors = wb.getCellValue(k, wb.seacrh_pattern("Vendor", 0).get(0).intValue());
+			System.out.println("The vendors listed are :" + vendors);
+			VendorList = vendors.split(",");
+			int size = VendorList.length;
+			System.out.println("The size of list is :" + size);
+			String status = wb.getCellValue(k, wb.seacrh_pattern("Status Text", 0).get(0).intValue());
+			System.out.println("The status is :" + status);
+			StatusList = status.split(",");
+			for (int i = 0; i <= size - 1; i++) {
+				try {
+				XLVendor = VendorList[i];
+				System.out.println("The Vendor is :" + XLVendor);
+				XLStatus = StatusList[i];
+				System.out.println("The Status from XL :" +XLStatus);
+				try {
+					data.verifyStatus(XLVendor, XLStatus, row,soft);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					if(!XLStatus.equals("In Progress")) {
+					data.verifydatesumbitted(row, XLVendor,soft);
+					}else {
+						System.out.println("Date is not available");
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					data.verifyNotes(XLVendor, row,soft);
+				}catch(Exception e) {
+					System.out.println("No vendors");
+				}
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			soft.assertAll();
+			addEvidence(CurrentState.getDriver(), "To verify status of Vendors processed in DTC", "yes");
+		}
+		}
+	
+	/*@Test(priority = 5, description = "To verify Status of vendor after DTC transmission")
+	public void verifyDTCAPI() throws Exception {
+		data = new TPSEE_Syndication_Status_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Syndication DTCAPI");
 		wb.deleteEmptyRows();
 		int row = 0;
 		String Vendor, Status;
@@ -98,27 +151,44 @@ public class TPSEE_Syndication_Status_DTCVerification extends BaseClass {
 			String LocNum = wb.getCellValue(k, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
 			System.out.println("The Location Number is :" + LocNum);
 			row = data.getLocationNumberRowNum(LocNum);
-			if (!LocNum.equals(null)) {
-				for (int i = 1; i <= wb.getRowCount(); i++) {
-					Vendor = wb.getCellValue(i, wb.seacrh_pattern("Vendor", 0).get(0).intValue());
-					System.out.println("The Vendor is :" + Vendor);
-					Status = wb.getCellValue(i, wb.seacrh_pattern("Status", 0).get(0).intValue());
-					try {
-						data.verifyStatus(Vendor, Status, row);
-						System.out.println("The row number is :" + row);
-					} catch (Exception e) {
-						e.printStackTrace();
+			System.out.println("The row number is :" +row);
+			String vendors = wb.getCellValue(k, wb.seacrh_pattern("Vendor", 0).get(0).intValue());
+			System.out.println("The vendors listed are :" + vendors);
+			VendorList = vendors.split(",");
+			int size = VendorList.length;
+			System.out.println("The size of list is :" + size);
+			String status = wb.getCellValue(k, wb.seacrh_pattern("Status", 0).get(0).intValue());
+			System.out.println("The status is :" + status);
+			StatusList = status.split(",");
+			for (int i = 0; i <= size - 1; i++) {
+				try {
+				Vendor = VendorList[i];
+				System.out.println("The Vendor is :" + Vendor);
+				Status = StatusList[i];
+				try {
+					data.verifyStatus(Vendor, Status, row);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					if(!Status.equals("In Progress")) {
+					data.verifydatesumbitted(row, Vendor);
+					}else {
+						System.out.println("Date is not available");
 					}
-					try {
-						data.verifydatesumbitted(row, Vendor);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					data.verifyNotes(Vendor, row);
+				}catch(Exception e) {
+					System.out.println("No vendors");
+				}
+				}catch(Exception e) {
+					e.printStackTrace();
 				}
 			}
 		}
 		addEvidence(CurrentState.getDriver(), "To verify status of Vendors processed in DTC", "yes");
-		CurrentState.getDriver().navigate().refresh();
-		CurrentState.getDriver().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-	}
+		}*/
 }

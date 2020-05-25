@@ -1,6 +1,7 @@
 package com.dac.testcases.TPSEE;
 
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
@@ -14,7 +15,9 @@ public class TPSEE_Syndication_Status_DTC_VendorsVerification extends BaseClass{
 	
 	TPSEE_Syndication_Status_Page data;
 	Navigationpage np;
-	
+	String[] VendorList;
+	String[] StatusList;
+	SoftAssert soft = new SoftAssert();
 	/**
 	 * Test to navigate to Syndication Status Page
 	 * 
@@ -83,13 +86,21 @@ public class TPSEE_Syndication_Status_DTC_VendorsVerification extends BaseClass{
 			String LocNum = wb.getCellValue(i, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
 			System.out.println("The Location Number is :" + LocNum);
 			row = data.getLocationNumberRowNum(LocNum);
-			String Vendor = wb.getCellValue(1, wb.seacrh_pattern("Vendor", 0).get(0).intValue());
+			String vendors = wb.getCellValue(1, wb.seacrh_pattern("Vendor", 0).get(0).intValue());
+			VendorList = vendors.split(",");
+			int size = VendorList.length;
+			System.out.println("The size of list is :" +size);
+			String status = wb.getCellValue(1, wb.seacrh_pattern("Status", 0).get(0).intValue());
+			System.out.println("The status is :" +status);
+			StatusList = status.split(",");
+			for(int k =0; k<=size; k++) {
+			String Vendor = VendorList[k];
 			System.out.println("The Location Number is :" + Vendor);
-			String Status = wb.getCellValue(1, wb.seacrh_pattern("Status", 0).get(0).intValue());
-			System.out.println("The status is :" + Status);
-			data.verifyStatus(Vendor, Status, row);
+			String Status = StatusList[k];
+			data.verifyStatus(Vendor, Status, row, soft);
+			soft.assertAll();
 			addEvidence(CurrentState.getDriver(), "To Verify Status of Vendors of DTC", "yes");
-			CurrentState.getDriver().navigate().refresh();
+			}
 		}
 	}
 
@@ -111,9 +122,9 @@ public class TPSEE_Syndication_Status_DTC_VendorsVerification extends BaseClass{
 			System.out.println("The Location Number is :" + Vendor);
 			String Status = wb.getCellValue(2, wb.seacrh_pattern("Status", 0).get(0).intValue());
 			System.out.println("The status is :" + Status);
-			data.verifyStatus(Vendor, Status, row);
+			data.verifyStatus(Vendor, Status, row,soft);
+			soft.assertAll();
 			addEvidence(CurrentState.getDriver(), "To Verify Status of Vendors of DTC", "yes");
-			CurrentState.getDriver().navigate().refresh();
 		}
 	}
 
@@ -135,9 +146,9 @@ public class TPSEE_Syndication_Status_DTC_VendorsVerification extends BaseClass{
 			System.out.println("The Location Number is :" + Vendor);
 			String Status = wb.getCellValue(3, wb.seacrh_pattern("Status", 0).get(0).intValue());
 			System.out.println("The status is :" + Status);
-			data.verifyStatus(Vendor, Status, row);
+			data.verifyStatus(Vendor, Status, row,soft);
+			soft.assertAll();
 			addEvidence(CurrentState.getDriver(), "To Verify Status of Vendors of DTC", "yes");
-			CurrentState.getDriver().navigate().refresh();
 		}
 	}
 
@@ -159,9 +170,9 @@ public class TPSEE_Syndication_Status_DTC_VendorsVerification extends BaseClass{
 			System.out.println("The Location Number is :" + Vendor);
 			String Status = wb.getCellValue(4, wb.seacrh_pattern("Status", 0).get(0).intValue());
 			System.out.println("The status is :" + Status);
-			data.verifyStatus(Vendor, Status, row);
+			data.verifyStatus(Vendor, Status, row,soft);
+			soft.assertAll();
 			addEvidence(CurrentState.getDriver(), "To Verify Status of Vendors of DTC", "yes");
-			CurrentState.getDriver().navigate().refresh();
 		}
 	}
 
