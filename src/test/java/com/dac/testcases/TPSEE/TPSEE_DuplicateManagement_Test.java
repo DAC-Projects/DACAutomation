@@ -599,15 +599,10 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	@Test(priority = 35)
 	public void verifyPotentialDup() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
-		DTC_Navigation navi = new DTC_Navigation(driver);
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
 		String LocationNumber = wb.getCellValue(1, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
 		System.out.println("The Location Number is :" + LocationNumber);
-		navi.Count_check(LocationNumber);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		data.Pot_Dup(LocationNumber);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		navi.Count_check_ignore(LocationNumber);
 		addEvidence(CurrentState.getDriver(), "To take action on Potential Duplicate Tab", "yes");
 	}
 }
