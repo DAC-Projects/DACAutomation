@@ -1,5 +1,8 @@
 package com.dac.main.POM_TPSEE;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,6 +11,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,6 +40,7 @@ import org.testng.Assert;
 
 import com.dac.main.BasePage;
 
+import resources.CurrentState;
 import resources.FileHandler;
 import resources.JSWaiter;
 import resources.formatConvert;
@@ -117,11 +122,11 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	
 	/*------------------------ Filter Criteria ------------------------*/
 	
-	@FindBy(xpath="//h1[contains(text(),'')]")
-	private WebElement PageTitle;
-	
-	@FindBy(xpath="//h2[contains(text(),'')]")
-	private WebElement GMBPageTitle;
+	@FindBy(xpath="//*[@id='page-content']//h1")
+    private WebElement PageTitle;
+   
+    @FindBy(xpath="//p[@class='lead']")
+    private WebElement PageTitletext;
 
 	// History graph
 	@FindBy(css = "rect.highcharts-plot-background")
@@ -212,7 +217,8 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
      * @return
      * @throws Exception
      */
-    public double GetDRSDataUsingColName(String PathofXL, String Col_Name) throws Exception {         
+    @SuppressWarnings({ "unused", "deprecation" })
+	public double GetDRSDataUsingColName(String PathofXL, String Col_Name) throws Exception {         
           FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
           Workbook wb = new XSSFWorkbook(excelFilePath);
           Sheet sh = wb.getSheetAt(0);    
@@ -298,7 +304,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			if(!Group.equals("None")) {			
 				clickelement(fiterGroup);
 				waitForElement(filterDropDown, 20);
-				group = fiterGroup.findElement(By.xpath("//div[@data-value='"+Group+"']"));
+				group = fiterGroup.findElement(By.xpath("//*[@id = 'myGroups']//div[contains(@class,'item') and contains(text(),'"+Group+"')]"));
 				waitForElement(group, 10);
 				clickelement(group);
 				waitUntilLoad(driver);
@@ -541,6 +547,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @return
 		 * @throws Exception
 		 */
+		@SuppressWarnings("deprecation")
 		public int GetDataUsingColName(String PathofXL, String Col_Name) throws Exception {		  
 			  FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
 		      Workbook wb = new XSSFWorkbook(excelFilePath);
@@ -550,7 +557,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		      int Last_row = sh.getLastRowNum();
 		      int col_num = 0;
 		      System.out.println(""+col);	      
-		      for (int i = 0; i <row.getLastCellNum(); i++) {	    	  
+		      for (int i = 0; i <=row.getLastCellNum(); i++) {	    	  
 		    	    if ((row.getCell(i).toString()).equals(Col_Name)) {	        	 
 		    	    	col_num = i;	    	    	
 		    	    	System.out.println(""+col_num);	
@@ -560,7 +567,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		            	int cellValue = 0;
 		            	int y = 0;
 		            	int sum = 0;	
-		            	for(int j =1;j<Last_row; j++) {
+		            	for(int j =1;j<=Last_row; j++) {
 		            		row = sh.getRow(j);
 		            		Cell cell = row.getCell(col_num);
 		            		if (cell != null) {
@@ -595,6 +602,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @return
 		 * @throws Exception
 		 */ 
+		@SuppressWarnings("deprecation")
 		public ArrayList<String> GetSiteDataUsingColName(String PathofXL, String Col_Name) throws Exception {		  
 			  FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
 		      Workbook wb = new XSSFWorkbook(excelFilePath);
@@ -605,7 +613,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		      int col_num = 0;
 		      System.out.println(""+col);	
 		      ArrayList<String> sites  = new ArrayList<String>();
-		      for (int i = 0; i <row.getLastCellNum(); i++) {	    	  
+		      for (int i = 0; i <=row.getLastCellNum(); i++) {	    	  
 		    	    if ((row.getCell(i).toString()).equals(Col_Name)) {	        	 
 		    	    	col_num = i;	    	    	
 		    	    	System.out.println(""+col_num);	
@@ -946,17 +954,23 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 							 
 				case "ytd" : 	try{
 									clickelement(highChart_YTD);
-									if(eleClicked(highChart_YTD)) {
-										scrollByElement(x);
-										days = getNumberofDays();
-										assert(true);
-									}else {
-										System.out.println("Element Not clicked");
-										}
-								}catch(Exception e) {
-									e.printStackTrace();
-								}
-								break;
+									 if(eleClicked(highChart_YTD)) {
+	                                        scrollByElement(x);
+	                                        days = getNumberofDays();
+	                                        System.out.println("Days Abi"+days);
+	                                        Date UI_date = getCurrentfromDate();
+	                                        System.out.println("UI"+UI_date);
+	                                        Date VE_Date=getCurrent();
+	                                        System.out.println("VE"+VE_Date);	                                        
+	                                        Assert.assertEquals(UI_date, VE_Date);
+	                                        System.out.println("1 year data is displayed");
+	                                    }else {
+	                                        System.out.println("Element Not clicked");
+	                                        }
+	                                }catch(Exception e) {
+	                                    e.printStackTrace();
+	                                }
+	                                break;
 						     
 				case "1y"  : 	try{
 									clickelement(highChart_1y);
@@ -976,7 +990,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 										e.printStackTrace();
 									}
 								break;
-							 
+								
 				case "all" :
 				default    : 	try{
 									clickelement(highChart_All);
@@ -995,6 +1009,23 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		
 					return this;
 			}	
+		
+		
+		/**
+		 * To get date of 01/01/current year
+		 * @return
+		 * @throws ParseException
+		 */
+		public Date getCurrent() throws ParseException {
+            String ad1="01/01/";
+            String year = Integer.toString(Year.now().getValue());
+            String ad2=ad1.concat(year);
+            System.out.println(ad2);
+            String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
+            SimpleDateFormat formats = new SimpleDateFormat(var);
+            Date finalcurrentdate = formats.parse(ad2);
+            return finalcurrentdate;
+        }
 		
 		/**
 		 * To get difference between two dates
@@ -1402,4 +1433,41 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				}
 					return foundVendors;
 			}
+		
+		public void deletefile() {
+			File path = new File("./downloads");
+		    File[] files = path.listFiles();
+		    for (File file : files) {
+		        System.out.println("Deleted filename :"+ file.getName());
+		        file.delete();
+		    }
+		}
+		
+		public void VerifyTitleText(String Tit, String titText) {
+	           
+            waitForElement(PageTitle, 10);
+            String Title = PageTitle.getText();
+            System.out.println("Page Title is : "+Title);
+            String TitleText = PageTitletext.getText();
+            System.out.println("The title text  is :" + TitleText);
+            Assert.assertEquals(Tit, Title);
+            Assert.assertEquals(titText,TitleText );     
+        }
+		
+		public void Download(WebElement ExportBtn, WebElement ExportType) throws FileNotFoundException, InterruptedException, IOException {
+			try {
+				exportVATable(ExportBtn, ExportType );
+		        Robot robot = new Robot();
+		        robot.setAutoDelay(5000);
+		        robot.keyPress(KeyEvent.VK_ALT);
+		        robot.keyPress(KeyEvent.VK_S);
+		        robot.keyRelease(KeyEvent.VK_ALT);
+		        robot.keyRelease(KeyEvent.VK_S);
+		        if ("firefox".equalsIgnoreCase(CurrentState.getBrowser()))
+		          robot.keyPress(KeyEvent.VK_ENTER);
+
+		      } catch (AWTException e) {
+		        e.printStackTrace();
+		      }
+		}
 }
