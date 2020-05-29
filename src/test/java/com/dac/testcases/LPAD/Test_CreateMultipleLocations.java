@@ -38,7 +38,8 @@ public class Test_CreateMultipleLocations extends LaunchLPAD {
 
 @Test(dependsOnMethods= {"com.dac.testcases.LPAD.Test_LoginToLPAD.TC_Login_LPAD"})
 public void TC_EnterLocationData() throws Exception {
-	int column=17,columnStatus=18;
+	int colLocationNumber=17, colLocationName=18, ColLocationStatus=19;
+	String status="NEW",locationName="";
 	System.out.println("Step1: Enter Location Data");
 	wait=new WebDriverWait(driver, 30);
 	wb = new ExcelHandler(LocationDataExcelPath, "BasicInfo");
@@ -64,18 +65,19 @@ public void TC_EnterLocationData() throws Exception {
 		tabs.navigateBusinessInfoTab();
 		businessInfo.fillBusinessInfoData();
 		tabs.navigateProductsTab();
-		products.clickOnDSOptions("CREATE");
+		products.clickOnDSOptions("NEW");
 		tabs.submitLocation();
 		Thread.sleep(2000);
 		NewlocationNumber=basicInfo.getLocationNumber();
-//		System.out.println("Row is: "+i+"Location Number is: "+locationNumber);
-//		home.writeToNotepad(NewlocationNumber);
+		locationName=basicInfo.getSBName();
+//		System.out.println(locationName);
 		tabs.navigateSiteSpecificInfoTab();
-		site.fillSiteSpecificInfoData();
-//		tabs.updateLocation();
-		wb.setCellValue( i, column, NewlocationNumber);
-		wb.setCellValue(i, columnStatus, "NEW");
-//		wb.setCellValue( 1, 18, "PFOUpdate");
+		site.fillSiteSpecificInfoData("ZOMATO");
+
+		//		tabs.updateLocation();
+		wb.setCellValue( i, colLocationNumber, NewlocationNumber);
+		wb.setCellValue( i, colLocationName, locationName);
+		wb.setCellValue(i, ColLocationStatus, status);
 		
 	}
 	

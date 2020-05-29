@@ -1,5 +1,6 @@
 package com.dac.main.POM_LPAD;
 
+import java.sql.Timestamp;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -17,6 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.dac.testcases.LPAD.LaunchLPAD;
 
 import resources.ExcelHandler;
+import resources.Utilities;
 
 public class Page_LocationBasicInfoTab extends LaunchLPAD {
 	
@@ -116,9 +118,15 @@ public class Page_LocationBasicInfoTab extends LaunchLPAD {
 	}
 	
 	public void setShortBusinessName(String Name) {
+		String time=Utilities.getCurrentTime();
+		Name=Name+time;
 		ShortBusinessName.sendKeys(Name);
 	}
 	
+	public String getSBName() {
+		String name=ShortBusinessName.getAttribute("value");
+		return name;
+	}
 	public void setCountry(String country) {
 		uiSelect=new Select(selectCountry);
 		uiSelect.selectByVisibleText(country);

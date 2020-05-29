@@ -2,6 +2,10 @@ package resources;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Calendar;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -31,4 +35,10 @@ public class Utilities {
 		return image;
 	}
 	
+public static String getCurrentTime() {
+	Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+	String time=String.valueOf(timestamp.getTime());
+		return time;
+		
+	}
 }

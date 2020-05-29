@@ -24,7 +24,7 @@ public class Page_SiteSpecificInfoTab extends LaunchLPAD {
 	Select estSelect,cuSelect; 
 	WebDriverWait wait;
 	public JavascriptExecutor js;
-	
+	String [][] siteSpecificData,xlInput;
 	
 	@FindBy(xpath="//*[@id=\"main-wrapper\"]/section/div[1]/h1")
 	private WebElement header;
@@ -143,13 +143,39 @@ public class Page_SiteSpecificInfoTab extends LaunchLPAD {
 		btnAddCategory.click();
 	}
 	
-	public void fillSiteSpecificInfoData() throws Exception {
+	public void fillSiteSpecificInfoData(String vendor) throws Exception {
 		wait = new WebDriverWait(driver, 30);
-		String [][] inputData=new ExcelHandler(LocationDataExcelPath, "SiteSpecificInfo").getExcelTable();
+		siteSpecificData=new ExcelHandler(LocationDataExcelPath, "SiteSpecificInfo").getExcelTable();
 //		String strcategory=inputData[excelRow][0];		System.out.println(strcategory);
-		setZomatoAmenities(inputData);
+		
+		if(checkVendor(vendor)) {
+			switch (vendor){
+			case "ZOMATO":
+				setZomatoAmenities(siteSpecificData);
+			default:
+				System.out.println("Invalid Vendor");
+			}
+		}
 		
 		
+		
+		
+	}
+	private boolean checkVendor(String vendor) throws Exception {
+		xlInput = new ExcelHandler(LocationDataExcelPath, "Products").getExcelTable();
+		int count=xlInput.length;
+		boolean flag=false;
+		for(int i=1;i<count;i++) {
+			String xlVendor=xlInput[i][0];
+			System.out.println(xlVendor+" = "+ vendor);
+			if(xlVendor.equalsIgnoreCase(vendor)) {
+				flag=true;
+				break;
+			}else {
+				flag=false;
+			}
+		}
+		return flag;
 	}
 	private void setZomatoAmenities(String [][] values) throws InterruptedException {
 		js = (JavascriptExecutor) driver;

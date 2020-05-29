@@ -36,12 +36,13 @@ public interface IAutoconst {
 	
 	/*----------------LPAD Variables----------------*/
 	String LPADUrlBeta="https://dac-map-beta.azurewebsites.net/";
-	String ResellerAdmin="CSEE_External_reseller";
+	String ResellerAdmin="cseetestreseller@gmail.com";
 	String ResellerPassword="111111";
-	String Reseller="Domain N";
+	String Reseller="DAC Group";
 	String LocationDataExcelPath="./data/LocationSampleData.xlsx";
 	String AddressFormatExcelPath="./data/AddressFormats.xlsx";
 	String LpadAccountName="SA Test DRS";
 	String LpadContact="TestAcccountOwner4";
-			
+			//smitha.internal.domain@dacgroup.com - Smitha's Internal Domain
+			//	cseetestreseller@gmail.com - DAC Group
 }

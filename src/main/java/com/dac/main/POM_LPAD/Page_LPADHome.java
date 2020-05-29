@@ -135,9 +135,6 @@ public class Page_LPADHome{
 		action = new Actions(driver);
 		js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollTo(0, -document.body.scrollHeight);");
-//		js.executeScript("arguments[0].scrollIntoView(true);", Locations);
-		
-//		js.executeScript("arguments[0].click();",CheckBoxLPM);
 		Thread.sleep(2000);
 		action.moveToElement(Locations).click().perform();
 		System.out.println("Result: Navigated to Locations Page");
@@ -159,13 +156,14 @@ public class Page_LPADHome{
 		String domain=Username.substring(Username.indexOf("-") + 1, Username.length());
 		return domain;
 	}
-	public void switchToDomain(String domain) {
+	public void switchToDomain(String domain) throws InterruptedException {
 		String CurrentDomain=getDomain();
 		CurrentDomain=CurrentDomain.trim();
 		if (!domain.equalsIgnoreCase(CurrentDomain)) {
 			System.out.println("Required Switch To Domain");
 			profileLink.click();
 			linkSwitchDomain.click();
+			Thread.sleep(2000);
 			boolean bind=searchDomain(domain);
 			if(bind) {
 				btnOK.click();
@@ -188,9 +186,9 @@ public class Page_LPADHome{
 		for(int i=0;i<domainCount;i++) {
 			reseller=allDomains.get(i).getAttribute("alt");
 			if (reseller.equalsIgnoreCase(Domain)) {
-				System.out.println(reseller);
 				allDomains.get(i).click();
 				flag=true;
+				break;
 			}else {
 				reseller=null;
 				flag=false;

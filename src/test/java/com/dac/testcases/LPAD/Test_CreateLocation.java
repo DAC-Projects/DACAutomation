@@ -84,7 +84,7 @@ public void TC_EnterPFOData() throws Exception {
 	wait=new WebDriverWait(driver, 30);
 	tabs.navigateProductsTab();
 //	Thread.sleep(2000);
-	products.clickOnDSOptions("CREATE");
+	products.clickOnDSOptions("NEW");
 	System.out.println("PFO Data Insertion Completed.....");
 }
 @Test(dependsOnMethods= {"TC_EnterBusinessInfoData"})

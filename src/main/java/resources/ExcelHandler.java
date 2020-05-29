@@ -158,6 +158,11 @@ public class ExcelHandler {
 	
 	
 	public void setCellValue(int rownum, int colNum, String newValue) throws Exception {
+		int rowCount=sheet.getLastRowNum();
+		System.out.println(rowCount);
+		if(rowCount<rownum) {
+			row=sheet.createRow(rownum);
+		}
 		cell=sheet.getRow(rownum).createCell(colNum);
 		System.out.println("new value "+newValue);
 		cell.setCellValue((String)newValue);

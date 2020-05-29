@@ -155,11 +155,12 @@ public class Page_LocationNavigationTabList extends LaunchLPAD {
 			if(btnOK.isDisplayed()) {
 				Thread.sleep(1000);
 				btnOK.click();
+				System.out.println("Button OK Clicked");
 			}else {
-				
+				System.out.println("Inside Else Part");
 			}
-//			wait.until(ExpectedConditions.visibilityOf(btnOK));//for success message popup
-//			btnOK.click();//for success message popup
+			wait.until(ExpectedConditions.visibilityOf(btnOK));//for success message popup
+			btnOK.click();//for success message popup
 //			js.executeScript("window.scrollTo(0, -document.body.scrollHeight);");
 		}else {
 			System.out.println("Submit Button Not enabled");
