@@ -39,7 +39,9 @@ import com.selenium.testevidence.EvidenceReport;
 import com.selenium.testevidence.EvidenceType;
 import com.selenium.testevidence.GenerateEvidenceReport;
 import com.selenium.testevidence.SeleniumEvidence;
+
 import io.github.bonigarcia.wdm.Architecture;
+import io.github.bonigarcia.wdm.DriverManagerType;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import net.sf.jasperreports.engine.JasperPrint;
 
@@ -348,7 +350,7 @@ public WebDriver openBrowser(String browser) throws IOException {
     if (browser.equalsIgnoreCase("Chrome")) {
 
 
-    WebDriverManager.chromedriver().version("80.0.3987.16").setup(); 
+    WebDriverManager.chromedriver().version("83.0.4103.39").setup(); 
 
 
    // WebDriverManager.getInstance(DriverManagerType.CHROME).setup();

@@ -343,7 +343,7 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 						List<WebElement> rows_table = Dup_TableRow;
 						int rows_count = rows_table.size(); // To calculate no of rows In table.
 						count = count + rows_count;
-						for (int row = 0; row < rows_count; row++) {
+						for (int row = 0; row < rows_count -1; row++) {
 							String celtext = driver
 									.findElement(By
 											.xpath("//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[2]/div"))
@@ -362,7 +362,7 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 								Date displayeddate = formats.parse(finalDate);
 								System.out.println("Displayed Date is : " + displayeddate);
 								if (todaysDate.equals(displayeddate)) {
-									String ExtNotes = driver.findElement(By.xpath("(//*[@id='duplicate-table']/tbody/tr["+row+"]/td[2]/div/parent::*/following-sibling::td[2]//div[@class='duplicate-note']//span)[1]")).getText();
+									String ExtNotes = driver.findElement(By.xpath("(//*[@id='duplicate-table']/tbody/tr["+(row+1)+"]/td[2]/div/parent::*/following-sibling::td[2]//div[@class='duplicate-note']//span)[1]")).getText();
 									System.out.println("External Notes is :" +ExtNotes);
 									if(ExtNotes.equalsIgnoreCase(timestamp)) {
 									String StatusText = driver.findElement(By.xpath(
@@ -512,6 +512,10 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 							clickelement(Ignore_Confirmation);
 							System.out.println("Action Performed is : Ignore");
 							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+							scrollByElement(ComPenSearchbox);
+							clickelement(ComPenSearchbox);
+							ComPenSearchbox.sendKeys(LocationNumber);
+							clickelement(ComPenSearchBtn);
 							int entiresText1 = NumOfentries(Dup_Table_Info);
 							System.out.println("Final entries in Table is :" + entiresText1);
 							Assert.assertEquals(entiresText1, entiresText - 1);
@@ -527,8 +531,8 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		} else {
 			System.out.println("No Data Available");
 		}
-		SearchBox.click();
-		SearchBox.clear();
+		ComPenSearchbox.click();
+		ComPenSearchbox.clear();
 		driver.navigate().refresh();
 	}
 
@@ -643,6 +647,11 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 							clickelement(Ignore_Confirmation);
 							System.out.println("Action Performed is : Ignore");
 							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+							clickelement(PendingTab);
+							scrollByElement(ComPenSearchbox);
+							clickelement(ComPenSearchbox);
+							ComPenSearchbox.sendKeys(LocNum);
+							clickelement(ComPenSearchBtn);
 							int entiresText1 = NumOfentries(Dup_Table_Info);
 							System.out.println("Final entries in Table is :" + entiresText1);
 							Assert.assertEquals(entiresText1, entiresText - 1);
@@ -669,7 +678,6 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
 				.toString();
 		SimpleDateFormat formats = new SimpleDateFormat(var);
-		verifyfixPot_Dup(LocNum);
 		clickelement(PendingTab);
 		waitForElement(DupTable, 10);
 		Outer: if (Dup_Table_Info.isDisplayed()) {

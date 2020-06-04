@@ -113,7 +113,7 @@ public class TPSEE_Syndication_Status_DTCVerification extends BaseClass {
 				XLStatus = StatusList[i];
 				System.out.println("The Status from XL :" +XLStatus);
 				try {
-					data.verifyStatus(XLVendor, XLStatus, row,soft);
+					data.verifyStatus(XLVendor, XLStatus, row,soft,LocNum);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

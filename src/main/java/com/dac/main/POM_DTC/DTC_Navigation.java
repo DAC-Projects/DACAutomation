@@ -7,7 +7,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import resources.ExcelHandler;
@@ -70,8 +73,11 @@ public class DTC_Navigation {
 	@FindBy(xpath = "(//*[@class='btn btn-danger btnalertclose'])[2]")
 	private WebElement close;
 
+	WebDriverWait wait;
+	
 	public DTC_Navigation(WebDriver driver) {
 		this.driver = driver;
+		wait = new WebDriverWait(driver, 10);
 		driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
 		PageFactory.initElements(driver, this);
 
@@ -185,17 +191,20 @@ public class DTC_Navigation {
 		}
 	}
 	
-	int i;
+	int before_Ignore;
     public void Count_check(String lo_Number) throws InterruptedException {
         String lo=String.valueOf(lo_Number);
         location_number.sendKeys(lo);
         apply.click();
         Thread.sleep(5000);
-        String ad=driver.findElement(By.xpath("//*[@id=\"duplicatelistTable_info\"]")).getText();
+        WebElement UICount = driver.findElement(By.xpath("//*[@id='duplicatelistTable_info']"));
+        before_Ignore =  NumOfentries(UICount);
+        System.out.println("Count before ignore is :" +before_Ignore);
+       /* String ad=driver.findElement(By.xpath("//*[@id=\"duplicatelistTable_info\"]")).getText();
         String ad1=ad.substring(19, 21);
         i=Integer.parseInt(ad1);  
         System.out.println(i);
-        System.out.println("abi"+ad1);
+        System.out.println("abi"+ad1);*/
         Thread.sleep(1000);
         Clear_button.click();
     }
@@ -205,10 +214,28 @@ public class DTC_Navigation {
         location_number.sendKeys(lo);
         apply.click();
         Thread.sleep(5000);
-        String ad=driver.findElement(By.xpath("//*[@id=\"duplicatelistTable_info\"]")).getText();
+        WebElement UICount = driver.findElement(By.xpath("//*[@id='duplicatelistTable_info']"));
+        int after_ignore =  NumOfentries(UICount);
+        System.out.println("Count After ignoring :" +after_ignore);
+        /*String ad=driver.findElement(By.xpath("//*[@id=\"duplicatelistTable_info\"]")).getText();
         String ad1=ad.substring(19, 21);
         int j=Integer.parseInt(ad1)-1;  
-        System.out.println(j);
-        Assert.assertEquals(i, j);   
+        System.out.println(j);*/
+       // Assert.assertEquals(before_Ignore, after_ignore);   
     }
+    
+    public int NumOfentries(WebElement entry) {
+    	wait.until(ExpectedConditions.visibilityOf(entry));
+		if(entry.isDisplayed()) {
+		String entiresText = entry.getText();
+		System.out.println("The total entries in a table is :" + entiresText);
+		String result = entiresText.substring(entiresText.indexOf("f") + 1, entiresText.indexOf("s") - 6).trim();
+		int finalvalue = Integer.parseInt(result);
+		System.out.println("The number of entries is : " +finalvalue);
+		return finalvalue;
+		}else {
+			System.out.println("No Data available");
+			return 0;
+		}		
+	}
 }

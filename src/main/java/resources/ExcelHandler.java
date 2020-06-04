@@ -144,9 +144,20 @@ public class ExcelHandler {
 	}
 	
 	
-	public void setCellValue(int rownum, int colNum, String newValue) {
-		cell=workbook.getSheet(sheetName).getRow(rownum).getCell(colNum);
-		cell.setCellValue(newValue);
+	public void setCellValue(int rownum, int colNum, String newValue) throws Exception {
+		int rowCount=sheet.getLastRowNum();
+		System.out.println(rowCount);
+		if(rowCount<rownum) {
+			row=sheet.createRow(rownum);
+		}
+		cell=sheet.getRow(rownum).createCell(colNum);
+		System.out.println("new value "+newValue);
+		cell.setCellValue((String)newValue);
+		
+		fis.close(); //Close the InputStream
+        FileOutputStream output_file =new FileOutputStream(new File(filePath));  //Open FileOutputStream to write updates
+        workbook.write(output_file); //write changes
+        output_file.close();
 	}
 	
 	

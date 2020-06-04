@@ -29,6 +29,22 @@ public abstract class CF_abstractMethods extends BasePage {
 		action = new Actions(driver);
 		PageFactory.initElements(driver, this);
 	}
+	
+public static String time_Stamp;
+	
+	
+	public void time_get() {
+		time_Stamp=timeStamp();
+		System.out.println("Getting time"+time_Stamp);
+	}
+	
+	public String timeStamp() {
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
+		String formattedDate = sdf.format(date);
+		System.out.println("Timestamp is :"+formattedDate);
+		return formattedDate;		
+	}
 
 	@FindBy(xpath = "//div[@class='pageHead']")
 	private WebElement PageTitle;

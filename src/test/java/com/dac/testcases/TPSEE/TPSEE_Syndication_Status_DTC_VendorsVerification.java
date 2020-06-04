@@ -97,7 +97,7 @@ public class TPSEE_Syndication_Status_DTC_VendorsVerification extends BaseClass{
 			String Vendor = VendorList[k];
 			System.out.println("The Location Number is :" + Vendor);
 			String Status = StatusList[k];
-			data.verifyStatus(Vendor, Status, row, soft);
+			data.verifyStatus(Vendor, Status, row, soft,LocNum);
 			soft.assertAll();
 			addEvidence(CurrentState.getDriver(), "To Verify Status of Vendors of DTC", "yes");
 			}
@@ -122,7 +122,7 @@ public class TPSEE_Syndication_Status_DTC_VendorsVerification extends BaseClass{
 			System.out.println("The Location Number is :" + Vendor);
 			String Status = wb.getCellValue(2, wb.seacrh_pattern("Status", 0).get(0).intValue());
 			System.out.println("The status is :" + Status);
-			data.verifyStatus(Vendor, Status, row,soft);
+			data.verifyStatus(Vendor, Status, row,soft,LocNum);
 			soft.assertAll();
 			addEvidence(CurrentState.getDriver(), "To Verify Status of Vendors of DTC", "yes");
 		}
@@ -146,7 +146,7 @@ public class TPSEE_Syndication_Status_DTC_VendorsVerification extends BaseClass{
 			System.out.println("The Location Number is :" + Vendor);
 			String Status = wb.getCellValue(3, wb.seacrh_pattern("Status", 0).get(0).intValue());
 			System.out.println("The status is :" + Status);
-			data.verifyStatus(Vendor, Status, row,soft);
+			data.verifyStatus(Vendor, Status, row,soft,LocNum);
 			soft.assertAll();
 			addEvidence(CurrentState.getDriver(), "To Verify Status of Vendors of DTC", "yes");
 		}
@@ -170,7 +170,7 @@ public class TPSEE_Syndication_Status_DTC_VendorsVerification extends BaseClass{
 			System.out.println("The Location Number is :" + Vendor);
 			String Status = wb.getCellValue(4, wb.seacrh_pattern("Status", 0).get(0).intValue());
 			System.out.println("The status is :" + Status);
-			data.verifyStatus(Vendor, Status, row,soft);
+			data.verifyStatus(Vendor, Status, row,soft,LocNum);
 			soft.assertAll();
 			addEvidence(CurrentState.getDriver(), "To Verify Status of Vendors of DTC", "yes");
 		}

@@ -15,12 +15,13 @@
 	<!-- <class name="com.dac.testcases.LPAD.Test_LoginToLPAD" /> 
 	<class name="com.dac.testcases.LPAD.Test_CreateLocation" /> -->
 	<!-- <class name="com.dac.testcases.TPSEE.TPSEE_Syndication_Status_DTCVerification" /> -->
-	<class name="com.dac.testcases.TPSEE.TPSEE_Syndication_Status_LPAD" />
+	<!-- <class name="com.dac.testcases.TPSEE.TPSEE_Syndication_Status_LPAD" /> -->
+	<!-- <class name="com.dac.testcases.TPSEE.TPSEE_Syndication_Status_DTC_API" /> -->
 	<!-- <class name="com.dac.testcases.TPSEE.TPSEE_Syndication_Status_DTC_VendorsVerification" />  -->
 	<!-- <class name="com.dac.testcases.TPSEE.TPSEE_DuplicateManagement_Test" /> -->
-		<!-- <class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />
-		<class name="com.dac.testcases.TPSEE.TPSEE_ReviewStream_Test" />
-		<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
+		<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />
+		<!-- <class name="com.dac.testcases.TPSEE.TPSEE_ReviewStream_Test" /> -->
+		<!-- <class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
 		<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
 		<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
 		<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
@@ -28,14 +29,12 @@
 		<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />
 		<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
 		<class name="com.dac.testcases.TPSEE.TPSEE_ESRreports_Test" />
-		<class name="com.dac.testcases.TPSEE.TPSEE_ReviewStream_Test" />
 		<class name="com.dac.testcases.TPSEE.TPSEE_ReviewNotifications_Test" />
 		<class name="com.dac.testcases.TPSEE.TPSEE_LocalReportsScoreChange_Test" />
 		<class name="com.dac.testcases.TPSEE.TPSEE_Groups_Test" />
 		<class name="com.dac.testcases.TPSEE.TPSEE_ROI_Test"/> 
 		<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" />
-		<class name="com.dac.testcases.TPSEE.TPSEE_DuplicateManagement_Test" />
-		<class name="com.dac.testcases.TPSEE.TPSEE_Syndication_Status_Test" />-->
+		<class name="com.dac.testcases.TPSEE.TPSEE_DuplicateManagement_Test" />		 -->
 	</classes>
 	</test>
 

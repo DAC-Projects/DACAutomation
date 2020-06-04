@@ -1,8 +1,10 @@
 package com.dac.main.POM_CF;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -10,8 +12,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import com.dac.main.BasePage;
+import org.testng.asserts.SoftAssert;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -28,8 +29,7 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 	}
 
 	CF_Campaigns_Page data;
-	
-	
+
 	@FindBy(xpath = "//a[@href='/Dashboard/CampaignSteps']//span[2]")
 	private WebElement CreateCampaignLink;
 
@@ -111,8 +111,80 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 	@FindBy(xpath = "//button[@id='wizard-submit-button']")
 	private WebElement SubmitBtn;
 
+	@FindBy(xpath = "//input[@id='fw_scheduled_input']")
+	private WebElement ScheduledSearchField;
+
+	@FindBy(xpath = "//div[@class='input-group search-box-camp-process']//span[@class='input-group-addon']")
+	private WebElement ScheduledSearchBtn;
+
+	@FindBy(xpath = "//table[@id='tblCampaigns']")
+	private WebElement ScheduledTable;
+
+	@FindBy(xpath = "//table[@id='tblCampaigns']//tbody//tr")
+	private List<WebElement> ScheduledTableRow;
+
+	@FindBy(xpath = "//div[@class='dataTables_info' and @id='tblCampaigns_info']")
+	private WebElement ScheduledTableEntries;
+
+	@FindBy(xpath = "//div[@class='feedbackHeaderText']//span")
+	private WebElement PreviewBanner;
+
+	@FindBy(xpath = "//div[@class='livePreview_Body']")
+	private WebElement PreviewBody;
+
+	@FindBy(xpath = "//span[@class='livePreview_Signature']")
+	private WebElement PreviewSign;
+
+	@FindBy(xpath = "//button[@id='preview-step-header-2']")
+	private WebElement FeedBackPage;
+
+	@FindBy(xpath = "//span[@id='ratingmessage']")
+	private WebElement RatingMessage;
+
+	@FindBy(xpath = "//input[@id='optionalName']")
+	private WebElement Name;
+
+	@FindBy(xpath = "//*[@id='comment']")
+	private WebElement Comments;
+
+	@FindBy(xpath = "//input[@type='checkbox']")
+	private WebElement checkbox;
+
+	@FindBy(xpath = "//button[@class='btn btn-primary wizard-button wizard-button-blue Send_feedback']")
+	private WebElement SendFeedBack;
+
+	@FindBy(xpath = "//span[@class='livePreview_HighRatingMessage']")
+	private WebElement HighRate;
+
+	@FindBy(xpath = "//span[@class='livePreview_MidRatingMessage']")
+	private WebElement MidRate;
+
+	@FindBy(xpath = "//span[@class='livePreview_LowRatingMessage']")
+	private WebElement LowRate;
+
+	@FindBy(xpath = "//button[@id='prev-back-button']")
+	private WebElement ExitPreview;
+
+	@FindBy(xpath = "//button[@id='wizard-view-button']")
+	private WebElement ViewCampaign;
+
+	/*-------------------------Pagination-----------------------*/
+	@FindBy(xpath = "(//*[@class='pagination']//a)")
+	private List<WebElement> pagination;
+
+	@FindBy(xpath = "(//*[@class='pagination']//a)[1]")
+	private WebElement paginationPrev;
+
+	@FindBy(xpath = "(//*[@class='pagination']//a)[last()]")
+	private WebElement paginationNext;
+
+	@FindBy(xpath = "(//*[@class='pagination']//a)[last()-1]")
+	private List<WebElement> paginationLast;
+	/*-------------------------Pagination-----------------------*/
+
 	Select selecttype, selectopt, selectlang, selecttime;
 	ExcelHandler wb;
+	SoftAssert soft = new SoftAssert();
 
 	/**
 	 * To enter campaign information
@@ -122,8 +194,11 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 	 * @param Lang
 	 * @param CamName
 	 * @param CampDes
+	 * @throws Exception
 	 */
-	public void CampaignInfo(String Type, String Option, String Lang, String CamName, String CampDes) {
+	public void CampaignInfo(String Type, String Option, String Lang, String CamName, String CampDes) throws Exception {
+		time_Stamp = timeStamp();
+		System.out.println("The current time stamp is :" +time_Stamp);
 		waitForElement(CreateCampaignLink, 10);
 		clickelement(CreateCampaignLink);
 		waitForElement(CampaignDD, 10);
@@ -135,8 +210,9 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 		selectopt.selectByVisibleText(Option);
 		selectlang = new Select(CampLang);
 		selectlang.selectByVisibleText(Lang);
-		CampName.sendKeys(CamName);
+		CampName.sendKeys(CamName + time_Stamp);
 		CampDescription.sendKeys(CampDes);
+		BaseClass.addEvidence(CurrentState.getDriver(), "Test to write Campaign Information", "yes");
 		clickelement(NextBtn);
 	}
 
@@ -150,29 +226,52 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 	 * @param Ebanner
 	 * @param EBody
 	 * @param ESign
+	 * @throws Exception
 	 */
 	public void CampaignSetUp(String Location, String Email, String Esender, String Esubject, String Ebanner,
-			String EBody, String ESign) {
+			String EBody, String ESign) throws Exception {
 		waitForElement(LocationDetails, 10);
 		LocationDetails.sendKeys(Location);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		driver.findElement(By.xpath("//li[@class='ui-menu-item' and contains(text(),'"+Location+"')]")).click();
+		driver.findElement(By.xpath("//li[@class='ui-menu-item' and contains(text(),'" + Location + "')]")).click();
 		EmailField.sendKeys(Email);
 		Sender.sendKeys(Esender);
+		EmailSubject.clear();
 		EmailSubject.sendKeys(Esubject);
+		EmailBanner.clear();
 		EmailBanner.sendKeys(Ebanner);
 		EmailBody.sendKeys(EBody);
 		EmailSignature.sendKeys(ESign);
+		BaseClass.addEvidence(CurrentState.getDriver(), "Enter Setup Details", "yes");
 		clickelement(NextBtn);
 	}
 
-	public void CampaignScheduling(String time) {
-		selecttime = new Select(DeploymentTime);
-		selecttime.selectByVisibleText(time);
-		clickelement(NextBtn);
+	/**
+	 * Enter Time into the campaign
+	 * 
+	 * @param time
+	 * @throws Exception
+	 */
+	public void CampaignScheduling(String SheetName) throws Exception {
+		wb = new ExcelHandler("./data/CF.xlsx", SheetName);
+		String time = wb.getCellValue(1, wb.seacrh_pattern("Time", 0).get(0).intValue());
+		if (!time.equals("null")) {
+			selecttime = new Select(DeploymentTime);
+			System.out.println("The time is :" + time);
+			selecttime.selectByVisibleText(time);
+			clickelement(NextBtn);
+		}
 	}
 
-	public void ThankyouSetUp(String Onestar, String Threestar, String Fivestar) {
+	/**
+	 * Enter details of Thank you page
+	 * 
+	 * @param Onestar
+	 * @param Threestar
+	 * @param Fivestar
+	 * @throws Exception
+	 */
+	public void ThankyouSetUp(String Onestar, String Threestar, String Fivestar) throws Exception {
 		if (!Onestar.equalsIgnoreCase("null")) {
 			clickelement(OneStar);
 			OneStar.clear();
@@ -188,44 +287,369 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 			FiveStar.clear();
 			FiveStar.sendKeys(Fivestar);
 		}
+		BaseClass.addEvidence(CurrentState.getDriver(), "Test to Thankyou Page", "yes");
 		clickelement(NextBtn);
 	}
 
-	public void SummaryPage() {
+	/**
+	 * Click on Submit Button
+	 * 
+	 * @throws Exception
+	 */
+	public void SummaryPage() throws Exception {
 		clickelement(SubmitBtn);
+		BaseClass.addEvidence(CurrentState.getDriver(), "Test to Submit the Summary Page", "yes");
+		waitForElement(ViewCampaign, 10);
+		clickelement(ViewCampaign);
+		BaseClass.addEvidence(CurrentState.getDriver(), "Test to navigate to campaigns Page", "yes");
 	}
-	
+
+	/**
+	 * Details to enter in Campaign SetUp
+	 * 
+	 * @throws Exception
+	 */
 	public void ECampaignSetUp() throws Exception {
-			wb = new ExcelHandler("./data/CF.xlsx", "CreateCampaign");
-			for (int i = 1; i <= wb.getRowCount(); i++) {
-				String Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
-				System.out.println("The Location is :" + Location);
-				String Recipent = wb.getCellValue(i, wb.seacrh_pattern("Reciepents", 0).get(0).intValue());
-				System.out.println("The Reciepents are :" + Recipent);
-				String Sender = wb.getCellValue(i, wb.seacrh_pattern("Sender", 0).get(0).intValue());
-				System.out.println("The sender is :" + Sender);
-				String EmailSubject = wb.getCellValue(i, wb.seacrh_pattern("Email Subject", 0).get(0).intValue());
-				System.out.println("The email subject is :" + EmailSubject);
-				String EmailBanner = wb.getCellValue(i, wb.seacrh_pattern("Email Banner", 0).get(0).intValue());
-				System.out.println("Email Banner is :" + EmailBanner);
-				String EmailBody = wb.getCellValue(i, wb.seacrh_pattern("Email Body", 0).get(0).intValue());
-				System.out.println("Email Body is :" + EmailBody);
-				String EmailSignature = wb.getCellValue(i, wb.seacrh_pattern("Email Signature", 0).get(0).intValue());
-				System.out.println("Email Signature is :" + EmailSignature);
-				CampaignSetUp(Location, Recipent, Sender, EmailSubject, EmailBanner, EmailBody, EmailSignature);
-				BaseClass.addEvidence(CurrentState.getDriver(), "Enter Setup Details", "yes");
+		wb = new ExcelHandler("./data/CF.xlsx", "EmailLocationCampaign");
+		for (int i = 1; i <= wb.getRowCount(); i++) {
+			String Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
+			System.out.println("The Location is :" + Location);
+			String Recipent = wb.getCellValue(i, wb.seacrh_pattern("Reciepents", 0).get(0).intValue());
+			System.out.println("The Reciepents are :" + Recipent);
+			String Sender = wb.getCellValue(i, wb.seacrh_pattern("Sender", 0).get(0).intValue());
+			System.out.println("The sender is :" + Sender);
+			String EmailSubject = wb.getCellValue(i, wb.seacrh_pattern("Email Subject", 0).get(0).intValue());
+			System.out.println("The email subject is :" + EmailSubject);
+			String EmailBanner = wb.getCellValue(i, wb.seacrh_pattern("Email Banner", 0).get(0).intValue());
+			System.out.println("Email Banner is :" + EmailBanner);
+			String EmailBody = wb.getCellValue(i, wb.seacrh_pattern("Email Body", 0).get(0).intValue());
+			System.out.println("Email Body is :" + EmailBody);
+			String EmailSignature = wb.getCellValue(i, wb.seacrh_pattern("Email Signature", 0).get(0).intValue());
+			System.out.println("Email Signature is :" + EmailSignature);
+			CampaignSetUp(Location, Recipent, Sender, EmailSubject, EmailBanner, EmailBody, EmailSignature);
+		}
+	}
+
+	/**
+	 * Thank You Page details
+	 * 
+	 * @throws Exception
+	 */
+	public void ThankYouPage() throws Exception {
+		wb = new ExcelHandler("./data/CF.xlsx", "EmailLocationCampaign");
+		String Onestar = wb.getCellValue(1, wb.seacrh_pattern("1Star Messaging", 0).get(0).intValue());
+		System.out.println("One Two Star Message is : " + Onestar);
+		String Threestar = wb.getCellValue(1, wb.seacrh_pattern("3Star Messaging", 0).get(0).intValue());
+		System.out.println("One Two Star Message is : " + Threestar);
+		String Fourstar = wb.getCellValue(1, wb.seacrh_pattern("4Star Messaging", 0).get(0).intValue());
+		System.out.println("One Two Star Message is : " + Fourstar);
+		ThankyouSetUp(Onestar, Threestar, Fourstar);
+	}
+
+	/**
+	 * Search for the campaign created
+	 * @return
+	 * @throws Exception
+	 */
+	public String SearchSchedule() throws Exception {
+		wb = new ExcelHandler("./data/CF.xlsx", "EmailLocationCampaign");
+		String CampaignName = wb.getCellValue(1, wb.seacrh_pattern("CamName", 0).get(0).intValue());
+		System.out.println("The Campaign Name is:" + CampaignName + time_Stamp);
+		ScheduledSearchField.sendKeys(CampaignName + time_Stamp);
+		clickelement(ScheduledSearchBtn);
+		return CampaignName + time_Stamp;
+	}
+
+	/**
+	 * Verify preview schedule
+	 * @throws Exception
+	 */
+	public void PreviewSchedule() throws Exception {
+		wb = new ExcelHandler("./data/CF.xlsx", "EmailLocationCampaign");
+		waitForElement(ScheduledTable, 10);
+		String CampaignName = SearchSchedule();
+		System.out.println("The Campaign Name is :" + CampaignName);
+		if (ScheduledTableEntries.isDisplayed()) {
+			String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
+			int page = Integer.parseInt(n);
+			System.out.println("\n" + page);
+			Outer: if (paginationNext.isDisplayed()) {
+				for (int i = 1; i <= page; i++) {
+					List<WebElement> rows_table = ScheduledTableRow;
+					int rows_count = rows_table.size();
+					System.out.println("The total Number of Rows are :" + rows_count);
+					for (int row = 0; row < rows_count; row++) {
+						if (driver.findElement(By.xpath("//table[@id='tblCampaigns']//tbody//tr[" + (row + 1)
+								+ "]//td[contains(text(),'" + CampaignName + "')]")).isDisplayed()) {
+							WebElement PreviewButton = driver
+									.findElement(By.xpath("//table[@id='tblCampaigns']//tbody//tr[" + (row + 1)
+											+ "]//td[5]//div[2]//span//a[contains(@id,'preview')]"));
+							if (PreviewButton.isEnabled()) {
+								scrollByElement(PreviewButton);
+								clickelement(PreviewButton);
+								String EmailBanner = wb.getCellValue(1,
+										wb.seacrh_pattern("Email Banner", 0).get(0).intValue());
+								System.out.println("Email Banner is :" + EmailBanner);
+								String EmailBody = wb.getCellValue(1,
+										wb.seacrh_pattern("Email Body", 0).get(0).intValue());
+								System.out.println("Email Body is :" + EmailBody);
+								String EmailSignature = wb.getCellValue(1,
+										wb.seacrh_pattern("Email Signature", 0).get(0).intValue());
+								System.out.println("Email Signature is :" + EmailSignature);
+								waitForElement(PreviewBanner, 10);
+								String Banner = PreviewBanner.getText();
+								System.out.println("Banner is :" + Banner);
+								soft.assertEquals(Banner, EmailBanner);
+								String Body = PreviewBody.getText();
+								System.out.println("Body is :" + Body);
+								soft.assertEquals(Body, EmailBody);
+								String Signature = PreviewSign.getText();
+								System.out.println("Signature is:" + Signature);
+								soft.assertEquals(Signature, EmailSignature);
+								BaseClass.addEvidence(driver, "Test to verify Preview Page", "yes");
+								FeedBack();
+								break Outer;
+							} else {
+								System.out.println("Preview Button not found");
+							}
+						} else {
+							System.out.println("No Campaigns displayed");
+						}
+					}
+					if (paginationNext.isEnabled()) {
+						scrollByElement(paginationNext);
+						paginationNext.click();
+						Thread.sleep(4000);
+					}
+				}
+			}
+			soft.assertAll();
+		}
+	}
+
+	/**
+	 * Verify Feedback Page
+	 * @throws Exception
+	 */
+	public void FeedBack() throws Exception {
+		clickelement(FeedBackPage);
+		wb = new ExcelHandler("./data/CF.xlsx", "EmailLocationCampaign");
+		String StarRating = wb.getCellValue(1, wb.seacrh_pattern("Rating", 0).get(0).intValue());
+		System.out.println("The star rating is :" + StarRating);
+		String ReviewerName = wb.getCellValue(1, wb.seacrh_pattern("Name", 0).get(0).intValue());
+		System.out.println("Reviewer Name is :" + ReviewerName);
+		String ReviewerComments = wb.getCellValue(1, wb.seacrh_pattern("Comments", 0).get(0).intValue());
+		System.out.println("Comment is :" + ReviewerComments);
+		String Onestar = wb.getCellValue(1, wb.seacrh_pattern("1Star Messaging", 0).get(0).intValue());
+		System.out.println("One Two Star Message is : " + Onestar);
+		String Threestar = wb.getCellValue(1, wb.seacrh_pattern("3Star Messaging", 0).get(0).intValue());
+		System.out.println("Three Star Message is : " + Threestar);
+		String Fourstar = wb.getCellValue(1, wb.seacrh_pattern("4Star Messaging", 0).get(0).intValue());
+		System.out.println("Four Star Message is : " + Fourstar);
+		driver.findElement(By.xpath(
+				"(//div[@id='ratingResponse']//span//input[@value='" + StarRating + "'])//following-sibling::label"))
+		.click();
+		String Message = RatingMessage.getText();
+		if (StarRating.equals("1") || StarRating.equals("2")) {
+			soft.assertEquals(Message, "Below expectations");
+		} else if (StarRating.equals("3")) {
+			soft.assertEquals(Message, "Room for improvement");
+		} else if (StarRating.equals("4")) {
+			soft.assertEquals(Message, "Yay! I'm a fan!");
+		} else if (StarRating.equals("5")) {
+			soft.assertEquals(Message, "Yay! I'm a fan!");
+		}
+		if (!ReviewerName.equals("null")) {
+			clickelement(Name);
+			Name.sendKeys(ReviewerName);
+		}
+		if (!ReviewerComments.equals("null")) {
+			clickelement(Comments);
+			Comments.sendKeys(ReviewerComments);
+		}
+		clickelement(checkbox);
+		BaseClass.addEvidence(driver, "Test to verify Star Rating", "yes");
+		clickelement(SendFeedBack);
+		if (StarRating.equals("1") || StarRating.equals("2")) {
+			String LowRating = LowRate.getText();
+			System.out.println("The message is :" + LowRating);
+			soft.assertEquals(LowRating, Onestar);
+		} else if (StarRating.equals("3")) {
+			String MidRating = MidRate.getText();
+			System.out.println("The message is :" + MidRating);
+			soft.assertEquals(MidRating, Threestar);
+		} else if (StarRating.equals("4") || StarRating.equals("5")) {
+			String HighRating = HighRate.getText();
+			System.out.println("The message is :" + HighRating);
+			soft.assertEquals(HighRating, Fourstar);
+		}
+		BaseClass.addEvidence(driver, "Test to verify Feedback Page", "yes");
+		clickelement(ExitPreview);
+		soft.assertTrue(driver.findElement(By.xpath("//div[@class='pageHead']")).isDisplayed(),
+				"Page is not displayed");
+	}
+
+	/**
+	 * Delete Campaign
+	 * @throws Exception
+	 */
+	public void DeleteCampaign() throws Exception {
+		wb = new ExcelHandler("./data/CF.xlsx", "EmailLocationCampaign");
+		waitForElement(ScheduledTable, 10);
+		String CampaignName = SearchSchedule();
+		System.out.println("Campaign Name is :" + CampaignName);
+		if (ScheduledTableEntries.isDisplayed()) {
+			String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
+			int page = Integer.parseInt(n);
+			System.out.println("\n" + page);
+			Outer: if (paginationNext.isDisplayed()) {
+				for (int i = 1; i <= page; i++) {
+					List<WebElement> rows_table = ScheduledTableRow;
+					int rows_count = rows_table.size();
+					System.out.println("The total Number of Rows are :" + rows_count);
+					for (int row = 0; row < rows_count; row++) {
+						if (driver.findElement(By.xpath("//table[@id='tblCampaigns']//tbody//tr[" + (row + 1)
+								+ "]//td[contains(text(),'" + CampaignName + "')]")).isDisplayed()) {
+							BaseClass.addEvidence(driver, "Test to search for the campaign", "yes");
+							WebElement DeleteBtn = driver.findElement(By.xpath(
+									"//table[@id='tblCampaigns']//tbody//tr[" + (row + 1) + "]//td[5]//div[3]//input"));
+							if (DeleteBtn.isEnabled()) {
+								scrollByElement(DeleteBtn);
+								clickelement(DeleteBtn);
+								WebElement confirm = driver.findElement(By.xpath("//div[@class='modal-footer']//button[@id='btnSchConfirm']"));
+								JavascriptExecutor executor = (JavascriptExecutor)driver;
+								executor.executeScript("arguments[0].click();", confirm);
+								driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
+								WebElement close = driver.findElement(By.xpath("(//button[@class='close'])[2]"));
+								clickelement(close);
+								BaseClass.addEvidence(driver, "Test to delete the campaign", "yes");
+								break Outer;
+							}
+						}
+					}
+					if (paginationNext.isEnabled()) {
+						scrollByElement(paginationNext);
+						paginationNext.click();
+						Thread.sleep(4000); 
+					}
+				}
 			}
 		}
-
-		public void ThankYouPage() throws Exception {
-			wb = new ExcelHandler("./data/CF.xlsx", "CreateCampaign");
-			String Onestar = wb.getCellValue(1, wb.seacrh_pattern("1Star Messaging", 0).get(0).intValue());
-			System.out.println("One Two Star Message is : " + Onestar);
-			String Threestar = wb.getCellValue(1, wb.seacrh_pattern("3Star Messaging", 0).get(0).intValue());
-			System.out.println("One Two Star Message is : " + Threestar);
-			String Fourstar = wb.getCellValue(1, wb.seacrh_pattern("4Star Messaging", 0).get(0).intValue());
-			System.out.println("One Two Star Message is : " + Fourstar);
-			ThankyouSetUp(Onestar, Threestar, Fourstar);
-			BaseClass.addEvidence(CurrentState.getDriver(), "Test to Thankyou Page", "yes");
+	}
+	
+	/**
+	 * set value for reschedule campaign
+	 * @param i
+	 * @throws Exception
+	 */
+	public void Reschedulecampname(int i) throws Exception {
+		wb = new ExcelHandler("./data/CF.xlsx", "EmailLocationCampaign");
+		String CampaignName = wb.getCellValue(1, wb.seacrh_pattern("CamName", 0).get(0).intValue());
+		wb.setCellValue(i, wb.seacrh_pattern("ReSchedule CampName", 0).get(0), CampaignName + time_Stamp);
+	}
+	
+	/**
+	 * Search for rescheduled campaign
+	 * @return
+	 * @throws Exception
+	 */
+	public String SearchRESchedule() throws Exception {
+		wb = new ExcelHandler("./data/CF.xlsx", "EmailLocationCampaign");
+		String CampaignName = wb.getCellValue(1, wb.seacrh_pattern("ReSchedule CampName", 0).get(0).intValue());
+		System.out.println("The Campaign Name is:" + CampaignName);
+		ScheduledSearchField.sendKeys(CampaignName);
+		clickelement(ScheduledSearchBtn);
+		return CampaignName;
+	}
+	
+	/**
+	 * Reschedule campaign
+	 * @throws Exception
+	 */
+	public void REschedule() throws Exception {
+		wb = new ExcelHandler("./data/CF.xlsx", "EmailLocationCampaign");
+		waitForElement(ScheduledTable, 10);
+		String CampaignName = SearchSchedule();
+		System.out.println("Campaign Name is :" + CampaignName);
+		if (ScheduledTableEntries.isDisplayed()) {
+			String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
+			int page = Integer.parseInt(n);
+			System.out.println("\n" + page);
+			Outer: if (paginationNext.isDisplayed()) {
+				for (int i = 1; i <= page; i++) {
+					List<WebElement> rows_table = ScheduledTableRow;
+					int rows_count = rows_table.size();
+					System.out.println("The total Number of Rows are :" + rows_count);
+					for (int row = 0; row < rows_count; row++) {
+						if (driver.findElement(By.xpath("//table[@id='tblCampaigns']//tbody//tr[" + (row + 1)
+								+ "]//td[contains(text(),'" + CampaignName + "')]")).isDisplayed()) {
+							WebElement RescheduleBtn = driver.findElement(By.xpath("//table[@id='tblCampaigns']//tbody//tr[" + (row + 1) + "]//td[5]//div[1]//input"));
+							if(RescheduleBtn.isEnabled()) {
+								scrollByElement(RescheduleBtn);
+								clickelement(RescheduleBtn);
+								clickelement(NextBtn);
+								String ESender = wb.getCellValue(1, wb.seacrh_pattern("Sender", 0).get(0).intValue());
+								System.out.println("The sender is :" + Sender);
+								Sender.sendKeys(ESender);
+								clickelement(NextBtn);
+								break Outer;
+							}else {
+								System.out.println("Reschedule Btn is disabled");
+							}
+						}
+					}if (paginationNext.isEnabled()) {
+						scrollByElement(paginationNext);
+						paginationNext.click();
+						Thread.sleep(4000);
+					}
+				}
+			}
 		}
+	}
+	
+	/**
+	 * Set reschedule date and time
+	 */
+	public void SetDateTimeReschedule() {
+		clickelement(NextBtn);
+		clickelement(SubmitBtn);	
+	}
+	
+	/**
+	 * verify rescheduled campaign
+	 * @throws Exception
+	 */
+	public void verifyRescheduleCampaign() throws Exception {
+		wb = new ExcelHandler("./data/CF.xlsx", "EmailLocationCampaign");
+		waitForElement(ScheduledTable, 10);
+		String CampaignName = SearchRESchedule();
+		System.out.println("Campaign Name is :" + CampaignName);
+		if (ScheduledTableEntries.isDisplayed()) {
+			String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
+			int page = Integer.parseInt(n);
+			System.out.println("\n" + page);
+			Outer: if (paginationNext.isDisplayed()) {
+				for (int i = 1; i <= page; i++) {
+					List<WebElement> rows_table = ScheduledTableRow;
+					int rows_count = rows_table.size();
+					System.out.println("The total Number of Rows are :" + rows_count);
+					for (int row = 0; row < rows_count; row++) {
+						if (driver.findElement(By.xpath("//table[@id='tblCampaigns']//tbody//tr[" + (row + 1)
+								+ "]//td[contains(text(),'" + CampaignName + "')]")).isDisplayed()) {
+							WebElement TimeCreated = driver.findElement(By.xpath("//table[@id='tblCampaigns']//tbody//tr[" + (row + 1) + "]//td[3]"));
+							String DateCreated = TimeCreated.getText();
+							System.out.println("Date Created is :" +DateCreated);
+							soft.assertEquals(DateCreated, time_Stamp);
+							break Outer;
+						}
+					}if (paginationNext.isEnabled()) {
+						scrollByElement(paginationNext);
+						paginationNext.click();
+						Thread.sleep(4000);
+					}
+				}
+			}
+			soft.assertAll();
+		}
+	}
 }

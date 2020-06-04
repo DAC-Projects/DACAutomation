@@ -11,7 +11,7 @@ import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
 
-public class TPSEE_Syndication_Status_LPAD extends BaseClass {
+public class TPSEE_Syndication_Status_DTC_API extends BaseClass {
 
 	TPSEE_Syndication_Status_Page data;
 	Navigationpage np;
@@ -46,15 +46,10 @@ public class TPSEE_Syndication_Status_LPAD extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "To Verify Title and Title Text", "yes");
 	}
 
-	/**
-	 * Test to verify Vendors and Status of the vendors added from LPAD
-	 * 
-	 * @throws Exception
-	 */
-	@Test(priority = 3, description = "To verify status of vendors")
-	public void verifyLPADdetails() throws Exception {
+	@Test(priority = 5, description = "To verify Status of vendor after DTC API transmission")
+	public void verifyDTCAPI() throws Exception {
 		data = new TPSEE_Syndication_Status_Page(CurrentState.getDriver());
-		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "SyndicationLPAD");
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Syndication DTCAPI");
 		wb.deleteEmptyRows();
 		int row = 0;
 		String Vendor, Status;
@@ -76,14 +71,22 @@ public class TPSEE_Syndication_Status_LPAD extends BaseClass {
 					Vendor = VendorList[i];
 					System.out.println("The Vendor is :" + Vendor);
 					Status = StatusList[i].trim();
-					System.out.println("The status from XL:" +Status);
 					try {
-						data.verifyStatus(Vendor, Status, row,soft,LocNum);
+						data.verifyStatus(Vendor, Status, row, soft, LocNum);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 					try {
-						data.verifyNotes(Vendor, row,soft);
+						if (!Status.equals("In Progress")) {
+							data.verifydatesumbitted(row, Vendor, soft);
+						} else {
+							System.out.println("Date is not available");
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					try {
+						data.verifyNotes(Vendor, row, soft);
 					} catch (Exception e) {
 						System.out.println("No vendors");
 					}
@@ -91,8 +94,8 @@ public class TPSEE_Syndication_Status_LPAD extends BaseClass {
 					e.printStackTrace();
 				}
 			}
-			addEvidence(CurrentState.getDriver(), "To verify status of Vendors processed in DTC", "yes");	
+			soft.assertAll();
+			addEvidence(CurrentState.getDriver(), "To verify status of Vendors processed in DTC", "yes");
 		}
-		soft.assertAll();
 	}
 }
