@@ -28,7 +28,6 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 		PageFactory.initElements(driver, this);
 	}
 
-	CF_Campaigns_Page data;
 
 	@FindBy(xpath = "//a[@href='/Dashboard/CampaignSteps']//span[2]")
 	private WebElement CreateCampaignLink;
