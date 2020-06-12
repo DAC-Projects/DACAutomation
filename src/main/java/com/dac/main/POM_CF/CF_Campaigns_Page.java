@@ -369,6 +369,7 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 		waitForElement(ScheduledTable, 10);
 		String CampaignName = SearchSchedule();
 		System.out.println("The Campaign Name is :" + CampaignName);
+		//driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		if (ScheduledTableEntries.isDisplayed()) {
 			String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
 			int page = Integer.parseInt(n);
@@ -385,6 +386,7 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 									.findElement(By.xpath("//table[@id='tblCampaigns']//tbody//tr[" + (row + 1)
 											+ "]//td[5]//div[2]//span//a[contains(@id,'preview')]"));
 							if (PreviewButton.isEnabled()) {
+								waitForElement(PreviewButton, 10);
 								scrollByElement(PreviewButton);
 								clickelement(PreviewButton);
 								String EmailBanner = wb.getCellValue(1,
@@ -514,6 +516,7 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 							WebElement DeleteBtn = driver.findElement(By.xpath(
 									"//table[@id='tblCampaigns']//tbody//tr[" + (row + 1) + "]//td[5]//div[3]//input"));
 							if (DeleteBtn.isEnabled()) {
+								waitForElement(DeleteBtn, 10);
 								scrollByElement(DeleteBtn);
 								clickelement(DeleteBtn);
 								WebElement confirm = driver.findElement(By.xpath("//div[@class='modal-footer']//button[@id='btnSchConfirm']"));

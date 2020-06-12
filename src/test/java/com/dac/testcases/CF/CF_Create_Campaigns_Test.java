@@ -115,6 +115,7 @@ public class CF_Create_Campaigns_Test extends BaseClass {
 		data = new CF_Campaigns_Page(CurrentState.getDriver());
 		data.PreviewSchedule();
 		addEvidence(CurrentState.getDriver(), "Test to verify Campaign Preview", "Yes");
+		CurrentState.getDriver().navigate().refresh();
 	}
 
 	/**
