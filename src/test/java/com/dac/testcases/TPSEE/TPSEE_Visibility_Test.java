@@ -177,7 +177,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * Test for SiteTable data in Visibility Page
 	 * 
 	 * @throws Exception
-	 */
+	 *//*
 	@Test(priority = 7, groups = { "smoke" }, description = "Test for verifying sitetable in Visibility page")
 	public void verifySiteTable() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -189,7 +189,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Data of Directory Sites", "yes");
 		data.verifySocialSites();
 		addEvidence(CurrentState.getDriver(), "Data of Social Sites Tab", "yes");
-	}
+	}*/
 
 	/**
 	 * Test to apply filters

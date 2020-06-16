@@ -82,7 +82,7 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "//ul[@class='pagination']//li[@class='active']")
 	private WebElement paginationFirst;
 	
-	@FindBy(xpath = "(//*[@class='pagination']//a)[last()-1]")
+	@FindBy(xpath = "(//*[@class='pagination']//a)[last()]")
 	private WebElement paginationNext;
 	
 	@FindBy(xpath = "(//*[@class='pagination']//a)[last()]")

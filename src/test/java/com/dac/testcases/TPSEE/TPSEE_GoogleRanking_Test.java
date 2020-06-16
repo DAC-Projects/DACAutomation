@@ -69,8 +69,8 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	@Test(priority = 3, groups = { "smoke" }, description = "Test for navigating to ContentAnalysis page")
 	public void Verifyscorenloc() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
-		//double GRscore = data.GRScore();
-		//Assert.assertEquals(GRscore, score);
+		double GRscore = data.GRScore();
+		Assert.assertEquals(GRscore, score);
 		int GRLoc = data.GRLoc();
 		Assert.assertEquals(GRLoc, location);
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Accuracy page");

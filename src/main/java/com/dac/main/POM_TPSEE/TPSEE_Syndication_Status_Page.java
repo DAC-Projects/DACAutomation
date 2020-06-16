@@ -260,4 +260,47 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 			soft.assertEquals(Notes, "Weekly Submissions");
 		}
 	}
+	
+	/**
+	 * Get row number for the provided location Number
+	 * @param LocationNumber
+	 * @return
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 */
+	@SuppressWarnings("null")
+	public void VerifyLocationNumber(String LocationNumber) throws ParseException, InterruptedException {
+		wait.until(ExpectedConditions.visibilityOf(SyndicationLocTable));
+		String celText = null;
+		Outer: if (SyndicationLocTable.isDisplayed()) {
+			scrollByElement(Last_Page);
+			String n = Last_Page.getText();
+			System.out.println("Last PageNumber in String is :" + n);
+			int page = Integer.parseInt(n);
+			System.out.println("Last Page Number is :" + page);
+			String entriesText = SyndTableInfo.getText();
+			entriesText = entriesText.substring(entriesText.indexOf("("));
+			clickelement(Page_First);
+			if (Page_Next.isDisplayed()) {
+				for (int i = 1; i <= page; i++) {
+					scrollByElement(SyndicationLocTable);
+					int size = driver.findElements(By.xpath("//tbody//tr[@role='row']")).size();
+					System.out.println("The size is :" + size);
+					for (int row = 1; row <= size; row++) {
+						celText = driver.findElement(By.xpath("(//tbody//tr[@role='row'])[" + (row) + "]//td[1]"))
+								.getAttribute("innerText");
+						if (celText.contains(LocationNumber)) {
+							Assert.fail("Location Number exists but expected is Location Number should not exist");
+							break Outer;
+						}
+					}
+					if (Page_Next.isEnabled()) {
+						scrollByElement(Page_Next);
+						Page_Next.click();
+						Thread.sleep(4000);
+					}
+				}
+			}
+		}
+	}
 }
