@@ -2,6 +2,7 @@ package com.dac.testcases.CF;
 
 import java.util.Arrays;
 
+import org.openqa.selenium.By;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -75,7 +76,7 @@ public class CF_Create_Campaigns_Test extends BaseClass {
 			String CampaignDescription = wb.getCellValue(i, wb.seacrh_pattern("CamDes", 0).get(0).intValue());
 			System.out.println("The Campaign Description is :" + CampaignDescription);
 			data.CampaignInfo(CampaignType, CampaignOption, CampLanguage, CampaignName, CampaignDescription);
-			data.ECampaignSetUp();
+			data.ECampaignSetUp(i);
 			ECampaignSchedule(from_day, from_month, from_year, to_day, to_month, to_year);
 			data.CampaignScheduling("Date");
 			addEvidence(CurrentState.getDriver(), "Test to add time", "yes");
@@ -146,12 +147,14 @@ public class CF_Create_Campaigns_Test extends BaseClass {
 			String CampaignDescription = wb.getCellValue(i, wb.seacrh_pattern("CamDes", 0).get(0).intValue());
 			System.out.println("The Campaign Description is :" + CampaignDescription);
 			data.CampaignInfo(CampaignType, CampaignOption, CampLanguage, CampaignName, CampaignDescription);
-			data.ECampaignSetUp();
+			data.ECampaignSetUp(i);
 			ECampaignSchedule(from_day, from_month, from_year, to_day, to_month, to_year);
 			data.CampaignScheduling("Date");
 			addEvidence(CurrentState.getDriver(), "Test to add time", "yes");
 			data.ThankYouPage();
 			data.SummaryPage();
+			//Thread.sleep(5000);
+			//CurrentState.getDriver().findElement(By.xpath("//button[@id='wizard-view-button']")).click();
 			data.Reschedulecampname(i);
 		}
 	}

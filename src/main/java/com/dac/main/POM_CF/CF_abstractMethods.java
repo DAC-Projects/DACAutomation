@@ -1,5 +1,10 @@
 package com.dac.main.POM_CF;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -163,5 +168,22 @@ public static String time_Stamp;
 		if (day_d != 0 | !(month_MMM.equalsIgnoreCase("null")) | year_YYYY != 0) {
 			selectCalender_Date(calenderField, day_d, month_MMM, year_YYYY);
 		}
+	}
+	
+	public void UploadImage(String FilePath) throws AWTException {
+		//put path to your image in a clipboard
+	    StringSelection ss = new StringSelection(FilePath);
+	    Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+
+	    //imitate mouse events like ENTER, CTRL+C, CTRL+V
+	    Robot robot = new Robot();
+	    robot.keyPress(KeyEvent.VK_ENTER);
+	    robot.keyRelease(KeyEvent.VK_ENTER);
+	    robot.keyPress(KeyEvent.VK_CONTROL);
+	    robot.keyPress(KeyEvent.VK_V);
+	    robot.keyRelease(KeyEvent.VK_V);
+	    robot.keyRelease(KeyEvent.VK_CONTROL);
+	    robot.keyPress(KeyEvent.VK_ENTER);
+	    robot.keyRelease(KeyEvent.VK_ENTER);
 	}
 }
