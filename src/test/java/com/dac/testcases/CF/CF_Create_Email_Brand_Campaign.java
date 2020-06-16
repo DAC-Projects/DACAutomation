@@ -80,7 +80,7 @@ public class CF_Create_Email_Brand_Campaign extends BaseClass {
 			EBrandCampaignSchedule(from_day, from_month, from_year, to_day, to_month, to_year);
 			data.CampaignScheduling("Date");
 			addEvidence(CurrentState.getDriver(), "Test to add time", "yes");
-			data.ThankYouPage();
+			data.ThankYouPage("EmailBrandCampaign");
 			data.SummaryPage();
 		}
 	}
@@ -146,7 +146,7 @@ public class CF_Create_Email_Brand_Campaign extends BaseClass {
 			EBrandCampaignSchedule(from_day, from_month, from_year, to_day, to_month, to_year);
 			data.CampaignScheduling("Date");
 			addEvidence(CurrentState.getDriver(), "Test to add time", "yes");
-			data.ThankYouPage();
+			data.ThankYouPage("EmailBrandCampaign");
 			data.SummaryPage();
 			data.Reschedulecampname(i);
 		}

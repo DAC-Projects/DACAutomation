@@ -80,7 +80,7 @@ public class CF_Create_Campaigns_Test extends BaseClass {
 			ECampaignSchedule(from_day, from_month, from_year, to_day, to_month, to_year);
 			data.CampaignScheduling("Date");
 			addEvidence(CurrentState.getDriver(), "Test to add time", "yes");
-			data.ThankYouPage();
+			data.ThankYouPage("EmailLocationCampaign");
 			data.SummaryPage();
 		}
 	}
@@ -151,7 +151,7 @@ public class CF_Create_Campaigns_Test extends BaseClass {
 			ECampaignSchedule(from_day, from_month, from_year, to_day, to_month, to_year);
 			data.CampaignScheduling("Date");
 			addEvidence(CurrentState.getDriver(), "Test to add time", "yes");
-			data.ThankYouPage();
+			data.ThankYouPage("EmailLocationCampaign");
 			data.SummaryPage();
 			//Thread.sleep(5000);
 			//CurrentState.getDriver().findElement(By.xpath("//button[@id='wizard-view-button']")).click();
