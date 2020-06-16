@@ -22,7 +22,7 @@ public class LDMAPITest extends ApiBase {
 
 	ExcelHandler excel = new ExcelHandler();
 	String filePath ="./data/API.xlsx";
-	JsonCompare js = new JsonCompare();
+	
 
 
 	@DataProvider
@@ -41,8 +41,6 @@ public class LDMAPITest extends ApiBase {
 	{
 		return excel.getData(filePath, "Sheet2", "APIDataGetLocationByAccountID");
 	}
-
-
 
 
 

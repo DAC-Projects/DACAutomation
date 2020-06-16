@@ -23,17 +23,30 @@ ATUReport atu = new ATUReport();
 	}
 	
 	public void getRequest(String TestName, String header, String parameters,String URL, String Statuscode, String Response) {
-		String param[] = parameters.split(",");
+		
 		String headers[] = header.split(",");
 		
 		RestAssured.baseURI =URL; 
 		RequestSpecification request = RestAssured.given();
-
-		Response response = request
+		Response response = null;
+		
+		if(!parameters.isEmpty()) {
+		String param[] = parameters.split(",");
+		 response = request
 				.header(headers[0], headers[1])				
 				.queryParam(param[0], param[1]) 
 				.get("");
-
+		}
+		else
+		{
+			response = request
+					.header(headers[0], headers[1])				 
+					.get("");
+			System.err.println("noparameter");
+		}
+		
+		
+		
 		String jsonString = response.asString();
 		String responseCode = Integer.toString(response.getStatusCode());
 
