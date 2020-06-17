@@ -12,22 +12,25 @@ import com.dac.main.POM_DTC.DTC_Navigation;
 import com.dac.main.POM_DTC.DTC_Transmission;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import resources.BaseClass;
+import resources.CurrentState;
 
-public class Google_categories {
+public class Google_categories extends BaseClass {
 
 	public static WebDriver driver;
-	 WebDriverWait wait;
 	String url="https://beta-dtc-web.azurewebsites.net/";
 	
 	@Test	
   public void launchBrowser() {
-	   WebDriverManager.chromedriver().version("81.0.4044.69").setup(); 
+	   WebDriverManager.chromedriver().version("83.0.4103.39").setup(); 
 	   driver=new ChromeDriver();
 	// System.setProperty("webdriver.chrome.driver","C:\\Users\\abinaya\\Downloads\\chromedriver.exe");
 	   driver.get(url);
 	   driver.manage().window().maximize();
 	   driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
 	   System.out.println(driver.getTitle());
+		//BaseClass.addEvidence(driver, "Testing", "yes");
+
 }
 	@Test( dependsOnMethods = { "launchBrowser"})
 	 public void LoginDTC() throws Exception {
@@ -35,8 +38,22 @@ public class Google_categories {
 		  DTC_Google_Category google=new DTC_Google_Category(driver);
 		  dtcLogin.submitLogin("adevaraj@dacgroup.com","lockdown@123");
 		  dtcLogin.pressYesKey();
-		  google.navigateDACCategory();
+		  /*google.AddGooglecategory();
+		  google.verifyAddeedGoogleCategory();
+		  google.deleteGoogleCategory();
+		  google.verifydeletedGooglecategory();
+		  google.AddDACcatgeory();
+		  google.verifyDACcatgeory();
+		  google.DeleteDACcatgeory();
+		  google.verifyDeleteDACcatgeory();*/
+		  google.newcategory();
+		google.scrollelement();
+		  System.out.println();
+		  
 		  String pageTitle= dtcLogin.getTitle(driver);
+		  System.out.println(pageTitle);
+		  BaseClass.addEvidence(driver, "Testing", "yes");
+		 // driver.close();
 		  
 	}
 }
