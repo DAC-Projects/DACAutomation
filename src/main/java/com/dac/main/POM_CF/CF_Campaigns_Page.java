@@ -187,19 +187,51 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 
 	@FindBy(xpath = "//input[@id='cbxGenerateCode']")
 	private WebElement GenerateChkBox;
+	
+	@FindBy(xpath = "//div//h4[contains(text(),'Processed Campaigns')]")
+	private WebElement ProcessedCampTitle;
+	
+	@FindBy(xpath = "//input[@id='fw_all_input']")
+	private WebElement ProcessedSearch;
+	
+	@FindBy(xpath = "//table[@id='tblAllCampaigns']")
+	private WebElement ProcessedTable;
+	
+	@FindBy(xpath = "//table[@id='tblAllCampaigns']//tbody//tr[@role='row']")
+	private List<WebElement> ProcessedTableRow;
+	
+	@FindBy(xpath = "//div[@class='input-group search-box-campaign-grid']//span[@class='input-group-addon']")
+	private WebElement ProcessedSearchBtn;
+	
+	@FindBy(xpath = "//div[@id='tblAllCampaigns_info']")
+	private WebElement ProcessedEntries;
 
-	/*-------------------------Pagination-----------------------*/
-	@FindBy(xpath = "(//*[@class='pagination']//a)")
+	/*-------------------------Pagination Scheduled-----------------------*/
+	@FindBy(xpath = "(//div[@id = 'tblCampaigns_paginate']//*[@class='pagination']//a)")
 	private List<WebElement> pagination;
 
-	@FindBy(xpath = "(//*[@class='pagination']//a)[1]")
+	@FindBy(xpath = "(//div[@id = 'tblCampaigns_paginate']//*[@class='pagination']//a)[1]")
 	private WebElement paginationPrev;
 
-	@FindBy(xpath = "(//*[@class='pagination']//a)[last()]")
+	@FindBy(xpath = "(//div[@id = 'tblCampaigns_paginate']//*[@class='pagination']//a)[last()]")
 	private WebElement paginationNext;
 
-	@FindBy(xpath = "(//*[@class='pagination']//a)[last()-1]")
-	private List<WebElement> paginationLast;
+	@FindBy(xpath = "(//div[@id = 'tblCampaigns_paginate']//*[@class='pagination']//a)[last()-1]")
+	private WebElement paginationLast;
+	/*-------------------------Pagination-----------------------*/
+	
+	/*-------------------------Pagination Scheduled-----------------------*/
+	@FindBy(xpath = "(//div[@id = 'tblAllCampaigns_paginate']//*[@class='pagination']//a)")
+	private List<WebElement> paginationProcess;
+
+	@FindBy(xpath = "(//div[@id = 'tblAllCampaigns_paginate']//*[@class='pagination']//a)[1]")
+	private WebElement paginationPrevProcess;
+
+	@FindBy(xpath = "(//div[@id = 'tblAllCampaigns_paginate']//*[@class='pagination']//a)[last()]")
+	private WebElement paginationNextProcess;
+
+	@FindBy(xpath = "(//div[@id = 'tblAllCampaigns_paginate']//*[@class='pagination']//a)[last()-1]")
+	private WebElement paginationLastProcess;
 	/*-------------------------Pagination-----------------------*/
 
 	Select selecttype, selectopt, selectlang, selecttime;
@@ -234,6 +266,7 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 		CampDescription.sendKeys(CampDes);
 		BaseClass.addEvidence(CurrentState.getDriver(), "Test to write Campaign Information", "yes");
 		clickelement(NextBtn);
+		
 	}
 
 	/**
@@ -666,7 +699,7 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 		String CampaignName = SearchRESchedule();
 		System.out.println("Campaign Name is :" + CampaignName);
 		if (ScheduledTableEntries.isDisplayed()) {
-			String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
+			String n = driver.findElement(By.xpath("(//div[@id = 'tblCampaigns_paginate']//*[@class='pagination']//a)[last()-1]")).getText();
 			int page = Integer.parseInt(n);
 			System.out.println("\n" + page);
 			Outer: if (paginationNext.isDisplayed()) {
@@ -675,7 +708,7 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 					int rows_count = rows_table.size();
 					System.out.println("The total Number of Rows are :" + rows_count);
 					for (int row = 0; row < rows_count; row++) {
-						if (driver.findElement(By.xpath("//table[@id='tblCampaigns']//tbody//tr[" + (row + 1)
+						if (driver.findElement(By.xpath("//table[@id='tblCampaigns']//tbody//tr[@role='row'][" + (row + 1)
 								+ "]//td[contains(text(),'" + CampaignName + "')]")).isDisplayed()) {
 							WebElement TimeCreated = driver.findElement(
 									By.xpath("//table[@id='tblCampaigns']//tbody//tr[" + (row + 1) + "]//td[3]"));
@@ -794,5 +827,52 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 		BaseClass.addEvidence(CurrentState.getDriver(), "GRLocation Scheduling Page", "yes");
 		scrollByElement(NextBtn);
 		clickelement(NextBtn);
+	}
+	
+	public void Processedcampname(int i) throws Exception {
+		wb = new ExcelHandler("./data/CF.xlsx", "GRLocationCampaign");
+		String CampaignName = wb.getCellValue(1, wb.seacrh_pattern("CamName", 0).get(0).intValue());
+		wb.setCellValue(i, wb.seacrh_pattern("ProcessedCampaign Name", 0).get(0), CampaignName + time_Stamp);
+	}
+	
+	public String SearchProcessedCampaign() throws Exception {
+		wb = new ExcelHandler("./data/CF.xlsx", "GRLocationCampaign");
+		String CampaignName = wb.getCellValue(1, wb.seacrh_pattern("ProcessedCampaign Name", 0).get(0).intValue());
+		System.out.println("Campaign Name is :" +CampaignName);
+		scrollByElement(ProcessedSearch);
+		ProcessedSearch.click();
+		ProcessedSearch.clear();
+		ProcessedSearch.sendKeys(CampaignName);
+		clickelement(ProcessedSearchBtn);
+		return CampaignName;
+	}
+	
+	public void ProcessedCampaign() throws Exception {
+		wb = new ExcelHandler("./data/CF.xlsx", "GRLocationCampaign");
+		waitForElement(ProcessedTable, 10);
+		String CampaignName = SearchProcessedCampaign();
+		System.out.println("Campaign Name is :" + CampaignName);
+		if (ProcessedEntries.isDisplayed()) {
+			String n = paginationLastProcess.getText();
+			int page = Integer.parseInt(n);
+			System.out.println("\n" + page);
+			Outer: if (paginationNextProcess.isDisplayed()) {
+				for (int i = 1; i <= page; i++) {
+					List<WebElement> rows_table = ProcessedTableRow;
+					int rows_count = rows_table.size();
+					System.out.println("The total Number of Rows are :" + rows_count);
+					for (int row = 0; row < rows_count; row++) {
+						if(driver.findElement(By.xpath("//table[@id='tblAllCampaigns']//tbody//tr[@role='row']["+(row+1)+"]//td[contains(text(),'"+CampaignName+"')]")).isDisplayed()) {
+							System.out.println("Campaign Displayed");
+						}
+					}if (paginationNextProcess.isEnabled()) {
+						scrollByElement(paginationNextProcess);
+						paginationNextProcess.click();
+						Thread.sleep(4000);
+					}
+				}
+			}
+		}
+		
 	}
 }
