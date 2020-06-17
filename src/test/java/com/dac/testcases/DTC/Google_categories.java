@@ -46,8 +46,8 @@ public class Google_categories extends BaseClass {
 		  google.verifyDACcatgeory();
 		  google.DeleteDACcatgeory();
 		  google.verifyDeleteDACcatgeory();*/
-		  google.newcategory();
-		google.scrollelement();
+		  google.newcategory("Google","Google Category","Guyana");
+		  google.scrollelement();
 		  System.out.println();
 		  
 		  String pageTitle= dtcLogin.getTitle(driver);
