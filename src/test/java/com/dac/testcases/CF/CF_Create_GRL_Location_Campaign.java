@@ -51,7 +51,7 @@ public class CF_Create_GRL_Location_Campaign extends BaseClass{
 			data.GRLocationScheduling();
 			data.ThankYouPage("GRLocationCampaign");
 			data.SummaryPage();	
-			data.Processedcampname(i);
+			data.Processedcampname(i,"GRLocationCampaign");
 		}
 	}
 }

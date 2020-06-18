@@ -148,7 +148,7 @@ public class CF_Create_Email_Brand_Campaign extends BaseClass {
 			addEvidence(CurrentState.getDriver(), "Test to add time", "yes");
 			data.ThankYouPage("EmailBrandCampaign");
 			data.SummaryPage();
-			data.Reschedulecampname(i);
+			data.Reschedulecampname(i,"EmailBrandCampaign");
 		}
 	}
 	/**

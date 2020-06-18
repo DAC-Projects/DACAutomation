@@ -610,8 +610,8 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 	 * @param i
 	 * @throws Exception
 	 */
-	public void Reschedulecampname(int i) throws Exception {
-		wb = new ExcelHandler("./data/CF.xlsx", "EmailLocationCampaign");
+	public void Reschedulecampname(int i, String FileName) throws Exception {
+		wb = new ExcelHandler("./data/CF.xlsx", FileName);
 		String CampaignName = wb.getCellValue(1, wb.seacrh_pattern("CamName", 0).get(0).intValue());
 		wb.setCellValue(i, wb.seacrh_pattern("ReSchedule CampName", 0).get(0), CampaignName + time_Stamp);
 	}
@@ -829,8 +829,8 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 		clickelement(NextBtn);
 	}
 	
-	public void Processedcampname(int i) throws Exception {
-		wb = new ExcelHandler("./data/CF.xlsx", "GRLocationCampaign");
+	public void Processedcampname(int i, String FileName) throws Exception {
+		wb = new ExcelHandler("./data/CF.xlsx", FileName);
 		String CampaignName = wb.getCellValue(1, wb.seacrh_pattern("CamName", 0).get(0).intValue());
 		wb.setCellValue(i, wb.seacrh_pattern("ProcessedCampaign Name", 0).get(0), CampaignName + time_Stamp);
 	}
@@ -864,6 +864,7 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 					for (int row = 0; row < rows_count; row++) {
 						if(driver.findElement(By.xpath("//table[@id='tblAllCampaigns']//tbody//tr[@role='row']["+(row+1)+"]//td[contains(text(),'"+CampaignName+"')]")).isDisplayed()) {
 							System.out.println("Campaign Displayed");
+							break Outer;
 						}
 					}if (paginationNextProcess.isEnabled()) {
 						scrollByElement(paginationNextProcess);

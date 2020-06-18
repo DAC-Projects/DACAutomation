@@ -155,7 +155,7 @@ public class CF_Create_Campaigns_Test extends BaseClass {
 			data.SummaryPage();
 			//Thread.sleep(5000);
 			//CurrentState.getDriver().findElement(By.xpath("//button[@id='wizard-view-button']")).click();
-			data.Reschedulecampname(i);
+			data.Reschedulecampname(i,"EmailLocationCampaign");
 		}
 	}
 	
