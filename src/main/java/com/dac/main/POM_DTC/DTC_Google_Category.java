@@ -41,9 +41,14 @@ public DTC_Google_Category (WebDriver driver) {
 	action = new Actions(driver);
 	PageFactory.initElements(driver, this);
 	}
+
 	int count=0;
+	@FindBy(xpath="//*[@id=\"container\"]/header")
+	private WebElement header;
 	@FindBy(xpath="//*[@id=\"sidebar\"]/ul/li[5]")
 	private WebElement mnuDACCategory;
+	@FindBy(xpath="//*[@id=\"sidebar\"]/ul/li[1]")
+	private WebElement mnuVendors;
 	
 	@FindBy(xpath="//*[@id=\"categorymap\"]/div/div/div[2]/div[1]/div[1]")
 	private WebElement category_mapping;
@@ -81,7 +86,6 @@ public DTC_Google_Category (WebDriver driver) {
 	@FindBy(xpath="//*[@id=\"btnsavenewcategory\"]")
 	private WebElement save;
 	
-	
 	public void AddGooglecategory(String goocategory, String selectcatgoogle, String selectcountry) throws InterruptedException {
 	mnuDACCategory.click();
 	Thread.sleep(1000);
@@ -91,7 +95,7 @@ public DTC_Google_Category (WebDriver driver) {
 	Thread.sleep(1000);
 	search.sendKeys(selectcatgoogle);
 	Thread.sleep(1000);
-	driver.findElement(By.xpath("//*[@id=\"categorymap\"]/div/div/div[2]/div[1]/div[2]/div[4]/div/div/ul/li/a/span[contains(text(),goocategory)]")).click();
+	driver.findElement(By.xpath("//*[@id=\"categorymap\"]/div/div/div[2]/div[1]/div[2]/div[4]/div/div/ul/li/a/span[contains(text(),'"+goocategory+"')]")).click();
 	Thread.sleep(1000);
 	country.click();
 	  ArrayList<String> list=new ArrayList<String>();//Creating arraylist    
@@ -102,17 +106,17 @@ public DTC_Google_Category (WebDriver driver) {
     for (i = 0; i < actmenu.size(); i++) {
     	//System.out.println(actmenu.get(i).getText());    
     	 a= actmenu.get(i).getText();
-    	 if(a.contains("Austria"))  {
+    	 if(a.contains("Guyana"))  {
 	System.out.println("Conuntry is displayed.");
 	}}
   
     country_send.sendKeys(selectcountry);
     Thread.sleep(10000);
-    driver.findElement(By.xpath("  //*[@id=\"divselcountry\"]/div/div/ul/li/a/span[contains(text(),selectcountry)]")).click();  
+    driver.findElement(By.xpath("  //*[@id=\"divselcountry\"]/div/div/ul/li/a/span[contains(text(),'"+selectcountry+"')]")).click();  
     Thread.sleep(10000);
-    driver.findElement(By.xpath("//*[@id=\"txtfilter\"]")).sendKeys("Abenteuersportcenter");
+    driver.findElement(By.xpath("//*[@id=\"txtfilter\"]")).sendKeys("Acrylic store");
     Thread.sleep(10000);
-    driver.findElement(By.xpath("//td[contains(text(),'Abenteuersportcenter')]/../td[3]")).click();    
+    driver.findElement(By.xpath("//td[contains(text(),'Acrylic store')]/../td[3]")).click();    
    driver.findElement(By.xpath("//*[@id=\"temppopId\"]/div[1]/div/div/button/span[1]")).click();
     Thread.sleep(1000);
     driver.findElement(By.xpath("//*[@id=\"temppopId\"]/div[1]/div/div/div/div/input")).sendKeys("Sports Bar");
@@ -122,7 +126,6 @@ public DTC_Google_Category (WebDriver driver) {
     driver.findElement(By.xpath("(//*[@id=\"btnpopoverok\"])[2]")).click();
     Thread.sleep(2000);
 }
-	
 	public void scrollByElement(WebElement element) {
 		wait.until(ExpectedConditions.visibilityOf(element));
 		JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -135,7 +138,7 @@ public DTC_Google_Category (WebDriver driver) {
 			Thread.sleep(1000);
 			search.sendKeys(selectdaccategory);
 			Thread.sleep(1000);
-			driver.findElement(By.xpath("//*[@id=\"categorymap\"]/div/div/div[2]/div[1]/div[2]/div[4]/div/div/ul/li/a/span[contains(text(),category)]")).click();
+			driver.findElement(By.xpath("//*[@id=\"categorymap\"]/div/div/div[2]/div[1]/div[2]/div[4]/div/div/ul/li/a/span[contains(text(),'"+category+"')]")).click();
 			Thread.sleep(1000);
 			driver.findElement(By.xpath("//*[@id=\"txtfilter\"]")).sendKeys("Sports Bar");
 			Thread.sleep(2000);
@@ -145,6 +148,7 @@ public DTC_Google_Category (WebDriver driver) {
 			System.out.println(actmenu1.size());
 			int i1;
 			String a1=null;
+			int count=1;
 		    for (i1 = 0; i1 < actmenu1.size(); i1++) {
 		    	//System.out.println(actmenu.get(i).getText());    
 		    	 a1= actmenu1.get(i1).getText();
@@ -153,9 +157,9 @@ public DTC_Google_Category (WebDriver driver) {
 		    	 //String ad="Google\nBB\nSchool Administrator";
 		    	 if(a1.contains("Google")) {
 		    		 System.out.println("Google is displyed");
-		    	  if(a1.contains("AT")) {
-		    		 System.out.println("AT is displyed");
-		    	  if(a1.contains("Abenteuersportcenter"))
+		    	  if(a1.contains("GY")) {
+		    		 System.out.println("GY is displyed");
+		    	  if(a1.contains("Acrylic store"))
 		    	 {
 		    		 System.out.println("School Bar is displyed");
 		    		 break;
@@ -168,28 +172,26 @@ public DTC_Google_Category (WebDriver driver) {
 		    }
 		    System.out.println(count);
 		    Thread.sleep(1000);
-		    
-		    WebElement ad=driver.findElement(By.xpath("//*[@id=\"selectedDACTable\"]/tbody/tr[7]"));
+		    WebElement ad=driver.findElement(By.xpath("//*[@id=\"selectedDACTable\"]/tbody/tr[30]"));
 		    scrollByElement(ad);
 		    Thread.sleep(1000);
-		   
 		    String tes=driver.findElement(By.xpath("//*[@id=\"selectedDACTable\"]/tbody/tr["+count+"]/td[2]/span")).getText();
 		    Thread.sleep(1000);
-		    String a="Abenteuersportcenter";
-		    Assert.assertEquals(a, tes);
+		    String a="Acrylic store";
+		   Assert.assertEquals(a, tes);
 		    System.out.println("ABI"+tes);
 	}
 	
 	
 	
 	public void deleteGoogleCategory(String goocategory,String selectcatgoogle, String selectcountry) throws Exception {
-		scrollByElement(dropdown_click);
+		scrollByElement(mnuVendors);
 	    Thread.sleep(2000);
 	    dropdown_click.click();
 		Thread.sleep(1000);
 		search.sendKeys(selectcatgoogle);
 		Thread.sleep(1000);
-		driver.findElement(By.xpath("//*[@id=\"categorymap\"]/div/div/div[2]/div[1]/div[2]/div[4]/div/div/ul/li/a/span[contains(text(),'goocategory')]")).click();
+		driver.findElement(By.xpath("//*[@id=\"categorymap\"]/div/div/div[2]/div[1]/div[2]/div[4]/div/div/ul/li/a/span[contains(text(),'"+goocategory+"')]")).click();
 		Thread.sleep(1000);
 		country.click();
 		  ArrayList<String> list=new ArrayList<String>();//Creating arraylist    
@@ -207,11 +209,11 @@ public DTC_Google_Category (WebDriver driver) {
 	    System.out.println(list.size());
 	    country_send.sendKeys(selectcountry);
 	    Thread.sleep(10000);
-	    driver.findElement(By.xpath("  //*[@id=\"divselcountry\"]/div/div/ul/li/a/span[contains(text(),selectcountry)]")).click();  
+	    driver.findElement(By.xpath("  //*[@id=\"divselcountry\"]/div/div/ul/li/a/span[contains(text(),'"+selectcountry+"')]")).click();  
 	    Thread.sleep(10000);
-	    driver.findElement(By.xpath("//*[@id=\"txtfilter\"]")).sendKeys("Abenteuersportcenter");
+	    driver.findElement(By.xpath("//*[@id=\"txtfilter\"]")).sendKeys("Acrylic store");
 	    Thread.sleep(1000);
-	    driver.findElement(By.xpath("//td[contains(text(),'Abenteuersportcenter')]/../td[4]")).click();
+	    driver.findElement(By.xpath("//td[contains(text(),'Acrylic store')]/../td[4]")).click();
 	    Thread.sleep(1000);
 	   driver.findElement(By.xpath("//*[@id=\"btnYesConfirmYes\"]")).click();
 	}
@@ -221,7 +223,7 @@ public DTC_Google_Category (WebDriver driver) {
 		 Thread.sleep(1000);
 		search.sendKeys(selectdaccategory);
 		Thread.sleep(1000);
-		driver.findElement(By.xpath("//*[@id=\"categorymap\"]/div/div/div[2]/div[1]/div[2]/div[4]/div/div/ul/li/a/span[contains(text(),'category')]")).click();
+		driver.findElement(By.xpath("//*[@id=\"categorymap\"]/div/div/div[2]/div[1]/div[2]/div[4]/div/div/ul/li/a/span[contains(text(),'"+category+"')]")).click();
 		driver.findElement(By.xpath("//*[@id=\"txtfilter\"]")).sendKeys("Sports Bar");
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("//*[@id=\"dacId1944\"]")).click();
@@ -232,17 +234,13 @@ public DTC_Google_Category (WebDriver driver) {
 		int count1=1;
 		String a1=null;
 	    for (i1 = 0; i1 < actmenu1.size(); i1++) {
-	    	//System.out.println(actmenu.get(i).getText());    
 	    	 a1= actmenu1.get(i1).getText();
 	    	 System.out.println(a1);
-
-	    	 //String ad="Google\nBB\nSchool Administrator";
 	    	 if(a1.contains("Google")) {
 	    		 System.out.println("Google is displyed");
-	    	  if(a1.contains("AT")) {
+	    	  if(a1.contains("GY")) {
 	    		 System.out.println("AT is displyed");
-	    	 	    		 break; }
-	    	 }
+	    	 	    		 break; }}
 	    	 else {
 	    		 System.out.println("Not found");
 	    	 }
@@ -250,8 +248,10 @@ public DTC_Google_Category (WebDriver driver) {
 	    }
 	    System.out.println(count1);
 	    Thread.sleep(1000);
-	    WebElement ad=driver.findElement(By.xpath("//*[@id=\"selectedDACTable\"]/tbody/tr[7]"));
+	    WebElement ad=driver.findElement(By.xpath("//*[@id=\"selectedDACTable\"]/tbody/tr[30]"));
 	    scrollByElement(ad);
+	    String tes=driver.findElement(By.xpath("//*[@id=\"selectedDACTable\"]/tbody/tr["+count1+"]/td[2]")).getText();
+	    System.out.println(tes);
 	    Thread.sleep(1000);
 	}
 	public void AddDACcatgeory(String selectdaccategory) throws InterruptedException {
@@ -266,8 +266,8 @@ public DTC_Google_Category (WebDriver driver) {
 	    	 System.out.println(a1);
 	    	 if(a1.contains(selectdaccategory)) {
 	    		 System.out.println("Google is displyed");
-	    	  if(a1.contains("AT")) {
-	    		 System.out.println("AT is displyed");
+	    	  if(a1.contains("GY")) {
+	    		 System.out.println("GY is displyed");
 	    	 	    		 break;  }}
 	    	 else {
 	    		 System.out.println("Not found");
@@ -276,28 +276,28 @@ public DTC_Google_Category (WebDriver driver) {
 	    }
 	    System.out.println(count1);
 	    Thread.sleep(1000);
-	    WebElement ad=driver.findElement(By.xpath("//*[@id=\"selectedDACTable\"]/tbody/tr[7]"));
+	    WebElement ad=driver.findElement(By.xpath("//*[@id=\"selectedDACTable\"]/tbody/tr[30]"));
 	    scrollByElement(ad);
 	    Thread.sleep(1000);
 	    driver.findElement(By.xpath("//*[@id=\"selectedDACTable\"]/tbody/tr["+count1+"]/td[2]")).click();
 	   Thread.sleep(2000);
 	   driver.findElement(By.xpath("//*[@id=\"temppopId1\"]/div[1]/div/div/button/span[1]")).click();
 	   Thread.sleep(2000);
-	   driver.findElement(By.xpath("//*[@id=\"temppopId1\"]/div[1]/div/div/div/div/input")).sendKeys("Abenteuersportcenter");
+	   driver.findElement(By.xpath("//*[@id=\"temppopId1\"]/div[1]/div/div/div/div/input")).sendKeys("Acrylic store");
 	   Thread.sleep(1000);
-	   driver.findElement(By.xpath("//*[@id=\"temppopId1\"]/div[1]/div/div/div/ul/li/a/span[contains(text(),'Aben')]")).click();
+	   driver.findElement(By.xpath("//*[@id=\"temppopId1\"]/div[1]/div/div/div/ul/li/a/span[contains(text(),'Acrylic')]")).click();
 	   Thread.sleep(5000);  
 	    WebElement we = driver.findElement(By.xpath("(//*[@id='btnpopoverok1'])[2]"));
 	    we.click();
 	}
 	public void verifyDACcatgeory(String goocategory, String selectdaccategory) throws InterruptedException {
-		scrollByElement(dropdown_click);
+		scrollByElement(mnuVendors);
 	    Thread.sleep(2000);
 	    dropdown_click.click();
 		Thread.sleep(1000);
 		search.sendKeys(selectdaccategory);
 		Thread.sleep(1000);
-		driver.findElement(By.xpath("//*[@id=\"categorymap\"]/div/div/div[2]/div[1]/div[2]/div[4]/div/div/ul/li/a/span[contains(text(),goocategory)]")).click();
+		driver.findElement(By.xpath("//*[@id=\"categorymap\"]/div/div/div[2]/div[1]/div[2]/div[4]/div/div/ul/li/a/span[contains(text(),'"+goocategory+"')]")).click();
 		Thread.sleep(1000);
 		country.click();
 		  ArrayList<String> list=new ArrayList<String>();//Creating arraylist    
@@ -313,14 +313,14 @@ public DTC_Google_Category (WebDriver driver) {
 		}}
 	    list.add(a);
 	    System.out.println(list.size());
-	    country_send.sendKeys("Austria");
+	    country_send.sendKeys("Guyana");
 	    Thread.sleep(10000); 
 	    Thread.sleep(1000);
-	    driver.findElement(By.xpath("  //*[@id=\"divselcountry\"]/div/div/ul/li/a/span[contains(text(),'Austria')]")).click();  
+	    driver.findElement(By.xpath("  //*[@id=\"divselcountry\"]/div/div/ul/li/a/span[contains(text(),'Guyana')]")).click();  
 	    Thread.sleep(10000);
-	    driver.findElement(By.xpath("//*[@id=\"txtfilter\"]")).sendKeys("Abenteuersportcenter");
+	    driver.findElement(By.xpath("//*[@id=\"txtfilter\"]")).sendKeys("Acrylic store");
 	    Thread.sleep(10000);
-	    String ad=driver.findElement(By.xpath("//td[contains(text(),'Abenteuersportcenter')]/../td[3]")).getText();
+	    String ad=driver.findElement(By.xpath("//td[contains(text(),'Acrylic')]/../td[3]")).getText();
 	    System.out.println(ad);
 	    	}
 	public void DeleteDACcatgeory(String category, String selectdaccategory) throws InterruptedException {
@@ -346,7 +346,7 @@ public DTC_Google_Category (WebDriver driver) {
 	    	 //String ad="Google\nBB\nSchool Administrator";
 	    	 if(a1.contains("Google")) {
 	    		 System.out.println("Google is displyed");
-	    	  if(a1.contains("AT")) {
+	    	  if(a1.contains("GY")) {
 	    		 System.out.println("AT is displyed");
 	    	  if(a1.contains("Abenteuersportcenter"))
 	    	 {
@@ -360,7 +360,7 @@ public DTC_Google_Category (WebDriver driver) {
 	    }
 	    System.out.println(count);
 	    Thread.sleep(1000);
-	    WebElement ad=driver.findElement(By.xpath("//*[@id=\"selectedDACTable\"]/tbody/tr[7]"));
+	    WebElement ad=driver.findElement(By.xpath("//*[@id=\"selectedDACTable\"]/tbody/tr[30]"));
 	    scrollByElement(ad);
 	    Thread.sleep(1000);
 	    String tes=driver.findElement(By.xpath("//*[@id=\"selectedDACTable\"]/tbody/tr["+count+"]/td[2]/span")).getText();
@@ -369,7 +369,7 @@ public DTC_Google_Category (WebDriver driver) {
 	   // Assert.assertEquals(a, tes);
 	    System.out.println("ABI"+tes);
 	    Actions action = new Actions(driver);
-	    WebElement we = driver.findElement(By.xpath("//*[@id='selectedDACTable']/tbody/tr[10]/td[3]"));
+	    WebElement we = driver.findElement(By.xpath("//*[@id='selectedDACTable']/tbody/tr["+count+"]/td[3]"));
 	    action.moveToElement(we).moveToElement(driver.findElement(By.xpath("//*[@id='selectedDACTable']/tbody/tr["+count+"]/td[3]/span"))).click().build().perform();
 	    Thread.sleep(1000);
 	    driver.findElement(By.xpath("//*[@id=\"btnOnlyCountry\"]")).click();
@@ -397,14 +397,14 @@ public DTC_Google_Category (WebDriver driver) {
 		}}
 	    list.add(a);
 	    System.out.println(list.size());
-	    country_send.sendKeys("Austria");
+	    country_send.sendKeys("Gyuana");
 	    Thread.sleep(10000);
-	    driver.findElement(By.xpath("  //*[@id=\"divselcountry\"]/div/div/ul/li/a/span[contains(text(),'Austria')]")).click();  
+	    driver.findElement(By.xpath("  //*[@id=\"divselcountry\"]/div/div/ul/li/a/span[contains(text(),'Gyuana')]")).click();  
 	    Thread.sleep(10000);
-	    driver.findElement(By.xpath("//*[@id=\"txtfilter\"]")).sendKeys("Abenteuersportcenter");
+	    driver.findElement(By.xpath("//*[@id=\"txtfilter\"]")).sendKeys("Acrylic store");
 	    Thread.sleep(1000);
 	    String ad=null;
-	    ad=driver.findElement(By.xpath("//td[contains(text(),'Abenteuersportcenter')]/../td[3]")).getText();
+	    ad=driver.findElement(By.xpath("//td[contains(text(),'Acrylic')]/../td[3]")).getText();
 	    System.out.println("Its ss" +ad);
 	}
 	
@@ -476,7 +476,7 @@ public DTC_Google_Category (WebDriver driver) {
 		  for (int i = 0; i < actmenu.size(); i++) {
 		   a= actmenu.get(i).getAttribute("data-orgcontent");
 		   b= actmenu2.get(i).getText();
-		   String c=a+"\t"+b;
+		   String c=a+b;
 		   list.add(c);	
 
 }
@@ -506,21 +506,22 @@ public DTC_Google_Category (WebDriver driver) {
 			   ag1=ag1.replaceAll("^\"|\"$", "");
 			   String[] number2=ag1.split(":");
 			   a1=number2[1];
-			   String a2=ag + "\t"+a1;
+			   String a2=ag+a1;
 			   wordList3.add(a2);
 			}
-			for(int i=0; i<wordList1.size();i++) {
-				if(wordList3.contains(list.get(i))) {
-				//System.out.println("printing is working");
+			for(int i=0; i<wordList3.size();i++) {
+				boolean ans = wordList3.contains(list.get(i)); 
+				//System.out.println(ans);
+				String s1=Boolean.toString(ans); 
+				if(s1.equals("true")) {
+					
 				}
-				else
-				{
-				System.out.println("Un matched categories");
-				System.out.println(wordList3.get(i)+list.get(i));
-				System.out.println(i);
+				else {
+					System.out.println(list.get(i));
 				}
-			}
-			}
-	
 
+				
+				}
+			}
+			
 }

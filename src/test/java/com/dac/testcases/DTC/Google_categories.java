@@ -29,7 +29,7 @@ public class Google_categories extends BaseClass {
 	   driver.manage().window().maximize();
 	   driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
 	   System.out.println(driver.getTitle());
-		//BaseClass.addEvidence(driver, "Testing", "yes");
+		BaseClass.addEvidence(driver, "Testing", "yes");
 
 }
 	@Test( dependsOnMethods = { "launchBrowser"})
@@ -38,18 +38,17 @@ public class Google_categories extends BaseClass {
 		  DTC_Google_Category google=new DTC_Google_Category(driver);
 		  dtcLogin.submitLogin("adevaraj@dacgroup.com","lockdown@123");
 		  dtcLogin.pressYesKey();
-		  /*google.AddGooglecategory();
-		  google.verifyAddeedGoogleCategory();
-		  google.deleteGoogleCategory();
-		  google.verifydeletedGooglecategory();
-		  google.AddDACcatgeory();
-		  google.verifyDACcatgeory();
-		  google.DeleteDACcatgeory();
-		  google.verifyDeleteDACcatgeory();*/
+		  google.AddGooglecategory("Google","Google Category","Guyana");
+		  google.verifyAddeedGoogleCategory("DAC","DAC");
+		  google.deleteGoogleCategory("Google","Google Category","Guyana");
+		  google.verifydeletedGooglecategory("DAC","DAC");
+		  google.AddDACcatgeory("Google");
+		  google.verifyDACcatgeory("Google","Google");
+		  google.DeleteDACcatgeory("DAC","DAC");
+		  google.verifyDeleteDACcatgeory("Google","Google Category");
 		  google.newcategory("Google","Google Category","Guyana");
 		  google.scrollelement();
 		  System.out.println();
-		  
 		  String pageTitle= dtcLogin.getTitle(driver);
 		  System.out.println(pageTitle);
 		  BaseClass.addEvidence(driver, "Testing", "yes");
