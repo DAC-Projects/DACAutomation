@@ -17,27 +17,32 @@ import resources.CurrentState;
 
 public class Google_categories extends BaseClass {
 
-	public static WebDriver driver;
+//	public static WebDriver driver;
 	String url="https://beta-dtc-web.azurewebsites.net/";
 	
-	@Test	
+	@Test(description="Test")	
   public void launchBrowser() {
-	   WebDriverManager.chromedriver().version("83.0.4103.39").setup(); 
-	   driver=new ChromeDriver();
-	// System.setProperty("webdriver.chrome.driver","C:\\Users\\abinaya\\Downloads\\chromedriver.exe");
-	   driver.get(url);
-	   driver.manage().window().maximize();
-	   driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
-	   System.out.println(driver.getTitle());
-		//BaseClass.addEvidence(driver, "Testing", "yes");
+	  
+	   System.out.println("driver test"+CurrentState.getDriver());
+	  
+
+
+	   CurrentState.getDriver().get(url);
+	  
+	  
+	   System.out.println(CurrentState.getDriver().getTitle());
+	
 
 }
-	@Test( dependsOnMethods = { "launchBrowser"})
+	@Test( dependsOnMethods = { "launchBrowser"},description="Test")
 	 public void LoginDTC() throws Exception {
-		  DTC_Transmission dtcLogin=new DTC_Transmission(driver);
-		  DTC_Google_Category google=new DTC_Google_Category(driver);
+		  DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
+		  DTC_Google_Category google=new DTC_Google_Category(CurrentState.getDriver());
 		  dtcLogin.submitLogin("adevaraj@dacgroup.com","lockdown@123");
 		  dtcLogin.pressYesKey();
+	
+		  addEvidence(CurrentState.getDriver(), "Testing", "yes");
+		//  BaseClass.addEvidence(driver, "Testing", "yes");
 		  /*google.AddGooglecategory();
 		  google.verifyAddeedGoogleCategory();
 		  google.deleteGoogleCategory();
@@ -46,13 +51,13 @@ public class Google_categories extends BaseClass {
 		  google.verifyDACcatgeory();
 		  google.DeleteDACcatgeory();
 		  google.verifyDeleteDACcatgeory();*/
-		  google.newcategory("Google","Google Category","Guyana");
-		  google.scrollelement();
-		  System.out.println();
-		  
-		  String pageTitle= dtcLogin.getTitle(driver);
-		  System.out.println(pageTitle);
-		  BaseClass.addEvidence(driver, "Testing", "yes");
+//		  google.newcategory("Google","Google Category","Guyana");
+//		  google.scrollelement();
+//		  System.out.println();
+//		  
+//		  String pageTitle= dtcLogin.getTitle(driver);
+//		  System.out.println(pageTitle);
+//		  BaseClass.addEvidence(driver, "Testing", "yes");
 		 // driver.close();
 		  
 	}

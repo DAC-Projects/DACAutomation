@@ -92,7 +92,8 @@ public class ExtentTestNGITestListener
    * @see org.testng.ITestListener#onStart(org.testng.ITestContext)		*/
   @Override
   public synchronized void onStart(ITestContext context) {
-	 
+	  CurrentState
+      .setApp(context.getCurrentXmlTest().getParameter("appName"));
     CurrentState
         .setBrowser(context.getCurrentXmlTest().getParameter("browser"));
     CurrentState.setTestName(context.getName());
@@ -119,8 +120,10 @@ public class ExtentTestNGITestListener
       CurrentState.getDriver().manage().deleteAllCookies();
       //Send driver object to JSWaiter Class
       JSWaiter.setDriver(CurrentState.getDriver());
-      
+      if(CurrentState.getApp().equalsIgnoreCase("TRSEE"))
       BaseClass.navigateToBasePage();
+      
+    	  
    
   }
 
@@ -341,7 +344,7 @@ public class ExtentTestNGITestListener
     if (browser.equalsIgnoreCase("Chrome")) {
 
 
-     WebDriverManager.chromedriver().version("81.0.4044.69").setup(); 
+     WebDriverManager.chromedriver().version("83.0.4103.39").setup(); 
 
 
      //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
