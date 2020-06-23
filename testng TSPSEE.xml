@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" parallel="false">
- 
-<!-- <listener class-name="resources.IntegrationTestListener"></listener>
- 	<listeners>
+ <!--  <listeners>
+
 <listener class-name="resources.ExtentTestNGITestListener"></listener>
 </listeners>
  
@@ -23,21 +22,16 @@
 		</classes>
 	</test> -->
 	
-	 	<!--<test name="DTC">
+		<!--  <test name="DTC">
 		<classes>
 			<class name="com.dac.testcases.DTC.Create_Transmission" />
 		</classes>
-	</test>-->  
- 
- 		 <test name="DTC">
+	</test>-->
+	
+  <test name="DTC">
 		 <classes>
-			<class name="com.dac.testcases.DTC.VerifytheStatus_Manual" />
+			<class name="com.dac.testcases.DTC.Vendor_Transmission_Setup" />
 		</classes>
-		</test>
-		
-	 <!--<test name="DTC">
-		 <classes>
-			<class name="com.dac.testcases.DTC.DateSubmitted" />
-		</classes>
-		</test>--> 
+		</test> 		
+	
 </suite>

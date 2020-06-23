@@ -228,7 +228,6 @@ public DTC_Transmission (WebDriver driver) {
 	@FindBy(xpath="	//*[@id=\"divzomatoaccount\"]/div[2]/div/ul/li[1]/div/input")
 	private WebElement acc_Input_zomato;
 	
-
 	@FindBy(xpath="	//*[@id=\"divhereaccount\"]/div[2]/div/ul/li[1]/div/input")
 	private WebElement acc_Input_here;
 	
@@ -250,11 +249,8 @@ public DTC_Transmission (WebDriver driver) {
 	@FindBy(xpath="//*[@id=\"btnexporttransmission\"]")
 	private WebElement Ini_apple;
 	
-	
 	@FindBy(xpath="//*[@id=\"alertModal\"]/div/div/div[3]/button[3]")
 	private WebElement close_apple;
-	
-	
 	
 	@FindBy(xpath="//*[@id=\"transmission\"]/div/div/div[2]/div[3]/div[2]/div/span")
 	private WebElement Apple_refresh;
@@ -265,7 +261,6 @@ public DTC_Transmission (WebDriver driver) {
 	@FindBy(xpath="//*[@id=\"appleTransmissionlistTable\"]/tbody/tr[1]/td[8]/a[1]")
 	private WebElement Apple_dow;
 	
-
 	@FindBy(xpath="//*[@id=\"btnzomatorequest\"]")
 	private WebElement addrequest_zomato;
 	
@@ -503,9 +498,7 @@ public DTC_Transmission (WebDriver driver) {
 		wb1.setCellValue(0, 1, "Apple_Request_ID");
 	    wb1.setCellValue(i, j, na);
 		Thread.sleep(1000);
-		apple_trans.click();
-
-	  }
+		apple_trans.click();}
 	
 	public void verify_apple(String LO_number, String id) throws Exception {
 		String a="Complete";
@@ -624,7 +617,6 @@ public DTC_Transmission (WebDriver driver) {
 		System.out.println("Transmission");	
 		mnuTransmission.click();
 		Thread.sleep(2000);
-
 		here_trans.click();
 		Thread.sleep(4000);
 		driver.findElement(By.xpath("//*[@id=\"transmission\"]/div/div/div[2]/div[5]/div[2]/div/span")).click();
