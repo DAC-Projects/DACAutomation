@@ -140,17 +140,13 @@ public DTC_Transmission (WebDriver driver) {
 	@FindBy(xpath="//*[@id=\"transmissionModal\"]/div/div/div[2]/div[2]/div[1]/form/div[1]/div[1]/div")
 	private WebElement Se_vendor;
 	
-	
 	@FindBy(xpath="//*[@id='transmissionModal']/div/div/div[2]/div[2]/div[1]/form/div[1]/div[1]/div/ul/li[1]/a/label/input")
 	private WebElement Se_vendor1;
 	
 	//*[@id="idA_PWD_ForgotPassword"]
-	
 	@FindBy(xpath="//*[@id='btnfilter']")
 	private WebElement Ap_filter;
-	
-	
-	
+
 	@FindBy(xpath="//input[@id='checkall']")
 	private WebElement check_Location;
 	
@@ -171,13 +167,11 @@ public DTC_Transmission (WebDriver driver) {
 	
 	//*[@id="transmissionlistTable"]/tbody/tr[1]/td[5]
 	
-	
 	@FindBy(xpath="//*[@id='transmissionlistTable']/tbody/tr[1]/td[5]")
 	private WebElement Status;
 	
 	@FindBy(xpath="//*[@id='transmissionlistTable']/tbody/tr[1]")
 	private WebElement cli;
-	
 	
 	@FindBy(xpath="//*[@id='selctedlistTable']//input[@value='complete']")
 	private WebElement checkbox;
@@ -203,9 +197,6 @@ public DTC_Transmission (WebDriver driver) {
 	
 	@FindBy(xpath="//*[@id=\"transmissionModal\"]/div/div/div[2]/div[1]/div[3]/div[2]/input[2]")
 	private WebElement All_cancel;
-	
-	
-
 	
 	@FindBy(xpath="//*[@id=\"txtlocationnumberggle\"]")
 	private WebElement API_LocationNumber;

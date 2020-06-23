@@ -31,7 +31,7 @@
    <parameter name="browser" value="chrome"/>
     <classes>
 <!-- 	 <class name= "com.dac.testcases.CA.CA_Review_Test" /> 
- -->		<class name= "com.dac.testcases.CA.CA_Summary_Test" /> 
+ -->		<class name= "com.dac.testcases.TSEE.TPSEE_ESRreports_Test" /> 
 	    
     </classes>
 
