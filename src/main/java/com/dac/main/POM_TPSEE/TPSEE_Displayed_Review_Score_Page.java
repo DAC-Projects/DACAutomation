@@ -52,6 +52,13 @@ public class TPSEE_Displayed_Review_Score_Page extends TPSEE_abstractMethods{
 	
 	private String FacebookRating = "*//div[contains(@class,'facebook text')]";
 	
+	@FindBy(xpath="//*[@id='page-content']//h3")
+	private WebElement PageTitle;
+	
+	@FindBy(xpath="//p[@class='lead']")
+	private WebElement PageTitletext;
+
+	
 	/*-------------------------Table Scores-----------------------*/
 	
 
@@ -181,6 +188,7 @@ public void compareUInExportFaceBook_Score(String chromepath, String IEpath, Str
 		return exporttableData;
 	}
 	
+	@SuppressWarnings("unused")
 	public List<Map<String, String>> ReviewDataTable() throws InterruptedException{
 		JSWaiter.waitJQueryAngular();
 	
@@ -193,7 +201,7 @@ public void compareUInExportFaceBook_Score(String chromepath, String IEpath, Str
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 		String entiresText = driver.findElement(By.className("dataTables_info")).getText();
 		entiresText = entiresText.substring(entiresText.indexOf("("));
-		WebElement TableTitle = driver.findElement(By.xpath("//*[@id='reviewscore_wrapper']//*[@class='heading-title']"));
+		WebElement TableTitle = driver.findElement(By.xpath("//*[@id='reviewscore_wrapper']//*[@class='table-header']"));
 		scrollByElement(TableTitle);
 		int count = 0;
 	    if(paginationNext.isDisplayed()) {
@@ -206,7 +214,7 @@ public void compareUInExportFaceBook_Score(String chromepath, String IEpath, Str
 	    		for (int row = 0; row < rows_count; row++) { 
 	    			List < WebElement > Columns_row = rows_table.get(row).findElements(By.tagName("td"));	//To locate columns(cells) of that specific row.
 	    			int columns_count = Columns_row.size();		//To calculate no of columns (cells). In that specific row.
-	    			int noOfRows=row+1;
+	    			
 	    			//System.out.println("Number of cells In Row " + noOfRows + " are " + columns_count);
 	    			for (int column = 0; column < columns_count; column++) {	//Loop will execute till the last cell of that specific row.
 	    				List<WebElement> headerTableRow=TableHeader.findElements(By.tagName("th"));
@@ -316,4 +324,19 @@ public void compareUInExportFaceBook_Score(String chromepath, String IEpath, Str
 			}
 			
 		}
+		
+public void VerifyTitleText(String Tit, String titText) {
+			
+			waitForElement(PageTitle, 10);
+			String Title = PageTitle.getText();
+			System.out.println("Page Title is : "+Title);
+			waitForElement(PageTitletext, 10);
+			String TitleText = PageTitletext.getText();
+			System.out.println("The title text  is :" + TitleText);
+			Assert.assertEquals(Tit, Title);
+			Assert.assertEquals(titText,TitleText );
+					
+					
+		}
+
 }

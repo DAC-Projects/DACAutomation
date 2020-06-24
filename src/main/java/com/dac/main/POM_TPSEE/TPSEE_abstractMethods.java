@@ -251,7 +251,6 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
                                 y = Double.parseDouble(s);
                                 System.out.println("\n " +s);
                                 sum = sum+y;*/
-                                	
                                 	double cellValue = Double.parseDouble(cellValue1);
                                 	System.out.println(cellValue);
                                 	score.add(cellValue);

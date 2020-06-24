@@ -1,5 +1,4 @@
-package com.dac.main.POM_TPSEE;
-// To store constant values
+package com.dac.main.POM_TPSEE;// To store constant values
 public interface TPSEERepository {
 	
 	String User = "UserId";
@@ -46,4 +45,6 @@ public interface TPSEERepository {
 	String BingXLSX = "BingXLSX.xlsx";
 	String GMBXLSX = "GMBXLSX.xlsx";
 	String ReviewStreamExportXLSX = "ReviewStreamExportXLSX.xlsx";
+	String FacebookExportCSV = "FacebookExportCSV.csv";
+	String FacebookExportXLSX = "FacebookExportXLSX.xlsx";
 }

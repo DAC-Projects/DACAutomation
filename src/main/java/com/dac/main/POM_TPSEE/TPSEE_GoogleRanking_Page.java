@@ -73,7 +73,11 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "//div[@id='keywordTableExportDropdown']//a[contains(text(),'Export as XLSX')]")
 	private WebElement Export_xlsx;
 	
-	  
+	@FindBy(xpath = "//*[@id='page-content']//h1")
+	private WebElement Title;
+	
+	@FindBy(xpath = "//p[@class= 'lead']")
+	private WebElement TitleText;
 	
 	@FindBy(xpath = "//table[@id='rankingDetail']")
 	private WebElement RankingTable;
@@ -134,6 +138,12 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	//tooltipvalue in the graph
 	@FindBy(css = "g.highcharts-label.highcharts-tooltip-box.highcharts-color-none")
 	private WebElement grphtooltip; 
+	
+	@FindBy(xpath = "(//*[@class='highcharts-label highcharts-tooltip-box highcharts-color-none']//*[name()='text']//*[name()='tspan'])[3]")
+	private WebElement GRScore;
+	
+	@FindBy(xpath = "(//*[@class='highcharts-label highcharts-tooltip-box highcharts-color-none']//*[name()='text']//*[name()='tspan'])[2]")
+	private WebElement GRLoc;
 	
 	/* ------------------------------End of Locators---------------------------------------*/
 	@Override
@@ -263,7 +273,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	    		for (int row = 0; row < rows_count; row++) { 
 	    			List < WebElement > Columns_row = rows_table.get(row).findElements(By.tagName("div"));	//To locate columns(cells) of that specific row.
 	    			int columns_count = Columns_row.size();		//To calculate no of columns (cells). In that specific row.
-	    			int noOfRows=row+1;
+	    			
 	    			//System.out.println("Number of cells In Row " + noOfRows + " are " + columns_count);
 	    			for (int column = 0; column < columns_count; column++) {	//Loop will execute till the last cell of that specific row.
 	    				List<WebElement> headerTableRow=RankingTableHeader.findElements(By.tagName("th"));
@@ -426,10 +436,18 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 		scrollByElement(hstryGrph);
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 -2, 0).click().perform();
-		String tooltipvalue = grphtooltip.getText();
+		String tooltipvalue = GRScore.getText();
 		System.out.println("\n Reading tooltipdata ********** \n");
 		System.out.println("\n tooltipvalue is \n" +tooltipvalue);	
-		double score =  Double.parseDouble(tooltipvalue.substring(44 , 48));
+		String Score = tooltipvalue.substring(tooltipvalue.lastIndexOf(":") + 1);
+		double score;
+		if(Score.contains(">")) {
+			Score = Score.replace(">", "");
+			Score = Score.trim();
+			score = Double.parseDouble(Score);
+		}else {
+			score = Double.parseDouble(Score);
+		}
 		System.out.println(score);
 		return score;			
 	}
@@ -439,10 +457,10 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 		scrollByElement(hstryGrph);
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 -2, 0).click().perform();
-		String tooltipvalue = grphtooltip.getText();
+		String tooltipvalue = GRLoc.getText();
 		System.out.println("\n Reading tooltipdata ********** \n");
 		System.out.println("\n tooltipvalue is \n" +tooltipvalue);
-		int numberoflocations = Integer.parseInt(tooltipvalue.substring(31 , 32));
+		int numberoflocations = Integer.parseInt(tooltipvalue.substring(tooltipvalue.lastIndexOf(":") + 1));
 		System.out.println(numberoflocations);
 		return numberoflocations;	
 	}
@@ -470,4 +488,16 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 			}
 			return tooltipdata;
 	}			
+	
+	public void VerifyGRText() {
+		  waitForElement(Title, 10);
+          String Titl = Title.getText();
+          System.out.println("Page Title is : "+Titl);
+          waitForElement(TitleText, 10);
+          String TitleTxt = TitleText.getText();
+          System.out.println("The title text for GR Report is :" + TitleTxt);
+          Assert.assertEquals("Google Ranking Report"
+          		+"\n" + "Ranking Info", Titl);
+          Assert.assertEquals("This report shows how a location's Google listing is ranking when potential customers search for keywords in Google Maps.",TitleTxt );
+	}
 	}

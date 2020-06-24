@@ -17,8 +17,8 @@ public class TPSEE_ESRreports_Test extends BaseClass {
 	static List<Map<String, String>> export;
 	Navigationpage np;
 	TPSEE_ESRreports_Page data;
-	
-	//Navigation to ESR Page
+
+	// Navigation to ESR Page
 	@Test(groups = { "smoke" }, description = "Test for navigating to ESR page")
 	public void navigateToESRPage() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
@@ -28,35 +28,40 @@ public class TPSEE_ESRreports_Test extends BaseClass {
 
 		// Assert.assertFalse( "sample error", true);
 	}
-	
-	@Test(dependsOnMethods= {"navigateToESRPage"}, groups = { "smoke" }, description = "Test for Set Frequency")
+
+	@Test(priority = 2, groups = {"smoke" }, description = "Test for verifying title and description of report")
+	public void verifyText() throws Exception {
+		data = new TPSEE_ESRreports_Page(CurrentState.getDriver());
+		data.VerifyTitleText("Business report");
+		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
+	}
+
+	@Test(priority = 3, groups = { "smoke" }, description = "Test for Set Frequency")
 	public void setFrequency() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
-		try {	
+		try {
 			int count = 1;
-			ExcelHandler wb = new ExcelHandler("./data/ESRReport.xlsx", "ESR"); wb.deleteEmptyRows();
+			ExcelHandler wb = new ExcelHandler("./data/ESRReport.xlsx", "ESR");
+			wb.deleteEmptyRows();
 			TPSEE_ESRreports_Page s = new TPSEE_ESRreports_Page(CurrentState.getDriver());
-			for(int i=1;i<=wb.getRowCount();i++) {
-				System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
-				if(i>1) CurrentState.getDriver().navigate().refresh();
+			for (int i = 1; i <= wb.getRowCount(); i++) {
+				System.out.println("*******************  Scenarios : " + count + "Starts ****************************");
+				if (i > 1)
+					CurrentState.getDriver().navigate().refresh();
 				s.waitUntilLoad(CurrentState.getDriver());
-		        String ESRFrequency = wb.getCellValue(i, wb.seacrh_pattern("ESRFrequency", 0).get(0).intValue());
-		        String Email = wb.getCellValue(i, wb.seacrh_pattern("Email", 0).get(0).intValue());
+				String ESRFrequency = wb.getCellValue(i, wb.seacrh_pattern("ESRFrequency", 0).get(0).intValue());
+				String Email = wb.getCellValue(i, wb.seacrh_pattern("Email", 0).get(0).intValue());
 				System.out.println(ESRFrequency);
-				s.clicksendReport(ESRFrequency,Email);
+				s.clicksendReport(ESRFrequency, Email);
 				addEvidence(CurrentState.getDriver(), "Frequency check", "yes");
 				count++;
 
 				System.out.println(Email);
-			}		
-			
-			 
-		}catch(Exception e) {
+			}
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-		
-		
 
-	}
-
+}

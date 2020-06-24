@@ -1,5 +1,6 @@
 package com.dac.main.POM_TPSEE;
 
+
 import static org.testng.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
@@ -47,14 +48,14 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	
 	/* ------------------------------Locators---------------------------------------*/
 	
-//	@FindBy(xpath = "//div[contains(@class,'progress progress-striped pos-rel')]")
+
 	@FindBy(css = "div.progress.progress-striped.pos-rel")
 	private WebElement Progress;
 	
 	@FindBy(xpath ="//*[@id='table_review']")
 	private WebElement contentsiteTable;
-	//@FindBy(css = "div.progress")
-	String Progressbar = "//div[contains(@class,'progress progress-striped pos-rel')]"; //*[@id="page-content"]/div[1]/div
+
+	String Progressbar = "//div[contains(@class,'progress progress-striped pos-rel')]"; 
 	
 	@FindBy(xpath="//div[@id='completenessTableExportDropdown']//button" )
 	private WebElement export1;
@@ -72,7 +73,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	private WebElement SiteTableHeader;
 	
 	@FindBy(css = "img.logo-img.img-responsive.sourceImg")
-	private WebElement SiteLink;
+	private List<WebElement> SiteLink;
 	
 	@FindBy(xpath ="//img[@class='logo-img img-responsive sourceImg']")
 	private WebElement vendorslist;
@@ -104,6 +105,9 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	
 	@FindBy(xpath = "//div[@id='incomplete_results_info']")
 	private WebElement entiresText;
+	
+	@FindBy(xpath = "//div[@class='highcharts-label highcharts-tooltip-box highcharts-color-none']//span")
+	private WebElement NumOfLocations;
 	
 	/*-------------------------SiteTableData-----------------------*/
 	
@@ -232,6 +236,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	}
 	
 	
+	@SuppressWarnings("unused")
 	public List<Map<String, String>> AnalysisSiteData() throws InterruptedException {
 		JSWaiter.waitJQueryAngular();
 		if(contentsiteTable.isDisplayed()){
@@ -248,7 +253,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	    		for (int row = 0; row < rows_count; row++) { 
 	    			List < WebElement > Columns_row = rows_table.get(row).findElements(By.tagName("td"));//To locate columns(cells) of that specific row.
 	    			int columns_count = Columns_row.size();		//To calculate no of columns (cells). In that specific row.
-	    			int noOfRows=row+1;
+	    			
 	    			//System.out.println("Number of cells In Row " + noOfRows + " are " + columns_count);
 	    			for (int column = 0; column < columns_count; column++) {	//Loop will execute till the last cell of that specific row.
 	    				List<WebElement> headerTableRow=SiteTableHeader.findElements(By.tagName("th"));
@@ -295,13 +300,22 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 		return score;
 	}
 	
-	public List<Map<String, String>> SitelLinkData() throws InterruptedException{
+	public void SitelLinkData() throws Exception{
 		JSWaiter.waitJQueryAngular();
-		waitForElement(siteTable, 40);
-		//getting into progressbar found listing
-		scrollByElement(SiteLink);
-		//clicking on found listing progress bar
-		clickelement(SiteLink);
+		waitForElement(contentsiteTable, 40);
+		scrollByElement(contentsiteTable);
+		int size = SiteLink.size();
+		int newsize;
+		if(size>3) {
+			newsize=3;
+		}
+		else {
+			newsize =size;
+		}
+		System.out.println("The size is :" +size);
+		for(int k = 1; k<=newsize; k++) {
+			driver.findElement(By.xpath("(//*[@class='logo-img img-responsive sourceImg'])["+ k +"]")).click();
+		
 		System.out.println("\n Link clicked \n");
 		waitForElement(SiteLinkTable,40);
 		scrollByElement(SiteLinkTable);
@@ -315,7 +329,6 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 		JSWaiter.waitJQueryAngular();
 		waitForElement(Tableresults,50);
 		String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
-	//	driver.findElement(By.xpath("(//*[@class='pagination']//a)[2]")).click();
 		int page = Integer.parseInt(n);
 		System.out.println("\n"+page);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
@@ -336,7 +349,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	    		for (int row = 0; row < rows_count; row++) { 
 	    			List < WebElement > Columns_row = rows_table.get(row).findElements(By.tagName("td"));	//To locate columns(cells) of that specific row.
 	    			int columns_count = Columns_row.size();		//To calculate no of columns (cells). In that specific row.
-	    			int noOfRows=row+1;
+	    			
 	    			//System.out.println("Number of cells In Row " + noOfRows + " are " + columns_count);
 	    			for (int column = 1; column < columns_count; column++) {	//Loop will execute till the last cell of that specific row.
 	    				List<WebElement> headerTableRow=SiteLinkTableHeader.findElements(By.tagName("th"));
@@ -362,6 +375,22 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 	    }
 	    	System.out.println("Total number of entries in table : "+count);
 	    	Assert.assertTrue(entiresText.contains(""+count+""), "Table Data count matches with total enties count");
+	    	scrollByElement(Tableresults);
+	    	System.out.println("UI Table Values :" +tableCellValues);
+			List<Map<String, String>> TableExport =	getSiteLinkExporttableData();
+			System.out.println("Excel File Values :" +TableExport);
+			int UISize = tableCellValues.size();
+			System.out.println("UI Table size is :" +UISize);
+			int XLSize = TableExport.size();
+			System.out.println("Excel File size is :" +XLSize);
+			if(UISize == XLSize) {
+				for(int i = 0; i<=UISize; i++) {							
+					assertTrue(tableCellValues.get(i).equals(TableExport.get(i)));
+				}
+			}
+			deletefile();
+			tableCellValues.clear();
+			scrollByElement(contentsiteTable);
 		}else if(driver.findElement(By.className("dataTables_empty")).isDisplayed()) {
 				try {
 					BaseClass.addEvidence(driver, "Data is not available for selected Filter", "yes");
@@ -370,7 +399,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 					e.printStackTrace();
 				}
 			}
-				return tableCellValues;
+		}
 		}
 	
 	
@@ -511,10 +540,12 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 			scrollByElement(hstryGrph);
 			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 			action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 -2, 0).click().perform();
-			String tooltipvalue = grphtooltip.getText();
+			String tooltipvalue = NumOfLocations.getText();
 			System.out.println("\n Reading tooltipdata ********** \n");
 			System.out.println("\n tooltipvalue is \n" +tooltipvalue);	
-			double score =  Double.parseDouble(tooltipvalue.substring(46, 51));
+		String score1 =	tooltipvalue.substring(tooltipvalue.lastIndexOf(":") + 1);
+		//	double score =  Double.parseDouble(tooltipvalue.substring(46, 51));
+			double score = Double.parseDouble(score1);
 			System.out.println(score);
 			return score;			
 		}
@@ -524,10 +555,12 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods{
 			scrollByElement(hstryGrph);
 			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 			action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth())/2 -2, 0).click().perform();
-			String tooltipvalue = grphtooltip.getText();
+			String tooltipvalue = NumOfLocations.getText();
 			System.out.println("\n Reading tooltipdata ********** \n");
 			System.out.println("\n tooltipvalue is \n" +tooltipvalue);
-			int numberoflocations = Integer.parseInt(tooltipvalue.substring(31, 33));
+			//int numberoflocations = Integer.parseInt(tooltipvalue.substring(31, 33));
+			String NumOfLocations =	tooltipvalue.substring(tooltipvalue.indexOf(":") + 1, tooltipvalue.indexOf("S") - 1);
+			int numberoflocations = Integer.parseInt(NumOfLocations);
 			System.out.println(numberoflocations);
 			return numberoflocations;	
 		}
