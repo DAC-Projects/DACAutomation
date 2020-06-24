@@ -89,7 +89,7 @@ public class CF_Create_Email_Brand_Campaign extends BaseClass {
 	public void PreviewCampaign() throws Exception {
 		wb = new ExcelHandler("./data/CF.xlsx", "EmailBrandCampaign");
 		data = new CF_Campaigns_Page(CurrentState.getDriver());
-		data.PreviewSchedule();
+		data.PreviewSchedule("EmailBrandCampaign");
 		addEvidence(CurrentState.getDriver(), "Test to verify Campaign Preview", "Yes");
 		CurrentState.getDriver().navigate().refresh();
 	}
@@ -97,7 +97,7 @@ public class CF_Create_Email_Brand_Campaign extends BaseClass {
 	@Test(priority = 4, dependsOnMethods = "PreviewCampaign", description = "Test to Delete Campaign")
 	public void DeleteCreatedCampaign() throws Exception {
 		data = new CF_Campaigns_Page(CurrentState.getDriver());
-		data.DeleteCampaign();
+		data.DeleteCampaign("EmailBrandCampaign");
 	}
 	
 	@Test(priority = 5, dependsOnMethods = "DeleteCreatedCampaign", description = "Test to create reschedule campaign", dataProvider = "testData")

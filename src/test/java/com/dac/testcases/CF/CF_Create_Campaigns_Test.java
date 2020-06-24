@@ -2,7 +2,6 @@ package com.dac.testcases.CF;
 
 import java.util.Arrays;
 
-import org.openqa.selenium.By;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -114,7 +113,7 @@ public class CF_Create_Campaigns_Test extends BaseClass {
 	@Test(priority = 4, dependsOnMethods = "EmailCampaignLocation", description = "Test to search the created campaign in scheduled table")
 	public void PreviewCampaign() throws Exception {
 		data = new CF_Campaigns_Page(CurrentState.getDriver());
-		data.PreviewSchedule();
+		data.PreviewSchedule("EmailLocationCampaign");
 		addEvidence(CurrentState.getDriver(), "Test to verify Campaign Preview", "Yes");
 		CurrentState.getDriver().navigate().refresh();
 	}
@@ -127,7 +126,7 @@ public class CF_Create_Campaigns_Test extends BaseClass {
 	@Test(priority = 5, dependsOnMethods = "PreviewCampaign", description = "Test to Delete Campaign")
 	public void DeleteCreatedCampaign() throws Exception {
 		data = new CF_Campaigns_Page(CurrentState.getDriver());
-		data.DeleteCampaign();
+		data.DeleteCampaign("EmailLocationCampaign");
 	}
 	
 	@Test(priority = 6, description = "Test to create reschedule campaign", dataProvider = "testData")
@@ -163,7 +162,7 @@ public class CF_Create_Campaigns_Test extends BaseClass {
 	public void RescheduleCampaign(String from_day, String from_month, String from_year, String to_day,
 			String to_month, String to_year) throws Exception {
 		data = new CF_Campaigns_Page(CurrentState.getDriver());
-		data.REschedule();
+		data.REschedule("EmailLocationCampaign");
 		addEvidence(CurrentState.getDriver(), "Test to reschedule campaign", "yes");
 		ECampaignSchedule(from_day, from_month, from_year, to_day, to_month, to_year);
 		data.CampaignScheduling("Reschedule Date");

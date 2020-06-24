@@ -11,9 +11,11 @@
 <test name="Customer_FeedBack">
   <parameter name="browser" value="Chrome"/>
     <classes>
+   		<class name="com.dac.testcases.CF.CF_Create_Email_MultiLocation_Campaign" /> 
+   		<!-- <class name="com.dac.testcases.CF.CF_Create_GRL_Brand_Campaign" />
     	<class name="com.dac.testcases.CF.CF_Create_GRL_Location_Campaign" />
-  		<!-- <class name="com.dac.testcases.CF.CF_Create_Campaigns_Test" /> -->
-  		<!-- <class name="com.dac.testcases.CF.CF_Create_Email_Brand_Campaign" /> -->
+  		<class name="com.dac.testcases.CF.CF_Create_Campaigns_Test" />
+  		<class name="com.dac.testcases.CF.CF_Create_Email_Brand_Campaign" /> -->
     </classes>
   </test> 
   
