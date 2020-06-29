@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.lucene.analysis.miscellaneous.TrimFilter;
 import org.openqa.selenium.JavascriptExecutor;
@@ -13,6 +14,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -55,7 +57,7 @@ public class Page_LPADHome{
 	@FindBy(xpath="//*[@href='/BusinessUnit/BUIndex']")
 	private WebElement BusinessUnits;
 
-	@FindBy(xpath="//*[@href='/Accounts/AccountsIndex']")
+	@FindBy(xpath="//a[@href='/Accounts/AccountsIndex']")
 	private WebElement Accounts;
 	
 	@FindBy(id="subList")
@@ -88,7 +90,7 @@ public class Page_LPADHome{
 		this.driver =  driver;
 		action = new Actions(driver);
 		wait = new WebDriverWait(driver, 30);
-//		driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
 		PageFactory.initElements(driver, this);
 		
 	}
@@ -105,9 +107,13 @@ public class Page_LPADHome{
 		System.out.println("Result: Navigated to BU Page");
 		}
 	
-	public void NavigateToAccounts() {
+	public void NavigateToAccounts() throws InterruptedException {
 		action = new Actions(driver);
-		action.moveToElement(Accounts).click().perform();
+		Thread.sleep(5000);
+//		wait=new WebDriverWait(driver, 30);
+//		wait.until(ExpectedConditions.elementToBeClickable(Accounts));
+		Accounts.click();
+//		action.moveToElement(Accounts).click().perform();
 		System.out.println("Result: Navigated to Accounts Page");
 		}
 	
@@ -135,8 +141,9 @@ public class Page_LPADHome{
 		action = new Actions(driver);
 		js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollTo(0, -document.body.scrollHeight);");
-		Thread.sleep(2000);
-		action.moveToElement(Locations).click().perform();
+		Thread.sleep(5000);
+		Locations.click();
+//		action.moveToElement(Locations).click().perform();
 		System.out.println("Result: Navigated to Locations Page");
 		}
 	

@@ -18,7 +18,7 @@ public class Page_LocationsListPage {
 	
 	
 	
-	@FindBy(xpath="//*[@id=\"LocationListTable_filter\"]/label/input")
+	@FindBy(xpath="//*[@id='LocationListTable_filter']/label/input")
 	private WebElement txtSearchBox;
 	
 	@FindBy(id="btnTableSearch")
@@ -27,7 +27,7 @@ public class Page_LocationsListPage {
 	@FindBy(id="LocationListDownload")
 	private WebElement btnExport;
 		
-	@FindBy(xpath="//*[@href=\"/LocationAdd/AddIndex?AccountLocationList=locationList&locationListType=locationList\"]")
+	@FindBy(xpath="//*[@href='/LocationAdd/AddIndex?AccountLocationList=locationList&locationListType=locationList']")
 	private WebElement btnCreateLocation;
 	/*------- Business Status filters------*/
 	@FindBy(xpath="//button[@class='multiselect dropdown-toggle btn btn-default']")

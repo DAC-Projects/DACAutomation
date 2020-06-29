@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Calendar;
+import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -37,8 +38,23 @@ public class Utilities {
 	
 public static String getCurrentTime() {
 	Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+	
 	String time=String.valueOf(timestamp.getTime());
+	
 		return time;
 		
 	}
+public static int randomNumber() {
+	Random rand = new Random(); //instance of random class
+    int upperbound = 100,int_random;
+      //generate random values from 0-24
+//    System.out.println("Random integer value from 0 to" + (upperbound-1) + " : "+ int_random);
+    return int_random = rand.nextInt(upperbound); 
+//    double double_random=rand.nextDouble();
+//    float float_random=rand.nextFloat();
+    
+//    System.out.println("Random float value between 0.0 and 1.0 : "+float_random);
+//    System.out.println("Random double value between 0.0 and 1.0 : "+double_random);
+}
+
 }

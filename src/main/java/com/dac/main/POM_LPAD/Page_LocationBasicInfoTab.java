@@ -27,7 +27,7 @@ public class Page_LocationBasicInfoTab extends LaunchLPAD {
 	Select uiSelect; 
 	WebDriverWait wait;
 	JavascriptExecutor executor;
-	ExcelHandler excel;
+	ExcelHandler basic;
 	//-----------Basic Info Tab------------------
 	@FindBy(xpath="//*[@id='lblLocationNumber']")
 	private WebElement locationNumber;
@@ -36,16 +36,16 @@ public class Page_LocationBasicInfoTab extends LaunchLPAD {
 	private WebElement selectAccountName;
 	
 	@FindBy(id="ReferenceID")
-	private WebElement ReferenceCode;
+	private WebElement elReferenceCode;
 	
 	@FindBy(id="ReferenceCode2")
-	private WebElement ReferenceCode2;
+	private WebElement elReferenceCode2;
 	
 	@FindBy(id="LongBusinessName")
-	private WebElement BusinessName;
+	private WebElement elBusinessName;
 	
 	@FindBy(id="BusinessName")
-	private WebElement ShortBusinessName;
+	private WebElement elShortBusinessName;
 	
 	@FindBy(id="Country")
 	private WebElement selectCountry;
@@ -54,34 +54,34 @@ public class Page_LocationBasicInfoTab extends LaunchLPAD {
 	private WebElement chkAccountAddressFill;
 	
 	@FindBy(id="LocationAddress")
-	private WebElement AddressLine1;
+	private WebElement elAddressLine1;
 	
 	@FindBy(id="Address1")
-	private WebElement AddressLine2;
+	private WebElement elAddressLine2;
 	
 	@FindBy(id="Address3")
-	private WebElement AddressLine3;
+	private WebElement elAddressLine3;
 	
 	@FindBy(id="Address4")
-	private WebElement AddressLine4;
+	private WebElement elAddressLine4;
 	
 	@FindBy(id="Address5")
-	private WebElement AddressLine5;
+	private WebElement elAddressLine5;
 	
 	@FindBy(id="Neighborhood")
-	private WebElement Neighborhood;
+	private WebElement elNeighborhood;
 	
 	@FindBy(id="City")
-	private WebElement City;
+	private WebElement elCity;
 	
 	@FindBy(id="State")
 	private WebElement selectState;
 	
 	@FindBy(id="ZipCode")
-	private WebElement ZipCode;
+	private WebElement elZipCode;
 	
 	@FindBy(id="PhoneNumber")
-	private WebElement MainBusinessPhoneNumber;
+	private WebElement elMainBusinessPhoneNumber;
 	
 	@FindBy(id="PrimaryLanguage")
 	private WebElement selectPrimaryLanguage;
@@ -106,25 +106,25 @@ public class Page_LocationBasicInfoTab extends LaunchLPAD {
 	}
 	
 	public void setReferenceCode(String Code) {
-		ReferenceCode.sendKeys(Code);
+		elReferenceCode.sendKeys(Code);
 	}
 	
 	public void setReferenceCode2(String Code) {
-		ReferenceCode2.sendKeys(Code);
+		elReferenceCode2.sendKeys(Code);
 	}
 	
 	public void setBusinessName(String Name) {
-		BusinessName.sendKeys(Name);
+		elBusinessName.sendKeys(Name);
 	}
 	
 	public void setShortBusinessName(String Name) {
 		String time=Utilities.getCurrentTime();
 		Name=Name+time;
-		ShortBusinessName.sendKeys(Name);
+		elShortBusinessName.sendKeys(Name);
 	}
 	
 	public String getSBName() {
-		String name=ShortBusinessName.getAttribute("value");
+		String name=elShortBusinessName.getAttribute("value");
 		return name;
 	}
 	public void setCountry(String country) {
@@ -133,27 +133,27 @@ public class Page_LocationBasicInfoTab extends LaunchLPAD {
 	}
 	
 	public void setAddress1(String address) {
-		AddressLine1.sendKeys(address);
+		elAddressLine1.sendKeys(address);
 	}
 	public void setAddress2(String address) {
-		AddressLine2.sendKeys(address);
+		elAddressLine2.sendKeys(address);
 	}
 	
 	public void setAddress3(String address) {
-		AddressLine3.sendKeys(address);
+		elAddressLine3.sendKeys(address);
 	}
 	public void setAddress4(String address) {
-		AddressLine4.sendKeys(address);
+		elAddressLine4.sendKeys(address);
 	}
 	public void setAddress5(String address) {
-		AddressLine5.sendKeys(address);
+		elAddressLine5.sendKeys(address);
 	}
 	
 	public void setNeighborhood(String location) {
-		Neighborhood.sendKeys(location);
+		elNeighborhood.sendKeys(location);
 	}
 	public void setCity(String location) {
-		City.sendKeys(location);
+		elCity.sendKeys(location);
 	}
 	
 	public void setState(String state) {
@@ -162,10 +162,10 @@ public class Page_LocationBasicInfoTab extends LaunchLPAD {
 	}
 	
 	public void setZipCode(String zip) {
-		ZipCode.sendKeys(zip);
+		elZipCode.sendKeys(zip);
 	}
 	public void setPhoneNumber(String phone) {
-		MainBusinessPhoneNumber.sendKeys(phone);
+		elMainBusinessPhoneNumber.sendKeys(phone);
 	}
 	
 	public void setPrimaryLanguage(String language) {
@@ -174,63 +174,63 @@ public class Page_LocationBasicInfoTab extends LaunchLPAD {
 	}
 	
 	public void fillBasicInfoData(int excelRow) throws Exception {
-	
-		String [][] inputData=new ExcelHandler(LocationDataExcelPath, "BasicInfo").getExcelTable();
+		basic = new ExcelHandler(LocationDataExcelPath,"BasicInfo");
+		String [][] inputData=basic.getExcelTable();
 		
-		String AccountName=inputData[excelRow][0]; String ReferenceCode1 =inputData[excelRow][1];
+		String AccountName=inputData[excelRow][0]; String ReferenceCode =inputData[excelRow][1];
 		String ReferenceCode2=inputData[excelRow][2]; String BusinessName=inputData[excelRow][3];
 		String ShortBusinessName=inputData[excelRow][4]; String Country=inputData[excelRow][5];
-		String Address1=inputData[excelRow][6]; String Address2=inputData[excelRow][7];
-		String Address3=inputData[excelRow][8]; String Address4=inputData[excelRow][9];
-		String Address5=inputData[excelRow][10]; String strNeighborhood=inputData[excelRow][11];
-		String City=inputData[excelRow][12]; String state=inputData[excelRow][13];
-		String strZipCode=inputData[excelRow][14]; String PhoneNumber=inputData[excelRow][15];
-		String Primarylanguage=inputData[excelRow][16]; 
+		String AddressLine1=inputData[excelRow][6]; String AddressLine2=inputData[excelRow][7];
+		String AddressLine3=inputData[excelRow][8]; String AddressLine4=inputData[excelRow][9];
+		String AddressLine5=inputData[excelRow][10]; String Neighborhood=inputData[excelRow][11];
+		String City=inputData[excelRow][12]; String State=inputData[excelRow][13];
+		String Zipcode=inputData[excelRow][14]; String MainBusinessPhoneNumber=inputData[excelRow][15];
+		String PrimaryLanguage=inputData[excelRow][16]; 
 		
-		System.out.println(AccountName);	System.out.println(ReferenceCode1);
+		System.out.println(AccountName);	System.out.println(ReferenceCode);
 		System.out.println(ReferenceCode2);		System.out.println(BusinessName);
 		System.out.println(ShortBusinessName);		System.out.println(Country);
-		System.out.println(Address1);		System.out.println(Address2);
-		System.out.println(Address3);		System.out.println(Address4);
-		System.out.println(Address5);		System.out.println(strNeighborhood);
-		System.out.println(City);		System.out.println(state);
-		System.out.println(strZipCode);		System.out.println(PhoneNumber);
-		System.out.println(Primarylanguage);
+		System.out.println(AddressLine1);		System.out.println(AddressLine2);
+		System.out.println(AddressLine3);		System.out.println(AddressLine4);
+		System.out.println(AddressLine5);		System.out.println(Neighborhood);
+		System.out.println(City);		System.out.println(State);
+		System.out.println(Zipcode);		System.out.println(MainBusinessPhoneNumber);
+		System.out.println(PrimaryLanguage);
 		
 		setAccountName(AccountName);
-		setReferenceCode(ReferenceCode1);
+		setReferenceCode(ReferenceCode);
 		setReferenceCode2(ReferenceCode2);
 		setBusinessName(BusinessName);
 		setShortBusinessName(ShortBusinessName);
 		setCountry(Country);
-		wait.until(ExpectedConditions.visibilityOfAllElements(AddressLine1));
-		setAddress1(Address1);
-		if(AddressLine2.isDisplayed()) {
-			setAddress2(Address2);
+		wait.until(ExpectedConditions.visibilityOfAllElements(elAddressLine1));
+		setAddress1(AddressLine1);
+		if(elAddressLine2.isDisplayed()) {
+			setAddress2(AddressLine1);
 		}
-		if(AddressLine3.isDisplayed()) {
-			setAddress3(Address3);
+		if(elAddressLine3.isDisplayed()) {
+			setAddress3(AddressLine3);
 		}
-		if(AddressLine4.isDisplayed()){
-			setAddress4(Address4);
+		if(elAddressLine4.isDisplayed()){
+			setAddress4(AddressLine4);
 		}
-		if(AddressLine5.isDisplayed()) {
-			setAddress5(Address5);
+		if(elAddressLine5.isDisplayed()) {
+			setAddress5(AddressLine5);
 		}
-		if(Neighborhood.isDisplayed()) {
-			setNeighborhood(strNeighborhood);
+		if(elNeighborhood.isDisplayed()) {
+			setNeighborhood(Neighborhood);
 		}
 		
 		setCity(City);
 		
 		if(selectState.isDisplayed()) {
-			setState(state);
+			setState(State);
 		}
-		if(ZipCode.isDisplayed()) {
-			setZipCode(strZipCode);
+		if(elZipCode.isDisplayed()) {
+			setZipCode(Zipcode);
 		}
-		setPhoneNumber(PhoneNumber);
-		setPrimaryLanguage(Primarylanguage);
+		setPhoneNumber(MainBusinessPhoneNumber);
+		setPrimaryLanguage(PrimaryLanguage);
 		
 		
 		

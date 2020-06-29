@@ -43,7 +43,7 @@ public void TC_EnterLocationData() throws Exception {
 	System.out.println("Step1: Enter Location Data");
 	wait=new WebDriverWait(driver, 30);
 	wb = new ExcelHandler(LocationDataExcelPath, "BasicInfo");
-	
+//	wb.getColHeadingNumber("MainBusinessPhoneNumber");
 	basicInfoData = wb.getExcelTable();
 	int TotalRow=basicInfoData.length-1;
 	int vendorIdColumn=1;//Vendor ID in excel
