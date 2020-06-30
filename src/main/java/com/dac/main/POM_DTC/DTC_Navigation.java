@@ -221,7 +221,7 @@ public class DTC_Navigation {
         String ad1=ad.substring(19, 21);
         int j=Integer.parseInt(ad1)-1;  
         System.out.println(j);*/
-       // Assert.assertEquals(before_Ignore, after_ignore);   
+        Assert.assertEquals(before_Ignore - 1, after_ignore);   
     }
     
     public int NumOfentries(WebElement entry) {
