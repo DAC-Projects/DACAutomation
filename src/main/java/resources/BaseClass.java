@@ -22,7 +22,7 @@ public abstract class BaseClass {
 
 
   // **********************for login to auth and then Dashboard
-	public static WebDriver driver;
+	//public static WebDriver driver;
   /**
    * This method is to navigate to TSEE dashboard page from AC1 Beta	
  * @throws InterruptedException */

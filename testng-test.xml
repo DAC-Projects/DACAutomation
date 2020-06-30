@@ -1,42 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Suite" parallel="tests">
- 
-<listeners>
-<listener class-name="resources.ExtentTestNGITestListener"></listener>
-</listeners>
+<suite name="Suite" parallel="false">
+
+	<listeners>
+		<!-- <listener class-name="resources.IntegrationTestListener"></listener>-->
+		<listener class-name="resources.ExtentTestNGITestListener"></listener> 
+	</listeners>
+
+   
+   <test name="DTC">
   
 
- <!--    <test name="Customer Feedback" parallel="false" group-by-instances="true">
-
-  <parameter name="browser" value="chrome"/>
-    <classes>
-	 	<class name= "com.dac.testcases.CF.VerifyCreate_DraftBrandCamp" /> 
-	    <class name= "com.dac.testcases.CF.VerifyCreate_DraftLocCamp" /> 
-    </classes>
-  </test> -->
-
-
-
-   <!--    <test name="Sentiment Analysis" parallel="false" group-by-instances="true">
-  <parameter name="browser" value="chrome"/>
-    <classes>
-	 	<class name= "com.dac.testcases.SA.SA_RevewReportCard_Test" /> 
-    </classes>
-  </test> -->
-
-  <test name="Competitive Analysis" parallel="false" group-by-instances="true">
-
-  <parameter name="Filter" value= "Fokwah Inc, 2318 Danforth Ave., Scarborough, Ontario, M4C 1K7;"/>
-   <parameter name="browser" value="chrome"/>
-    <classes>
-<!-- 	 <class name= "com.dac.testcases.CA.CA_Review_Test" /> 
- -->		<class name= "com.dac.testcases.TSEE.TPSEE_ESRreports_Test" /> 
-	    
-    </classes>
-
-  </test>
-
- 
-  
+<parameter name="browser" value="chrome"/>
+  <parameter name="appName" value="DTC" />
+         <classes>
+            <class name="com.dac.testcases.DTC.Vendor_Transmission_Setup" />
+        </classes>
+        </test>        
+   
 </suite>
+

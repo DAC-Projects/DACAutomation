@@ -16,7 +16,7 @@ import com.selenium.testevidence.SeleniumEvidence;
  * Where we can set the data values to the identifiers before getting the values of the identifiers 
  * for each thread local variables		*/
 public class CurrentState {
-
+	private static ThreadLocal<String> application =new ThreadLocal<String>();
   private static ThreadLocal<String> testName = new ThreadLocal<String>();
   private static ThreadLocal<String> browser = new ThreadLocal<String>();
   private static ThreadLocal<ExtentTest> logger = new ThreadLocal<ExtentTest>();
@@ -92,6 +92,21 @@ public class CurrentState {
    * @param browser : on which browser to execute ie. chrome or ie or firefox		*/
   public static void setBrowser(String browser) {
     CurrentState.browser.set(browser);
+  }
+  
+  /**
+   * This method used to get the setted app name, execute in specific driver
+   * for each browser as a local identifier		*/
+  public static String getApp() {
+    return application.get();
+  }
+
+  /**
+   * This method used to set on which app to execute the steps of test cases
+   * 
+   * @param browser : on which browser to execute ie. chrome or ie or firefox		*/
+  public static void setApp(String appName) {
+    CurrentState.application.set(appName);
   }
 
 }

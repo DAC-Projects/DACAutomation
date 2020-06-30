@@ -14,45 +14,84 @@ import com.dac.main.POM_DTC.DTC_Transmission;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import resources.BaseClass;
 import resources.CurrentState;
+import resources.ExcelHandler;
 
 public class Google_categories extends BaseClass {
 
-	public static WebDriver driver;
 	String url="https://beta-dtc-web.azurewebsites.net/";
 	
-	@Test	
-  public void launchBrowser() {
-	   WebDriverManager.chromedriver().version("83.0.4103.39").setup(); 
-	   driver=new ChromeDriver();
-	// System.setProperty("webdriver.chrome.driver","C:\\Users\\abinaya\\Downloads\\chromedriver.exe");
-	   driver.get(url);
-	   driver.manage().window().maximize();
-	   driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
-	   System.out.println(driver.getTitle());
-		BaseClass.addEvidence(driver, "Testing", "yes");
+	@Test(description="Test")	
+		public void launchBrowser() {
+		  DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
+		 
+		  System.out.println("driver test"+CurrentState.getDriver());
+		  CurrentState.getDriver().get(url);
+		  dtcLogin.submitLogin("adevaraj@dacgroup.com","lockdown@123");
+		  addEvidence(CurrentState.getDriver(), "Testing", "yes");
+
+		  dtcLogin.pressYesKey();
+		  String pageTitle= dtcLogin.getTitle(CurrentState.getDriver());
+		  System.out.println(pageTitle);
+
 
 }
-	@Test( dependsOnMethods = { "launchBrowser"})
+	@Test( dependsOnMethods = { "launchBrowser"},description="Test")
 	 public void LoginDTC() throws Exception {
-		  DTC_Transmission dtcLogin=new DTC_Transmission(driver);
-		  DTC_Google_Category google=new DTC_Google_Category(driver);
-		  dtcLogin.submitLogin("adevaraj@dacgroup.com","lockdown@123");
-		  dtcLogin.pressYesKey();
-		  google.AddGooglecategory("Google","Google Category","Guyana");
-		  google.verifyAddeedGoogleCategory("DAC","DAC");
-		  google.deleteGoogleCategory("Google","Google Category","Guyana");
-		  google.verifydeletedGooglecategory("DAC","DAC");
-		  google.AddDACcatgeory("Google");
-		  google.verifyDACcatgeory("Google","Google");
-		  google.DeleteDACcatgeory("DAC","DAC");
-		  google.verifyDeleteDACcatgeory("Google","Google Category");
-		  google.newcategory("Google","Google Category","Guyana");
-		  google.scrollelement();
-		  System.out.println();
-		  String pageTitle= dtcLogin.getTitle(driver);
-		  System.out.println(pageTitle);
-		  BaseClass.addEvidence(driver, "Testing", "yes");
-		 // driver.close();
-		  
-	}
-}
+				int count = 1;
+				ExcelHandler wb = new ExcelHandler("./data/DTC.xlsx", "Google");
+				wb.deleteEmptyRows();
+				int a=wb.getRowCount();
+				System.out.println(a);
+				 DTC_Google_Category google=new DTC_Google_Category(CurrentState.getDriver());
+				 google.cat();
+				 addEvidence(CurrentState.getDriver(), "google", "yes");
+
+				for(int i=1;i<=a;i++) {
+					System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
+					String goocategory = wb.getCellValue(i, wb.seacrh_pattern("goocategory", 0).get(0).intValue());
+					String selectcatgoogle=wb.getCellValue(i, wb.seacrh_pattern("selectcatgoogle", 0).get(0).intValue());
+					String selectcountry=wb.getCellValue(i, wb.seacrh_pattern("selectcountry", 0).get(0).intValue());
+					String Dac_category=wb.getCellValue(i, wb.seacrh_pattern("Dac_category", 0).get(0).intValue());
+					String Vendor_category=wb.getCellValue(i, wb.seacrh_pattern("Vendor_category", 0).get(0).intValue());
+					String category=wb.getCellValue(i, wb.seacrh_pattern("Category", 0).get(0).intValue());
+					String selectdaccategory=wb.getCellValue(i, wb.seacrh_pattern("selectdaccategory", 0).get(0).intValue());
+					String countrycode=wb.getCellValue(i, wb.seacrh_pattern("countrycode", 0).get(0).intValue());
+					String filepath=wb.getCellValue(i, wb.seacrh_pattern("filepath", 0).get(0).intValue());
+
+					count++;
+					System.out.println(goocategory+selectcatgoogle+category);
+		 
+		 google.AddGooglecategory(goocategory,selectcatgoogle,selectcountry,Dac_category,Vendor_category);
+		  addEvidence(CurrentState.getDriver(), "AddGooglecategory", "yes");
+
+		google.verifyAddeedGoogleCategory(category,selectdaccategory,goocategory,Dac_category,Vendor_category,countrycode);
+		  addEvidence(CurrentState.getDriver(), "verifyAddeedGoogleCategory", "yes");
+
+		 google.deleteGoogleCategory(goocategory,selectcatgoogle,selectcountry,Vendor_category);
+		  addEvidence(CurrentState.getDriver(), "deleteGoogleCategory", "yes");
+
+		 google.verifydeletedGooglecategory(category,selectdaccategory,Dac_category,countrycode, goocategory);
+		  addEvidence(CurrentState.getDriver(), "verifydeletedGooglecategory", "yes");
+
+		 google.AddDACcatgeory(goocategory,Vendor_category,countrycode);
+		  addEvidence(CurrentState.getDriver(), "AddDACcatgeory", "yes");
+
+		  google.verifyDACcatgeory(goocategory,selectcatgoogle,selectcountry,Vendor_category);
+		  addEvidence(CurrentState.getDriver(), "verifyDACcatgeory", "yes");
+
+		 google.DeleteDACcatgeory(category,selectdaccategory,goocategory,Dac_category,Vendor_category,countrycode);
+		  addEvidence(CurrentState.getDriver(), "DeleteDACcatgeory", "yes");
+
+		  google.verifyDeleteDACcatgeory(goocategory,selectcatgoogle,selectcountry,Vendor_category);
+		  addEvidence(CurrentState.getDriver(), "verifyDeleteDACcatgeory", "yes");
+
+		  google.newcategory(goocategory,selectcatgoogle , selectcountry, countrycode);
+		  addEvidence(CurrentState.getDriver(), "New category added", "yes");
+
+		  google.scrollelement(filepath);	
+		 // addEvidence(CurrentState.getDriver(), "scrollelement", "yes");
+
+		  Thread.sleep(3000);
+			  
+	}}}
+

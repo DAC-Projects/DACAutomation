@@ -13,10 +13,13 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
+import resources.BaseClass;
+import resources.CurrentState;
 import resources.ExcelHandler;
 
-public class DTC_Transmission_Setup {
+public class DTC_Transmission_Setup extends BaseClass {
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
@@ -44,12 +47,20 @@ private By fieldnew(String filednew) {
 	return fieldnew;
 }
 
+private By fieldnew1(String filednew) {
+	By fieldnew=By.xpath("//*[@id=\"ModalAvailableField\"]/div/div/div[2]/div/div[2]/div[3]/div[2]/div/ul/li/a/span[contains(text(),'"+filednew+"')]");
+	return fieldnew;
+}
+
 private By file_name(String setupname) {
     By file_name=By.xpath("//*[@id=\"filelistTable\"]/tbody/tr/td[2][contains(text(),'"+setupname+"')]/../td[1]");
     return file_name;
 }
 
-
+private By fomat_select(String formatname) {
+	By fname=By.xpath("//*[@id=\"ModalAvailableField\"]/div/div/div[2]/div/div[3]/div[2]/div/div/ul/li/a/span[1][contains(text(),'"+formatname+"')]");
+			return fname;
+}
 @FindBy(xpath="//*[@id=\"vendors\"]/div/div/div[2]/div[1]/div[1]")
 private WebElement Vendors;
 
@@ -61,9 +72,14 @@ private WebElement vendor_field_name;
 
 @FindBy(xpath="//*[@id=\"ModalAvailableField\"]/div/div/div[2]/div/div[2]/div[3]/div[1]/button/span[1]")
 private WebElement DTC_field;
+@FindBy(xpath="//*[@id=\"ModalAvailableField\"]/div/div/div[2]/div/div[2]/div[3]/div[2]/button/span[1]")
+private WebElement DTC_field_Multi;
 
 @FindBy(xpath="//*[@id=\"ModalAvailableField\"]/div/div/div[2]/div/div[2]/div[3]/div[1]/div/div/input")
 private WebElement DTC_filedinput;
+
+@FindBy(xpath="//*[@id=\"ModalAvailableField\"]/div/div/div[2]/div/div[2]/div[3]/div[2]/div/div/input")
+private WebElement DTC_fieldinput_multi;
 
 @FindBy(xpath="//*[@id=\"btnfieldmapsave\"]")
 private WebElement save;
@@ -144,6 +160,14 @@ private WebElement vendor;
 @FindBy(xpath="//*[@class='btn btn-danger btnalertclose']")
 private WebElement close_btn;
 
+@FindBy(xpath="//*[@id=\"ModalAvailableField\"]/div/div/div[2]/div/div[3]/div[2]/div/button/span[1]")
+private WebElement format;
+
+@FindBy(xpath="//*[@id=\"ModalAvailableField\"]/div/div/div[2]/div/div[3]/div[2]/div/div/div/input")
+private WebElement format_value;
+
+@FindBy(xpath="//*[@id=\"chkmulti\"]")
+private WebElement multi;
 public void scrollByElement(WebElement element) {
 	wait.until(ExpectedConditions.visibilityOf(element));
 	JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -151,35 +175,55 @@ public void scrollByElement(WebElement element) {
 	int xLoc = element.getLocation().getX();
 	js.executeScript("window.scrollTo(" + xLoc + ", " + yLoc + ")");
 }
-
-public void Adding_New_filed(String name, String setupname,String field_name, String DTCfield) throws Exception {
+public void setup(String name, String setupname) throws InterruptedException {
 	Vendors.click();
 	Thread.sleep(1000);
 	driver.findElement(vendor_name(name)).click();
 	driver.findElement(setup_name(setupname)).click();
 	Thread.sleep(3000);
+}
+public void Adding_New_filed(String name, String setupname,String field_name, String DTCfield) throws Exception {
+	Thread.sleep(3000);
 	newfield.click();
 	Thread.sleep(2000);
 	vendor_field_name.sendKeys(field_name);
 	Thread.sleep(3000);
-	DTC_field.click();
-	DTC_filedinput.sendKeys(DTCfield);
-	driver.findElement(fieldnew(DTCfield)).click();
+	multi.click();
 	Thread.sleep(1000);
+	//DTC_field.click();
+	
+	DTC_field_Multi.click();
+
+	//DTC_filedinput.sendKeys(DTCfield);
+	DTC_fieldinput_multi.sendKeys(DTCfield);
+	driver.findElement(fieldnew1(DTCfield)).click();
+	Thread.sleep(1000);
+	DTC_field_Multi.click();
+	Thread.sleep(1000);
+	driver.findElement(By.xpath("//*[@id=\"ModalAvailableField\"]/div/div/div[2]/div/div[7]/div[2]/div/button/span[1]")).click();
+	Thread.sleep(1000);
+	driver.findElement(By.xpath("//*[@id=\"ModalAvailableField\"]/div/div/div[2]/div/div[7]/div[2]/div/div/ul/li[2]/a/span[1]")).click();
+	//format.click();
+	//format_value.sendKeys(fname);
+	Thread.sleep(1000);
+	//driver.findElement(fomat_select(fname)).click();
+	driver.findElement(By.xpath("//*[@id=\"spanindex17\"][1]")).click();
 	Robot robot = new Robot();
 	robot.keyPress(KeyEvent.VK_PAGE_DOWN);
 	robot.keyRelease(KeyEvent.VK_PAGE_DOWN);
+	 addEvidence(CurrentState.getDriver(), "Adding new filed", "yes");
 	save.click();
 	Thread.sleep(3000);
 	List<WebElement> actmenu1 = driver.findElements(By.xpath("//*[@id=\"vendorFieldMappingTable\"]/tbody/tr/td[2]"));
 	List<WebElement> actmenu2 = driver.findElements(By.xpath("//*[@id=\"vendorFieldMappingTable\"]/tbody/tr/td[3]"));
-
 	System.out.println(actmenu1.size());
-	 for (int i1 = 0; i1 < actmenu1.size(); i1++) {
+	 
+	for (int i1 = 0; i1 < actmenu1.size(); i1++) {
 	    	 String a1= actmenu1.get(i1).getText();
 	    	 String a2=actmenu2.get(i1).getText();
 	    	 System.out.println(a1);
 	    	 System.out.println(a2);
+	    	 Assert.assertEquals(DTCfield, field_name);
 	    	 if(a1.equals(field_name)&&a2.equals(DTCfield)) {
 	    		 System.out.println("Working");	
 }
@@ -189,8 +233,8 @@ robot.keyRelease(KeyEvent.VK_PAGE_DOWN);
 save_pop.click();
 Thread.sleep(3000);
 confirm.click();
-Thread.sleep(3000);
-close.click();
+Thread.sleep(6000);
+//close.click();
 }
 
 public void transmission(String LO_number) throws Exception {
