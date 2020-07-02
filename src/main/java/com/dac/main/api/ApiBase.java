@@ -42,7 +42,7 @@ ATUReport atu = new ATUReport();
 			response = request
 					.header(headers[0], headers[1])				 
 					.get("");
-			System.err.println("noparameter");
+		//	System.err.println("noparameter");
 		}
 		
 		
