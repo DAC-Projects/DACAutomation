@@ -191,7 +191,7 @@ public class DTC_Navigation {
 		}
 	}
 	
-	int before_Ignore;
+	int before_Ignore,after_ignore;
     public void Count_check(String lo_Number) throws InterruptedException {
         String lo=String.valueOf(lo_Number);
         location_number.sendKeys(lo);
@@ -210,12 +210,13 @@ public class DTC_Navigation {
     }
     
     public void Count_check_ignore(String lo_Number) throws InterruptedException {
+    	driver.navigate().refresh();
         String lo=String.valueOf(lo_Number);
         location_number.sendKeys(lo);
         apply.click();
         Thread.sleep(5000);
         WebElement UICount = driver.findElement(By.xpath("//*[@id='duplicatelistTable_info']"));
-        int after_ignore =  NumOfentries(UICount);
+        after_ignore =  NumOfentries(UICount);
         System.out.println("Count After ignoring :" +after_ignore);
         /*String ad=driver.findElement(By.xpath("//*[@id=\"duplicatelistTable_info\"]")).getText();
         String ad1=ad.substring(19, 21);
