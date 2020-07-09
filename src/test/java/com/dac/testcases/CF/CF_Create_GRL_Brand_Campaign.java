@@ -64,4 +64,16 @@ public class CF_Create_GRL_Brand_Campaign extends BaseClass{
 			data.Processedcampname(i,"GRLBrandCampaign");
 		}
 	}
+	
+	@Test(priority = 3, description = "Verify Processed Campaign")
+	public void VerifyProcessedCamp() throws Exception {
+		data = new CF_Campaigns_Page(CurrentState.getDriver());
+		wb = new ExcelHandler("./data/CF.xlsx", "GRLocationCampaign");
+		for (int i = 1; i <= wb.getRowCount(); i++) {
+			String CampaignName = wb.getCellValue(i, wb.seacrh_pattern("ProcessedCampaign Name", 0).get(0).intValue());
+			System.out.println("Campaign Name is :" +CampaignName);
+			data.ProcessedCampaign("GRLBrandCampaign");
+			addEvidence(CurrentState.getDriver(), "Verify Campaign", "yes");
+		}
+	}
 }

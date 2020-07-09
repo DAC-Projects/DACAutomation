@@ -46,378 +46,377 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import net.sf.jasperreports.engine.JasperPrint;
 
 public class ExtentTestNGITestListener
-    implements ITestListener, IClassListener, IAutoconst, ISuiteListener {
+implements ITestListener, IClassListener, IAutoconst, ISuiteListener {
 
-  private static ExtentReports extent = ExtentManager.getInstance();
-  @SuppressWarnings("rawtypes")
-private static ThreadLocal parentTest = new ThreadLocal();
-  @SuppressWarnings("rawtypes")
-private static ThreadLocal test = new ThreadLocal();
-  @SuppressWarnings({ "unchecked", "rawtypes" })
-private static ThreadLocal<ArrayList<JasperPrint>> printList =new ThreadLocal();
-    
-  
-  /**
-   * Setting up folders downloads, Screenshot and testevidence And if exist
-   * clear its content
-   * 
-   * @throws IOException
-   */
-  @Override
-  public void onStart(ISuite suite) {
-	  System.out.println("Suite Name : "+ suite.getName());
-	  
-	  String[] folderCreate = { "./downloads", "./Screenshot", "./testevidence" };
-	    System.out.println("folderCreate.toString() : "+folderCreate.toString());
+	private static ExtentReports extent = ExtentManager.getInstance();
+	@SuppressWarnings("rawtypes")
+	private static ThreadLocal parentTest = new ThreadLocal();
+	@SuppressWarnings("rawtypes")
+	private static ThreadLocal test = new ThreadLocal();
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private static ThreadLocal<ArrayList<JasperPrint>> printList =new ThreadLocal();
 
-	    for (String folder : folderCreate) {
-	      File file = new File(folder);
 
-	      if (!file.exists()) {
+	/**
+	 * Setting up folders downloads, Screenshot and testevidence And if exist
+	 * clear its content
+	 * 
+	 * @throws IOException
+	 */
+	@Override
+	public void onStart(ISuite suite) {
+		System.out.println("Suite Name : "+ suite.getName());
+		String[] folderCreate = { "./downloads", "./Screenshot", "./testevidence" };
+		System.out.println("folderCreate.toString() : "+folderCreate.toString());
 
-	       file.mkdirs();
-	      }
+		for (String folder : folderCreate) {
+			File file = new File(folder);
 
-	      try {
-			FileUtils.cleanDirectory(file);
-			 System.out.println("cleaned directory");
+			if (!file.exists()) {
+
+				file.mkdirs();
+			}
+
+			try {
+				FileUtils.cleanDirectory(file);
+				System.out.println("cleaned directory");
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("catch block");
+			}
+		}
+
+	}
+
+
+	/**
+	 * Set parent "node" for extent reports store "browser" and "test name" from testng.xml
+	 * 
+	 * @see org.testng.ITestListener#onStart(org.testng.ITestContext)		*/
+	@SuppressWarnings("unchecked")
+	@Override
+	public synchronized void onStart(ITestContext context) {
+
+		CurrentState
+		.setBrowser(context.getCurrentXmlTest().getParameter("browser"));
+		CurrentState.setTestName(context.getName());
+		ExtentTest parent = extent.createTest(CurrentState.getTestName());
+		parentTest.set(parent);
+		printList.set(new ArrayList<JasperPrint>()); 
+
+	}
+
+	/**
+	 * open browser, clear cookies and open maximized
+	 * 
+	 * @see org.testng.IClassListener#onBeforeClass(org.testng.ITestClass)
+	 */
+	@Override
+	public synchronized void onBeforeClass(ITestClass testClass) {
+
+		try {
+			CurrentState.setDriver(openBrowser(CurrentState.getBrowser()));
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("catch block");
 		}
-	    }
-  	
-  }
-  
-  
-  /**
-   * Set parent "node" for extent reports store "browser" and "test name" from testng.xml
-   * 
-   * @see org.testng.ITestListener#onStart(org.testng.ITestContext)		*/
-  @SuppressWarnings("unchecked")
-@Override
-  public synchronized void onStart(ITestContext context) {
-	 
-    CurrentState
-        .setBrowser(context.getCurrentXmlTest().getParameter("browser"));
-    CurrentState.setTestName(context.getName());
-    ExtentTest parent = extent.createTest(CurrentState.getTestName());
-    parentTest.set(parent);
-    printList.set(new ArrayList<JasperPrint>()); 
+		CurrentState.getDriver().manage().window().maximize();
+		CurrentState.getDriver().manage().deleteAllCookies();
+		//Send driver object to JSWaiter Class
+		JSWaiter.setDriver(CurrentState.getDriver());
 
-  }
+		BaseClass.navigateToBasePage();
 
-  /**
-   * open browser, clear cookies and open maximized
-   * 
-   * @see org.testng.IClassListener#onBeforeClass(org.testng.ITestClass)
-   */
-  @Override
-  public synchronized void onBeforeClass(ITestClass testClass) {
- 
-      try {
-        CurrentState.setDriver(openBrowser(CurrentState.getBrowser()));
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-      CurrentState.getDriver().manage().window().maximize();
-      CurrentState.getDriver().manage().deleteAllCookies();
-      //Send driver object to JSWaiter Class
-      JSWaiter.setDriver(CurrentState.getDriver());
-      
-      BaseClass.navigateToBasePage();
-   
-  }
+	}
 
-  /**
-   * (non-Javadoc)
-   * Initialize Child nodes in extent report
-   * 
-   * @see org.testng.ITestListener#onTestStart(org.testng.ITestResult)
-   */
-  @SuppressWarnings("unchecked")
-@Override
-  public synchronized void onTestStart(ITestResult result) {
-    ExtentTest child = ((ExtentTest) parentTest.get()).createNode(getTestname(result));
-    child.assignCategory(
-        "Tests_executed_in_" + CurrentState.getBrowser() + "_browser");
-    test.set(child);
-    CurrentState.setLogger(child);
-    ((ExtentTest) test.get()).log(Status.INFO, "Testlogs");
-    
-   CurrentState.setEvidenceList(new ArrayList<SeleniumEvidence>());
- 
-  }
-  
-  /**
-   * This method return the description of @Test method if provided 
-   * otherwise will return the test method name 	*/
-  private String getTestname(ITestResult result){
-    String description = (result.getMethod().getDescription() != null)
-        ? result.getMethod().getDescription()
-        : result.getMethod().getMethodName();
-    return description;
-  }
+	/**
+	 * (non-Javadoc)
+	 * Initialize Child nodes in extent report
+	 * 
+	 * @see org.testng.ITestListener#onTestStart(org.testng.ITestResult)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public synchronized void onTestStart(ITestResult result) {
+		ExtentTest child = ((ExtentTest) parentTest.get()).createNode(getTestname(result));
+		child.assignCategory(
+				"Tests_executed_in_" + CurrentState.getBrowser() + "_browser");
+		test.set(child);
+		CurrentState.setLogger(child);
+		((ExtentTest) test.get()).log(Status.INFO, "Testlogs");
 
-  /**
-   * This method is used to execute when the @Test method is successfully executed		
-   * 
-   * @see org.testng.IClassListener#onTestSuccess(org.testng.ITestResult)		*/
-  @SuppressWarnings({ "unchecked", "rawtypes" })
-  @Override
-  public synchronized void onTestSuccess(ITestResult result) {
-    ((ExtentTest) test.get()).pass("Test Case Success and Verified");
-    List evidence =CurrentState.getEvidenceList();
-    try {
-    
-    if(!evidence.isEmpty()) {
-      
-    EvidenceReport report = new EvidenceReport(evidence, "MyReportOK", getTestname(result), result.getTestContext().getName(), null);
-      printList.get().add(GenerateEvidenceReport.generareEvidenceReport(report, EvidenceType.PDF));}else {
-      BaseClass.addEvidence(CurrentState.getDriver(), "Test Passed. No Steps were added to this method", "yes");
-        EvidenceReport report = new EvidenceReport(CurrentState.getEvidenceList(), "MyReportOK", getTestname(result), result.getTestContext().getName(), null);
-        printList.get().add(GenerateEvidenceReport.generareEvidenceReport(report, EvidenceType.PDF));}
-      
-    }catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
+		CurrentState.setEvidenceList(new ArrayList<SeleniumEvidence>());
 
-  /**
-   * This method is used to execute when the @Test method is failed from execution		
-   * 
-   * @see org.testng.IClassListener#onTestFailure(org.testng.ITestResult)		*/
-  @SuppressWarnings({ "unchecked", "rawtypes" })
-  @Override
-  public synchronized void onTestFailure(ITestResult result) {
+	}
 
-    generateErrorLog(result);
+	/**
+	 * This method return the description of @Test method if provided 
+	 * otherwise will return the test method name 	*/
+	private String getTestname(ITestResult result){
+		String description = (result.getMethod().getDescription() != null)
+				? result.getMethod().getDescription()
+						: result.getMethod().getMethodName();
+				return description;
+	}
 
-    try {
-    	BaseClass.addEvidence(CurrentState.getDriver(), "Error", "yes");
-    String errorMessage = result.getThrowable().getMessage();
-    List evidence =CurrentState.getEvidenceList();
-      
-    EvidenceReport report = new EvidenceReport(evidence, "MyReportNOK", getTestname(result), result.getTestContext().getName(), errorMessage);
-      printList.get().add(GenerateEvidenceReport.generareEvidenceReport(report, EvidenceType.PDF));
+	/**
+	 * This method is used to execute when the @Test method is successfully executed		
+	 * 
+	 * @see org.testng.IClassListener#onTestSuccess(org.testng.ITestResult)		*/
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public synchronized void onTestSuccess(ITestResult result) {
+		((ExtentTest) test.get()).pass("Test Case Success and Verified");
+		List evidence =CurrentState.getEvidenceList();
+		try {
 
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (Exception e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+			if(!evidence.isEmpty()) {
 
-  }
+				EvidenceReport report = new EvidenceReport(evidence, "MyReportOK", getTestname(result), result.getTestContext().getName(), null);
+				printList.get().add(GenerateEvidenceReport.generareEvidenceReport(report, EvidenceType.PDF));}else {
+					BaseClass.addEvidence(CurrentState.getDriver(), "Test Passed. No Steps were added to this method", "yes");
+					EvidenceReport report = new EvidenceReport(CurrentState.getEvidenceList(), "MyReportOK", getTestname(result), result.getTestContext().getName(), null);
+					printList.get().add(GenerateEvidenceReport.generareEvidenceReport(report, EvidenceType.PDF));}
 
-  /**
-   * This method is used to execute when the @Test method is skipped from execution 
-   * as those method may depends on stats of another test method		
-   * 
-   * @see org.testng.IClassListener#onTestSkipped(org.testng.ITestResult)		*/
-  @SuppressWarnings("unchecked")
-@Override
-  public synchronized void onTestSkipped(ITestResult result) {
-    String description = (result.getMethod().getDescription() != null)
-        ? result.getMethod().getDescription()
-        : result.getMethod().getMethodName();
-    ExtentTest child = ((ExtentTest) parentTest.get()).createNode(description);
-    child.assignCategory(CurrentState.getBrowser());
-    test.set(child);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    ((ExtentTest) test.get()).skip(result.getThrowable());
-    
-  }
+	/**
+	 * This method is used to execute when the @Test method is failed from execution		
+	 * 
+	 * @see org.testng.IClassListener#onTestFailure(org.testng.ITestResult)		*/
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public synchronized void onTestFailure(ITestResult result) {
 
-  @Override
-  public synchronized void onTestFailedButWithinSuccessPercentage(
-      ITestResult result) {
+		generateErrorLog(result);
 
-  }
+		try {
+			BaseClass.addEvidence(CurrentState.getDriver(), "Error", "yes");
+			String errorMessage = result.getThrowable().getMessage();
+			List evidence =CurrentState.getEvidenceList();
 
-  /**
-   * (non-Javadoc)
-   * Close the browser after the execution of each class in TestNG.xml 
-   * 
-   * @see org.testng.IClassListener#onAfterClass(org.testng.ITestClass)	   */
-  @Override
-  public synchronized void onAfterClass(ITestClass testClass) {
-   
-    CurrentState.getDriver().quit();
-    CurrentState.setDriver(null);
-  }
+			EvidenceReport report = new EvidenceReport(evidence, "MyReportNOK", getTestname(result), result.getTestContext().getName(), errorMessage);
+			printList.get().add(GenerateEvidenceReport.generareEvidenceReport(report, EvidenceType.PDF));
 
-  /**
-   * Quit the browser after the execution of each class in TestNG.xml 
-   * and generate the test evidence after each execution of a class		
-   * 
-   * @see org.testng.ITestListener#onFinish(org.testng.ITestContext)	*/
-  @Override
-  public synchronized void onFinish(ITestContext context) {
-    extent.flush();
-    if (CurrentState.getDriver() != null) {
-      CurrentState.getDriver().quit();
-    }
-    
-    if(!printList.get().isEmpty()) {
-      GenerateEvidenceReport.exportReport(printList.get(), "Report for "+context.getName());
-      printList.get().clear();}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-  }
+	}
 
-  /**
-   * Code to generate error log when the test script got failed.
-   * 
-   * @param result
-   */
-  private void generateErrorLog(ITestResult result) {
-    try {
-      String methodname = result.getMethod().getMethodName();
-      ((ExtentTest) test.get()).log(Status.FAIL, methodname);
-      String image;
+	/**
+	 * This method is used to execute when the @Test method is skipped from execution 
+	 * as those method may depends on stats of another test method		
+	 * 
+	 * @see org.testng.IClassListener#onTestSkipped(org.testng.ITestResult)		*/
+	@SuppressWarnings("unchecked")
+	@Override
+	public synchronized void onTestSkipped(ITestResult result) {
+		String description = (result.getMethod().getDescription() != null)
+				? result.getMethod().getDescription()
+						: result.getMethod().getMethodName();
+				ExtentTest child = ((ExtentTest) parentTest.get()).createNode(description);
+				child.assignCategory(CurrentState.getBrowser());
+				test.set(child);
 
-      image = Utilities.captureScreenshot(CurrentState.getDriver(),
-          this.getClass().getSimpleName() + "_" + result.getName(), true);
+				((ExtentTest) test.get()).skip(result.getThrowable());
 
-      ((ExtentTest) test.get()).addScreenCaptureFromPath(image, "Error");
+	}
 
-      if (result.getThrowable() instanceof ElementNotVisibleException) {
-        ((ExtentTest) test.get()).log(Status.FAIL,
-            "function " + methodname + " failed beacuse :");
-        ((ExtentTest) test.get()).log(Status.FAIL,
-            "Although an element is present on the DOM, it is not visible");
+	@Override
+	public synchronized void onTestFailedButWithinSuccessPercentage(
+			ITestResult result) {
 
-      } else if (result
-          .getThrowable() instanceof ElementNotSelectableException) {
-        ((ExtentTest) test.get()).log(Status.FAIL,
-            "function " + methodname + " failed beacuse :");
-        ((ExtentTest) test.get()).log(Status.FAIL,
-            "Element cannot be selected. Element could be disabled");
+	}
 
-      } else if (result.getThrowable() instanceof TimeoutException) {
-        ((ExtentTest) test.get()).log(Status.FAIL,
-            "function " + methodname + " failed beacuse :");
-        ((ExtentTest) test.get()).log(Status.FAIL,
-            "Execution failed because the command did not complete in enough time.");
+	/**
+	 * (non-Javadoc)
+	 * Close the browser after the execution of each class in TestNG.xml 
+	 * 
+	 * @see org.testng.IClassListener#onAfterClass(org.testng.ITestClass)	   */
+	@Override
+	public synchronized void onAfterClass(ITestClass testClass) {
 
-      } else if (result.getThrowable() instanceof NoSuchElementException) {
-        ((ExtentTest) test.get()).log(Status.FAIL,
-            "function " + methodname + " failed beacuse :");
-        ((ExtentTest) test.get()).log(Status.FAIL,
-            "Cannot find Element on the page");
+		CurrentState.getDriver().quit();
+		CurrentState.setDriver(null);
+	}
 
-      } else if (result
-          .getThrowable() instanceof StaleElementReferenceException) {
-        ((ExtentTest) test.get()).log(Status.FAIL,
-            "function " + methodname + " failed beacuse :");
-        ((ExtentTest) test.get()).log(Status.FAIL,
-            "Element is no longer appearing on the DOM page.");
+	/**
+	 * Quit the browser after the execution of each class in TestNG.xml 
+	 * and generate the test evidence after each execution of a class		
+	 * 
+	 * @see org.testng.ITestListener#onFinish(org.testng.ITestContext)	*/
+	@Override
+	public synchronized void onFinish(ITestContext context) {
+		extent.flush();
+		if (CurrentState.getDriver() != null) {
+			CurrentState.getDriver().quit();
+		}
 
-      }
+		if(!printList.get().isEmpty()) {
+			GenerateEvidenceReport.exportReport(printList.get(), "Report for "+context.getName());
+			printList.get().clear();}
 
-      Throwable th = result.getThrowable();
-      if (th != null) {
-        System.out.println(th.getMessage());
+	}
 
-        String error = th.getMessage().split("Session info")[0];
-        ((ExtentTest) test.get()).log(Status.FAIL, error);
-        //result.setThrowable(null);
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
+	/**
+	 * Code to generate error log when the test script got failed.
+	 * 
+	 * @param result
+	 */
+	private void generateErrorLog(ITestResult result) {
+		try {
+			String methodname = result.getMethod().getMethodName();
+			((ExtentTest) test.get()).log(Status.FAIL, methodname);
+			String image;
 
-  /**
-   * This method is used to open the browser ie. chrome or firefox or ie browser 
-   * while execution and setup the configuration before opening the browser.
-   * 
-   * @param browser
-   * @return the driver in which user going to execute among chrome/firefox/ie.
-   * @throws IOException	   */
-  @SuppressWarnings({ "unused", "deprecation" })
-public WebDriver openBrowser(String browser) throws IOException {
-	  WebDriverWait wait;
-    WebDriver driver = null;
+			image = Utilities.captureScreenshot(CurrentState.getDriver(),
+					this.getClass().getSimpleName() + "_" + result.getName(), true);
 
-    File file = new File(".\\downloads");
-    if (!file.exists())
-      file.mkdirs();
+			((ExtentTest) test.get()).addScreenCaptureFromPath(image, "Error");
 
-    String downloadFolder = System.getProperty("user.dir") + "\\downloads";
+			if (result.getThrowable() instanceof ElementNotVisibleException) {
+				((ExtentTest) test.get()).log(Status.FAIL,
+						"function " + methodname + " failed beacuse :");
+				((ExtentTest) test.get()).log(Status.FAIL,
+						"Although an element is present on the DOM, it is not visible");
 
-    if (browser.equalsIgnoreCase("Chrome")) {
+			} else if (result
+					.getThrowable() instanceof ElementNotSelectableException) {
+				((ExtentTest) test.get()).log(Status.FAIL,
+						"function " + methodname + " failed beacuse :");
+				((ExtentTest) test.get()).log(Status.FAIL,
+						"Element cannot be selected. Element could be disabled");
+
+			} else if (result.getThrowable() instanceof TimeoutException) {
+				((ExtentTest) test.get()).log(Status.FAIL,
+						"function " + methodname + " failed beacuse :");
+				((ExtentTest) test.get()).log(Status.FAIL,
+						"Execution failed because the command did not complete in enough time.");
+
+			} else if (result.getThrowable() instanceof NoSuchElementException) {
+				((ExtentTest) test.get()).log(Status.FAIL,
+						"function " + methodname + " failed beacuse :");
+				((ExtentTest) test.get()).log(Status.FAIL,
+						"Cannot find Element on the page");
+
+			} else if (result
+					.getThrowable() instanceof StaleElementReferenceException) {
+				((ExtentTest) test.get()).log(Status.FAIL,
+						"function " + methodname + " failed beacuse :");
+				((ExtentTest) test.get()).log(Status.FAIL,
+						"Element is no longer appearing on the DOM page.");
+
+			}
+
+			Throwable th = result.getThrowable();
+			if (th != null) {
+				System.out.println(th.getMessage());
+
+				String error = th.getMessage().split("Session info")[0];
+				((ExtentTest) test.get()).log(Status.FAIL, error);
+				//result.setThrowable(null);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * This method is used to open the browser ie. chrome or firefox or ie browser 
+	 * while execution and setup the configuration before opening the browser.
+	 * 
+	 * @param browser
+	 * @return the driver in which user going to execute among chrome/firefox/ie.
+	 * @throws IOException	   */
+	@SuppressWarnings({ "unused", "deprecation" })
+	public WebDriver openBrowser(String browser) throws IOException {
+		WebDriverWait wait;
+		WebDriver driver = null;
+
+		File file = new File(".\\downloads");
+		if (!file.exists())
+			file.mkdirs();
+
+		String downloadFolder = System.getProperty("user.dir") + "\\downloads";
+
+		if (browser.equalsIgnoreCase("Chrome")) {
 
 
-    WebDriverManager.chromedriver().version("83.0.4103.39").setup(); 
+			WebDriverManager.chromedriver().version("83.0.4103.39").setup(); 
 
 
-   // WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
+			// WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
 
-    HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
-    		chromePrefs.put("profile.default_content_settings.popups", 0);
-    		chromePrefs.put("download.default_directory", downloadFolder);
-    		chromePrefs.put("download.prompt_for_download", false);
-    		chromePrefs.put("plugins.plugins_disabled", "Chrome PDF Viewer");
-    		ChromeOptions options=new ChromeOptions();
+			HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
+			chromePrefs.put("profile.default_content_settings.popups", 0);
+			chromePrefs.put("download.default_directory", downloadFolder);
+			chromePrefs.put("download.prompt_for_download", false);
+			chromePrefs.put("plugins.plugins_disabled", "Chrome PDF Viewer");
+			ChromeOptions options=new ChromeOptions();
 
-    		//options.addArguments("--headless")
-    		//options.addArguments("--window-size=1920,1080")
-    		options.addArguments("--test-type");
-    		//options.addArguments("--disable-gpu")
-    		options.addArguments("--no-sandbox");
-    		//options.addArguments("--disable-dev-shm-usage")
-    		options.addArguments("--disable-software-rasterizer");
-    		options.addArguments("--disable-popup-blocking");
-    		options.addArguments("--disable-extensions");
-    		options.setExperimentalOption("prefs", chromePrefs);
+			//options.addArguments("--headless")
+			//options.addArguments("--window-size=1920,1080")
+			options.addArguments("--test-type");
+			//options.addArguments("--disable-gpu")
+			options.addArguments("--no-sandbox");
+			//options.addArguments("--disable-dev-shm-usage")
+			options.addArguments("--disable-software-rasterizer");
+			options.addArguments("--disable-popup-blocking");
+			options.addArguments("--disable-extensions");
+			options.setExperimentalOption("prefs", chromePrefs);
 
-    		DesiredCapabilities cap = DesiredCapabilities.chrome();
-    		cap.setCapability(ChromeOptions.CAPABILITY, options);
-    		cap.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-    		driver = new ChromeDriver(cap);    
-    		driver.manage().window().maximize();
+			DesiredCapabilities cap = DesiredCapabilities.chrome();
+			cap.setCapability(ChromeOptions.CAPABILITY, options);
+			cap.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+			driver = new ChromeDriver(cap);    
+			driver.manage().window().maximize();
 
-  //Send driver object to JSWaiter Class
-    JSWaiter.setDriver(driver);
-    //This is the default wait for Explicit Waits
-    wait = new WebDriverWait(driver,15);
-    } else if (browser.equalsIgnoreCase("Firefox")) {
-      WebDriverManager.firefoxdriver().setup();
-      FirefoxProfile profile = new FirefoxProfile();
-      profile.setPreference("browser.download.dir", downloadFolder); // folder
-      profile.setPreference("pdfjs.disabled", true); // disable the built-in
-                                                     // viewer
-      profile.setPreference("browser.download.folderList", 2);
-      profile.setPreference("browser.download.panel.shown", false);
-      profile.setPreference("browser.helperApps.neverAsksaveToDisk",
-          "application/x-msexcel,application/excel,application/x-excel,application/excel,application/x-excel,application/excel,application/vnd.ms-excel,application/x-excel,application/x-msexcel");
+			//Send driver object to JSWaiter Class
+			JSWaiter.setDriver(driver);
+			//This is the default wait for Explicit Waits
+			wait = new WebDriverWait(driver,15);
+		} else if (browser.equalsIgnoreCase("Firefox")) {
+			WebDriverManager.firefoxdriver().setup();
+			FirefoxProfile profile = new FirefoxProfile();
+			profile.setPreference("browser.download.dir", downloadFolder); // folder
+			profile.setPreference("pdfjs.disabled", true); // disable the built-in
+			// viewer
+			profile.setPreference("browser.download.folderList", 2);
+			profile.setPreference("browser.download.panel.shown", false);
+			profile.setPreference("browser.helperApps.neverAsksaveToDisk",
+					"application/x-msexcel,application/excel,application/x-excel,application/excel,application/x-excel,application/excel,application/vnd.ms-excel,application/x-excel,application/x-msexcel");
 
-      FirefoxOptions firefoxOptions = new FirefoxOptions();
-      firefoxOptions.setCapability(FirefoxDriver.PROFILE, profile);
-      firefoxOptions.setCapability(FirefoxDriver.MARIONETTE, true);
-      firefoxOptions.setCapability(CapabilityType.ELEMENT_SCROLL_BEHAVIOR, 0);
+			FirefoxOptions firefoxOptions = new FirefoxOptions();
+			firefoxOptions.setCapability(FirefoxDriver.PROFILE, profile);
+			firefoxOptions.setCapability(FirefoxDriver.MARIONETTE, true);
+			firefoxOptions.setCapability(CapabilityType.ELEMENT_SCROLL_BEHAVIOR, 0);
 
-      driver = new FirefoxDriver(firefoxOptions);
-    //Send driver object to JSWaiter Class
-      JSWaiter.setDriver(driver);
-      //This is the default wait for Explicit Waits
-      wait = new WebDriverWait(driver,15);
+			driver = new FirefoxDriver(firefoxOptions);
+			//Send driver object to JSWaiter Class
+			JSWaiter.setDriver(driver);
+			//This is the default wait for Explicit Waits
+			wait = new WebDriverWait(driver,15);
 
-    } else if (browser.equalsIgnoreCase("IE")) {
-      WebDriverManager.iedriver().architecture(Architecture.X32).setup();
-      DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();     
-      capabilities.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
-      capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
-      capabilities.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, true);     
-      capabilities.setCapability("requireWindowFocus", true);
-     
-      //options.requireWindowFocus();
-      String path = System.getProperty("user.dir") + "/downloads";
-      String cmd1 = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\Microsoft\\Internet Explorer\\Main\\FeatureControl\\FEATURE_BFCACHE "
-          + path;
-      /*InternetExplorerOptions options = new InternetExplorerOptions();
+		} else if (browser.equalsIgnoreCase("IE")) {
+			WebDriverManager.iedriver().architecture(Architecture.X32).setup();
+			DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();     
+			capabilities.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
+			capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
+			capabilities.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, true);     
+			capabilities.setCapability("requireWindowFocus", true);
+
+			//options.requireWindowFocus();
+			String path = System.getProperty("user.dir") + "/downloads";
+			String cmd1 = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\Microsoft\\Internet Explorer\\Main\\FeatureControl\\FEATURE_BFCACHE "
+					+ path;
+			/*InternetExplorerOptions options = new InternetExplorerOptions();
       capabilities.setCapability("se:ieOptions", options);
       options.setCapability("browser.helperApps.neverAsk.saveToDisk" , "application/octet-stream;application/csv;text/csv/xlsx;application/vnd.ms-excel;"); 
       options.setCapability("browser.helperApps.alwaysAsk.force", false); 
@@ -426,30 +425,30 @@ public WebDriver openBrowser(String browser) throws IOException {
       options.setCapability("browser.download.dir","e:\\SampleExcel");
       InternetExplorerDriver(options);*/
 
-      try {
-        Runtime.getRuntime().exec(cmd1);
-      } catch (Exception e) {
-        System.out.println(
-            "Coulnd't change the registry for default directory for IE");
-      }
-      driver = new InternetExplorerDriver(capabilities);
-    //Send driver object to JSWaiter Class
-      JSWaiter.setDriver(driver);
-      //This is the default wait for Explicit Waits
-      wait = new WebDriverWait(driver,15);
+			try {
+				Runtime.getRuntime().exec(cmd1);
+			} catch (Exception e) {
+				System.out.println(
+						"Coulnd't change the registry for default directory for IE");
+			}
+			driver = new InternetExplorerDriver(capabilities);
+			//Send driver object to JSWaiter Class
+			JSWaiter.setDriver(driver);
+			//This is the default wait for Explicit Waits
+			wait = new WebDriverWait(driver,15);
 
-    }
+		}
 
-    driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
-    System.out.println("opened browser");
-    return driver;
+		driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
+		System.out.println("opened browser");
+		return driver;
 
-  }
+	}
 
 
 
-  @Override
-  public void onFinish(ISuite suite) {
-	  System.out.println("Finish Suite Name : "+ suite.getName());
-  }
+	@Override
+	public void onFinish(ISuite suite) {
+		System.out.println("Finish Suite Name : "+ suite.getName());
+	}
 }

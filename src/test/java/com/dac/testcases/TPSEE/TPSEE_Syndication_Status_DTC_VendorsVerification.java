@@ -11,13 +11,14 @@ import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
 
-public class TPSEE_Syndication_Status_DTC_VendorsVerification extends BaseClass{
-	
+public class TPSEE_Syndication_Status_DTC_VendorsVerification extends BaseClass {
+
 	TPSEE_Syndication_Status_Page data;
 	Navigationpage np;
 	String[] VendorList;
 	String[] StatusList;
 	SoftAssert soft = new SoftAssert();
+
 	/**
 	 * Test to navigate to Syndication Status Page
 	 * 
@@ -31,7 +32,7 @@ public class TPSEE_Syndication_Status_DTC_VendorsVerification extends BaseClass{
 		CurrentState.getLogger().log(Status.PASS, "Navigated to Syndication Report Page");
 		addEvidence(CurrentState.getDriver(), "To Navigate to Syndication Report Page", "yes");
 	}
-	
+
 	/**
 	 * Test to apply filters
 	 * 
@@ -71,6 +72,7 @@ public class TPSEE_Syndication_Status_DTC_VendorsVerification extends BaseClass{
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * To verify Status of Vendor Apple
 	 * 
@@ -82,26 +84,16 @@ public class TPSEE_Syndication_Status_DTC_VendorsVerification extends BaseClass{
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Syndication");
 		wb.deleteEmptyRows();
 		int row = 0;
-		for (int i = 1; i <= wb.getRowCount(); i++) {
-			String LocNum = wb.getCellValue(i, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
-			System.out.println("The Location Number is :" + LocNum);
-			row = data.getLocationNumberRowNum(LocNum);
-			String vendors = wb.getCellValue(1, wb.seacrh_pattern("Vendor", 0).get(0).intValue());
-			VendorList = vendors.split(",");
-			int size = VendorList.length;
-			System.out.println("The size of list is :" +size);
-			String status = wb.getCellValue(1, wb.seacrh_pattern("Status", 0).get(0).intValue());
-			System.out.println("The status is :" +status);
-			StatusList = status.split(",");
-			for(int k =0; k<=size; k++) {
-			String Vendor = VendorList[k];
-			System.out.println("The Location Number is :" + Vendor);
-			String Status = StatusList[k];
-			data.verifyStatus(Vendor, Status, row, soft,LocNum);
-			soft.assertAll();
-			addEvidence(CurrentState.getDriver(), "To Verify Status of Vendors of DTC", "yes");
-			}
-		}
+		String LocNum = wb.getCellValue(1, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
+		System.out.println("The Location Number is :" + LocNum);
+		row = data.getLocationNumberRowNum(LocNum);
+		String Vendor = wb.getCellValue(1, wb.seacrh_pattern("Vendor", 0).get(0).intValue());
+		String Status = wb.getCellValue(1, wb.seacrh_pattern("Status", 0).get(0).intValue());
+		System.out.println("The status is :" + Status);
+		System.out.println("The Vendor is :" + Vendor);
+		data.verifyStatus(Vendor, Status, row, soft, LocNum);
+		soft.assertAll();
+		addEvidence(CurrentState.getDriver(), "To Verify Status of Vendors of DTC", "yes");
 	}
 
 	/**
@@ -114,18 +106,16 @@ public class TPSEE_Syndication_Status_DTC_VendorsVerification extends BaseClass{
 		data = new TPSEE_Syndication_Status_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Syndication");
 		wb.deleteEmptyRows();
-		for (int i = 1; i <= wb.getRowCount(); i++) {
-			String LocNum = wb.getCellValue(i, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
-			System.out.println("The Location Number is :" + LocNum);
-			int row = data.getLocationNumberRowNum(LocNum);
-			String Vendor = wb.getCellValue(2, wb.seacrh_pattern("Vendor", 0).get(0).intValue());
-			System.out.println("The Location Number is :" + Vendor);
-			String Status = wb.getCellValue(2, wb.seacrh_pattern("Status", 0).get(0).intValue());
-			System.out.println("The status is :" + Status);
-			data.verifyStatus(Vendor, Status, row,soft,LocNum);
-			soft.assertAll();
-			addEvidence(CurrentState.getDriver(), "To Verify Status of Vendors of DTC", "yes");
-		}
+		String LocNum = wb.getCellValue(1, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
+		System.out.println("The Location Number is :" + LocNum);
+		int row = data.getLocationNumberRowNum(LocNum);
+		String Vendor = wb.getCellValue(2, wb.seacrh_pattern("Vendor", 0).get(0).intValue());
+		System.out.println("The vendor is :" + Vendor);
+		String Status = wb.getCellValue(2, wb.seacrh_pattern("Status", 0).get(0).intValue());
+		System.out.println("The status is :" + Status);
+		data.verifyStatus(Vendor, Status, row, soft, LocNum);
+		soft.assertAll();
+		addEvidence(CurrentState.getDriver(), "To Verify Status of Vendors of DTC", "yes");
 	}
 
 	/**
@@ -138,18 +128,16 @@ public class TPSEE_Syndication_Status_DTC_VendorsVerification extends BaseClass{
 		data = new TPSEE_Syndication_Status_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Syndication");
 		wb.deleteEmptyRows();
-		for (int i = 1; i <= wb.getRowCount(); i++) {
-			String LocNum = wb.getCellValue(i, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
-			System.out.println("The Location Number is :" + LocNum);
-			int row = data.getLocationNumberRowNum(LocNum);
-			String Vendor = wb.getCellValue(3, wb.seacrh_pattern("Vendor", 0).get(0).intValue());
-			System.out.println("The Location Number is :" + Vendor);
-			String Status = wb.getCellValue(3, wb.seacrh_pattern("Status", 0).get(0).intValue());
-			System.out.println("The status is :" + Status);
-			data.verifyStatus(Vendor, Status, row,soft,LocNum);
-			soft.assertAll();
-			addEvidence(CurrentState.getDriver(), "To Verify Status of Vendors of DTC", "yes");
-		}
+		String LocNum = wb.getCellValue(1, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
+		System.out.println("The Location Number is :" + LocNum);
+		int row = data.getLocationNumberRowNum(LocNum);
+		String Vendor = wb.getCellValue(3, wb.seacrh_pattern("Vendor", 0).get(0).intValue());
+		System.out.println("The vendor is :" + Vendor);
+		String Status = wb.getCellValue(3, wb.seacrh_pattern("Status", 0).get(0).intValue());
+		System.out.println("The status is :" + Status);
+		data.verifyStatus(Vendor, Status, row, soft, LocNum);
+		soft.assertAll();
+		addEvidence(CurrentState.getDriver(), "To Verify Status of Vendors of DTC", "yes");
 	}
 
 	/**
@@ -162,18 +150,16 @@ public class TPSEE_Syndication_Status_DTC_VendorsVerification extends BaseClass{
 		data = new TPSEE_Syndication_Status_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Syndication");
 		wb.deleteEmptyRows();
-		for (int i = 1; i <= wb.getRowCount(); i++) {
-			String LocNum = wb.getCellValue(i, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
-			System.out.println("The Location Number is :" + LocNum);
-			int row = data.getLocationNumberRowNum(LocNum);
-			String Vendor = wb.getCellValue(4, wb.seacrh_pattern("Vendor", 0).get(0).intValue());
-			System.out.println("The Location Number is :" + Vendor);
-			String Status = wb.getCellValue(4, wb.seacrh_pattern("Status", 0).get(0).intValue());
-			System.out.println("The status is :" + Status);
-			data.verifyStatus(Vendor, Status, row,soft,LocNum);
-			soft.assertAll();
-			addEvidence(CurrentState.getDriver(), "To Verify Status of Vendors of DTC", "yes");
-		}
+		String LocNum = wb.getCellValue(1, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
+		System.out.println("The Location Number is :" + LocNum);
+		int row = data.getLocationNumberRowNum(LocNum);
+		String Vendor = wb.getCellValue(4, wb.seacrh_pattern("Vendor", 0).get(0).intValue());
+		System.out.println("The vendor is :" + Vendor);
+		String Status = wb.getCellValue(4, wb.seacrh_pattern("Status", 0).get(0).intValue());
+		System.out.println("The status is :" + Status);
+		data.verifyStatus(Vendor, Status, row, soft, LocNum);
+		soft.assertAll();
+		addEvidence(CurrentState.getDriver(), "To Verify Status of Vendors of DTC", "yes");
 	}
 
 }

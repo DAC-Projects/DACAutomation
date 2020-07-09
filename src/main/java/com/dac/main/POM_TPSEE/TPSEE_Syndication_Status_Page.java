@@ -19,6 +19,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
+import resources.BaseClass;
+import resources.CurrentState;
+
 public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 
 	public TPSEE_Syndication_Status_Page(WebDriver driver) {
@@ -131,8 +134,9 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 	 * @param XLStatus
 	 * @param row
 	 * @param soft
+	 * @throws Exception 
 	 */
-	public void verifyStatus(String Vendor, String XLStatus, int row, SoftAssert soft, String LocationNumber) {
+	public void verifyStatus(String Vendor, String XLStatus, int row, SoftAssert soft, String LocationNumber) throws Exception {
 		String UIstatus = "";
 		List<WebElement> vendortablerow = driver.findElements(
 				By.xpath("(//tbody//tr[@role='row'])[" + row + "]//div[@class='table-listing-details']//tbody//tr"));
@@ -140,11 +144,13 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 		System.out.println("The size of vendor table is :" + size);
 			WebElement x = driver.findElement(By.xpath("(//tbody//tr[@role='row'])[" + row
 					+ "]//div[@class='table-listing-details']//tbody//td[contains(text(),'" + Vendor + "')]"));
+			scrollByElement(x);
 			if (x.isDisplayed()) {
 				UIstatus = driver.findElement(By.xpath("(//tbody//tr[@role='row'])[" + row
 						+ "]//div[@class='table-listing-details']//tbody//td[contains(text(),'" + Vendor
 						+ "')]//following-sibling::td[1]")).getAttribute("innerText");
 				System.out.println("Status of Vendor is :" + UIstatus);
+				BaseClass.addEvidence(CurrentState.getDriver(), "Verify vendors", "yes");
 				soft.assertEquals(UIstatus, XLStatus,"The Location Number is "+LocationNumber+" The Vendor is "+Vendor+" UI Status is "+UIstatus+" and XL Status is "+XLStatus+"");
 			} else {
 				System.out.println("Vendor is not displayed");

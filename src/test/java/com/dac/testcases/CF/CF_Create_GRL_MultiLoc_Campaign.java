@@ -10,8 +10,8 @@ import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
 
-public class CF_Create_GRL_Location_Campaign extends BaseClass{
-	
+public class CF_Create_GRL_MultiLoc_Campaign extends BaseClass{
+
 	Navigationpage np;
 	CF_Campaigns_Page data;
 	ExcelHandler wb;
@@ -32,7 +32,7 @@ public class CF_Create_GRL_Location_Campaign extends BaseClass{
 	@Test(priority = 2, description = "Test to create email brand campaign", dependsOnMethods = "navigateToCampaignPage")
 	public void CreateBrandEmailCampaign() throws Exception {
 		data = new CF_Campaigns_Page(CurrentState.getDriver());
-		wb = new ExcelHandler("./data/CF.xlsx", "GRLocationCampaign");
+		wb = new ExcelHandler("./data/CF.xlsx", "GRLMultiLocation");
 		for (int i = 1; i <= wb.getRowCount(); i++) {
 			String CampaignType = wb.getCellValue(i, wb.seacrh_pattern("CamType", 0).get(0).intValue());
 			System.out.println("The Campaign Type is:" + CampaignType);
@@ -45,24 +45,23 @@ public class CF_Create_GRL_Location_Campaign extends BaseClass{
 			String CampaignDescription = wb.getCellValue(i, wb.seacrh_pattern("CamDes", 0).get(0).intValue());
 			System.out.println("The Campaign Description is :" + CampaignDescription);
 			data.CampaignInfo(CampaignType, CampaignOption, CampLanguage, CampaignName, CampaignDescription);
-			String Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
-			System.out.println("The location is :" +Location );
-			data.GRLocationSetUp(Location);
+			data.GRLMultiLocSetUp();
+			addEvidence(CurrentState.getDriver(), "To Enter set up details", "yes");
 			data.GRLocationScheduling();
-			data.ThankYouPage("GRLocationCampaign");
+			data.ThankYouPage("GRLMultiLocation");
 			data.SummaryPage();	
-			data.Processedcampname(i,"GRLocationCampaign");
+			data.Processedcampname(i,"GRLMultiLocation");
 		}
 	}
 	
 	@Test(priority = 3, description = "Verify Processed Campaign")
 	public void VerifyProcessedCamp() throws Exception {
 		data = new CF_Campaigns_Page(CurrentState.getDriver());
-		wb = new ExcelHandler("./data/CF.xlsx", "GRLocationCampaign");
+		wb = new ExcelHandler("./data/CF.xlsx", "GRLMultiLocation");
 		for (int i = 1; i <= wb.getRowCount(); i++) {
 			String CampaignName = wb.getCellValue(i, wb.seacrh_pattern("ProcessedCampaign Name", 0).get(0).intValue());
 			System.out.println("Campaign Name is :" +CampaignName);
-			data.ProcessedCampaign("GRLocationCampaign");
+			data.ProcessedCampaign("GRLMultiLocation");
 			addEvidence(CurrentState.getDriver(), "Verify Campaign", "yes");
 		}
 	}

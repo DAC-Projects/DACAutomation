@@ -39,7 +39,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * Test to get dashboard scores
 	 * 
 	 * @throws Exception
-	 */
+	 *//*
 	@SuppressWarnings("static-access")
 	@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
 	public void GetKPIValues() throws Exception {
@@ -51,7 +51,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		System.out.println(location);
 		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
-	}
+	}*/
 
 	/**
 	 * Test to navigate to Visibility Page
@@ -113,7 +113,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * Test to Compare KPI Values with Report
 	 * 
 	 * @throws Exception
-	 */
+	 *//*
 
 	@Test(priority = 7, groups = { "smoke" }, description = "Test for compare KPI Values")
 	public void ovrviewlocscorecompare() throws Exception {
@@ -125,7 +125,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		Assert.assertEquals(score, ovrvwscr);
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Visibility page");
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
-	}
+	}*/
 
 	@SuppressWarnings("unused")
 	@Test(priority = 9, enabled = true, dataProvider = "testData",description = "Test for manual date selection" )

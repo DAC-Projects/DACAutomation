@@ -25,7 +25,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * Test to get dashboard scores
 	 * 
 	 * @throws Exception
-	 */
+	 *//*
 	@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
 	public void GetKPIValues() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
@@ -33,7 +33,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		System.out.println(location);
 		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
-	}
+	}*/
 
 	@Test(priority = 2, groups = { "smoke" }, description = "Test for navigating to All Locations page")
 	public void navigateToAllLocationsPage() throws Exception {
@@ -58,7 +58,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * Test To get overall score and compare with dashboard values
 	 * 
 	 * @throws Exception
-	 */
+	 *//*
 	@Test(priority = 4, groups = { "smoke" }, description = "Test for compare KPI Values")
 	public void ovrviewlocscorecompare() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
@@ -68,7 +68,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		Assert.assertEquals(loc, location);
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Visibility page");
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
-	}
+	}*/
 
 	@Test(priority = 5, groups = { "smoke" }, description = "Verify All Locations page loads after filter applied")
 	public void verifyFilteringReportsnavigateToAllLocations() throws Exception {
@@ -108,7 +108,6 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}
 
-	// Test for export and overview report in Content Analysis Page
 	@Test(priority = 7, groups = { "smoke" }, description = "Test for Location export and export verification")
 	public void verifyTableDataoExport() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
