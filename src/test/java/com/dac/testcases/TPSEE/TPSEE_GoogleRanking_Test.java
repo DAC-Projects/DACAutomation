@@ -36,7 +36,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	 * Test to get dashboard scores
 	 * 
 	 * @throws Exception
-	 */
+	 *//*
 	@SuppressWarnings("static-access")
 	@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
 	public void GetKPIValues() throws Exception {
@@ -48,7 +48,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		System.out.println(location);
 		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
-	}
+	}*/
 
 	@Test(priority = 2, groups = { "smoke" }, description = "Test for navigating to Google Ranking page")
 	public void navigateToGoogleRankingPage() throws Exception {
@@ -65,7 +65,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "verification f title", "yes");
 	}
 
-	// GRScorenLoc
+	/*// GRScorenLoc
 	@Test(priority = 3, groups = { "smoke" }, description = "Test for navigating to ContentAnalysis page")
 	public void Verifyscorenloc() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
@@ -75,7 +75,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		Assert.assertEquals(GRLoc, location);
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Accuracy page");
 		addEvidence(CurrentState.getDriver(), "Navigate to ContentAnalysis page from Dashboard", "yes");
-	}
+	}*/
 
 	// Test to verify Zoom Functionality
 	@Test(priority = 4, groups = { "smoke" }, description = "Verify Zoom Functionality")
