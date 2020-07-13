@@ -576,7 +576,7 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 		System.out.println("Four Star Message is : " + Fourstar);
 		driver.findElement(By.xpath(
 				"(//div[@id='ratingResponse']//span//input[@value='" + StarRating + "'])//following-sibling::label"))
-		.click();
+				.click();
 		String Message = RatingMessage.getText();
 		if (StarRating.equals("1") || StarRating.equals("2")) {
 			soft.assertEquals(Message, "Below expectations");
@@ -816,7 +816,7 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 	 */
 	public void BrandcampSetUp(String BrandName, String Address1, String City, String State, String PostCode,
 			String PhNum, String Reciepent, String sender, String Subject, String Banner, String Body, String Sign)
-					throws Exception {
+			throws Exception {
 
 		waitForElement(brandName, 10);
 		clickelement(brandName);
@@ -1000,7 +1000,7 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 			}
 			clickelement(UploadEmail);
 			String autoITExecutable = ".\\UploadFile.exe " + System.getProperty("user.dir")
-			+ "\\filesToUpload\\EmailTemplate-MLC.xlsx";
+					+ "\\filesToUpload\\EmailTemplate-MLC.xlsx";
 			Runtime.getRuntime().exec(autoITExecutable);
 			Thread.sleep(10000);
 			JavascriptExecutor jse = (JavascriptExecutor) driver;
@@ -1012,7 +1012,7 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 			Sender.sendKeys(sender);
 			clickelement(UploadEmailLogo);
 			String autoITExecutable1 = ".\\UploadFile.exe " + System.getProperty("user.dir")
-			+ "\\filesToUpload\\logo.jpeg";
+					+ "\\filesToUpload\\logo.jpeg";
 			Runtime.getRuntime().exec(autoITExecutable1);
 			Thread.sleep(10000);
 			clickelement(EmailSubject);
@@ -1067,7 +1067,7 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 			clickelement(GenerateChkBox);
 			clickelement(UploadEmailLogo);
 			String autoITExecutable1 = ".\\UploadFile.exe " + System.getProperty("user.dir")
-			+ "\\filesToUpload\\logo.jpeg";
+					+ "\\filesToUpload\\logo.jpeg";
 			Runtime.getRuntime().exec(autoITExecutable1);
 			Thread.sleep(10000);
 			clickelement(NextBtn);
@@ -1256,13 +1256,15 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 					"//table[@id='tblCompletedCampaigns']//tbody//tr[@role='row']//td[5]//span//label[contains(text(),'ARCHIVE')]["
 							+ i + "]"))
 					.isDisplayed()) {
-				clickelement(driver.findElement(By.xpath(
-						"//table[@id='tblCompletedCampaigns']//tbody//tr[@role='row']//td[5]//span//label[contains(text(),'ARCHIVE')]["
-								+ i + "]")));
 				String name = driver.findElement(By.xpath(
 						"((//table[@id='tblCompletedCampaigns']//tbody//tr[@role='row']//td[5]//span//label[contains(text(),'ARCHIVE')]["
 								+ i + "])/../../../../preceding-sibling::td)[" + i + "]"))
 						.getText();
+				clickelement(driver.findElement(By.xpath(
+						"//table[@id='tblCompletedCampaigns']//tbody//tr[@role='row']//td[5]//span//label[contains(text(),'ARCHIVE')]["
+								+ i + "]")));
+				WebElement close = driver.findElement(By.xpath("(//button[@class='close'])[7]"));
+				clickelement(close);
 				System.out.println("The Campaign Name is :" + name);
 				wb = new ExcelHandler("./data/CF.xlsx", FileName);
 				wb.setCellValue(1, wb.seacrh_pattern("", 0).get(0), name);
@@ -1287,8 +1289,8 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 		SearchFileld.sendKeys(Name);
 		WebElement SearchBtn = driver.findElement(By.xpath("//div//input[@id='fw_all_input']/../span"));
 		SearchBtn.click();
-		String CampName = driver
-				.findElement(By.xpath("(//table[@id='tblArchivedCampaigns']//tbody//tr[@role='row'])[1]//td[contains(@class,'sorting')]"))
+		String CampName = driver.findElement(By.xpath(
+				"(//table[@id='tblArchivedCampaigns']//tbody//tr[@role='row'])[1]//td[contains(@class,'sorting')]"))
 				.getText();
 		System.out.println("Column Text is : " + CampName);
 		if (CampName.equalsIgnoreCase(Name)) {
@@ -1296,4 +1298,3 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 		}
 	}
 }
-
