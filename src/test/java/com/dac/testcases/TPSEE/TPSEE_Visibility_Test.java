@@ -104,7 +104,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 4, groups = { "smoke" }, description = "Test for compare KPI Values")
+//	@Test(priority = 4, groups = { "smoke" }, description = "Test for compare KPI Values")
 	public void ovrviewlocscorecompare() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		Thread.sleep(5000);
