@@ -1293,8 +1293,12 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 				"(//table[@id='tblArchivedCampaigns']//tbody//tr[@role='row'])[1]//td[contains(@class,'sorting')]"))
 				.getText();
 		System.out.println("Column Text is : " + CampName);
+		soft.assertTrue(true, "Campaign Name is not equal");
 		if (CampName.equalsIgnoreCase(Name)) {
-			soft.assertTrue(true, "Campaign Name is not equal");
+			WebElement UnArchive = driver.findElement(By.xpath("//label[contains(text(),'UNARCHIVE')]"));
+			clickelement(UnArchive);
+			WebElement close = driver.findElement(By.xpath("(//button[@class='close'])[9]"));
+			clickelement(close);
 		}
 	}
 }
