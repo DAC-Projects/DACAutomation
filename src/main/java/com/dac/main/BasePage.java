@@ -559,8 +559,12 @@ public class BasePage {
 		if(entry.isDisplayed()) {
 		String entiresText = entry.getText();
 		System.out.println("The total entries in a table is :" + entiresText);
+		String result1 = null;
 		String result = entiresText.substring(entiresText.indexOf("(") + 3, entiresText.indexOf(")") - 7).trim();
-		int finalvalue = Integer.parseInt(result);
+		if(result.contains(",")) {
+			result1 = result.replace(",", "").trim();
+		}
+		int finalvalue = Integer.parseInt(result1);
 		System.out.println("The number of entries is : " +finalvalue);
 		return finalvalue;
 		}else {

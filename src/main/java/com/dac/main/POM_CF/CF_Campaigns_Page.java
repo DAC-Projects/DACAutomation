@@ -2,7 +2,6 @@ package com.dac.main.POM_CF;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -23,7 +22,6 @@ import org.testng.asserts.SoftAssert;
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
-import resources.JSWaiter;
 
 public class CF_Campaigns_Page extends CF_abstractMethods {
 
@@ -202,19 +200,18 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 
 	@FindBy(xpath = "//table[@id='tblAllCampaigns']")
 	private WebElement ProcessedTable;
-	
+
 	@FindBy(xpath = "//table[@id='tblAllCampaigns']")
 	private WebElement AllProcessedTable;
-	
+
 	@FindBy(xpath = "//table[@id='tblActiveCampaigns']")
 	private WebElement ActiveProcessedTable;
-	
+
 	@FindBy(xpath = "//table[@id='tblCompletedCampaigns']")
 	private WebElement CompletedProcessedTable;
-	
+
 	@FindBy(xpath = "//table[@id='tblArchivedCampaigns']")
 	private WebElement ArchivedProcessedTable;
-
 
 	@FindBy(xpath = "//table[@id='tblAllCampaigns']//tbody//tr[@role='row']")
 	private List<WebElement> ProcessedTableRow;
@@ -233,46 +230,43 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 
 	@FindBy(xpath = "//span[@id='chooseFile']")
 	private WebElement UploadEmailLogo;
-	
+
 	@FindBy(xpath = "//*[@id='ddlCampaignSetup_all']")
 	private WebElement AllFiltertype;
-	
+
 	@FindBy(xpath = "//*[@id='ddlCampaignType_all']")
 	private WebElement AllFilterSetup;
-	
+
 	@FindBy(xpath = "//*[@id='ddlCampaignSetup']")
 	private WebElement ActiveFiltertype;
-	
+
 	@FindBy(xpath = "//*[@id='ddlCampaignType']")
 	private WebElement ActiveFilterSetup;
-	
+
 	@FindBy(xpath = "//*[@id='ddlCampaignSetup_completed']")
 	private WebElement CompletedFiltertype;
-	
+
 	@FindBy(xpath = "//*[@id='ddlCampaignType_completed']")
 	private WebElement CompletedFilterSetup;
-	
+
 	@FindBy(xpath = "//*[@id='ddlCampaignSetup_archived']")
 	private WebElement ArchivedFiltertype;
-	
+
 	@FindBy(xpath = "//*[@id='ddlCampaignType_archived']")
 	private WebElement ArchivedFilterSetup;
-	
-	
-	
-	
+
 	@FindBy(xpath = "//table[@id='tblAllCampaigns']//tbody//tr//td[2]")
 	private List<WebElement> Camptype;
-	
+
 	@FindBy(xpath = "//*[@href='/CampaignsGrid/All']")
 	private WebElement AllTab;
-	
+
 	@FindBy(xpath = "//*[@href='/CampaignsGrid/Active']")
 	private WebElement ActiveTab;
-	
+
 	@FindBy(xpath = "//*[@href='/CampaignsGrid/Completed']")
 	private WebElement CompletedTab;
-	
+
 	@FindBy(xpath = "//*[@href='/CampaignsGrid/Archived']")
 	private WebElement ArchivedTab;
 
@@ -997,11 +991,11 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 				System.out.println("The Location Number is :" + Loc);
 				MultiLocationSearch.sendKeys(Loc);
 				if (driver
-						.findElement(By.xpath("//table[@id='tblLocations']//tbody//tr//td[contains(text(),'" + Loc + "')]"))
+						.findElement(
+								By.xpath("//table[@id='tblLocations']//tbody//tr//td[contains(text(),'" + Loc + "')]"))
 						.isDisplayed()) {
-					driver.findElement(
-							By.xpath("//table[@id='tblLocations']//tbody//tr//td[contains(text(),'" + Loc + "')]//preceding-sibling::td//input"))
-					.click();
+					driver.findElement(By.xpath("//table[@id='tblLocations']//tbody//tr//td[contains(text(),'" + Loc
+							+ "')]//preceding-sibling::td//input")).click();
 				}
 			}
 			clickelement(UploadEmail);
@@ -1009,9 +1003,9 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 			+ "\\filesToUpload\\EmailTemplate-MLC.xlsx";
 			Runtime.getRuntime().exec(autoITExecutable);
 			Thread.sleep(10000);
-			JavascriptExecutor jse = (JavascriptExecutor)driver;
+			JavascriptExecutor jse = (JavascriptExecutor) driver;
 			String msg = jse.executeScript("return document.getElementById('campaignemailaddress').value").toString();
-			System.out.println("The message is :" +msg);
+			System.out.println("The message is :" + msg);
 			Assert.assertTrue(msg.contains("email addresses have been uploaded"), msg + "doesn't contains expected");
 			clickelement(Sender);
 			Sender.clear();
@@ -1063,11 +1057,11 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 				System.out.println("The Location Number is :" + Loc);
 				MultiLocationSearch.sendKeys(Loc);
 				if (driver
-						.findElement(By.xpath("//table[@id='tblLocations']//tbody//tr//td[contains(text(),'" + Loc + "')]"))
+						.findElement(
+								By.xpath("//table[@id='tblLocations']//tbody//tr//td[contains(text(),'" + Loc + "')]"))
 						.isDisplayed()) {
-					driver.findElement(
-							By.xpath("//table[@id='tblLocations']//tbody//tr//td[contains(text(),'" + Loc + "')]//preceding-sibling::td//input"))
-					.click();
+					driver.findElement(By.xpath("//table[@id='tblLocations']//tbody//tr//td[contains(text(),'" + Loc
+							+ "')]//preceding-sibling::td//input")).click();
 				}
 			}
 			clickelement(GenerateChkBox);
@@ -1079,59 +1073,59 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 			clickelement(NextBtn);
 		}
 	}
-	
-	public void VerifyProcessedCampaign(String CampName,String FileName) throws Exception {
-		
+
+	public void VerifyProcessedCampaign(String CampName, String FileName) throws Exception {
+
 		wb = new ExcelHandler("./data/CF.xlsx", FileName);
 		String CampaignName = wb.getCellValue(1, wb.seacrh_pattern("ProcessedCampaign Name", 0).get(0).intValue());
-		System.out.println("Campaign Name is:" +CampaignName);
-		
+		System.out.println("Campaign Name is:" + CampaignName);
+
 	}
-	
-	public void SelectAllFilter(String FilterType,String FilterSetUp) {
-		if(!FilterType.equals("null")) {
-		selecttype = new Select(AllFiltertype);
-		selecttype.selectByVisibleText(FilterType);
-		} if(!FilterSetUp.equals("null")) {
-		selectSetup = new Select(AllFilterSetup);
-		selectSetup.selectByVisibleText(FilterSetUp);
+
+	public void SelectAllFilter(String FilterType, String FilterSetUp) {
+		if (!FilterType.equals("null")) {
+			selecttype = new Select(AllFiltertype);
+			selecttype.selectByVisibleText(FilterType);
 		}
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-	}
-	
-	public void SelectActiveFilter(String FilterType,String FilterSetUp) {
-		if(!FilterType.equals("null")) {
-		selecttype = new Select(ActiveFiltertype);
-		selecttype.selectByVisibleText(FilterType);
-		} if(!FilterSetUp.equals("null")) {
-		selectSetup = new Select(ActiveFilterSetup);
-		selectSetup.selectByVisibleText(FilterSetUp);
+		if (!FilterSetUp.equals("null")) {
+			selectSetup = new Select(AllFilterSetup);
+			selectSetup.selectByVisibleText(FilterSetUp);
 		}
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
-	
-	public void SelectCompletedFilter(String FilterType,String FilterSetUp) {
-		if(!FilterType.equals("null")) {
-		selecttype = new Select(CompletedFiltertype);
-		selecttype.selectByVisibleText(FilterType);
-		} if(!FilterSetUp.equals("null")) {
-		selectSetup = new Select(CompletedFilterSetup);
-		selectSetup.selectByVisibleText(FilterSetUp);
+
+	public void SelectActiveFilter(String FilterType, String FilterSetUp) {
+		if (!FilterType.equals("null")) {
+			selecttype = new Select(ActiveFiltertype);
+			selecttype.selectByVisibleText(FilterType);
 		}
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-	}
-	
-	public void SelectArchivedFilter(String FilterType,String FilterSetUp) {
-		if(!FilterType.equals("null")) {
-		selecttype = new Select(ArchivedFiltertype);
-		selecttype.selectByVisibleText(FilterType);
-		} if(!FilterSetUp.equals("null")) {
-		selectSetup = new Select(ArchivedFilterSetup);
-		selectSetup.selectByVisibleText(FilterSetUp);	
+		if (!FilterSetUp.equals("null")) {
+			selectSetup = new Select(ActiveFilterSetup);
+			selectSetup.selectByVisibleText(FilterSetUp);
 		}
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
-	
+
+	public void SelectCompletedFilter(String FilterType, String FilterSetUp) {
+		if (!FilterType.equals("null")) {
+			selecttype = new Select(CompletedFiltertype);
+			selecttype.selectByVisibleText(FilterType);
+		}
+		if (!FilterSetUp.equals("null")) {
+			selectSetup = new Select(CompletedFilterSetup);
+			selectSetup.selectByVisibleText(FilterSetUp);
+		}
+	}
+
+	public void SelectArchivedFilter(String FilterType, String FilterSetUp) {
+		if (!FilterType.equals("null")) {
+			selecttype = new Select(ArchivedFiltertype);
+			selecttype.selectByVisibleText(FilterType);
+		}
+		if (!FilterSetUp.equals("null")) {
+			selectSetup = new Select(ArchivedFilterSetup);
+			selectSetup.selectByVisibleText(FilterSetUp);
+		}
+	}
+
 	public void verifyAllTabDatawithFilters() {
 		waitForElement(AllTab, 10);
 		scrollByElement(AllTab);
@@ -1139,7 +1133,7 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 		waitForElement(AllProcessedTable, 10);
 		scrollByElement(AllProcessedTable);
 	}
-	
+
 	public void verifyActiveTabDatawithFilters() {
 		waitForElement(ActiveTab, 10);
 		scrollByElement(ActiveTab);
@@ -1147,7 +1141,7 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 		waitForElement(ActiveProcessedTable, 10);
 		scrollByElement(ActiveProcessedTable);
 	}
-	
+
 	public void verifyCompletedTabDatawithFilters() {
 		waitForElement(CompletedTab, 10);
 		scrollByElement(CompletedTab);
@@ -1155,7 +1149,7 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 		waitForElement(CompletedProcessedTable, 10);
 		scrollByElement(CompletedProcessedTable);
 	}
-	
+
 	public void verifyArchivedTabDatawithFilters() {
 		waitForElement(ArchivedTab, 10);
 		scrollByElement(ArchivedTab);
@@ -1163,72 +1157,143 @@ public class CF_Campaigns_Page extends CF_abstractMethods {
 		waitForElement(ArchivedProcessedTable, 10);
 		scrollByElement(ArchivedProcessedTable);
 	}
-	
-	public void verifyTypeFilter(String FilterType,String FilterSetUp, String id,String tblid) {
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		List<WebElement> s = driver.findElements(By.xpath("//table[@id='tblAllCampaigns']//tbody//tr[@role='row']"));
+
+	public void verifyTypeFilter(String FilterType, String FilterSetUp, String id, String tblid, SoftAssert soft)
+			throws InterruptedException {
+		Thread.sleep(10000);
+		List<WebElement> s = driver.findElements(By.xpath("//table[@id='" + tblid + "']//tbody//tr[@role='row']"));
 		int totalrows = s.size();
-		for(int i = 1; i<=totalrows; i++) {
-			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-			String Type = driver.findElement(By.xpath("//table[@id='"+tblid+"']//tbody//tr[@role='row']["+ i +"]//td[2]")).getText();
-			System.out.println("The Type is :" +Type);
-			if(!FilterSetUp.equals("null")) {
-				String Setup = driver.findElement(By.xpath("//table[@id='"+tblid+"']//tbody//tr[@role='row']["+ i +"]//td[3]")).getText();
-				System.out.println("The Setup is :" +Setup);
-				soft.assertEquals(Setup, FilterSetUp);
+		for (int i = 1; i <= totalrows; i++) {
+			String Type = driver
+					.findElement(By.xpath("//table[@id='" + tblid + "']//tbody//tr[@role='row'][" + i + "]//td[2]"))
+					.getText();
+			System.out.println("The Type is :" + Type);
+			if (FilterSetUp.equals("Multi-location")) {
+				String Setup = driver
+						.findElement(By.xpath("//table[@id='" + tblid + "']//tbody//tr[@role='row'][" + i + "]//td[3]"))
+						.getText();
+				System.out.println("The Setup is :" + Setup);
+				soft.assertEquals(Setup, "Multi-location Campaign");
 				clicksecondpage(id);
+				Thread.sleep(10000);
 			}
 			soft.assertEquals(Type, FilterType);
 		}
-			soft.assertAll();	
 	}
-	
-	public void verifyDateActive(String id,String tblid) throws ParseException {
-		String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
-		System.out.println("Current Date Format is :" +var);
+
+	public void verifyDateActive(String id, String tblid) throws ParseException, InterruptedException {
+		String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
+				.toString();
+		System.out.println("Current Date Format is :" + var);
 		Dateformat = new SimpleDateFormat(var);
-		String TodayDate = ((JavascriptExecutor)driver).executeScript("return moment().format(window.dateFormat.shortTemplate.PlainHtml.toUpperCase())").toString();
+		String TodayDate = ((JavascriptExecutor) driver)
+				.executeScript("return moment().format(window.dateFormat.shortTemplate.PlainHtml.toUpperCase())")
+				.toString();
 		Date finalDate = Dateformat.parse(TodayDate);
-		System.out.println("The Date is :" +finalDate);
-		List<WebElement> s = driver.findElements(By.xpath("//table[@id='"+tblid+"']//tbody//tr[@role='row']"));
+		System.out.println("The Date is :" + finalDate);
+		List<WebElement> s = driver.findElements(By.xpath("//table[@id='" + tblid + "']//tbody//tr[@role='row']"));
 		int totalrows = s.size();
-		for(int i = 1; i<=totalrows; i++) {
-			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-			String Udate = driver.findElement(By.xpath("//table[@id='"+tblid+"']//tbody//tr[@role='row']["+ i +"]//td[4]")).getText();
-			String result = Udate.substring(Udate.indexOf(0) + 1,Udate.indexOf("M") - 8).trim();
+		for (int i = 1; i <= totalrows; i++) {
+			String Udate = driver
+					.findElement(By.xpath("//table[@id='" + tblid + "']//tbody//tr[@role='row'][" + i + "]//td[4]"))
+					.getText();
+			String result = Udate.substring(Udate.indexOf(0) + 1, Udate.indexOf("M") - 8).trim();
 			Date UIDate = Dateformat.parse(result);
-			System.out.println("UI Date is :" +UIDate);
+			System.out.println("UI Date is :" + UIDate);
 			soft.assertTrue(UIDate.after(finalDate), "Date is before current date");
 			clicksecondpage(id);
-			JSWaiter.waitJQueryAngular();
+			Thread.sleep(10000);
 		}
 		soft.assertAll();
 	}
-	
-	public void verifyDateCompleted(String id, String tblid) throws ParseException {
-		String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
+
+	public void verifyDateCompleted(String id, String tblid) throws ParseException, InterruptedException {
+		String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
+				.toString();
 		Dateformat = new SimpleDateFormat(var);
-		String TodayDate = ((JavascriptExecutor)driver).executeScript("return moment().format(window.dateFormat.shortTemplate.PlainHtml.toUpperCase())").toString();
+		String TodayDate = ((JavascriptExecutor) driver)
+				.executeScript("return moment().format(window.dateFormat.shortTemplate.PlainHtml.toUpperCase())")
+				.toString();
 		Date finalDate = Dateformat.parse(TodayDate);
-		System.out.println("The Date is :" +finalDate);
-		List<WebElement> s = driver.findElements(By.xpath("//table[@id='tblCompletedCampaigns']//tbody//tr[@role='row']"));
+		System.out.println("The Date is :" + finalDate);
+		List<WebElement> s = driver
+				.findElements(By.xpath("//table[@id='tblCompletedCampaigns']//tbody//tr[@role='row']"));
 		int totalrows = s.size();
-		for(int i = 1; i<=totalrows - 1; i++) {
-			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-			String Udate = driver.findElement(By.xpath("//table[@id='"+tblid+"']//tbody//tr[@role='row']["+ i +"]//td[4]")).getText();
-			String result = Udate.substring(Udate.indexOf(0) + 1,Udate.indexOf("M") - 8).trim();
+		for (int i = 1; i <= totalrows; i++) {
+			String Udate = driver
+					.findElement(By.xpath("//table[@id='" + tblid + "']//tbody//tr[@role='row'][" + i + "]//td[4]"))
+					.getText();
+			String result = Udate.substring(Udate.indexOf(0) + 1, Udate.indexOf("M") - 8).trim();
 			Date UIDate = Dateformat.parse(result);
-			System.out.println("UI Date is :" +UIDate);
+			System.out.println("UI Date is :" + UIDate);
 			soft.assertTrue(UIDate.before(finalDate), "Date is after current date");
 			clicksecondpage(id);
-			JSWaiter.waitJQueryAngular();
+			Thread.sleep(10000);
 		}
 		soft.assertAll();
 	}
-	
+
 	public void clicksecondpage(String id) {
-		if(driver.findElement(By.xpath("(//div[@id = '"+id+"']//*[@class='pagination']//a)[contains(text(),'2')]")).isDisplayed()) {
-			clickelement(driver.findElement(By.xpath("(//div[@id = '"+id+"']//*[@class='pagination']//a)[contains(text(),'2')]")));
+		if (driver.findElement(By.xpath("(//div[@id = '" + id + "']//*[@class='pagination']//a)[contains(text(),'2')]"))
+				.isDisplayed()) {
+			clickelement(driver.findElement(
+					By.xpath("(//div[@id = '" + id + "']//*[@class='pagination']//a)[contains(text(),'2')]")));
+		}
+	}
+
+	public void CompletedArchiveData(SoftAssert soft, String FileName) throws Exception {
+		waitForElement(CompletedTab, 10);
+		clickelement(CompletedTab);
+		waitForElement(CompletedProcessedTable, 10);
+		int FinalEntries;
+		int NumberOfEntries = NumOfentries(driver.findElement(By.xpath("//*[@id='tblCompletedCampaigns_info']")));
+		System.out.println("The Number of entries before Archived :" + NumberOfEntries);
+		List<WebElement> s = driver
+				.findElements(By.xpath("//table[@id='tblCompletedCampaigns']//tbody//tr[@role='row']"));
+		int totalrows = s.size();
+		Outer: for (int i = 1; i <= totalrows; i++) {
+			if (driver.findElement(By.xpath(
+					"//table[@id='tblCompletedCampaigns']//tbody//tr[@role='row']//td[5]//span//label[contains(text(),'ARCHIVE')]["
+							+ i + "]"))
+					.isDisplayed()) {
+				clickelement(driver.findElement(By.xpath(
+						"//table[@id='tblCompletedCampaigns']//tbody//tr[@role='row']//td[5]//span//label[contains(text(),'ARCHIVE')]["
+								+ i + "]")));
+				String name = driver.findElement(By.xpath(
+						"((//table[@id='tblCompletedCampaigns']//tbody//tr[@role='row']//td[5]//span//label[contains(text(),'ARCHIVE')]["
+								+ i + "])/../../../../preceding-sibling::td)[" + i + "]"))
+						.getText();
+				System.out.println("The Campaign Name is :" + name);
+				wb = new ExcelHandler("./data/CF.xlsx", FileName);
+				wb.setCellValue(1, wb.seacrh_pattern("", 0).get(0), name);
+				FinalEntries = NumOfentries(driver.findElement(By.xpath("//*[@id='tblCompletedCampaigns_info']")));
+				System.out.println("The Number of entries before Archived :" + FinalEntries);
+				soft.assertEquals(FinalEntries, NumberOfEntries - 1);
+				break Outer;
+			}
+		}
+	}
+
+	public void ArchivedData(String FileName, SoftAssert soft) throws Exception {
+		wb = new ExcelHandler("./data/CF.xlsx", FileName);
+		String Name = wb.getCellValue(1, wb.seacrh_pattern("Camp Name", 0).get(0).intValue());
+		System.out.println("The Name is :" + Name);
+		waitForElement(ArchivedTab, 10);
+		clickelement(ArchivedTab);
+		waitForElement(ArchivedProcessedTable, 10);
+		WebElement SearchFileld = driver.findElement(By.xpath("//input[@id='fw_archived_input']"));
+		SearchFileld.click();
+		SearchFileld.clear();
+		SearchFileld.sendKeys(Name);
+		WebElement SearchBtn = driver.findElement(By.xpath("//div//input[@id='fw_all_input']/../span"));
+		SearchBtn.click();
+		String CampName = driver
+				.findElement(By.xpath("(//table[@id='tblArchivedCampaigns']//tbody//tr[@role='row'])[1]//td[contains(@class,'sorting')]"))
+				.getText();
+		System.out.println("Column Text is : " + CampName);
+		if (CampName.equalsIgnoreCase(Name)) {
+			soft.assertTrue(true, "Campaign Name is not equal");
 		}
 	}
 }
+
