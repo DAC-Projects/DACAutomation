@@ -64,6 +64,11 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//button[@id='btnPreviewGroup']")
 	private WebElement PreviewBtn;
 	
+	//@FindBy(xpath = "//*[@value='Or']")
+	//@FindBy(xpath = "//input[@id='form-or']")
+	@FindBy(xpath = "//input[@id='form-or']//following-sibling::label")
+	private WebElement radio_or;
+	
 	/*---------------------- View Group ----------------*/
 	
 	@FindBy(xpath="//div[@class = 'rule-filter-container']")
@@ -119,7 +124,11 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 	/*@FindBy(xpath = "//td[text()='country_group_F']/..//*[@class='edit-group']")
 	private WebElement Delete_btn;*/
 	
-	@FindBy(xpath="//button[@data-bb-handler='confirm']")
+	//@FindBy(xpath="//button[@data-bb-handler='confirm']")
+	//@FindBy(xpath="/html/body/div[11]/div/div/div[3]/button[2]")
+	//@FindBy(xpath="//button[@type='button'] | // button[text()='Yes']")
+	//@FindBy(xpath="//button[@class='btn btn-width-sm btn-primary']")
+	@FindBy(xpath="//button[text()='Yes']")
 	private WebElement Ok_btn;
 	/*-------------------------To Delete-----------------------*/
 	
@@ -288,7 +297,9 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		
 		if(connector.equals("OR"))
 		{
-		driver.findElement(By.xpath("//*[@value='Or']")).click();
+		//driver.findElement(By.xpath("//*[@value='Or']")).click();
+			clickelement(radio_or);
+			
 		}
 		Select country1 = new Select(driver.findElement(By.xpath("//*[@id='select-field-2']")));
 		Thread.sleep(5000);
@@ -337,6 +348,7 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 	    	for(int i=1;i<=page;i++) {	//Loop will execute till the all the row of table completes.
 	    		scrollByElement(GroupTableInfo);
 	    			String celtext = driver.findElement(By.xpath("*//tr//td[@class='sort-name-col sorting_1'][contains(text(),'"+Group+"')]")).getText();
+	    		//String celtext = driver.findElement(By.xpath("*//tr//td[@class='sort-name-col sorting_1'][contains(text(),'')]")).getText();
 	    			System.out.println("\n"+celtext);
 	    					if(celtext.equals(Group)) {
 	    						WebElement Delete_btn=driver.findElement(By.xpath("//*[@class='remove-group'][@data-name= '"+Group+"']"));
@@ -344,6 +356,7 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 	    						Ok_btn.click();	
 	    						break;
 	    			}
+	    				
 	    		}
 	    		if(paginationNext.isEnabled()) {
 	    			scrollByElement(paginationNext);
