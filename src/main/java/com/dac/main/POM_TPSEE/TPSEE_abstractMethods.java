@@ -555,8 +555,9 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		      int col = row.getLastCellNum();
 		      int Last_row = sh.getLastRowNum();
 		      int col_num = 0;
-		      System.out.println(""+col);	      
-		      for (int i = 0; i <=row.getLastCellNum(); i++) {	    	  
+		      System.out.println(""+col);	
+		      
+		      for (int i = 0; i <row.getLastCellNum(); i++) {	    	  
 		    	    if ((row.getCell(i).toString()).equals(Col_Name)) {	        	 
 		    	    	col_num = i;	    	    	
 		    	    	System.out.println(""+col_num);	

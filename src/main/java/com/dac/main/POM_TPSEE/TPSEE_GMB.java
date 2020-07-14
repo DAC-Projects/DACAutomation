@@ -316,9 +316,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		if (XLSXExport.isDisplayed() && XLSXExport.isEnabled()) {
 			wait.until(ExpectedConditions.visibilityOf(XLSXExport));
 			XLSXExport.click();
-			Thread.sleep(5000);
+			Thread.sleep(10000);
 			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + file));
-			Thread.sleep(6000);
+			Thread.sleep(10000);
 			CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile(Exportpath));
 		} else {
 			System.out.println("No Data Available in GMB");
@@ -695,7 +695,7 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	}
 
 	public void CompareUIXLWebActions(String filename) throws Exception {
-
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		int x = GetDataUsingColName(filename, "Website Actions");
 		WebElement WebActions = driver.findElement(By.xpath("//span[@id='customerWebsite']"));
 		int total = GetUIText3(WebActions);
@@ -822,6 +822,7 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	public String IsDataAvailable() {
 		String data = driver.findElement(By.xpath("//*[@class='highcharts-title']")).getText();
 		return data;
+		
 	}
 
 	public void VerifyGMBTitleText(String Tit, String titText) {
