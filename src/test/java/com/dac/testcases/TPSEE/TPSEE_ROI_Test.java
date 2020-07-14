@@ -47,24 +47,18 @@ public class TPSEE_ROI_Test  extends BaseClass{
 	public void VerifyROIvalues(String from_day, String from_month, String from_year, String to_day, String to_month, String to_year) throws Exception {
 		data = new TPSEE_ROI(CurrentState.getDriver());
 		np = new Navigationpage(CurrentState.getDriver());
-	 data.Nav_GMB();
-		
+		data.Nav_GMB();			
 		data.GMB();
 		 np.navigateToROI();
-		
-
 		 data.ROIvalues();
 		  data.val_pass();
 		 sum1=data.to();
 		 data.avg();
 		 data.Nav_GMB();
-
 		 data.selectCalender_FromDate1((int)(Double.parseDouble(from_day)), from_month, (int)(Double.parseDouble(from_year)));
 		 data.selectCalender_ToDate1((int)(Double.parseDouble(to_day)), to_month, (int)(Double.parseDouble(to_year)));	
 		 data.GMB();
-
 		 np.navigateToROI();
-
 		 data.selectCalender_FromDate((int)(Double.parseDouble(from_day)), from_month, (int)(Double.parseDouble(from_year)));
 		 data.selectCalender_ToDate((int)(Double.parseDouble(to_day)), to_month, (int)(Double.parseDouble(to_year)));
 	 	 data.getNumberofDays_ROI();
