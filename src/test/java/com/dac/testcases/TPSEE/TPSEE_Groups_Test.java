@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -25,6 +28,8 @@ public class TPSEE_Groups_Test extends BaseClass{
 	String Group=null;
 	
 	
+	
+	
 	/**
 	 * navigating
 	 * @throws Exception
@@ -41,7 +46,7 @@ public class TPSEE_Groups_Test extends BaseClass{
 	
 	
 	
-	@SuppressWarnings("unchecked")
+/*	@SuppressWarnings({ "unchecked", "unlikely-arg-type" })
 	@Test(priority= 2, groups = {"smoke" }, description = "Test to delete group")
 		public void InitialDeleteTable() throws Exception {
 		data = new TPSEE_Groups(CurrentState.getDriver());
@@ -50,12 +55,17 @@ public class TPSEE_Groups_Test extends BaseClass{
 		//for(int i=1;i<=wb.getRowCount();i++) {
 			//if(i>1) CurrentState.getDriver().navigate().refresh();
 			s.waitUntilLoad(CurrentState.getDriver());
+			
 			String Group = wb.getCellValue(1, wb.seacrh_pattern("Group", 0).get(0).intValue());
-			System.out.println(Group);			
-			data.delete_Group(Group);
-		//addEvidence(CurrentState.getDriver(), "Verified Table Data", "yes");
+			System.out.println(Group);	
+			
+			
+				data.delete_Group(Group);
+			
+		addEvidence(CurrentState.getDriver(), "Verified Table Data", "yes");
 		//}
-	}
+			
+	}*/
 	
 	//Creating a Group with 1 rule
 	@SuppressWarnings("unchecked")
@@ -110,6 +120,7 @@ public class TPSEE_Groups_Test extends BaseClass{
 	addEvidence(CurrentState.getDriver(), "Verified Table Data", "yes");
 			
 }
+	
 	
 //Deleting a Group with 1 Rule
 	@SuppressWarnings("unchecked")
@@ -207,10 +218,10 @@ public class TPSEE_Groups_Test extends BaseClass{
 					data.delete_Group(Group);
 				addEvidence(CurrentState.getDriver(), "Verified Table Data", "yes");
 				
-			}
+			} 
 			
 			
-			/*//Creating a Group with 3 Rules
+			//Creating a Group with 3 Rules
 			@Test(priority= 9, groups = {"smoke" }, description = "Test to create multiple criteria with 3 Rules")
 			public void AddFilterTable() throws Exception {
 			data = new TPSEE_Groups(CurrentState.getDriver());
@@ -379,5 +390,5 @@ public class TPSEE_Groups_Test extends BaseClass{
 			data.delete_Group(Group);
 		addEvidence(CurrentState.getDriver(), "Verified Table Data", "yes");
 		
-	}*/
-}
+	}
+} 
