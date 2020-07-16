@@ -9,9 +9,7 @@ import resources.CurrentState;
 import resources.ExcelHandler;
 
 public class Vendor_Transmission_Setup extends BaseClass{
-	
 	String url="https://beta-dtc-web.azurewebsites.net/";
-	
 	@Test(groups = { "Setup" })	
   public void launchBrowser() throws Exception {
 		CurrentState.getDriver().get(url);
@@ -20,8 +18,6 @@ public class Vendor_Transmission_Setup extends BaseClass{
 	   dtcLogin.submitLogin("adevaraj@dacgroup.com","laptop@123");
 	   dtcLogin.pressYesKey();
 	}
-
-	    
 	@Test(dependsOnMethods = { "launchBrowser"},groups = { "AddnewField" })
 	 public void AddingNewfiled() throws Exception {
 		DTC_Transmission_Setup vendor=new DTC_Transmission_Setup(CurrentState.getDriver());
@@ -45,9 +41,7 @@ public class Vendor_Transmission_Setup extends BaseClass{
 		vendor.Adding_New_filed(V_fieldname,D_fieldname);
 		addEvidence(CurrentState.getDriver(), "Adding Hours", "yes");
 		count++;
-		
-	}
-	
+		}
 	else {
 		int a=wb.getRowCount();
 		System.out.println(a);
@@ -63,9 +57,7 @@ public class Vendor_Transmission_Setup extends BaseClass{
 	}}
 		vendor.save();
 		addEvidence(CurrentState.getDriver(), "save", "yes");
-
-		}
-
+}
 	@Test(dependsOnMethods = { "launchBrowser"},groups = {"ManualTransmission"})
 	 public void Transmission() throws Throwable {
 		DTC_Transmission_Setup vendor=new DTC_Transmission_Setup(CurrentState.getDriver());
@@ -74,7 +66,6 @@ public class Vendor_Transmission_Setup extends BaseClass{
 		vendor.transmission(location_number);
 		addEvidence(CurrentState.getDriver(), "Manual transmission", "yes");
 	}
-	
 	@Test( dependsOnMethods = { "launchBrowser"},groups = { "VerifyManualTransmission" })
 	public void Verification() throws Throwable{
 		DTC_Transmission_Setup vendor=new DTC_Transmission_Setup(CurrentState.getDriver());

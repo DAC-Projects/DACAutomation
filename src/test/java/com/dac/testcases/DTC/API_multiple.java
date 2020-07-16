@@ -46,7 +46,6 @@ public class API_multiple extends BaseClass{
 
 	@Test(dependsOnMethods = { "launchBrowser"},groups = { "APITransmission" })
 	public void Transmission() throws Throwable {
-		
 		DTC_Transmission_Setup vendor=new DTC_Transmission_Setup(CurrentState.getDriver());
 		ExcelHandler wb2= new ExcelHandler("./data/DTC.xlsx", "Field");
 		String location_number = wb2.getCellValue(1, wb2.seacrh_pattern("location_number", 0).get(0).intValue());

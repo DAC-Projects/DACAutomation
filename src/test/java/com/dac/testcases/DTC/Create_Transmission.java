@@ -19,14 +19,11 @@ public class Create_Transmission extends BaseClass {
 		   DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
 		   dtcLogin.submitLogin("adevaraj@dacgroup.com","laptop@123");
 		    dtcLogin.pressYesKey();
-}
-
-	
+}	
 	@Test( dependsOnMethods = { "launchBrowser"})
 	 public void LoginDTC() throws Exception {
 		  DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
-		  DTC_Navigation navi=new DTC_Navigation(CurrentState.getDriver());
-		  String LO_number = null , account= null, reseller=null, parameter=null;
+		  String LO_number = null;
 		  try {	
 			  dtcLogin.Transmission();
 				int count = 1;
@@ -40,33 +37,40 @@ public class Create_Transmission extends BaseClass {
 					System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
 					LO_number = wb.getCellValue(i, wb.seacrh_pattern("LocationNumber", 0).get(0).intValue());
 					System.out.println(LO_number);
-					//dtcLogin.manual_Transmission(LO_number,a1,b);
+					dtcLogin.manual_Transmission(LO_number,a1,b);
 					a1++;
 					count++;
 				}}
 		  catch(Exception e) {
 		  e.printStackTrace();
-			
-
 			}
 		  addEvidence(CurrentState.getDriver(), "Manual", "yes");}
 	
 	@Test( dependsOnMethods = { "LoginDTC"})
 	 public void Addrequest() throws Exception {
-		 DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
-		  DTC_Navigation navi=new DTC_Navigation(CurrentState.getDriver());
+		  DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
 		  String pageTitle= dtcLogin.getTitle(CurrentState.getDriver());
 		  String LO_number = null , account= null, reseller=null, parameter=null;
+		  ExcelHandler wb1 = new ExcelHandler("./data/LocationSampleData.xlsx", "BasicInfo");
+		  wb1.deleteEmptyRows();
+		  int a1=wb1.getRowCount();
+		  System.out.println(a1);
+		  
+		  for(int i1=1;i1<=1;i1++) {
+				System.out.println("*******************  Scenarios : "+"Starts ****************************");
+				LO_number = wb1.getCellValue(i1, wb1.seacrh_pattern("LocationNumber", 0).get(0).intValue());
+				account=wb1.getCellValue(i1, wb1.seacrh_pattern("AccountName", 0).get(0).intValue());
+				System.out.println(LO_number);
+			   }
+		  
 		  try {	
 				int count = 1;
-				ExcelHandler wb = new ExcelHandler("./data/DTC.xlsx", "Sheet1");
+				ExcelHandler wb = new ExcelHandler("./data/LocationSampleData.xlsx", "Sheet1");
 				wb.deleteEmptyRows();
 				int a=wb.getRowCount();
 				System.out.println(a);
 				for(int i=1;i<=1;i++) {
 					System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
-					LO_number = wb.getCellValue(i, wb.seacrh_pattern("LO_number", 0).get(0).intValue());
-					account=wb.getCellValue(i, wb.seacrh_pattern("Account Name", 0).get(0).intValue());
 					reseller=wb.getCellValue(i, wb.seacrh_pattern("Reseller", 0).get(0).intValue());
 					parameter=wb.getCellValue(i, wb.seacrh_pattern("Parameter", 0).get(0).intValue());
 					System.out.println(LO_number);
@@ -75,9 +79,9 @@ public class Create_Transmission extends BaseClass {
 		  catch(Exception e) {
 		  e.printStackTrace();
 			}
-		  System.out.println(pageTitle);
+		  
+		System.out.println(pageTitle);
 		
-
 		dtcLogin.apple_Trans(account);
 		addEvidence(CurrentState.getDriver(), "Apple", "yes");
 
@@ -90,5 +94,4 @@ public class Create_Transmission extends BaseClass {
 		dtcLogin.Tomtom_Trans(LO_number, account, reseller, parameter);
 		addEvidence(CurrentState.getDriver(), "Tomtom", "yes"); 
 		}
-		 
-	  }
+		 }

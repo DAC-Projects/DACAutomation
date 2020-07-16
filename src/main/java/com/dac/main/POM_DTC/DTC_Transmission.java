@@ -583,7 +583,6 @@ public DTC_Transmission (WebDriver driver) {
 		String filname = BasePage.getLastModifiedFile("./downloads");
 		System.out.println(filname);
 		addEvidence(CurrentState.getDriver(), "Zomato request", "yes");
-
 		String fname="./downloads/" + filname;
 		String splitBy = ",";
 		BufferedReader br = new BufferedReader(new FileReader(fname));
@@ -598,7 +597,6 @@ public DTC_Transmission (WebDriver driver) {
 				 String ad1=LO_number; 
 				 for (String number : wordList1) {
 					 number=number.replaceAll("^\"|\"$", "");
-					 
 					 if(number.equals(ad1)) {
 						Assert.assertEquals(number, ad1);
 						 System.out.println("Both are same");
@@ -607,7 +605,7 @@ public DTC_Transmission (WebDriver driver) {
 					else {
 						System.out.println("Location not found");}
 				 		}
-				 br.close();
+				    br.close();
 				 zomato_trans.click();
 	}
 	
@@ -635,7 +633,6 @@ public DTC_Transmission (WebDriver driver) {
 		Account_here.click();
 		Thread.sleep(2000);
 		addEvidence(CurrentState.getDriver(), "Here", "yes");
-
 		schedule_time.click();
 		Thread.sleep(2000);
 		cli_pop.click();
@@ -888,8 +885,7 @@ public static String getLastModifiedFile(String dirPath)
 		Thread.sleep(4000);
 		String ad22=driver.findElement(By.xpath("//*[@id=\"transmissionlistTable\"]/tbody/tr[1]/td[9]")).getText();
 		System.out.println(ad22);	
-	}
-	
+		}
 	public void verif_Status_allcomplete(String RID) throws InterruptedException {
 		Thread.sleep(3000);
 		System.out.println("Transmission");
@@ -917,7 +913,6 @@ public static String getLastModifiedFile(String dirPath)
 		String ad22=driver.findElement(By.xpath("//*[@id=\"transmissionlistTable\"]/tbody/tr[1]/td[9]")).getText();
 		System.out.println(ad22);	
 	}
-
 	public void verif_Status_allcancel(String RID) throws InterruptedException {
 	Thread.sleep(3000);
 	System.out.println("Transmission");
@@ -943,8 +938,7 @@ public static String getLastModifiedFile(String dirPath)
 	String ad22=driver.findElement(By.xpath("//*[@id=\"transmissionlistTable\"]/tbody/tr[1]/td[9]")).getText();
 	System.out.println(ad22);	
   }
-
-public void apple_date(String id) throws Exception {
+ public void apple_date(String id) throws Exception {
 	mnuTransmission.click();
 	Thread.sleep(2000);
 	apple_trans.click();
@@ -955,7 +949,7 @@ public void apple_date(String id) throws Exception {
 	driver.findElement(By.xpath("//*[@id=\"btnSubmitConfirmSubmit\"]")).click();
 	Thread.sleep(1000);
 }
-public void zomato_date(String id) throws Exception {
+ public void zomato_date(String id) throws Exception {
 	mnuTransmission.click();
 	Thread.sleep(2000);
 	zomato_trans.click();
