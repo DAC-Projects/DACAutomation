@@ -32,7 +32,7 @@ public class TPSEE_ESRreports_Test extends BaseClass {
 	@Test(priority = 2, groups = {"smoke" }, description = "Test for verifying title and description of report")
 	public void verifyText() throws Exception {
 		data = new TPSEE_ESRreports_Page(CurrentState.getDriver());
-		data.VerifyTitleText("Business report");
+		data.VerifyTitleText("Executive Summary");
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
 
