@@ -27,10 +27,9 @@ public class DateSubmitted extends BaseClass {
 	  
 		CurrentState.getDriver().get(url);
     	Dimension d = new Dimension(1000,700);
-	  
-	   System.out.println(CurrentState.getDriver().getTitle());
-	   DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
-	   dtcLogin.submitLogin("adevaraj@dacgroup.com","laptop@123");
+	    System.out.println(CurrentState.getDriver().getTitle());
+	    DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
+	    dtcLogin.submitLogin("adevaraj@dacgroup.com","laptop@123");
 	    dtcLogin.pressYesKey();
  }
 
@@ -45,9 +44,7 @@ public class DateSubmitted extends BaseClass {
 		  String apple_RqID=null;
 		  String zomato_RqID=null;
 		  String here_RqID=null;
-		  String manual_RqID =null;
 		  String tomtom_Request_ID=null;
-		  String Manual_ID=null;
 		  String vendor="Bing";
 		  String LO_number_API= null;
 		  String pageTitle= dtcLogin.getTitle(CurrentState.getDriver());
@@ -56,7 +53,6 @@ public class DateSubmitted extends BaseClass {
 				ExcelHandler wb = new ExcelHandler("./data/Request_ID.xlsx", "Sheet1");
 				wb.deleteEmptyRows();
 					System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
-					//CurrentState.getDriver().navigate().refresh();
 			         zomato_RqID = wb.getCellValue(1, wb.seacrh_pattern("Zomato_Request_ID", 0).get(0).intValue());
 			         here_RqID = wb.getCellValue(1, wb.seacrh_pattern("Here_Request_ID", 0).get(0).intValue());
 			         tomtom_Request_ID = wb.getCellValue(1, wb.seacrh_pattern("tomtom_Request_ID", 0).get(0).intValue());
@@ -64,7 +60,6 @@ public class DateSubmitted extends BaseClass {
 
 					System.out.println(apple_RqID);
 					System.out.println(zomato_RqID);
-					
 					count++;
 				}
 		  catch(Exception e)

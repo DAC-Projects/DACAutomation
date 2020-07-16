@@ -27,7 +27,6 @@ public class TPSEE_ROI_Test  extends BaseClass{
 		data = new TPSEE_ROI(CurrentState.getDriver());
 		np.navigateToROI();		 
 		data.notificationHandle();
-
 		String Tit="ROI Calculator";
 		String titText="The Google My Business ROI Calculator allows users to attribute a monetary value to performance metrics to estimate the ROI of their program.";
 		data.VerifyTitleText(Tit, titText);
