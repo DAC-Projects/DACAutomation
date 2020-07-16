@@ -66,7 +66,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	}
 
 	// CAScorenLoc
-//	@Test(priority = 4, groups = { "smoke" }, description = "Test for navigating to ContentAnalysis page")
+	@Test(priority = 4, groups = { "smoke" }, description = "Test for navigating to ContentAnalysis page")
 	public void Verifyscorenloc() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		Thread.sleep(3000);

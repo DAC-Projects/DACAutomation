@@ -41,7 +41,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * Test to get dashboard scores
 	 * 
 	 * @throws Exception
-	 */
+	 *//*
 	@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
 	public void GetKPIValues() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -53,7 +53,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
 	}
-
+*/
 	/**
 	 * Test to navigate to Visibility Page
 	 * 
@@ -103,8 +103,8 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * Test To get overall score and compare with dashboard values
 	 * 
 	 * @throws Exception
-	 */
-//	@Test(priority = 4, groups = { "smoke" }, description = "Test for compare KPI Values")
+	 *//*
+	@Test(priority = 4, groups = { "smoke" }, description = "Test for compare KPI Values")
 	public void ovrviewlocscorecompare() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		Thread.sleep(5000);
@@ -114,7 +114,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		Assert.assertEquals(score, ovrvwscr);
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Visibility page");
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
-	}
+	}*/
 
 	/**
 	 * Test to verify zoom functionality

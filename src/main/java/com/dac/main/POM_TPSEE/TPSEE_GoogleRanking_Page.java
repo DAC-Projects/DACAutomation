@@ -319,6 +319,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	public void GRDataTableExportCSV() throws FileNotFoundException, IOException, InterruptedException {				
 			JSWaiter.waitJQueryAngular();
 			exportVATable(Export, Export_csv);
+			Thread.sleep(10000);
 			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ GoogleRankingExportCSV));
 			Thread.sleep(5000);
 			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
@@ -333,6 +334,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 		public void GRDataTableExportXLSX() throws FileNotFoundException, IOException, InterruptedException {				
 				JSWaiter.waitJQueryAngular();
 				exportVATable(Export, Export_xlsx);
+				Thread.sleep(10000);
 				renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+GoogleRankingExportXLSX));
 				Thread.sleep(5000);
 				CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));

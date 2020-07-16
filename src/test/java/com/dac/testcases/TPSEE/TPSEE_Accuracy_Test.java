@@ -115,7 +115,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * @throws Exception
 	 */
 
-//	@Test(priority = 7, groups = { "smoke" }, description = "Test for compare KPI Values")
+	@Test(priority = 7, groups = { "smoke" }, description = "Test for compare KPI Values")
 	public void ovrviewlocscorecompare() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		Thread.sleep(5000);
@@ -307,7 +307,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 				"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
 	}
 
-	/*@Test(priority = 17, groups = { "smoke" }, description = "Test for verifying sitetable in Visibility page")
+	@Test(priority = 17, groups = { "smoke" }, description = "Test for verifying sitetable in Visibility page")
 	public void verifyTableHeaders() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.verifyAllTab();
@@ -322,7 +322,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		data.verifyPHNOTab();
 		addEvidence(CurrentState.getDriver(), "Data of Social Sites Tab", "yes");
 	}
-*/
+
 	/**
 	 * Test to verify inaccuracy and ignored checkbox
 	 * 

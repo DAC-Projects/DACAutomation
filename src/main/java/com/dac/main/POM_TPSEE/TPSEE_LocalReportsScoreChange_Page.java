@@ -55,8 +55,8 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 	private WebElement notification;
 	
 	
-//	@FindBy(xpath = "(//div[@class='col-sm-10']//input)[3]']")
-//	private WebElement emailAddress;
+	@FindBy(xpath = "//*[@id='emails1-selectized']")
+	private WebElement emailAddress;
 	
 	@FindBy(xpath = "//*[@id='report_options']")
 	private WebElement selectReport;
@@ -115,7 +115,7 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 
 	
 	public void LocalReportScoreChangeNotifiction(String [][] inputData, int excelRow) {
-		WebElement emailAddress,btnSuccessOK;
+		WebElement btnSuccessOK;
 		String strNotificationName=inputData[excelRow][0]; String strEmail=inputData[excelRow][1];
 		String strReportname=inputData[excelRow][2]; String strCondition=inputData[excelRow][3];
 		String strPercentage=inputData[excelRow][4]; 				
@@ -127,8 +127,8 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 				notificationName.clear();
 				notificationName.sendKeys(strNotificationName);
 				
-				waitForElement(notification, 10);
-				emailAddress = notification.findElement(By.xpath("(//div[@class='col-sm-10']//input)[3]"));
+//				waitForElement(notification, 10);
+//				emailAddress = notification.findElement(By.xpath("(//div[@class='col-sm-10']//input)[3]"));
 				emailAddress.clear();
 				emailAddress.sendKeys(strEmail);
 				emailAddress.sendKeys(Keys.ENTER);
@@ -145,7 +145,7 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 				savedata();
 				
 				btnSuccessOK=driver.findElement(By.xpath("//button[text()='Ok']"));
-				waitForElement(btnSuccessOK, 10);
+				waitForElement(btnSuccessOK, 50);
 //				Assert.assertTrue(SuccessMessage.getText().equals("Success! Your request has been completed!"));
 				
 				clickelement(btnSuccessOK);
@@ -251,7 +251,7 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 		btnDelete=getDeleteButtonRow(ExcelData[excelRow][0]);
 		scrollByElement(btnDelete);
 		clickelement(btnDelete);
-		waitForElement(confirmDialogBox, 20);
+//		waitForElement(confirmDialogBox, 30);
 		btnConfirmOK=driver.findElement(By.xpath("//button[text()='Yes']"));
 		//btnConfirmOK=driver.findElement(By.xpath("//*[@class='bootbox modal fade bootbox-confirm in']//div//div[2]//button[2]"));
 		scrollByElement(btnConfirmOK);
@@ -260,6 +260,7 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 //		waitForElement(successDialogBox,10);
 //		Assert.assertTrue(SuccessMessage.getText().equals("Success! Your request has been completed!"));
 		btnSuccessOK=driver.findElement(By.xpath("//button[text()='Ok']"));
+		waitForElement(btnSuccessOK, 50);
 		clickelement(btnSuccessOK);
 		System.out.println("Notification Deleted");
 					

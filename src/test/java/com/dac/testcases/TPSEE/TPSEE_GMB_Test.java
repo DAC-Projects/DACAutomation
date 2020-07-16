@@ -22,7 +22,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	Navigationpage np;
 	TPSEE_GMB data;
 	WebDriver driver;
-	String grph = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none";
+	String grph = ".highcharts-label.highcharts-tooltip-box.highcharts-color-none";
 	int start;
 	int end;
 	int start1;
@@ -556,7 +556,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 
 			try {
 				data.CompareUIXLWebActions(chromepath1m);
-				addEvidence(CurrentState.getDriver(), "UI and XL comparision for WebActions  ", "yes");
+				addEvidence(CurrentState.getDriver(), "UI and XL comparision for WebActions", "yes");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -1824,7 +1824,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 						(int) (Double.parseDouble(to_year)));
 				addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 				Date fromcal = data.getCurrentfromDate();
-				Date fromgrph = data.verifyinitialHistoryGraph(start, end, grph);
+				Date fromgrph = data.verifyinitialHistoryGraph(0, -2, grph);
 				addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 				Assert.assertEquals(fromgrph, fromcal);
 				Date tocal = data.getCurrenttoDate();
