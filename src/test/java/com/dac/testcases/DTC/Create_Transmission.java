@@ -33,7 +33,7 @@ public class Create_Transmission extends BaseClass {
 				wb.deleteEmptyRows();
 				int a=wb.getRowCount();
 				System.out.println(a);
-				for(int i=1;i<=a;i++) {
+				for(int i=1;i<=4;i++) {
 					System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
 					LO_number = wb.getCellValue(i, wb.seacrh_pattern("LocationNumber", 0).get(0).intValue());
 					System.out.println(LO_number);

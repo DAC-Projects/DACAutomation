@@ -31,7 +31,7 @@ public class VerifytheStatus_Manual extends BaseClass {
 			         Manual_ID=wb.getCellValue(1, wb.seacrh_pattern("Manual_ID", 0).get(0).intValue());
 			        System.out.println(Manual_ID);	
 			        String vendor="Bing";
-			       // dtcLogin.verif_Status_complete(Manual_ID,vendor);
+			     //  dtcLogin.verif_Status_complete(Manual_ID,vendor);
 					count++;
 				}
 		  catch(Exception e)
@@ -149,7 +149,7 @@ public class VerifytheStatus_Manual extends BaseClass {
 		  int a1=wb111.getRowCount();
 		  System.out.println(a1);
 		  
-		  for(int i1=5;i1<=5;i1++) {
+		 for(int i1=5;i1<=5;i1++) {
 				System.out.println("*******************  Scenarios : "+"Starts ****************************");
 				LO_number_API = wb111.getCellValue(i1, wb111.seacrh_pattern("LocationNumber", 0).get(0).intValue());
 				System.out.println(LO_number);
@@ -165,7 +165,7 @@ public class VerifytheStatus_Manual extends BaseClass {
 			  addEvidence(CurrentState.getDriver(), "API", "yes");
 		  }
 
-		  dtcLogin.verify_apple(LO_number,apple_RqID);
+		 dtcLogin.verify_apple(LO_number,apple_RqID);
 		  addEvidence(CurrentState.getDriver(), "Apple request", "yes");
 
 		  dtcLogin.verify_zomato(LO_number,zomato_RqID );
