@@ -12,7 +12,7 @@
 	group-by-instances="true">
 	<parameter name="browser" value="chrome" />
 	<classes>
-	<class name="com.dac.testcases.TPSEE.TPSEE_DuplicateManagement_Test" />
+	<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />
 		<!-- <class name="com.dac.testcases.TPSEE.TPSEE_Syndication_Status_LPAD_Loc_ReActivate" />
 		<class name="com.dac.testcases.TPSEE.TPSEE_Syndication_Status_LPAD_Loc_DeActivate" />
 		<class name="com.dac.testcases.LPAD.Test_LoginToLPAD" /> 

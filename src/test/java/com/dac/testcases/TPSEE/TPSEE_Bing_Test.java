@@ -328,7 +328,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 	public String[][] testData() {
 		String[][] data = null, data1 = null;
 		try {
-			ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Zoom");
+			ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "BingZoom");
 			wb.deleteEmptyRows();
 			int rowCount = wb.getRowCount();
 			System.out.println("rowCount : " + rowCount);
