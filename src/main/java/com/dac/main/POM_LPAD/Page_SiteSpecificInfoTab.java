@@ -143,12 +143,14 @@ public class Page_SiteSpecificInfoTab extends LaunchLPAD {
 		btnAddCategory.click();
 	}
 	
-	public void fillSiteSpecificInfoData(String vendor) throws Exception {
+	public void fillSiteSpecificInfoData(String vendor, ExcelHandler data, int row) throws Exception {
 		wait = new WebDriverWait(driver, 30);
+		String vendors= data.getCellValue(row, data.seacrh_pattern("Vendors_Create", 0).get(0).intValue());
+		String[] vendorsList=vendors.split(",");
 		siteSpecificData=new ExcelHandler(LocationDataExcelPath, "SiteSpecificInfo").getExcelTable();
 //		String strcategory=inputData[excelRow][0];		System.out.println(strcategory);
 		
-		if(checkVendor(vendor)) {
+		if(checkVendor(vendor,vendorsList)) {
 			switch (vendor){
 			case "ZOMATO":
 				setZomatoAmenities(siteSpecificData);
@@ -161,12 +163,13 @@ public class Page_SiteSpecificInfoTab extends LaunchLPAD {
 		
 		
 	}
-	private boolean checkVendor(String vendor) throws Exception {
-		xlInput = new ExcelHandler(LocationDataExcelPath, "Products").getExcelTable();
-		int count=xlInput.length;
+	private boolean checkVendor(String vendor,String[] XLvendrosList) throws Exception {
+//		xlInput = new ExcelHandler(LocationDataExcelPath, "Products").getExcelTable();
+		int count=XLvendrosList.length;
+		
 		boolean flag=false;
-		for(int i=1;i<count;i++) {
-			String xlVendor=xlInput[i][0];
+		for(int i=0;i<count;i++) {
+			String xlVendor=XLvendrosList[i].toString();
 			System.out.println(xlVendor+" = "+ vendor);
 			if(xlVendor.equalsIgnoreCase(vendor)) {
 				flag=true;

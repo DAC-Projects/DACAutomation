@@ -38,7 +38,7 @@ public class Test_CreateMultipleLocations extends LaunchLPAD {
 
 @Test(dependsOnMethods= {"com.dac.testcases.LPAD.Test_LoginToLPAD.TC_Login_LPAD"})
 public void TC_EnterLocationData() throws Exception {
-	int colLocationNumber=17, colLocationName=18, ColLocationStatus=19;
+	int colLocationNumber=21, colLocationName=22, ColLocationStatus=23;
 	String status="NEW",locationName="";
 	System.out.println("Step1: Enter Location Data");
 	wait=new WebDriverWait(driver, 30);
@@ -65,14 +65,14 @@ public void TC_EnterLocationData() throws Exception {
 		tabs.navigateBusinessInfoTab();
 		businessInfo.fillBusinessInfoData();
 		tabs.navigateProductsTab();
-		products.clickOnDSOptions("NEW");
+		products.clickOnDSOptions("NEW",wb,i);
 		tabs.submitLocation();
 		Thread.sleep(2000);
 		NewlocationNumber=basicInfo.getLocationNumber();
 		locationName=basicInfo.getSBName();
 //		System.out.println(locationName);
 		tabs.navigateSiteSpecificInfoTab();
-		site.fillSiteSpecificInfoData("ZOMATO");
+		site.fillSiteSpecificInfoData("ZOMATO",wb,i);
 
 		//		tabs.updateLocation();
 		wb.setCellValue( i, colLocationNumber, NewlocationNumber);

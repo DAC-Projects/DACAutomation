@@ -28,6 +28,7 @@ public class Page_LocationBasicInfoTab extends LaunchLPAD {
 	WebDriverWait wait;
 	JavascriptExecutor executor;
 	ExcelHandler basic;
+	String BName="";
 	//-----------Basic Info Tab------------------
 	@FindBy(xpath="//*[@id='lblLocationNumber']")
 	private WebElement locationNumber;
@@ -112,14 +113,23 @@ public class Page_LocationBasicInfoTab extends LaunchLPAD {
 	public void setReferenceCode2(String Code) {
 		elReferenceCode2.sendKeys(Code);
 	}
-	
+	private String generateBName() {
+		String time=Utilities.getCurrentTime();
+		return time;
+	}
 	public void setBusinessName(String Name) {
+//		String time=Utilities.getCurrentTime();
+		String tmp=generateBName();
+		System.out.println(Name);
+		Name=Name+tmp;
+		System.out.println(Name);
 		elBusinessName.sendKeys(Name);
 	}
 	
 	public void setShortBusinessName(String Name) {
-		String time=Utilities.getCurrentTime();
-		Name=Name+time;
+//		String time=Utilities.getCurrentTime();
+		Name=Name+BName;
+		System.out.println(Name);
 		elShortBusinessName.sendKeys(Name);
 	}
 	
