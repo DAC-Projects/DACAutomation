@@ -1,40 +1,27 @@
 package com.dac.testcases.DTC;
-
-import java.util.concurrent.TimeUnit;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
-
 import com.dac.main.POM_DTC.DTC_Navigation;
 import com.dac.main.POM_DTC.DTC_Transmission;
-import com.dac.main.POM_TPSEE.TPSEE_ESRreports_Page;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
+import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
 
-public class VerifytheStatus_Manual {
-	public static WebDriver driver;
+public class VerifytheStatus_Manual extends BaseClass {
 	 WebDriverWait wait;
 	String url="https://beta-dtc-web.azurewebsites.net/";
-	
-	@Test	
- public void launchBrowser() {
-	  
-	   WebDriverManager.chromedriver().version("81.0.4044.69").setup(); 
-	   driver=new ChromeDriver();
-	  driver.get(url);
-	  driver.manage().window().maximize();
-	  driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
-	  System.out.println(driver.getTitle());
- }
-	
+	@Test(groups = { "Setup" })	
+	public void launchBrowser() throws Exception {
+		CurrentState.getDriver().get(url);
+	   System.out.println(CurrentState.getDriver().getTitle());
+	   DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
+	   dtcLogin.submitLogin("adevaraj@dacgroup.com","laptop@123");
+	   dtcLogin.pressYesKey();
+	}	
 	@Test( dependsOnMethods = { "launchBrowser"})
 	 public void complete() throws Exception {
-		  DTC_Transmission dtcLogin=new DTC_Transmission(driver);
-		  DTC_Navigation navi=new DTC_Navigation(driver);
+		  DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
+		  DTC_Navigation navi=new DTC_Navigation(CurrentState.getDriver());
 		  dtcLogin.submitLogin("adevaraj@dacgroup.com","lockdown@123");
 		  dtcLogin.pressYesKey();
 		  String Manual_ID=null;
@@ -45,20 +32,18 @@ public class VerifytheStatus_Manual {
 			         Manual_ID=wb.getCellValue(1, wb.seacrh_pattern("Manual_ID", 0).get(0).intValue());
 			        System.out.println(Manual_ID);	
 			        String vendor="Bing";
-			       // dtcLogin.verif_Status_complete(Manual_ID,vendor);
+			        dtcLogin.verif_Status_complete(Manual_ID,vendor);
 					count++;
 				}
 		  catch(Exception e)
 		  {
 		  e.printStackTrace();
-			}
-		
-	  }
-	
+			addEvidence(CurrentState.getDriver(), "Manual", "yes");
+		  } }
 
 	@Test( dependsOnMethods = { "complete"})
 	 public void cancel() throws Exception {
-		  DTC_Transmission dtcLogin=new DTC_Transmission(driver);
+		  DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
 		  String Manual_ID=null;
 		  try {	
 				int count = 1;
@@ -66,20 +51,20 @@ public class VerifytheStatus_Manual {
 					System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
 			         Manual_ID=wb.getCellValue(2, wb.seacrh_pattern("Manual_ID", 0).get(0).intValue());
 			        System.out.println(Manual_ID);		
-			 	   //dtcLogin.verif_Status_cancel(Manual_ID);
+			 	   dtcLogin.verif_Status_cancel(Manual_ID);
 					count++;
 				}
 		  catch(Exception e)
 		  {
 		  e.printStackTrace();
-			}
-		
-	  }
+			addEvidence(CurrentState.getDriver(), "Manual", "yes");
+
+			}}
 	
 
 	@Test( dependsOnMethods = { "cancel"})
 	 public void allcomplete() throws Exception {
-		  DTC_Transmission dtcLogin=new DTC_Transmission(driver);
+		  DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
 		  String Manual_ID=null;
 		  try {	
 				int count = 1;
@@ -93,12 +78,12 @@ public class VerifytheStatus_Manual {
 		  catch(Exception e)
 		  {
 		  e.printStackTrace();
-			}
-	  }
+			addEvidence(CurrentState.getDriver(), "Manual", "yes");
+			}}
 
 	@Test( dependsOnMethods = { "allcomplete"})
 	 public void allcancel() throws Exception {
-		  DTC_Transmission dtcLogin=new DTC_Transmission(driver);
+		  DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
 		  String Manual_ID=null;
 		  try {	
 				int count = 1;
@@ -112,50 +97,69 @@ public class VerifytheStatus_Manual {
 		  catch(Exception e)
 		  {
 		  e.printStackTrace();
-			}
-		
-	  }
+			addEvidence(CurrentState.getDriver(), "Manual", "yes");
+		  }}
 	
 	@Test( dependsOnMethods = { "allcancel"})
 	 public void Other_venodrs() throws Exception {
-		  DTC_Transmission dtcLogin=new DTC_Transmission(driver);
-		  String RqID = null,
-		  LO_number="9000226217";
+		  DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
 		  String apple_RqID=null;
 		  String zomato_RqID=null;
 		  String here_RqID=null;
 		  String tomtom_Request_ID=null;
 		  String Manual_ID=null;
 		  String LO_number_API= null;
-		  String pageTitle= dtcLogin.getTitle(driver);
+		  String pageTitle= dtcLogin.getTitle(CurrentState.getDriver());
+		  ExcelHandler wb1 = new ExcelHandler("./data/LocationSampleData.xlsx", "BasicInfo");
+			wb1.deleteEmptyRows();
+			int a=wb1.getRowCount();
+			System.out.println(a);
+			  String LO_number = null,location_name=null;
+			
+			  for(int i=1;i<=1;i++) {
+				LO_number = wb1.getCellValue(i, wb1.seacrh_pattern("LocationNumber", 0).get(0).intValue());
+				location_name =wb1.getCellValue(i, wb1.seacrh_pattern("LocationName", 0).get(0).intValue());
+				System.out.println(LO_number);
+			}
+			  
 		  try {	
 				int count = 1;
 				ExcelHandler wb = new ExcelHandler("./data/Request_ID.xlsx", "Sheet1"); wb.deleteEmptyRows();
 					System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
-			         apple_RqID = wb.getCellValue(1, wb.seacrh_pattern("Apple_Request_ID", 0).get(0).intValue());
-			         zomato_RqID = wb.getCellValue(1, wb.seacrh_pattern("Zomato_Request_ID", 0).get(0).intValue());
-			         here_RqID = wb.getCellValue(1, wb.seacrh_pattern("Here_Request_ID", 0).get(0).intValue());
-			         tomtom_Request_ID = wb.getCellValue(1, wb.seacrh_pattern("tomtom_Request_ID", 0).get(0).intValue());
-			      					count++;
+			        apple_RqID = wb.getCellValue(1, wb.seacrh_pattern("Apple_Request_ID", 0).get(0).intValue());
+			        zomato_RqID = wb.getCellValue(1, wb.seacrh_pattern("Zomato_Request_ID", 0).get(0).intValue());
+			        here_RqID = wb.getCellValue(1, wb.seacrh_pattern("Here_Request_ID", 0).get(0).intValue());
+			        tomtom_Request_ID = wb.getCellValue(1, wb.seacrh_pattern("tomtom_Request_ID", 0).get(0).intValue());
+			      	count++;
 				}
 		  catch(Exception e)
 		  {
 		  e.printStackTrace();
+			addEvidence(CurrentState.getDriver(), "Manual", "yes");
 			}
+		  
 		  LO_number_API=" 9000226221";
-		 
 		  String vendor="Google";
-		  String vendor1="Bing";
-		  //String vendor2="Foursquare";
+		  
 		  System.out.println(pageTitle);
-		 // dtcLogin.API_Transmission();
-		//dtcLogin.API_Transmission_vendor(LO_number_API, vendor1);
-		// dtcLogin.API_Transmission_vendor(LO_number_API, vendor);
+		 dtcLogin.API_Transmission();
+		 addEvidence(CurrentState.getDriver(), "API", "yes");
+
+		dtcLogin.API_Transmission_vendor(LO_number_API, vendor);
+		addEvidence(CurrentState.getDriver(), "API", "yes");
+
 		dtcLogin.verify_apple(LO_number,apple_RqID);
+		addEvidence(CurrentState.getDriver(), "Apple request", "yes");
+
 		dtcLogin.verify_zomato(LO_number,zomato_RqID );
-		dtcLogin.verify_here(here_RqID);
+		addEvidence(CurrentState.getDriver(), "Zomato request", "yes");
+
+		dtcLogin.verify_here(here_RqID,location_name);
+		addEvidence(CurrentState.getDriver(), "HERE request", "yes");
+
 		dtcLogin.verify_tomtom(LO_number,tomtom_Request_ID);
-		driver.close();
+		addEvidence(CurrentState.getDriver(), "tomtom_request", "yes");
+
 	  }
 }
 

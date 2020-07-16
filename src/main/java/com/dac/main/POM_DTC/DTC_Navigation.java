@@ -149,7 +149,7 @@ public class DTC_Navigation {
 		}
 		Clear_button.click();
 	}
-	int i;
+	/*int i;
 	public void Count_check(String lo_Number) throws InterruptedException {
 		String lo=String.valueOf(lo_Number);
 		location_number.sendKeys(lo);
@@ -177,7 +177,55 @@ public class DTC_Navigation {
 		Assert.assertEquals(i, j);
 		
 		
-	}
+	}*/
+	
+	int before_Ignore,after_ignore;
+    public void Count_check(String lo_Number) throws InterruptedException {
+        String lo=String.valueOf(lo_Number);
+        location_number.sendKeys(lo);
+        apply.click();
+        Thread.sleep(5000);
+        WebElement UICount = driver.findElement(By.xpath("//*[@id='duplicatelistTable_info']"));
+        before_Ignore =  NumOfentries(UICount);
+        System.out.println("Count before ignore is :" +before_Ignore);
+       /* String ad=driver.findElement(By.xpath("//*[@id=\"duplicatelistTable_info\"]")).getText();
+        String ad1=ad.substring(19, 21);
+        i=Integer.parseInt(ad1);
+        System.out.println(i);
+        System.out.println("abi"+ad1);*/
+        Thread.sleep(1000);
+        Clear_button.click();
+    }
+   
+    public void Count_check_ignore(String lo_Number) throws InterruptedException {
+        String lo=String.valueOf(lo_Number);
+        location_number.sendKeys(lo);
+        apply.click();
+        Thread.sleep(5000);
+        WebElement UICount = driver.findElement(By.xpath("//*[@id='duplicatelistTable_info']"));
+        after_ignore =  NumOfentries(UICount);
+        System.out.println("Count After ignoring :" +after_ignore);
+        /*String ad=driver.findElement(By.xpath("//*[@id=\"duplicatelistTable_info\"]")).getText();
+        String ad1=ad.substring(19, 21);
+        int j=Integer.parseInt(ad1)-1;
+        System.out.println(j);*/
+        Assert.assertEquals(before_Ignore - 1, after_ignore);  
+    }
+   
+    public int NumOfentries(WebElement entry) {
+        //wait.until(ExpectedConditions.visibilityOf(entry));
+        if(entry.isDisplayed()) {
+        String entiresText = entry.getText();
+        System.out.println("The total entries in a table is :" + entiresText);
+        String result = entiresText.substring(entiresText.indexOf("f") + 1, entiresText.indexOf("s") - 6).trim();
+        int finalvalue = Integer.parseInt(result);
+        System.out.println("The number of entries is : " +finalvalue);
+        return finalvalue;
+        }else {
+            System.out.println("No Data available");
+            return 0;
+        }       
+    }
 	public void Dup() {
 		System.out.println("Duplicate dashboard");
 		mnuLaunchpad.click();

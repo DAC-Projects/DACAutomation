@@ -28,7 +28,7 @@ public interface IAutoconst {
 	String[] deepfieldAccount = {baseUrl+"deepfield-software-incorporated-beta", "bmobit@dacgroup.com"};
 	String[] deepfieldAccount_SE_app = {baseUrl+"social-automation-beta", "rohitmenon8055@gmail.com"};
 	String[] deepfieldAccount_SE = {baseUrl+"social-automation-beta","vrohitmenon@gmail.com	"};
-	String[] transparenSEE = {baseUrl+"international-account-beta-beta", "spillai@dacgroup.com"};
+	String[] transparenSEE = {baseUrl+"aurify-brands-test-beta", "jmohan@dacgroup.com"};
 	String[] Fit4LessAccount = {baseUrl+"fit4less-beta", "1test@gmail.com"};
 	String[] neuralTuringTechAccount = {baseUrl+"neural-turing-tech-beta", "svarghese@dacgroup.com"};
 	

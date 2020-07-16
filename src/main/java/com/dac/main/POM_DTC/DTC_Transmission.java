@@ -23,10 +23,14 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+
+import com.dac.main.BasePage;
+
 import groovyjarjarasm.asm.ClassReader;
+import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
-public class DTC_Transmission {
+public class DTC_Transmission extends BaseClass  {
 	WebDriver driver;
 	ExcelHandler wb1;
 	;
@@ -388,6 +392,7 @@ public DTC_Transmission (WebDriver driver) {
 		check_Location.click();
 		Thread.sleep(1000);
 		run.click();
+		addEvidence(CurrentState.getDriver(), "Manual", "yes");
 		Thread.sleep(1000);
 		initiate.click();
 		Thread.sleep(1000);
@@ -464,7 +469,6 @@ public DTC_Transmission (WebDriver driver) {
 		System.out.println(sta);
 		addrequest_apple.click();
 		Thread.sleep(2000);
-
 		Account.click();
 		Thread.sleep(2000);
 		acc_Input.sendKeys(account);
@@ -475,6 +479,7 @@ public DTC_Transmission (WebDriver driver) {
 		Account.click();
 		Thread.sleep(2000);
 		schedule_time.click();
+		addEvidence(CurrentState.getDriver(), "Apple", "yes");
 		Thread.sleep(2000);
 		cli_pop.click();
 		Thread.sleep(2000);
@@ -504,10 +509,11 @@ public DTC_Transmission (WebDriver driver) {
 		Assert.assertEquals(a, ad1q);
 		driver.findElement(file(id)).click();
 		Thread.sleep(5000);
-		String filname=getLastModifiedFile("C:\\Users\\abinaya\\Downloads");
+		String filname = BasePage.getLastModifiedFile("./downloads");
 		System.out.println(filname);
+		addEvidence(CurrentState.getDriver(), "Apple request", "yes");
 		String splitBy = ",";
-		String fname="C:\\Users\\abinaya\\Downloads\\" + filname;
+		String fname="./downloads/" + filname;
 		BufferedReader br = new BufferedReader(new FileReader(fname));
 		String line = br.readLine();
 		String myList="null";
@@ -515,7 +521,7 @@ public DTC_Transmission (WebDriver driver) {
           String[] b = line.split(splitBy); 
           myList=b[1];
         }
-		System.out.println("da"+myList);
+		System.out.println(myList);
 		String ad1=LO_number;
 		myList = myList.replaceAll("^\"|\"$", "");
 		System.out.println(myList);
@@ -533,7 +539,6 @@ public DTC_Transmission (WebDriver driver) {
 		Thread.sleep(4000);
 		addrequest_zomato.click();
 		Thread.sleep(2000);
-
 		Account_zomato.click();
 		Thread.sleep(2000);
 		acc_Input_zomato.sendKeys(account);
@@ -543,6 +548,7 @@ public DTC_Transmission (WebDriver driver) {
 		Thread.sleep(2000);
 		Account_zomato.click();
 		Thread.sleep(2000);
+		addEvidence(CurrentState.getDriver(), "Zomato", "yes");
 		schedule_time.click();
 		Thread.sleep(2000);
 		cli_pop.click();
@@ -574,9 +580,11 @@ public DTC_Transmission (WebDriver driver) {
 		Assert.assertEquals(a, ad1q);
 		driver.findElement(file(id)).click();
 		Thread.sleep(1000);		
-		String filname=getLastModifiedFile("C:\\Users\\abinaya\\Downloads");
+		String filname = BasePage.getLastModifiedFile("./downloads");
 		System.out.println(filname);
-		String fname="C:\\Users\\abinaya\\Downloads\\" + filname;
+		addEvidence(CurrentState.getDriver(), "Zomato request", "yes");
+
+		String fname="./downloads/" + filname;
 		String splitBy = ",";
 		BufferedReader br = new BufferedReader(new FileReader(fname));
 		String line = br.readLine();
@@ -626,6 +634,8 @@ public DTC_Transmission (WebDriver driver) {
 		Thread.sleep(2000);
 		Account_here.click();
 		Thread.sleep(2000);
+		addEvidence(CurrentState.getDriver(), "Here", "yes");
+
 		schedule_time.click();
 		Thread.sleep(2000);
 		cli_pop.click();
@@ -642,7 +652,7 @@ public DTC_Transmission (WebDriver driver) {
 	    wb1.setCellValue(i, j, na);
 		here_trans.click();
 	  }
-	public void verify_here(String id) throws Exception {
+	public void verify_here(String id,String location_name) throws Exception {
 		System.out.println("Transmission");	
 		mnuTransmission.click();
 		Thread.sleep(2000);
@@ -655,11 +665,12 @@ public DTC_Transmission (WebDriver driver) {
 		driver.findElement(file(id)).click();
 		Thread.sleep(1000);	
 		Thread.sleep(3000);		
-		String filname=getLastModifiedFile("C:\\Users\\abinaya\\Downloads");
+		String filname = BasePage.getLastModifiedFile("./downloads");
 		System.out.println(filname);
 		String name=filname.substring(0,13);
 		System.out.println("Abi"+name);
-		String fname = "C:\\Users\\abinaya\\Downloads\\"+filname;
+		addEvidence(CurrentState.getDriver(), "HERE request", "yes");
+		String fname = "./downloads/"+filname;
 		System.out.println(fname);
 		ArrayList<String> wordList1 = new ArrayList<String>(); 
 		ExcelHandler wb = new ExcelHandler(fname, filname); 
@@ -669,7 +680,7 @@ public DTC_Transmission (WebDriver driver) {
 			wordList1.add(LO_number1);
 		}
 		System.out.println(wordList1);
-					String ad1="Automation Test";
+					String ad1=location_name;
 					 for (String number : wordList1) {
 						 number=number.replaceAll("^\"|\"$", "");
 						 if(number.equals(ad1)) {
@@ -719,6 +730,7 @@ public DTC_Transmission (WebDriver driver) {
 		Thread.sleep(2000);
 		tomtom_check.click();
 		Thread.sleep(1000);
+		addEvidence(CurrentState.getDriver(), "Tomtom", "yes");
 		tomtom_run.click();
 		Thread.sleep(1000);
 		tomtom_close.click();
@@ -732,7 +744,9 @@ public DTC_Transmission (WebDriver driver) {
 		wb1.setCellValue(0, 4, "tomtom_Request_ID");
 	    wb1.setCellValue(i, j, ad);
 		tomtom_trans.click();
-		}		
+		}	
+	
+	
 	public String timeStamp() {
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
@@ -768,9 +782,11 @@ public void verify_tomtom(String LO_number, String tomtom_RqID) throws Exception
 		driver.findElement(By.xpath("//*[@id=\"reportfilelistTable\"]/tbody/tr/td[1]/a")).click();
 		Thread.sleep(2000);
 		}}
-	String filname=getLastModifiedFile("C:\\Users\\abinaya\\Downloads");
+	addEvidence(CurrentState.getDriver(), "tomtom_request", "yes");
+
+	String filname = BasePage.getLastModifiedFile("./downloads");
 	System.out.println(filname);
-    String fname="C:\\Users\\abinaya\\Downloads\\"+filname;
+    String fname="./downloads/"+filname;
     System.out.println(fname);
 	ExcelHandler a = new ExcelHandler(fname, "TomTom_32189_58_134"); 
 	System.out.println(a.getRowCount());
@@ -891,7 +907,7 @@ public static String getLastModifiedFile(String dirPath)
 		cli.click();
 		Thread.sleep(10000); JavascriptExecutor js = (JavascriptExecutor) driver;
 	    js.executeScript("window.scrollBy(0,200)");
-	   Thread.sleep(1000);
+	    Thread.sleep(1000);
 		All_complete.click();
 		Thread.sleep(10000);
 		close_btn.click();
@@ -933,6 +949,7 @@ public void apple_date(String id) throws Exception {
 	Thread.sleep(2000);
 	apple_trans.click();
 	Apple_refresh.click();
+	addEvidence(CurrentState.getDriver(), "Apple", "yes");
 	Thread.sleep(2000);
 	driver.findElement(file_date(id)).click();
 	driver.findElement(By.xpath("//*[@id=\"btnSubmitConfirmSubmit\"]")).click();
@@ -943,6 +960,7 @@ public void zomato_date(String id) throws Exception {
 	Thread.sleep(2000);
 	zomato_trans.click();
 	Thread.sleep(2000);
+	addEvidence(CurrentState.getDriver(), "Zomato", "yes");
 	driver.findElement(By.xpath("//*[@id=\"transmission\"]/div/div/div[2]/div[4]/div[2]/div/span")).click();
 	Thread.sleep(2000);
 	driver.findElement(file_date(id)).click();
@@ -953,9 +971,10 @@ public void here_date(String id) throws Exception {
 	Thread.sleep(2000);
 	here_trans.click();
 	Thread.sleep(1000);
+	addEvidence(CurrentState.getDriver(), "Here", "yes");
 	driver.findElement(By.xpath("//*[@id=\"transmission\"]/div/div/div[2]/div[5]/div[2]/div/span")).click();
-	 JavascriptExecutor js = (JavascriptExecutor) driver;
-	    js.executeScript("window.scrollBy(0,200)");
+	JavascriptExecutor js = (JavascriptExecutor) driver;
+	js.executeScript("window.scrollBy(0,200)");
 	Thread.sleep(2000);
 	driver.findElement(file_date(id)).click();
 }
@@ -967,6 +986,7 @@ public void tomtom_date(String id) throws Exception {
 	Thread.sleep(1000);
 	 JavascriptExecutor js = (JavascriptExecutor) driver;
     js.executeScript("window.scrollBy(0,200)");
+	addEvidence(CurrentState.getDriver(), "tomtom", "yes");
     ExcelHandler wb = new ExcelHandler("./data/Request_ID.xlsx", "Sheet1"); wb.deleteEmptyRows();
 	String tomtom_RqID = wb.getCellValue(1, wb.seacrh_pattern("tomtom_Request_ID", 0).get(0).intValue());
 	tomtom_paraname.sendKeys(tomtom_RqID);

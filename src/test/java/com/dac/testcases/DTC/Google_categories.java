@@ -23,12 +23,10 @@ public class Google_categories extends BaseClass {
 	@Test(description="Test")	
 		public void launchBrowser() {
 		  DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
-		 
 		  System.out.println("driver test"+CurrentState.getDriver());
 		  CurrentState.getDriver().get(url);
-		  dtcLogin.submitLogin("adevaraj@dacgroup.com","lockdown@123");
+		  dtcLogin.submitLogin("adevaraj@dacgroup.com","laptop@123");
 		  addEvidence(CurrentState.getDriver(), "Testing", "yes");
-
 		  dtcLogin.pressYesKey();
 		  String pageTitle= dtcLogin.getTitle(CurrentState.getDriver());
 		  System.out.println(pageTitle);

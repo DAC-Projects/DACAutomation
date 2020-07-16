@@ -2,6 +2,7 @@ package com.dac.testcases.DTC;
 
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,36 +19,33 @@ import resources.ExcelHandler;
 
 public class DTCLoginPage_TC {
 
-	public static WebDriver driver;
+	//public static WebDriver driver;
 	 WebDriverWait wait;
 	String url="https://beta-dtc-web.azurewebsites.net/";
 	
 	@Test	
   public void launchBrowser() {
-	  
-	   WebDriverManager.chromedriver().version("81.0.4044.69").setup(); 
-	   driver=new ChromeDriver();
-	 // System.setProperty("webdriver.chrome.driver","C:\\Users\\abinaya\\Downloads\\chromedriver.exe");
-	  driver.get(url);
-	  driver.manage().window().maximize();
-	  driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
-	  System.out.println(driver.getTitle());
+		  CurrentState.getDriver().get(url);
+	    	Dimension d = new Dimension(1000,700);
+		  
+		   System.out.println(CurrentState.getDriver().getTitle());
+		   DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
+		   dtcLogin.submitLogin("adevaraj@dacgroup.com","laptop@123");
+		    dtcLogin.pressYesKey();
+
   }
 
 	 @Test( dependsOnMethods = { "launchBrowser"})
  public void LoginDTC() throws Exception {
-	  DTC_Duplicate_Management dtcLogin=new DTC_Duplicate_Management(driver);
-	  DTC_Navigation navi=new DTC_Navigation(driver);
-	  dtcLogin.submitLogin("adevaraj@dacgroup.com","lockdown@123");
-	  dtcLogin.pressYesKey();
-	  String pageTitle= dtcLogin.getTitle(driver);
+	  DTC_Duplicate_Management dtcLogin=new DTC_Duplicate_Management(CurrentState.getDriver());
+	  DTC_Navigation navi=new DTC_Navigation(CurrentState.getDriver());
+
 	  navi.Dup();
 	  int i=1;
-	  //navi.Count_check();
-	  //navi.Count_check_ignore();
-	  //navi.excel(i);
+	  navi.Count_check("9000223167");
+	  navi.Count_check_ignore("9000223167");
+	  navi.excel(i);
 	  
-	  System.out.println(pageTitle);
   }
 	 /*@Test( dependsOnMethods = { "launchBrowser"})
 	 public void LoginDTC() throws Exception {

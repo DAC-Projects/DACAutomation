@@ -134,11 +134,10 @@ public class TPSEE_ROI extends TPSEE_abstractMethods {
 		    @FindBy(xpath="//*[@id='page-content']/div[1]/div[2]/ul/li[1]/div/span")
 		    private WebElement dat_count;
 	ArrayList<String> actualResult = new ArrayList<String>();
-
 	ArrayList<String> expectedResult = new ArrayList<String>();
 	ArrayList<Double> totalResult = new ArrayList<Double>();
 	double annual_per=2.0/365;
-public void tool1(String t1) throws InterruptedException {
+	public void tool1(String t1) throws InterruptedException {
 	Thread.sleep(3000);
     waitForElement(tool_1, 30);
     scrollByElement(tool_1);
