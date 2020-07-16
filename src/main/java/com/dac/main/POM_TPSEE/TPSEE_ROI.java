@@ -468,14 +468,14 @@ public void selectCalender_ToDate1(int day_d, String month_MMM, int year_YYYY) t
     	 month = cal.get(Calendar.MONTH);
         return month;
     }
-        public void Nav_GMB() {
+        public void Nav_GMB() throws Exception {
         	clickelement(GMB_page);
+        	Thread.sleep(3000);
+            driver.findElement(By.xpath("//*[@id=\"wm-shoutout-219267\"]/div[3]/div[2]/span")).click();
+        	Thread.sleep(3000);
 }
         public void GMB() throws Exception {
-        	Thread.sleep(3000);
-        driver.findElement(By.xpath("//*[@id=\"wm-shoutout-219267\"]/div[3]/div[2]/span")).click();
-scrollByElement(cus_web);
-
+ scrollByElement(cus_web);
 String web=cus_web.getText();
 System.out.println(web);
 actualResult.add(web);
