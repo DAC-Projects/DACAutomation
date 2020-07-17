@@ -88,10 +88,13 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	@Test(priority = 4)
 	public void verifyGraphncompareDate() {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
+		boolean datavalidation = data.IsDataAvailable();
+		if (!datavalidation == true) {
 		try {
 			data.getGraphDatenVerify();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
 		}
 	}
 
@@ -102,6 +105,8 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 */
 	@Test(priority = 5)
 	public void gethighchartsdate() throws Exception {
+		boolean datavalidation = data.IsDataAvailable();
+		if (!datavalidation == true) {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		try {
 			try {
@@ -149,6 +154,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		}
 	}
 
 	/**
@@ -165,7 +171,6 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	@Test(priority = 6, enabled = true, dataProvider = "testData")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
-
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		boolean datavalidation = data.IsDataAvailable();
 		if (!datavalidation == true) {
@@ -186,8 +191,11 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 */
 	@Test(priority = 7)
 	public void VerifyPieChartData() {
-		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
-		data.VerifyPieChart();
+		boolean datavalidation = data.IsDataAvailable();
+		if (!datavalidation == true) {
+			data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
+			data.VerifyPieChart();
+		}
 	}
 
 	/**
@@ -198,17 +206,20 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	@Test(priority = 8)
 	public void Export() throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
-		try {
-			data.ExportasCSV();
-			addEvidence(CurrentState.getDriver(), "Export as CSV", "yes");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			data.ExportasXLSX();
-			addEvidence(CurrentState.getDriver(), "Export as XLSX", "yes");
-		} catch (Exception e) {
-			e.printStackTrace();
+		boolean datavalidation = data.IsDataAvailable();
+		if (!datavalidation == true) {
+			try {
+				data.ExportasCSV();
+				addEvidence(CurrentState.getDriver(), "Export as CSV", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				data.ExportasXLSX();
+				addEvidence(CurrentState.getDriver(), "Export as XLSX", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -220,35 +231,38 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	@Test(priority = 9)
 	public void CompareUIXLData() throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
-		try {
-			data.PageAction();
-			addEvidence(CurrentState.getDriver(), "To get Number of Phone Calls", "yes");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			data.Checkin();
-			addEvidence(CurrentState.getDriver(), "To Compare UI and XL CheckIn", "yes");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			data.Fans();
-			addEvidence(CurrentState.getDriver(), "To Compare XL and UI Fans", "yes");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			data.PostEngagement();
-			addEvidence(CurrentState.getDriver(), "To Compare XL and UI Post Engagements", "yes");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			data.getImpressionCount();
-			addEvidence(CurrentState.getDriver(), "To Compare XL and UI Impressions", "yes");
-		} catch (Exception e) {
-			e.printStackTrace();
+		boolean datavalidation = data.IsDataAvailable();
+		if (!datavalidation == true) {
+			try {
+				data.PageAction();
+				addEvidence(CurrentState.getDriver(), "To get Number of Phone Calls", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				data.Checkin();
+				addEvidence(CurrentState.getDriver(), "To Compare UI and XL CheckIn", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				data.Fans();
+				addEvidence(CurrentState.getDriver(), "To Compare XL and UI Fans", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				data.PostEngagement();
+				addEvidence(CurrentState.getDriver(), "To Compare XL and UI Post Engagements", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				data.getImpressionCount();
+				addEvidence(CurrentState.getDriver(), "To Compare XL and UI Impressions", "yes");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

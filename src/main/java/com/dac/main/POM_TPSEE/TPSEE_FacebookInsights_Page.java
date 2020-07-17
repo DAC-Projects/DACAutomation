@@ -92,7 +92,7 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//*[@id='impression-chart']")
 	private WebElement PieChart;
 
-	@FindBy(xpath = "//*[@class='highcharts-title']")
+	@FindBy(xpath = "(//*[@class='highcharts-title'])[2]")
 	private WebElement DataAvailability;
 
 	@FindBy(xpath = "//div[@id='facebookExportDropdown']//a[contains(text(),'Export as CSV')]")
@@ -266,7 +266,7 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 	 * @return
 	 */
 	public boolean IsDataAvailable() {
-		if (DataAvailability.getText().equals("There is currently not enough data.")) {
+		if (DataAvailability.getText().equals("There is currently not enough data")) {
 			return true;
 		} else {
 			return false;
