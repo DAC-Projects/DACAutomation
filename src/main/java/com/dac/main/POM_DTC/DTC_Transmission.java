@@ -439,6 +439,8 @@ public DTC_Transmission (WebDriver driver) {
 		String ad=driver.findElement(By.xpath("//*[@id='ggletransmissionlistTable']/tbody/tr[1]/td[9]")).getText();
 		Thread.sleep(1000);
 		String da=driver.findElement(By.xpath("//*[@id=\"ggletransmissionlistTable\"]/tbody/tr/td[11]")).getText();
+		
+		
 		System.out.println("Date"+da);
 		if(vendor.equals("Google")) {
 		driver.findElement(By.xpath("//*[@id=\"ggletransmissionlistTable\"]/tbody/tr/td[9]/span")).click();
@@ -785,7 +787,9 @@ public void verify_tomtom(String LO_number, String tomtom_RqID) throws Exception
 	System.out.println(filname);
     String fname="./downloads/"+filname;
     System.out.println(fname);
-	ExcelHandler a = new ExcelHandler(fname, "TomTom_32189_58_134"); 
+    String ak=filname.replace(".xlsx", "");
+	System.out.println(ak);
+	ExcelHandler a = new ExcelHandler(fname, ak); 
 	System.out.println(a.getRowCount());
 	for(int j=1;j<=a.getRowCount();j++) {
 		String LO_number1  = a.getCellValue(j, a.seacrh_pattern("Location No", 0).get(0).intValue());

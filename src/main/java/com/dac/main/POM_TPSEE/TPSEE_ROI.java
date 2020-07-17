@@ -498,18 +498,12 @@ System.out.println(actualResult);
 		return null;
 	}
 	 public  int getNumberofDays_ROI() throws Exception {
-         int diff = 0;
-         Date init=new SimpleDateFormat("dd.MM.yyyy").parse(getCurrentfromDate_ROI()); 
-	     System.out.println(init);
+         int diff = 0;         
          Thread.sleep(5000);
-         Date enddate=new SimpleDateFormat("dd.MM.yyyy").parse(getCurrenttoDate_ROI());
-         System.out.println(enddate);
-         Thread.sleep(5000);
-         long difference = Math.abs(init.getTime() - enddate.getTime());
+         long difference = Math.abs(getCurrentfromDate_ROI().getTime() - getCurrenttoDate_ROI().getTime());
          System.out.println("ad"+difference);
          long differenceDates = difference / (24 * 60 * 60 * 1000);
          System.out.println("ad"+differenceDates);
-
          diff = (int)(long)differenceDates+1;       
          System.out.println("diff"+diff); 
          Com_date(diff);
@@ -517,15 +511,25 @@ System.out.println(actualResult);
      }   
     
 	 
-	 public String getCurrentfromDate_ROI() throws ParseException, java.text.ParseException {
+	 public Date getCurrentfromDate_ROI() throws ParseException, java.text.ParseException {
+		 String var = null;			
+			var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
+			System.out.println(var);
+			SimpleDateFormat formats = new SimpleDateFormat(var);
 	        String currentfromDate = ((JavascriptExecutor)driver).executeScript("return document.getElementById('startdatepicker').value").toString();
 	        System.out.println("Abi"+currentfromDate);
-	        return currentfromDate;
+	        Date init = formats.parse(currentfromDate);
+	        return init;
 	    }
-	    public String getCurrenttoDate_ROI() throws ParseException, java.text.ParseException {
-	        String currenttoDate = ((JavascriptExecutor)driver).executeScript("return document.getElementById('enddatepicker').value").toString();
-	        System.out.println("Abi"+currenttoDate);
-	        return currenttoDate;
+	    public Date getCurrenttoDate_ROI() throws ParseException, java.text.ParseException {
+	    	 String var = null;			
+				var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
+				System.out.println(var);
+				SimpleDateFormat formats = new SimpleDateFormat(var);
+				String currenttoDate = ((JavascriptExecutor)driver).executeScript("return document.getElementById('enddatepicker').value").toString();
+				Date enddate = formats.parse(currenttoDate);
+				System.out.println("Abi"+currenttoDate);
+	        return enddate;
 	        }
 	    
 	    public void Com_date(int diff) {
