@@ -100,14 +100,14 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	// Test to compare vendors in the application in Visibility Page
+	/*// Test to compare vendors in the application in Visibility Page
 	@Test(priority = 6, groups = { "smoke" }, description = "Verify Site Vendors List")
 	public void comparevendorsListnverifySitevendors() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		ArrayList<String> accuracyvendors = data.verifyAccuracySitevendors();
 		Assert.assertEquals(accuracyvendors, foundlistingVendors);
 		addEvidence(CurrentState.getDriver(), "Site Vendors in Content Analysis site vendors ", "yes");
-	}
+	}*/
 
 	/**
 	 * Test to Compare KPI Values with Report
@@ -307,7 +307,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 				"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
 	}
 
-	@Test(priority = 17, groups = { "smoke" }, description = "Test for verifying sitetable in Visibility page")
+	/*@Test(priority = 17, groups = { "smoke" }, description = "Test for verifying sitetable in Visibility page")
 	public void verifyTableHeaders() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.verifyAllTab();
@@ -321,7 +321,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		Thread.sleep(5000);
 		data.verifyPHNOTab();
 		addEvidence(CurrentState.getDriver(), "Data of Social Sites Tab", "yes");
-	}
+	}*/
 
 	/**
 	 * Test to verify inaccuracy and ignored checkbox

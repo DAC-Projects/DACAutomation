@@ -65,7 +65,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
 
-	// CAScorenLoc
+	/*// CAScorenLoc
 	@Test(priority = 4, groups = { "smoke" }, description = "Test for navigating to ContentAnalysis page")
 	public void Verifyscorenloc() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
@@ -76,7 +76,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		Assert.assertEquals(CALoc, location);
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Accuracy page");
 		addEvidence(CurrentState.getDriver(), "Navigate to ContentAnalysis page from Dashboard", "yes");
-	}
+	}*/
 
 	// Test to verify Zoom Functionality
 	@Test(priority = 5, groups = { "smoke" }, description = "Verify Zoom Functionality")

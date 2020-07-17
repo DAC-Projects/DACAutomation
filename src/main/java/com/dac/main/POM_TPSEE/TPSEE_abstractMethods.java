@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -964,8 +963,8 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	                                        System.out.println("UI"+UI_date);
 	                                        Date VE_Date=getCurrent();
 	                                        System.out.println("VE"+VE_Date);	                                        
-	                                  //      Assert.assertEquals(UI_date, VE_Date);
-	                                        System.out.println("1 year data is displayed");
+	                                        Assert.assertEquals(UI_date, VE_Date);
+	                                        System.out.println("YearToDate data is displayed");
 	                                    }else {
 	                                        System.out.println("Element Not clicked");
 	                                        }
@@ -1019,13 +1018,15 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		 * @throws ParseException
 		 */
 		public Date getCurrent() throws ParseException {
-            String ad1="01/01/";
+            /*String ad1="01/01/";           
             String year = Integer.toString(Year.now().getValue());
             String ad2=ad1.concat(year);
-            System.out.println(ad2);
+            System.out.println(ad2);*/
+            String FirstDayofYear = ((JavascriptExecutor)driver).executeScript("return moment().startOf('year').format(window.dateFormat.shortTemplate.PlainHtml.toUpperCase())").toString();
+            System.out.println("The first date of year is :" +FirstDayofYear);
             String var = ((JavascriptExecutor)driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml").toString();
             SimpleDateFormat formats = new SimpleDateFormat(var);
-            Date finalcurrentdate = formats.parse(ad2);
+            Date finalcurrentdate = formats.parse(FirstDayofYear);
             return finalcurrentdate;
         }
 		

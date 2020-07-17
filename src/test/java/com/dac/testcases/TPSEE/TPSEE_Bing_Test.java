@@ -146,7 +146,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 	}
 
 	// Test for comparing UI and export Impression count
-	@Test(priority = 8, groups = { "smoke" }, description = "Verify Impressions")
+	@Test(priority = 8, groups = { "smoke" }, description = "Verify Impressions")	
 	public void VerifyTotalImpressionUIExport() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		data.compareUInExportImpressions(chromepath, IEpath, FFpath);
@@ -179,11 +179,11 @@ public class TPSEE_Bing_Test extends BaseClass {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				try {
+				/*try {
 					data.compareUInExportImpressions(chromepath1m, IEpath1m, FFpath1m);
 				} catch (Exception e) {
 					e.printStackTrace();
-				}
+				}*/
 
 				try {
 					String ThreeMonths = "3m";
@@ -198,12 +198,12 @@ public class TPSEE_Bing_Test extends BaseClass {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				try {
+				/*try {
 					data.compareUInExportImpressions(chromepath3m, IEpath3m, FFpath3m);
 					addEvidence(CurrentState.getDriver(), "Impression", "yes");
 				} catch (Exception e) {
 					e.printStackTrace();
-				}
+				}*/
 
 				try {
 					String SixMonths = "6m";
@@ -218,14 +218,14 @@ public class TPSEE_Bing_Test extends BaseClass {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				try {
+				/*try {
 					data.compareUInExportImpressions(chromepath6m, IEpath6m, FFpath6m);
 					addEvidence(CurrentState.getDriver(), "Impression", "yes");
 				} catch (Exception e) {
 					e.printStackTrace();
-				}
+				}*/
 
-				try {
+				/*try {
 					String OneYear = "1y";
 					data.clickHighchartCriteria(OneYear);
 					addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
@@ -237,13 +237,13 @@ public class TPSEE_Bing_Test extends BaseClass {
 					addEvidence(CurrentState.getDriver(), "XLSXExport", "yes");
 				} catch (Exception e) {
 					e.printStackTrace();
-				}
-				try {
+				}*/
+				/*try {
 					data.compareUInExportImpressions(chromepath1y, IEpath1y, FFpath1y);
 					addEvidence(CurrentState.getDriver(), "Impression", "yes");
 				} catch (Exception e) {
 					e.printStackTrace();
-				}
+				}*/
 
 				try {
 					String YearToDate = "ytd";
@@ -258,12 +258,12 @@ public class TPSEE_Bing_Test extends BaseClass {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				try {
+				/*try {
 					data.compareUInExportImpressions(chromepathytd, IEpathytd, FFpathytd);
 					addEvidence(CurrentState.getDriver(), "Impression", "yes");
 				} catch (Exception e) {
 					e.printStackTrace();
-				}
+				}*/
 
 				try {
 					String ALLDATA = "all";
@@ -278,12 +278,12 @@ public class TPSEE_Bing_Test extends BaseClass {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				try {
+				/*try {
 					data.compareUInExportImpressions(chromepathall, IEpathall, FFpathall);
 					addEvidence(CurrentState.getDriver(), "Impression", "yes");
 				} catch (Exception e) {
 					e.printStackTrace();
-				}
+				}*/
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -313,7 +313,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 				data.exportXLSXBing(BingXLSXdateselect);
 				Thread.sleep(5000);
 				addEvidence(CurrentState.getDriver(), "XLSXExport", "Yes");
-				data.compareUInExportImpressions(chromepathdateselect, IEpathdateselect, FFpathdateselect);
+			//	data.compareUInExportImpressions(chromepathdateselect, IEpathdateselect, FFpathdateselect);
 				Thread.sleep(5000);
 				addEvidence(CurrentState.getDriver(), "Comparision", "Yes");
 				Thread.sleep(5000);

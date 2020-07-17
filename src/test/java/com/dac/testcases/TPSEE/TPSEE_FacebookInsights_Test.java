@@ -29,6 +29,10 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		np.navigateToFacebookInsights();
 		CurrentState.getLogger().log(Status.PASS, "Navigated Successfully to Facebook Page");
 		addEvidence(CurrentState.getDriver(), "Navigation to Facebook Page", "yes");
+		Thread.sleep(5000);
+		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
+		data.clickDone();
+		addEvidence(CurrentState.getDriver(), "Clicked on Walkme", "yes");
 	}
 
 	/**
@@ -163,14 +167,17 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 			String to_year) throws Exception {
 
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
-		if (!(from_day.equals("null")) | !(to_day.equals("null"))) {
-			data.selectCalender_FromDate(grphfromDate, (int) (Double.parseDouble(from_day)), from_month,
-					(int) (Double.parseDouble(from_year)));
-			addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
-			data.selectCalender_ToDate(grphtoDate, (int) (Double.parseDouble(to_day)), to_month,
-					(int) (Double.parseDouble(to_year)));
-			addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
-			CurrentState.getDriver().navigate().refresh();
+		boolean datavalidation = data.IsDataAvailable();
+		if (!datavalidation == true) {
+			if (!(from_day.equals("null")) | !(to_day.equals("null"))) {
+				data.selectCalender_FromDate(grphfromDate, (int) (Double.parseDouble(from_day)), from_month,
+						(int) (Double.parseDouble(from_year)));
+				addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
+				data.selectCalender_ToDate(grphtoDate, (int) (Double.parseDouble(to_day)), to_month,
+						(int) (Double.parseDouble(to_year)));
+				addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
+				CurrentState.getDriver().navigate().refresh();
+			}
 		}
 	}
 

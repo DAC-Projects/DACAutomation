@@ -145,11 +145,19 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "(//*[name()='rect' and @class='highcharts-plot-background'])[6]")
 	private WebElement CheckInsGraphSec;
+	
+	@FindBy(xpath = "//button//span[@class='walkme-custom-balloon-button-text']")
+	private WebElement DoneBtn;
 
 	String path = "./downloads/chromeFacebookExportXLSX.xlsx";
 
 	/*-----------------------------------Locators---------------------------------------------------*/
 
+	
+	public void clickDone() {
+		waitForElement(DoneBtn, 10);
+		clickelement(DoneBtn);
+	}
 	/**
 	 * To Verify Title and Title Text
 	 * 
