@@ -271,6 +271,16 @@ public class Navigationpage extends BasePage{
     	//action.moveToElement(AllGroups).click().perform();
     	System.out.println("Waiting for page to load********");
     	waitUntilLoad(driver);
+    	try {
+            clickwalkme();
+        } catch (Exception e) {
+            System.out.println("No Walkme Displayed");
+        }
+        try {
+            clickNotificationPopUp();
+        } catch (Exception e) {
+            System.out.println("No Notification PopUp displayed");
+        }
     }
     
     //-----CA
