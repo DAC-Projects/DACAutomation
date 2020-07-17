@@ -35,7 +35,7 @@ public abstract class BaseClass {
     if(!CurrentState.getBrowser().contains("ie")) {
 
 //    	wait.until(ExpectedConditions.visibilityOf(CurrentState.getDriver().findElement(By.xpath("//div//button[contains(@class,'walkme-custom-balloon-button walkme-custom-balloon-weak-button walkme-custom-balloon-cancel-button walkme-action-cancel walkme-click-and-hover')]"))));
-    	CurrentState.getDriver().findElement(By.xpath("//div//button[contains(@class,'walkme-custom-balloon-button walkme-custom-balloon-weak-button walkme-custom-balloon-cancel-button walkme-action-cancel walkme-click-and-hover')]")).click();    	
+//    	CurrentState.getDriver().findElement(By.xpath("//div//button[contains(@class,'walkme-custom-balloon-button walkme-custom-balloon-weak-button walkme-custom-balloon-cancel-button walkme-action-cancel walkme-click-and-hover')]")).click();    	
     }
   }
 
