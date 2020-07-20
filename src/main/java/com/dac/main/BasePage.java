@@ -469,7 +469,7 @@ public class BasePage {
 				j++;
 			}
 			rowResults[i] = cellValues;
-			
+
 			System.out.println(Arrays.toString(rowResults[i]));
 
 			i++;
@@ -553,23 +553,26 @@ public class BasePage {
 		// strADate.forEach(System.out::println);//Print List
 		return strADate;
 	}
-	
+
 	public int NumOfentries(WebElement entry) {
 		waitForElement(entry, 10);
 		if(entry.isDisplayed()) {
-		String entiresText = entry.getText();
-		System.out.println("The total entries in a table is :" + entiresText);
-		String result1 = null;
-		String result = entiresText.substring(entiresText.indexOf("(") + 3, entiresText.indexOf(")") - 7).trim();
-		if(result.contains(",")) {
-			result1 = result.replace(",", "").trim();
+			String entiresText = entry.getText();
+			System.out.println("The total entries in a table is :" + entiresText);
+			String result1 = null;
+			String result = entiresText.substring(entiresText.indexOf("(") + 3, entiresText.indexOf(")") - 7).trim();
+			System.out.println("The result is :" +result);
+			if(result.contains(",")) {
+				result1 = result.replace(",", "").trim();
+				int finalvalue = Integer.parseInt(result1);
+				System.out.println("The number of entries is : " +finalvalue);
+				return finalvalue;
+			}else {
+				int finalvalue1 = Integer.parseInt(result);
+				System.out.println("The number of entries is :" +finalvalue1);
+				return finalvalue1;
+			}
 		}
-		int finalvalue = Integer.parseInt(result1);
-		System.out.println("The number of entries is : " +finalvalue);
-		return finalvalue;
-		}else {
-			System.out.println("No Data available");
-			return 0;
-		}		
+		return 0;
 	}
 }

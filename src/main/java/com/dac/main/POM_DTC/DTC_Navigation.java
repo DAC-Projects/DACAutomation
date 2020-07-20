@@ -171,14 +171,14 @@ public class DTC_Navigation {
 
 	public void excel(int i,String time_Stamp) throws Exception {
 		int count = 1;
-		ExcelHandler wb = new ExcelHandler("./data/Message.xlsx", "LONO");
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Duplicate_Management");
 		wb.deleteEmptyRows();
 		try {
 			System.out.println(wb.getRowCount());
 			System.out.println(
 					"*******************  Scenarios for Content " + count + "Starts ****************************");
-			String lo_Number = wb.getCellValue(i, wb.seacrh_pattern("location_Number", 0).get(0).intValue());
-			String Se_Status = wb.getCellValue(i, wb.seacrh_pattern("Status", 0).get(0).intValue());
+			String lo_Number = wb.getCellValue(i, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
+			String Se_Status = wb.getCellValue(i, wb.seacrh_pattern("DTC_Status", 0).get(0).intValue());
 			//String EX_Notes = wb.getCellValue(i, wb.seacrh_pattern("External Notes", 0).get(0).intValue());
 			String Internal_Notes = wb.getCellValue(i, wb.seacrh_pattern("Internal Notes", 0).get(0).intValue());
 			System.out.println(lo_Number);
@@ -226,17 +226,23 @@ public class DTC_Navigation {
     }
     
     public int NumOfentries(WebElement entry) {
-    	wait.until(ExpectedConditions.visibilityOf(entry));
 		if(entry.isDisplayed()) {
-		String entiresText = entry.getText();
-		System.out.println("The total entries in a table is :" + entiresText);
-		String result = entiresText.substring(entiresText.indexOf("f") + 1, entiresText.indexOf("s") - 6).trim();
-		int finalvalue = Integer.parseInt(result);
-		System.out.println("The number of entries is : " +finalvalue);
-		return finalvalue;
-		}else {
-			System.out.println("No Data available");
-			return 0;
-		}		
+			String entiresText = entry.getText();
+			System.out.println("The total entries in a table is :" + entiresText);
+			String result1 = null;
+			String result = entiresText.substring(entiresText.indexOf("f") + 1, entiresText.indexOf("s") - 6).trim();
+			System.out.println("The result is :" +result);
+			if(result.contains(",")) {
+				result1 = result.replace(",", "").trim();
+				int finalvalue = Integer.parseInt(result1);
+				System.out.println("The number of entries is : " +finalvalue);
+				return finalvalue;
+			}else {
+				int finalvalue1 = Integer.parseInt(result);
+				System.out.println("The number of entries is :" +finalvalue1);
+				return finalvalue1;
+			}
+		}
+		return 0;
 	}
 }
