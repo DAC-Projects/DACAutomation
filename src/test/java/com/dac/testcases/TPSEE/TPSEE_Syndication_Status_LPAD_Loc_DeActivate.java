@@ -31,10 +31,10 @@ public class TPSEE_Syndication_Status_LPAD_Loc_DeActivate extends BaseClass{
 	@Test(priority = 2, description = "Verify Location Number deactivated")
 	public void DeActivateScenario() throws Exception {
 		data = new TPSEE_Syndication_Status_Page(CurrentState.getDriver());
-		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "SyndicationLPAD");
+		ExcelHandler wb = new ExcelHandler("./data/LocationSampleData.xlsx", "BasicInfo");
 		wb.deleteEmptyRows();
-		for (int k = 1; k <= wb.getRowCount(); k++) {
-			String LocNum = wb.getCellValue(k, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
+		for (int k = 3; k <= 3; k++) {
+			String LocNum = wb.getCellValue(3, wb.seacrh_pattern("LocationNumber", 0).get(0).intValue());
 			System.out.println("The Location Number is :" + LocNum);
 			data.VerifyLocationNumber(LocNum);
 			addEvidence(CurrentState.getDriver(), "Test for deactivating location", "yes");

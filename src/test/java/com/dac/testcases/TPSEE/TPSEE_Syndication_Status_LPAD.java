@@ -54,21 +54,21 @@ public class TPSEE_Syndication_Status_LPAD extends BaseClass {
 	@Test(priority = 3, description = "To verify status of vendors")
 	public void verifyLPADdetails() throws Exception {
 		data = new TPSEE_Syndication_Status_Page(CurrentState.getDriver());
-		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "SyndicationLPAD");
+		ExcelHandler wb = new ExcelHandler("./data/LocationSampleData.xlsx", "BasicInfo");
 		wb.deleteEmptyRows();
 		int row = 0;
 		String Vendor, Status;
-		for (int k = 1; k <= wb.getRowCount(); k++) {
-			String LocNum = wb.getCellValue(k, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
+		for (int k = 1; k <= 1; k++) {
+			String LocNum = wb.getCellValue(k, wb.seacrh_pattern("LocationNumber", 0).get(0).intValue());
 			System.out.println("The Location Number is :" + LocNum);
 			row = data.getLocationNumberRowNum(LocNum);
 			System.out.println("The row number is :" + row);
-			String vendors = wb.getCellValue(k, wb.seacrh_pattern("Vendor", 0).get(0).intValue());
+			String vendors = wb.getCellValue(k, wb.seacrh_pattern("Vendors_Create", 0).get(0).intValue());
 			System.out.println("The vendors listed are :" + vendors);
 			VendorList = vendors.split(",");
 			int size = VendorList.length;
 			System.out.println("The size of list is :" + size);
-			String status = wb.getCellValue(k, wb.seacrh_pattern("Status", 0).get(0).intValue());
+			String status = wb.getCellValue(k, wb.seacrh_pattern("Status Text", 0).get(0).intValue());
 			System.out.println("The status is :" + status);
 			StatusList = status.split(",");
 			for (int i = 0; i <= size - 1; i++) {
