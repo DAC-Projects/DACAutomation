@@ -22,8 +22,16 @@ public class Create_Transmission extends BaseClass {
 }	
 	@Test( dependsOnMethods = { "launchBrowser"})
 	 public void LoginDTC() throws Exception {
+		int manuallocation=4;
 		  DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
-		  String LO_number = null;
+			ExcelHandler wb1 = new ExcelHandler("./data/LocationDataDownload_20200720134229.xlsx", "LocationDataDownloadReport");
+
+		  for(int i1=1;i1<=1;i1++) {
+				System.out.println("*******************  Scenarios : "+"Starts ****************************");
+				String LO_number1= wb1.getCellValue(1, wb1.seacrh_pattern("Numéro de téléphone de l'entreprise", 0).get(0).intValue());
+				System.out.println(LO_number1);
+		  }
+		/*  String LO_number = null;
 		  try {	
 			  dtcLogin.Transmission();
 				int count = 1;
@@ -33,7 +41,7 @@ public class Create_Transmission extends BaseClass {
 				wb.deleteEmptyRows();
 				int a=wb.getRowCount();
 				System.out.println(a);
-				for(int i=1;i<=4;i++) {
+				for(int i=1;i<=manuallocation;i++) {
 					System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
 					LO_number = wb.getCellValue(i, wb.seacrh_pattern("LocationNumber", 0).get(0).intValue());
 					System.out.println(LO_number);
@@ -42,12 +50,13 @@ public class Create_Transmission extends BaseClass {
 					count++;
 				}}
 		  catch(Exception e) {
-		  e.printStackTrace();
+		  e.printStackTrace();*/
+		  
 			}
-		  addEvidence(CurrentState.getDriver(), "Manual", "yes");}
 	
 	@Test( dependsOnMethods = { "LoginDTC"})
 	 public void Addrequest() throws Exception {
+		int otherlocation=1;
 		  DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
 		  String pageTitle= dtcLogin.getTitle(CurrentState.getDriver());
 		  String LO_number = null , account= null, reseller=null, parameter=null;
@@ -56,12 +65,9 @@ public class Create_Transmission extends BaseClass {
 		  int a1=wb1.getRowCount();
 		  System.out.println(a1);
 		  
-		  for(int i1=1;i1<=1;i1++) {
-				System.out.println("*******************  Scenarios : "+"Starts ****************************");
-				LO_number = wb1.getCellValue(i1, wb1.seacrh_pattern("LocationNumber", 0).get(0).intValue());
-				account=wb1.getCellValue(i1, wb1.seacrh_pattern("AccountName", 0).get(0).intValue());
+				LO_number = wb1.getCellValue(otherlocation, wb1.seacrh_pattern("LocationNumber", 0).get(0).intValue());
+				account=wb1.getCellValue(otherlocation, wb1.seacrh_pattern("AccountName", 0).get(0).intValue());
 				System.out.println(LO_number);
-			   }
 		  
 		  try {	
 				int count = 1;
@@ -69,13 +75,12 @@ public class Create_Transmission extends BaseClass {
 				wb.deleteEmptyRows();
 				int a=wb.getRowCount();
 				System.out.println(a);
-				for(int i=1;i<=1;i++) {
 					System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
-					reseller=wb.getCellValue(i, wb.seacrh_pattern("Reseller", 0).get(0).intValue());
-					parameter=wb.getCellValue(i, wb.seacrh_pattern("Parameter", 0).get(0).intValue());
+					reseller=wb.getCellValue(otherlocation, wb.seacrh_pattern("Reseller", 0).get(0).intValue());
+					parameter=wb.getCellValue(otherlocation, wb.seacrh_pattern("Parameter", 0).get(0).intValue());
 					System.out.println(LO_number);
 					count++;
-				}}
+				}
 		  catch(Exception e) {
 		  e.printStackTrace();
 			}
