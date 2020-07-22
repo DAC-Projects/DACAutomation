@@ -36,6 +36,14 @@ public class Navigationpage extends BasePage{
 	
 	@FindBy(xpath = "//div//button[contains(@class,'walkme-custom-balloon-button walkme-custom-balloon-weak-button walkme-custom-balloon-cancel-button walkme-action-cancel walkme-click-and-hover')]")
 	private WebElement walkmeclose;
+
+	/*Walkme Snippet-----------------------------------*/
+    @FindBy(xpath = "//button//span[@class='walkme-custom-balloon-button-text' and contains(text(),'Cancel')]")
+    private WebElement WalkMeCancel;
+
+    @FindBy(xpath = "//span[@class= 'walkme-action-destroy-0 wm-close-link' and contains(text(),'Okay')]")
+    private WebElement NotificationPopUp;
+    /*--------------------------Walkme Snippet-----------------------------------*/
 	
 	// -------------------------------- TSEE ------------------------------
 	@FindBy(xpath = "//a[@href='/Dashboard/AllLocations/']/span")
@@ -241,6 +249,16 @@ public class Navigationpage extends BasePage{
     	//action.moveToElement(AllGroups).click().perform();
     	System.out.println("Waiting for page to load********");
     	waitUntilLoad(driver);
+    	try {
+            clickwalkme();
+        } catch (Exception e) {
+            System.out.println("No Walkme Displayed");
+        }
+        try {
+            clickNotificationPopUp();
+        } catch (Exception e) {
+            System.out.println("No Notification PopUp displayed");
+        }
     }
     
     public void navigateToReviewNotifications() {
@@ -253,6 +271,16 @@ public class Navigationpage extends BasePage{
     	//action.moveToElement(AllGroups).click().perform();
     	System.out.println("Waiting for page to load********");
     	waitUntilLoad(driver);
+    	try {
+            clickwalkme();
+        } catch (Exception e) {
+            System.out.println("No Walkme Displayed");
+        }
+        try {
+            clickNotificationPopUp();
+        } catch (Exception e) {
+            System.out.println("No Notification PopUp displayed");
+        }
     }
     
     //-----CA
@@ -522,4 +550,26 @@ public class Navigationpage extends BasePage{
 				}
 			}
 	}
+	public void clickwalkme() {
+        JSWaiter.waitJQueryAngular();
+        if (WalkMeCancel.isDisplayed()) {
+            clickelement(WalkMeCancel);
+        } else {
+            System.out.println("No Walkme Displayed");
+        }
+    }
+
+ 
+
+    /**
+     * To Click on Okay Notification PopUp
+     */
+    public void clickNotificationPopUp() {
+        JSWaiter.waitJQueryAngular();
+        if (NotificationPopUp.isDisplayed()) {
+            clickelement(NotificationPopUp);
+        } else {
+            System.out.println("No Notification Displayed");
+        }
+    }
 }
