@@ -32,6 +32,7 @@ public interface IAutoconst {
 	String[] transparenSEE = {baseUrl+"international-account-beta-beta", "newlocation@test.com"}; //LM beta
 	//String[] transparenSEE = {baseUrl+"international-location-test-account","chappel.mann+test1@gmail.com"}; // AO Staging
 	//String[] transparenSEE = {baseUrl+"international-location-test-account","chappel.mann+stl2@gmail.com"}; // LM Staging
+	//String[] transparenSEE = {baseUrl+"automation-test-account-tsee-beta","amahadev@dacgroup.com"};
 	String[] Fit4LessAccount = {baseUrl+"fit4less-beta", "1test@gmail.com"};
 	String[] neuralTuringTechAccount = {baseUrl+"neural-turing-tech-beta", "svarghese@dacgroup.com"};
 	String[] Configuration = {baseUrl+"social-automation-beta", "rohitmenon8055@gmail.com"};
