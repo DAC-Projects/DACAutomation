@@ -341,8 +341,10 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
 		int page = Integer.parseInt(n);
 		System.out.println("\n"+page);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
-		String entiresText = driver.findElement(By.className("dataTables_info")).getText();
+		//wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("table_groups_info")));
+		//String entiresText = driver.findElement(By.className("dataTables_info")).getText();
+		String entiresText = driver.findElement(By.id("table_groups_info")).getText();
 		int count = 0;
 	    if(paginationNext.isDisplayed()) {
 	    	for(int i=1;i<=page;i++) {	//Loop will execute till the all the row of table completes.
