@@ -33,7 +33,7 @@ import resources.ExcelHandler;
 public class DTC_Transmission extends BaseClass  {
 	WebDriver driver;
 	ExcelHandler wb1;
-	;
+	
 	
 	@FindBy(xpath="//*[@id=\"sidebar\"]/ul/li[4]")
 	private WebElement mnuTransmission;
@@ -653,6 +653,7 @@ public DTC_Transmission (WebDriver driver) {
 	  }
 	public void verify_here(String id,String location_name) throws Exception {
 		System.out.println("Transmission");	
+		String a="Complete";
 		mnuTransmission.click();
 		Thread.sleep(2000);
 		here_trans.click();
@@ -661,6 +662,7 @@ public DTC_Transmission (WebDriver driver) {
 		//driver.findElement(By.xpath("//*[@id=\"hereTransmissionlistTable\"]/tbody/tr[2]/td[8]/a")).click();
 		String ad1q=driver.findElement(file_status(id)).getText();
 		System.out.println(ad1q);
+	     Assert.assertEquals(ad1q,a);
 		driver.findElement(file(id)).click();
 		Thread.sleep(1000);	
 		Thread.sleep(3000);		
@@ -782,7 +784,6 @@ public void verify_tomtom(String LO_number, String tomtom_RqID) throws Exception
 		Thread.sleep(2000);
 		}}
 	addEvidence(CurrentState.getDriver(), "tomtom_request", "yes");
-
 	String filname = BasePage.getLastModifiedFile("./downloads");
 	System.out.println(filname);
     String fname="./downloads/"+filname;
@@ -802,9 +803,7 @@ public void verify_tomtom(String LO_number, String tomtom_RqID) throws Exception
 	Thread.sleep(1000);
 }
 
-
-public static String getLastModifiedFile(String dirPath)
-		throws InterruptedException {
+public static String getLastModifiedFile(String dirPath)throws InterruptedException {
 	Thread.sleep(4000);
 	File dir = new File(dirPath);
 	File[] files = dir.listFiles();
@@ -834,16 +833,16 @@ public static String getLastModifiedFile(String dirPath)
 		Thread.sleep(2000);
 		String ad1=driver.findElement(By.xpath("//*[@id=\"transmissionlistTable\"]/tbody/tr[1]/td[5]")).getText();
 		System.out.println(ad1);
-		//Assert.assertEquals(ad1, a);
+		Assert.assertEquals(ad1, a);
 		String ad2=driver.findElement(By.xpath("//*[@id=\"transmissionlistTable\"]/tbody/tr[1]/td[9]")).getText();
 		System.out.println(ad2);
 		cli.click();
 		Thread.sleep(4000);
-		vendor.click();
+		//vendor.click();
 		Thread.sleep(1000);
 		driver.findElement(By.xpath("//*[@id=\"transmissionModal\"]/div/div/div[2]/div[1]/div[1]/form/div/div[2]/div/ul/li/a/label[contains(text(),'"+ven+"')]")).click();
 		Thread.sleep(1000);
-		//vendor_name.click();
+		vendor_name.click();
 		Thread.sleep(1000);
 		vendor.click();
 		Thread.sleep(10000);
@@ -861,6 +860,7 @@ public static String getLastModifiedFile(String dirPath)
 		System.out.println(ad22);	
 	}
 	public void verif_Status_cancel(String RID) throws InterruptedException {
+		String a="Complete";
 		Thread.sleep(3000);
 		System.out.println("Transmission");
 		driver.findElement(By.xpath("//*[@id=\"btnclrfiltertrans\"]")).click();
@@ -871,6 +871,8 @@ public static String getLastModifiedFile(String dirPath)
 		Thread.sleep(6000);
 		String ad1=driver.findElement(By.xpath("//*[@id=\"transmissionlistTable\"]/tbody/tr[1]/td[5]")).getText();
 		System.out.println(ad1);
+		Assert.assertEquals(ad1, a);
+
 		String ad2=driver.findElement(By.xpath("//*[@id=\"transmissionlistTable\"]/tbody/tr[1]/td[9]")).getText();
 		System.out.println(ad2);
 		Thread.sleep(10000);
@@ -891,6 +893,8 @@ public static String getLastModifiedFile(String dirPath)
 		System.out.println(ad22);	
 		}
 	public void verif_Status_allcomplete(String RID) throws InterruptedException {
+		String a="Complete";
+
 		Thread.sleep(3000);
 		System.out.println("Transmission");
 		Thread.sleep(2000);
@@ -902,6 +906,7 @@ public static String getLastModifiedFile(String dirPath)
 		Thread.sleep(4000);
 		String ad1=driver.findElement(By.xpath("//*[@id=\"transmissionlistTable\"]/tbody/tr[1]/td[5]")).getText();
 		System.out.println(ad1);
+		Assert.assertEquals(ad1, a);
 		String ad2=driver.findElement(By.xpath("//*[@id=\"transmissionlistTable\"]/tbody/tr[1]/td[9]")).getText();
 		System.out.println(ad2);
 		cli.click();
@@ -918,6 +923,8 @@ public static String getLastModifiedFile(String dirPath)
 		System.out.println(ad22);	
 	}
 	public void verif_Status_allcancel(String RID) throws InterruptedException {
+		String a="Complete";
+
 	Thread.sleep(3000);
 	System.out.println("Transmission");
 	Thread.sleep(2000);
@@ -929,6 +936,7 @@ public static String getLastModifiedFile(String dirPath)
 	Thread.sleep(4000);
 	String ad1=driver.findElement(By.xpath("//*[@id=\"transmissionlistTable\"]/tbody/tr[1]/td[5]")).getText();
 	System.out.println(ad1);
+	Assert.assertEquals(ad1, a);
 	String ad2=driver.findElement(By.xpath("//*[@id=\"transmissionlistTable\"]/tbody/tr[1]/td[9]")).getText();
 	System.out.println(ad2);
 	cli.click();
