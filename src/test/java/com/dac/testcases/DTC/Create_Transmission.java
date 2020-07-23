@@ -58,7 +58,6 @@ public class Create_Transmission extends BaseClass {
 		  wb1.deleteEmptyRows();
 		  int a1=wb1.getRowCount();
 		  System.out.println(a1);
-		  
 				LO_number = wb1.getCellValue(otherlocation, wb1.seacrh_pattern("LocationNumber", 0).get(0).intValue());
 				account=wb1.getCellValue(otherlocation, wb1.seacrh_pattern("AccountName", 0).get(0).intValue());
 				System.out.println(LO_number);
