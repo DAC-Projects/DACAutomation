@@ -24,14 +24,8 @@ public class Create_Transmission extends BaseClass {
 	 public void LoginDTC() throws Exception {
 		int manuallocation=4;
 		  DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
-			ExcelHandler wb1 = new ExcelHandler("./data/LocationDataDownload_20200720134229.xlsx", "LocationDataDownloadReport");
 
-		  for(int i1=1;i1<=1;i1++) {
-				System.out.println("*******************  Scenarios : "+"Starts ****************************");
-				String LO_number1= wb1.getCellValue(1, wb1.seacrh_pattern("Numéro de téléphone de l'entreprise", 0).get(0).intValue());
-				System.out.println(LO_number1);
-		  }
-		/*  String LO_number = null;
+		 String LO_number = null;
 		  try {	
 			  dtcLogin.Transmission();
 				int count = 1;
@@ -50,8 +44,8 @@ public class Create_Transmission extends BaseClass {
 					count++;
 				}}
 		  catch(Exception e) {
-		  e.printStackTrace();*/
-		  
+		  e.printStackTrace();
+		  }
 			}
 	
 	@Test( dependsOnMethods = { "LoginDTC"})
