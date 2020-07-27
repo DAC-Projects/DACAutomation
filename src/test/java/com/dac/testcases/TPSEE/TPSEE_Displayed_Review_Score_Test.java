@@ -8,6 +8,8 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_Displayed_Review_Score_Page;
+import com.dac.main.POM_TPSEE.TPSEE_Syndication_Status_Page;
+
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
@@ -30,16 +32,23 @@ public class TPSEE_Displayed_Review_Score_Test extends BaseClass {
 
 		// Assert.assertFalse( "sample error", true);
 	}
+	
+	@Test(priority = 2, description = "Test to verify highlight of report")
+	public void VerifyDRSHighlight() throws Exception {
+		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
+		data.DRShighlight();
+		addEvidence(CurrentState.getDriver(), "Test to verify report highlight", "yes");
+	}
 
-	@Test(priority = 2, groups = {"smoke" }, description = "Test for verifying title and description of report")
+	@Test(priority = 3, groups = {"smoke" }, description = "Test for verifying title and description of report")
 	public void verifyText() throws Exception {
 		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
-		data.VerifyTitleText("Displayed Review Score",
+		data.VerifyTitleText1("Displayed Review Score",
 				"The displayed review score for each location is what the star rating is on the listing for the previous day. The displayed star rating may be different from the average star rating for the site in the review report if these sites apply a different equation to calculate reviews using factors such as recency.");
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
 
-	@Test(priority = 3, groups = { "smoke" }, description = "Verify Displayed Riview page loads after filter applied")
+	@Test(priority = 4, groups = { "smoke" }, description = "Verify Displayed Riview page loads after filter applied")
 	public void verifyFilteringReportsDisplayedReview() throws Exception {
 		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
 		try {
@@ -70,35 +79,35 @@ public class TPSEE_Displayed_Review_Score_Test extends BaseClass {
 		}
 	}
 
-	@Test(priority = 4, groups = { "smoke" }, description = "Export as csv")
+	@Test(priority = 5, groups = { "smoke" }, description = "Export as csv")
 	public void exportascsv() throws Exception {
 		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
 		data.DRSTableExportCSV();
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}
 
-	@Test(priority = 5, groups = { "smoke" }, description = "Export as csv")
+	@Test(priority = 6, groups = { "smoke" }, description = "Export as csv")
 	public void exportasxlsx() throws Exception {
 		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
 		data.DRSTableExportXLSX();
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}
 
-	@Test(priority = 6, groups = { "smoke" }, description = "Export as csv")
+	@Test(priority = 7, groups = { "smoke" }, description = "Export as csv")
 	public void Compare_UI_XLGoogleRating() throws Exception {
 		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
 		data.compareUInExportGoogle_Score(chromepath, IEpath, FFpath);
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}
 
-	@Test(priority = 7, groups = { "smoke" }, description = "Export as csv")
+	@Test(priority = 8, groups = { "smoke" }, description = "Export as csv")
 	public void Compare_UI_XLFacebookRating() throws Exception {
 		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
 		data.compareUInExportFaceBook_Score(chromepath, IEpath, FFpath);
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}
 
-	@Test(priority = 8, groups = { "smoke" }, description = "Export as csv")
+	@Test(priority = 9, groups = { "smoke" }, description = "Export as csv")
 	public void tabledataexport() throws Exception {
 		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
 		data.ReviewDataTable();

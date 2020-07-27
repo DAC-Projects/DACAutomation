@@ -66,11 +66,18 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Visibility page");
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
 	}
+	
+	@Test(priority = 3, description = "Test to verify report highlighted")
+	public void VerifyReportHighlight() throws Exception {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.visibilityhightlight();
+		addEvidence(CurrentState.getDriver(), "Test to verify report highlighted", "yes");
+	}
 
 	@Test(priority = 3, groups = { "smoke" }, description = "Test for verifying title and description of report")
 	public void verifyText() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-		data.VerifyTitleText("Visibility Report",
+		data.VerifyTitleText1("Visibility Report",
 				"This report identifies the visibility of a location by site, across the sites that are being monitored.");
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
@@ -270,7 +277,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * Test to export a file as PDF of applied date
 	 * 
 	 * @throws Exception
-	 */
+	 *//*
 	@Test(priority = 12, groups = {
 			"smoke" }, dataProvider = "testData", description = "Test for export file as Visibility History pdf")
 	public void PDFHistoryExport(String from_day, String from_month, String from_year, String to_day, String to_month,
@@ -286,7 +293,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		Thread.sleep(5000);
 		data.hstrypdfexport();
 		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
-	}
+	}*/
 
 	/**
 	 * Test for Comparing Tooltip and overview report in Visibility Page

@@ -45,6 +45,12 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		PageFactory.initElements(driver, this);
 	}
 
+	
+	@FindBy(xpath = "//li[@id='visibility_report']")
+	private WebElement Report;
+	
+	@FindBy(xpath = "//*[@id='reports']")
+	private WebElement ReportSection;
 	/*----------------------Exporting into csv-------------------------*/
 	@FindBy(xpath = "//*[@id='visibilityCurrentExportDropdown']//button")
 	private WebElement exportBtn;
@@ -90,10 +96,10 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//input[@id='exportEndDate']")
 	private WebElement hstryend;
 
-	@FindBy(xpath = "//*[@id='btnHistoryExport'][@class = 'btn btn-primary']")
+	@FindBy(xpath = "//*[@id='btnHistoryExport']")
 	private WebElement hstrybtn;
 
-	@FindBy(xpath = "//div[@id='exportAsyncMessage']//div[@class='close pull-right']")
+	@FindBy(xpath = "//div[@id='exportAsyncMessage']//a[@class='close icon-remove icon-color-info']")
 	private WebElement close;
 
 	/*----------------------locators to export pdf for period of time-------------------------*/
@@ -888,5 +894,9 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 				}
 			}
 		}
+	}
+	
+	public void visibilityhightlight() {
+		reporthighlight(Report,ReportSection);		
 	}
 }

@@ -47,15 +47,22 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 
 		// Assert.assertFalse( "sample error", true);
 	}
+	
+	@Test(priority = 3, description = "Test to verify report highlight")
+	public void VerifyLocationHighlight() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.Locationhighlight();
+		addEvidence(CurrentState.getDriver(), "Test to verify report highlight", "yes");
+	}
 
-/*	@Test(priority = 3, groups = { "smoke" }, description = "Test for verify title and description")
+	@Test(priority = 4, groups = { "smoke" }, description = "Test for verify title and description")
 	public void verifyText() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.VerifyLocationsTitleText("Locations",
 				"This is where all the locations currently associated to your account are listed.");
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 
-	}*/
+	}
 
 	/**
 	 * Test To get overall score and compare with dashboard values

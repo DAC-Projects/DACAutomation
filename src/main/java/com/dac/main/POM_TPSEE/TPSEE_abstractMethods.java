@@ -126,6 +126,9 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 
 	@FindBy(xpath = "//*[@id='page-content']//h1")
 	private WebElement PageTitle;
+	
+	@FindBy(xpath = "//*[@id='page-content']//h3")
+	private WebElement PageTitle1;
 
 	@FindBy(xpath = "//p[@class='lead']")
 	private WebElement PageTitletext;
@@ -1630,5 +1633,28 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		}else {
 			System.out.println("No more pages found");
 		}
+	}
+	
+	public void VerifyTitleText1(String Tit, String titText) {
+		
+		waitForElement(PageTitle1, 10);
+		String Title = PageTitle1.getText();
+		System.out.println("Page Title is : "+Title);
+		waitForElement(PageTitletext, 10);
+		String TitleText = PageTitletext.getText();
+		System.out.println("The title text  is :" + TitleText);
+		Assert.assertEquals(Tit, Title);
+		Assert.assertEquals(titText,TitleText );				
+	}
+	
+	public void reporthighlight(WebElement ele, WebElement ele1) {
+		waitForElement(ele1, 10);
+		String mainmenu = ele1.getAttribute("class");
+		System.out.println("The mainmenu is :" +mainmenu);
+		Assert.assertEquals(mainmenu, "on_off_root active");
+		waitForElement(ele, 10);
+		String text = ele.getAttribute("class");
+		System.out.println("The class name is :" +text);
+		Assert.assertEquals(text, "active");
 	}
 }

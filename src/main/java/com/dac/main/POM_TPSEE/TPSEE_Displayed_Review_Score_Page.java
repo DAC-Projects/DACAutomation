@@ -103,6 +103,12 @@ public class TPSEE_Displayed_Review_Score_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "//*[@id='reviewscore_results_info']")
 	private WebElement totalentries;
 	
+	@FindBy(xpath = "//li[@id='reviews-new']")
+	private WebElement DRSSec;
+	
+	@FindBy(xpath = "//li[@id='displayed_review_score']")
+	private WebElement DRSPage;
+	
 	/*-------------------------Pagination-----------------------*/
 	
 
@@ -325,18 +331,7 @@ public void compareUInExportFaceBook_Score(String chromepath, String IEpath, Str
 			
 		}
 		
-public void VerifyTitleText(String Tit, String titText) {
-			
-			waitForElement(PageTitle, 10);
-			String Title = PageTitle.getText();
-			System.out.println("Page Title is : "+Title);
-			waitForElement(PageTitletext, 10);
-			String TitleText = PageTitletext.getText();
-			System.out.println("The title text  is :" + TitleText);
-			Assert.assertEquals(Tit, Title);
-			Assert.assertEquals(titText,TitleText );
-					
-					
+		public void DRShighlight() {
+			reporthighlight(DRSPage, DRSSec);
 		}
-
 }

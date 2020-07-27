@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
+import com.dac.main.POM_TPSEE.TPSEE_Accuracy_Page;
 import com.dac.main.POM_TPSEE.TPSEE_ContentAnalysis_Page;
 
 import resources.BaseClass;
@@ -37,7 +38,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
+	/*@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
 	public void GetKPIValues() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		Thread.sleep(10000);
@@ -47,7 +48,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		System.out.println(location);
 		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
-	}
+	}*/
 
 	@Test(priority = 2, groups = { "smoke" }, description = "Test for navigating to ContentAnalysis page")
 	public void navigateToContentAnalysisPage() throws Exception {
@@ -55,6 +56,13 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		np.navigateToContentAnalysis();
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Accuracy page");
 		addEvidence(CurrentState.getDriver(), "Navigate to ContentAnalysis page from Dashboard", "yes");
+	}
+	
+	@Test(priority = 3, description = "Test to verify highlight of report")
+	public void VerifyAccuracyHighlight() throws Exception {
+		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
+		data.ContentAnalysishighlight();
+		addEvidence(CurrentState.getDriver(), "Test to verify report highlight", "yes");
 	}
 
 	@Test(priority = 3, groups = { "smoke" }, description = "Test for verifying title and description of report")

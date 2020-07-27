@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_Accuracy_Page;
+import com.dac.main.POM_TPSEE.TPSEE_AllLocations_Page;
 import com.dac.main.POM_TPSEE.TPSEE_Visibility_Page;
 import resources.BaseClass;
 import resources.CurrentState;
@@ -39,7 +40,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * Test to get dashboard scores
 	 * 
 	 * @throws Exception
-	 */
+	 *//*
 	@SuppressWarnings("static-access")
 	@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
 	public void GetKPIValues() throws Exception {
@@ -51,7 +52,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		System.out.println(location);
 		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
-	}
+	}*/
 
 	/**
 	 * Test to navigate to Visibility Page
@@ -87,10 +88,17 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Accuracy page from Dashboard", "yes");
 	}
 
-	@Test(priority = 5, groups = { "smoke" }, description = "Test for verify title and description")
+	@Test(priority = 5, description = "Test to verify highlight of report")
+	public void VerifyAccuracyHighlight() throws Exception {
+		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+		data.Accuracyhighlight();
+		addEvidence(CurrentState.getDriver(), "Test to verify report highlight", "yes");
+	}
+	
+	@Test(priority = 6, groups = { "smoke" }, description = "Test for verify title and description")
 	public void verifyText() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-		data.VerifyTitleText("Accuracy Report",
+		data.VerifyTitleText1("Accuracy Report",
 				"This report identifies the accuracy of a location by field, across the sites that are being monitored.");
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
@@ -115,7 +123,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * @throws Exception
 	 */
 
-	@Test(priority = 7, groups = { "smoke" }, description = "Test for compare KPI Values")
+	/*@Test(priority = 7, groups = { "smoke" }, description = "Test for compare KPI Values")
 	public void ovrviewlocscorecompare() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		Thread.sleep(5000);
@@ -125,7 +133,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		Assert.assertEquals(score, ovrvwscr);
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Visibility page");
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
-	}
+	}*/
 
 	@SuppressWarnings("unused")
 	@Test(priority = 9, enabled = true, dataProvider = "testData",description = "Test for manual date selection" )

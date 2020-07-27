@@ -140,6 +140,12 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//button[@id ='btn_ignore_potential_duplicate']")
 	private WebElement Ignore_Confirmation;
+	
+	@FindBy(xpath = "//*[@id='reports']")
+	private WebElement DupSec;
+	
+	@FindBy(xpath = "//li[@id='duplicate_management_report']")
+	private WebElement DupPage;
 
 	// @FindBy(xpath = "(//*[@class='duplicate-notes-show-more'])")
 	String ClickMore = "(//*[@class='duplicate-notes-show-more'])";
@@ -760,5 +766,9 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		Date todaydate = formats.parse(today);
 		System.out.println(todaydate);
 		return todaydate;
+	}
+	
+	public void Duphighlight() {
+		reporthighlight(DupPage, DupSec);
 	}
 }

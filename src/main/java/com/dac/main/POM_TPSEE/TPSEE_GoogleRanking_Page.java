@@ -145,6 +145,13 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "(//*[@class='highcharts-label highcharts-tooltip-box highcharts-color-none']//*[name()='text']//*[name()='tspan'])[2]")
 	private WebElement GRLoc;
 	
+	@FindBy(xpath = "//*[@id='google_ranking_report']")
+	private WebElement GRPage;
+	
+	@FindBy(xpath = "//*[@id='reports']")
+	private WebElement GRSec;
+	
+	
 	/* ------------------------------End of Locators---------------------------------------*/
 	@Override
 	public List<Map<String, String>> getOverviewReport() {
@@ -501,5 +508,9 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
           Assert.assertEquals("Google Ranking Report"
           		+"\n" + "Ranking Info", Titl);
           Assert.assertEquals("This report shows how a location's Google listing is ranking when potential customers search for keywords in Google Maps.",TitleTxt );
+	}
+	
+	public void GoogleRankinghighlight() {
+		reporthighlight(GRPage, GRSec);
 	}
 	}

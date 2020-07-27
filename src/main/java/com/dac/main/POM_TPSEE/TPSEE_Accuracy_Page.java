@@ -128,6 +128,12 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 
 	@FindBy(xpath = "//*[@id='phone']")
 	private WebElement PHNumtab;
+	
+	@FindBy(xpath = "//*[@id='accuracy_report']")
+	private WebElement AccuracyPage;
+	
+	@FindBy(xpath = "//*[@id='reports']")
+	private WebElement AccuracySec;
 
 
 	/*-------------------------Pagination-----------------------*/
@@ -889,4 +895,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		return vendor;
 	}
 
+	public void Accuracyhighlight() {
+		reporthighlight(AccuracyPage, AccuracySec);
+	}
 }

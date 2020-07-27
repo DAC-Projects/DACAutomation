@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
+import com.dac.main.POM_TPSEE.TPSEE_ContentAnalysis_Page;
 import com.dac.main.POM_TPSEE.TPSEE_GoogleRanking_Page;
 
 import resources.BaseClass;
@@ -57,8 +58,15 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Google Ranking page");
 		addEvidence(CurrentState.getDriver(), "Navigate to Google Ranking page from Dashboard", "yes");
 	}
+	
+	@Test(priority = 3, description = "Test to verify highlight of report")
+	public void VerifyAccuracyHighlight() throws Exception {
+		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
+		data.GoogleRankinghighlight();
+		addEvidence(CurrentState.getDriver(), "Test to verify report highlight", "yes");
+	}
 
-	@Test(priority = 3, groups = {"smoke" }, description = "Test for verifying title and description of report")
+	@Test(priority = 4, groups = {"smoke" }, description = "Test for verifying title and description of report")
 	public void verifytitle() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.VerifyGRText();
@@ -78,7 +86,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	}*/
 
 	// Test to verify Zoom Functionality
-	@Test(priority = 4, groups = { "smoke" }, description = "Verify Zoom Functionality")
+	@Test(priority = 5, groups = { "smoke" }, description = "Verify Zoom Functionality")
 	public void gethighchartsdate() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		try {
@@ -130,7 +138,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	}
 
 	@SuppressWarnings("unused")
-	@Test(priority = 5, enabled = true, dataProvider = "testData", description = "Test for Manual date selection")
+	@Test(priority = 6, enabled = true, dataProvider = "testData", description = "Test for Manual date selection")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 
@@ -193,7 +201,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		}
 	}
 
-	@Test(priority = 6, groups = { "smoke" }, description = "Add Account Level and Group Level Keyword")
+	@Test(priority = 7, groups = { "smoke" }, description = "Add Account Level and Group Level Keyword")
 	public void verifyApplyKeywords() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		try {
@@ -220,7 +228,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		}
 	}
 
-	@Test(priority = 7, groups = { "smoke" }, description = "Verify Google Ranking page loads after filter applied")
+	@Test(priority = 8, groups = { "smoke" }, description = "Verify Google Ranking page loads after filter applied")
 	public void verifyFilteringReportsnavigateToGoogleRanking() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		try {
@@ -252,7 +260,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	}
 
 	// Test for export and overview report in Content Analysis Page
-	@Test(priority = 8, groups = { "smoke" }, description = "Test for Ranking scores Data")
+	@Test(priority = 9, groups = { "smoke" }, description = "Test for Ranking scores Data")
 	public void verifyRankingScoreDataGoogleRanking() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.RankingScoresData();
@@ -260,14 +268,14 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	}
 
 	// Test for Tooltip and overview report in Content Analysis Page
-	@Test(priority = 9, groups = { "smoke" }, description = "Test to get Tooltip Data")
+	@Test(priority = 10, groups = { "smoke" }, description = "Test to get Tooltip Data")
 	public void verifyToolTipGoogleRanking() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.verifyGRHistoryGraph();
 		addEvidence(CurrentState.getDriver(), "Tooltip values verified from Google Ranking", "yes");
 	}
 
-	@Test(priority = 10, groups = { "smoke" }, description = "Export as csv")
+	@Test(priority = 11, groups = { "smoke" }, description = "Export as csv")
 	public void exportascsv() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.GRDataTableExportCSV();
@@ -275,7 +283,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	}
 
 	// Test for export and overview report in Content Analysis Page
-	@Test(priority = 11, groups = { "smoke" }, description = "Test for Ranking export and export verification")
+	@Test(priority = 12, groups = { "smoke" }, description = "Test for Ranking export and export verification")
 	public void verifyTableDataoExport() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.compareexporttableDatanrankingdetails(data.RankingDataTable(), data.getRankingDataTableExport());
@@ -287,7 +295,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 12, groups = { "smoke" }, description = "Verify Top Button")
+	@Test(priority = 13, groups = { "smoke" }, description = "Verify Top Button")
 	public void GetTopBtn() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.TopButton();

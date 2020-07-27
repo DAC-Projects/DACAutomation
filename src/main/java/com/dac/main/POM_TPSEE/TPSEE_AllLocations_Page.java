@@ -103,6 +103,12 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//p[@class='lead']")
 	private WebElement PageTitletext;
+	
+	@FindBy(xpath = "//*[@id='locations']")
+	private WebElement LocationSec;
+	
+	@FindBy(xpath = "//*[@id='all_locations']")
+	private WebElement AllLocationsPage;
 
 	/*-------------------------Pagination-----------------------*/
 
@@ -362,5 +368,9 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 		waitForElement(GoToPage, 10);
 		scrollByElement(GoToPage);
 		GoTopage(GoToPage);
+	}
+	
+	public void Locationhighlight() {
+		reporthighlight(AllLocationsPage, LocationSec);
 	}
 }

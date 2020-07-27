@@ -75,6 +75,12 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//*[@id='syndication-table_info']")
 	private WebElement TotalEntries;
+	
+	@FindBy(xpath = "//li[@id='reports']")
+	private WebElement SyndicationSec;
+	
+	@FindBy(xpath = "//li[@id='syndication_status_report']")
+	private WebElement SyndicationPage;
 
 	/**
 	 * To verify title and title text
@@ -308,5 +314,9 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 				}
 			}
 		}
+	}
+	
+	public void Syndicationhighlight() {
+		reporthighlight(SyndicationPage, SyndicationSec);
 	}
 }

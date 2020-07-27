@@ -131,6 +131,12 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 
 	@FindBy(css = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none>span>span.bold")
 	private WebElement scorenloc;
+	
+	@FindBy(xpath = "//*[@id='completeness_report']")
+	private WebElement ContentAnalysisPage;
+	
+	@FindBy(xpath = "//*[@id='reports']")
+	private WebElement ContentAnalysisSec;
 
 	/*
 	 * ------------------------------Locators
@@ -600,5 +606,9 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 		int numberoflocations = Integer.parseInt(NumOfLocations);
 		System.out.println(numberoflocations);
 		return numberoflocations;
+	}
+	
+	public void ContentAnalysishighlight() {
+		reporthighlight(ContentAnalysisPage, ContentAnalysisSec);
 	}
 }

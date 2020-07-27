@@ -5,6 +5,7 @@ import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
+import com.dac.main.POM_TPSEE.TPSEE_GoogleRanking_Page;
 import com.dac.main.POM_TPSEE.TPSEE_Syndication_Status_Page;
 
 import resources.BaseClass;
@@ -32,6 +33,13 @@ public class TPSEE_Syndication_Status_LPAD extends BaseClass {
 		CurrentState.getLogger().log(Status.PASS, "Navigated to Syndication Report Page");
 		addEvidence(CurrentState.getDriver(), "To Navigate to Syndication Report Page", "yes");
 	}
+	
+	@Test(priority = 2, description = "Test to verify highlight of report")
+	public void VerifyDataSyndicationHighlight() throws Exception {
+		data = new TPSEE_Syndication_Status_Page(CurrentState.getDriver());
+		data.Syndicationhighlight();
+		addEvidence(CurrentState.getDriver(), "Test to verify report highlight", "yes");
+	}
 
 	/**
 	 * Test to verify Title and Title text
@@ -58,7 +66,7 @@ public class TPSEE_Syndication_Status_LPAD extends BaseClass {
 		wb.deleteEmptyRows();
 		int row = 0;
 		String Vendor, Status;
-		for (int k = 1; k <= 1; k++) {
+		for (int k = 1; k <= 4; k++) {
 			String LocNum = wb.getCellValue(k, wb.seacrh_pattern("LocationNumber", 0).get(0).intValue());
 			System.out.println("The Location Number is :" + LocNum);
 			row = data.getLocationNumberRowNum(LocNum);
@@ -68,7 +76,7 @@ public class TPSEE_Syndication_Status_LPAD extends BaseClass {
 			VendorList = vendors.split(",");
 			int size = VendorList.length;
 			System.out.println("The size of list is :" + size);
-			String status = wb.getCellValue(k, wb.seacrh_pattern("Status Text", 0).get(0).intValue());
+			String status = wb.getCellValue(k, wb.seacrh_pattern("LPAD_Status", 0).get(0).intValue());
 			System.out.println("The status is :" + status);
 			StatusList = status.split(",");
 			for (int i = 0; i <= size - 1; i++) {
