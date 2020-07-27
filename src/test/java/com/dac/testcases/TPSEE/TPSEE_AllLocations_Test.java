@@ -3,8 +3,8 @@ package com.dac.testcases.TPSEE;
 import java.util.List;
 import java.util.Map;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
@@ -20,6 +20,9 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	Navigationpage np;
 	TPSEE_AllLocations_Page data;
 	int location;
+	SoftAssert soft = new SoftAssert();
+	String result;
+	 
 
 	/**
 	 * Test to get dashboard scores
@@ -45,14 +48,14 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		// Assert.assertFalse( "sample error", true);
 	}
 
-	@Test(priority = 3, groups = { "smoke" }, description = "Test for verify title and description")
+/*	@Test(priority = 3, groups = { "smoke" }, description = "Test for verify title and description")
 	public void verifyText() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.VerifyLocationsTitleText("Locations",
 				"This is where all the locations currently associated to your account are listed.");
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 
-	}
+	}*/
 
 	/**
 	 * Test To get overall score and compare with dashboard values
@@ -101,17 +104,33 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		}
 	}
 
-	@Test(priority = 6, groups = { "smoke" }, description = "Export as csv")
+	@Test(priority = 6, description = "Export as csv")
 	public void exportascsv() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.LocationDataTableExportCSV();
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}
-
-	@Test(priority = 7, groups = { "smoke" }, description = "Test for Location export and export verification")
+	
+	@Test(priority = 7, description = "Test for Location export and export verification")
 	public void verifyTableDataoExport() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.compareExprttoAnalysisSiteLinkData(data.LocationDataTable(), data.getLocationDataTableExport());
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
+	}	
+	
+	@Test(priority = 8, description = "Test to GoTo Page verification")
+	public void verifyGotoPage() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.GoTo();
+		addEvidence(CurrentState.getDriver(), "Test to verify GoTo Page", "yes");
+	}
+	
+	@Test(priority = 9, description = "Test to results per page")
+	public void verifyResultperPage() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+			data.resultperpage(soft);	
+			addEvidence(CurrentState.getDriver(), "Test to verify Results per page", "yes");
+			Thread.sleep(5000);		
+			soft.assertAll();
 	}
 }
