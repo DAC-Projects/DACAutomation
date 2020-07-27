@@ -575,4 +575,26 @@ public class BasePage {
 		}
 		return 0;
 	}
+	
+	public int NumOfentriesinPage(WebElement entry) {
+		waitForElement(entry, 10);
+		if(entry.isDisplayed()) {
+			String entiresText = entry.getText();
+			System.out.println("The total entries in a table is :" + entiresText);
+			String result1 = null;
+			String result = entiresText.substring(entiresText.indexOf("1") + 4, entiresText.indexOf("(") - 1).trim();
+			System.out.println("The result is :" +result);
+			if(result.contains(",")) {
+				result1 = result.replace(",", "").trim();
+				int finalvalue = Integer.parseInt(result1);
+				System.out.println("The number of entries is : " +finalvalue);
+				return finalvalue;
+			}else {
+				int finalvalue1 = Integer.parseInt(result);
+				System.out.println("The number of entries is :" +finalvalue1);
+				return finalvalue1;
+			}
+		}
+		return 0;
+	}
 }
