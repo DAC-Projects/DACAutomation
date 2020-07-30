@@ -32,19 +32,15 @@
     <classes>
         
 
-      <class name= "com.dac.testcases.CA.CA_ContentAnalysis_Test" />
-      
-        
-<!-- 	<class name= "com.dac.testcases.CA.CA_Summary_Test" />
-<class name= "com.dac.testcases.CA.CA_Visibility_Test" />	
+      <class name= "com.dac.testcases.CA.CA_Review_Test" />        
+	<class name= "com.dac.testcases.CA.CA_Summary_Test" />
 	<class name= "com.dac.testcases.CA.CA_Visibility_Test" />		
 	<class name= "com.dac.testcases.CA.CA_ContentAnalysis_Test" />
-    <class name= "com.dac.testcases.CA.CA_Summary_Test" />
-    <class name= "com.dac.testcases.CA.CA_ContentAnalysis_Test" />
-    <class name= "com.dac.testcases.CA.CA_Visibility_Test" />	
-    <class name= "com.dac.testcases.CA.CA_Accuracy_Test" />
+        <class name= "com.dac.testcases.CA.CA_Accuracy_Test" />
+    <!--     
+        
    -->
-	<!-- <class name= "com.dac.testcases.CA.CA_Accuracy_Test" /> -->
+	
  	</classes>
   </test> 
   
