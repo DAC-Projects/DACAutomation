@@ -155,8 +155,12 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 
 	
 	public void clickDone() {
+		if(DoneBtn.isDisplayed()) {
 		waitForElement(DoneBtn, 10);
 		clickelement(DoneBtn);
+		}else {
+			System.out.println("NO Button Displayed");
+		}
 	}
 	/**
 	 * To Verify Title and Title Text

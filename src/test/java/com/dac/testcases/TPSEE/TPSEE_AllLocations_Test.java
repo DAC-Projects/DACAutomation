@@ -99,9 +99,9 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 				String State = wb.getCellValue(i, wb.seacrh_pattern("State", 0).get(0).intValue());
 				String City = wb.getCellValue(i, wb.seacrh_pattern("City", 0).get(0).intValue());
 				String Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
-				s.applyGlobalFilter(Group, CountryCode, State, City, Location);
+				s.LAVapplyGlobalFilter(Group, CountryCode, State, City, Location);
 				System.out.println(Group + ", " + CountryCode + ", " + State + ", " + City + ", " + Location);
-				s.clickApplyFilterBTN();
+				s.clickApplyFilterBTNLAV();
 				BaseClass.addEvidence(CurrentState.getDriver(), "Applied global filter: " + Group + ", " + CountryCode
 						+ ", " + State + ", " + City + ", " + Location + "", "yes");
 			}
@@ -125,7 +125,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}	
 	
-	@Test(priority = 8, description = "Test to GoTo Page verification")
+	/*@Test(priority = 8, description = "Test to GoTo Page verification")
 	public void verifyGotoPage() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.GoTo();
@@ -139,5 +139,5 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 			addEvidence(CurrentState.getDriver(), "Test to verify Results per page", "yes");
 			Thread.sleep(5000);		
 			soft.assertAll();
-	}
+	}*/
 }

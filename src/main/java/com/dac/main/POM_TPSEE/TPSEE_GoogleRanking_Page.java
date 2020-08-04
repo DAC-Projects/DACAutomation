@@ -100,7 +100,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "(//div/a[@class='remove'])[last()]")
 	private WebElement removeacckey;
 	
-	@FindBy(xpath = "//div[@class = 'selectize-input items not-full has-options has-items']")
+	@FindBy(xpath = "(//div[contains(@class , 'selectize-input items')])[1]")
 	//selectize-input items has-options has-items not-full
 	private WebElement accountkeyword;
 	
@@ -110,7 +110,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "(//div[@class='col-sm-12']//table)[2]")
 	private WebElement GroupKeypanel;
 	
-	@FindBy(xpath = "//div[@class='selectize-input items has-options has-items full']")
+	@FindBy(xpath = "(//div[contains(@class , 'selectize-input items')])[2]")
 	private WebElement GroupKeywords;
 	
 	@FindBy(xpath = "//button[@id='btnSave']")

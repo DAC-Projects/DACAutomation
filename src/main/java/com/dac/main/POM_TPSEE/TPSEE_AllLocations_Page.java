@@ -63,13 +63,13 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//div[@id='locationTable']/table")
 	private WebElement LocationTable;
 
-	@FindBy(xpath = "//table[@id='table_report']//thead")
+	@FindBy(xpath = "//table[@id='locationTable']//thead")
 	private WebElement LocationTableHeader;
 
-	@FindBy(xpath = "//table[@id='table_report']//tbody//tr")
+	@FindBy(xpath = "//table[@id='locationTable']//tbody//tr")
 	private List<WebElement> LocationTableRow;
 
-	@FindBy(xpath = "//div[@id='paginationInfo']")
+	@FindBy(xpath = "//*[@id='locationTable_info']")
 	private WebElement entiresText;
 
 	@FindBy(xpath = "//*[@id='location-table']/h3")
@@ -78,7 +78,7 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//select[@id='pageSize']")
 	private WebElement ResultperPage;
 
-	@FindBy(xpath = "//input[@id='current-page']")
+	@FindBy(xpath = "//input[@class='page-input form-control form-control-sm']")
 	private WebElement GoToPage;
 
 	/*-------------------------Pagination-----------------------*/
@@ -178,8 +178,7 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 						if (column == 1 & row < rows_count) {
 							celtext = driver
 									.findElement(
-											By.xpath("(//table[@id='table_report']//tbody//tr//td)[" + (row + 1) + "]"))
-									.getText();
+											By.xpath("(//table[@id='locationTable']//tbody//tr//td)[" + (row + 1) + "]"))									.getText();
 						} else {
 							celtext = Columns_row.get(column).getText().trim(); // To retrieve text from that specific
 																				// cell.

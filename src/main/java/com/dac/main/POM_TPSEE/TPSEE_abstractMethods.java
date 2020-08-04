@@ -103,24 +103,45 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 
 	@FindBy(id = "myGroups")
 	private WebElement fiterGroup;
+	
+	@FindBy(xpath = "(//*[@class='selection ui dropdown fluid search'])[1]")
+	private WebElement LAVfiterGroup;
 
 	@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList")
 	private WebElement FilterCountry;
+	
+	@FindBy(xpath = "(//*[@class='selection ui dropdown fluid search'])[2]")
+	private WebElement LAVFilterCountry;
 
 	@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList1")
 	private WebElement FilterState;
+	
+	@FindBy(xpath = "(//*[@class='selection ui dropdown fluid search'])[3]")
+	private WebElement LAVFilterState;
 
 	@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList2")
 	private WebElement FilterCity;
+	
+	@FindBy(xpath = "(//*[@class='selection ui dropdown fluid search'])[4]")
+	private WebElement LAVFilterCity;
 
 	@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList3")
 	private WebElement Filterlocation;
+	
+	@FindBy(xpath = "(//*[@class='selection ui dropdown fluid search'])[5]")
+	private WebElement LAVFilterlocation;
 
 	@FindBy(css = "button#apply_filter")
 	private WebElement Apply_filter;
+	
+	@FindBy(xpath = "//button[@id='applyFilterBtn']")
+	private WebElement LAV_Apply_Filter;
 
 	@FindBy(css = "div#filter-options")
 	public WebElement filter_Panel;
+	
+	@FindBy(css = "div.tsee-location-filter.row")
+	public WebElement LAVfilter_Panel;
 
 	/*------------------------ Filter Criteria ------------------------*/
 
@@ -294,6 +315,88 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	 * @param Location
 	 *            for Global filtering reports
 	 */
+	public void LAVapplyGlobalFilter(String Group, String CountryCode, String State, String City, String Location) {
+		JSWaiter.waitJQueryAngular();
+		WebElement country, state, city, location, group;
+		if (Group == null || Group.equalsIgnoreCase("none"))
+			Group = "None";
+		if (CountryCode == null || CountryCode.equalsIgnoreCase("null"))
+			CountryCode = "All Countries";
+		if (CountryCode == null || State == null || State.equalsIgnoreCase("null"))
+			State = "All States";
+		if (CountryCode == null || State == null || City == null || City.equalsIgnoreCase("null"))
+			City = "All Cities";
+		if (CountryCode == null || State == null || City == null || Location == null
+				|| Location.equalsIgnoreCase("null"))
+			Location = "All Locations";
+		try {
+			waitForElement(LAVfilter_Panel, 25);
+			waitUntilLoad(driver);
+			if (!Group.equals("None")) {
+				clickelement(LAVfiterGroup);
+				waitForElement(filterDropDown, 20);
+				group = driver.findElement(By.xpath(
+						"(*//div[contains(@class,'selection ui dropdown fluid search')])[1]//div[contains(@class,'item') and contains(text(),'" + Group + "')]"));
+				waitForElement(group, 10);
+				clickelement(group);
+				waitUntilLoad(driver);
+			}
+			if (!CountryCode.equals("All Countries")) {
+				clickelement(LAVFilterCountry);
+				waitForElement(filterDropDown, 20);
+				country = driver.findElement(By
+						.xpath("(*//div[contains(@class,'selection ui dropdown fluid search')])[2]//div[contains(@class,'item') and contains(text(),'"+ CountryCode.toUpperCase() + "')]"));
+				// (//*[contains(@class,'myList')])[1]//div[contains(text(),'US')]"+CountryCode.toUpperCase()+"']
+				waitForElement(country, 10);
+				Thread.sleep(1000);
+				clickelement(country);
+				waitUntilLoad(driver);
+			}
+			if (!State.equals("All States")) {
+				clickelement(LAVFilterState);
+				waitForElement(filterDropDown, 20);
+				state = driver.findElement(
+						By.xpath("(*//div[contains(@class,'selection ui dropdown fluid search')])[3]//div[contains(@class,'item') and contains(text(),'"+ State +"')]"));
+				waitForElement(state, 10);
+				Thread.sleep(1000);
+				clickelement(state);
+				waitUntilLoad(driver);
+			}
+			if (!City.equals("All Cities")) {
+				clickelement(LAVFilterCity);
+				waitForElement(filterDropDown, 20);
+				city = driver.findElement(
+						By.xpath("(*//div[contains(@class,'selection ui dropdown fluid search')])[4]//div[contains(@class,'item') and contains(text(),'"+ City +"')]"));
+				waitForElement(city, 10);
+				Thread.sleep(1000);
+				clickelement(city);
+				waitUntilLoad(driver);
+			}
+			if (!Location.equals("All Locations")) {
+				clickelement(LAVFilterlocation);
+				waitForElement(filterDropDown, 20);
+				location = driver.findElement(
+						By.xpath("(*//div[contains(@class,'selection ui dropdown fluid search')])[5]//div[contains(@class,'item') and contains(text(),'"+ Location +"')]"));
+				waitForElement(location, 10);
+				Thread.sleep(1000);
+				clickelement(location);
+				waitUntilLoad(driver);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("searched Country/State/City/Location may not be there or may be a typo error please check it");
+		}
+		waitUntilLoad(driver);
+	}
+	
+	/**
+	 * @param Group
+	 * @param Country
+	 * @param State
+	 * @param City
+	 * @param Location
+	 *            for Global filtering reports
+	 */
 	public void applyGlobalFilter(String Group, String CountryCode, String State, String City, String Location) {
 		JSWaiter.waitJQueryAngular();
 		WebElement country, state, city, location, group;
@@ -357,7 +460,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				clickelement(Filterlocation);
 				waitForElement(filterDropDown, 20);
 				location = Filterlocation.findElement(
-						By.xpath("(//*[contains(@class,'myList')])[4]//div[contains(text(),'" + Location + "')]"));
+						By.xpath("(//*[contains(@class,'myList')])[4]//div[contains(text(),'"+Location+"')]"));
 				waitForElement(location, 10);
 				Thread.sleep(1000);
 				clickelement(location);
@@ -380,6 +483,19 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			Thread.sleep(3000);
 		}
 	}
+	
+	/**
+	 * This method used to click on the Apply Filter button
+	 */
+	public void clickApplyFilterBTNLAV() throws InterruptedException {
+		JSWaiter.waitJQueryAngular();
+		if (LAV_Apply_Filter.isDisplayed()) {
+			clickelement(LAV_Apply_Filter);
+			Thread.sleep(3000);
+		}
+	}
+	
+	
 
 	/**
 	 * @return must implement overview report for all pages

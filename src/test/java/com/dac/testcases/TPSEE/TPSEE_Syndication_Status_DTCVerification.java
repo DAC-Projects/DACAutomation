@@ -93,7 +93,7 @@ public class TPSEE_Syndication_Status_DTCVerification extends BaseClass {
 		wb.deleteEmptyRows();
 		int row = 0;
 		String XLVendor, XLStatus;
-		for (int k = 1; k <= 1; k++) {
+		for (int k = 2; k <= 4; k++) {
 			String LocNum = wb.getCellValue(k, wb.seacrh_pattern("LocationNumber", 0).get(0).intValue());
 			System.out.println("The Location Number is :" + LocNum);
 			row = data.getLocationNumberRowNum(LocNum);

@@ -31,7 +31,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigation to Facebook Page", "yes");
 		Thread.sleep(5000);
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
-		data.clickDone();
+	//	data.clickDone();
 		addEvidence(CurrentState.getDriver(), "Clicked on Walkme", "yes");
 	}
 
@@ -168,7 +168,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * @param to_year
 	 * @throws Exception
 	 */
-	@Test(priority = 6, enabled = true, dataProvider = "testData")
+/*	@Test(priority = 6, enabled = true, dataProvider = "testData")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
@@ -184,7 +184,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 				CurrentState.getDriver().navigate().refresh();
 			}
 		}
-	}
+	}*/
 
 	/**
 	 * Test to verify Pie Chart Tooltip Data

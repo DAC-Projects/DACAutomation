@@ -135,7 +135,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
 	}*/
 
-	@SuppressWarnings("unused")
+	/*@SuppressWarnings("unused")
 	@Test(priority = 9, enabled = true, dataProvider = "testData",description = "Test for manual date selection" )
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
@@ -157,7 +157,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 			// Assert.assertEquals(togrph, tocal);
 			addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 		}
-	}
+	}*/
 
 	/**
 	 * Test to very Zoom Functionality
@@ -238,9 +238,9 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 				String State = wb.getCellValue(i, wb.seacrh_pattern("State", 0).get(0).intValue());
 				String City = wb.getCellValue(i, wb.seacrh_pattern("City", 0).get(0).intValue());
 				String Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
-				s.applyGlobalFilter(Group, CountryCode, State, City, Location);
+				s.LAVapplyGlobalFilter(Group, CountryCode, State, City, Location);
 				System.out.println(Group + ", " + CountryCode + ", " + State + ", " + City + ", " + Location);
-				s.clickApplyFilterBTN();
+				s.clickApplyFilterBTNLAV();
 				BaseClass.addEvidence(CurrentState.getDriver(), "Applied global filter: " + Group + ", " + CountryCode
 						+ ", " + State + ", " + City + ", " + Location + "", "yes");
 			}

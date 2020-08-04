@@ -124,8 +124,8 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 	/*@FindBy(xpath = "//td[text()='country_group_F']/..//*[@class='edit-group']")
 	private WebElement Delete_btn;*/
 
-	@FindBy(xpath="//button[contains(text(),'Yes')]")
-	private WebElement Ok_btn;
+	@FindBy(xpath="/html/body/div[12]/div/div/div[3]/button[2]")
+    private WebElement Ok_btn;
 	/*-------------------------To Delete-----------------------*/
 
 	/*-------------------------Pagination-----------------------*/
@@ -343,7 +343,8 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		if(paginationNext.isDisplayed()) {
 			for(int i=1;i<=page;i++) {	//Loop will execute till the all the row of table completes.
 				scrollByElement(GroupTableInfo);
-				String celtext = driver.findElement(By.xpath("*//tr//td[@class='sort-name-col sorting_1'][contains(text(),'"+Group+"')]")).getText();
+				
+				String celtext = driver.findElement(By.xpath("*//tr//td[@class='sort-name-col sorting_1'][contains(text(),'')]")).getText();
 				System.out.println("\n"+celtext);
 				if(celtext.equals(Group)) {
 					WebElement Delete_btn=driver.findElement(By.xpath("//*[@class='remove-group'][@data-name= '"+Group+"']"));
