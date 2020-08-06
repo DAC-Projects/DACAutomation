@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_Bing_Page;
+import com.dac.main.POM_TPSEE.TPSEE_GoogleRanking_Page;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -74,8 +75,15 @@ public class TPSEE_Bing_Test extends BaseClass {
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Bing page");
 		addEvidence(CurrentState.getDriver(), "Navigate to Bing page from Dashboard", "yes");
 	}
+	
+	@Test(priority = 2, description = "Test to verify highlight of report")
+	public void VerifyBingHighlight() throws Exception {
+		data = new TPSEE_Bing_Page(CurrentState.getDriver());
+		data.Binghighlight();
+		addEvidence(CurrentState.getDriver(), "Test to verify report highlight", "yes");
+	}
 
-	@Test(priority = 2, groups = { "smoke" }, description = "Test for verify title and description")
+	@Test(priority = 3, groups = { "smoke" }, description = "Test for verify title and description")
 	public void verifyText() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		data.VerifyTitleText("Bing Places for Business",
@@ -84,14 +92,14 @@ public class TPSEE_Bing_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
 
-	@Test(priority = 3, groups = { "smoke" }, description = "Test for verify hover text")
+	@Test(priority = 4, groups = { "smoke" }, description = "Test for verify hover text")
 	public void verifyHoverText() {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		data.GetHoverText("Total Impressions based on the selected weekly range. ");
 	}
 
 	// Test to apply filter in Bing Page
-	@Test(priority = 4, groups = { "smoke" }, description = "Verify Bing page loads after filter applied")
+	@Test(priority = 5, groups = { "smoke" }, description = "Verify Bing page loads after filter applied")
 	public void verifyFilteringReportsBing() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		try {
@@ -122,7 +130,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 	}
 
 	// Test for Tooltip score in Bing Page
-	@Test(priority = 5, groups = { "smoke" }, description = "Test to get ToolTip Value Score")
+	@Test(priority = 6, groups = { "smoke" }, description = "Test to get ToolTip Value Score")
 	public void verifyTooltipBing() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		data.verifyBingHistoryGraph();
@@ -131,14 +139,14 @@ public class TPSEE_Bing_Test extends BaseClass {
 
 	// Test to export Bing report
 
-	@Test(priority = 6, groups = { "smoke" }, description = "Verify Site Vendors List")
+	@Test(priority = 7, groups = { "smoke" }, description = "Verify Site Vendors List")
 	public void BingCSVExport() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		data.exportCSVBing();
 		addEvidence(CurrentState.getDriver(), "Verifying export functionality ", "yes");
 	}
 
-	@Test(priority = 7, groups = { "smoke" }, description = "Verify Site Vendors List")
+	@Test(priority = 8, groups = { "smoke" }, description = "Verify Site Vendors List")
 	public void BingExport() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		data.exportXLSXBing(BingXLSX);
@@ -146,7 +154,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 	}
 
 	// Test for comparing UI and export Impression count
-	@Test(priority = 8, groups = { "smoke" }, description = "Verify Impressions")	
+	@Test(priority = 9, groups = { "smoke" }, description = "Verify Impressions")	
 	public void VerifyTotalImpressionUIExport() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		data.compareUInExportImpressions(chromepath, IEpath, FFpath);
@@ -154,7 +162,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 	}
 
 	// Test to verify Zoom Functionality
-	@Test(priority = 9, groups = { "smoke" }, description = "Verify Zoom Functionality")
+	@Test(priority = 10, groups = { "smoke" }, description = "Verify Zoom Functionality")
 	public void gethighchartsdate() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		String Isdataavailable = data.validdata();
@@ -291,7 +299,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 	}
 
 	@SuppressWarnings("unused")
-	@Test(priority = 10, dataProvider = "testData",description = "Verify manual date Selection")
+	@Test(priority = 11, dataProvider = "testData",description = "Verify manual date Selection")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 

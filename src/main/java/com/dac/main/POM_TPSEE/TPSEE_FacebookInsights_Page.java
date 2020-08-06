@@ -148,6 +148,12 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 	
 	@FindBy(xpath = "//button//span[@class='walkme-custom-balloon-button-text']")
 	private WebElement DoneBtn;
+	
+	@FindBy(xpath = "//li[@id='facebook_insights']")
+	private WebElement FacebookPage;
+	
+	@FindBy(xpath = "//li[@id='local_analytics']")
+	private WebElement FacebookSec;
 
 	String path = "./downloads/chromeFacebookExportXLSX.xlsx";
 
@@ -508,7 +514,7 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 		String finaltooltipvalue = Graphs.getText();
 		System.out.println("\n Reading tooltipdata ********** \n");
 		System.out.println("\n tooltipvalue is \n" + finaltooltipvalue);
-		String finaldate = finaltooltipvalue.substring(2, 12);
+		String finaldate = finaltooltipvalue.substring(2, 11);
 		System.out.println(finaldate);
 		SimpleDateFormat formats = new SimpleDateFormat(var);
 		endtDate = formats.parse(finaldate);
@@ -578,5 +584,9 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 			System.out.println("No Data Available");
 		}
 
+	}
+	
+	public void Facebookhighlight() {
+		reporthighlight(FacebookPage, FacebookSec);
 	}
 }

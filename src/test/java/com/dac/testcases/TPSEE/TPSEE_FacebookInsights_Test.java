@@ -6,6 +6,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
+import com.dac.main.POM_TPSEE.TPSEE_Bing_Page;
 import com.dac.main.POM_TPSEE.TPSEE_FacebookInsights_Page;
 import resources.BaseClass;
 import resources.CurrentState;
@@ -35,12 +36,19 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Clicked on Walkme", "yes");
 	}
 
+	@Test(priority = 2, description = "Test to verify highlight of report")
+	public void VerifyFacebookHighlight() throws Exception {
+		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
+		data.Facebookhighlight();
+		addEvidence(CurrentState.getDriver(), "Test to verify report highlight", "yes");
+	}
+	
 	/**
 	 * Test to verify Title and Title Text
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 2)
+	@Test(priority = 3, description = "Test to verify title")
 	public void verifyTitleText() throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		data.VerifyFacebookTitleText("Facebook Insights",
@@ -53,7 +61,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 3, dependsOnMethods = { "verifyTitleText" })
+	@Test(priority = 4, dependsOnMethods = { "verifyTitleText" })
 	public void verifyFilteringReportsAccuracy() throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		try {
@@ -85,7 +93,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	/**
 	 * verification of date
 	 */
-	@Test(priority = 4)
+	@Test(priority = 5, description = "Test to verify graph")
 	public void verifyGraphncompareDate() {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		boolean datavalidation = data.IsDataAvailable();
@@ -103,7 +111,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 5)
+	@Test(priority = 6, description = "Test to verify highcharts")
 	public void gethighchartsdate() throws Exception {
 		boolean datavalidation = data.IsDataAvailable();
 		if (!datavalidation == true) {
@@ -168,7 +176,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * @param to_year
 	 * @throws Exception
 	 */
-/*	@Test(priority = 6, enabled = true, dataProvider = "testData")
+	@Test(priority = 7, enabled = true, dataProvider = "testData")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
@@ -184,12 +192,12 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 				CurrentState.getDriver().navigate().refresh();
 			}
 		}
-	}*/
+	}
 
 	/**
 	 * Test to verify Pie Chart Tooltip Data
 	 */
-	@Test(priority = 7)
+	@Test(priority = 8, description = "Test to verify Pie chart")
 	public void VerifyPieChartData() {
 		boolean datavalidation = data.IsDataAvailable();
 		if (!datavalidation == true) {
@@ -203,7 +211,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 8)
+	@Test(priority = 9, description = "Test to verify Export")
 	public void Export() throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		boolean datavalidation = data.IsDataAvailable();
@@ -228,7 +236,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 9)
+	@Test(priority = 10, description = "Test to compare UI and XL")
 	public void CompareUIXLData() throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		boolean datavalidation = data.IsDataAvailable();

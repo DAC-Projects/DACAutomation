@@ -80,6 +80,12 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//*[@class='big-stats tooltip-info']")
 	private WebElement MousehoverText;
+	
+	@FindBy(xpath = "//li[@id='bing_places_report']")
+	private WebElement BingPage;
+	
+	@FindBy(xpath = "//li[@id='local_analytics']")
+	private WebElement BingSec;
 
 	/*----------------------------------Locators----------------------------------------------*/
 
@@ -213,4 +219,7 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 		Assert.assertEquals(Exp_Text, Text);
 	}
 
+	public void Binghighlight() {
+		reporthighlight(BingPage, BingSec);
+	}
 }

@@ -60,7 +60,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	}
 	
 	@Test(priority = 3, description = "Test to verify highlight of report")
-	public void VerifyAccuracyHighlight() throws Exception {
+	public void VerifyGRHighlight() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.GoogleRankinghighlight();
 		addEvidence(CurrentState.getDriver(), "Test to verify report highlight", "yes");

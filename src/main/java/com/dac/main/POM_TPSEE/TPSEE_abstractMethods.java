@@ -41,6 +41,7 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import com.dac.main.BasePage;
+import com.dac.main.Navigationpage;
 
 import resources.CurrentState;
 import resources.FileHandler;
@@ -235,6 +236,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 
 	@FindBy(xpath = "(//*[@class='highcharts-label highcharts-range-input'])[2]")
 	private WebElement toDate;
+	
+	@FindBy(xpath = "//button//span[@class='walkme-custom-balloon-button-text' and contains(text(),'Cancel')]")
+	private WebElement WalkMeCancel;
+
+	@FindBy(xpath = "//span[@class= 'walkme-action-destroy-0 wm-close-link' and contains(text(),'Okay')]")
+	private WebElement NotificationPopUp;
 
 	/**
 	 * Get data using column name and sum for Bing and GMB Page
@@ -1772,5 +1779,49 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		String text = ele.getAttribute("class");
 		System.out.println("The class name is :" +text);
 		Assert.assertEquals(text, "active");
+	}
+	
+	public void navigateKPI(WebElement ele, WebElement ele1, String title) throws InterruptedException {
+		waitForElement(ele, 10);
+		scrollByElement(ele);
+		clickelement(ele);
+		try {
+		clickwalkme();
+		}catch(Exception e){
+			System.out.println("No walkme displayed");
+		}
+		try {
+		clickNotificationPopUp();
+		}catch(Exception e){
+			System.out.println("No walkme displayed");
+		}
+		String Title = ele1.getText();
+		System.out.println("The page title is :" +Title);
+		Assert.assertEquals(Title, title);
+	}
+	
+	public void clickwalkme() {
+		JSWaiter.waitJQueryAngular();
+		if (WalkMeCancel.isDisplayed()) {
+			clickelement(WalkMeCancel);
+		} else {
+			System.out.println("No Walkme Displayed");
+		}
+	}
+	
+	public void clickNotificationPopUp() {
+		JSWaiter.waitJQueryAngular();
+		if (NotificationPopUp.isDisplayed()) {
+			clickelement(NotificationPopUp);
+		} else {
+			System.out.println("No Notification Displayed");
+		}
+	}
+	
+	public void KPIMouseHover(WebElement ele, String txt) {
+		action.moveToElement(ele);
+		String text = ele.getAttribute("data-original-title");
+		System.out.println("The mouse hover text is :" +text);
+		Assert.assertEquals(text, txt);
 	}
 }

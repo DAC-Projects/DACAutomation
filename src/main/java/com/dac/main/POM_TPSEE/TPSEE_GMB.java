@@ -208,6 +208,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//div[@id='photoViewsIndex']//span[@class='infobox-content'][contains(text(),'Customer')]")
 	private WebElement PhCust;
+	
+	@FindBy(xpath = "//li[@id='google_places_report']")
+	private WebElement GMBPage;
+	
+	@FindBy(xpath = "//li[@id='local_analytics']")
+	private WebElement GMBSec;
 
 	/*-------------------------------Locators-------------------------------------------------*/
 
@@ -982,4 +988,8 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		}
 	}
 
+	public void GMBhighlight() {
+		reporthighlight(GMBPage, GMBSec);
+	}
+	
 }
