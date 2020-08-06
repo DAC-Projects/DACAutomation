@@ -2,13 +2,12 @@ package com.dac.testcases.TPSEE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
@@ -36,6 +35,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	String grphtoDate = "(//*[@class='highcharts-label highcharts-range-input'])[2]";
 	String exportfromDate = "//*[@id='exportStartDate']";
 	String exportToDate = "//*[@id='exportEndDate']";
+	SoftAssert soft = new SoftAssert();
 
 	/**
 	 * Test to get dashboard scores
@@ -322,6 +322,12 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(),
 				"Site level scores in Visibility site table  and overview visibility export found matching", "yes");
 		data.exporttablefoundCSV();
+		Thread.sleep(3000);
+		data.GoTo();
+		Thread.sleep(3000);
+		data.resultperpage(soft);
+		soft.assertAll();
+		addEvidence(CurrentState.getDriver(), "Test to verify GoTo and Results Per Page", "yes");
 	}
 
 	/**
@@ -350,6 +356,12 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(),
 				"Site level scores in Visibility site table  and overview visibility export found matching", "yes");
 		data.exporttableNotfoundCSV();
+		Thread.sleep(3000);
+		data.GoTo();
+		Thread.sleep(3000);
+		data.resultperpage(soft);
+		soft.assertAll();
+		addEvidence(CurrentState.getDriver(), "Test to verify GoTo and Results Per Page", "yes");
 	}
 
 	@SuppressWarnings("finally")

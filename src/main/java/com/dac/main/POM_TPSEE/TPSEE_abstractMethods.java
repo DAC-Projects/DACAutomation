@@ -1742,17 +1742,17 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	
 	public void GoTopage(WebElement GoTo) throws InterruptedException {
 		scrollByElement(GoTo);
-		clickelement(GoTo);
-		GoTo.clear();
 		String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
 		int totalpage = Integer.parseInt(n);
+		clickelement(GoTo);
+		GoTo.clear();
 		if(totalpage>1) {
 		GoTo.sendKeys("2");
 		GoTo.sendKeys(Keys.ENTER);
 		Thread.sleep(5000);
 		String classname = driver.findElement(By.xpath("(//*[@class='pagination'])//li[3]")).getAttribute("class");
 		System.out.println("The class name is :" +classname);
-		Assert.assertEquals(classname, "active");
+		Assert.assertEquals(classname, "paginate_button active");
 		}else {
 			System.out.println("No more pages found");
 		}

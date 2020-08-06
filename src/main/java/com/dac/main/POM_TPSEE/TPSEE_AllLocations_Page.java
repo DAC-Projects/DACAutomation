@@ -75,10 +75,10 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//*[@id='location-table']/h3")
 	private WebElement loc;
 
-	@FindBy(xpath = "//select[@id='pageSize']")
+	@FindBy(xpath = "//select[@name='locationTable_length']")
 	private WebElement ResultperPage;
 
-	@FindBy(xpath = "//input[@class='page-input form-control form-control-sm']")
+	@FindBy(xpath = "//input[contains(@class,'page-input form-control form-control-sm')]")
 	private WebElement GoToPage;
 
 	/*-------------------------Pagination-----------------------*/

@@ -20,6 +20,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -177,6 +178,15 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//*[@id='visibility_results']/tbody/tr")
 	private List<WebElement> VisibityTableRow;
+	
+	@FindBy(xpath = "//select[@name='visibility_results_length']")
+	private WebElement Resultperpage;
+	
+	@FindBy(xpath = "//input[contains(@class,'page-input form-control form-control-sm')]")
+	private WebElement GotoPage;
+	
+	@FindBy(xpath = "//div[@id='visibility_results_info']")
+	private WebElement EntryText;
 
 	String Vendortitle = "//*[@id='visibility_table_title']";
 
@@ -898,5 +908,19 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	
 	public void visibilityhightlight() {
 		reporthighlight(Report,ReportSection);		
+	}
+	
+	public void resultperpage(SoftAssert soft) throws InterruptedException {
+		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
+		Thread.sleep(3000);
+		ResultsperPage(soft, EntryText, Resultperpage);
+	}
+	
+	public void GoTo() throws InterruptedException {
+		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
+		Thread.sleep(3000);
+		waitForElement(GotoPage, 10);
+		scrollByElement(GotoPage);
+		GoTopage(GotoPage);
 	}
 }
