@@ -166,7 +166,13 @@ public class Navigationpage extends BasePage{
     @FindBy(xpath="//*[@href='/SocialMediaReports/']")
     private WebElement SE_Reports;
     
+    @FindBy(xpath="//a[@href='/SocialMedia/Configuration/']")
+    private WebElement SE_Connections;
     
+    @FindBy(xpath="//div[text()='Facebook']/../../..//input[@id='manage-button']")
+    private WebElement SE_FacebookManagePages;
+    
+   
     
     public void  navigateTPSEE_Visibility() {
   	  
@@ -343,6 +349,26 @@ public class Navigationpage extends BasePage{
 		
 	}
 
+	
+	public void navigateToSE_Connections() { //Navigate to Manage Connections page
+	   	
+    	action.moveToElement(Settings).perform();
+    	waitForElement(SE_Connections, 20);
+    	action.moveToElement(SE_Connections).perform();
+    	//clickelement(AllGroups);
+    	clickelement(SE_Connections);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+	
+public void navigateToFacebookManagePages() { // Navigate to Facebook ManagesPage
+	   	
+  
+    	clickelement(SE_FacebookManagePages);
+    	System.out.println("Waiting for page to load********");
+    	waitUntilLoad(driver);
+    }
+	
 	/** To click on TSEE_Accuracy link in LHS to navigate to TSEE_Accuracy page   */
 	public void navigateToTSEE_Accuracy() {
 		clickelement(Accuracy);   
