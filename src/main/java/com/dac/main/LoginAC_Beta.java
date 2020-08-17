@@ -32,8 +32,8 @@ public class LoginAC_Beta {
 	private WebElement Dashboard;
 	
 	/*----------Link for Staging-----------*/
-		/*@FindBy(linkText="TransparenSee")
-	private WebElement Dashboard;*/
+	@FindBy(xpath  = "//a[contains(text(),'https://dacgrouplabs-staging.azurewebsites.net/Dashboard/APILoginViaToken')]")     
+	private WebElement Staging;
 		
 	public LoginAC_Beta() {
 		this.driver = CurrentState.getDriver();
@@ -55,10 +55,15 @@ public class LoginAC_Beta {
 	}
 	
 	public void clickDashboardLink() {
+//		For Beta
+//		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(Dashboard));
+//		Dashboard.sendKeys(Keys.CONTROL, Keys.ENTER);
 		
-		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(Dashboard));
-		Dashboard.sendKeys(Keys.CONTROL, Keys.ENTER);;
+//		For Staging....
+		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(Staging));
+        Staging.sendKeys(Keys.CONTROL, Keys.ENTER);
 	}
+	
 	
 	public void findUser(String data) {
 		search_email.sendKeys(data);
