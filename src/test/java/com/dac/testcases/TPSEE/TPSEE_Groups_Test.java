@@ -46,26 +46,55 @@ public class TPSEE_Groups_Test extends BaseClass{
 	
 	
 	
-/*	@SuppressWarnings({ "unchecked", "unlikely-arg-type" })
+	@SuppressWarnings({ "unchecked", "unlikely-arg-type" })
 	@Test(priority= 2, groups = {"smoke" }, description = "Test to delete group")
 		public void InitialDeleteTable() throws Exception {
 		data = new TPSEE_Groups(CurrentState.getDriver());
-		wb = new ExcelHandler("./data/Groups.xlsx", "Sheet1"); wb.deleteEmptyRows();
+		/*wb = new ExcelHandler("./data/Groups.xlsx", "Sheet1"); wb.deleteEmptyRows();
 		TPSEE_Groups s = new TPSEE_Groups(CurrentState.getDriver());
 		//for(int i=1;i<=wb.getRowCount();i++) {
 			//if(i>1) CurrentState.getDriver().navigate().refresh();
 			s.waitUntilLoad(CurrentState.getDriver());
 			
 			String Group = wb.getCellValue(1, wb.seacrh_pattern("Group", 0).get(0).intValue());
-			System.out.println(Group);	
+			System.out.println(Group);	*/
+		try
+		{
+			data = new TPSEE_Groups(CurrentState.getDriver());
+			wb = new ExcelHandler("./data/Groups.xlsx", "Sheet1"); wb.deleteEmptyRows();
+			TPSEE_Groups s = new TPSEE_Groups(CurrentState.getDriver());
+			s.waitUntilLoad(CurrentState.getDriver());
 			
+			String Group = wb.getCellValue(1, wb.seacrh_pattern("Group", 0).get(0).intValue());
+			System.out.println(Group);
+					data.delete_Group(Group);
+		}
+		
+		catch(Exception e)
+		{
+			System.out.println("No Group to Delete");
+		}
+		
+		try
+		{
+			data = new TPSEE_Groups(CurrentState.getDriver());
+			wb = new ExcelHandler("./data/Groups.xlsx", "Sheet2"); wb.deleteEmptyRows();
+			TPSEE_Groups s = new TPSEE_Groups(CurrentState.getDriver());
+			s.waitUntilLoad(CurrentState.getDriver());
 			
-				data.delete_Group(Group);
-			
+			String Group = wb.getCellValue(1, wb.seacrh_pattern("Group", 0).get(0).intValue());
+			System.out.println(Group);
+					data.delete_Group(Group);
+		}
+		
+		catch(Exception e)
+		{
+			System.out.println("No Group to Delete");
+		}
 		addEvidence(CurrentState.getDriver(), "Verified Table Data", "yes");
 		//}
 			
-	}*/
+	}
 	
 	//Creating a Group with 1 rule
 	@SuppressWarnings("unchecked")
