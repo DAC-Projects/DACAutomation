@@ -147,7 +147,6 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 	public List<Map<String, String>> LocationDataTable() throws InterruptedException {
 		JSWaiter.waitJQueryAngular();
 		waitForElement(LocationTable, 40);
-		// getting into progressbar found listing
 		System.out.println("\n reading table data********************* \n");
 		String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
 		int page = Integer.parseInt(n);
@@ -371,5 +370,25 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 	
 	public void Locationhighlight() {
 		reporthighlight(AllLocationsPage, LocationSec);
+	}
+	
+	public void TableSorting() throws InterruptedException {
+		waitForElement(LocationTable, 40);
+		String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
+		int page = Integer.parseInt(n);
+		System.out.println("\n" + page);
+		int totalentries = NumOfentriesinPage(entiresText);
+		System.out.println("The total entries are :" +totalentries);
+		if (paginationNext.isDisplayed()) {
+			
+			// Code for Sorting and verify
+			
+			
+		} if (paginationNext.isEnabled()) {
+			JSWaiter.waitJQueryAngular();
+			scrollByElement(paginationNext);
+			paginationNext.click();
+			Thread.sleep(4000);
+		}
 	}
 }

@@ -20,6 +20,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import com.dac.main.BasePage;
 
@@ -137,6 +138,12 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 	
 	@FindBy(xpath = "//*[@id='reports']")
 	private WebElement ContentAnalysisSec;
+	
+	@FindBy(xpath = "//select[@name='incomplete_results_length']")
+	private WebElement Resultperpage;
+	
+	@FindBy(xpath = "//input[contains(@class , 'form-control')]")
+	private WebElement gotopage;
 
 	/*
 	 * ------------------------------Locators
@@ -315,7 +322,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 		return score;
 	}
 
-	public void SitelLinkData() throws Exception {
+	public void SitelLinkData(SoftAssert soft) throws Exception { 
 		JSWaiter.waitJQueryAngular();
 		waitForElement(contentsiteTable, 40);
 		scrollByElement(contentsiteTable);
@@ -439,6 +446,10 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 					e.printStackTrace();
 				}
 			}
+			
+			GoTo();
+			Thread.sleep(3000);
+			resultperpage(soft);
 		}
 	}
 
@@ -610,5 +621,27 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 	
 	public void ContentAnalysishighlight() {
 		reporthighlight(ContentAnalysisPage, ContentAnalysisSec);
+	}
+	
+	public void resultperpage(SoftAssert soft) throws InterruptedException {
+		if (driver.findElement(By.className("dataTables_info")).isDisplayed()) {
+		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
+		Thread.sleep(3000);
+		ResultsperPage(soft, entiresText, Resultperpage);
+		}else {
+			System.out.println("No Data Available");
+		}
+	}
+	
+	public void GoTo() throws InterruptedException {
+		if (driver.findElement(By.className("dataTables_info")).isDisplayed()) {
+		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
+		Thread.sleep(3000);
+		waitForElement(gotopage, 10);
+		scrollByElement(gotopage);
+		GoTopage(gotopage);
+		}else {
+			System.out.println("No Data available");
+		}
 	}
 }

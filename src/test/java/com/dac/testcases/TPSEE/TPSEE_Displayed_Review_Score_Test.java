@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_Displayed_Review_Score_Page;
-import com.dac.main.POM_TPSEE.TPSEE_Syndication_Status_Page;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -22,6 +22,7 @@ public class TPSEE_Displayed_Review_Score_Test extends BaseClass {
 	String chromepath = "./downloads/chromeReviewScoreExportXLSX.xlsx";
 	String IEpath = "./downloads/IEReviewScoreExportXLSX.xlsx";
 	String FFpath = "./downloads/FFReviewScoreExportXLSX.xlsx";
+	SoftAssert soft = new SoftAssert();
 
 	@Test(priority = 1, groups = { "smoke" }, description = "Test for navigating to Displayed Riview page")
 	public void navigateToDisplayedReviewScore() throws Exception {
@@ -112,6 +113,22 @@ public class TPSEE_Displayed_Review_Score_Test extends BaseClass {
 		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
 		data.ReviewDataTable();
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
+	}
+	
+	@Test(priority = 10, description = "Test to GoTo Page verification")
+	public void verifyGotoPage() throws Exception {
+		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
+		data.GoTo();
+		addEvidence(CurrentState.getDriver(), "Test to verify GoTo Page", "yes");
+	}
+	
+	@Test(priority = 11, description = "Test to results per page")
+	public void verifyResultperPage() throws Exception {
+		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
+			data.resultperpage(soft);	
+			addEvidence(CurrentState.getDriver(), "Test to verify Results per page", "yes");
+			Thread.sleep(5000);		
+			soft.assertAll();
 	}
 
 }

@@ -21,6 +21,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -134,6 +135,15 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	
 	@FindBy(xpath = "//*[@id='reports']")
 	private WebElement AccuracySec;
+	
+	@FindBy(xpath = "//select[@name='inaccuracy_results_length']")
+	private WebElement Resultperpage;
+	
+	@FindBy(xpath = "//input[@class='page-input form-control form-control-sm']")
+	private WebElement gotopage;
+	
+	@FindBy(xpath = "//div[@id='inaccuracy_results_info']")
+	private WebElement Entry;
 
 
 	/*-------------------------Pagination-----------------------*/
@@ -284,7 +294,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	 */
 
 	@SuppressWarnings("unused")
-	public void verifysitelinkdata() throws Exception{
+	public void verifysitelinkdata(SoftAssert soft) throws Exception{
 		JSWaiter.waitJQueryAngular();
 		waitForElement(accuracysite, 40);
 		waitForElement(siteshow, 40);
@@ -387,6 +397,9 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 						e.printStackTrace();
 					}
 				}
+			GoTo();
+			Thread.sleep(3000);
+			resultperpage(soft);
 			}
 	}
 
@@ -897,5 +910,19 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 
 	public void Accuracyhighlight() {
 		reporthighlight(AccuracyPage, AccuracySec);
+	}
+	
+	public void resultperpage(SoftAssert soft) throws InterruptedException {
+		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
+		Thread.sleep(3000);
+		ResultsperPage(soft, Entry, Resultperpage);
+	}
+	
+	public void GoTo() throws InterruptedException {
+		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
+		Thread.sleep(3000);
+		waitForElement(gotopage, 10);
+		scrollByElement(gotopage);
+		GoTopage(gotopage);
 	}
 }

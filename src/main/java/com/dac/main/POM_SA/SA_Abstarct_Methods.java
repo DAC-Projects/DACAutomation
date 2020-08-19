@@ -1,7 +1,5 @@
 package com.dac.main.POM_SA;
 
-import static org.testng.Assert.assertEquals;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -28,6 +25,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import com.dac.main.BasePage;
 
@@ -38,6 +36,12 @@ import resources.formatConvert;
 public abstract class SA_Abstarct_Methods extends BasePage implements SA_Repository{
 
 	/*------------------------ Filter Criteria ------------------------*/
+	
+	@FindBy(xpath = "//h3[@class = 'page-title']")
+	private WebElement PageTitle;
+	
+	@FindBy(xpath = "//p[@class = 'lead']")
+	private WebElement TitleText;
 
 	@FindBy(xpath="//*[@class='menu transition visible']")
 	private WebElement filterDropDown;
@@ -57,7 +61,7 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 	@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList3")
 	private WebElement Filterlocation;
 
-	@FindBy(css = "button#apply_filter")
+	@FindBy(xpath = "//button[@id='btnApply']")
 	private WebElement Apply_filter;
 
 	@FindBy(css = "div#filter-options")
@@ -148,7 +152,7 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 	
 	/*-------------------------Pagination-----------------------*/
 	
-	
+	SoftAssert soft = new SoftAssert();
 	
 	public SA_Abstarct_Methods(WebDriver driver) {
 		super(driver);
@@ -188,7 +192,7 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 			if(!CountryCode.equals("All Countries")) {
 				clickelement(FilterCountry);
 				waitForElement(filterDropDown, 20);
-				country = driver.findElement(By.xpath("(//*[contains(@class,'myList')])[1]//div[@data-value='"+CountryCode.toUpperCase()+"']"));
+				country = driver.findElement(By.xpath("(//*[contains(@class,'myList')])[1]//div[contains(@class,'item') and contains(text(),'"+ CountryCode.toUpperCase() +"')]"));
 				waitForElement(country, 10);
 				Thread.sleep(1000);
 				clickelement(country);
@@ -197,7 +201,7 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 			if(!State.equals("All States")) {			
 				clickelement(FilterState);
 				waitForElement(filterDropDown, 20);
-				state = FilterState.findElement(By.xpath("//div[@data-value='"+State+"']"));
+				state = driver.findElement(By.xpath("(//*[contains(@class,'myList')])[2]//div[contains(@class,'item') and contains(text(),'"+State+"')]"));
 				waitForElement(state, 10);
 				Thread.sleep(1000);
 				clickelement(state);
@@ -206,7 +210,7 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 			if(!City.equals("All Cities")) {
 				clickelement(FilterCity);
 				waitForElement(filterDropDown, 20);
-				city = FilterCity.findElement(By.xpath("//div[@data-value='"+City+"']"));
+				city = driver.findElement(By.xpath("(//*[contains(@class,'myList')])[3]//div[contains(@class,'item') and contains(text(),'"+City+"')]"));
 				waitForElement(city, 10);
 				Thread.sleep(1000);
 				clickelement(city);
@@ -215,7 +219,7 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 			if(!Location.equals("All Locations")) {			
 				clickelement(Filterlocation);
 				waitForElement(filterDropDown, 20);
-				location = Filterlocation.findElement(By.xpath("//div[text()='"+Location+"']"));
+				location = driver.findElement(By.xpath("(//*[contains(@class,'myList')])[4]//div[contains(@class,'item') and contains(text(),'"+Location+"')]"));
 				waitForElement(location, 10);
 				Thread.sleep(1000);
 				clickelement(location);
@@ -739,4 +743,14 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 	}
 	*/
 	
+	public void verifyTitle(String title, String titletext) {
+		waitForElement(PageTitle, 10);
+		String Title = PageTitle.getText();
+		System.out.println("The title is :" +Title);
+		String Titletext = TitleText.getText();
+		System.out.println("The title text is :" +Titletext);
+		soft.assertEquals(Title, title);
+		soft.assertEquals(Titletext, titletext);
+		soft.assertAll();
+	}
 }

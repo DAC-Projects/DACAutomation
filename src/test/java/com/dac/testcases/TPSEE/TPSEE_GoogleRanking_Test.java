@@ -5,13 +5,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
-import com.dac.main.POM_TPSEE.TPSEE_ContentAnalysis_Page;
 import com.dac.main.POM_TPSEE.TPSEE_GoogleRanking_Page;
 
 import resources.BaseClass;
@@ -32,6 +31,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	int end1;
 	String grphfromDate = "(//*[@class='highcharts-label highcharts-range-input'])[1]";
 	String grphtoDate = "(//*[@class='highcharts-label highcharts-range-input'])[2]";
+	SoftAssert soft = new SoftAssert();
 
 	/**
 	 * Test to get dashboard scores
@@ -288,6 +288,20 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.compareexporttableDatanrankingdetails(data.RankingDataTable(), data.getRankingDataTableExport());
 		addEvidence(CurrentState.getDriver(), "Verified Ranking export for Google Ranking", "yes");
+	}
+	
+	@Test(priority = 13, description ="Test to verify GoTo page")
+	public void GOTO() throws InterruptedException {
+		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
+		data.GoTo();
+	}
+	
+	@Test(priority = 14, description = "Test to verify Resultsperpage")
+	public void ResultsperPage() throws InterruptedException {
+		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
+		data.resultperpage(soft);
+		soft.assertAll();
+		
 	}
 
 	/**

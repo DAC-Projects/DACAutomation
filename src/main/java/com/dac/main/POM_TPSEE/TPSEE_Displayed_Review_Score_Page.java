@@ -16,6 +16,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import com.dac.main.BasePage;
 
@@ -82,6 +83,15 @@ public class TPSEE_Displayed_Review_Score_Page extends TPSEE_abstractMethods{
 	
 	@FindBy(id = "table_title")
 	private WebElement Tabletitle;
+	
+	@FindBy(xpath = "//select[@name='reviewscore_results_length']")
+	private WebElement Resultsperpage;
+	
+	@FindBy(xpath = "//input[contains(@class,'page-input form-control form-control-sm')]")
+	private WebElement gotopage;
+	
+	@FindBy(xpath = "//div[@id='reviewscore_results_info']")
+	private WebElement Entry;
 		
 	/*-------------------------Table Scores-----------------------*/
 	
@@ -333,5 +343,19 @@ public void compareUInExportFaceBook_Score(String chromepath, String IEpath, Str
 		
 		public void DRShighlight() {
 			reporthighlight(DRSPage, DRSSec);
+		}
+		
+		public void resultperpage(SoftAssert soft) throws InterruptedException {
+			driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
+			Thread.sleep(3000);
+			ResultsperPage(soft, Entry, Resultsperpage);
+		}
+		
+		public void GoTo() throws InterruptedException {
+			driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
+			Thread.sleep(3000);
+			waitForElement(gotopage, 10);
+			scrollByElement(gotopage);
+			GoTopage(gotopage);
 		}
 }

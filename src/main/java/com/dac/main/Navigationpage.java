@@ -596,7 +596,7 @@ public class Navigationpage extends BasePage {
 	/**
 	 * To click on SA_ReviewReport link in LHS to navigate to SA_ReviewReport page
 	 */
-	public void navigateToSA_ReviewReport() {
+	public void navigateToSA_ReviewsFeed() {
 		JSWaiter.waitJQueryAngular();
 		wait.until(ExpectedConditions.visibilityOf(ReviewFeed));
 		scrollByElement(ReviewFeed);

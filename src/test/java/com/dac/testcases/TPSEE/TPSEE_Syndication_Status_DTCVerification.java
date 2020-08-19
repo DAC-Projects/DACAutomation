@@ -140,6 +140,22 @@ public class TPSEE_Syndication_Status_DTCVerification extends BaseClass {
 		}
 		}
 	
+	@Test(priority = 5, description = "Test to GoTo Page verification")
+	public void verifyGotoPage() throws Exception {
+		data = new TPSEE_Syndication_Status_Page(CurrentState.getDriver());
+		data.GoTo();
+		addEvidence(CurrentState.getDriver(), "Test to verify GoTo Page", "yes");
+	}
+	
+	@Test(priority = 6, description = "Test to results per page")
+	public void verifyResultperPage() throws Exception {
+		data = new TPSEE_Syndication_Status_Page(CurrentState.getDriver());
+			data.resultperpage(soft);	
+			addEvidence(CurrentState.getDriver(), "Test to verify Results per page", "yes");
+			Thread.sleep(5000);		
+			soft.assertAll();
+	}
+	
 	/*@Test(priority = 5, description = "To verify Status of vendor after DTC transmission")
 	public void verifyDTCAPI() throws Exception {
 		data = new TPSEE_Syndication_Status_Page(CurrentState.getDriver());

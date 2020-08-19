@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name = "Suite">
+	<listeners>
+		<listener class-name="resources.ExtentTestNGITestListener"></listener>
+	</listeners>
+	
+	<test name = "Sentiment Analysis">
+		<parameter name="browser" value="chrome" />
+		<classes>
+			<class name = "com.dac.testcases.SA.ReviewsFeed_Test"/>
+		</classes>
+	</test>
+</suite>

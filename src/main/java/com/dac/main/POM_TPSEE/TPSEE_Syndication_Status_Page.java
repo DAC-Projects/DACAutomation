@@ -81,6 +81,15 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 	
 	@FindBy(xpath = "//li[@id='syndication_status_report']")
 	private WebElement SyndicationPage;
+	
+	@FindBy(xpath = "//select[@name='syndication-table_length']")
+	private WebElement Resultperpage;
+	
+	@FindBy(xpath = "//input[contains(@class,'page-input form-control form-control-sm')]")
+	private WebElement gotopage;
+	
+	@FindBy(xpath = "//div[@id='syndication-table_info']")
+	private WebElement Entry;
 
 	/**
 	 * To verify title and title text
@@ -318,5 +327,19 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 	
 	public void Syndicationhighlight() {
 		reporthighlight(SyndicationPage, SyndicationSec);
+	}
+	
+	public void resultperpage(SoftAssert soft) throws InterruptedException {
+		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
+		Thread.sleep(3000);
+		ResultsperPage(soft, Entry, Resultperpage);
+	}
+	
+	public void GoTo() throws InterruptedException {
+		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
+		Thread.sleep(3000);
+		waitForElement(gotopage, 10);
+		scrollByElement(gotopage);
+		GoTopage(gotopage);
 	}
 }

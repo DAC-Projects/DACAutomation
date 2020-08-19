@@ -317,15 +317,15 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	@Test(priority = 14, groups = { "smoke" }, description = "Test for verifying progress bar in Visibility page")
 	public void numberofentriesnExporttableVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-		data.DataTablefound();
+		data.DataTablefound(soft);
 		// data.compareexporttableDatannumberofentries(data.DataTablefound(),data.getExporttableDataFound());
 		addEvidence(CurrentState.getDriver(),
 				"Site level scores in Visibility site table  and overview visibility export found matching", "yes");
 		data.exporttablefoundCSV();
-		Thread.sleep(3000);
+		/*Thread.sleep(3000);
 		data.GoTo();
 		Thread.sleep(3000);
-		data.resultperpage(soft);
+		data.resultperpage(soft);*/
 		soft.assertAll();
 		addEvidence(CurrentState.getDriver(), "Test to verify GoTo and Results Per Page", "yes");
 	}
@@ -351,16 +351,16 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	@Test(priority = 16, groups = { "smoke" }, description = "Test for verifying progress bar in Visibility page")
 	public void numberofentriesnExporttableNotFoundVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-		data.DataTableNotfound();
+		data.DataTableNotfound(soft);
 		// data.compareexporttableDatannumberofentriesNotFound(data.DataTableNotfound(),data.getExporttableDataNotFound());
 		addEvidence(CurrentState.getDriver(),
 				"Site level scores in Visibility site table  and overview visibility export found matching", "yes");
 		data.exporttableNotfoundCSV();
-		Thread.sleep(3000);
+		/*Thread.sleep(3000);
 		data.GoTo();
 		Thread.sleep(3000);
 		data.resultperpage(soft);
-		soft.assertAll();
+		soft.assertAll();*/
 		addEvidence(CurrentState.getDriver(), "Test to verify GoTo and Results Per Page", "yes");
 	}
 

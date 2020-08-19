@@ -2,18 +2,18 @@ package com.dac.testcases.TPSEE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_Accuracy_Page;
-import com.dac.main.POM_TPSEE.TPSEE_AllLocations_Page;
 import com.dac.main.POM_TPSEE.TPSEE_Visibility_Page;
+
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
@@ -35,6 +35,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	int end1;
 	String grphfromDate = "(//*[@class='highcharts-label highcharts-range-input'])[1]";
 	String grphtoDate = "(//*[@class='highcharts-label highcharts-range-input'])[2]";
+	SoftAssert soft = new SoftAssert();
 
 	/**
 	 * Test to get dashboard scores
@@ -308,7 +309,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	@Test(priority = 16, groups = { "smoke" }, description = "Test for verifying site link data in Accuracy page")
 	public void numberofentriesnExporttableAccuracy() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-		data.verifysitelinkdata();
+		data.verifysitelinkdata(soft);
 		// data.compareexporttableDatannumberofentries(data.verifysitelinkdata(),
 		// data.getExporttableData());
 		addEvidence(CurrentState.getDriver(),

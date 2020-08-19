@@ -21,6 +21,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import com.dac.main.BasePage;
 
@@ -115,6 +116,12 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	
 	@FindBy(xpath = "//button[@id='btnSave']")
 	private WebElement SaveKeyword;
+	
+	@FindBy(xpath = "//select[@name='rankingDetail_length']")
+	private WebElement Resultperpage;
+	
+	@FindBy(xpath = "//input[contains(@class , 'form-control')]")
+	private WebElement gotopage;
 	
 	
 	/*-----------------------Ranking Table---------------------------*/
@@ -512,5 +519,19 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods{
 	
 	public void GoogleRankinghighlight() {
 		reporthighlight(GRPage, GRSec);
+	}
+	
+	public void resultperpage(SoftAssert soft) throws InterruptedException {
+		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
+		Thread.sleep(3000);
+		ResultsperPage(soft, entiresText, Resultperpage);
+	}
+	
+	public void GoTo() throws InterruptedException {
+		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
+		Thread.sleep(3000);
+		waitForElement(gotopage, 10);
+		scrollByElement(gotopage);
+		GoTopage(gotopage);
 	}
 	}

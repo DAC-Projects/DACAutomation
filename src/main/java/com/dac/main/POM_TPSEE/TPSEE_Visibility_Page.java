@@ -401,7 +401,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unused")
-	public void DataTablefound() throws Exception {
+	public void DataTablefound(SoftAssert soft) throws Exception {
 		JSWaiter.waitJQueryAngular();
 		waitForElement(siteTable, 40);
 		int size = progressfound.size();
@@ -500,6 +500,9 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 					e.printStackTrace();
 				}
 			}
+			GoTo();
+			Thread.sleep(3000);
+			resultperpage(soft);
 		}
 	}
 
@@ -511,7 +514,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unused")
-	public void DataTableNotfound() throws Exception {
+	public void DataTableNotfound(SoftAssert soft) throws Exception {
 		JSWaiter.waitJQueryAngular();
 		waitForElement(siteTable, 40);
 		int size = progressNotfound.size();
@@ -618,6 +621,9 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			GoTo();
+			Thread.sleep(3000);
+			resultperpage(soft);
 		}
 
 	}

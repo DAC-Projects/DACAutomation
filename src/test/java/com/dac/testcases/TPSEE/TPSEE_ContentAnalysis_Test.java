@@ -1,17 +1,15 @@
 package com.dac.testcases.TPSEE;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
-import com.dac.main.POM_TPSEE.TPSEE_Accuracy_Page;
 import com.dac.main.POM_TPSEE.TPSEE_ContentAnalysis_Page;
 
 import resources.BaseClass;
@@ -32,6 +30,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	int end1;
 	String grphfromDate = "(//*[@class='highcharts-label highcharts-range-input'])[1]";
 	String grphtoDate = "(//*[@class='highcharts-label highcharts-range-input'])[2]";
+	SoftAssert soft = new SoftAssert();
 
 	/**
 	 * Test to get dashboard scores
@@ -253,7 +252,8 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	@Test(priority = 10, groups = { "smoke" }, description = "Test for overview export and export verification")
 	public void verifyTableDataoExport() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
-		data.SitelLinkData();
+		data.SitelLinkData(soft);
+		soft.assertAll();
 		// data.compareexporttableDatannumberofentries(data.SitelLinkData(),
 		// data.getSiteLinkExporttableData());
 		addEvidence(CurrentState.getDriver(), "Verified overview export for Accuracy report", "yes");

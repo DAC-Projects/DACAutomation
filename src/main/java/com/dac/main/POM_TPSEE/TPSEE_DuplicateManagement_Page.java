@@ -18,6 +18,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 
@@ -146,6 +147,15 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 	
 	@FindBy(xpath = "//li[@id='duplicate_management_report']")
 	private WebElement DupPage;
+	
+	@FindBy(xpath = "//select[@name='duplicate-table_length']")
+	private WebElement Resultperpage;
+	
+	@FindBy(xpath = "(//input[contains(@class,'form-control')])[4]")
+	private WebElement gotopage;
+	
+	@FindBy(xpath = "//div[@id='duplicate-table_info']")
+	private WebElement Entry;
 
 	// @FindBy(xpath = "(//*[@class='duplicate-notes-show-more'])")
 	String ClickMore = "(//*[@class='duplicate-notes-show-more'])";
@@ -770,5 +780,19 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 	
 	public void Duphighlight() {
 		reporthighlight(DupPage, DupSec);
+	}
+	
+	public void resultperpage(SoftAssert soft) throws InterruptedException {
+		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
+		Thread.sleep(3000);
+		ResultsperPage(soft, Entry, Resultperpage);
+	}
+	
+	public void GoTo() throws InterruptedException {
+		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
+		Thread.sleep(3000);
+		waitForElement(gotopage, 10);
+		scrollByElement(gotopage);
+		GoTopage(gotopage);
 	}
 }

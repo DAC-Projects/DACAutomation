@@ -53,8 +53,8 @@ public class SA_Reviews_Test extends BaseClass{
 	/**
 	 * Test to compare Dashboard value with page value
 	 * @throws Exception
-	 *//*
-	@Test(priority = 3)
+	 */
+	/*@Test(priority = 3)
 	public void Getoverallscore() throws Exception {
 		data = new SA_Reviews_Page(CurrentState.getDriver());
 		pageavgreview = data.averagescore();
@@ -64,12 +64,12 @@ public class SA_Reviews_Test extends BaseClass{
 		
 		Assert.assertEquals(PageRNPS, DashRnPs);
 		addEvidence(CurrentState.getDriver(), "Get Overall Scores", "yes");		
-	}
+	}*/
 	
-	*//**
+	/**
 	 * Location filter parameters
 	 * @throws Exception
-	 *//*
+	 */
 	public void verifyFilteringReportsVisibility() throws Exception {
 		data = new SA_Reviews_Page(CurrentState.getDriver());
 			try {	
@@ -94,7 +94,7 @@ public class SA_Reviews_Test extends BaseClass{
 				e.printStackTrace();
 			}
 		}
-	*//**
+	/**
 	 * Apply Global Filters
 	 * @param from_day
 	 * @param from_month
@@ -103,7 +103,7 @@ public class SA_Reviews_Test extends BaseClass{
 	 * @param to_month
 	 * @param to_year
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 4, dataProvider = "testData")
 	public void DateFilter(String from_day, String from_month, String from_year, String to_day, String to_month, String to_year) throws Exception {		
 		data = new SA_Reviews_Page(CurrentState.getDriver());	
@@ -111,14 +111,14 @@ public class SA_Reviews_Test extends BaseClass{
 		verifyFilteringReportsVisibility();
 		
 		data.selectCalender_FromDate(From_Date,(int)(Double.parseDouble(from_day)), from_month, (int)(Double.parseDouble(from_year)));
-		
+		Thread.sleep(5000);
 		data.selectCalender_ToDate(To_Date,(int)(Double.parseDouble(to_day)), to_month, (int)(Double.parseDouble(to_year)));
 		
 		data.clickApplyFilterBTN();
 		addEvidence(CurrentState.getDriver(), "Applied Global Filters", "yes");
 	}
 	
-	*//**
+	/**
 	 * To get scores in review report page
 	 * @throws Exception
 	 *//*
@@ -135,24 +135,24 @@ public class SA_Reviews_Test extends BaseClass{
 		
 		data.getRNPS();
 		addEvidence(CurrentState.getDriver(), "Get Overall Scores", "yes");		
-	}
+	}*/
 	
-	*//**
+	/**
 	 * Test to export Location Data
 	 * @throws Exception
-	 *//*
-	@Test(priority = 6)
+	 */
+	/*@Test(priority = 6)
 	public void GetLocationExportData() throws Exception {
 		data = new SA_Reviews_Page(CurrentState.getDriver());
 		data.LocationExport();
 		addEvidence(CurrentState.getDriver(), "Download CSV file", "yes");
-	}
+	}*/
 	
-	*//**
+	/**
 	 * Date comparision with Global filter calender and highcharts date
 	 * @throws Exception
-	 *//*
-	@Test(priority = 7)
+	 */
+	/*@Test(priority = 7)
 	public void CompareHighchartsDatewithOverallDate() throws Exception {
 		data = new SA_Reviews_Page(CurrentState.getDriver());
 		Date overallfromDate = data.getCurrentfromDate();
@@ -168,15 +168,15 @@ public class SA_Reviews_Test extends BaseClass{
 		addEvidence(CurrentState.getDriver(), "Get highcharts to Date", "yes");
 		Assert.assertEquals(HighchartsfromDate, overallfromDate);
 		Assert.assertEquals(HighchartsToDate, overallToDate);
-	}
+	}*/
 	
 
-	*//**
+	/**
 	 * Test to verify zoom functionality 
 	 * @throws Exception
-	 *//*
+	 */
 		
-		@Test(priority = 8,groups = {"smoke"},
+		/*@Test(priority = 8,groups = {"smoke"},
 			description ="Verify Zoom Functionality")
 		public void gethighchartsdate() throws Exception{
 			data = new SA_Reviews_Page(CurrentState.getDriver());
@@ -226,9 +226,9 @@ public class SA_Reviews_Test extends BaseClass{
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
-		}
+		}*/
 		
-		*//**
+		/**
 		 * To Compare Reviews Export and UI
 		 * @throws Exception 
 		 */
@@ -275,7 +275,7 @@ public class SA_Reviews_Test extends BaseClass{
 			}			
 	}
 		
-		/*@Test(priority = 11)
+		@Test(priority = 11)
 		public void compareUITagsearchData() throws Exception {
 			data = new SA_Reviews_Page(CurrentState.getDriver());
 			try {	
@@ -295,9 +295,9 @@ public class SA_Reviews_Test extends BaseClass{
 			}catch(Exception e) {
 				e.printStackTrace();
 			}			
-	}*/
+	}
 		
-		/*@Test(priority = 12)
+		@Test(priority = 12)
 		public void compareUIKeywordsearchData() throws Exception {
 			data = new SA_Reviews_Page(CurrentState.getDriver());
 			try {	
@@ -318,10 +318,10 @@ public class SA_Reviews_Test extends BaseClass{
 			}catch(Exception e) {
 				e.printStackTrace();
 			}			
-	}*/
+	}
 		
 		
-		/*@Test(priority = 13)
+		@Test(priority = 13)
 		public void compareUISentimentData() throws Exception {
 			data = new SA_Reviews_Page(CurrentState.getDriver());
 			try {	
@@ -341,7 +341,7 @@ public class SA_Reviews_Test extends BaseClass{
 			}catch(Exception e) {
 				e.printStackTrace();
 			}			
-	}*/
+	}
 		
 		
 		
@@ -349,15 +349,15 @@ public class SA_Reviews_Test extends BaseClass{
 		/**
 		 * Test to verify Top button functionality
 		 * @throws Exception
-		 *//*
+		 */
 			@Test(priority = 10)
 			public void GetTopBtn() throws Exception {
 				data = new SA_Reviews_Page(CurrentState.getDriver());
 				data.TopButton();
 				addEvidence(CurrentState.getDriver(), "Top Button click verification", "yes");
-			}	*/
+			}	
 		
-	/*
+	
 	@Test(priority = 14)
 	public void compareUISentimentCategoryData() throws Exception {
 		data = new SA_Reviews_Page(CurrentState.getDriver());
@@ -378,13 +378,13 @@ public class SA_Reviews_Test extends BaseClass{
 		}catch(Exception e) {
 			e.printStackTrace();
 		}			
-	} */
+	} 
 	
 	@DataProvider
 	public String[][] testData(){
 		String[][] data = null, data1 = null;
 		try {
-		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Zoom");
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "SA_Zoom");
 		wb.deleteEmptyRows();
 		int rowCount = wb.getRowCount();
 		System.out.println("rowCount : "+rowCount);

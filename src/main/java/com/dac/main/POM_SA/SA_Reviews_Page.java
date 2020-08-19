@@ -533,9 +533,6 @@ public class SA_Reviews_Page extends SA_Abstarct_Methods{
 	}catch(Exception e) {
 			e.printStackTrace();
 		}
-		/*scrollByElement(advanceSearch);
-		clickelement(advanceSearch);*/
-		action.moveToElement(driver.findElement(By.xpath("(//a[@class='tagit-close'])[1]"))).click().build().perform();
 		
 	}
 	
