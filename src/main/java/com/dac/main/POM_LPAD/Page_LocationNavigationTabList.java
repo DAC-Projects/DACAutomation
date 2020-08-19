@@ -93,7 +93,16 @@ public class Page_LocationNavigationTabList extends LaunchLPAD {
 		actions.moveToElement(businessInfoTab).perform();
 		actions.moveToElement(businessInfoTab).doubleClick(businessInfoTab).build().perform();
 	}
-	
+	public void navigateDetailsTab() throws InterruptedException {
+		wait = new WebDriverWait(driver, 30);
+		js = (JavascriptExecutor) driver;
+		Thread.sleep(2000);
+		js.executeScript("window.scrollTo(0, -document.body.scrollHeight);");
+		wait.until(ExpectedConditions.elementToBeClickable(detailsTab));
+		System.out.println("-------------clicking detailsTab");
+		actions.moveToElement(detailsTab).perform();
+		actions.moveToElement(detailsTab).doubleClick(detailsTab).build().perform();
+	}
 	public void navigateProductsTab() throws InterruptedException {
 		wait = new WebDriverWait(driver, 30);
 		js = (JavascriptExecutor) driver;

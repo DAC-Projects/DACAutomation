@@ -20,7 +20,8 @@ import org.testng.Assert;
 
 import com.dac.main.BasePage;
 
-import junit.framework.AssertionFailedError;
+
+import resources.IAutoconst;
 
 public class Page_LPADHome{
 
@@ -163,7 +164,8 @@ public class Page_LPADHome{
 		String domain=Username.substring(Username.indexOf("-") + 1, Username.length());
 		return domain;
 	}
-	public void switchToDomain(String domain) throws InterruptedException {
+	public void switchToDomain() throws InterruptedException {
+		String domain=IAutoconst.Reseller;
 		String CurrentDomain=getDomain();
 		CurrentDomain=CurrentDomain.trim();
 		if (!domain.equalsIgnoreCase(CurrentDomain)) {

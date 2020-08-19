@@ -27,7 +27,7 @@ public class Page_LocationBasicInfoTab extends LaunchLPAD {
 	Select uiSelect; 
 	WebDriverWait wait;
 	JavascriptExecutor executor;
-	ExcelHandler basic;
+	ExcelHandler data;
 	String BName="";
 	//-----------Basic Info Tab------------------
 	@FindBy(xpath="//*[@id='lblLocationNumber']")
@@ -87,6 +87,13 @@ public class Page_LocationBasicInfoTab extends LaunchLPAD {
 	@FindBy(id="PrimaryLanguage")
 	private WebElement selectPrimaryLanguage;
 	
+	@FindBy(id="Latitude")
+	private WebElement Latitude;
+	
+	@FindBy(id="Longitude")
+	private WebElement Longitude;
+	
+	
 	
 	public Page_LocationBasicInfoTab(WebDriver driver) {
 		this.driver=driver;
@@ -124,6 +131,7 @@ public class Page_LocationBasicInfoTab extends LaunchLPAD {
 		Name=Name+tmp;
 		System.out.println(Name);
 		elBusinessName.sendKeys(Name);
+		elShortBusinessName.sendKeys(Name);
 	}
 	
 	public void setShortBusinessName(String Name) {
@@ -137,6 +145,16 @@ public class Page_LocationBasicInfoTab extends LaunchLPAD {
 		String name=elShortBusinessName.getAttribute("value");
 		return name;
 	}
+	public String getLatitude() {
+		String lat=Latitude.getAttribute("value");
+		return lat;
+	}
+	
+	public String getLongitude() {
+		String longi=Longitude.getAttribute("value");
+		return longi;
+	}
+	
 	public void setCountry(String country) {
 		uiSelect=new Select(selectCountry);
 		uiSelect.selectByVisibleText(country);
@@ -183,19 +201,28 @@ public class Page_LocationBasicInfoTab extends LaunchLPAD {
 		uiSelect.selectByVisibleText(language);
 	}
 	
-	public void fillBasicInfoData(int excelRow) throws Exception {
-		basic = new ExcelHandler(LocationDataExcelPath,"BasicInfo");
-		String [][] inputData=basic.getExcelTable();
+	public void fillBasicInfoData(int row) throws Exception {
+		data = new ExcelHandler(LocationDataExcelPath,"BasicInfo");
+//		String [][] inputData=data.getExcelTable();
 		
-		String AccountName=inputData[excelRow][0]; String ReferenceCode =inputData[excelRow][1];
-		String ReferenceCode2=inputData[excelRow][2]; String BusinessName=inputData[excelRow][3];
-		String ShortBusinessName=inputData[excelRow][4]; String Country=inputData[excelRow][5];
-		String AddressLine1=inputData[excelRow][6]; String AddressLine2=inputData[excelRow][7];
-		String AddressLine3=inputData[excelRow][8]; String AddressLine4=inputData[excelRow][9];
-		String AddressLine5=inputData[excelRow][10]; String Neighborhood=inputData[excelRow][11];
-		String City=inputData[excelRow][12]; String State=inputData[excelRow][13];
-		String Zipcode=inputData[excelRow][14]; String MainBusinessPhoneNumber=inputData[excelRow][15];
-		String PrimaryLanguage=inputData[excelRow][16]; 
+		String AccountName  	= data.getCellValue(row, data.seacrh_pattern("AccountName", 0).get(0).intValue());
+		String ReferenceCode  	= data.getCellValue(row, data.seacrh_pattern("ReferenceCode", 0).get(0).intValue());
+		String ReferenceCode2  	= data.getCellValue(row, data.seacrh_pattern("ReferenceCode2", 0).get(0).intValue());
+		String BusinessName  	= data.getCellValue(row, data.seacrh_pattern("BusinessName", 0).get(0).intValue());
+		String ShortBusinessName= data.getCellValue(row, data.seacrh_pattern("ShortBusinessName", 0).get(0).intValue());
+		String Country  		= data.getCellValue(row, data.seacrh_pattern("Country", 0).get(0).intValue());
+		String AddressLine1  	= data.getCellValue(row, data.seacrh_pattern("AddressLine1", 0).get(0).intValue());
+		String AddressLine2  	= data.getCellValue(row, data.seacrh_pattern("AddressLine2", 0).get(0).intValue());
+		String AddressLine3  	= data.getCellValue(row, data.seacrh_pattern("AddressLine3", 0).get(0).intValue());
+		String AddressLine4  	= data.getCellValue(row, data.seacrh_pattern("AddressLine4", 0).get(0).intValue());
+		String AddressLine5  	= data.getCellValue(row, data.seacrh_pattern("AddressLine5", 0).get(0).intValue());
+		String Neighborhood  	= data.getCellValue(row, data.seacrh_pattern("Neighborhood", 0).get(0).intValue());
+		String City  			= data.getCellValue(row, data.seacrh_pattern("City", 0).get(0).intValue());
+		String State 			= data.getCellValue(row, data.seacrh_pattern("State", 0).get(0).intValue());
+		String Zipcode  		= data.getCellValue(row, data.seacrh_pattern("Zipcode", 0).get(0).intValue());
+		String MainBusinessPhoneNumber  = data.getCellValue(row, data.seacrh_pattern("MainBusinessPhoneNumber", 0).get(0).intValue());
+		String PrimaryLanguage  = data.getCellValue(row, data.seacrh_pattern("PrimaryLanguage", 0).get(0).intValue());
+		
 		
 		System.out.println(AccountName);	System.out.println(ReferenceCode);
 		System.out.println(ReferenceCode2);		System.out.println(BusinessName);
@@ -211,7 +238,7 @@ public class Page_LocationBasicInfoTab extends LaunchLPAD {
 		setReferenceCode(ReferenceCode);
 		setReferenceCode2(ReferenceCode2);
 		setBusinessName(BusinessName);
-		setShortBusinessName(ShortBusinessName);
+//		setShortBusinessName(ShortBusinessName);
 		setCountry(Country);
 		wait.until(ExpectedConditions.visibilityOfAllElements(elAddressLine1));
 		setAddress1(AddressLine1);
@@ -247,7 +274,7 @@ public class Page_LocationBasicInfoTab extends LaunchLPAD {
 	}
 	public String getLocationNumber() {
 		String number= locationNumber.getText();
-//		System.out.println("Location Number is: " + number);
+		System.out.println("Location Number is: " + number);
 		
 		return number;
 	}

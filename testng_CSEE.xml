@@ -3,7 +3,16 @@
 
 <suite name="QA_Beta">
 
+	<listeners>
+		<!-- <listener class-name="resources.IntegrationTestListener"></listener>-->
+		<listener class-name="resources.ExtentTestNGITestListener"></listener> 
+	</listeners>
+
+
+
 <test name="CovergenSEE">
+<parameter name="browser" value="chrome" />
+<parameter name="appName" value="LAPD"/>
  <classes>
 
 
@@ -11,10 +20,10 @@
  
 <class name="com.dac.testcases.LPAD.Test_LoginToLPAD" /> 
 
-<class name="com.dac.testcases.LPAD.Test_CreateAccount" />  
 <!-- 
 <class name="com.dac.testcases.LPAD.Test_CreateMultipleLocations" /> 
 <class name="com.dac.testcases.LPAD.Test_ManageLocation" /> 
+<class name="com.dac.testcases.LPAD.Test_CreateAccount" />  
 <class name="com.dac.csee.Test_ImpersonateToTSEE" /> 
 <class name="com.dac.csee.LPAD_ImpersonateToTSEE_test" />
 <class name="com.dac.testcases.LPAD.Test_CreateLocation" /> 

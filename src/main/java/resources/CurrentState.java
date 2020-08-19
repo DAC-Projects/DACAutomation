@@ -19,9 +19,11 @@ public class CurrentState {
 
   private static ThreadLocal<String> testName = new ThreadLocal<String>();
   private static ThreadLocal<String> browser = new ThreadLocal<String>();
+  private static ThreadLocal<String> application = new ThreadLocal<String>();
   private static ThreadLocal<ExtentTest> logger = new ThreadLocal<ExtentTest>();
   private static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
   private static ThreadLocal<List> evidenceList =new ThreadLocal<List>();
+  
 
   /**
    * This method used to get the logger for setted logger, execute in specific driver
@@ -93,5 +95,19 @@ public class CurrentState {
   public static void setBrowser(String browser) {
     CurrentState.browser.set(browser);
   }
+  
+  /**
+   Method for get app Name
+   */
+  public static String getApp() {
+	    return application.get();
+	  }
+  /**
+   * This method used to "set the App Name name" to execute in specific driver
+   * for each appname as a local identifier		*/
+  public static void setApp(String appName) {
+    CurrentState.application.set(appName);
+  }
 
+  
 }

@@ -28,7 +28,7 @@ public class Page_LocationManageProductsTab extends LaunchLPAD {
 	WebDriverWait wait;
 	JavascriptExecutor js;
 	String xcelInputData[][];
-	String LocatorDataSyndication="LPM|DataSyndication|1|1";//Locator for identify the Options Popup
+	String LocatorDataSyndication="LPM|DataSyndication|2|1";//Locator for identify the Options Popup
 	//LPM|DataSyndication|2|1- Internal
 	//LPM|DataSyndication|1|1
 	
@@ -64,13 +64,13 @@ public class Page_LocationManageProductsTab extends LaunchLPAD {
 	
 	
 	//This locators only working with "Domain N" only
-	@FindBy(xpath="//div[@prefix='LPM|DataSyndication|1|1']//a[contains(text(),'OK')]")
+	@FindBy(xpath="//div[@prefix='LPM|DataSyndication|2|1']//a[contains(text(),'OK')]")
 	private WebElement OKButtonOption;
 	
-	@FindBy(xpath="//div[@prefix='LPM|DataSyndication|1|1']//h4")
+	@FindBy(xpath="//div[@prefix='LPM|DataSyndication|2|1']//h4")
 	private WebElement OptionsHeading;
 	
-	@FindBy(xpath = "//div[@prefix='LPM|DataSyndication|1|1']//input[@type='checkbox']")
+	@FindBy(xpath = "//div[@prefix='LPM|DataSyndication|2|1']//input[@type='checkbox']")
 	private List<WebElement> allvendors;
 	
 	
@@ -112,12 +112,14 @@ public class Page_LocationManageProductsTab extends LaunchLPAD {
 		Thread.sleep(2000);
 	}
 	
-	public void clickOnDSOptions(String type) throws Exception {
+	public void clickOnDSOptions(String type,ExcelHandler data, int row) throws Exception {
 		js = (JavascriptExecutor) driver;
+		String Vendor_IDs = null;
 		wait=new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(headingProductsTab));
 		if (type.equalsIgnoreCase("NEW")) {
-			xcelInputData = new ExcelHandler(LocationDataExcelPath, "Products").getExcelTable();
+//			xcelInputData = new ExcelHandler(LocationDataExcelPath, "Products").getExcelTable();
+			Vendor_IDs = data.getCellValue(row, data.seacrh_pattern("Vendor_ID_Create", 0).get(0).intValue());
 			enableLPM();
 //			System.out.println("Clicking on LPM");
 //			js.executeScript("arguments[0].scrollIntoView(true);", ToggleBoxSE);
@@ -135,7 +137,8 @@ public class Page_LocationManageProductsTab extends LaunchLPAD {
 			OptionsDataSyndication.click();
 			Thread.sleep(2000);
 		}else if (type.equalsIgnoreCase("UPDATE")) {
-			xcelInputData = new ExcelHandler(LocationDataExcelPath, "UpdateOptions").getExcelTable();
+			Vendor_IDs = data.getCellValue(row, data.seacrh_pattern("Vendro_ID_Update", 0).get(0).intValue());
+//			xcelInputData = new ExcelHandler(LocationDataExcelPath, "UpdateOptions").getExcelTable();
 			System.out.println("Clicking on Options");
 			js.executeScript("arguments[0].scrollIntoView(true);", ToggleSyndicationStatus);
 			js.executeScript("arguments[0].scrollIntoView(true);", ToggleBoxLPM);
@@ -146,7 +149,8 @@ public class Page_LocationManageProductsTab extends LaunchLPAD {
 		}
 		
 		deselectAllVendors();
-		selectOption(xcelInputData);
+		String[] options=Vendor_IDs.split(",");
+		selectOption(options);//select vendors available in Excel
 	}
 	
 	public void clickOnSyndicationStatusReport() throws InterruptedException {
@@ -178,15 +182,18 @@ public class Page_LocationManageProductsTab extends LaunchLPAD {
 		}
 		
 	}
-	private void selectOption(String [][] optionValue) throws InterruptedException {
+	private void selectOption(String [] options)  throws Exception {
 		js = (JavascriptExecutor) driver;
-		int TotalRow=optionValue.length-1,column=1;
-		for (int i=1;i<=TotalRow;i++) {
+		
+		int TotalRow=options.length;
+		System.out.println("Total row in array >> "+TotalRow );
+		
+		for (int i=0;i<TotalRow;i++) {
 			
 			WebElement elementOption = null;
 			String strChecked=null;
-			elementOption=driver.findElement(By.xpath("//div[@prefix='"+LocatorDataSyndication+"']//input[@value='"+ optionValue[i][column] +"']"));
-//			System.out.println("Vendor name is: "+optionValue[i][0]+": ID is>> "+ optionValue[i][1]+" Selected");
+			String item=options[i].trim();
+			elementOption=driver.findElement(By.xpath("//div[@prefix='"+LocatorDataSyndication+"']//input[@value='"+ item +"']"));
 			Thread.sleep(2000);
 			strChecked=elementOption.getAttribute("checked");
 			if (!(strChecked==null)) {
@@ -199,10 +206,10 @@ public class Page_LocationManageProductsTab extends LaunchLPAD {
 				strChecked=null;
 			}
 		}
-			
+		System.out.println("Options Selected");	
 		OKButtonOption.click();
 	}
-	private boolean checkVendor(String vendor) throws Exception {
+	/*private boolean checkVendor(String vendor) throws Exception {
 		xcelInputData = new ExcelHandler(LocationDataExcelPath, "UpdateOptions").getExcelTable();
 		int count=xcelInputData.length;
 		boolean flag=false;
@@ -217,7 +224,7 @@ public class Page_LocationManageProductsTab extends LaunchLPAD {
 			}
 		}
 		return flag;
-	}
+	}*/
 	public boolean disableLPM() throws InterruptedException {
 		String value= TickMarkLPM.getAttribute("style");
 //		System.out.println(value);

@@ -4,6 +4,7 @@ package com.dac.main.POM_LPAD;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,8 +24,9 @@ public class Page_SiteSpecificInfoTab extends LaunchLPAD {
 	Actions actions;
 	Select estSelect,cuSelect; 
 	WebDriverWait wait;
-	public JavascriptExecutor js;
-	String [][] siteSpecificData,xlInput;
+	JavascriptExecutor js;
+	ExcelHandler siteSpecificData;
+	String [][] xlInput;
 	
 	@FindBy(xpath="//*[@id=\"main-wrapper\"]/section/div[1]/h1")
 	private WebElement header;
@@ -74,11 +76,35 @@ public class Page_SiteSpecificInfoTab extends LaunchLPAD {
 	@FindBy(xpath="//div[@id='ZomatoSummary']//button[@class='btn btn-primary']")
 	private WebElement btnZomatoSubmit;
 
+	
+	
 	@FindBy(xpath = "//table[@id='ListTable2']/tbody/tr//img")
 	private List<WebElement> btnSelectedEstType;
 	
 	@FindBy(xpath = "//table[@id='ListTable3']/tbody/tr//img")
 	private List<WebElement> btnSelectedCuisType;
+	
+	/*-------Apple--------------*/
+	@FindBy(xpath="//input[@id='appleEdit']")
+	private WebElement btnAppleEdit;
+	
+	@FindBy(xpath="//input[@id='AppleBusinessName']")
+	private WebElement AppleBusinessName;
+	
+	@FindBy(xpath="//div[@id='s2id_AppleAmenities']")
+	private WebElement AppleAmenities;
+	
+	@FindBy(xpath="//ul[@id='select2-results-15']")
+	private WebElement AppleAmenitiesList;
+	
+	@FindBy(xpath="//input[@id='CateAdd12']")
+	private WebElement btnAppleAmAdd;
+	
+	@FindBy(xpath="//div[@id='AppleSummary']//button[@class='btn btn-primary']")
+	private WebElement btnAppleSubmit;
+	
+	//ul[@id='select2-results-15']/li/div[contains(text(),'Delivery')]
+	//div[@id='select2-drop']//ul/li/div[contains(text(),'Delivery')]
 	
 	@FindBy(xpath="//button[@data-bb-handler='confirm']")
 	private WebElement btnConfrim;
@@ -92,7 +118,58 @@ public class Page_SiteSpecificInfoTab extends LaunchLPAD {
 		PageFactory.initElements(driver, this);
 	}
 	
-	public void setValue(String[][] valueOptions) throws InterruptedException {
+	private void setAppleBusinessname(String name) {
+		AppleBusinessName.clear();
+		AppleBusinessName.sendKeys(name);
+	}
+	private void submitAppleValue() {
+		btnAppleSubmit.click();
+	}
+	private void setAppleAmenities(String Amenities) throws InterruptedException {
+		System.out.println(Amenities);
+		String[] options=Amenities.split(",");
+		
+		js = (JavascriptExecutor) driver;
+		
+		int TotalRow=options.length;
+		System.out.println("Total row in array >> "+TotalRow );
+		
+		for (int i=0;i<TotalRow;i++) {
+			AppleAmenities.click();
+			WebElement elementType = null;
+			String strChecked=null;
+			System.out.println(options[i]);
+			String item=options[i].trim();
+			elementType=driver.findElement(By.xpath("//div[@id='select2-drop']//ul/li/div[contains(text(),'"+item+"')]"));
+			Thread.sleep(2000);
+			elementType.click();
+			Thread.sleep(2000);
+			btnAppleAmAdd.click();
+			
+			
+			
+		}
+		System.out.println("Amenities Selected");	
+	}
+	private void setAppleValues(ExcelHandler valueOptions) throws InterruptedException {
+		//start from here
+		js = (JavascriptExecutor) driver;
+		wait = new WebDriverWait(driver, 30);
+		js.executeScript("window.scrollTo(0, -document.body.scrollHeight);");
+		
+
+		String StrAppleBusinessName=  valueOptions.getCellValue(1, valueOptions.seacrh_pattern("AppleBusinessName", 0).get(0).intValue());
+		String strAppelAmenities=  valueOptions.getCellValue(1, valueOptions.seacrh_pattern("AppleAmenites", 0).get(0).intValue());
+		setAppleBusinessname(StrAppleBusinessName);
+		setAppleAmenities(strAppelAmenities);
+//		js.executeScript("arguments[0].scrollIntoView(true);", btnAppleSubmit);
+		js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+		submitAppleValue();
+		wait.until(ExpectedConditions.visibilityOf(btnOK));
+		btnOK.click();
+	}
+	
+	private void setZomatoValue(ExcelHandler valueOptions) throws InterruptedException {
 		js = (JavascriptExecutor) driver;
 		wait = new WebDriverWait(driver, 30);
 		estSelect = new Select(selectEstablishmentTypes);
@@ -101,8 +178,11 @@ public class Page_SiteSpecificInfoTab extends LaunchLPAD {
 		
 		//Add Establishment Type
 //		deselectEstTypes(btnSelectedEstType);
+		String establishment=  valueOptions.getCellValue(1, valueOptions.seacrh_pattern("Zomato_EstablishmentType", 0).get(0).intValue());
+		String strCuisineType=  valueOptions.getCellValue(1, valueOptions.seacrh_pattern("Zomato_Cuisine", 0).get(0).intValue());
+		
 		actions.moveToElement(establishmentType).click().build().perform();
-		estSelect.selectByVisibleText(valueOptions[1][0]);
+		estSelect.selectByVisibleText(establishment);
 		Thread.sleep(2000);
 		btnZomatoEstAdd.click();
 		
@@ -110,7 +190,7 @@ public class Page_SiteSpecificInfoTab extends LaunchLPAD {
 		js.executeScript("arguments[0].scrollIntoView(true);", establishmentType);
 //		deselectEstTypes(btnSelectedCuisType);
 		actions.moveToElement(cuisineType).click().build().perform();
-		cuSelect.selectByVisibleText(valueOptions[1][1]);
+		cuSelect.selectByVisibleText(strCuisineType);
 		Thread.sleep(2000);
 		btnZomatoCuisineAdd.click();
 		
@@ -139,21 +219,29 @@ public class Page_SiteSpecificInfoTab extends LaunchLPAD {
 		}
 	}
 
-	public void clickOnAddCategoryBtn() {
+	private void clickOnAddCategoryBtn() {
 		btnAddCategory.click();
 	}
 	
-	public void fillSiteSpecificInfoData(String vendor, ExcelHandler data, int row) throws Exception {
+	public void fillSiteSpecificInfoData( String vendor, ExcelHandler data, int row) throws Exception {
 		wait = new WebDriverWait(driver, 30);
 		String vendors= data.getCellValue(row, data.seacrh_pattern("Vendors_Create", 0).get(0).intValue());
 		String[] vendorsList=vendors.split(",");
-		siteSpecificData=new ExcelHandler(LocationDataExcelPath, "SiteSpecificInfo").getExcelTable();
+		siteSpecificData=new ExcelHandler(LocationDataExcelPath, "SiteSpecificInfo");
 //		String strcategory=inputData[excelRow][0];		System.out.println(strcategory);
-		
+		vendor=vendor.toUpperCase();
 		if(checkVendor(vendor,vendorsList)) {
 			switch (vendor){
 			case "ZOMATO":
+				
 				setZomatoAmenities(siteSpecificData);
+			
+				break;
+			case "APPLE":
+				
+				setAppleAmenities(siteSpecificData);
+			
+				break;
 			default:
 				System.out.println("Invalid Vendor");
 			}
@@ -180,16 +268,23 @@ public class Page_SiteSpecificInfoTab extends LaunchLPAD {
 		}
 		return flag;
 	}
-	private void setZomatoAmenities(String [][] values) throws InterruptedException {
+	private void setZomatoAmenities(ExcelHandler values) throws InterruptedException {
 		js = (JavascriptExecutor) driver;
 		wait=new WebDriverWait(driver, 30);
-		System.out.println("Clicking on Edit Button");
+		System.out.println("Clicking on Zomato-Edit Button");
 		js.executeScript("arguments[0].scrollIntoView(true);", btnZomatoEdit);
 		js.executeScript("arguments[0].click();",btnZomatoEdit);
 		Thread.sleep(2000);
-		setValue(values);
+		setZomatoValue(values);
 	}
-	private void openAmenities() throws InterruptedException {
-		
+	private void setAppleAmenities(ExcelHandler values) throws InterruptedException {
+		js = (JavascriptExecutor) driver;
+		wait=new WebDriverWait(driver, 30);
+		System.out.println("Clicking on Apple-Edit Button");
+		js.executeScript("arguments[0].scrollIntoView(true);", btnAppleEdit);
+		js.executeScript("arguments[0].click();",btnAppleEdit);
+		Thread.sleep(2000);
+		setAppleValues(values);
 	}
+	
 }

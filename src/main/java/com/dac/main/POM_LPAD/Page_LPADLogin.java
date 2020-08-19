@@ -8,47 +8,65 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.dac.main.BasePage;
+
+import resources.BaseClass;
+import resources.IAutoconst;
 
 
-public class Page_LPADLogin 
+
+public class Page_LPADLogin extends BaseClass
 {
 	WebDriver driver;
 
 	@FindBy(name="username")
-	private WebElement UserNameTB;
+	private static WebElement UserNameTB;
 	
 	@FindBy(id="txt_password")
-	private WebElement PasswordTB;
+	private static WebElement PasswordTB;
 	
 	@FindBy(id="btlogin")
-	private WebElement LoginBTN;
+	private static WebElement LoginBTN;
 	
 	
 	public  Page_LPADLogin(WebDriver driver) {
+//		super(driver);
 		this.driver =  driver;
 		driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
 		PageFactory.initElements(driver, this);
 		
 	}
 	
-	public void setUserName(String un) {
+	private static void setUserName(String un) {
 		
 		UserNameTB.sendKeys(un);
 	}
 	
-	public void setPassword(String pwd) {
+	private static void setPassword(String pwd) {
 	
 		PasswordTB.sendKeys(pwd);
 	}
-	public String getTitle() {
+	private String getTitle() {
 		
 		return driver.getTitle();
+//		if (pageTitle.equalsIgnoreCase("Management Administration Portal Login")) {
+//			  System.out.println("LPAD Login TC Passed");
+//		  }else {
+//			  System.out.println("LPAD Login TC Failed");
+//		  }
 		
 	}
 	
-	public void clickLogin() {
+	private static void clickLogin() {
 		//loginBTN.submit();
 		System.out.println("Trying to Login");
 		LoginBTN.click();
+	}
+	
+	public  void LoginTOLPAD() {
+		driver.get(IAutoconst.url);
+		setUserName(IAutoconst.ResellerAdmin);
+		setPassword(IAutoconst.ResellerPassword);
+		clickLogin();
 	}
 }

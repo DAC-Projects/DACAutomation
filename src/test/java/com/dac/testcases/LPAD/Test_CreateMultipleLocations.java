@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 import com.dac.main.POM_LPAD.Page_LPADHome;
 import com.dac.main.POM_LPAD.Page_LocationBasicInfoTab;
 import com.dac.main.POM_LPAD.Page_LocationBusinessInfoTab;
+import com.dac.main.POM_LPAD.Page_LocationDetailsTab;
 import com.dac.main.POM_LPAD.Page_LocationManageProductsTab;
 import com.dac.main.POM_LPAD.Page_LocationNavigationTabList;
 import com.dac.main.POM_LPAD.Page_LocationsListPage;
@@ -29,22 +30,23 @@ public class Test_CreateMultipleLocations extends LaunchLPAD {
 	Page_LPADHome home;
 	Page_LocationsListPage locations;
 	Page_SiteSpecificInfoTab site;
+	Page_LocationDetailsTab details;
 	WebDriverWait wait;  
 	JavascriptExecutor js;
 	String basicInfoData[][];
-	ExcelHandler wb, newlocations;
+	ExcelHandler newlocations,basic;
 	
 
 
 @Test(dependsOnMethods= {"com.dac.testcases.LPAD.Test_LoginToLPAD.TC_Login_LPAD"})
 public void TC_EnterLocationData() throws Exception {
 	int colLocationNumber=21, colLocationName=22, ColLocationStatus=23;
-	String status="NEW",locationName="";
+	String status="NEW",locationName="",latitude="",longitude="";
 	System.out.println("Step1: Enter Location Data");
 	wait=new WebDriverWait(driver, 30);
-	wb = new ExcelHandler(LocationDataExcelPath, "BasicInfo");
+	basic = new ExcelHandler(LocationDataExcelPath, "BasicInfo");
 //	wb.getColHeadingNumber("MainBusinessPhoneNumber");
-	basicInfoData = wb.getExcelTable();
+	basicInfoData = basic.getExcelTable();
 	int TotalRow=basicInfoData.length-1;
 	int vendorIdColumn=1;//Vendor ID in excel
 	home=new Page_LPADHome(driver);
@@ -52,6 +54,7 @@ public void TC_EnterLocationData() throws Exception {
 	tabs=new Page_LocationNavigationTabList(driver);
 	basicInfo=new Page_LocationBasicInfoTab(driver);
 	businessInfo=new Page_LocationBusinessInfoTab(driver);
+	details=new Page_LocationDetailsTab(driver);
 	products=new Page_LocationManageProductsTab(driver);
 	site=new Page_SiteSpecificInfoTab(driver);
 	
@@ -64,20 +67,30 @@ public void TC_EnterLocationData() throws Exception {
 		basicInfo.fillBasicInfoData(i);
 		tabs.navigateBusinessInfoTab();
 		businessInfo.fillBusinessInfoData();
+		tabs.navigateDetailsTab();
+		details.fillDetailsTabData();
 		tabs.navigateProductsTab();
-		products.clickOnDSOptions("NEW",wb,i);
+		products.clickOnDSOptions("NEW",basic,i);
+		Thread.sleep(3000);
 		tabs.submitLocation();
 		Thread.sleep(2000);
 		NewlocationNumber=basicInfo.getLocationNumber();
 		locationName=basicInfo.getSBName();
+		latitude=basicInfo.getLatitude();
+		longitude=basicInfo.getLongitude();
 //		System.out.println(locationName);
+		Thread.sleep(5000);
 		tabs.navigateSiteSpecificInfoTab();
-		site.fillSiteSpecificInfoData("ZOMATO",wb,i);
+		site.fillSiteSpecificInfoData("zomato",basic,i);
+		site.fillSiteSpecificInfoData("APPLE",basic,i);
 
 		//		tabs.updateLocation();
-		wb.setCellValue( i, colLocationNumber, NewlocationNumber);
-		wb.setCellValue( i, colLocationName, locationName);
-		wb.setCellValue(i, ColLocationStatus, status);
+//		Vendor_IDs = data.getCellValue(row, data.seacrh_pattern("Vendro_ID_Update", 0).get(0).intValue());
+		basic.setCellValue( i, basic.seacrh_pattern("LocationNumber", 0).get(0).intValue(), NewlocationNumber);
+		basic.setCellValue( i, basic.seacrh_pattern("LocationName", 0).get(0).intValue(), locationName);
+		basic.setCellValue(i, basic.seacrh_pattern("Status", 0).get(0).intValue(), status);
+		basic.setCellValue(i, basic.seacrh_pattern("Latitude", 0).get(0).intValue(), latitude);
+		basic.setCellValue(i, basic.seacrh_pattern("Longitude", 0).get(0).intValue(), longitude);
 		
 	}
 	

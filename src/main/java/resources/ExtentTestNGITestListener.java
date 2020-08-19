@@ -34,6 +34,7 @@ import org.testng.ITestResult;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
+import com.dac.main.POM_LPAD.Page_LPADLogin;
 import com.selenium.testevidence.EvidenceReport;
 import com.selenium.testevidence.EvidenceType;
 import com.selenium.testevidence.GenerateEvidenceReport;
@@ -92,7 +93,8 @@ public class ExtentTestNGITestListener
    * @see org.testng.ITestListener#onStart(org.testng.ITestContext)		*/
   @Override
   public synchronized void onStart(ITestContext context) {
-	 
+	  CurrentState
+      .setApp(context.getCurrentXmlTest().getParameter("appName"));
     CurrentState
         .setBrowser(context.getCurrentXmlTest().getParameter("browser"));
     CurrentState.setTestName(context.getName());
@@ -119,8 +121,11 @@ public class ExtentTestNGITestListener
       CurrentState.getDriver().manage().deleteAllCookies();
       //Send driver object to JSWaiter Class
       JSWaiter.setDriver(CurrentState.getDriver());
-      
+      if(CurrentState.getApp().equalsIgnoreCase("TRSEE"))
       BaseClass.navigateToBasePage();
+      
+//      if(CurrentState.getApp().equalsIgnoreCase("LPAD"))
+//    	  Page_LPADLogin.LoginTOLPAD();
    
   }
 
@@ -147,9 +152,16 @@ public class ExtentTestNGITestListener
    * This method return the description of @Test method if provided 
    * otherwise will return the test method name 	*/
   private String getTestname(ITestResult result){
-    String description = (result.getMethod().getDescription() != null)
-        ? result.getMethod().getDescription()
-        : result.getMethod().getMethodName();
+	  String description;
+	  if(!result.getMethod().getDescription().isEmpty()) {
+		
+		   description = result.getMethod().getDescription();
+		   System.err.println("description not null and value "+description);
+	  }
+	  else {
+		  description = result.getMethod().getMethodName();
+		  System.err.println("description  null and method name value "+description);
+	  }
     return description;
   }
 
@@ -342,7 +354,8 @@ public class ExtentTestNGITestListener
     if (browser.equalsIgnoreCase("Chrome")) {
 
 
-    	   WebDriverManager.chromedriver().version("83.0.4103.39").setup(); 
+//    WebDriverManager.chromedriver().version("80.0.3987.16").setup(); 
+    	WebDriverManager.chromedriver().version("83.0.4103.39").setup();
 
 
     //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
