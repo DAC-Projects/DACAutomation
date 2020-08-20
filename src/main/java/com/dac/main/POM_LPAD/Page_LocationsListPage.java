@@ -11,7 +11,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-public class Page_LocationsListPage {
+import com.dac.main.BasePage;
+
+public class Page_LocationsListPage extends BasePage {
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
@@ -91,6 +93,7 @@ public class Page_LocationsListPage {
 	//ul[@class='multiselect-container dropdown-menu']/li[3]
 	
 	public Page_LocationsListPage(WebDriver driver) {
+		super(driver);
 		this.driver=driver;
 		action = new Actions(driver);
 		driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);

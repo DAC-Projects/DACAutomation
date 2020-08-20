@@ -124,9 +124,6 @@ public class ExtentTestNGITestListener
       if(CurrentState.getApp().equalsIgnoreCase("TRSEE"))
       BaseClass.navigateToBasePage();
       
-//      if(CurrentState.getApp().equalsIgnoreCase("LPAD"))
-//    	  Page_LPADLogin.LoginTOLPAD();
-   
   }
 
   /**

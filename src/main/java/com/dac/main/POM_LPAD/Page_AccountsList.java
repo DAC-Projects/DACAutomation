@@ -15,12 +15,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.dac.main.BasePage;
 import com.dac.testcases.LPAD.LaunchLPAD;
 
 import resources.ExcelHandler;
 import resources.Utilities;
 
-public class Page_AccountsList extends LaunchLPAD {
+public class Page_AccountsList extends BasePage {
 	
 	WebDriver driver;
 	Actions actions;
@@ -68,6 +69,7 @@ public class Page_AccountsList extends LaunchLPAD {
 	//Locators End.
 	
 	public Page_AccountsList(WebDriver driver) {
+		super(driver);
 		this.driver=driver;
 		actions = new Actions(driver);
 		driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);

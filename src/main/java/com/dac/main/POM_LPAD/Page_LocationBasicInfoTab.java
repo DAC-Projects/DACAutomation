@@ -15,12 +15,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.dac.main.BasePage;
 import com.dac.testcases.LPAD.LaunchLPAD;
 
 import resources.ExcelHandler;
+import resources.IAutoconst;
 import resources.Utilities;
 
-public class Page_LocationBasicInfoTab extends LaunchLPAD {
+public class Page_LocationBasicInfoTab extends BasePage {
 	
 	WebDriver driver;
 	Actions actions;
@@ -96,6 +98,7 @@ public class Page_LocationBasicInfoTab extends LaunchLPAD {
 	
 	
 	public Page_LocationBasicInfoTab(WebDriver driver) {
+		super(driver);
 		this.driver=driver;
 		actions = new Actions(driver);
 		driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
@@ -202,7 +205,7 @@ public class Page_LocationBasicInfoTab extends LaunchLPAD {
 	}
 	
 	public void fillBasicInfoData(int row) throws Exception {
-		data = new ExcelHandler(LocationDataExcelPath,"BasicInfo");
+		data = new ExcelHandler(IAutoconst.LocationDataExcelPath,"BasicInfo");
 //		String [][] inputData=data.getExcelTable();
 		
 		String AccountName  	= data.getCellValue(row, data.seacrh_pattern("AccountName", 0).get(0).intValue());

@@ -20,7 +20,7 @@ import com.dac.testcases.LPAD.LaunchLPAD;
 
 import resources.ExcelHandler;
 
-public class Page_LocationManageProductsTab extends LaunchLPAD {
+public class Page_LocationManageProductsTab extends BasePage {
 	
 	WebDriver driver;
 	Actions actions;
@@ -80,6 +80,7 @@ public class Page_LocationManageProductsTab extends LaunchLPAD {
 	
 	
 	public Page_LocationManageProductsTab(WebDriver driver) {
+		super(driver);
 		this.driver=driver;
 		actions = new Actions(driver);
 		driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);

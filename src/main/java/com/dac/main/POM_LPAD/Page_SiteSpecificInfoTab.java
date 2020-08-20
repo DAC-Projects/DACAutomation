@@ -15,11 +15,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.dac.main.BasePage;
 import com.dac.testcases.LPAD.LaunchLPAD;
 
 import resources.ExcelHandler;
+import resources.IAutoconst;
 
-public class Page_SiteSpecificInfoTab extends LaunchLPAD {
+public class Page_SiteSpecificInfoTab extends BasePage {
 	WebDriver driver;
 	Actions actions;
 	Select estSelect,cuSelect; 
@@ -112,6 +114,7 @@ public class Page_SiteSpecificInfoTab extends LaunchLPAD {
 	private WebElement btnOK;
 
 	public Page_SiteSpecificInfoTab(WebDriver driver) {
+		super(driver);
 		this.driver=driver;
 		actions = new Actions(driver);
 		driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
@@ -227,7 +230,7 @@ public class Page_SiteSpecificInfoTab extends LaunchLPAD {
 		wait = new WebDriverWait(driver, 30);
 		String vendors= data.getCellValue(row, data.seacrh_pattern("Vendors_Create", 0).get(0).intValue());
 		String[] vendorsList=vendors.split(",");
-		siteSpecificData=new ExcelHandler(LocationDataExcelPath, "SiteSpecificInfo");
+		siteSpecificData=new ExcelHandler(IAutoconst.LocationDataExcelPath, "SiteSpecificInfo");
 //		String strcategory=inputData[excelRow][0];		System.out.println(strcategory);
 		vendor=vendor.toUpperCase();
 		if(checkVendor(vendor,vendorsList)) {

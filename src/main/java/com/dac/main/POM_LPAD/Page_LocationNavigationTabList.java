@@ -14,10 +14,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.dac.main.BasePage;
 import com.dac.testcases.LPAD.LaunchLPAD;
 
 
-public class Page_LocationNavigationTabList extends LaunchLPAD {
+public class Page_LocationNavigationTabList extends BasePage {
 	
 	WebDriver driver;
 	Actions actions;
@@ -64,6 +65,7 @@ public class Page_LocationNavigationTabList extends LaunchLPAD {
 	private WebElement btnOK;
 	
 	public Page_LocationNavigationTabList(WebDriver driver) {
+		super(driver);
 		this.driver=driver;
 		actions = new Actions(driver);
 		driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
@@ -140,10 +142,10 @@ public class Page_LocationNavigationTabList extends LaunchLPAD {
 				btnOK.click();//incomplete waring
 				Thread.sleep(1000);
 			}
-//			wait.until(ExpectedConditions.visibilityOf(btnOK));//for success message popup
+			wait.until(ExpectedConditions.visibilityOf(btnOK));//for success message popup
+			btnOK.click();
 //			btnOK.click();
-//			btnOK.click();
-//			js.executeScript("window.scrollTo(0, -document.body.scrollHeight);");
+			js.executeScript("window.scrollTo(0, -document.body.scrollHeight);");
 		}else {
 			System.out.println("Submit Button Not enabled");
 		}

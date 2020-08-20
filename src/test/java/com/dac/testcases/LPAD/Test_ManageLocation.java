@@ -37,7 +37,7 @@ public class Test_ManageLocation extends LaunchLPAD {
 	
 
 
-	/*@Test(dependsOnMethods= {"com.dac.testcases.LPAD.Test_CreateMultipleLocations.TC_EnterLocationData"})
+	@Test(dependsOnMethods= {"com.dac.testcases.LPAD.Test_CreateMultipleLocations.TC_EnterLocationData"})
 public void TC_UpdateLPM_OptionsData() throws Exception {
 	int column=17;//for getting Location Number from Excel
 	System.out.println("Scenario1: Update LPM Product Options with New Options");
@@ -56,22 +56,25 @@ public void TC_UpdateLPM_OptionsData() throws Exception {
 	site=new Page_SiteSpecificInfoTab(driver);
 	
 	home.NavigateToLocations();
-	String locationNumber=basicInfoData[1][column];
+	String locationNumber  	= wb.getCellValue(1, wb.seacrh_pattern("LocationNumber", 0).get(0).intValue());
+//	String locationNumber=basicInfoData[1][column];
 	System.out.println("Location Number"+ locationNumber);
 	
 	locations.searchLocation(locationNumber);
 	Thread.sleep(2000);
 	locations.NavigateManageLocation();
 	tabs.navigateProductsTab();
-		products.clickOnDSOptions("UPDATE");
+		products.clickOnDSOptions("UPDATE",wb,1);
 		Thread.sleep(2000);
 //		tabs.navigateSiteSpecificInfoTab();
 //		site.fillSiteSpecificInfoData();
 		tabs.updateLocation();
-		wb.setCellValue( 1, 18, "PFOUpdate");
+		wb.setCellValue(1, wb.seacrh_pattern("Status", 0).get(0).intValue(), "Option_Update");
+//		wb.setCellValue( 1, 18, "PFOUpdate");
 	
 	System.out.println("LPM Options Updated.....");
 }
+	
 /*
  
 @Test(dependsOnMethods= {"com.dac.testcases.LPAD.Test_LoginToLPAD.TC_Login_LPAD"})
@@ -266,6 +269,7 @@ public void TC_ReactivateLocation() throws Exception {
 }
 */
 //Re-Open Location	
+	/*
 @Test(dependsOnMethods= {"com.dac.testcases.LPAD.Test_LoginToLPAD.TC_Login_LPAD"})
 public void TC_ReOpenLocation() throws Exception {
 	int column=17, LocationRow=1;//for getting Location Number from Excel
@@ -292,12 +296,12 @@ public void TC_ReOpenLocation() throws Exception {
 	locations.searchLocation(locationNumber);
 	locations.NavigateManageLocation();
 	tabs.navigateProductsTab();
-	products.clickOnDSOptions("NEW");
+	products.clickOnDSOptions("NEW",wb,LocationRow);
 	tabs.navigateSiteSpecificInfoTab();
-	site.fillSiteSpecificInfoData("ZOMATO");
+	site.fillSiteSpecificInfoData("ZOMATO", wb, LocationRow);
 	tabs.updateLocation();
 	System.out.println(locationNumber+" >> Location Opened.....");
 	update.setCellValue( 5, 0, locationNumber);
 	update.setCellValue( 5, 1, status);
-}
+}*/
 }

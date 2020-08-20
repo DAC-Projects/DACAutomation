@@ -15,13 +15,15 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.dac.main.BasePage;
 import com.dac.testcases.LPAD.LaunchLPAD;
 
 import resources.BaseClass;
 import resources.ExcelHandler;
+import resources.IAutoconst;
 import resources.Utilities;
 
-public class Page_ManageAccount extends LaunchLPAD {
+public class Page_ManageAccount extends BasePage {
 	
 	WebDriver driver;
 	Actions actions;
@@ -115,6 +117,7 @@ public class Page_ManageAccount extends LaunchLPAD {
 	private WebElement popupMessage;
 	
 	public Page_ManageAccount(WebDriver driver) {
+		super(driver);
 		this.driver=driver;
 		actions = new Actions(driver);
 		driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
@@ -217,7 +220,7 @@ public class Page_ManageAccount extends LaunchLPAD {
 		btnOK.click();
 	}
 	public void setAccountData(int excelRow) throws Exception {
-		accountData = new ExcelHandler(LocationDataExcelPath,"AccountInfo");
+		accountData = new ExcelHandler(IAutoconst.LocationDataExcelPath,"AccountInfo");
 		String [][] inputData=accountData.getExcelTable();
 		
 		String strStatus=inputData[excelRow][0];String strAccountName=inputData[excelRow][1]; 

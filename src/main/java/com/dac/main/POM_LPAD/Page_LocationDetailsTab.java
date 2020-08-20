@@ -15,11 +15,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.dac.main.BasePage;
 import com.dac.testcases.LPAD.LaunchLPAD;
 
 import resources.ExcelHandler;
+import resources.IAutoconst;
 
-public class Page_LocationDetailsTab extends LaunchLPAD {
+public class Page_LocationDetailsTab extends BasePage {
 	WebDriver driver;
 	Actions actions;
 	Select uiSelect; 
@@ -74,6 +76,7 @@ public class Page_LocationDetailsTab extends LaunchLPAD {
 	
 	
 	public Page_LocationDetailsTab(WebDriver driver) {
+		super(driver);
 		this.driver=driver;
 		actions = new Actions(driver);
 		driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
@@ -189,7 +192,7 @@ public class Page_LocationDetailsTab extends LaunchLPAD {
 	}
 	public void fillDetailsTabData() throws Exception {
 		
-		data = new ExcelHandler(LocationDataExcelPath,"Details");
+		data = new ExcelHandler(IAutoconst.LocationDataExcelPath,"Details");
 		wait = new WebDriverWait(driver, 30);
 		
 		setSocialinfoURL(data);

@@ -15,7 +15,7 @@ import resources.IAutoconst;
 
 
 
-public class Page_LPADLogin extends BaseClass
+public class Page_LPADLogin extends BasePage
 {
 	WebDriver driver;
 
@@ -30,21 +30,23 @@ public class Page_LPADLogin extends BaseClass
 	
 	
 	public  Page_LPADLogin(WebDriver driver) {
-//		super(driver);
+		super(driver);
 		this.driver =  driver;
 		driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
 		PageFactory.initElements(driver, this);
 		
 	}
 	
-	private static void setUserName(String un) {
+	private  void setUserName(String un) throws InterruptedException {
 		
 		UserNameTB.sendKeys(un);
+		Thread.sleep(2000);
 	}
 	
-	private static void setPassword(String pwd) {
+	private  void setPassword(String pwd) throws InterruptedException {
 	
 		PasswordTB.sendKeys(pwd);
+		Thread.sleep(2000);
 	}
 	private String getTitle() {
 		
@@ -57,14 +59,17 @@ public class Page_LPADLogin extends BaseClass
 		
 	}
 	
-	private static void clickLogin() {
-		//loginBTN.submit();
+	private  void clickLogin() {
 		System.out.println("Trying to Login");
-		LoginBTN.click();
+		clickelement(LoginBTN);
+		
 	}
 	
-	public  void LoginTOLPAD() {
+	public  void LoginTOLPAD() throws InterruptedException {
+		driver.get(IAutoconst.LPADUrlBeta);
+		Thread.sleep(5000);
 		setUserName(IAutoconst.ResellerAdmin);
+		System.out.println(IAutoconst.ResellerAdmin);
 		setPassword(IAutoconst.ResellerPassword);
 		clickLogin();
 	}

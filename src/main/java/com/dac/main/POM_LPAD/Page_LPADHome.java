@@ -23,7 +23,7 @@ import com.dac.main.BasePage;
 import junit.framework.AssertionFailedError;
 import resources.IAutoconst;
 
-public class Page_LPADHome{
+public class Page_LPADHome extends BasePage{
 
 	WebDriver driver;
 	Actions action; 
@@ -88,6 +88,7 @@ public class Page_LPADHome{
 	/*----------------Locators End------------*/
 	
 	public Page_LPADHome(WebDriver driver) {
+		super(driver);
 		this.driver =  driver;
 		action = new Actions(driver);
 		wait = new WebDriverWait(driver, 30);
@@ -114,7 +115,6 @@ public class Page_LPADHome{
 //		wait=new WebDriverWait(driver, 30);
 //		wait.until(ExpectedConditions.elementToBeClickable(Accounts));
 		Accounts.click();
-//		action.moveToElement(Accounts).click().perform();
 		System.out.println("Result: Navigated to Accounts Page");
 		}
 	
