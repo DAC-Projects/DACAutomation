@@ -32,7 +32,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigation to Facebook Page", "yes");
 		Thread.sleep(5000);
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
-	//	data.clickDone();
+		//data.clickDone();
 		addEvidence(CurrentState.getDriver(), "Clicked on Walkme", "yes");
 	}
 
@@ -61,7 +61,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 4, dependsOnMethods = { "verifyTitleText" })
+	@Test(priority = 5/*, dependsOnMethods = { "verifyTitleText" }*/)
 	public void verifyFilteringReportsAccuracy() throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		try {
@@ -93,7 +93,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	/**
 	 * verification of date
 	 */
-	@Test(priority = 5, description = "Test to verify graph")
+	@Test(priority = 6, description = "Test to verify graph")
 	public void verifyGraphncompareDate() {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		boolean datavalidation = data.IsDataAvailable();
@@ -111,7 +111,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 6, description = "Test to verify highcharts")
+	@Test(priority = 4, description = "Test to verify highcharts")
 	public void gethighchartsdate() throws Exception {
 		boolean datavalidation = data.IsDataAvailable();
 		if (!datavalidation == true) {

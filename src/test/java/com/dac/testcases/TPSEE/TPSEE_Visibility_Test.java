@@ -2,6 +2,7 @@ package com.dac.testcases.TPSEE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -82,7 +83,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
 
-	/*@SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	@Test(priority = 6, enabled = true, dataProvider = "testData", description = "Manual date selection")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
@@ -104,7 +105,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 			// Assert.assertEquals(togrph, tocal);
 			addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 		}
-	}*/
+	}
 
 	/**
 	 * Test To get overall score and compare with dashboard values
@@ -277,7 +278,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * Test to export a file as PDF of applied date
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 12, groups = {
 			"smoke" }, dataProvider = "testData", description = "Test for export file as Visibility History pdf")
 	public void PDFHistoryExport(String from_day, String from_month, String from_year, String to_day, String to_month,
@@ -293,7 +294,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		Thread.sleep(5000);
 		data.hstrypdfexport();
 		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
-	}*/
+	}
 
 	/**
 	 * Test for Comparing Tooltip and overview report in Visibility Page
@@ -322,10 +323,6 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(),
 				"Site level scores in Visibility site table  and overview visibility export found matching", "yes");
 		data.exporttablefoundCSV();
-		/*Thread.sleep(3000);
-		data.GoTo();
-		Thread.sleep(3000);
-		data.resultperpage(soft);*/
 		soft.assertAll();
 		addEvidence(CurrentState.getDriver(), "Test to verify GoTo and Results Per Page", "yes");
 	}
@@ -356,11 +353,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(),
 				"Site level scores in Visibility site table  and overview visibility export found matching", "yes");
 		data.exporttableNotfoundCSV();
-		/*Thread.sleep(3000);
-		data.GoTo();
-		Thread.sleep(3000);
-		data.resultperpage(soft);
-		soft.assertAll();*/
+		soft.assertAll();
 		addEvidence(CurrentState.getDriver(), "Test to verify GoTo and Results Per Page", "yes");
 	}
 

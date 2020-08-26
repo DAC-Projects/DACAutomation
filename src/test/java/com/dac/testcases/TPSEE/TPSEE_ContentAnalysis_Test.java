@@ -1,6 +1,7 @@
 package com.dac.testcases.TPSEE;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -137,7 +138,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		}
 	}
 
-	/*@SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	@Test(priority = 6, enabled = true, dataProvider = "testData",description = "Verify manual date selection")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
@@ -159,7 +160,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 			// Assert.assertEquals(togrph, tocal);
 			addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 		}
-	}*/
+	}
 
 	@Test(priority = 7, groups = { "smoke" }, description = "Verify Content Analysis page loads after filter applied")
 	public void verifyFilteringReportsContentAnalysis() throws Exception {
