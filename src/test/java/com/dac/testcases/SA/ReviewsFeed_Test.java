@@ -169,12 +169,18 @@ public class ReviewsFeed_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Test to verify location name sorting", "yes");
 	}*/
 	
-	@Test(priority = 18, description = "Test to verify keyword")
+	/*@Test(priority = 18, description = "Test to verify keyword")
 	public void verifyKeywordentered() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.KeywordSearch();
+	}*/
+	
+	@Test(priority = 19, description = "Test to verify response type")
+	public void verifyResponseType() throws Exception {
+		data = new Reviews_Feed(CurrentState.getDriver());
+		data.SelectResponse();
 	}
-
+	
 	public void DateFilter(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());

@@ -24,7 +24,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 1)
+	@Test(priority = 1, description = "Test to navigate to Facebook Page")
 	public void navigateToFaceBookInsights() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateToFacebookInsights();
@@ -61,8 +61,8 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 5/*, dependsOnMethods = { "verifyTitleText" }*/)
-	public void verifyFilteringReportsAccuracy() throws Exception {
+	@Test(priority = 5, description = "Test to apply filters")
+	public void verifyFilteringReportsFacebook() throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		try {
 			int count = 1;
