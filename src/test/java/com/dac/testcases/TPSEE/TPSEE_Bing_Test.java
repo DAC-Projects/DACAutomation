@@ -292,7 +292,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 		}
 	}
 
-	@SuppressWarnings("finally")
+	//@SuppressWarnings("finally")
 	@DataProvider
 	public String[][] testData() {
 		String[][] data = null, data1 = null;

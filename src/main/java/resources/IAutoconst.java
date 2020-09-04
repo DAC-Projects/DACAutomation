@@ -23,8 +23,8 @@ public interface IAutoconst {
 	 password="DacQa123";
 
 	//account credentials
-	//String baseUrl="http://staging.manage.dacgroup.com:82/accounts/";
-	String baseUrl = "https://manage.dacgroup.com/accounts/";
+	String baseUrl="http://staging.manage.dacgroup.com:82/accounts/";
+	//String baseUrl = "https://manage.dacgroup.com/accounts/";
 	String[] competitiveAnalysis = {baseUrl+"competitive-analysis-test-account-beta-1", "mobittah98@yahoo.ca"};
 	String[] CFAccountBeta = {baseUrl + "deepfield-software-incorporated-beta", "bmobit@dacgroup.com"};
 	String[] deepfieldAccount = {baseUrl+"deepfield-software-incorporated-beta", "bmobit@dacgroup.com"};
@@ -33,8 +33,8 @@ public interface IAutoconst {
 	//String[] transparenSEE = {baseUrl+"aurify-brands-test-beta", "chappel.mann+loctest@gmail.com"}; // Location level - Bing
 	//String[] transparenSEE = {baseUrl+"automation-test-account-tsee-beta","amahadev@dacgroup.com"}; // Client Level User - Beta
 	//String[] transparenSEE = {baseUrl+"automation-test-account-tsee-beta","jmann@dacgroup.com"}; // Location Level User - Beta
-	String [] transparenSEE = {baseUrl +"aurify-brands","abritton@dacgroup.com"};  // Client Level User - Staging
-	//String [] transparenSEE = {baseUrl +"aurify-brands","p.pundyk@fieldsgoodchicken.com"}; // Location Level User - Staging
+	//String [] transparenSEE = {baseUrl +"aurify-brands","abritton@dacgroup.com"};  // Client Level User - Staging
+	String [] transparenSEE = {baseUrl +"aurify-brands","p.pundyk@fieldsgoodchicken.com"}; // Location Level User - Staging
 	//String[] transparenSEE = {baseUrl + "international-account-beta-beta", "amahadev@dacgroup.com"};
 	String[] Fit4LessAccount = {baseUrl+"fit4less-beta", "1test@gmail.com"};
 	String[] neuralTuringTechAccount = {baseUrl+"neural-turing-tech-beta", "john.cena@dacgroup.com"};

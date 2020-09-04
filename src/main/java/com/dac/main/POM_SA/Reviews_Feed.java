@@ -8,8 +8,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -22,9 +20,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
-import com.google.common.collect.Ordering;
-
 import junit.framework.Assert;
+import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
 import resources.JSWaiter;
@@ -40,7 +37,9 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 	List<String> BusinssName = new ArrayList<String>();
 	List<String> Location = new ArrayList<String>();
 	String Vendor = null;
+	String Rating = null;
 	String[] vendorlist;
+	String[] Ratinglist;
 	String[] taglist;
 	String tag = null;
 	Select select;
@@ -70,6 +69,12 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 
 	@FindBy(xpath = "//*[@id='Review']//dl[contains(@class,'source-filter')]")
 	private WebElement SourceFilter;
+	
+	@FindBy(xpath = "(//input[@class='form-control keywordSearch'])[1]")
+	private WebElement SearchKeyword;
+	
+	@FindBy(xpath = "//*[@id='Review']//dl[contains(@class,'dropdown star-filter')]")
+	private WebElement RatingFilter;
 
 	@FindBy(xpath = "//*[@id='Review']//*[@id='filter-search']")
 	private WebElement advanceSearch;
@@ -84,7 +89,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 	private List<WebElement> Reviews;
 
 	@FindBy(xpath = "//*[@id='Review']//*[@class='business-info']")
-	private List<WebElement> ReviewInfo; 
+	private List<WebElement> ReviewInfo;
 
 	@FindBy(xpath = "//*[@id='Review']//*[@class='sentiment-score-filter']")
 	private WebElement SentimentTab;
@@ -100,6 +105,13 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 
 	@FindBy(xpath = "//div[@class='reference-code']//div[2]")
 	private WebElement refcode;
+
+	@FindBy(xpath = "//li[@id='reviews-new']")
+	private WebElement ReviewsSection;
+
+	@FindBy(xpath = "//li[@id='reviews_feed']")
+	private WebElement Review_FeedPage;
+	
 	/*-------------------------Pagination-----------------------*/
 
 	@FindBy(xpath = "(//*[@class='pagination']//a)")
@@ -123,6 +135,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
+	
 	public void LocationExport() throws FileNotFoundException, IOException, InterruptedException {
 		scrollByElement(LocationExport);
 		clickelement(LocationExport);
@@ -184,7 +197,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 							Thread.sleep(2000);
 							String loc = driver.findElement(By.xpath("//*[contains(@class,'myList1')]")).getText()
 									.toLowerCase();
-							if (!Text.equalsIgnoreCase("Null")) {
+							if (!Text.equalsIgnoreCase("Null") || !Text.equalsIgnoreCase("All States")) {
 								String locdetails = driver
 										.findElement(By.xpath("(//*[@class='location-separator'])[" + row + "]"))
 										.getText().toLowerCase();
@@ -278,11 +291,17 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		waitForElement(ReviewCount, 10);
 		int RCount = Integer.parseInt(ReviewCount.getText());
 		System.out.println("The Review Count is :" + RCount);
-		int count = NumOfentriesinPage(Entry);
+		int count = SANumOfentriesinPage(Entry);
 		System.out.println("The number of entries :" + count);
 		Assert.assertEquals(count, RCount);
 	}
 
+	
+	/**
+	 * To get the source name
+	 * @param source
+	 * @return
+	 */
 	public String getSource(String source) {
 		if (source.contains("google")) {
 			return "google";
@@ -303,8 +322,11 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		}
 	}
 
+	/**
+	 * To select source from dropdown
+	 * @throws Exception
+	 */
 	public void SelectSource() throws Exception {
-
 		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_AdvancedFilters");
 		for (int k = 1; k <= wb.getRowCount(); k++) {
 			String vendors = wb.getCellValue(k, wb.seacrh_pattern("Source", 0).get(0).intValue());
@@ -320,7 +342,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 					clickelement(SourceFilter);
 					action.moveToElement(driver.findElement(
 							By.xpath("(//*[@id='filter-area']//input[@title='" + Vendor.trim() + "'])[1]"))).click()
-					.build().perform();
+							.build().perform();
 					System.out.println("Vendor selected" + Vendor);
 					waitUntilLoad(driver);
 					Thread.sleep(5000);
@@ -335,7 +357,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 				System.out.println("No vendors selected");
 			}
 		}
-	}
+	}	
 
 	/**
 	 * To compare the source with Reviews
@@ -367,7 +389,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 						for (int k = 1; k <= wb.getRowCount(); k++) {
 							String vendors = wb.getCellValue(k, wb.seacrh_pattern("Source", 0).get(0).intValue())
 									.toLowerCase();
-							System.out.println("The vendors listed are :" +vendors);
+							System.out.println("The vendors listed are :" + vendors);
 							soft.assertTrue(vendors.contains(vendorname), "vendor is :" + vendorname);
 						}
 					}
@@ -384,14 +406,180 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		scrollByElement(SourceFilter);
 		clickelement(SourceFilter);
 		action.moveToElement(driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='All'])[1]"))).click()
-		.build().perform();
+				.build().perform();
 		clickelement(SourceFilter);
 		waitUntilLoad(driver);
 		soft.assertAll();
 	}
-
+	
+	/**
+	 * Select Star rating from dropdown and compare
+	 * @throws Exception
+	 */
+	public void SelectRating() throws Exception {
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_AdvancedFilters");
+		for (int k = 1; k <= wb.getRowCount(); k++) {
+			String rating = wb.getCellValue(k, wb.seacrh_pattern("Rating", 0).get(0).intValue());
+			System.out.println("The vendors listed are :" + rating);
+			Ratinglist = rating.split(",");
+			int size = Ratinglist.length;
+			System.out.println("The size of list is :" + size);
+			for (int i = 0; i <= size - 1; i++) {
+				Rating = Ratinglist[i];
+				System.out.println("The vendor is :" + Rating);
+				if (!Rating.equalsIgnoreCase("null")) {
+					scrollByElement(RatingFilter);
+					clickelement(RatingFilter);
+					action.moveToElement(driver.findElement(
+							By.xpath("(//*[@id='filter-area']//input[@title='" + Rating.trim() + "'])[1]"))).click()
+							.build().perform();
+					System.out.println("Rating selected" + Rating);
+					BaseClass.addEvidence(driver, "Select Rating", "yes");
+					waitUntilLoad(driver);
+					Thread.sleep(5000);
+					clickelement(RatingFilter);
+				} else {
+					System.out.println("No Rating selected");
+				}
+			}
+			if (!Rating.equalsIgnoreCase("null")) {
+				compareratingwithreviews();
+			} else {
+				System.out.println("No rating selected");
+			}
+		}
+	}	
+	
+	public void compareratingwithreviews() {
+		JSWaiter.waitJQueryAngular();
+		waitForElement(ReviewSection, 10);
+		scrollByElement(ReviewSection);
+		waitForElement(paginationLast, 10);
+		int lastpage = Integer
+				.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
+		System.out.println("Last Page Number is :" + lastpage);
+		waitForElement(paginationPrev, 10);
+		clickelement(paginationPrev);
+		try {
+			if (paginationNext.isDisplayed()) {
+				for (int i = 1; i <= lastpage; i++) {
+					int size = Reviews.size();
+					System.out.println(size);
+					for (int j = 1; j <= size; j++) {
+						scrollByElement(driver
+								.findElement(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]")));
+						if(!Rating.equals("All") || !Rating.equals("Recommended") || !Rating.equals("Not Recommended") 
+								|| !Rating.equals("No Rating")) {
+						List<WebElement> starrate = driver
+								.findElements(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j
+										+ "]//i[contains(@class,'yellow')]"));
+						int starratesize = starrate.size();
+						System.out.println("The starrate size is :" + starratesize);
+						int XLValue = Integer.parseInt(Rating);
+						soft.assertEquals(starratesize, XLValue);
+						}else if(Rating.equals("Recommended")){
+							scrollByElement(driver
+									.findElement(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]")));
+							String Recom = driver.findElement(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]//span")).getText();
+							System.out.println("The text is :" +Recom);
+							soft.assertEquals(Recom, "Recommended");
+						}else if(Rating.equals("Not Recommended")){
+							scrollByElement(driver
+									.findElement(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]")));
+							String NotRecom = driver.findElement(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]//span")).getText();
+							System.out.println("The text is :" +NotRecom);
+							soft.assertEquals(NotRecom, "Not Recommended");
+						}
+						
+					}if (paginationNext.isEnabled()x) {
+						scrollByElement(paginationNext);
+						paginationNext.click();
+						Thread.sleep(4000);
+					}
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**\
+	 *
+	 *Test to enter keyword
+	 * @throws Exception
+	 */
+	public void KeywordSearch() throws Exception {
+		JSWaiter.waitJQueryAngular();
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Other_Filters");	
+		waitForElement(advanceSearch, 10);
+		clickelement(advanceSearch);
+		waitForElement(SearchKeyword, 10);
+		scrollByElement(SearchKeyword);
+		for(int i =1; i<=wb.getRowCount(); i++) {
+			String Keyword = wb.getCellValue(i, wb.seacrh_pattern("Keywords", 0).get(0).intValue());
+			clickelement(SearchKeyword);
+			SearchKeyword.sendKeys(Keyword);
+			SearchKeyword.sendKeys(Keys.ENTER);
+			BaseClass.addEvidence(driver, "Enter keyword to search", "yes");
+			verifyKeyword(Keyword);
+		}
+		clickelement(SearchKeyword);
+		SearchKeyword.clear();
+		JSWaiter.waitJQueryAngular();
+		clickelement(advanceSearch);
+		soft.assertAll();
+	}
+	
+	/**
+	 * Test to verify entered keyword
+	 * @param Key
+	 */
+	public void verifyKeyword(String Key) {
+		JSWaiter.waitJQueryAngular();
+		waitForElement(ReviewSection, 10);
+		scrollByElement(ReviewSection);
+		waitForElement(paginationLast, 10);
+		boolean dataavailable = DataAvailable();
+		if (dataavailable == false) {
+		int lastpage = Integer
+				.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
+		System.out.println("Last Page Number is :" + lastpage);
+		waitForElement(paginationPrev, 10);
+		clickelement(paginationPrev);
+		try {
+			if (paginationNext.isDisplayed()) {
+				for (int i = 1; i <= lastpage; i++) {
+					int size = Reviews.size();
+					System.out.println(size);
+					for (int j = 1; j <= size; j++) {
+						WebElement UITextele = driver.findElement(By.xpath("(//div[@class='review-content'])["+ j +"]"));
+						scrollByElement(UITextele);
+						String UIText = UITextele.getText();
+						System.out.println("The Review is :" +UIText);
+						soft.assertTrue(UIText.contains(Key), "Text of page "+i+" and row "+j+" doesnot contain" +Key);
+					}
+					BaseClass.addEvidence(driver, "Test to verify keyword", "yes");
+					if (paginationNext.isEnabled()) {
+						scrollByElement(paginationNext);
+						paginationNext.click();
+						Thread.sleep(4000);
+					}
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		}else {
+			System.out.println("No Data available for selected Keyword" +Key);
+		}
+	}
+	
+	
+	/**
+	 * To search with tag
+	 * @throws Exception
+	 */
 	public void VerifyTag() throws Exception {
-
 		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_AdvancedFilters");
 		waitForElement(advanceSearch, 10);
 		clickelement(advanceSearch);
@@ -423,6 +611,10 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		clickelement(advanceSearch);
 	}
 
+	/**
+	 * To Compare tag with reviews
+	 * @param tag
+	 */
 	public void compareTagswithreviews(String tag) {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		JSWaiter.waitJQueryAngular();
@@ -453,7 +645,6 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 								tag = taglist[l];
 								System.out.println("The tag is :" + tag);
 								if (Tagname.contains(tag)) {
-									// soft.assertTrue(Tagname.contains(tag));
 									soft.assertTrue(true);
 								}
 							}
@@ -470,30 +661,43 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 	 * To apply Search tag filter
 	 * 
 	 * @param text
+	 * @throws Exception
 	 */
-	public void applySentiment(String Text, SoftAssert soft) {
+	public void applySentiment() throws Exception {
 		JSWaiter.waitJQueryAngular();
-		if (Text == null || Text.equalsIgnoreCase("none"))
-			Text = "All";
-		try {
-			waitUntilLoad(driver);
-			waitForElement(advanceSearch, 10);
-			scrollByElement(advanceSearch);
-			clickelement(advanceSearch);
-			if (!Text.equals("None")) {
-				scrollByElement(SentimentTab);
-				clickelement(SentimentTab);
-				driver.findElement(
-						By.xpath("//div[@class='sentiment-score-filter']//div[@class = 'item' and contains(text(), '"
-								+ Text + "')]"))
-				.click();
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Sentiment_Filters");
+		for (int i = 1; i <= wb.getRowCount(); i++) {
+			String sentiment = wb.getCellValue(i, wb.seacrh_pattern("Sentiment", 0).get(0).intValue());
+			System.out.println("The sentiment is :" + sentiment);
+			if (sentiment == null || sentiment.equalsIgnoreCase("none"))
+				sentiment = "All";
+			try {
 				waitUntilLoad(driver);
+				waitForElement(advanceSearch, 10);
+				scrollByElement(advanceSearch);
 				clickelement(advanceSearch);
+				if (!sentiment.equals("None")) {
+					scrollByElement(SentimentTab);
+					clickelement(SentimentTab);
+					driver.findElement(By
+							.xpath("//div[@class='sentiment-score-filter']//div[@class = 'item' and contains(text(), '"
+									+ sentiment + "')]"))
+							.click();
+					waitUntilLoad(driver);
+					clickelement(advanceSearch);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+			compareSentimentswithreviews(sentiment, soft);
 		}
-		compareSentimentswithreviews(Text, soft);
+		clickelement(advanceSearch);
+		scrollByElement(SentimentTab);
+		clickelement(SentimentTab);
+		driver.findElement(
+				By.xpath("//div[@class='sentiment-score-filter']//div[@class = 'item' and contains(text(), 'All')]"))
+				.click();
+		soft.assertAll();
 	}
 
 	/**
@@ -503,6 +707,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		JSWaiter.waitJQueryAngular();
 		waitForElement(ReviewSection, 10);
 		scrollByElement(ReviewSection);
+		String ReviewsSentiment = null;
 		boolean dataavailable = DataAvailable();
 		if (dataavailable == false) {
 			waitForElement(paginationLast, 10);
@@ -511,7 +716,6 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 			System.out.println("Last Page Number is :" + lastpage);
 			waitForElement(paginationPrev, 10);
 			clickelement(paginationPrev);
-			String ReviewsSentiment = null;
 			try {
 				if (paginationNext.isDisplayed()) {
 					for (int i = 1; i <= lastpage; i++) {
@@ -550,12 +754,12 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else {
+		} else {
 			System.out.println("No Data Available");
-			Assert.fail("No Data Available for the selected sort type");
 		}
 	}
 
+	
 	public boolean DataAvailable() {
 		String text = driver.findElement(By.xpath("(//div[@class='form-group'])[2]")).getText();
 		System.out.println("The text is :" + text);
@@ -566,21 +770,26 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		}
 	}
 
+	/**
+	 * To verify Sort Function of Date
+	 * @param l
+	 * @throws Exception
+	 */
 	public void verifyDateSort(int l) throws Exception {
 		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "SortByData");
 		String sorttype = wb.getCellValue(l, wb.seacrh_pattern("Filter", 0).get(0).intValue());
-		System.out.println("The sort type is :" +sorttype);
+		System.out.println("The sort type is :" + sorttype);
 		String var = null;
-		var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat")
-				.toString();
-		System.out.println("The date format is :" +var);
+		var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat").toString();
+		System.out.println("The date format is :" + var);
 		SimpleDateFormat formats = new SimpleDateFormat(var);
 		List<Date> datelist = new ArrayList<>();
 		scrollByElement(ReviewSection);
 		scrollByElement(clicksort);
 		clickelement(clicksort);
 		Thread.sleep(3000);
-		action.moveToElement(driver.findElement(By.xpath("//div[text()='"+sorttype+"']"))).click().build().perform();
+		action.moveToElement(driver.findElement(By.xpath("//div[text()='" + sorttype + "']"))).click().build()
+				.perform();
 		JSWaiter.waitJQueryAngular();
 		boolean dataavailable = DataAvailable();
 		if (dataavailable == false) {
@@ -596,74 +805,93 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 						int size = ReviewInfo.size();
 						System.out.println(size);
 						for (int j = 1; j <= size; j++) {
-							WebElement Udate = driver.findElement(By.xpath("(//div[@class='date-text'])["+ j +"]"));
+							WebElement Udate = driver.findElement(By.xpath("(//div[@class='date-text'])[" + j + "]"));
 							scrollByElement(Udate);
 							String UIdate = Udate.getText();
-							System.out.println("The UI Date in String is :" +UIdate);
+							System.out.println("The UI Date in String is :" + UIdate);
 							Date FinalUIDate = formats.parse(UIdate);
-							System.out.println("Converted Date is :" +FinalUIDate);
+							System.out.println("Converted Date is :" + FinalUIDate);
 							datelist.add(FinalUIDate);
-							System.out.println("The Date List is :" +datelist);
-							//Thread.sleep(3000);
-						}if (paginationNext.isEnabled()) {
+							System.out.println("The Date List is :" + datelist);
+							// Thread.sleep(3000);
+						}
+						if (paginationNext.isEnabled()) {
 							scrollByElement(paginationNext);
 							paginationNext.click();
 							Thread.sleep(4000);
 						}
 					}
 				}
-					System.out.println("The final date List are:" +datelist);
-					int datelistsize = datelist.size();
-					System.out.println("The size of the list is :" +datelistsize);
-					for(int k=0; k<=datelistsize - 1; k++) {
-						for(int m = k+1; m<=datelistsize - 1; m++) {
-							if(sorttype.equals("Date - Newest")) {
-								System.out.println("List start with :" +datelist.get(k) + "the next date is :"+datelist.get(k+1));
-								if((datelist.get(k).compareTo(datelist.get(m))>=0)) {
-									soft.assertTrue(true,"Date is in ascending order");
-								}else {
-									Assert.fail("Date is not ascending order" + "First Date is :"+datelist.get(k) + "Second Date is :" +datelist.get(k++));
-								}
-							}else if(sorttype.equals("Date - Oldest")) {
-								System.out.println("List start with :" +datelist.get(k) + "the next date is :"+datelist.get(k+1));
-								if((datelist.get(k).compareTo(datelist.get(m))<=0)) {
-									soft.assertTrue(true,"Date is in descending order");
-								}else {
-									soft.fail("Date is not descending order"+ "First Date is :"+datelist.get(k) + "Second Date is :" +datelist.get(k++));
-								}
-							}else {
-								System.out.println("Specified data is not selected");
-								soft.fail("Specified data is not selected");
+				System.out.println("The final date List are:" + datelist);
+				int datelistsize = datelist.size();
+				System.out.println("The size of the list is :" + datelistsize);
+				for (int k = 0; k <= datelistsize - 1; k++) {
+					for (int m = k + 1; m <= datelistsize - 1; m++) {
+						if (sorttype.equals("Date - Newest")) {
+							System.out.println(
+									"List start with :" + datelist.get(k) + "the next date is :" + datelist.get(k + 1));
+							if ((datelist.get(k).compareTo(datelist.get(m)) >= 0)) {
+								soft.assertTrue(true, "Date is in ascending order");
+							} else {
+								Assert.fail("Date is not ascending order" + "First Date is :" + datelist.get(k)
+										+ "Second Date is :" + datelist.get(k++));
 							}
+						} else if (sorttype.equals("Date - Oldest")) {
+							System.out.println(
+									"List start with :" + datelist.get(k) + "the next date is :" + datelist.get(k + 1));
+							if ((datelist.get(k).compareTo(datelist.get(m)) <= 0)) {
+								soft.assertTrue(true, "Date is in descending order");
+							} else {
+								soft.fail("Date is not descending order" + "First Date is :" + datelist.get(k)
+										+ "Second Date is :" + datelist.get(k++));
+							}
+						} else {
+							System.out.println("Specified data is not selected");
 						}
 					}
-				
-			}catch(Exception e) {
+				}
+
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else {
+		} else {
 			System.out.println("No Data Available");
 		}
 	}
 
+	/**
+	 * To verify Sort Function of Date by latest
+	 * @throws Exception
+	 */
 	public void VerifySortByNewest() throws Exception {
 		verifyDateSort(1);
+		soft.assertAll();
 	}
 
+	/**
+	 * To verify Sort Function of Date by oldest
+	 * @throws Exception
+	 */
 	public void VerifySortByOldest() throws Exception {
 		verifyDateSort(2);
+		soft.assertAll();
 	}
 
+	/**
+	 * To verify sort function of reference code
+	 * @throws Exception
+	 */
 	public void verifySortReferenceCode() throws Exception {
 		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "SortByData");
-		String sorttype = wb.getCellValue(6, wb.seacrh_pattern("Filter", 0).get(0).intValue());
-		System.out.println("The sort type is :" +sorttype);
+		String sorttype = wb.getCellValue(5, wb.seacrh_pattern("Filter", 0).get(0).intValue());
+		System.out.println("The sort type is :" + sorttype);
 		List<String> RCode = new ArrayList<String>();
 		scrollByElement(ReviewSection);
 		scrollByElement(clicksort);
 		clickelement(clicksort);
 		Thread.sleep(3000);
-		action.moveToElement(driver.findElement(By.xpath("//div[text()='"+sorttype+"']"))).click().build().perform();
+		action.moveToElement(driver.findElement(By.xpath("//div[text()='" + sorttype + "']"))).click().build()
+				.perform();
 		JSWaiter.waitJQueryAngular();
 		boolean dataavailable = DataAvailable();
 		if (dataavailable == false) {
@@ -679,38 +907,58 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 						int size = ReviewInfo.size();
 						System.out.println(size);
 						for (int j = 1; j <= size; j++) {
-							scrollByElement(refcode);
-							String referencecode = refcode.getText();
-							System.out.println("The reference code is :" +referencecode);
+							WebElement Refcode = driver
+									.findElement(By.xpath("(//div[@class='reference-code']//div[2])[" + j + "]"));
+							scrollByElement(Refcode);
+							String referencecode = Refcode.getText();
+							System.out.println("The reference code is :" + referencecode);
 							RCode.add(referencecode);
-							System.out.println("The ref code list is :" +RCode);
-						}if (paginationNext.isEnabled()) {
+							System.out.println("The ref code list is :" + RCode);
+						}
+						if (paginationNext.isEnabled()) {
 							scrollByElement(paginationNext);
 							paginationNext.click();
 							Thread.sleep(4000);
 						}
 					}
-					System.out.println("The final list of ref code is :" +RCode);
-
 				}
-			}catch(Exception e) {
+				System.out.println("The final list of ref code is :" + RCode);
+				List<String> Rcodedup = new ArrayList<String>();
+				Rcodedup.addAll(RCode);
+				Collections.sort(Rcodedup);
+				System.out.println("Duplicated list of ref code :" + Rcodedup);
+				if (RCode.size() == Rcodedup.size()) {
+					if (RCode.equals(Rcodedup)) {
+						System.out.println("Lists are equal");
+						soft.assertTrue(true);
+					} else {
+						System.out.println("Lists are not equal");
+						Assert.fail("List is not sorted");
+					}
+				}
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else {
+		} else {
 			System.out.println("No Data Available");
 		}
 	}
 
+	/**
+	 * To verify sort function by source name
+	 * @throws Exception
+	 */
 	public void VerifySortSource() throws Exception {
 		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "SortByData");
 		String sorttype = wb.getCellValue(7, wb.seacrh_pattern("Filter", 0).get(0).intValue());
-		System.out.println("The sort type is :" +sorttype);
+		System.out.println("The sort type is :" + sorttype);
 		ArrayList<String> Source = new ArrayList<String>();
 		scrollByElement(ReviewSection);
 		scrollByElement(clicksort);
 		clickelement(clicksort);
 		Thread.sleep(3000);
-		action.moveToElement(driver.findElement(By.xpath("//div[text()='"+sorttype+"']"))).click().build().perform();
+		action.moveToElement(driver.findElement(By.xpath("//div[text()='" + sorttype + "']"))).click().build()
+				.perform();
 		JSWaiter.waitJQueryAngular();
 		boolean dataavailable = DataAvailable();
 		if (dataavailable == false) {
@@ -720,59 +968,225 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 			waitForElement(paginationPrev, 10);
 			clickelement(paginationPrev);
 			try {
-				/*if (paginationNext.isDisplayed()) {
+				if (paginationNext.isDisplayed()) {
 					for (int i = 1; i <= lastpage; i++) {
 						JSWaiter.waitJQueryAngular();
 						int size = ReviewInfo.size();
 						System.out.println(size);
 						for (int j = 1; j <= size; j++) {
-							WebElement src = driver
-									.findElement(
-											By.xpath("(//*[@id='Review']//div//img[@class = 'source-thumb'])[" + j + "]"));
+							WebElement src = driver.findElement(
+									By.xpath("(//*[@id='Review']//div//img[@class = 'source-thumb'])[" + j + "]"));
 							scrollByElement(src);
 							String sourcenme = src.getAttribute("src").toLowerCase();
 							System.out.println(sourcenme);
 							String vendorname = getSource(sourcenme);
 							System.out.println("The Vendor name is :" + vendorname);
 							Source.add(vendorname);
-							System.out.println("The list contains :" +Source);
-						}if (paginationNext.isEnabled()) {
+							System.out.println("The list contains :" + Source);
+						}
+						if (paginationNext.isEnabled()) {
 							scrollByElement(paginationNext);
 							paginationNext.click();
 							Thread.sleep(4000);
 						}
 					}
-				}*/
-				Source.add("Yelp");
-				Source.add("Bing");
-				Source.add("Google");
-				Source.add("Facebook");
-				System.out.println("The final list is :" +Source);
-				List<String> tmp = Source;
-				Collections.sort(tmp);
-				boolean ascending = true;
-				int size = Source.size();
-				System.out.println("Source list size is :" +size);
-				int size1 = tmp.size();
-				for (int k = 0; k<=size -1  && (ascending); k++) {
-					for(int m = 0; m <= size1 -1; m++) {
-						/*if(Source.get(k).compareToIgnoreCase(Source.get(k + 1)) >= 0) { */
-							if(Source.size() == tmp.size()) {
-								soft.assertTrue(Source.get(k).equalsIgnoreCase(tmp.get(m)));
-							}
-						/*	ascending = true;
-							soft.assertTrue(true,"Source is is in ascending order");*/
-						//}
-							else {
-							soft.fail("Source is not in ascending order" + "First Source is" +Source.get(k) + "Second date is :" +Source.get(m));
+				}
+				System.out.println("The final list is :" + Source);
+				List<String> Source2 = new ArrayList<String>();
+				Source2.addAll(Source);
+				Collections.sort(Source2);
+				System.out.println("Sorted Lists :" + Source2);
+				if (Source.size() == Source2.size()) {
+					if (Source.equals(Source2)) {
+						System.out.println("Lists are equal");
+						soft.assertTrue(true);
+					} else {
+						System.out.println("Lists are not equal");
+						Assert.fail("List is not sorted");
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("No Data available for selected value");
+
+		}
+		soft.assertAll();
+	}
+
+	/**
+	 * Verify Sort Function by star rating
+	 * @param i
+	 * @throws Exception
+	 */
+	public void verifyStarRattingSort(int i) throws Exception {
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "SortByData");
+		String sorttype = wb.getCellValue(i, wb.seacrh_pattern("Filter", 0).get(0).intValue());
+		System.out.println("The sort type is :" + sorttype);
+		List<Integer> starvalue = new ArrayList<Integer>();
+		scrollByElement(ReviewSection);
+		scrollByElement(clicksort);
+		clickelement(clicksort);
+		Thread.sleep(3000);
+		action.moveToElement(driver.findElement(By.xpath("//div[text()='" + sorttype + "']"))).click().build()
+				.perform();
+		JSWaiter.waitJQueryAngular();
+		boolean dataavailable = DataAvailable();
+		if (dataavailable == false) {
+			int lastpage = Integer
+					.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
+			System.out.println("Last Page Number is :" + lastpage);
+			waitForElement(paginationPrev, 10);
+			clickelement(paginationPrev);
+			try {
+				if (paginationNext.isDisplayed()) {
+					for (int j = 1; j <= lastpage; j++) {
+						JSWaiter.waitJQueryAngular();
+						int size = ReviewInfo.size();
+						System.out.println(size);
+						for (int k = 1; k <= size; k++) {
+							scrollByElement(driver
+									.findElement(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + k + "]")));
+							List<WebElement> starrate = driver
+									.findElements(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + k
+											+ "]//i[contains(@class,'yellow')]"));
+							int starratesize = starrate.size();
+							System.out.println("The starrate size is :" + starratesize);
+							starvalue.add(starratesize);
+							System.out.println("The star value is :" + starvalue);
+						}
+						if (paginationNext.isEnabled()) {
+							scrollByElement(paginationNext);
+							paginationNext.click();
+							Thread.sleep(4000);
 						}
 					}
 				}
-			}catch(Exception e) {
+				System.out.println("The final list is :" + starvalue);
+				if (sorttype.equalsIgnoreCase("Star Rating - Highest")) {
+					System.out.println("Star Rating - Highest");
+					for (int m = 1; m <= starvalue.size() - 1; m++) {
+						System.out.println("entered for loop");
+						if (((starvalue.get(m - 1)) >= (starvalue.get(m)))) {
+							System.out.println("inside if" + starvalue.get(m - 1));
+							soft.assertTrue(true);
+						} else {
+							System.out.println("inside else " + starvalue.get(m - 1));
+							soft.fail("Compared first value" + starvalue.get(m - 1) + "with second value"
+									+ starvalue.get(m));
+						}
+					}
+				} else if (sorttype.equalsIgnoreCase("Star Rating - Lowest")) {
+					for (int n = 1; n <= starvalue.size() - 1; n++) {
+						if ((starvalue.get(n - 1) <= starvalue.get(n))) {
+							System.out.println("inside if" + starvalue.get(n - 1));
+							soft.assertTrue(true);
+						} else {
+							System.out.println("inside else " + starvalue.get(n - 1));
+							soft.fail("Compared first value" + starvalue.get(n - 1) + "with second value"
+									+ starvalue.get(n));
+						}
+					}
+				}
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else {
-			soft.fail("No Data available for selected value");
+		} else {
+			System.out.println("No Data Available");
+		}
+	}
+
+	/**
+	 * Verify Sort Function by star rating by high star
+	 * @throws Exception
+	 */
+	public void VerifyHighStar() throws Exception {
+		verifyStarRattingSort(3);
+		soft.assertAll();
+	}
+
+	/**
+	 * Verify Sort Function by star rating by low star
+	 * @throws Exception
+	 */
+	public void VerifyLowStar() throws Exception {
+		verifyStarRattingSort(4);
+		soft.assertAll();
+	}
+
+	/**
+	 * Verify report tab highlight
+	 */
+	public void Review_Feed_Highlight() {
+		reporthighlight(Review_FeedPage, ReviewsSection);
+	}
+	
+	/**
+	 * Verify Sort Function using location name
+	 * @throws Exception
+	 */
+	public void verifySortLocationName() throws Exception {
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "SortByData");
+		String sorttype = wb.getCellValue(6, wb.seacrh_pattern("Filter", 0).get(0).intValue());
+		System.out.println("The sort type is :" + sorttype);
+		List<String> Location = new ArrayList<String>();
+		scrollByElement(ReviewSection);
+		scrollByElement(clicksort);
+		clickelement(clicksort);
+		Thread.sleep(3000);
+		action.moveToElement(driver.findElement(By.xpath("//div[text()='" + sorttype + "']"))).click().build()
+				.perform();
+		JSWaiter.waitJQueryAngular();
+		boolean dataavailable = DataAvailable();
+		if (dataavailable == false) {
+			int lastpage = Integer
+					.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
+			System.out.println("Last Page Number is :" + lastpage);
+			waitForElement(paginationPrev, 10);
+			clickelement(paginationPrev);
+			try {
+				if (paginationNext.isDisplayed()) {
+					for (int i = 1; i <= lastpage; i++) {
+						JSWaiter.waitJQueryAngular();
+						int size = ReviewInfo.size();
+						System.out.println(size);
+						for (int j = 1; j <= size; j++) {
+							WebElement LocationName = driver
+									.findElement(By.xpath("(//div[@class='business-info']//div//strong)[" + j + "]"));
+							scrollByElement(LocationName);
+							String location = LocationName.getText();
+							System.out.println("The reference code is :" + location);
+							Location.add(location);
+							System.out.println("The ref code list is :" + Location);
+							BaseClass.addEvidence(driver, "get location detail", "yes");
+						}
+						if (paginationNext.isEnabled()) {
+							scrollByElement(paginationNext);
+							paginationNext.click();
+							Thread.sleep(4000);
+						}
+					}
+				}
+				System.out.println("The final list of ref code is :" + Location);
+				List<String> LocNameup = new ArrayList<String>();
+				LocNameup.addAll(Location);
+				Collections.sort(LocNameup);
+				System.out.println("Duplicated list of ref code :" + LocNameup);
+				if (Location.size() == LocNameup.size()) {
+					if (Location.equals(LocNameup)) {
+						System.out.println("Lists are equal");
+						soft.assertTrue(true);
+					} else {
+						System.out.println("Lists are not equal");
+						Assert.fail("List is not sorted");
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("No Data Available");
 		}
 	}
 }

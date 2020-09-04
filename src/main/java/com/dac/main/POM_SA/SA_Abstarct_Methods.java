@@ -625,6 +625,7 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("deprecation")
 	public ArrayList<String> GetDataUsingColName(String PathofXL, String Col_Name) throws Exception {		  
 		  FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
 	      Workbook wb = new XSSFWorkbook(excelFilePath);
@@ -752,5 +753,39 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 		soft.assertEquals(Title, title);
 		soft.assertEquals(Titletext, titletext);
 		soft.assertAll();
+	}
+	
+	public void reporthighlight(WebElement ele, WebElement ele1) {
+		waitForElement(ele1, 10);
+		String mainmenu = ele1.getAttribute("class");
+		System.out.println("The mainmenu is :" +mainmenu);
+		soft.assertEquals(mainmenu, "on_off_root active");
+		waitForElement(ele, 10);
+		String text = ele.getAttribute("class");
+		System.out.println("The class name is :" +text);
+		soft.assertEquals(text, "active");
+		soft.assertAll();
+	}
+	
+	public int SANumOfentriesinPage(WebElement entry) {
+		waitForElement(entry, 10);
+		if(entry.isDisplayed()) {
+			String entiresText = entry.getText();
+			System.out.println("The total entries in a table is :" + entiresText);
+			String result1 = null;
+			String result = entiresText.substring(entiresText.indexOf("(") + 3, entiresText.indexOf(")") - 7).trim();
+			System.out.println("The result is :" +result);
+			if(result.contains(",")) {
+				result1 = result.replace(",", "").trim();
+				int finalvalue = Integer.parseInt(result1);
+				System.out.println("The number of entries is : " +finalvalue);
+				return finalvalue;
+			}else {
+				int finalvalue1 = Integer.parseInt(result);
+				System.out.println("The number of entries is :" +finalvalue1);
+				return finalvalue1;
+			}
+		}
+		return 0;
 	}
 }

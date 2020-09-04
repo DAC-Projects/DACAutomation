@@ -30,117 +30,151 @@ public class ReviewsFeed_Test extends BaseClass {
 		np.navigateToSA_ReviewsFeed();
 		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes");
 	}
-/*
-	
-	  @Test(priority = 2, description = "Test to verify Title and Title Text")
-	  public void VerifyTitleText() throws Exception { 
-		  data = new Reviews_Feed(CurrentState.getDriver()); 
-		  data.verifyTitle("Review Feed",
-				  "The Review Feed lists all reviews that have been collected across the sites that are being monitored."); 
-		  addEvidence(CurrentState.getDriver(),"Test to verify title and title text", "yes");
-		  }
-	  
-	  @Test(priority = 3, description = "Test to apply Global Filter") 
-	  public void ApplyGlobalFilters() throws Exception { 
-		  data = new Reviews_Feed(CurrentState.getDriver()); 
-		  ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_Filter"); 
-		  int count = 1; 
-		  for(int i=1;i<=wb.getRowCount();i++) {
-			  System.out.println("*******************  Scenarios : "+ count
-					  +"Starts ****************************"); 
-			  if(i>1)
-				  CurrentState.getDriver().navigate().refresh();
-			  data.waitUntilLoad(CurrentState.getDriver()); 
-			  String Group = wb.getCellValue(i, wb.seacrh_pattern("Group", 0).get(0).intValue()); 
-			  String CountryCode = wb.getCellValue(i, wb.seacrh_pattern("Country", 0).get(0).intValue()); 
-			  String State = wb.getCellValue(i,wb.seacrh_pattern("State", 0).get(0).intValue()); 
-			  String City = wb.getCellValue(i, wb.seacrh_pattern("City", 0).get(0).intValue()); 
-			  String Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue()); 
-			  data.applyGlobalFilter(Group, CountryCode, State, City, Location);
-			  System.out.println(Group+", "+CountryCode+", "+State+", "+City+", "+Location); 
-			  data.clickApplyFilterBTN(); 
-			  addEvidence(CurrentState.getDriver(),"Applied global filter: "+Group+", "+CountryCode+", "+State+", "+City+", "+Location+"", "yes"); 
-			  } 
-		  }
-	  
-	  @Test(priority = 4, description = "Test to Export Location Data") 
-	  public void ExportLocation() throws Exception { 
-		  data = new Reviews_Feed(CurrentState.getDriver()); 
-		  data.LocationExport();
-		  addEvidence(CurrentState.getDriver(), "Test to export", "yes"); 
-	  }
-	  
-	 @Test(priority = 5, description = "Test to Compare UI and XL Data") 
-	 public void compareUIandXLData() throws Exception { 
-		 data = new Reviews_Feed(CurrentState.getDriver()); 
-		 ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "SA_Filters"); 
-		 wb.deleteEmptyRows();
-		 String Text = null; 
-		 for(int i=1;i<=wb.getRowCount();i++) { 
-			 if(i>1)
-				 CurrentState.getDriver().navigate().refresh();
-			 data.waitUntilLoad(CurrentState.getDriver()); Text = wb.getCellValue(i,
-					 wb.seacrh_pattern("State", 0).get(0).intValue()); 
-			 }
-		 data.CompareReviewTableDatawithExport(Text);
-		 addEvidence(CurrentState.getDriver() ,"Get UI Reviews, Ref-Code, Business Name and Links", "Yes"); 
-		 }
-	  
-	  @Test(priority = 6, description = "Test to compare review count and entries in table") 
-	  public void compareReviewCountandNumberofEntries() throws Exception { 
-		  data = new Reviews_Feed(CurrentState.getDriver()); 
-		  data.verifyReviewCount();
-		  addEvidence(CurrentState.getDriver(), "Test to compare reviews count","yes"); 
-		  }  
-	 
 
-	@Test(priority = 7, description = "Test to select source")
+/*	@Test(priority = 2, description = "Test to verify active state of the report")
+	public void verifyreportactivestate() throws Exception {
+		data = new Reviews_Feed(CurrentState.getDriver());
+		data.Review_Feed_Highlight();
+		addEvidence(CurrentState.getDriver(), "Test to verify active state of the report", "yes");
+	}
+
+	@Test(priority = 3, description = "Test to verify Title and Title Text")
+	public void VerifyTitleText() throws Exception {
+		data = new Reviews_Feed(CurrentState.getDriver());
+		data.verifyTitle("Review Feed",
+				"The Review Feed lists all reviews that have been collected across the sites that are being monitored.");
+		addEvidence(CurrentState.getDriver(), "Test to verify title and title text", "yes");
+	}
+
+	@Test(priority = 4, description = "Test to apply Global Filter")
+	public void ApplyGlobalFilters() throws Exception {
+		data = new Reviews_Feed(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_Filter");
+		int count = 1;
+		for (int i = 1; i <= wb.getRowCount(); i++) {
+			System.out.println("*******************  Scenarios : " + count + "Starts ****************************");
+			if (i > 1)
+				CurrentState.getDriver().navigate().refresh();
+			data.waitUntilLoad(CurrentState.getDriver());
+			String Group = wb.getCellValue(i, wb.seacrh_pattern("Group", 0).get(0).intValue());
+			String CountryCode = wb.getCellValue(i, wb.seacrh_pattern("Country", 0).get(0).intValue());
+			String State = wb.getCellValue(i, wb.seacrh_pattern("State", 0).get(0).intValue());
+			String City = wb.getCellValue(i, wb.seacrh_pattern("City", 0).get(0).intValue());
+			String Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
+			data.applyGlobalFilter(Group, CountryCode, State, City, Location);
+			System.out.println(Group + ", " + CountryCode + ", " + State + ", " + City + ", " + Location);
+			data.clickApplyFilterBTN();
+			addEvidence(CurrentState.getDriver(), "Applied global filter: " + Group + ", " + CountryCode + ", " + State
+					+ ", " + City + ", " + Location + "", "yes");
+		}
+	}
+
+	@Test(priority = 5, description = "Test to Export Location Data")
+	public void ExportLocation() throws Exception {
+		data = new Reviews_Feed(CurrentState.getDriver());
+		data.LocationExport();
+		addEvidence(CurrentState.getDriver(), "Test to export", "yes");
+	}
+
+	@Test(priority = 6, description = "Test to Compare UI and XL Data")
+	public void compareUIandXLData() throws Exception {
+		data = new Reviews_Feed(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "SA_Filters");
+		wb.deleteEmptyRows();
+		String Text = null;
+		for (int i = 1; i <= wb.getRowCount(); i++) {
+			if (i > 1)
+				CurrentState.getDriver().navigate().refresh();
+			data.waitUntilLoad(CurrentState.getDriver());
+			Text = wb.getCellValue(i, wb.seacrh_pattern("State", 0).get(0).intValue());
+		}
+		data.CompareReviewTableDatawithExport(Text);
+		addEvidence(CurrentState.getDriver(), "Get UI Reviews, Ref-Code, Business Name and Links", "Yes");
+	}
+
+	@Test(priority = 7, description = "Test to compare review count and entries in table")
+	public void compareReviewCountandNumberofEntries() throws Exception {
+		data = new Reviews_Feed(CurrentState.getDriver());
+		data.verifyReviewCount();
+		addEvidence(CurrentState.getDriver(), "Test to compare reviews count", "yes");
+	}
+
+	@Test(priority = 8, description = "Test to select source")
 	public void compareSourcewithReviewsTable() throws Exception {
-		data = new Reviews_Feed(CurrentState.getDriver());			
+		data = new Reviews_Feed(CurrentState.getDriver());
 		data.SelectSource();
 		addEvidence(CurrentState.getDriver(), "Test to apply source", "yes");
-		}
-		
-	
-	@Test(priority = 8, description = "Test to enter and verify tag")
+	}
+
+	@Test(priority = 9, description = "Test to enter and verify tag")
 	public void comparetag() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.VerifyTag();
 		addEvidence(CurrentState.getDriver(), "Test to verify tags", "yes");
-	}*/
-	
-	/*@Test(priority = 9, description = "Test to verify sentiment")
+	}
+
+	@Test(priority = 10, description = "Test to verify sentiment")
 	public void verifySentiment() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
-		 ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Sentiment_Filters"); 
-		 for(int i = 1; i<=wb.getRowCount(); i++) {
-			 String sentiment = wb.getCellValue(i, wb.seacrh_pattern("Sentiment", 0).get(0).intValue());
-			 System.out.println("The sentiment is :" +sentiment);
-			 data.applySentiment(sentiment,soft);
-			 soft.assertAll();
-			 addEvidence(CurrentState.getDriver(), "Test to  compare sentiment", "yes");
-		 }		
-	}*/
+		data.applySentiment();
+		addEvidence(CurrentState.getDriver(), "Test to  compare sentiment", "yes");
+	}
 
-	/*@Test(priority = 10, description ="verify sorting of table by date")
-	public void verifyDatesortbytable() throws Exception {
+	@Test(priority = 11, description = "verify sorting of table by latest date")
+	public void verifyLatestDatesortbytable() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.VerifySortByNewest();
 		addEvidence(CurrentState.getDriver(), "Test to verify sortByTable Newest Date", "yes");
-		Thread.sleep(4000);
+	}
+
+	@Test(priority = 12, description = "verify sorting of table by oldest date")
+	public void verifyOldestDatesortbytable() throws Exception {
+		data = new Reviews_Feed(CurrentState.getDriver());
 		data.VerifySortByOldest();
 		addEvidence(CurrentState.getDriver(), "Test to verify sortByTable Oldest Date", "yes");
-		soft.assertAll();		
-	}*/
-	
-	@Test(priority = 11, description = "verify sorting of table by source")
+	}
+
+	@Test(priority = 13, description = "verify sorting of table by source")
 	public void verifySourcesortby() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.VerifySortSource();
 		addEvidence(CurrentState.getDriver(), "Test to verify sortbyTable Source", "yes");
-		soft.assertAll();
 	}
+
+	@Test(priority = 14, description = "verify sorting of table by star rating")
+	public void verifyhigheststarratingsort() throws Exception {
+		data = new Reviews_Feed(CurrentState.getDriver());
+		data.VerifyHighStar();
+		addEvidence(CurrentState.getDriver(), "Test to verify sorted by highest star rating", "yes");
+	}
+
+	@Test(priority = 15, description = "verify sorting of table by star rating")
+	public void verifyloweststarratingsort() throws Exception {
+		data = new Reviews_Feed(CurrentState.getDriver());
+		data.VerifyLowStar();
+		addEvidence(CurrentState.getDriver(), "Test to verify sorted by lowest star rating", "yes");
+	}
+
+	@Test(priority = 16, description = "Test to verify Ref Code")
+	public void verifyRefCodeSort() throws Exception {
+		data = new Reviews_Feed(CurrentState.getDriver());
+		data.verifySortReferenceCode();
+		addEvidence(CurrentState.getDriver(), "Test to verify ref code is sorted", "yes");
+	}*/
 	
+	/*@Test(priority = 17, description = "Test to verify Location Name sort")
+	public void verifyLocationNameSort() throws Exception {
+		data = new Reviews_Feed(CurrentState.getDriver());
+		data.verifySortLocationName();
+		addEvidence(CurrentState.getDriver(), "Test to verify location name sorting", "yes");
+	}*/
+	
+	@Test(priority = 18, description = "Test to verify keyword")
+	public void verifyKeywordentered() throws Exception {
+		data = new Reviews_Feed(CurrentState.getDriver());
+		data.KeywordSearch();
+	}
+
 	public void DateFilter(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
