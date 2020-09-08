@@ -31,7 +31,7 @@ public class ReviewsFeed_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes");
 	}
 
-/*	@Test(priority = 2, description = "Test to verify active state of the report")
+	@Test(priority = 2, description = "Test to verify active state of the report")
 	public void verifyreportactivestate() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.Review_Feed_Highlight();
@@ -160,25 +160,37 @@ public class ReviewsFeed_Test extends BaseClass {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.verifySortReferenceCode();
 		addEvidence(CurrentState.getDriver(), "Test to verify ref code is sorted", "yes");
-	}*/
+	}
 	
-	/*@Test(priority = 17, description = "Test to verify Location Name sort")
+	@Test(priority = 17, description = "Test to verify Location Name sort")
 	public void verifyLocationNameSort() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.verifySortLocationName();
 		addEvidence(CurrentState.getDriver(), "Test to verify location name sorting", "yes");
-	}*/
+	}
 	
-	/*@Test(priority = 18, description = "Test to verify keyword")
+	@Test(priority = 18, description = "Test to verify keyword")
 	public void verifyKeywordentered() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.KeywordSearch();
-	}*/
+	}
 	
 	@Test(priority = 19, description = "Test to verify response type")
 	public void verifyResponseType() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.SelectResponse();
+	}
+	
+	@Test(priority = 20, description = "Test to verify content filter")
+	public void verifyContentFilter() throws Exception {
+		data = new Reviews_Feed(CurrentState.getDriver());
+		data.SelectContent();
+	}
+	
+	@Test(priority = 21, description = "Test to verify rating filter")
+	public void verifyratingfilter() throws Exception {
+		data = new Reviews_Feed(CurrentState.getDriver());
+		data.SelectRating();
 	}
 	
 	public void DateFilter(String from_day, String from_month, String from_year, String to_day, String to_month,

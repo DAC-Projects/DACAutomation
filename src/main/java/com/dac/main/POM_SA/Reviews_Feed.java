@@ -38,9 +38,11 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 	String Vendor = null;
 	String Rating = null;
 	String ONResponse;
+	String contentsel;
 	String[] vendorlist;
 	String[] Ratinglist;
 	String[] ResponseList;
+	String[] ContentList;
 	String[] taglist;
 	String tag = null;
 	Select select;
@@ -70,16 +72,16 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 
 	@FindBy(xpath = "//*[@id='Review']//dl[contains(@class,'source-filter')]")
 	private WebElement SourceFilter;
-	
+
 	@FindBy(xpath = "(//input[@class='form-control keywordSearch'])[1]")
 	private WebElement SearchKeyword;
-	
+
 	@FindBy(xpath = "//*[@id='Review']//dl[contains(@class,'dropdown star-filter')]")
 	private WebElement RatingFilter;
-	
-	@FindBy(xpath = "//div//select[@id='contentChange'][1]")
+
+	@FindBy(xpath = "(//div[@class='searchByContent'])[1]")
 	private WebElement ContentSel;
-	
+
 	@FindBy(xpath = "//div[@class='ownerResponse']")
 	private WebElement Response;
 
@@ -94,7 +96,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 
 	@FindBy(xpath = "//*[@id='Review']//*[@class='review-content']")
 	private List<WebElement> Reviews;
-	
+
 	@FindBy(xpath = "//a[@id='viewListingLink']")
 	private List<WebElement> ListingLink;
 
@@ -121,7 +123,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 
 	@FindBy(xpath = "//li[@id='reviews_feed']")
 	private WebElement Review_FeedPage;
-	
+
 	/*-------------------------Pagination-----------------------*/
 
 	@FindBy(xpath = "(//*[@class='pagination']//a)")
@@ -145,7 +147,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	
+
 	public void LocationExport() throws FileNotFoundException, IOException, InterruptedException {
 		scrollByElement(LocationExport);
 		clickelement(LocationExport);
@@ -306,9 +308,9 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		Assert.assertEquals(count, RCount);
 	}
 
-	
 	/**
 	 * To get the source name
+	 * 
 	 * @param source
 	 * @return
 	 */
@@ -334,6 +336,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 
 	/**
 	 * To select source from dropdown
+	 * 
 	 * @throws Exception
 	 */
 	public void SelectSource() throws Exception {
@@ -367,7 +370,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 				System.out.println("No vendors selected");
 			}
 		}
-	}	
+	}
 
 	/**
 	 * To compare the source with Reviews
@@ -406,7 +409,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 					if (paginationNext.isEnabled()) {
 						scrollByElement(paginationNext);
 						paginationNext.click();
-						Thread.sleep(4000);
+						JSWaiter.waitJQueryAngular();
 					}
 				}
 			}
@@ -421,9 +424,10 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		waitUntilLoad(driver);
 		soft.assertAll();
 	}
-	
+
 	/**
 	 * Select Star rating from dropdown and compare
+	 * 
 	 * @throws Exception
 	 */
 	public void SelectRating() throws Exception {
@@ -458,85 +462,144 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 				System.out.println("No rating selected");
 			}
 		}
-	}	
-	
-	public void compareratingwithreviews() {
+		scrollByElement(RatingFilter);
+		clickelement(RatingFilter);
+		action.moveToElement(driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='All'])[2]"))).click()
+				.build().perform();
+		soft.assertAll();
+	}
+
+	/**
+	 * Compare Rating with Reviews in the table
+	 * 
+	 * @throws Exception
+	 */
+	public void compareratingwithreviews() throws Exception {
 		JSWaiter.waitJQueryAngular();
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_AdvancedFilters");
 		waitForElement(ReviewSection, 10);
 		scrollByElement(ReviewSection);
-		waitForElement(paginationLast, 10);
-		int lastpage = Integer
-				.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
-		System.out.println("Last Page Number is :" + lastpage);
-		waitForElement(paginationPrev, 10);
-		clickelement(paginationPrev);
-		try {
-			if (paginationNext.isDisplayed()) {
-				for (int i = 1; i <= lastpage; i++) {
-					int size = Reviews.size();
-					System.out.println(size);
-					for (int j = 1; j <= size; j++) {
-						scrollByElement(driver
-								.findElement(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]")));
-						if(!Rating.equals("All") || !Rating.equals("Recommended") || !Rating.equals("Not Recommended") 
-								|| !Rating.equals("No Rating")) {
-						List<WebElement> starrate = driver
-								.findElements(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j
-										+ "]//i[contains(@class,'yellow')]"));
-						int starratesize = starrate.size();
-						System.out.println("The starrate size is :" + starratesize);
-						int XLValue = Integer.parseInt(Rating);
-						soft.assertEquals(starratesize, XLValue);
-						}else if(Rating.equals("Recommended")){
+		boolean dataavailable = DataAvailable();
+		if (dataavailable == false) {
+			waitForElement(paginationLast, 10);
+			int lastpage = Integer
+					.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
+			System.out.println("Last Page Number is :" + lastpage);
+			waitForElement(paginationPrev, 10);
+			clickelement(paginationPrev);
+			try {
+				if (paginationNext.isDisplayed()) {
+					for (int i = 1; i <= lastpage; i++) {
+						int size = Reviews.size();
+						System.out.println(size);
+						for (int j = 1; j <= size; j++) {
 							scrollByElement(driver
 									.findElement(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]")));
-							String Recom = driver.findElement(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]//span")).getText();
-							System.out.println("The text is :" +Recom);
-							soft.assertEquals(Recom, "Recommended");
-						}else if(Rating.equals("Not Recommended")){
-							scrollByElement(driver
-									.findElement(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]")));
-							String NotRecom = driver.findElement(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]//span")).getText();
-							System.out.println("The text is :" +NotRecom);
-							soft.assertEquals(NotRecom, "Not Recommended");
+							if (!Rating.equals("All") || !Rating.equals("Recommended")
+									|| !Rating.equals("Not Recommended") || !Rating.equals("No Rating")) {
+								List<WebElement> starrate = driver
+										.findElements(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j
+												+ "]//i[contains(@class,'yellow')]"));
+								BaseClass.addEvidence(driver, "Test to verify rating with filter", "yes");
+								int starratesize = starrate.size();
+								String sratesize = Integer.toString(starratesize);
+								System.out.println("The starrate size is :" + sratesize);
+								for (int k = 1; k <= wb.getRowCount(); k++) {
+									String XLrating = wb.getCellValue(k,
+											wb.seacrh_pattern("Rating", 0).get(0).intValue());
+									System.out.println("The vendors listed are :" + XLrating);
+									soft.assertTrue(XLrating.contains(sratesize),
+											"The rating from UI is " + sratesize + " is not present in " + XLrating);
+								}
+							} else if (Rating.equals("Recommended")) {
+								scrollByElement(driver.findElement(
+										By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]")));
+								String Recom = driver
+										.findElement(By
+												.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]//span"))
+										.getText();
+								BaseClass.addEvidence(driver, "Test to verify rating with filter", "yes");
+								System.out.println("The text is :" + Recom);
+								if (Recom.equals("Recommends")) {
+									for (int k = 1; k <= wb.getRowCount(); k++) {
+										String XLrating = wb.getCellValue(k,
+												wb.seacrh_pattern("Rating", 0).get(0).intValue());
+										System.out.println("The vendors listed are :" + XLrating);
+										soft.assertTrue(XLrating.contains("Recommended"),
+												"The rating from UI is " + Recom + " is not present in " + XLrating);
+									}
+								} else {
+									soft.fail("Selected Rating is Recommended but not found");
+								}
+							} else if (Rating.equals("Not Recommended")) {
+								scrollByElement(driver.findElement(
+										By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]")));
+								String NotRecom = driver
+										.findElement(By
+												.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]//span"))
+										.getText();
+								BaseClass.addEvidence(driver, "Test to verify rating with filter", "yes");
+								System.out.println("The text is :" + NotRecom);
+								if (NotRecom.equals("Doesn't Recommend")) {
+									for (int k = 1; k <= wb.getRowCount(); k++) {
+										String XLrating = wb.getCellValue(k,
+												wb.seacrh_pattern("Rating", 0).get(0).intValue());
+										System.out.println("The vendors listed are :" + XLrating);
+										soft.assertTrue(XLrating.contains("Not Recommended"),
+												"The rating from UI is " + NotRecom + " is not present in " + XLrating);
+									}
+								} else {
+									soft.fail("Selected Rating is Not Recommended but not found");
+								}
+							} else if (Rating.equals("No Rating")) {
+								WebElement UIstarrate = driver.findElement(
+										By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]"));
+								BaseClass.addEvidence(driver, "Test to verify rating with filter", "yes");
+								soft.assertTrue(!UIstarrate.isDisplayed());
+							}
 						}
-						
-					}if (paginationNext.isEnabled()) {
-						scrollByElement(paginationNext);
-						paginationNext.click();
-						Thread.sleep(4000);
+						if (paginationNext.isEnabled()) {
+							scrollByElement(paginationNext);
+							paginationNext.click();
+							JSWaiter.waitJQueryAngular();
+						}
 					}
 				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		}catch(Exception e) {
-			e.printStackTrace();
+		} else {
+			System.out.println("No Data available");
 		}
 	}
-	
+
 	/**
 	 * To select the response type
+	 * 
 	 * @throws Exception
 	 */
 	public void SelectResponse() throws Exception {
 		JSWaiter.waitJQueryAngular();
-		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx","Reviews_AdvancedFilters");
-		for(int i =1; i<=wb.getRowCount(); i++) {
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_AdvancedFilters");
+		for (int i = 1; i <= wb.getRowCount(); i++) {
 			String response = wb.getCellValue(i, wb.seacrh_pattern("OResponse", 0).get(0).intValue());
 			System.out.println("The vendors listed are :" + response);
 			ResponseList = response.split(",");
 			int size = ResponseList.length;
-			System.out.println("The response list size is :" +size);
-			for(int j = 0; j<=size - 1; j++) {
+			System.out.println("The response list size is :" + size);
+			for (int j = 0; j <= size - 1; j++) {
 				ONResponse = ResponseList[j];
-				System.out.println("The response selected is :" +ONResponse);
-				if(!ONResponse.equals("null")) {
+				System.out.println("The response selected is :" + ONResponse);
+				if (!ONResponse.equals("null")) {
 					scrollByElement(Response);
 					clickelement(Response);
-					driver.findElement(By.xpath("//div[@class='ownerResponse']//div[contains(text(),'"+ ONResponse +"')]")).click();
+					driver.findElement(
+							By.xpath("//div[@class='ownerResponse']//div[contains(text(),'" + ONResponse + "')]"))
+							.click();
 					JSWaiter.waitJQueryAngular();
 					BaseClass.addEvidence(driver, "Test to select the response type", "yes");
 					verifyselectedResponse(ONResponse);
-				}else {
+				} else {
 					System.out.println("No response selected");
 				}
 			}
@@ -546,13 +609,17 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		driver.findElement(By.xpath("//div[@class='ownerResponse']//div[contains(text(),'All')]")).click();
 		soft.assertAll();
 	}
-	
+
+	/**
+	 * Verify response selected in the reviews table
+	 * 
+	 * @param response
+	 */
 	public void verifyselectedResponse(String response) {
 		JSWaiter.waitJQueryAngular();
 		waitForElement(ReviewSection, 10);
 		scrollByElement(ReviewSection);
 		waitForElement(paginationLast, 10);
-		
 		boolean dataavailable = DataAvailable();
 		if (dataavailable == false) {
 			int lastpage = Integer
@@ -564,60 +631,78 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 				if (paginationNext.isDisplayed()) {
 					for (int i = 1; i <= lastpage; i++) {
 						int size = ListingLink.size();
-						System.out.println("The size is :" +size);
+						System.out.println("The size is :" + size);
 						for (int j = 1; j <= size; j++) {
-							if(response.equalsIgnoreCase("Response")) {
-								WebElement reponsebox = driver.findElement(By.xpath("(//div[@class='owner-responses rrm'])["+j+"]"));
+							if (response.equalsIgnoreCase("Response")) {
+								WebElement reponsebox = driver
+										.findElement(By.xpath("(//div[@class='owner-responses rrm'])[" + j + "]"));
 								scrollByElement(reponsebox);
 								soft.assertTrue(reponsebox.isDisplayed(), "WebElement is not visible");
-							}else if(response.equalsIgnoreCase("Draft Response")) {
-								WebElement draftresponse = driver.findElement(By.xpath("(//div[@class='card-header']//span)["+j+"]"));
+							} else if (response.equalsIgnoreCase("Draft Response")) {
+								WebElement draftresponse = driver
+										.findElement(By.xpath("(//div[@class='card-header']//span)[" + j + "]"));
 								scrollByElement(draftresponse);
 								String restext = draftresponse.getText();
-								System.out.println("The text is :" +restext);
+								System.out.println("The text is :" + restext);
 								soft.assertEquals(restext, "Draft");
-							}else if(response.equalsIgnoreCase("Assisted Response")) {
-								WebElement assistresponse = driver.findElement(By.xpath("(//div[@class='owner-name'])["+j+"]"));
+							} else if (response.equalsIgnoreCase("Assisted Response")) {
+								WebElement assistresponse = driver
+										.findElement(By.xpath("(//div[@class='owner-name'])[" + j + "]"));
 								scrollByElement(assistresponse);
 								String assisresponse = assistresponse.getText();
-								System.out.println("The response type is :" +assisresponse);
+								System.out.println("The response type is :" + assisresponse);
 								soft.assertEquals(assisresponse, "Response Assistant");
+							} else if (response.equalsIgnoreCase("No Response")) {
+								WebElement reponsebox = driver
+										.findElement(By.xpath("(//div[@class='owner-responses rrm'])[" + j + "]"));
+								WebElement draftresponse = driver
+										.findElement(By.xpath("(//div[@class='card-header']//span)[" + j + "]"));
+								WebElement assistresponse = driver
+										.findElement(By.xpath("(//div[@class='owner-name'])[" + j + "]"));
+								soft.assertTrue(
+										!(reponsebox.isDisplayed())
+												&& !(draftresponse.isDisplayed() && !(assistresponse.isDisplayed())),
+										"One of the elements is displayed");
 							}
-						} BaseClass.addEvidence(driver, "Test to verify response type selected", "yes");
+						}
+						BaseClass.addEvidence(driver, "Test to verify response type selected", "yes");
 						if (paginationNext.isEnabled()) {
 							scrollByElement(paginationNext);
 							paginationNext.click();
-							Thread.sleep(4000);
+							JSWaiter.waitJQueryAngular();
 						}
 					}
 				}
-			}catch(Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else {
+		} else {
 			System.out.println("No Data available");
 		}
-			
+
 	}
-	
-	
-	/**\
+
+	/**
+	 * \
 	 *
-	 *Test to enter keyword
+	 * Test to enter keyword
+	 * 
 	 * @throws Exception
 	 */
 	public void KeywordSearch() throws Exception {
 		JSWaiter.waitJQueryAngular();
-		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Other_Filters");	
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Other_Filters");
 		waitForElement(advanceSearch, 10);
 		clickelement(advanceSearch);
 		waitForElement(SearchKeyword, 10);
+		Thread.sleep(5000);
 		scrollByElement(SearchKeyword);
-		for(int i =1; i<=wb.getRowCount(); i++) {
+		for (int i = 1; i <= wb.getRowCount(); i++) {
 			String Keyword = wb.getCellValue(i, wb.seacrh_pattern("Keywords", 0).get(0).intValue());
 			clickelement(SearchKeyword);
 			SearchKeyword.sendKeys(Keyword);
 			SearchKeyword.sendKeys(Keys.ENTER);
+			JSWaiter.waitJQueryAngular();
 			BaseClass.addEvidence(driver, "Enter keyword to search", "yes");
 			verifyKeyword(Keyword);
 		}
@@ -627,9 +712,10 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		clickelement(advanceSearch);
 		soft.assertAll();
 	}
-	
+
 	/**
 	 * Test to verify entered keyword
+	 * 
 	 * @param Key
 	 */
 	public void verifyKeyword(String Key) {
@@ -639,41 +725,44 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		waitForElement(paginationLast, 10);
 		boolean dataavailable = DataAvailable();
 		if (dataavailable == false) {
-		int lastpage = Integer
-				.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
-		System.out.println("Last Page Number is :" + lastpage);
-		waitForElement(paginationPrev, 10);
-		clickelement(paginationPrev);
-		try {
-			if (paginationNext.isDisplayed()) {
-				for (int i = 1; i <= lastpage; i++) {
-					int size = Reviews.size();
-					System.out.println(size);
-					for (int j = 1; j <= size; j++) {
-						WebElement UITextele = driver.findElement(By.xpath("(//div[@class='review-content'])["+ j +"]"));
-						scrollByElement(UITextele);
-						String UIText = UITextele.getText();
-						System.out.println("The Review is :" +UIText);
-						soft.assertTrue(UIText.contains(Key), "Text of page "+i+" and row "+j+" doesnot contain" +Key);
-					}
-					BaseClass.addEvidence(driver, "Test to verify keyword", "yes");
-					if (paginationNext.isEnabled()) {
-						scrollByElement(paginationNext);
-						paginationNext.click();
-						Thread.sleep(4000);
+			int lastpage = Integer
+					.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
+			System.out.println("Last Page Number is :" + lastpage);
+			waitForElement(paginationPrev, 10);
+			clickelement(paginationPrev);
+			try {
+				if (paginationNext.isDisplayed()) {
+					for (int i = 1; i <= lastpage; i++) {
+						int size = Reviews.size();
+						System.out.println(size);
+						for (int j = 1; j <= size; j++) {
+							WebElement UITextele = driver
+									.findElement(By.xpath("(//div[@class='review-content'])[" + j + "]"));
+							scrollByElement(UITextele);
+							String UIText = UITextele.getText();
+							System.out.println("The Review is :" + UIText);
+							soft.assertTrue(UIText.contains(Key),
+									"Text of page " + i + " and row " + j + " doesnot contain" + Key);
+						}
+						BaseClass.addEvidence(driver, "Test to verify keyword", "yes");
+						if (paginationNext.isEnabled()) {
+							scrollByElement(paginationNext);
+							paginationNext.click();
+							JSWaiter.waitJQueryAngular();
+						}
 					}
 				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		}else {
-			System.out.println("No Data available for selected Keyword" +Key);
+		} else {
+			System.out.println("No Data available for selected Keyword" + Key);
 		}
 	}
-	
+
 	/**
 	 * To search with tag
+	 * 
 	 * @throws Exception
 	 */
 	public void VerifyTag() throws Exception {
@@ -710,6 +799,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 
 	/**
 	 * To Compare tag with reviews
+	 * 
 	 * @param tag
 	 */
 	public void compareTagswithreviews(String tag) {
@@ -746,6 +836,11 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 								}
 							}
 						}
+					}
+					if (paginationNext.isEnabled()) {
+						scrollByElement(paginationNext);
+						paginationNext.click();
+						JSWaiter.waitJQueryAngular();
 					}
 				}
 			}
@@ -819,32 +914,38 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 						int size = Reviews.size();
 						System.out.println(size);
 						for (int j = 1; j <= size; j++) {
-							String txt = driver
+							if (driver
 									.findElement(By.xpath(
 											"(//div[contains(@class, 'overall-sentiment-text overall ')])[" + j + "]"))
-									.getAttribute("class");
-							if (txt.contains("lime")) {
-								ReviewsSentiment = "Positive";
-							} else if (txt.contains("green")) {
-								ReviewsSentiment = "Positive";
-							} else if (txt.contains("yellow")) {
-								ReviewsSentiment = "Neutral";
-							} else if (txt.contains("orange")) {
-								ReviewsSentiment = "Negative";
-							} else if (txt.contains("red")) {
-								ReviewsSentiment = "Negative";
-							} else if (txt.contains("grey")) {
-								ReviewsSentiment = "Not Available";
+									.isDisplayed()) {
+								String txt = driver.findElement(By.xpath(
+										"(//div[contains(@class, 'overall-sentiment-text overall ')])[" + j + "]"))
+										.getAttribute("class");
+								if (txt.contains("lime")) {
+									ReviewsSentiment = "Positive";
+								} else if (txt.contains("green")) {
+									ReviewsSentiment = "Positive";
+								} else if (txt.contains("yellow")) {
+									ReviewsSentiment = "Neutral";
+								} else if (txt.contains("orange")) {
+									ReviewsSentiment = "Negative";
+								} else if (txt.contains("red")) {
+									ReviewsSentiment = "Negative";
+								} else if (txt.contains("grey")) {
+									ReviewsSentiment = "Not Available";
+								} else {
+									System.out.println("No Data Available");
+								}
+								System.out.println(ReviewsSentiment);
+								soft.assertTrue(ReviewsSentiment.toLowerCase().contains(Text.toLowerCase()));
 							} else {
-								System.out.println("No Data Available");
+								System.out.println("WebElement is not displayed");
 							}
-							System.out.println(ReviewsSentiment);
-							soft.assertTrue(ReviewsSentiment.toLowerCase().contains(Text.toLowerCase()));
 						}
 						if (paginationNext.isEnabled()) {
 							scrollByElement(paginationNext);
 							paginationNext.click();
-							Thread.sleep(4000);
+							JSWaiter.waitJQueryAngular();
 						}
 					}
 				}
@@ -856,7 +957,11 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		}
 	}
 
-	
+	/**
+	 * Method that returns data is available or not in the table
+	 * 
+	 * @return
+	 */
 	public boolean DataAvailable() {
 		String text = driver.findElement(By.xpath("(//div[@class='form-group'])[2]")).getText();
 		System.out.println("The text is :" + text);
@@ -869,6 +974,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 
 	/**
 	 * To verify Sort Function of Date
+	 * 
 	 * @param l
 	 * @throws Exception
 	 */
@@ -915,7 +1021,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 						if (paginationNext.isEnabled()) {
 							scrollByElement(paginationNext);
 							paginationNext.click();
-							Thread.sleep(4000);
+							JSWaiter.waitJQueryAngular();
 						}
 					}
 				}
@@ -958,6 +1064,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 
 	/**
 	 * To verify Sort Function of Date by latest
+	 * 
 	 * @throws Exception
 	 */
 	public void VerifySortByNewest() throws Exception {
@@ -967,6 +1074,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 
 	/**
 	 * To verify Sort Function of Date by oldest
+	 * 
 	 * @throws Exception
 	 */
 	public void VerifySortByOldest() throws Exception {
@@ -976,6 +1084,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 
 	/**
 	 * To verify sort function of reference code
+	 * 
 	 * @throws Exception
 	 */
 	public void verifySortReferenceCode() throws Exception {
@@ -1015,7 +1124,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 						if (paginationNext.isEnabled()) {
 							scrollByElement(paginationNext);
 							paginationNext.click();
-							Thread.sleep(4000);
+							JSWaiter.waitJQueryAngular();
 						}
 					}
 				}
@@ -1043,6 +1152,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 
 	/**
 	 * To verify sort function by source name
+	 * 
 	 * @throws Exception
 	 */
 	public void VerifySortSource() throws Exception {
@@ -1084,7 +1194,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 						if (paginationNext.isEnabled()) {
 							scrollByElement(paginationNext);
 							paginationNext.click();
-							Thread.sleep(4000);
+							JSWaiter.waitJQueryAngular();
 						}
 					}
 				}
@@ -1114,6 +1224,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 
 	/**
 	 * Verify Sort Function by star rating
+	 * 
 	 * @param i
 	 * @throws Exception
 	 */
@@ -1196,6 +1307,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 
 	/**
 	 * Verify Sort Function by star rating by high star
+	 * 
 	 * @throws Exception
 	 */
 	public void VerifyHighStar() throws Exception {
@@ -1205,6 +1317,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 
 	/**
 	 * Verify Sort Function by star rating by low star
+	 * 
 	 * @throws Exception
 	 */
 	public void VerifyLowStar() throws Exception {
@@ -1218,9 +1331,10 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 	public void Review_Feed_Highlight() {
 		reporthighlight(Review_FeedPage, ReviewsSection);
 	}
-	
+
 	/**
 	 * Verify Sort Function using location name
+	 * 
 	 * @throws Exception
 	 */
 	public void verifySortLocationName() throws Exception {
@@ -1261,7 +1375,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 						if (paginationNext.isEnabled()) {
 							scrollByElement(paginationNext);
 							paginationNext.click();
-							Thread.sleep(4000);
+							JSWaiter.waitJQueryAngular();
 						}
 					}
 				}
@@ -1284,6 +1398,96 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 			}
 		} else {
 			System.out.println("No Data Available");
+		}
+	}
+
+	/**
+	 * Test to select filter from content filter
+	 * 
+	 * @throws Exception
+	 */
+	public void SelectContent() throws Exception {
+		JSWaiter.waitJQueryAngular();
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_AdvancedFilters");
+		for (int i = 1; i <= wb.getRowCount(); i++) {
+			String con = wb.getCellValue(i, wb.seacrh_pattern("Content", 0).get(0).intValue());
+			System.out.println("The content listed are :" + con);
+			ContentList = con.split(",");
+			int size = ContentList.length;
+			System.out.println("The content list size is :" + size);
+			for (int j = 0; j <= size - 1; j++) {
+				contentsel = ContentList[j];
+				System.out.println("The response selected is :" + contentsel);
+				if (!contentsel.equals("null")) {
+					scrollByElement(ContentSel);
+					clickelement(ContentSel);
+					driver.findElement(By.xpath(
+							"//div[@class='searchByContent']//div[contains(text(),'" + contentsel.trim() + "')]"))
+							.click();
+					JSWaiter.waitJQueryAngular();
+					BaseClass.addEvidence(driver, "Test to select the response type", "yes");
+					verifycontentfilter(contentsel);
+				} else {
+					System.out.println("No response selected");
+				}
+			}
+		}
+		scrollByElement(ContentSel);
+		clickelement(ContentSel);
+		driver.findElement(By.xpath("//div[@class='searchByContent']//div[contains(text(),'All')]")).click();
+		soft.assertAll();
+
+	}
+
+	/**
+	 * Method to verify content filter options in the table
+	 * 
+	 * @param content
+	 */
+	public void verifycontentfilter(String content) {
+		JSWaiter.waitJQueryAngular();
+		waitForElement(ReviewSection, 10);
+		scrollByElement(ReviewSection);
+		waitForElement(paginationLast, 10);
+		boolean dataavailable = DataAvailable();
+		if (dataavailable == false) {
+			int lastpage = Integer
+					.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
+			System.out.println("Last Page Number is :" + lastpage);
+			waitForElement(paginationPrev, 10);
+			clickelement(paginationPrev);
+			WebElement reponsebox;
+			try {
+				if (paginationNext.isDisplayed()) {
+					for (int i = 1; i <= lastpage; i++) {
+						int size = ListingLink.size();
+						System.out.println("The size is :" + size);
+						for (int j = 1; j <= size; j++) {
+							if (content.equalsIgnoreCase("Content")) {
+								reponsebox = driver
+										.findElement(By.xpath("(//div[@class='review-content'])[" + j + "]"));
+								scrollByElement(reponsebox);
+								soft.assertTrue(reponsebox.isDisplayed(), "WebElement is not visible");
+							} else if (content.equalsIgnoreCase("No Content")) {
+								reponsebox = driver
+										.findElement(By.xpath("(//div[@class='review-content'])[" + j + "]"));
+								scrollByElement(reponsebox);
+								soft.assertTrue(!(reponsebox.isDisplayed()), "WebElement is visible");
+							}
+						}
+						BaseClass.addEvidence(driver, "Test to verify response type selected", "yes");
+						if (paginationNext.isEnabled()) {
+							scrollByElement(paginationNext);
+							paginationNext.click();
+							JSWaiter.waitJQueryAngular();
+						}
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("No Data available");
 		}
 	}
 }
