@@ -164,11 +164,12 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 	 */
 
 	public void CompareReviewTableDatawithExport(String Text) throws Exception {
-
 		JSWaiter.waitJQueryAngular();
 		waitForElement(ReviewSection, 10);
 		scrollByElement(ReviewSection);
 		waitForElement(paginationLast, 10);
+		boolean dataavailable = DataAvailable();
+		if (dataavailable == false) {
 		int numberofentries = NumOfentriesinPage(Entry);
 		System.out.println("The number of entries :" + numberofentries);
 		int lastpage = Integer
@@ -294,6 +295,9 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		}else {
+			System.out.println("No Data Available");
+		}
 	}
 
 	/**
@@ -301,11 +305,16 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 	 */
 	public void verifyReviewCount() {
 		waitForElement(ReviewCount, 10);
+		boolean dataavailable = DataAvailable();
+		if (dataavailable == false) {
 		int RCount = Integer.parseInt(ReviewCount.getText());
 		System.out.println("The Review Count is :" + RCount);
 		int count = SANumOfentriesinPage(Entry);
 		System.out.println("The number of entries :" + count);
 		Assert.assertEquals(count, RCount);
+		}else {
+			System.out.println("No Data Available");
+		}
 	}
 
 	/**
@@ -380,6 +389,8 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		waitForElement(ReviewSection, 10);
 		scrollByElement(ReviewSection);
 		waitForElement(paginationLast, 10);
+		boolean dataavailable = DataAvailable();
+		if (dataavailable == false) {
 		int lastpage = Integer
 				.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
 		System.out.println("Last Page Number is :" + lastpage);
@@ -423,6 +434,9 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		clickelement(SourceFilter);
 		waitUntilLoad(driver);
 		soft.assertAll();
+		}else {
+			System.out.println("No Data Available");
+		}
 	}
 
 	/**
@@ -696,7 +710,6 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		clickelement(advanceSearch);
 		waitForElement(SearchKeyword, 10);
 		Thread.sleep(5000);
-		scrollByElement(SearchKeyword);
 		for (int i = 1; i <= wb.getRowCount(); i++) {
 			String Keyword = wb.getCellValue(i, wb.seacrh_pattern("Keywords", 0).get(0).intValue());
 			clickelement(SearchKeyword);
@@ -808,6 +821,8 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		waitForElement(ReviewSection, 10);
 		scrollByElement(ReviewSection);
 		waitForElement(paginationLast, 10);
+		boolean dataavailable = DataAvailable();
+		if (dataavailable == false) {
 		int lastpage = Integer
 				.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
 		System.out.println("Last Page Number is :" + lastpage);
@@ -846,6 +861,9 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		}else {
+			System.out.println("No Data Available");
 		}
 	}
 
