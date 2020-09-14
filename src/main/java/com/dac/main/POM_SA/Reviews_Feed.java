@@ -39,11 +39,15 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 	String Rating = null;
 	String ONResponse;
 	String contentsel;
+	String SenCatSel;
+	String sentiment;
 	String[] vendorlist;
 	String[] Ratinglist;
 	String[] ResponseList;
 	String[] ContentList;
 	String[] taglist;
+	String[] SenCatList;
+	String[] sentimentlist;
 	String tag = null;
 	Select select;
 
@@ -106,6 +110,9 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 	@FindBy(xpath = "//*[@id='Review']//*[@class='sentiment-score-filter']")
 	private WebElement SentimentTab;
 
+	@FindBy(xpath = "(//dl[@class='dropdown sentiment-category-filter'])[1]")
+	private WebElement SentimentCat;
+
 	@FindBy(xpath = "//select[@id='sorting']")
 	private WebElement Sort;
 
@@ -123,6 +130,9 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 
 	@FindBy(xpath = "//li[@id='reviews_feed']")
 	private WebElement Review_FeedPage;
+
+	@FindBy(xpath = "//div[@class='tooltips-container']")
+	private List<WebElement> SentimentContainer;
 
 	/*-------------------------Pagination-----------------------*/
 
@@ -170,132 +180,132 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		waitForElement(paginationLast, 10);
 		boolean dataavailable = DataAvailable();
 		if (dataavailable == false) {
-		int numberofentries = NumOfentriesinPage(Entry);
-		System.out.println("The number of entries :" + numberofentries);
-		int lastpage = Integer
-				.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
-		System.out.println("Last Page Number is :" + lastpage);
-		waitForElement(paginationPrev, 10);
-		clickelement(paginationPrev);
-		try {
-			if (paginationNext.isDisplayed()) {
-				for (int i = 1; i <= lastpage; i++) {
-					List<WebElement> rows_table = BusinessName;
-					int rows_count = rows_table.size();
-					for (int row = 1; row <= rows_count; row++) {
-						scrollByElement(ReviewSection);
-						String text = driver
-								.findElement(By.xpath("(//*[@id='Review']//div[@class='form-group col-xs-12'])[" + row
-										+ "]//*[@id='viewListingLink']"))
-								.getAttribute("href");
-						Thread.sleep(2000);
-						if (!text.contains("yelp")) {
-							String BName = driver.findElement(
-									By.xpath("(//div[@class='reviewEnhancement']//div[@class='form-group col-xs-12'])["
-											+ row + "]//div[@class='business-info']//div//strong"))
-									.getText();
-							System.out.println(BName);
-							Thread.sleep(2000);
-							String ReferenceNum = driver.findElement(
-									By.xpath("(//div[@class='reviewEnhancement']//div[@class='form-group col-xs-12'])["
-											+ row + "]//div[@class='reference-code']//div[2]"))
-									.getText();
-							System.out.println(ReferenceNum);
-							Thread.sleep(2000);
-							String LinksUrl = driver.findElement(
-									By.xpath("(//div[@class='reviewEnhancement']//div[@class='form-group col-xs-12'])["
+			int numberofentries = NumOfentriesinPage(Entry);
+			System.out.println("The number of entries :" + numberofentries);
+			int lastpage = Integer
+					.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
+			System.out.println("Last Page Number is :" + lastpage);
+			waitForElement(paginationPrev, 10);
+			clickelement(paginationPrev);
+			try {
+				if (paginationNext.isDisplayed()) {
+					for (int i = 1; i <= lastpage; i++) {
+						List<WebElement> rows_table = BusinessName;
+						int rows_count = rows_table.size();
+						for (int row = 1; row <= rows_count; row++) {
+							scrollByElement(ReviewSection);
+							String text = driver
+									.findElement(By.xpath("(//*[@id='Review']//div[@class='form-group col-xs-12'])["
 											+ row + "]//*[@id='viewListingLink']"))
 									.getAttribute("href");
-							System.out.println(LinksUrl);
 							Thread.sleep(2000);
-							String loc = driver.findElement(By.xpath("//*[contains(@class,'myList1')]")).getText()
-									.toLowerCase();
-							if (!Text.equalsIgnoreCase("Null") || !Text.equalsIgnoreCase("All States")) {
-								String locdetails = driver
-										.findElement(By.xpath("(//*[@class='location-separator'])[" + row + "]"))
-										.getText().toLowerCase();
-								soft.assertTrue(locdetails.contains(loc), "Found");
+							if (!text.contains("yelp")) {
+								String BName = driver.findElement(By.xpath(
+										"(//div[@class='reviewEnhancement']//div[@class='form-group col-xs-12'])[" + row
+												+ "]//div[@class='business-info']//div//strong"))
+										.getText();
+								System.out.println(BName);
+								Thread.sleep(2000);
+								String ReferenceNum = driver.findElement(By.xpath(
+										"(//div[@class='reviewEnhancement']//div[@class='form-group col-xs-12'])[" + row
+												+ "]//div[@class='reference-code']//div[2]"))
+										.getText();
+								System.out.println(ReferenceNum);
+								Thread.sleep(2000);
+								String LinksUrl = driver.findElement(By.xpath(
+										"(//div[@class='reviewEnhancement']//div[@class='form-group col-xs-12'])[" + row
+												+ "]//*[@id='viewListingLink']"))
+										.getAttribute("href");
+								System.out.println(LinksUrl);
+								Thread.sleep(2000);
+								String loc = driver.findElement(By.xpath("//*[contains(@class,'myList1')]")).getText()
+										.toLowerCase();
+								if (!Text.equalsIgnoreCase("Null") || !Text.equalsIgnoreCase("All States")) {
+									String locdetails = driver
+											.findElement(By.xpath("(//*[@class='location-separator'])[" + row + "]"))
+											.getText().toLowerCase();
+									soft.assertTrue(locdetails.contains(loc), "Found");
+								} else {
+									System.out.println("No filter applied");
+								}
+								BusinssName.add(BName);
+								ReferenceNumber.add(ReferenceNum);
+								URL.add(LinksUrl);
+								// System.out.println(text);
 							} else {
-								System.out.println("No filter applied");
+								System.out.println("Yelp is displayed");
 							}
-							BusinssName.add(BName);
-							ReferenceNumber.add(ReferenceNum);
-							URL.add(LinksUrl);
-							// System.out.println(text);
-						} else {
-							System.out.println("Yelp is displayed");
+						}
+						if (paginationNext.isEnabled()) {
+							scrollByElement(paginationNext);
+							paginationNext.click();
+							Thread.sleep(4000);
 						}
 					}
-					if (paginationNext.isEnabled()) {
-						scrollByElement(paginationNext);
-						paginationNext.click();
-						Thread.sleep(4000);
+				}
+				System.out.println("Business Name in Review : " + BusinssName);
+				System.out.println("Reference Code in Review :" + ReferenceNumber);
+				System.out.println("Link Listing in Review :" + URL);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				String chromepath = "./downloads/chromeLocationDataExport.xlsx";
+				String IEpath = "./downloads/IELocationDataExport.xlsx";
+				String FFpath = "./downloads/FFLocationDataExport.xlsx";
+				List<String> XLBname = new ArrayList<String>();
+				List<String> XLRefCode = new ArrayList<String>();
+				List<String> XLURL = new ArrayList<String>();
+				List<String> XLSource = new ArrayList<String>();
+
+				if (CurrentState.getBrowser().equals("chrome")) {
+					XLBname = GetDataUsingColName(chromepath, "Business Name");
+					Thread.sleep(1000);
+					XLRefCode = GetDataUsingColName(chromepath, "Reference Code");
+					Thread.sleep(1000);
+					XLURL = GetDataUsingColName(chromepath, "URL");
+					Thread.sleep(1000);
+					XLSource = GetDataUsingColName(chromepath, "Source");
+					Thread.sleep(1000);
+				}
+				if (CurrentState.getBrowser().equals("IE")) {
+					XLBname = GetDataUsingColName(IEpath, "Business Name");
+					Thread.sleep(1000);
+					XLRefCode = GetDataUsingColName(IEpath, "Reference Code");
+					Thread.sleep(1000);
+					XLURL = GetDataUsingColName(IEpath, "URL");
+					Thread.sleep(1000);
+					XLSource = GetDataUsingColName(IEpath, "Source");
+					Thread.sleep(1000);
+				}
+				if (CurrentState.getBrowser().equals("Firefox")) {
+					XLBname = GetDataUsingColName(FFpath, "Business Name");
+					Thread.sleep(1000);
+					XLRefCode = GetDataUsingColName(FFpath, "Reference Code");
+					Thread.sleep(1000);
+					XLURL = GetDataUsingColName(FFpath, "URL");
+					Thread.sleep(1000);
+					XLSource = GetDataUsingColName(FFpath, "Source");
+					Thread.sleep(1000);
+				}
+				soft.assertEquals(XLBname.size(), BusinssName.size());
+				// Assert.assertEquals(expected, actual);
+				soft.assertEquals(XLBname, BusinssName);
+				soft.assertEquals(XLRefCode.size(), ReferenceNumber.size());
+				soft.assertEquals(XLRefCode, ReferenceNumber);
+				soft.assertEquals(XLURL.size(), URL.size());
+				soft.assertEquals(XLURL, URL);
+				soft.assertEquals(XLSource.size(), URL.size());
+				if (XLSource.size() == URL.size()) {
+					for (int i = 0; i <= XLSource.size() - 1; i++) {
+						XLSource.get(i).contains(URL.get(i));
 					}
 				}
+				soft.assertAll();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			System.out.println("Business Name in Review : " + BusinssName);
-			System.out.println("Reference Code in Review :" + ReferenceNumber);
-			System.out.println("Link Listing in Review :" + URL);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			String chromepath = "./downloads/chromeLocationDataExport.xlsx";
-			String IEpath = "./downloads/IELocationDataExport.xlsx";
-			String FFpath = "./downloads/FFLocationDataExport.xlsx";
-			List<String> XLBname = new ArrayList<String>();
-			List<String> XLRefCode = new ArrayList<String>();
-			List<String> XLURL = new ArrayList<String>();
-			List<String> XLSource = new ArrayList<String>();
-
-			if (CurrentState.getBrowser().equals("chrome")) {
-				XLBname = GetDataUsingColName(chromepath, "Business Name");
-				Thread.sleep(1000);
-				XLRefCode = GetDataUsingColName(chromepath, "Reference Code");
-				Thread.sleep(1000);
-				XLURL = GetDataUsingColName(chromepath, "URL");
-				Thread.sleep(1000);
-				XLSource = GetDataUsingColName(chromepath, "Source");
-				Thread.sleep(1000);
-			}
-			if (CurrentState.getBrowser().equals("IE")) {
-				XLBname = GetDataUsingColName(IEpath, "Business Name");
-				Thread.sleep(1000);
-				XLRefCode = GetDataUsingColName(IEpath, "Reference Code");
-				Thread.sleep(1000);
-				XLURL = GetDataUsingColName(IEpath, "URL");
-				Thread.sleep(1000);
-				XLSource = GetDataUsingColName(IEpath, "Source");
-				Thread.sleep(1000);
-			}
-			if (CurrentState.getBrowser().equals("Firefox")) {
-				XLBname = GetDataUsingColName(FFpath, "Business Name");
-				Thread.sleep(1000);
-				XLRefCode = GetDataUsingColName(FFpath, "Reference Code");
-				Thread.sleep(1000);
-				XLURL = GetDataUsingColName(FFpath, "URL");
-				Thread.sleep(1000);
-				XLSource = GetDataUsingColName(FFpath, "Source");
-				Thread.sleep(1000);
-			}
-			soft.assertEquals(XLBname.size(), BusinssName.size());
-			// Assert.assertEquals(expected, actual);
-			soft.assertEquals(XLBname, BusinssName);
-			soft.assertEquals(XLRefCode.size(), ReferenceNumber.size());
-			soft.assertEquals(XLRefCode, ReferenceNumber);
-			soft.assertEquals(XLURL.size(), URL.size());
-			soft.assertEquals(XLURL, URL);
-			soft.assertEquals(XLSource.size(), URL.size());
-			if (XLSource.size() == URL.size()) {
-				for (int i = 0; i <= XLSource.size() - 1; i++) {
-					XLSource.get(i).contains(URL.get(i));
-				}
-			}
-			soft.assertAll();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		}else {
+		} else {
 			System.out.println("No Data Available");
 		}
 	}
@@ -307,12 +317,12 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		waitForElement(ReviewCount, 10);
 		boolean dataavailable = DataAvailable();
 		if (dataavailable == false) {
-		int RCount = Integer.parseInt(ReviewCount.getText());
-		System.out.println("The Review Count is :" + RCount);
-		int count = SANumOfentriesinPage(Entry);
-		System.out.println("The number of entries :" + count);
-		Assert.assertEquals(count, RCount);
-		}else {
+			int RCount = Integer.parseInt(ReviewCount.getText());
+			System.out.println("The Review Count is :" + RCount);
+			int count = SANumOfentriesinPage(Entry);
+			System.out.println("The number of entries :" + count);
+			Assert.assertEquals(count, RCount);
+		} else {
 			System.out.println("No Data Available");
 		}
 	}
@@ -391,50 +401,50 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		waitForElement(paginationLast, 10);
 		boolean dataavailable = DataAvailable();
 		if (dataavailable == false) {
-		int lastpage = Integer
-				.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
-		System.out.println("Last Page Number is :" + lastpage);
-		waitForElement(paginationPrev, 10);
-		clickelement(paginationPrev);
-		try {
-			if (paginationNext.isDisplayed()) {
-				for (int i = 1; i <= lastpage; i++) {
-					int size = Reviews.size();
-					System.out.println(size);
-					for (int j = 1; j <= size; j++) {
-						String sourcenme = driver
-								.findElement(
-										By.xpath("(//*[@id='Review']//div//img[@class = 'source-thumb'])[" + j + "]"))
-								.getAttribute("src").toLowerCase();
-						System.out.println(sourcenme);
-						String vendorname = getSource(sourcenme);
-						System.out.println("The Vendor name is :" + vendorname);
-						ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_AdvancedFilters");
-						for (int k = 1; k <= wb.getRowCount(); k++) {
-							String vendors = wb.getCellValue(k, wb.seacrh_pattern("Source", 0).get(0).intValue())
-									.toLowerCase();
-							System.out.println("The vendors listed are :" + vendors);
-							soft.assertTrue(vendors.contains(vendorname), "vendor is :" + vendorname);
+			int lastpage = Integer
+					.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
+			System.out.println("Last Page Number is :" + lastpage);
+			waitForElement(paginationPrev, 10);
+			clickelement(paginationPrev);
+			try {
+				if (paginationNext.isDisplayed()) {
+					for (int i = 1; i <= lastpage; i++) {
+						int size = Reviews.size();
+						System.out.println(size);
+						for (int j = 1; j <= size; j++) {
+							String sourcenme = driver
+									.findElement(By
+											.xpath("(//*[@id='Review']//div//img[@class = 'source-thumb'])[" + j + "]"))
+									.getAttribute("src").toLowerCase();
+							System.out.println(sourcenme);
+							String vendorname = getSource(sourcenme);
+							System.out.println("The Vendor name is :" + vendorname);
+							ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_AdvancedFilters");
+							for (int k = 1; k <= wb.getRowCount(); k++) {
+								String vendors = wb.getCellValue(k, wb.seacrh_pattern("Source", 0).get(0).intValue())
+										.toLowerCase();
+								System.out.println("The vendors listed are :" + vendors);
+								soft.assertTrue(vendors.contains(vendorname), "vendor is :" + vendorname);
+							}
+						}
+						if (paginationNext.isEnabled()) {
+							scrollByElement(paginationNext);
+							paginationNext.click();
+							JSWaiter.waitJQueryAngular();
 						}
 					}
-					if (paginationNext.isEnabled()) {
-						scrollByElement(paginationNext);
-						paginationNext.click();
-						JSWaiter.waitJQueryAngular();
-					}
 				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		scrollByElement(SourceFilter);
-		clickelement(SourceFilter);
-		action.moveToElement(driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='All'])[1]"))).click()
-				.build().perform();
-		clickelement(SourceFilter);
-		waitUntilLoad(driver);
-		soft.assertAll();
-		}else {
+			scrollByElement(SourceFilter);
+			clickelement(SourceFilter);
+			action.moveToElement(driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='All'])[1]")))
+					.click().build().perform();
+			clickelement(SourceFilter);
+			waitUntilLoad(driver);
+			soft.assertAll();
+		} else {
 			System.out.println("No Data Available");
 		}
 	}
@@ -823,46 +833,46 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		waitForElement(paginationLast, 10);
 		boolean dataavailable = DataAvailable();
 		if (dataavailable == false) {
-		int lastpage = Integer
-				.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
-		System.out.println("Last Page Number is :" + lastpage);
-		waitForElement(paginationPrev, 10);
-		clickelement(paginationPrev);
-		try {
-			if (paginationNext.isDisplayed()) {
-				for (int i = 1; i <= lastpage; i++) {
-					int size = Reviews.size();
-					System.out.println(size);
-					for (int j = 1; j <= size; j++) {
-						String Tagname = driver.findElement(By.xpath("(//ul[contains(@id,'review-tags')])[" + j + "]"))
-								.getText();
-						System.out.println(Tagname);
-						ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_AdvancedFilters");
-						for (int k = 1; k <= wb.getRowCount(); k++) {
-							String tags = wb.getCellValue(k, wb.seacrh_pattern("Tag", 0).get(0).intValue());
-							taglist = tags.split(",");
-							int tsize = taglist.length;
-							System.out.println("The tag list size is :" + size);
-							for (int l = 0; l <= tsize - 1; l++) {
-								tag = taglist[l];
-								System.out.println("The tag is :" + tag);
-								if (Tagname.contains(tag)) {
-									soft.assertTrue(true);
+			int lastpage = Integer
+					.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
+			System.out.println("Last Page Number is :" + lastpage);
+			waitForElement(paginationPrev, 10);
+			clickelement(paginationPrev);
+			try {
+				if (paginationNext.isDisplayed()) {
+					for (int i = 1; i <= lastpage; i++) {
+						int size = Reviews.size();
+						System.out.println(size);
+						for (int j = 1; j <= size; j++) {
+							String Tagname = driver
+									.findElement(By.xpath("(//ul[contains(@id,'review-tags')])[" + j + "]")).getText();
+							System.out.println(Tagname);
+							ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_AdvancedFilters");
+							for (int k = 1; k <= wb.getRowCount(); k++) {
+								String tags = wb.getCellValue(k, wb.seacrh_pattern("Tag", 0).get(0).intValue());
+								taglist = tags.split(",");
+								int tsize = taglist.length;
+								System.out.println("The tag list size is :" + size);
+								for (int l = 0; l <= tsize - 1; l++) {
+									tag = taglist[l];
+									System.out.println("The tag is :" + tag);
+									if (Tagname.contains(tag)) {
+										soft.assertTrue(true);
+									}
 								}
 							}
 						}
-					}
-					if (paginationNext.isEnabled()) {
-						scrollByElement(paginationNext);
-						paginationNext.click();
-						JSWaiter.waitJQueryAngular();
+						if (paginationNext.isEnabled()) {
+							scrollByElement(paginationNext);
+							paginationNext.click();
+							JSWaiter.waitJQueryAngular();
+						}
 					}
 				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		}else {
+		} else {
 			System.out.println("No Data Available");
 		}
 	}
@@ -1454,7 +1464,6 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		clickelement(ContentSel);
 		driver.findElement(By.xpath("//div[@class='searchByContent']//div[contains(text(),'All')]")).click();
 		soft.assertAll();
-
 	}
 
 	/**
@@ -1506,6 +1515,238 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 			}
 		} else {
 			System.out.println("No Data available");
+		}
+	}
+
+	public void SelectSentimentcategory() throws Exception {
+		JSWaiter.waitJQueryAngular();
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Sentiment_Filters");
+		for (int i = 1; i <= wb.getRowCount(); i++) {
+			String con = wb.getCellValue(i, wb.seacrh_pattern("Sentiment Category", 0).get(0).intValue());
+			System.out.println("The Sentiment Category listed are :" + con);
+			SenCatList = con.split(",");
+			int size = SenCatList.length;
+			System.out.println("The Sentiment Category list size is :" + size);
+			for (int j = 0; j <= size - 1; j++) {
+				SenCatSel = SenCatList[j];
+				System.out.println("The Sentiment Category selected is :" + SenCatSel);
+				if (!SenCatSel.equals("null")) {
+					scrollByElement(advanceSearch);
+					clickelement(advanceSearch);
+					scrollByElement(SentimentCat);
+					clickelement(SentimentCat);
+					driver.findElement(By.xpath("(//div[@class='dropdown-multi'])[3]//li//label[contains(text(),'"
+							+ SenCatSel.trim() + "')]")).click();
+					JSWaiter.waitJQueryAngular();
+					clickelement(SentimentCat);
+					BaseClass.addEvidence(driver, "Test to select the sentiment category", "yes");
+					clickelement(advanceSearch);
+					VerifySentimentCategory(SenCatSel);
+					scrollByElement(advanceSearch);
+					clickelement(advanceSearch);
+					scrollByElement(SentimentCat);
+					clickelement(SentimentCat);
+					driver.findElement(By.xpath("(//div[@class='dropdown-multi'])[3]//li//label[contains(text(),'All')]")).click();
+					JSWaiter.waitJQueryAngular();
+					clickelement(advanceSearch);
+				} else {
+					System.out.println("No sentiment category selected");
+				}
+			}
+		}
+		soft.assertAll();
+	}
+
+	public void VerifySentimentCategory(String SenCatSelect) {
+		
+		JSWaiter.waitJQueryAngular();
+		waitForElement(ReviewSection, 10);
+		scrollByElement(ReviewSection);
+		waitForElement(paginationLast, 10);
+		boolean dataavailable = DataAvailable();
+		if (dataavailable == false) {
+			int lastpage = Integer
+					.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
+			System.out.println("Last Page Number is :" + lastpage);
+			waitForElement(paginationPrev, 10);
+			clickelement(paginationPrev);
+			WebElement sentiment;
+			try {
+				if (paginationNext.isDisplayed()) {
+					int size = SentimentContainer.size();
+					System.out.println("The size is :" + size);
+					for (int j = 1; j <= size; j++) {
+						if (SenCatSelect.equalsIgnoreCase("Overall")) {
+							sentiment = driver.findElement(By.xpath(
+									"(//a[contains(text(),'Overall')])[" + j + "]"));
+							scrollByElement(sentiment);
+							String color = driver.findElement(
+									By.xpath("(//a[contains(text(),'Overall')])["+ j +"]/parent::div"))
+									.getAttribute("class");
+							System.out.println("The color is :" + color);
+							soft.assertTrue(!color.contains("grey"), "The color should not be grey");
+						} else if (SenCatSelect.equalsIgnoreCase("Atmosphere")) {
+							sentiment = driver.findElement(
+									By.xpath("(//a[contains(text(),'Atmosphere')])["
+											+ j + "]"));
+							scrollByElement(sentiment);
+							String color = driver.findElement(
+									By.xpath("(//a[contains(text(),'Atmosphere')])["
+											+ j + "]/parent::div"))
+									.getAttribute("class");
+							System.out.println("The color is :" + color);
+							soft.assertTrue(!color.contains("grey"), "The color should not be grey");
+						} else if (SenCatSelect.equalsIgnoreCase("Product")) {
+							sentiment = driver.findElement(By.xpath(
+									"(//a[contains(text(),'Product')])[" + j + "]"));
+							scrollByElement(sentiment);
+							String color = driver.findElement(
+									By.xpath("(//a[contains(text(),'Product')])[" + j
+											+ "]/parent::div"))
+									.getAttribute("class");
+							System.out.println("The color is :" + color);
+							soft.assertTrue(!color.contains("grey"), "The color should not be grey");
+						} else if (SenCatSelect.equalsIgnoreCase("Customer Service")) {
+							sentiment = driver.findElement(By.xpath(
+									"(//a[contains(text(),'Customer Service')])[" + j
+											+ "]"));
+							scrollByElement(sentiment);
+							String color = driver.findElement(By.xpath(
+									"(//a[contains(text(),'Customer Service')])[" + j
+											+ "]/parent::div"))
+									.getAttribute("class");
+							System.out.println("The color is :" + color);
+							soft.assertTrue(!color.contains("grey"), "The color should not be grey");
+						} else if (SenCatSelect.equalsIgnoreCase("Value")) {
+							sentiment = driver.findElement(By.xpath(
+									"(//a[contains(text(),'Value')])[" + j + "]"));
+							scrollByElement(sentiment);
+							String color = driver.findElement(
+									By.xpath("(//a[contains(text(),'Value')])[" + j
+											+ "]/parent::div"))
+									.getAttribute("class");
+							System.out.println("The color is :" + color);
+							soft.assertTrue(!color.contains("grey"), "The color should not be grey");
+						}
+					}
+					BaseClass.addEvidence(driver, "Test to verify sentiment category selected", "yes");
+					if (paginationNext.isEnabled()) {
+						scrollByElement(paginationNext);
+						paginationNext.click();
+						JSWaiter.waitJQueryAngular();
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("No data available");
+		}
+	}
+	
+	public void selectmultiplesentiment() throws Exception {
+		
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_AdvancedFilters");
+				for (int k = 1; k <= wb.getRowCount(); k++) {
+					String sentiments = wb.getCellValue(k, wb.seacrh_pattern("MultiSentiment", 0).get(0).intValue());
+					System.out.println("The vendors listed are :" + sentiments);
+					sentimentlist = sentiments.split(",");
+					int size = sentimentlist.length;
+					System.out.println("The size of list is :" + size);
+					for (int i = 0; i <= size - 1; i++) {
+						sentiment = sentimentlist[i];
+						System.out.println("The Sentiment is :" + sentiment);
+						if (!sentiment.equalsIgnoreCase("null")) {
+							scrollByElement(advanceSearch);
+							clickelement(advanceSearch);
+							scrollByElement(SentimentCat);
+							clickelement(SentimentCat);
+							driver.findElement(By.xpath("(//div[@class='dropdown-multi'])[3]//li//label[contains(text(),'"
+									+ sentiment.trim() + "')]")).click();
+							JSWaiter.waitJQueryAngular();
+							clickelement(SentimentCat);
+							BaseClass.addEvidence(driver, "Test to select multiple sentiment category", "yes");
+							System.out.println("Sentiment selected" + sentiment);
+							waitUntilLoad(driver);
+							Thread.sleep(5000);
+							clickelement(SentimentCat);
+							clickelement(advanceSearch);
+						} else {
+							System.out.println("No Vendor selected");
+						}
+					}
+					/*if (!Vendor.equalsIgnoreCase("null")) {
+						comparesentimentswithreviews();
+					} else {
+						System.out.println("No vendors selected");
+					}
+*/				}
+		
+	}
+	
+	public void comparesentimentwithreviews() {
+	//	Complete code for verifying data
+		JSWaiter.waitJQueryAngular();
+		waitForElement(ReviewSection, 10);
+		scrollByElement(ReviewSection);
+		waitForElement(paginationLast, 10);
+		boolean dataavailable = DataAvailable();
+		if (dataavailable == false) {
+			int lastpage = Integer
+					.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
+			System.out.println("Last Page Number is :" + lastpage);
+			waitForElement(paginationPrev, 10);
+			clickelement(paginationPrev);
+			WebElement sentiment;
+			try {
+				if (paginationNext.isDisplayed()) {
+					int size = SentimentContainer.size();
+					System.out.println("The size is :" + size);
+					for (int j = 1; j <= size; j++) {
+					//	write code here to compare data
+						ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_AdvancedFilters");
+						for (int k = 1; k <= wb.getRowCount(); k++) {
+							String sentiments = wb.getCellValue(k, wb.seacrh_pattern("MultiSentiment", 0).get(0).intValue());
+							System.out.println("The vendors listed are :" + sentiments);
+							sentimentlist = sentiments.split(",");
+							int size1 = sentimentlist.length;
+							System.out.println("The size of list is :" + size1);
+							for (int i = 0; i <= size1 - 1; i++) {
+								String selsentiment = sentimentlist[i];
+								System.out.println("The Sentiment is :" + selsentiment);
+								if(sentiments.contains("Overall")) {
+									sentiment = driver.findElement(By.xpath(
+											"(//a[contains(text(),'Overall')])[" + j + "]"));
+									scrollByElement(sentiment);
+									String color = driver.findElement(
+											By.xpath("(//a[contains(text(),'Overall')])["+ j +"]/parent::div"))
+											.getAttribute("class");
+									System.out.println("The color is :" + color);
+									soft.assertTrue(!color.contains("grey"), "The color should not be grey");
+								}else if(selsentiment.equalsIgnoreCase("Atmosphere")) {
+									//atms
+								}else if(selsentiment.equalsIgnoreCase("")) {
+									//prdct
+								}else if(selsentiment.equalsIgnoreCase("")) {
+									//cusser
+								}else if(selsentiment.equalsIgnoreCase("")) {
+									//val
+								}
+							}
+						}
+					}
+					BaseClass.addEvidence(driver, "Test to verify sentiment category selected", "yes");
+					if (paginationNext.isEnabled()) {
+						scrollByElement(paginationNext);
+						paginationNext.click();
+						JSWaiter.waitJQueryAngular();
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("No data available");
 		}
 	}
 }

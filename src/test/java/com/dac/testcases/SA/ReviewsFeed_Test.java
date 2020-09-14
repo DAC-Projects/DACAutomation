@@ -31,7 +31,7 @@ public class ReviewsFeed_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes");
 	}
 
-	@Test(priority = 2, description = "Test to verify active state of the report")
+/*	@Test(priority = 2, description = "Test to verify active state of the report")
 	public void verifyreportactivestate() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.Review_Feed_Highlight();
@@ -191,7 +191,19 @@ public class ReviewsFeed_Test extends BaseClass {
 	public void verifyratingfilter() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.SelectRating();
+	}*/
+	
+	@Test(priority = 22, description = "Test to verify sentiment category")
+	public void verifysentimentcategory() throws Exception {
+		data = new Reviews_Feed(CurrentState.getDriver());
+		data.SelectSentimentcategory();
 	}
+	
+	@Test(priority = 23, description = "Test to verify top button")
+	public void verifymultisentiments() throws Exception {
+		data = new Reviews_Feed(CurrentState.getDriver());
+		data.TopButton();
+	}	
 	
 	public void DateFilter(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
