@@ -18,9 +18,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import com.aventstack.extentreports.Status;
 import com.dac.main.BasePage;
 
 import junit.framework.AssertionFailedError;
+import resources.BaseClass;
+import resources.CurrentState;
 import resources.IAutoconst;
 
 public class Page_LPADHome extends BasePage{
@@ -29,6 +32,7 @@ public class Page_LPADHome extends BasePage{
 	Actions action; 
 	WebDriverWait wait;
 	JavascriptExecutor js;
+	
 	
 	/*----------------Locators Start------------*/
 	/*----------------Title Bar-----------------*/
@@ -182,7 +186,6 @@ public class Page_LPADHome extends BasePage{
 				Assert.fail("Switch To Domain Failed: Domain Not Binded with user");
 			}
 			
-
 		 }else{
 			 System.out.println("In the Same Domain");
 		 }
@@ -212,5 +215,11 @@ public class Page_LPADHome extends BasePage{
 		br.newLine();
 		br.append(inputText);
 		br.close();
+	}
+	public void create_LPAD_Evidence(String log, String msg) throws Exception {
+		
+		Thread.sleep(5000);
+		CurrentState.getLogger().log(Status.PASS, log);
+		BaseClass.addEvidence(CurrentState.getDriver(),msg, "yes");
 	}
 }

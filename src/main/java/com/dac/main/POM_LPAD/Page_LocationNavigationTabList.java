@@ -137,13 +137,14 @@ public class Page_LocationNavigationTabList extends BasePage {
 			actions.moveToElement(btnSubmit).click().build().perform();
 			wait.until(ExpectedConditions.visibilityOf(btnOK));//for warning message popup
 			actions.moveToElement(btnOK).click().build().perform();//confirm purchase
-			Thread.sleep(1000);
+			Thread.sleep(3000);
 			if(btnOK.isDisplayed()) {
-				btnOK.click();//incomplete waring
+				clickelement(btnOK);//btnOK.click();//incomplete waring
+				System.out.println("Complete Message Displayed");
 				Thread.sleep(1000);
 			}
-			wait.until(ExpectedConditions.visibilityOf(btnOK));//for success message popup
-			btnOK.click();
+//			wait.until(ExpectedConditions.visibilityOf(btnOK));//for success message popup
+//			btnOK.click();
 //			btnOK.click();
 			js.executeScript("window.scrollTo(0, -document.body.scrollHeight);");
 		}else {

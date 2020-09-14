@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import com.aventstack.extentreports.Status;
 import com.dac.main.POM_LPAD.Page_LPADHome;
 import com.dac.main.POM_LPAD.Page_LPADLogin;
 import com.dac.main.POM_LPAD.Page_LocationBasicInfoTab;
@@ -42,18 +43,25 @@ public class Test_CreateMultipleLocations extends BaseClass {
 	
 @Test()
 public void TC_Login_LPAD() throws Exception {
-//			GetColmunNumber number =new GetColmunNumber();
-			Page_LPADLogin loginPage=new Page_LPADLogin(CurrentState.getDriver());
-			Page_LPADHome home=new Page_LPADHome(CurrentState.getDriver());
-			WebDriverWait wait=new WebDriverWait(CurrentState.getDriver(), 50);
-		  
-		  loginPage.LoginTOLPAD();
-		  
-//		  String pageTitle= loginPage.getTitle();
-		 System.out.println("wait completes");
-		 home.switchToDomain();
+	Page_LPADLogin loginPage=new Page_LPADLogin(CurrentState.getDriver());
+	Page_LPADHome home=new Page_LPADHome(CurrentState.getDriver());
+	wait=new WebDriverWait(CurrentState.getDriver(), 50);
+	loginPage.LoginTOLPAD();
+//	String pageTitle= loginPage.getTitle();
+	System.out.println("wait completes");
+	
+	home.create_LPAD_Evidence("Login to LPAD", "Login to LPAD Successfully");
 		 
-//		 TakesScreenshot
+//	TakesScreenshot
+//	Thread.sleep(2000);
+//	CurrentState.getLogger().log(Status.PASS, "Login to LPAD Successfully");
+//	addEvidence(CurrentState.getDriver(), "Login to LPAD", "yes");
+	
+	home.switchToDomain();
+	home.create_LPAD_Evidence("Switch Domain", "Switch Domain Successfully");
+//	Thread.sleep(2000);
+//	CurrentState.getLogger().log(Status.PASS, "Switch Domain");
+//	addEvidence(CurrentState.getDriver(), "Switch Domain Successfully", "yes");
 }
 
 
@@ -92,8 +100,11 @@ public void TC_EnterLocationData() throws Exception {
 		products.clickOnDSOptions("NEW",basic,i);
 		Thread.sleep(3000);
 		tabs.submitLocation();
-		Thread.sleep(2000);
+//		Thread.sleep(3000);
+//		home.create_LPAD_Evidence("Create Location", "Location Created");
 		newLocationNumber=basicInfo.getLocationNumber();
+//		CurrentState.getLogger().log(Status.PASS, "Create new Location");
+//		addEvidence(CurrentState.getDriver(), "Location Created", "yes");
 		locationName=basicInfo.getSBName();
 		latitude=basicInfo.getLatitude();
 		longitude=basicInfo.getLongitude();
@@ -102,7 +113,9 @@ public void TC_EnterLocationData() throws Exception {
 		tabs.navigateSiteSpecificInfoTab();
 		site.fillSiteSpecificInfoData("zomato",basic,i);
 		site.fillSiteSpecificInfoData("APPLE",basic,i);
-
+//		home.create_LPAD_Evidence("Attributes", "Attributes Added");
+//		CurrentState.getLogger().log(Status.PASS, "Assign Attributes");
+//		addEvidence(CurrentState.getDriver(), "Attributes added", "yes");
 		//		tabs.updateLocation();
 //		Vendor_IDs = data.getCellValue(row, data.seacrh_pattern("Vendro_ID_Update", 0).get(0).intValue());
 		basic.setCellValue( i, basic.seacrh_pattern("LocationNumber", 0).get(0).intValue(), newLocationNumber);

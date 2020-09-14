@@ -126,6 +126,8 @@ public abstract class BaseClass {
 		  CurrentState.getEvidenceList().add(new SeleniumEvidence(testStep, null));
 		  CurrentState.getLogger().info(testStep);
 	  }	  
+	  
   }
+  
 
 }

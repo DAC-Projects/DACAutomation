@@ -345,9 +345,12 @@ public class ExtentTestNGITestListener
 
 
 //    WebDriverManager.chromedriver().version("80.0.3987.16").setup(); 
-    	WebDriverManager.chromedriver().version("83.0.4103.39").setup();
+//    	WebDriverManager.chromedriver().version("83.0.4103.39").setup();
+//    	WebDriverManager.chromedriver().version("84.0.4147.30").setup();
+//    	WebDriverManager.chromedriver().version("85.0.4183.38").setup();
+    	WebDriverManager.chromedriver().version("85.0.4183.87").setup();
 
-    //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
+//    WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
 
     HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
     		chromePrefs.put("profile.default_content_settings.popups", 0);

@@ -33,13 +33,14 @@ public interface IAutoconst {
 	String[] neuralTuringTechAccount = {baseUrl+"neural-turing-tech-beta", "svarghese@dacgroup.com"};
 //	String[] transparenSEE = {baseUrl+"international-account-beta-beta", "spillai@dacgroup.com","IN"};
 	
+	//beta
 //	String[] transparenSEE = {baseUrl+"aurify-brands-test-beta", "jmohan@dacgroup.com"}; 
-//	String[] transparenSEE = {baseUrl+"automation-test-account-tsee-beta","amahadev@dacgroup.com"};
-//	String[] transparenSEE = {baseUrl+"automation-test-account-tsee-beta","jmann@dacgroup.com"};
+//	String[] transparenSEE = {baseUrl+"automation-test-account-tsee-beta","amahadev@dacgroup.com"};//Account Owner
+//	String[] transparenSEE = {baseUrl+"automation-test-account-tsee-beta","jmann@dacgroup.com"}; //Location Manager
 	
 	//Staging
-//	String[] transparenSEE = {baseUrl+"international-location-test-account","chappel.mann+test1@gmail.com"};//Account Owner
-	String [] transparenSEE = {baseUrl +"aurify-brands","aarti.mehta@meltshop.com"}; //- Location Manager
+//	String[] transparenSEE = {baseUrl+"international-location-test-account","chappel.mann+stc@gmail.com"};//Account Owner
+	String [] transparenSEE = {baseUrl +"international-location-test-account","chappel.mann+stl2@gmail.com"}; //- Location Manager
 	
 	String userLocale="IN";
 	

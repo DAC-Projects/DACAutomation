@@ -18,10 +18,13 @@ import com.dac.main.POM_LPAD.Page_LocationNavigationTabList;
 import com.dac.main.POM_LPAD.Page_LocationsListPage;
 import com.dac.main.POM_LPAD.Page_SiteSpecificInfoTab;
 
+import resources.BaseClass;
+import resources.CurrentState;
 import resources.ExcelHandler;
+import resources.IAutoconst;
 
 
-public class Test_ManageLocation extends LaunchLPAD {
+public class Test_ManageLocation extends BaseClass {
 	Page_LocationBasicInfoTab basicInfo;
 	Page_LocationBusinessInfoTab businessInfo;
 	Page_LocationNavigationTabList tabs;
@@ -37,23 +40,23 @@ public class Test_ManageLocation extends LaunchLPAD {
 	
 
 
-	@Test(dependsOnMethods= {"com.dac.testcases.LPAD.Test_CreateMultipleLocations.TC_EnterLocationData"})
+@Test(dependsOnMethods= {"com.dac.testcases.LPAD.Test_CreateMultipleLocations.TC_EnterLocationData"})
 public void TC_UpdateLPM_OptionsData() throws Exception {
 	int column=17;//for getting Location Number from Excel
 	System.out.println("Scenario1: Update LPM Product Options with New Options");
-	wait=new WebDriverWait(driver, 30);
-	wb = new ExcelHandler(LocationDataExcelPath, "BasicInfo");
+	wait=new WebDriverWait(CurrentState.getDriver(), 30);
+	wb = new ExcelHandler(IAutoconst.LocationDataExcelPath, "BasicInfo");
 	
 	basicInfoData = wb.getExcelTable();
 	int TotalRow=basicInfoData.length-1;
 	
-	home=new Page_LPADHome(driver);
-	locations=new Page_LocationsListPage(driver);
-	tabs=new Page_LocationNavigationTabList(driver);
-	basicInfo=new Page_LocationBasicInfoTab(driver);
-	businessInfo=new Page_LocationBusinessInfoTab(driver);
-	products=new Page_LocationManageProductsTab(driver);
-	site=new Page_SiteSpecificInfoTab(driver);
+	home=new Page_LPADHome(CurrentState.getDriver());
+	locations=new Page_LocationsListPage(CurrentState.getDriver());
+	tabs=new Page_LocationNavigationTabList(CurrentState.getDriver());
+	basicInfo=new Page_LocationBasicInfoTab(CurrentState.getDriver());
+	businessInfo=new Page_LocationBusinessInfoTab(CurrentState.getDriver());
+	products=new Page_LocationManageProductsTab(CurrentState.getDriver());
+	site=new Page_SiteSpecificInfoTab(CurrentState.getDriver());
 	
 	home.NavigateToLocations();
 	String locationNumber  	= wb.getCellValue(1, wb.seacrh_pattern("LocationNumber", 0).get(0).intValue());
@@ -75,28 +78,29 @@ public void TC_UpdateLPM_OptionsData() throws Exception {
 	System.out.println("LPM Options Updated.....");
 }
 	
-/*
+
  
 @Test(dependsOnMethods= {"com.dac.testcases.LPAD.Test_LoginToLPAD.TC_Login_LPAD"})
 public void TC_ManageLocation_DisableLPM() throws Exception {
-	int column=17;//for getting Location Number from Excel
+	int column=17, LocationRow=2;//for getting Location Number from Excel
 	String status="LPM OFF";
 	System.out.println("Scenario2: Disable LPM Product....");
-	wait=new WebDriverWait(driver, 30);
-	wb = new ExcelHandler(LocationDataExcelPath, "BasicInfo");
+	wait=new WebDriverWait(CurrentState.getDriver(), 30);
+	wb = new ExcelHandler(IAutoconst.LocationDataExcelPath, "BasicInfo");
 	
 	basicInfoData = wb.getExcelTable();
 	int TotalRow=basicInfoData.length-1;
 	
-	home=new Page_LPADHome(driver);
-	locations=new Page_LocationsListPage(driver);
-	tabs=new Page_LocationNavigationTabList(driver);
-	basicInfo=new Page_LocationBasicInfoTab(driver);
-	businessInfo=new Page_LocationBusinessInfoTab(driver);
-	products=new Page_LocationManageProductsTab(driver);
+	home=new Page_LPADHome(CurrentState.getDriver());
+	locations=new Page_LocationsListPage(CurrentState.getDriver());
+	tabs=new Page_LocationNavigationTabList(CurrentState.getDriver());
+	basicInfo=new Page_LocationBasicInfoTab(CurrentState.getDriver());
+	businessInfo=new Page_LocationBusinessInfoTab(CurrentState.getDriver());
+	products=new Page_LocationManageProductsTab(CurrentState.getDriver());
 	
 	home.NavigateToLocations();
-	String locationNumber=basicInfoData[2][column];
+//	String locationNumber=basicInfoData[2][column];
+	String locationNumber  	= wb.getCellValue(LocationRow, wb.seacrh_pattern("LocationNumber", 0).get(0).intValue());
 	System.out.println("Location Number"+ locationNumber);
 	locations.searchLocation(locationNumber);
 	Thread.sleep(5000);
@@ -110,29 +114,30 @@ public void TC_ManageLocation_DisableLPM() throws Exception {
 		}
 	
 	System.out.println(locationNumber+" >> PFO Disabled....");
-	update.setCellValue( 2, 0, locationNumber);
-	update.setCellValue( 2, 1, status);
+//	update.setCellValue( 2, 0, locationNumber);
+//	update.setCellValue( 2, 1, status);
 }
 
 @Test(dependsOnMethods= {"TC_ManageLocation_DisableLPM"})
 public void TC_ManageLocation_EnableLPM() throws Exception {
-	int column=17;//for getting Location Number from Excel
+	int column=17,LocationRow=2;//for getting Location Number from Excel
 	System.out.println("Scenario3: Enable LPM Product....");
-	wait=new WebDriverWait(driver, 30);
-	wb = new ExcelHandler(LocationDataExcelPath, "BasicInfo");
+	wait=new WebDriverWait(CurrentState.getDriver(), 30);
+	wb = new ExcelHandler(IAutoconst.LocationDataExcelPath, "BasicInfo");
 	
 	basicInfoData = wb.getExcelTable();
 	int TotalRow=basicInfoData.length-1;
 	
-	home=new Page_LPADHome(driver);
-	locations=new Page_LocationsListPage(driver);
-	tabs=new Page_LocationNavigationTabList(driver);
-	basicInfo=new Page_LocationBasicInfoTab(driver);
-	businessInfo=new Page_LocationBusinessInfoTab(driver);
-	products=new Page_LocationManageProductsTab(driver);
+	home=new Page_LPADHome(CurrentState.getDriver());
+	locations=new Page_LocationsListPage(CurrentState.getDriver());
+	tabs=new Page_LocationNavigationTabList(CurrentState.getDriver());
+	basicInfo=new Page_LocationBasicInfoTab(CurrentState.getDriver());
+	businessInfo=new Page_LocationBusinessInfoTab(CurrentState.getDriver());
+	products=new Page_LocationManageProductsTab(CurrentState.getDriver());
 	
 	home.NavigateToLocations();
-	String locationNumber=basicInfoData[2][column];
+//	String locationNumber=basicInfoData[2][column];
+	String locationNumber  	= wb.getCellValue(LocationRow, wb.seacrh_pattern("LocationNumber", 0).get(0).intValue());
 	System.out.println("Location Number"+ locationNumber);
 	locations.searchLocation(locationNumber);
 	Thread.sleep(5000);
@@ -143,65 +148,65 @@ public void TC_ManageLocation_EnableLPM() throws Exception {
 		if(change) {
 			System.out.println("Change " + change);
 		tabs.updateLocation();
-		wb.setCellValue( 2, 18, "LPM Turned ON");
+//		wb.setCellValue( 2, 18, "LPM Turned ON");
 		}
 	
 	System.out.println("PFO: LPM Enabled.....");
 }
-*/
-	/*
+
 //Deactivate Location	
 @Test(dependsOnMethods= {"com.dac.testcases.LPAD.Test_LoginToLPAD.TC_Login_LPAD"})
 public void TC_DeactivateLocation() throws Exception {
 	int column=17, LocationRow=1;//for getting Location Number from Excel
 	String status="DEACTIVATED";
-	wait=new WebDriverWait(driver, 30);
-	wb = new ExcelHandler(LocationDataExcelPath, "BasicInfo");
-	update = new ExcelHandler(LocationDataExcelPath, "LocationUpdates");
-	home=new Page_LPADHome(driver);
-	locations=new Page_LocationsListPage(driver);
-	tabs=new Page_LocationNavigationTabList(driver);
+	wait=new WebDriverWait(CurrentState.getDriver(), 30);
+	wb = new ExcelHandler(IAutoconst.LocationDataExcelPath, "BasicInfo");
+//	update = new ExcelHandler(LocationDataExcelPath, "LocationUpdates");
+	home=new Page_LPADHome(CurrentState.getDriver());
+	locations=new Page_LocationsListPage(CurrentState.getDriver());
+	tabs=new Page_LocationNavigationTabList(CurrentState.getDriver());
 	basicInfoData = wb.getExcelTable();
 	
 	System.out.println("Scenario: Deactivating Location....");
 	
 	//Starting....
 	home.NavigateToLocations();
-	String locationNumber=basicInfoData[LocationRow][column];
+//	String locationNumber=basicInfoData[LocationRow][column];
+	String locationNumber  	= wb.getCellValue(LocationRow, wb.seacrh_pattern("LocationNumber", 0).get(0).intValue());
 	System.out.println("Location Number"+ locationNumber);
 	locations.searchLocation(locationNumber);
 	Thread.sleep(2000);
 	locations.DeactivateLocation();
 	
 	System.out.println(locationNumber+" >> Location Deactivated.....");
-	update.setCellValue( 1, 0, locationNumber);
-	update.setCellValue( 1, 1, status);
+//	update.setCellValue( 1, 0, locationNumber);
+//	update.setCellValue( 1, 1, status);
 }
-/*	
 //Delete Location
 @Test(dependsOnMethods= {"com.dac.testcases.LPAD.Test_LoginToLPAD.TC_Login_LPAD"})
 public void TC_DeleteLocation() throws Exception {
 	int column=17, LocationRow=2;//for getting Location Number from Excel
 	String status="DELETED";
-	wait=new WebDriverWait(driver, 30);
-	wb = new ExcelHandler(LocationDataExcelPath, "BasicInfo");
-	update = new ExcelHandler(LocationDataExcelPath, "LocationUpdates");
-	home=new Page_LPADHome(driver);
-	locations=new Page_LocationsListPage(driver);
-	tabs=new Page_LocationNavigationTabList(driver);
+	wait=new WebDriverWait(CurrentState.getDriver(), 30);
+	wb = new ExcelHandler(IAutoconst.LocationDataExcelPath, "BasicInfo");
+	update = new ExcelHandler(IAutoconst.LocationDataExcelPath, "LocationUpdates");
+	home=new Page_LPADHome(CurrentState.getDriver());
+	locations=new Page_LocationsListPage(CurrentState.getDriver());
+	tabs=new Page_LocationNavigationTabList(CurrentState.getDriver());
 	basicInfoData = wb.getExcelTable();
 	System.out.println("Scenario: Delete Location....");
 	
 	home.NavigateToLocations();
-	String locationNumber=basicInfoData[LocationRow][column];
+//	String locationNumber=basicInfoData[LocationRow][column];
+	String locationNumber  	= wb.getCellValue(LocationRow, wb.seacrh_pattern("LocationNumber", 0).get(0).intValue());
 	System.out.println("Location Number"+ locationNumber);
 	locations.searchLocation(locationNumber);
 	Thread.sleep(2000);
 	locations.DeleteLocation();
 	
 	System.out.println(locationNumber+" >> Location Deleted.....");
-	update.setCellValue( 2, 0, locationNumber);
-	update.setCellValue( 2, 1, status);
+//	update.setCellValue( 2, 0, locationNumber);
+//	update.setCellValue( 2, 1, status);
 }
 
 //Close Location
@@ -209,25 +214,26 @@ public void TC_DeleteLocation() throws Exception {
 public void TC_CloseLocation() throws Exception {
 	int column=17, LocationRow=3;//for getting Location Number from Excel
 	String status="CLOSED";
-	wait=new WebDriverWait(driver, 30);
-	wb = new ExcelHandler(LocationDataExcelPath, "BasicInfo");
-	update = new ExcelHandler(LocationDataExcelPath, "LocationUpdates");
-	home=new Page_LPADHome(driver);
-	locations=new Page_LocationsListPage(driver);
-	tabs=new Page_LocationNavigationTabList(driver);
+	wait=new WebDriverWait(CurrentState.getDriver(), 30);
+	wb = new ExcelHandler(IAutoconst.LocationDataExcelPath, "BasicInfo");
+	update = new ExcelHandler(IAutoconst.LocationDataExcelPath, "LocationUpdates");
+	home=new Page_LPADHome(CurrentState.getDriver());
+	locations=new Page_LocationsListPage(CurrentState.getDriver());
+	tabs=new Page_LocationNavigationTabList(CurrentState.getDriver());
 	basicInfoData = wb.getExcelTable();
 	System.out.println("Scenario: Close Location....");
 	
 	home.NavigateToLocations();
-	String locationNumber=basicInfoData[LocationRow][column];
+//	String locationNumber=basicInfoData[LocationRow][column];
+	String locationNumber  	= wb.getCellValue(LocationRow, wb.seacrh_pattern("LocationNumber", 0).get(0).intValue());
 	System.out.println("Location Number"+ locationNumber);
 	locations.searchLocation(locationNumber);
 	Thread.sleep(2000);
 	locations.CloseLocation();
 	
 	System.out.println(locationNumber+" >> Location Closed.....");
-	update.setCellValue(3, 0, locationNumber);
-	update.setCellValue(3, 1, status);
+//	update.setCellValue(3, 0, locationNumber);
+//	update.setCellValue(3, 1, status);
 }
 
 //Deactivate Location	
@@ -235,21 +241,22 @@ public void TC_CloseLocation() throws Exception {
 public void TC_ReactivateLocation() throws Exception {
 	int column=17, LocationRow=1;//for getting Location Number from Excel
 	String status="RE-ACTIVATED";
-	wait=new WebDriverWait(driver, 30);
-	wb = new ExcelHandler(LocationDataExcelPath, "BasicInfo");
-	update = new ExcelHandler(LocationDataExcelPath, "LocationUpdates");
-	home=new Page_LPADHome(driver);
-	locations=new Page_LocationsListPage(driver);
-	tabs=new Page_LocationNavigationTabList(driver);
-	products=new Page_LocationManageProductsTab(driver);
-	site=new Page_SiteSpecificInfoTab(driver);
+	wait=new WebDriverWait(CurrentState.getDriver(), 30);
+	wb = new ExcelHandler(IAutoconst.LocationDataExcelPath, "BasicInfo");
+	update = new ExcelHandler(IAutoconst.LocationDataExcelPath, "LocationUpdates");
+	home=new Page_LPADHome(CurrentState.getDriver());
+	locations=new Page_LocationsListPage(CurrentState.getDriver());
+	tabs=new Page_LocationNavigationTabList(CurrentState.getDriver());
+	products=new Page_LocationManageProductsTab(CurrentState.getDriver());
+	site=new Page_SiteSpecificInfoTab(CurrentState.getDriver());
 	basicInfoData = wb.getExcelTable();
 	locationUpdate = update.getExcelTable();
 	System.out.println("Scenario: Re-activating Location....");
 	
 	home.NavigateToLocations();
 	locations.SetBusinessStatus("Deactivated");
-	String locationNumber=locationUpdate[1][0];
+	String locationNumber  	= wb.getCellValue(1, wb.seacrh_pattern("LocationNumber", 0).get(0).intValue());
+//	String locationNumber=locationUpdate[1][0];
 	System.out.println("Location Number"+ locationNumber);
 	locations.searchLocation(locationNumber);
 	Thread.sleep(2000);
@@ -257,38 +264,38 @@ public void TC_ReactivateLocation() throws Exception {
 	locations.searchLocation(locationNumber);
 	locations.NavigateManageLocation();
 	tabs.navigateProductsTab();
-	products.clickOnDSOptions("NEW");
+	products.clickOnDSOptions("NEW",wb,LocationRow);
 	tabs.navigateSiteSpecificInfoTab();
-	site.fillSiteSpecificInfoData("ZOMATO");
+	site.fillSiteSpecificInfoData("ZOMATO",wb,LocationRow);
 	tabs.updateLocation();
 	Thread.sleep(2000);
 	
 	System.out.println(locationNumber+" >> Location Activated.....");
-	update.setCellValue( 4, 0, locationNumber);
-	update.setCellValue( 4, 1, status);
+//	update.setCellValue( 4, 0, locationNumber);
+//	update.setCellValue( 4, 1, status);
 }
-*/
+
 //Re-Open Location	
-	/*
 @Test(dependsOnMethods= {"com.dac.testcases.LPAD.Test_LoginToLPAD.TC_Login_LPAD"})
 public void TC_ReOpenLocation() throws Exception {
 	int column=17, LocationRow=1;//for getting Location Number from Excel
 	String status="RE-OPEN";
-	wait=new WebDriverWait(driver, 30);
-	wb = new ExcelHandler(LocationDataExcelPath, "BasicInfo");
-	update = new ExcelHandler(LocationDataExcelPath, "LocationUpdates");
-	home=new Page_LPADHome(driver);
-	locations=new Page_LocationsListPage(driver);
-	tabs=new Page_LocationNavigationTabList(driver);
-	products=new Page_LocationManageProductsTab(driver);
-	site=new Page_SiteSpecificInfoTab(driver);
+	wait=new WebDriverWait(CurrentState.getDriver(), 30);
+	wb = new ExcelHandler(IAutoconst.LocationDataExcelPath, "BasicInfo");
+	update = new ExcelHandler(IAutoconst.LocationDataExcelPath, "LocationUpdates");
+	home=new Page_LPADHome(CurrentState.getDriver());
+	locations=new Page_LocationsListPage(CurrentState.getDriver());
+	tabs=new Page_LocationNavigationTabList(CurrentState.getDriver());
+	products=new Page_LocationManageProductsTab(CurrentState.getDriver());
+	site=new Page_SiteSpecificInfoTab(CurrentState.getDriver());
 	basicInfoData = wb.getExcelTable();
 	locationUpdate = update.getExcelTable();
 	System.out.println("Scenario: Re-Open Location....");
 	
 	home.NavigateToLocations();
 	locations.SetBusinessStatus("Closed");
-	String locationNumber=locationUpdate[3][0];
+//	String locationNumber=locationUpdate[3][0];
+	String locationNumber  	= wb.getCellValue(LocationRow, wb.seacrh_pattern("LocationNumber", 0).get(0).intValue());
 	System.out.println("Location Number"+ locationNumber);
 	locations.searchLocation(locationNumber);
 	Thread.sleep(2000);
@@ -301,7 +308,7 @@ public void TC_ReOpenLocation() throws Exception {
 	site.fillSiteSpecificInfoData("ZOMATO", wb, LocationRow);
 	tabs.updateLocation();
 	System.out.println(locationNumber+" >> Location Opened.....");
-	update.setCellValue( 5, 0, locationNumber);
-	update.setCellValue( 5, 1, status);
-}*/
+//	update.setCellValue( 5, 0, locationNumber);
+//	update.setCellValue( 5, 1, status);
+}
 }
