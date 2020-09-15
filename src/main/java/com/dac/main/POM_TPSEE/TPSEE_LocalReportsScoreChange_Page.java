@@ -145,9 +145,12 @@ public class TPSEE_LocalReportsScoreChange_Page extends TPSEE_abstractMethods {
 				savedata();
 				
 				btnSuccessOK=driver.findElement(By.xpath("//button[text()='Ok']"));
-				waitForElement(btnSuccessOK, 50);
+				System.out.println("Waiting for Success Message");
+				waitForElement(btnSuccessOK, 100);
 //				Assert.assertTrue(SuccessMessage.getText().equals("Success! Your request has been completed!"));
 				
+				System.out.println("Clicking on Success Message");
+
 				clickelement(btnSuccessOK);
 				scrollByElement(notificationList);
 				

@@ -37,7 +37,7 @@ public class TPSEE_ReviewNotifications_Test extends BaseClass {
 						
 						rn.createAndVerifyEmailNotification(xcelInputData,1);
 						
-						CurrentState.getLogger().log(Status.PASS, "Notification Created");
+						CurrentState.getLogger().log(Status.PASS, "Notification Created and Verified");
 						addEvidence(CurrentState.getDriver(), "New Review Notification Created", "yes");
 					}
 	//Test for Edit Email Notification
@@ -54,7 +54,7 @@ public class TPSEE_ReviewNotifications_Test extends BaseClass {
 					}
 			
 			
-	//Test for Edit Email Notification
+	//Test for Delete Email Notification
 			@SuppressWarnings("unchecked")
 			@Test(dependsOnMethods = { "editEmailNotification"}, groups = {
 											"smoke" }, description = "TC: Deleting Notification from Review Notification")

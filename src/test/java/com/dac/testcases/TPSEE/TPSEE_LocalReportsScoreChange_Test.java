@@ -26,7 +26,7 @@ public class TPSEE_LocalReportsScoreChange_Test extends BaseClass {
 
 			// Assert.assertFalse( "sample error", true);
 		}
-		
+
 		//Test for Create Email Notification
 		@SuppressWarnings("unchecked")
 		@Test(dependsOnMethods = { "navigateToLocalReportsScoreChange"}, groups = {

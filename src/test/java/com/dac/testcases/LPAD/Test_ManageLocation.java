@@ -143,13 +143,18 @@ public void TC_ManageLocation_EnableLPM() throws Exception {
 	Thread.sleep(5000);
 	locations.NavigateManageLocation();
 	tabs.navigateProductsTab();
-		boolean change=products.enableLPM();	
-		Thread.sleep(2000);
-		if(change) {
-			System.out.println("Change " + change);
-		tabs.updateLocation();
-//		wb.setCellValue( 2, 18, "LPM Turned ON");
-		}
+	products.clickOnDSOptions("NEW",wb,LocationRow);
+	tabs.navigateSiteSpecificInfoTab();
+	site.fillSiteSpecificInfoData("ZOMATO",wb,LocationRow);
+	tabs.updateLocation();
+	Thread.sleep(2000);
+////		boolean change=products.enableLPM();	
+//		Thread.sleep(2000);
+//		if(change) {
+//			System.out.println("Change " + change);
+//		tabs.updateLocation();
+////		wb.setCellValue( 2, 18, "LPM Turned ON");
+//		}
 	
 	System.out.println("PFO: LPM Enabled.....");
 }

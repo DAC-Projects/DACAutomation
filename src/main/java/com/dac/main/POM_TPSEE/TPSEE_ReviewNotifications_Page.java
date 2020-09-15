@@ -105,6 +105,12 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 	
 	@FindBy(xpath = "//div[contains(text(),'Less-than 3 stars')]")
 	private WebElement customLessThan3stars;
+	/*-----------Pagination--------*/
+	@FindBy(xpath = "//li[@class='paginate_button ']")
+	private List<WebElement> TotalPages;
+	
+	@FindBy(xpath = "//ul[@class='pagination']")
+	private WebElement pagination;
 	
 	/*-----------Table Locators----------*/
 	
@@ -141,10 +147,12 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 	public void createAndVerifyEmailNotification(String [][] ExcelData, int newData) throws InterruptedException {
 
 		
-		JSWaiter.waitJQueryAngular();
+//		JSWaiter.waitJQueryAngular();
 		System.out.println("createEmailNotification "+ newData);
+//		scrollByElement(pagination);
+//		pagination();
 		loop:
-		for(int i=1;i<=10;i++) {
+		for(int i=1;i<=5;i++) {
 			try {
 				deleteEmailNotification(ExcelData,newData);
 			}catch (Exception e) {
@@ -158,7 +166,7 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 		
 		verifyEmailNotification(ExcelData, newData);
 		
-		System.out.println("Notification Created");
+		System.out.println("Notification Created and Verified");
 		
 	}
 
@@ -183,9 +191,10 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 		String strEmail=inputData[excelRow][2]; String strFilter1=inputData[excelRow][3];
 		String strSites=inputData[excelRow][4]; String strFrequency=inputData[excelRow][5];
 		String strCondition=inputData[excelRow][6]; String strRating=inputData[excelRow][7]; 				
-		
-				JSWaiter.waitJQueryAngular();
+		System.out.println("Create Notification "+ excelRow);
+//				JSWaiter.waitJQueryAngular();
 				waitForElement(notificationTableTitle, 30);
+				scrollByElement(notificationTableTitle);
 				notificationName.clear();
 				notificationName.sendKeys(strNotificationName);
 				description.clear();
@@ -208,7 +217,7 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 				scrollByElement(notificationTableTitle);
 				
 				waitUntilLoad(driver);
-		
+				System.out.println("Notification Created>>>");
 	}
 	
 	public void EditReviewNotification(String [][] inputData, int excelRow) throws InterruptedException {
@@ -218,7 +227,7 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 		String strSites=inputData[excelRow][4]; String strFrequency=inputData[excelRow][5];
 		String strCondition=inputData[excelRow][6]; String strRating=inputData[excelRow][7]; 				
 		
-				JSWaiter.waitJQueryAngular();
+//				JSWaiter.waitJQueryAngular();
 				waitForElement(notificationTableTitle, 30);
 				notificationName.clear();
 				notificationName.sendKeys(strNotificationName);
@@ -283,11 +292,13 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 	}
 	public void verifyEmailNotification(String [][] configuration, int row) {
 		String[] data = new String[1];
-		JSWaiter.waitJQueryAngular();
+//		JSWaiter.waitJQueryAngular();
 		System.out.println("verifyEmailNotification "+ row);
-		scrollByElement(notificationTableTitle);
+		
+//		scrollByElement(notificationTableTitle);
 		int uiRow=getRowIndex(configuration[row][0]);
 		System.out.println("uiRow  "+ uiRow);
+		
 		data=getNotificationTableData(uiRow);
 		
 		System.out.println("Notification Name: "+data[0]+">> Input Data: "+configuration[row][0]);
@@ -312,6 +323,8 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 		WebElement btnEdit;
 		JSWaiter.waitJQueryAngular();
 		System.out.println("editEmailNotification "+ newData+" Old: "+oldData);
+		Thread.sleep(2000);
+		scrollByElement(notificationTableTitle);
 		btnEdit=getEditButtonRow(ExcelData[oldData][0]);
 		scrollByElement(btnEdit);
 		clickelement(btnEdit);
@@ -320,11 +333,13 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 		System.out.println("Notification Updated");
 		
 	}
-	public void deleteEmailNotification(String [][] ExcelData, int excelRow) {
+	public void deleteEmailNotification(String [][] ExcelData, int excelRow) throws InterruptedException {
 		WebElement btnDelete,btnConfirmOK,successOK;
-		JSWaiter.waitJQueryAngular();
-		System.out.println("deleteEmailNotification "+ excelRow);
+//		JSWaiter.waitJQueryAngular();
+		System.out.println("Delete Review Notification "+ excelRow);
 		
+//		scrollByElement(notificationTableTitle);
+//		Thread.sleep(2000);
 		btnDelete=getDeleteButtonRow(ExcelData[excelRow][0]);
 		scrollByElement(btnDelete);
 		clickelement(btnDelete);
@@ -333,9 +348,11 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 		
 		
 		scrollByElement(btnConfirmOK);
-		clickelement(btnConfirmOK);
+//		clickelement(btnConfirmOK);
+		btnConfirmOK.click();
 		successOK=driver.findElement(By.xpath("//button[text()='Ok']"));
-		clickelement(successOK);
+		successOK.click();
+//		clickelement(successOK);
 		System.out.println("Notification Deleted");
 					
 	}
@@ -351,10 +368,10 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 	
 	private WebElement getEditButtonRow(String columnText) {
 		System.out.println("Inside getEditButtonRow Method: "+columnText );
+	
+		WebElement btnEdit=driver.findElement(By.xpath("//td[text()='"+ columnText +"']/..//*[@class='icon-edit icon-color-primary']"));
 		
-		WebElement btnRemove=driver.findElement(By.xpath("//td[text()='"+ columnText +"']/..//*[@class='icon-edit icon-color-primary']"));
-		
-		return btnRemove;
+		return btnEdit;
 		
 	}
 	private void selectValue(WebElement element, String value) {
@@ -397,10 +414,12 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 private String[] getNotificationTableData(int row) {
 	ArrayList<String> Data = new ArrayList<String>();
 	
-	JSWaiter.waitJQueryAngular();
+//	JSWaiter.waitJQueryAngular();
 	scrollByElement(NotificationTableHeader);
+	
 	List < WebElement > rows_table = NotificationTableRow;
 	int rows_count = rows_table.size();
+	System.out.println("Total Row count in Table "+ rows_count);
 	
 	List < WebElement > Columns_row = rows_table.get(row-1).findElements(By.tagName("td"));
 	
@@ -433,5 +452,18 @@ public static String[] GetStringArray(ArrayList<String> arr)
 
     return str; 
 }
+private void pagination() {
+	List < WebElement > pages = TotalPages;
+	int pageSize = pages.size();	
+	System.out.println("Total Pages : "+pageSize +" + 1");
+	if (pageSize>0) {
+		WebElement page= driver.findElement(By.xpath("//li[@class='paginate_button '][" + pageSize + "]/a"));
+//		System.out.println("Clicked on Page: "+pageSize);
+		
+		clickelement(page);
+	}
+}
+
+
 }
 

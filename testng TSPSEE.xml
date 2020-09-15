@@ -10,12 +10,14 @@
 
  <test name="TransparenSEE" parallel="tests" group-by-instances="true">
    <!-- <parameter name="Filter" value= "US,All States,All Cities,All Locations"/> -->
+   <parameter name="appName" value="TRSEE"/>
    <parameter name="browser" value="chrome"/>
     <classes>
+    	
+    	
     	<class name= "com.dac.testcases.TPSEE.TPSEE_ReviewNotifications_Test" /> 
-    	
-    	
 	 	<!-- 
+	 	<class name= "com.dac.testcases.TPSEE.TPSEE_LocalReportsScoreChange_Test" /> 
 	 	<class name= "com.dac.testcases.TPSEE.TPSEE_ReviewStream_Test" /> 
 	 	<class name= "com.dac.testcases.TPSEE.TPSEE_Visibility_Test" /> 
 	  	<class name= "com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" /> 
