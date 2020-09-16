@@ -193,7 +193,7 @@ public class ReviewsFeed_Test extends BaseClass {
 		data.SelectRating();
 	}*/
 	
-	@Test(priority = 22, description = "Test to verify sentiment category")
+	/*@Test(priority = 22, description = "Test to verify sentiment category")
 	public void verifysentimentcategory() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.SelectSentimentcategory();
@@ -203,7 +203,14 @@ public class ReviewsFeed_Test extends BaseClass {
 	public void verifymultisentiments() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.TopButton();
-	}	
+	}*/
+	
+	@Test(priority = 24, description = "Test to verify sentiment combination")
+	public void sentimentcombination() throws Exception {
+		data = new Reviews_Feed(CurrentState.getDriver());
+		data.selectsentandcatandverifyreview();
+	}
+	
 	
 	public void DateFilter(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {

@@ -126,6 +126,9 @@ public abstract class BaseClass {
 			
 		case "CFBeta" :
 			return IAutoconst.CFAccountBeta;
+			
+		case "Reviews Staging" :
+			return IAutoconst.neuralturingtechStaging;
 
 		default:
 			return IAutoconst.transparenSEE;

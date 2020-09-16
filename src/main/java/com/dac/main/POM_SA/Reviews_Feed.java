@@ -1518,6 +1518,11 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		}
 	}
 
+	/**
+	 * To select sentiment category filter
+	 * 
+	 * @throws Exception
+	 */
 	public void SelectSentimentcategory() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Sentiment_Filters");
@@ -1546,7 +1551,8 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 					clickelement(advanceSearch);
 					scrollByElement(SentimentCat);
 					clickelement(SentimentCat);
-					driver.findElement(By.xpath("(//div[@class='dropdown-multi'])[3]//li//label[contains(text(),'All')]")).click();
+					driver.findElement(
+							By.xpath("(//div[@class='dropdown-multi'])[3]//li//label[contains(text(),'All')]")).click();
 					JSWaiter.waitJQueryAngular();
 					clickelement(advanceSearch);
 				} else {
@@ -1557,8 +1563,13 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		soft.assertAll();
 	}
 
+	/**
+	 * To verify sentiment category selected in reviews table
+	 * 
+	 * @param SenCatSelect
+	 */
 	public void VerifySentimentCategory(String SenCatSelect) {
-		
+
 		JSWaiter.waitJQueryAngular();
 		waitForElement(ReviewSection, 10);
 		scrollByElement(ReviewSection);
@@ -1577,53 +1588,45 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 					System.out.println("The size is :" + size);
 					for (int j = 1; j <= size; j++) {
 						if (SenCatSelect.equalsIgnoreCase("Overall")) {
-							sentiment = driver.findElement(By.xpath(
-									"(//a[contains(text(),'Overall')])[" + j + "]"));
+							sentiment = driver.findElement(By.xpath("(//a[contains(text(),'Overall')])[" + j + "]"));
 							scrollByElement(sentiment);
-							String color = driver.findElement(
-									By.xpath("(//a[contains(text(),'Overall')])["+ j +"]/parent::div"))
+							String color = driver
+									.findElement(By.xpath("(//a[contains(text(),'Overall')])[" + j + "]/parent::div"))
 									.getAttribute("class");
 							System.out.println("The color is :" + color);
 							soft.assertTrue(!color.contains("grey"), "The color should not be grey");
 						} else if (SenCatSelect.equalsIgnoreCase("Atmosphere")) {
-							sentiment = driver.findElement(
-									By.xpath("(//a[contains(text(),'Atmosphere')])["
-											+ j + "]"));
+							sentiment = driver.findElement(By.xpath("(//a[contains(text(),'Atmosphere')])[" + j + "]"));
 							scrollByElement(sentiment);
-							String color = driver.findElement(
-									By.xpath("(//a[contains(text(),'Atmosphere')])["
-											+ j + "]/parent::div"))
+							String color = driver
+									.findElement(
+											By.xpath("(//a[contains(text(),'Atmosphere')])[" + j + "]/parent::div"))
 									.getAttribute("class");
 							System.out.println("The color is :" + color);
 							soft.assertTrue(!color.contains("grey"), "The color should not be grey");
 						} else if (SenCatSelect.equalsIgnoreCase("Product")) {
-							sentiment = driver.findElement(By.xpath(
-									"(//a[contains(text(),'Product')])[" + j + "]"));
+							sentiment = driver.findElement(By.xpath("(//a[contains(text(),'Product')])[" + j + "]"));
 							scrollByElement(sentiment);
-							String color = driver.findElement(
-									By.xpath("(//a[contains(text(),'Product')])[" + j
-											+ "]/parent::div"))
+							String color = driver
+									.findElement(By.xpath("(//a[contains(text(),'Product')])[" + j + "]/parent::div"))
 									.getAttribute("class");
 							System.out.println("The color is :" + color);
 							soft.assertTrue(!color.contains("grey"), "The color should not be grey");
 						} else if (SenCatSelect.equalsIgnoreCase("Customer Service")) {
-							sentiment = driver.findElement(By.xpath(
-									"(//a[contains(text(),'Customer Service')])[" + j
-											+ "]"));
+							sentiment = driver
+									.findElement(By.xpath("(//a[contains(text(),'Customer Service')])[" + j + "]"));
 							scrollByElement(sentiment);
-							String color = driver.findElement(By.xpath(
-									"(//a[contains(text(),'Customer Service')])[" + j
-											+ "]/parent::div"))
+							String color = driver
+									.findElement(By
+											.xpath("(//a[contains(text(),'Customer Service')])[" + j + "]/parent::div"))
 									.getAttribute("class");
 							System.out.println("The color is :" + color);
 							soft.assertTrue(!color.contains("grey"), "The color should not be grey");
 						} else if (SenCatSelect.equalsIgnoreCase("Value")) {
-							sentiment = driver.findElement(By.xpath(
-									"(//a[contains(text(),'Value')])[" + j + "]"));
+							sentiment = driver.findElement(By.xpath("(//a[contains(text(),'Value')])[" + j + "]"));
 							scrollByElement(sentiment);
-							String color = driver.findElement(
-									By.xpath("(//a[contains(text(),'Value')])[" + j
-											+ "]/parent::div"))
+							String color = driver
+									.findElement(By.xpath("(//a[contains(text(),'Value')])[" + j + "]/parent::div"))
 									.getAttribute("class");
 							System.out.println("The color is :" + color);
 							soft.assertTrue(!color.contains("grey"), "The color should not be grey");
@@ -1643,54 +1646,165 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 			System.out.println("No data available");
 		}
 	}
-	
-	public void selectmultiplesentiment() throws Exception {
-		
-		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_AdvancedFilters");
-				for (int k = 1; k <= wb.getRowCount(); k++) {
-					String sentiments = wb.getCellValue(k, wb.seacrh_pattern("MultiSentiment", 0).get(0).intValue());
-					System.out.println("The vendors listed are :" + sentiments);
-					sentimentlist = sentiments.split(",");
-					int size = sentimentlist.length;
-					System.out.println("The size of list is :" + size);
-					for (int i = 0; i <= size - 1; i++) {
-						sentiment = sentimentlist[i];
-						System.out.println("The Sentiment is :" + sentiment);
-						if (!sentiment.equalsIgnoreCase("null")) {
-							scrollByElement(advanceSearch);
-							clickelement(advanceSearch);
-							scrollByElement(SentimentCat);
-							clickelement(SentimentCat);
-							driver.findElement(By.xpath("(//div[@class='dropdown-multi'])[3]//li//label[contains(text(),'"
-									+ sentiment.trim() + "')]")).click();
-							JSWaiter.waitJQueryAngular();
-							clickelement(SentimentCat);
-							BaseClass.addEvidence(driver, "Test to select multiple sentiment category", "yes");
-							System.out.println("Sentiment selected" + sentiment);
-							waitUntilLoad(driver);
-							Thread.sleep(5000);
-							clickelement(SentimentCat);
-							clickelement(advanceSearch);
-						} else {
-							System.out.println("No Vendor selected");
-						}
-					}
-					/*if (!Vendor.equalsIgnoreCase("null")) {
-						comparesentimentswithreviews();
-					} else {
-						System.out.println("No vendors selected");
-					}
-*/				}
-		
+
+	/*
+	 * public void selectmultiplesentiment() throws Exception {
+	 * 
+	 * ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx",
+	 * "Reviews_AdvancedFilters"); for (int k = 1; k <= wb.getRowCount(); k++) {
+	 * String sentiments = wb.getCellValue(k, wb.seacrh_pattern("MultiSentiment",
+	 * 0).get(0).intValue()); System.out.println("The vendors listed are :" +
+	 * sentiments); sentimentlist = sentiments.split(","); int size =
+	 * sentimentlist.length; System.out.println("The size of list is :" + size); for
+	 * (int i = 0; i <= size - 1; i++) { sentiment = sentimentlist[i];
+	 * System.out.println("The Sentiment is :" + sentiment); if
+	 * (!sentiment.equalsIgnoreCase("null")) { scrollByElement(advanceSearch);
+	 * clickelement(advanceSearch); scrollByElement(SentimentCat);
+	 * clickelement(SentimentCat); driver.findElement(By.xpath(
+	 * "(//div[@class='dropdown-multi'])[3]//li//label[contains(text(),'" +
+	 * sentiment.trim() + "')]")).click(); JSWaiter.waitJQueryAngular();
+	 * clickelement(SentimentCat); BaseClass.addEvidence(driver,
+	 * "Test to select multiple sentiment category", "yes");
+	 * System.out.println("Sentiment selected" + sentiment); waitUntilLoad(driver);
+	 * Thread.sleep(5000); clickelement(SentimentCat); clickelement(advanceSearch);
+	 * } else { System.out.println("No Vendor selected"); } } if
+	 * (!Vendor.equalsIgnoreCase("null")) { comparesentimentswithreviews(); } else {
+	 * System.out.println("No vendors selected"); } }
+	 * 
+	 * }
+	 * 
+	 * public void comparesentimentwithreviews() { // Complete code for verifying
+	 * data JSWaiter.waitJQueryAngular(); waitForElement(ReviewSection, 10);
+	 * scrollByElement(ReviewSection); waitForElement(paginationLast, 10); boolean
+	 * dataavailable = DataAvailable(); if (dataavailable == false) { int lastpage =
+	 * Integer .parseInt(driver.findElement(By.xpath(
+	 * "(//*[@class='pagination']//a)[last()-1]")).getText());
+	 * System.out.println("Last Page Number is :" + lastpage);
+	 * waitForElement(paginationPrev, 10); clickelement(paginationPrev); WebElement
+	 * sentiment; try { if (paginationNext.isDisplayed()) { int size =
+	 * SentimentContainer.size(); System.out.println("The size is :" + size); for
+	 * (int j = 1; j <= size; j++) { // write code here to compare data ExcelHandler
+	 * wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_AdvancedFilters"); for
+	 * (int k = 1; k <= wb.getRowCount(); k++) { String sentiments =
+	 * wb.getCellValue(k, wb.seacrh_pattern("MultiSentiment", 0).get(0).intValue());
+	 * System.out.println("The vendors listed are :" + sentiments); sentimentlist =
+	 * sentiments.split(","); int size1 = sentimentlist.length;
+	 * System.out.println("The size of list is :" + size1); for (int i = 0; i <=
+	 * size1 - 1; i++) { String selsentiment = sentimentlist[i];
+	 * System.out.println("The Sentiment is :" + selsentiment);
+	 * if(sentiments.contains("Overall")) { sentiment = driver.findElement(By.xpath(
+	 * "(//a[contains(text(),'Overall')])[" + j + "]")); scrollByElement(sentiment);
+	 * String color = driver.findElement(
+	 * By.xpath("(//a[contains(text(),'Overall')])["+ j +"]/parent::div"))
+	 * .getAttribute("class"); System.out.println("The color is :" + color);
+	 * soft.assertTrue(!color.contains("grey"), "The color should not be grey");
+	 * }else if(selsentiment.equalsIgnoreCase("Atmosphere")) { //atms }else
+	 * if(selsentiment.equalsIgnoreCase("")) { //prdct }else
+	 * if(selsentiment.equalsIgnoreCase("")) { //cusser }else
+	 * if(selsentiment.equalsIgnoreCase("")) { //val } } } }
+	 * BaseClass.addEvidence(driver, "Test to verify sentiment category selected",
+	 * "yes"); if (paginationNext.isEnabled()) { scrollByElement(paginationNext);
+	 * paginationNext.click(); JSWaiter.waitJQueryAngular(); } } } catch (Exception
+	 * e) { e.printStackTrace(); } } else { System.out.println("No data available");
+	 * } }
+	 */
+
+	/**
+	 * Get color of sentiment category
+	 * 
+	 * @param txt
+	 * @return
+	 */
+	public String verifysenticolor(String txt) {
+		String ReviewsSentiment = null;
+		if (txt.contains("lime")) {
+			ReviewsSentiment = "Positive";
+		} else if (txt.contains("green")) {
+			ReviewsSentiment = "Positive";
+		} else if (txt.contains("yellow")) {
+			ReviewsSentiment = "Neutral";
+		} else if (txt.contains("orange")) {
+			ReviewsSentiment = "Negative";
+		} else if (txt.contains("red")) {
+			ReviewsSentiment = "Negative";
+		}
+		System.out.println(" The review sentiment is :" + ReviewsSentiment);
+		return ReviewsSentiment;
 	}
-	
-	public void comparesentimentwithreviews() {
-	//	Complete code for verifying data
+
+	/**
+	 * To select sentiment and sentiment category
+	 * 
+	 * @throws Exception
+	 */
+	public void selectsentandcatandverifyreview() throws Exception {
+		JSWaiter.waitJQueryAngular();
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Sentiment_Combination");
+		for (int i = 1; i <= wb.getRowCount(); i++) {
+			String sentiment = wb.getCellValue(i, wb.seacrh_pattern("Sentiment", 0).get(0).intValue());
+			System.out.println("The sentiment is :" + sentiment);
+			String con = wb.getCellValue(i, wb.seacrh_pattern("Category", 0).get(0).intValue());
+			System.out.println("The Sentiment Category listed are :" + con);
+			SenCatList = con.split(",");
+			int size = SenCatList.length;
+			System.out.println("The Sentiment Category list size is :" + size);
+			waitForElement(advanceSearch, 10);
+			scrollByElement(advanceSearch);
+			clickelement(advanceSearch);
+			if (!sentiment.equals("null")) {
+				scrollByElement(SentimentTab);
+				clickelement(SentimentTab);
+				driver.findElement(
+						By.xpath("//div[@class='sentiment-score-filter']//div[@class = 'item' and contains(text(), '"
+								+ sentiment + "')]"))
+						.click();
+				waitUntilLoad(driver);
+				for (int j = 0; j <= size - 1; j++) {
+					SenCatSel = SenCatList[j];
+					System.out.println("The Sentiment Category selected is :" + SenCatSel);
+					if (!SenCatSel.equals("null")) {
+						scrollByElement(SentimentCat);
+						clickelement(SentimentCat);
+						driver.findElement(By.xpath("(//div[@class='dropdown-multi'])[3]//li//label[contains(text(),'"
+								+ SenCatSel.trim() + "')]")).click();
+						JSWaiter.waitJQueryAngular();
+						clickelement(SentimentCat);
+						BaseClass.addEvidence(driver, "Test to select the sentiment category", "yes");
+						VerifySentimentandCategoryverify(SenCatSel, sentiment);
+						clickelement(SentimentCat);
+						driver.findElement(
+								By.xpath("(//div[@class='dropdown-multi'])[3]//li//label[contains(text(),'All')]"))
+								.click();
+						JSWaiter.waitJQueryAngular();
+						clickelement(SentimentCat);
+					}
+				}
+				scrollByElement(SentimentTab);
+				clickelement(SentimentTab);
+				driver.findElement(By.xpath(
+						"//div[@class='sentiment-score-filter']//div[@class = 'item' and contains(text(), 'All')]"))
+						.click();
+				waitUntilLoad(driver);
+				clickelement(advanceSearch);
+			}
+		}
+		soft.assertAll();
+	}
+
+	/**
+	 * To verify sentiments and category in reviews table
+	 * 
+	 * @param SenCatSelect
+	 * @param sent
+	 */
+	public void VerifySentimentandCategoryverify(String SenCatSelect, String sent) {
+
 		JSWaiter.waitJQueryAngular();
 		waitForElement(ReviewSection, 10);
 		scrollByElement(ReviewSection);
 		waitForElement(paginationLast, 10);
 		boolean dataavailable = DataAvailable();
+		String finalcolor = null;
 		if (dataavailable == false) {
 			int lastpage = Integer
 					.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
@@ -1703,36 +1817,59 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 					int size = SentimentContainer.size();
 					System.out.println("The size is :" + size);
 					for (int j = 1; j <= size; j++) {
-					//	write code here to compare data
-						ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_AdvancedFilters");
-						for (int k = 1; k <= wb.getRowCount(); k++) {
-							String sentiments = wb.getCellValue(k, wb.seacrh_pattern("MultiSentiment", 0).get(0).intValue());
-							System.out.println("The vendors listed are :" + sentiments);
-							sentimentlist = sentiments.split(",");
-							int size1 = sentimentlist.length;
-							System.out.println("The size of list is :" + size1);
-							for (int i = 0; i <= size1 - 1; i++) {
-								String selsentiment = sentimentlist[i];
-								System.out.println("The Sentiment is :" + selsentiment);
-								if(sentiments.contains("Overall")) {
-									sentiment = driver.findElement(By.xpath(
-											"(//a[contains(text(),'Overall')])[" + j + "]"));
-									scrollByElement(sentiment);
-									String color = driver.findElement(
-											By.xpath("(//a[contains(text(),'Overall')])["+ j +"]/parent::div"))
-											.getAttribute("class");
-									System.out.println("The color is :" + color);
-									soft.assertTrue(!color.contains("grey"), "The color should not be grey");
-								}else if(selsentiment.equalsIgnoreCase("Atmosphere")) {
-									//atms
-								}else if(selsentiment.equalsIgnoreCase("")) {
-									//prdct
-								}else if(selsentiment.equalsIgnoreCase("")) {
-									//cusser
-								}else if(selsentiment.equalsIgnoreCase("")) {
-									//val
-								}
-							}
+						if (SenCatSelect.equalsIgnoreCase("Overall")) {
+							sentiment = driver.findElement(By.xpath("(//a[contains(text(),'Overall')])[" + j + "]"));
+							scrollByElement(sentiment);
+							String color = driver
+									.findElement(By.xpath("(//a[contains(text(),'Overall')])[" + j + "]/parent::div"))
+									.getAttribute("class");
+							System.out.println("The color is :" + color);
+							finalcolor = verifysenticolor(color);
+							verifysentiment(sent, finalcolor, SenCatSelect);
+
+						} else if (SenCatSelect.equalsIgnoreCase("Atmosphere")) {
+							sentiment = driver.findElement(By.xpath("(//a[contains(text(),'Atmosphere')])[" + j + "]"));
+							scrollByElement(sentiment);
+							String color = driver
+									.findElement(
+											By.xpath("(//a[contains(text(),'Atmosphere')])[" + j + "]/parent::div"))
+									.getAttribute("class");
+							System.out.println("The color is :" + color);
+							finalcolor = verifysenticolor(color);
+							verifysentiment(sent, finalcolor, SenCatSelect);
+
+						} else if (SenCatSelect.equalsIgnoreCase("Product")) {
+							sentiment = driver.findElement(By.xpath("(//a[contains(text(),'Product')])[" + j + "]"));
+							scrollByElement(sentiment);
+							String color = driver
+									.findElement(By.xpath("(//a[contains(text(),'Product')])[" + j + "]/parent::div"))
+									.getAttribute("class");
+							System.out.println("The color is :" + color);
+							finalcolor = verifysenticolor(color);
+							verifysentiment(sent, finalcolor, SenCatSelect);
+
+						} else if (SenCatSelect.equalsIgnoreCase("Customer Service")) {
+							sentiment = driver
+									.findElement(By.xpath("(//a[contains(text(),'Customer Service')])[" + j + "]"));
+							scrollByElement(sentiment);
+							String color = driver
+									.findElement(By
+											.xpath("(//a[contains(text(),'Customer Service')])[" + j + "]/parent::div"))
+									.getAttribute("class");
+							System.out.println("The color is :" + color);
+							finalcolor = verifysenticolor(color);
+							verifysentiment(sent, finalcolor, SenCatSelect);
+
+						} else if (SenCatSelect.equalsIgnoreCase("Value")) {
+							sentiment = driver.findElement(By.xpath("(//a[contains(text(),'Value')])[" + j + "]"));
+							scrollByElement(sentiment);
+							String color = driver
+									.findElement(By.xpath("(//a[contains(text(),'Value')])[" + j + "]/parent::div"))
+									.getAttribute("class");
+							System.out.println("The color is :" + color);
+							finalcolor = verifysenticolor(color);
+							verifysentiment(sent, finalcolor, SenCatSelect);
+
 						}
 					}
 					BaseClass.addEvidence(driver, "Test to verify sentiment category selected", "yes");
@@ -1747,6 +1884,26 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 			}
 		} else {
 			System.out.println("No data available");
+		}
+	}
+
+	/**
+	 * Verify the sentiments for combination of sentiment and category
+	 * 
+	 * @param Sentiselected
+	 * @param color
+	 * @param Senticategory
+	 */
+	public void verifysentiment(String Sentiselected, String color, String Senticategory) {
+		if (Sentiselected.equals("Positive")) {
+			soft.assertTrue(color.equals("Positive"),
+					"The sentiment selected is :" + Sentiselected + " and sentiment category is :" + Senticategory);
+		} else if (Sentiselected.equals("Negative")) {
+			soft.assertTrue(color.equals("Negative"),
+					"The sentiment selected is :" + Sentiselected + " and sentiment category is :" + Senticategory);
+		} else if (Sentiselected.equals("Neutral")) {
+			soft.assertTrue(color.equals("Neutral"),
+					"The sentiment selected is :" + Sentiselected + " and sentiment category is :" + Senticategory);
 		}
 	}
 }
