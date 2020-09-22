@@ -31,7 +31,7 @@ public class ReviewsFeed_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes");
 	}
 
-/*	@Test(priority = 2, description = "Test to verify active state of the report")
+	@Test(priority = 2, description = "Test to verify active state of the report")
 	public void verifyreportactivestate() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.Review_Feed_Highlight();
@@ -191,9 +191,9 @@ public class ReviewsFeed_Test extends BaseClass {
 	public void verifyratingfilter() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.SelectRating();
-	}*/
+	}
 	
-	/*@Test(priority = 22, description = "Test to verify sentiment category")
+	@Test(priority = 22, description = "Test to verify sentiment category")
 	public void verifysentimentcategory() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.SelectSentimentcategory();
@@ -203,7 +203,7 @@ public class ReviewsFeed_Test extends BaseClass {
 	public void verifymultisentiments() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.TopButton();
-	}*/
+	}
 	
 	@Test(priority = 24, description = "Test to verify sentiment combination")
 	public void sentimentcombination() throws Exception {
@@ -211,7 +211,7 @@ public class ReviewsFeed_Test extends BaseClass {
 		data.selectsentandcatandverifyreview();
 	}
 	
-	
+	@Test(priority = 25, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider= "testData")
 	public void DateFilter(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
@@ -223,6 +223,7 @@ public class ReviewsFeed_Test extends BaseClass {
 		Thread.sleep(3000);
 		data.clickApplyFilterBTN();
 		addEvidence(CurrentState.getDriver(), "Applied Global Filters", "yes");
+		data.verifyDateSelected();
 	}
 
 	@SuppressWarnings("finally")

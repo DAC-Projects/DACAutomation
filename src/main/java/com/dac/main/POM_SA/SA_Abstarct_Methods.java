@@ -18,11 +18,13 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
@@ -153,6 +155,9 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 	/*-------------------------Pagination-----------------------*/
 	
 	SoftAssert soft = new SoftAssert();
+	String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat")
+			.toString();
+	SimpleDateFormat formats = new SimpleDateFormat(var);
 	
 	public SA_Abstarct_Methods(WebDriver driver) {
 		super(driver);
@@ -281,6 +286,7 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 	 */
 	private void selectCalender_Date(String calenderField, int day_d, String month_MMM, int year_YYYY) {
 	//clickelement(calenderField);
+	scrollByElement(driver.findElement(By.xpath(calenderField)));
 	driver.findElement(By.xpath(calenderField)).click();
 	int diff = year_YYYY - Integer.parseInt(currentYear_DatePicker.getText());
 	if(diff != 0) {
@@ -787,5 +793,112 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 			}
 		}
 		return 0;
+	}
+	
+	public void ResultsperPage(SoftAssert soft, WebElement entry, WebElement results) throws InterruptedException {
+		int totalentries = NumOfentries(entry);
+		System.out.println("The total number of entries are :" + totalentries);
+		int entryperPage;
+		if (totalentries >= 10) {
+			scrollByElement(entry);
+			select = new Select(results);
+			select.selectByVisibleText("10");
+			Thread.sleep(5000);
+			entryperPage = NumOfentriesinPage(entry);
+			System.out.println("The entries per page is :" + entryperPage);
+			soft.assertEquals(10 , entryperPage);
+		} else {
+			System.out.println("No enough data to perform");
+		}
+		if (totalentries >= 25) {
+			scrollByElement(entry);
+			select = new Select(results);
+			select.selectByVisibleText("25");
+			Thread.sleep(5000);
+			entryperPage = NumOfentriesinPage(entry);
+			System.out.println("The entries per page is :" + entryperPage);
+			soft.assertEquals(25 , entryperPage);
+		} else {
+			System.out.println("No enough data to perform");
+		}
+		if (totalentries >= 50) {
+			scrollByElement(entry);
+			select = new Select(results);
+			select.selectByVisibleText("50");
+			Thread.sleep(5000);
+			entryperPage = NumOfentriesinPage(entry);
+			System.out.println("The entries per page is :" + entryperPage);
+			soft.assertEquals(50 , entryperPage);
+		} else {
+			System.out.println("No enough data to perform");
+		}
+		if (totalentries >= 75) {
+			scrollByElement(entry);
+			select = new Select(results);
+			select.selectByVisibleText("75");
+			Thread.sleep(5000);
+			entryperPage = NumOfentriesinPage(entry);
+			System.out.println("The entries per page is :" + entryperPage);
+			soft.assertEquals(75 , entryperPage);
+		} else {
+			System.out.println("No enough data to perform");
+		}
+		if (totalentries >= 100) {
+			scrollByElement(entry);
+			select = new Select(results);
+			select.selectByVisibleText("100");
+			Thread.sleep(5000);
+			entryperPage = NumOfentriesinPage(entry);
+			System.out.println("The entries per page is :" + entryperPage);
+			soft.assertEquals(100 , entryperPage);
+		} else {
+			System.out.println("No enough data to perform");
+		}
+	}
+	
+	public void GoTopage(WebElement GoTo) throws InterruptedException {
+		scrollByElement(GoTo);
+		String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
+		int totalpage = Integer.parseInt(n);
+		clickelement(GoTo);
+		GoTo.clear();
+		if(totalpage>1) {
+		GoTo.sendKeys("2");
+		GoTo.sendKeys(Keys.ENTER);
+		Thread.sleep(5000);
+		String classname = driver.findElement(By.xpath("(//*[@class='pagination'])//li[3]")).getAttribute("class");
+		System.out.println("The class name is :" +classname);
+		Assert.assertEquals(classname, "paginate_button active");
+		}else {
+			System.out.println("No more pages found");
+		}
+	}
+	
+	/**
+	 * To get from date selected from UI
+	 * @return
+	 * @throws ParseException
+	 */
+	public Date getFromDate() throws ParseException {
+		String fromdate = ((JavascriptExecutor) driver).executeScript("return document.getElementById('dateFrom').value")
+				.toString();
+		System.out.println("The from date selected is :" +fromdate);
+		Date finalfromdate = formats.parse(fromdate);
+		System.out.println("The Date is :" +finalfromdate);
+		return finalfromdate;		
+	}
+	
+	/**
+	 * To get to date selected from UI
+	 * @return
+	 * @throws ParseException
+	 */
+	public Date getToDate() throws ParseException {
+		String todate = ((JavascriptExecutor) driver).executeScript("return document.getElementById('dateTo').value")
+				.toString();
+		System.out.println("The to date selected is :" +todate);
+		Date finaltodate = formats.parse(todate);
+		System.out.println("The Date is :" +finaltodate);
+		return finaltodate;
 	}
 }
