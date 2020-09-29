@@ -44,7 +44,7 @@ public class Google_categories extends BaseClass {
 				 google.cat();
 				 addEvidence(CurrentState.getDriver(), "google", "yes");
 
-				for(int i=1;i<=a;i++) {
+				for(int i=3;i<=3;i++) {
 					System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
 					String goocategory = wb.getCellValue(i, wb.seacrh_pattern("goocategory", 0).get(0).intValue());
 					String selectcatgoogle=wb.getCellValue(i, wb.seacrh_pattern("selectcatgoogle", 0).get(0).intValue());

@@ -90,7 +90,7 @@ public abstract class BaseClass {
     case "Competitive Analysis":
       return IAutoconst.competitiveAnalysis;
     case "Customer_FeedBack":
-      return IAutoconst.deepfieldAccount;
+      //return IAutoconst.deepfieldAccount;
 
     case "TransparenSEE":
     	return IAutoconst.transparenSEE;
@@ -99,7 +99,7 @@ public abstract class BaseClass {
     	return IAutoconst.deepfieldAccount_SE;
     
     case "SE_AP":
-    	return IAutoconst.deepfieldAccount_SE_app;
+    	//return IAutoconst.deepfieldAccount_SE_app;
 
     case "Sentiment Analysis":
     case "SA":

@@ -89,6 +89,8 @@ public DTC_Transmission (WebDriver driver) {
 		driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
 		PageFactory.initElements(driver, this);
 		}
+
+
 	
 	@FindBy(xpath="//*[@id=\"i0116\"]")
 	private WebElement txtLoginName;
@@ -519,17 +521,26 @@ public DTC_Transmission (WebDriver driver) {
 		BufferedReader br = new BufferedReader(new FileReader(fname));
 		String line = br.readLine();
 		String myList="null";
+		ArrayList<String> wordList1 = new ArrayList<String>(); 
 		while ((line = br.readLine()) !=null){
           String[] b = line.split(splitBy); 
           myList=b[1];
+  		wordList1.add(b[1]);
         }
-		System.out.println(myList);
 		String ad1=LO_number;
-		myList = myList.replaceAll("^\"|\"$", "");
-		System.out.println(myList);
-		Assert.assertEquals(myList, ad1);
-		br.close();
-		apple_trans.click();
+		 for (String number : wordList1) {
+			 number = number.replaceAll("^\"|\"$", "");
+		System.out.println("aa"+number);
+		if(number.equals(ad1)) {
+			Assert.assertEquals(number, ad1);
+			 System.out.println("Both are same");
+			 break;
+			 }
+		else {
+			System.out.println("Location not found");
+			}
+	apple_trans.click();
+	}	
 	}
 
 	public void zoamto_Trans(String account) throws Exception {

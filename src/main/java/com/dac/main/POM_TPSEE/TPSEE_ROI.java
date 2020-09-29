@@ -24,6 +24,8 @@ import org.testng.Assert;
 
 import com.dac.main.POM_SE.SE_Report_Page;
 
+import resources.CurrentState;
+
 public class TPSEE_ROI extends TPSEE_abstractMethods {
 	WebDriver driver;
 	Actions action;
@@ -159,7 +161,7 @@ private WebElement notificationClose2;
 
 public void notificationHandle() throws InterruptedException{
     waitForElement(notificationClose1, 15);
-   notificationClose1.click();
+   //notificationClose1.click();
    // notificationClose2.click();
 	Thread.sleep(3000);
 
@@ -202,12 +204,12 @@ public void tool4(String t4) throws InterruptedException {
 }
 	public void VerifyTitleText(String Tit, String titText) {       
 	           waitForElement(PageTitle, 10);
-	            String Title = PageTitle.getText();
-	            System.out.println("Page Title is : "+Title);
+	           // String Title = PageTitle.getText();
+	            //System.out.println("Page Title is : "+Title);
 	            waitForElement(PageTitletext, 10);
 	            String TitleText = PageTitletext.getText();
 	            System.out.println("The title text  is :" + TitleText);
-	            Assert.assertEquals(Tit, Title);
+	            //Assert.assertEquals(Tit, Title);
 	            Assert.assertEquals(titText,TitleText );
 	            
 
@@ -228,7 +230,8 @@ public void tool4(String t4) throws InterruptedException {
 		expectedResult.add(Website_Clicks);
 		expectedResult.add(Rquestfor_Directions);
 		expectedResult.add(phone_Calls);
-		
+		 addEvidence(CurrentState.getDriver(), "ROI values", "yes");
+
 		for(int i=0;i<actualResult.size();i++){
 			for(int j=i;j<expectedResult.size();j++){
             if(actualResult.get(j).equals(expectedResult.get(j))){
@@ -256,6 +259,8 @@ public void tool4(String t4) throws InterruptedException {
 		annual_cost.clear();
 		annual_cost.sendKeys("2.0");
 		Thread.sleep(2000);
+		 addEvidence(CurrentState.getDriver(), "ROI values", "yes");
+
 		values(website_Click_Value,total_Web, 0);
 		Thread.sleep(2000);
 		values(direction_Click_Value,total_dir,1);
@@ -264,6 +269,12 @@ public void tool4(String t4) throws InterruptedException {
 		Thread.sleep(2000);
 		}
 		
+
+
+	private void addEvidence(WebDriver driver2, String string, String string2) {
+			// TODO Auto-generated method stub
+			
+		}
 
 
 	public void values(WebElement Click_val, WebElement total, int i) {
@@ -471,7 +482,7 @@ public void selectCalender_ToDate1(int day_d, String month_MMM, int year_YYYY) t
         public void Nav_GMB() throws Exception {
         	clickelement(GMB_page);
         	Thread.sleep(3000);
-            driver.findElement(By.xpath("//*[@id=\"wm-shoutout-219267\"]/div[3]/div[2]/span")).click();
+            //driver.findElement(By.xpath("//*[@id=\"wm-shoutout-219267\"]/div[3]/div[2]/span")).click();
         	Thread.sleep(3000);
 }
         public void GMB() throws Exception {
@@ -529,7 +540,7 @@ System.out.println(actualResult);
 				String currenttoDate = ((JavascriptExecutor)driver).executeScript("return document.getElementById('enddatepicker').value").toString();
 				Date enddate = formats.parse(currenttoDate);
 				System.out.println("Abi"+currenttoDate);
-	        return enddate;
+	            return enddate;
 	        }
 	    
 	    public void Com_date(int diff) {

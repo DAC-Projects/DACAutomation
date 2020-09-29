@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" parallel="false">
- <!--  <listeners>
+<listeners>
+		<!-- <listener class-name="resources.IntegrationTestListener"></listener>-->
+		<listener class-name="resources.ExtentTestNGITestListener"></listener> 
+	</listeners>
 
-<listener class-name="resources.ExtentTestNGITestListener"></listener>
-</listeners>
  
    <test name="TrasnspernsEE" parallel="false"
 		group-by-instances="true">
 		<parameter name="browser" value="chrome" />
+		<parameter name="appName" value="TRSEE" />
 		<classes>
-			<class name="com.dac.testcases.TPSEE.TPSEE_ESRreports_Test" />
+			<class name="com.dac.testcases.TPSEE.TPSEE_ROI_Test" />
 		</classes>
 	</test>
 	  
-   <test name="SE_AP" parallel="false"
+  <!--   <test name="SE_AP" parallel="false"
 		group-by-instances="true">
 		<parameter name="browser" value="chrome" />
 		<classes>
@@ -28,10 +30,10 @@
 		</classes>
 	</test>-->
 	
-  <test name="DTC">
+ <!--  <test name="DTC">
 		 <classes>
-			<class name="com.dac.testcases.DTC.Vendor_Transmission_Setup" />
+			<class name="com.dac.testcases.DTC.DTCLoginPage_TC" />
 		</classes>
-		</test> 		
+		</test> 	-->	
 	
 </suite>

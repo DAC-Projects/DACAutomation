@@ -339,7 +339,6 @@ public class BasePage {
 
 		JSWaiter.waitJQueryAngular(); 
 		wait.until(ExpectedConditions.visibilityOf(element));
-
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		int yLoc = element.getLocation().getY() - 10;
 		int xLoc = element.getLocation().getX();
@@ -453,7 +452,6 @@ public class BasePage {
 
 
 	public String[][] readTableInArray(WebElement table) {
-
 		JSWaiter.waitJQueryAngular();
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		List<WebElement> allRows = table.findElements(By.tagName("tr"));

@@ -467,14 +467,30 @@ public class ExcelHandler {
 	 * @throws Exception 
 	 */
 	public  String getValue(int column_no, int row_no) throws Exception {
-		
+	
 		row = sheet.getRow(row_no);
 		
 		if (row.getCell(column_no)!= null  && StringUtils.isNotBlank(row.getCell(column_no).toString())){
 			return row.getCell(column_no).toString();
 		}else return "";
 	}
-	
+public  List<String> getValueRow(int row_no) throws Exception {
+	ArrayList<String> wordList1 = new ArrayList<String>(); 
+
+		int i;
+		row = sheet.getRow(row_no);
+		for( i=0;i<40;i++) {
+			if(row.getCell(i)==null ||StringUtils.isBlank(row.getCell(i).toString())){
+					wordList1.add(null);
+					}else{
+					String val = row.getCell(i).toString();
+					wordList1.add(val);
+					}
+		}		System.out.println(wordList1);
+
+		
+		return wordList1;
+	}
 	
 	/**
 	 * @param name

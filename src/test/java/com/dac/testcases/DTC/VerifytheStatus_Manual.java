@@ -35,7 +35,7 @@ public class VerifytheStatus_Manual extends BaseClass {
 			         Manual_ID=wb.getCellValue(manual_com, wb.seacrh_pattern("Manual_ID", 0).get(0).intValue());
 			        System.out.println(Manual_ID);	
 			        String vendor="Bing";
-			     //  dtcLogin.verif_Status_complete(Manual_ID,vendor);
+			     dtcLogin.verif_Status_complete(Manual_ID,vendor);
 					count++;
 				}
 		  catch(Exception e)
@@ -54,7 +54,7 @@ public class VerifytheStatus_Manual extends BaseClass {
 					System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
 			         Manual_ID=wb.getCellValue(manual_can, wb.seacrh_pattern("Manual_ID", 0).get(0).intValue());
 			        System.out.println(Manual_ID);		
-			 	 // dtcLogin.verif_Status_cancel(Manual_ID);
+			 	  dtcLogin.verif_Status_cancel(Manual_ID);
 					count++;
 				}
 		  catch(Exception e)
@@ -94,7 +94,7 @@ public class VerifytheStatus_Manual extends BaseClass {
 					System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
 			         Manual_ID=wb.getCellValue(manual_allcan, wb.seacrh_pattern("Manual_ID", 0).get(0).intValue());
 			        System.out.println(Manual_ID);
-			       // dtcLogin.verif_Status_allcancel(Manual_ID);
+			       dtcLogin.verif_Status_allcancel(Manual_ID);
 					count++;}
 		  catch(Exception e)
 		  {
