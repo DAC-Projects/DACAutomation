@@ -259,7 +259,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 		}
 	}
 
-	@SuppressWarnings("unused")
+	/*@SuppressWarnings("unused")
 	@Test(priority = 11, dataProvider = "testData",description = "Verify manual date Selection")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
@@ -290,7 +290,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 		} else {
 			System.out.println("No Data Available");
 		}
-	}
+	}*/
 
 	//@SuppressWarnings("finally")
 	@DataProvider

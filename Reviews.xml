@@ -4,9 +4,10 @@
 		<listener class-name="resources.ExtentTestNGITestListener"></listener>
 	</listeners>
 	
-	<test name = "Reviews Staging">
+	<test name = "SA">
 		<parameter name="browser" value="chrome" />
 		<classes>
+			<!-- <class name="com.dac.testcases.TPSEE.TPSEE_Displayed_Review_Score_Test" /> -->
 			<class name = "com.dac.testcases.SA.ReviewsFeed_Test"/>
 		</classes>
 	</test>

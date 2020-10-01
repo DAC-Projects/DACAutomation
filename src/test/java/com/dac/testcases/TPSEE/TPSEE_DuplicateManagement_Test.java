@@ -103,7 +103,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	 */
 	@Test(priority = 5, description = "Test to launch new browser")
 	public void launchBrowser() throws Exception {
-		WebDriverManager.chromedriver().version("83.0.4103.39").setup();
+		WebDriverManager.chromedriver().version("85.0.4183.87").setup();
 		driver = new ChromeDriver();
 		driver.get(url);
 		driver.manage().window().maximize();

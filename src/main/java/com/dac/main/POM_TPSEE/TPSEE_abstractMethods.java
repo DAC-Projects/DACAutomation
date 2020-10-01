@@ -262,7 +262,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		int col_num = 0;
 		System.out.println("" + col);
 		List<Double> score = new ArrayList<Double>();
-		for (int i = 0; i < row.getLastCellNum(); i++) {
+		for (int i = 0; i <= row.getLastCellNum(); i++) {
 			if ((row.getCell(i).toString()).equals(Col_Name)) {
 				col_num = i;
 				System.out.println("" + col_num);
@@ -822,11 +822,13 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		JSWaiter.waitJQueryAngular();
 		if (ExportType.isDisplayed() && ExportType.isEnabled()) {
 			wait.until(ExpectedConditions.visibilityOf(ExportType));
+			scrollByElement(ExportType);
 			ExportType.click();
 			Thread.sleep(5000);
 		}
 		if (ExportBtn.isDisplayed() && ExportBtn.isEnabled()) {
 			wait.until(ExpectedConditions.visibilityOf(ExportBtn));
+			scrollByElement(ExportBtn);
 			ExportBtn.click();
 			Thread.sleep(5000);
 		}
@@ -848,16 +850,19 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		JSWaiter.waitJQueryAngular();
 		if (ExportDropdown.isEnabled() & ExportDropdown.isDisplayed()) {
 			wait.until(ExpectedConditions.visibilityOf(ExportDropdown));
+			scrollByElement(ExportDropdown);
 			action.moveToElement(ExportDropdown).click().perform();
 			Thread.sleep(5000);
 		}
 		if (ExportType.isEnabled() & ExportType.isDisplayed()) {
 			wait.until(ExpectedConditions.visibilityOf(ExportType));
+			scrollByElement(ExportType);
 			action.moveToElement(ExportType).moveToElement(SelectPDF).click().perform();
 			Thread.sleep(20000);
 		}
 		if (LinkClick.isEnabled() & LinkClick.isDisplayed()) {
 			wait.until(ExpectedConditions.visibilityOf(LinkClick));
+			scrollByElement(LinkClick);
 			action.moveToElement(LinkClick).click().perform();
 			Thread.sleep(20000);
 		}
@@ -877,11 +882,13 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			WebElement LinkClick) throws InterruptedException, FileNotFoundException, IOException {
 		JSWaiter.waitJQueryAngular();
 		if (ExportBtn.isDisplayed() & ExportBtn.isEnabled()) {
+			scrollByElement(ExportBtn);
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			action.moveToElement(ExportBtn).click().perform();
 			Thread.sleep(20000);
 		}
 		if (LinkClick.isDisplayed() & LinkClick.isEnabled()) {
+			scrollByElement(LinkClick);
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			action.moveToElement(LinkClick).click().perform();
 			Thread.sleep(20000);

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -160,12 +161,24 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 	/*-----------------------------------Locators---------------------------------------------------*/
 
 	
+	public boolean Done() {
+		if((driver.findElement(By.xpath("//button//span[@class='walkme-custom-balloon-button-text']"))).isDisplayed()) {
+			return true;
+		}else {
+		return false;
+		}
+	}
+	
 	public void clickDone() {
-		if(DoneBtn.isDisplayed()) {
-		waitForElement(DoneBtn, 10);
-		clickelement(DoneBtn);
+		boolean done = Done();
+		try {	
+		if(done == true) {
+			driver.findElement(By.xpath("//button//span[@class='walkme-custom-balloon-button-text']")).click();
 		}else {
 			System.out.println("NO Button Displayed");
+		}
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 	/**
@@ -514,7 +527,7 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 		String finaltooltipvalue = Graphs.getText();
 		System.out.println("\n Reading tooltipdata ********** \n");
 		System.out.println("\n tooltipvalue is \n" + finaltooltipvalue);
-		String finaldate = finaltooltipvalue.substring(2, 11);
+		String finaldate = finaltooltipvalue.substring(2, 12);
 		System.out.println(finaldate);
 		SimpleDateFormat formats = new SimpleDateFormat(var);
 		endtDate = formats.parse(finaldate);
@@ -534,6 +547,7 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 				Date ImpressionDate = verifyFBHistorygraph(PageImpressionGrph, PageImpressionGrphSec);
 				System.out.println("Impression Date is :" + ImpressionDate);
 				Date CalDate = getCurrenttoDate();
+				System.out.println("Calender to Dtae is :" +CalDate);
 				System.out.println("Calender Date is :" + CalDate);
 				Assert.assertEquals(ImpressionDate, CalDate);
 				BaseClass.addEvidence(CurrentState.getDriver(), "To Verify Impression Graph Date", "yes");

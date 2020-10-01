@@ -1,6 +1,10 @@
 package resources;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -10,8 +14,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import com.dac.main.LoginAC_Beta;
 import com.selenium.testevidence.SeleniumEvidence;
+
+import ru.yandex.qatools.ashot.AShot;
+import ru.yandex.qatools.ashot.Screenshot;
+import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 public abstract class BaseClass {
 
@@ -113,9 +122,15 @@ public abstract class BaseClass {
 		case "Sentiment Analysis":
 			return IAutoconst.neuralTuringTechAccount;
 		case "SA":
-			return IAutoconst.transparenSEE;
+			return IAutoconst.neuralturingtechStaging;
 		// IAutoconst.Fit4LessAccount;
 		// IAutoconst.neuralTuringTechAccount;
+			
+			case "DRS" :
+				return IAutoconst.DRSClient;
+			case "DRS1" :
+				return IAutoconst.DRSLocation;
+				
 		case "Social Engagement":
 			return IAutoconst.SocialdeepFieldAccount;
 
@@ -160,6 +175,7 @@ public abstract class BaseClass {
 			CurrentState.getLogger().info(testStep);
 		}
 	}
+
 
 	/**
 	 * To Click on Cancel Walkme Snippet

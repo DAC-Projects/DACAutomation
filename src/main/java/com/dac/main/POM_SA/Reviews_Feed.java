@@ -1,6 +1,8 @@
 package com.dac.main.POM_SA;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,6 +11,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -21,6 +24,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
+
+import bsh.org.objectweb.asm.Type;
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
@@ -169,7 +174,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		scrollByElement(LocationExport);
 		clickelement(LocationExport);
 		Thread.sleep(3000);
-		convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + LocationDataExport));
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + LocationDataExport));
 	}
 
 	/**
@@ -266,33 +271,33 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 				List<String> XLSource = new ArrayList<String>();
 
 				if (CurrentState.getBrowser().equals("chrome")) {
-					XLBname = GetDataUsingColName(chromepath, "Business Name");
+					XLBname = readCsvColdata(chromepath, 4);
 					Thread.sleep(1000);
-					XLRefCode = GetDataUsingColName(chromepath, "Reference Code");
+					XLRefCode = readCsvColdata(chromepath, 1);
 					Thread.sleep(1000);
-					XLURL = GetDataUsingColName(chromepath, "URL");
+					XLURL = readCsvColdata(chromepath, 3);
 					Thread.sleep(1000);
-					XLSource = GetDataUsingColName(chromepath, "Source");
+					XLSource = readCsvColdata(chromepath, 2);
 					Thread.sleep(1000);
 				}
 				if (CurrentState.getBrowser().equals("IE")) {
-					XLBname = GetDataUsingColName(IEpath, "Business Name");
+					XLBname = readCsvColdata(IEpath, 4);
 					Thread.sleep(1000);
-					XLRefCode = GetDataUsingColName(IEpath, "Reference Code");
+					XLRefCode = readCsvColdata(IEpath, 1);
 					Thread.sleep(1000);
-					XLURL = GetDataUsingColName(IEpath, "URL");
+					XLURL = readCsvColdata(IEpath, 3);
 					Thread.sleep(1000);
-					XLSource = GetDataUsingColName(IEpath, "Source");
+					XLSource = readCsvColdata(IEpath, 2);
 					Thread.sleep(1000);
 				}
 				if (CurrentState.getBrowser().equals("Firefox")) {
-					XLBname = GetDataUsingColName(FFpath, "Business Name");
+					XLBname = readCsvColdata(FFpath, 4);
 					Thread.sleep(1000);
-					XLRefCode = GetDataUsingColName(FFpath, "Reference Code");
+					XLRefCode = readCsvColdata(FFpath, 1);
 					Thread.sleep(1000);
-					XLURL = GetDataUsingColName(FFpath, "URL");
+					XLURL = readCsvColdata(FFpath, 3);
 					Thread.sleep(1000);
-					XLSource = GetDataUsingColName(FFpath, "Source");
+					XLSource = readCsvColdata(FFpath, 2);
 					Thread.sleep(1000);
 				}
 				soft.assertEquals(XLBname.size(), BusinssName.size());
@@ -320,6 +325,19 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		}
 	}
 
+	
+	public 	List<String> readCsvColdata(String path, int colnum) throws IOException {
+		String splitBy = ",";
+		BufferedReader br = new BufferedReader(new FileReader(path));
+        String line = br.readLine();
+        List<String> csvcollist = new ArrayList<String>();
+        while ((line = br.readLine()) !=null){
+        	String[] b = line.split(splitBy);
+        	csvcollist.add(b[colnum].toString());      
+        }
+        System.out.println("Data in Type column : " +csvcollist);
+		return csvcollist;
+	}
 	/**
 	 * Verify Review count and Number of entries in a table
 	 */

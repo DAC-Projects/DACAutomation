@@ -420,6 +420,10 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 		FileHandler.renameTo(new File(Exportpath + report_export), Exportpath + export);
 		}
 	
+	public void renamefile(String filename, String export) throws FileNotFoundException, IOException {
+		FileHandler.renameTo(new File(Exportpath + filename), Exportpath + export);
+	}
+	
 	
 	/**
 	 * Get the date from highcharts section 
@@ -664,6 +668,8 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
             		wb.close();
 	            	return ExportData; 
 	    }	
+	
+	
 	
 	/**
 	 * Top button fuctionality
