@@ -1,0 +1,7 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Fri Nov 04 09:52:56 IST 2016
+file\:\\\\ISCAZRLIVEDMP01\\ivy\\integrisTestAuto\\maven_repository/.error=Could not transfer artifact unsorted-libraries\:AHDDF\:pom\:4.1 from/to Test_Automation_Repository (file\:\\\\ISCAZRLIVEDMP01\\ivy\\integrisTestAuto\\maven_repository)\: Repository path \\\\ISCAZRLIVEDMP01\\ivy\\integrisTestAuto\\maven_repository does not exist, and cannot be created.
+@default-Test_Automation_Repository-file\:\\\\ISCAZRLIVEDMP01\\ivy\\integrisTestAuto\\maven_repository/.lastUpdated=1478233376320
+https\://repo.maven.apache.org/maven2/.lastUpdated=1478233077084
+29e9f71d68d5c74d165f01dd9a7af565b50482f8@172.26.0.3\:8080>@default-central-https\://repo.maven.apache.org/maven2/.lastUpdated=1464761517024
+https\://repo.maven.apache.org/maven2/.error=
