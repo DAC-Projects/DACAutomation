@@ -236,13 +236,14 @@ public class Page_LocationBasicInfoTab extends BasePage {
 		System.out.println(City);		System.out.println(State);
 		System.out.println(Zipcode);		System.out.println(MainBusinessPhoneNumber);
 		System.out.println(PrimaryLanguage);
-		
+		Thread.sleep(5000);
 		setAccountName(AccountName);
 		setReferenceCode(ReferenceCode);
 		setReferenceCode2(ReferenceCode2);
 		setBusinessName(BusinessName);
 //		setShortBusinessName(ShortBusinessName);
 		setCountry(Country);
+		Thread.sleep(5000);
 		wait.until(ExpectedConditions.visibilityOfAllElements(elAddressLine1));
 		setAddress1(AddressLine1);
 		if(elAddressLine2.isDisplayed()) {

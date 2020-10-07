@@ -46,9 +46,9 @@ public interface IAutoconst {
 	
 	/*----------------LPAD Variables----------------*/
 	String LPADUrlBeta="https://dac-map-beta.azurewebsites.net/";
-	String ResellerAdmin="cseetestreseller@gmail.com";
+	String ResellerAdmin="csee_external_reseller";
 	String ResellerPassword="111111";
-	String Reseller="DAC Group";
+	String Reseller="Domain N";
 	String LocationDataExcelPath="./data/LocationSampleData.xlsx";
 	String AddressFormatExcelPath="./data/AddressFormats.xlsx";
 	String LpadAccountName="SA Test DRS";

@@ -139,9 +139,9 @@ public class Page_LocationNavigationTabList extends BasePage {
 			actions.moveToElement(btnOK).click().build().perform();//confirm purchase
 			Thread.sleep(3000);
 			if(btnOK.isDisplayed()) {
-				clickelement(btnOK);//btnOK.click();//incomplete waring
-				System.out.println("Complete Message Displayed");
 				Thread.sleep(1000);
+				System.out.println("Complete Message Displayed");
+				clickelement(btnOK);//btnOK.click();//incomplete waring
 			}
 //			wait.until(ExpectedConditions.visibilityOf(btnOK));//for success message popup
 //			btnOK.click();
