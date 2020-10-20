@@ -57,13 +57,13 @@ System.out.println(x);
 	public void readdata(int[] colNum,String addedcol, String deletedcol)  throws Exception {
 
 
-		for(int i=2;i<5;i++) {
+		for(int i=2;i<20;i++) {
 
 			store1=a.getCellValue(i, 0);
 			store2=b.getCellValue(i, 0);
 
 			if(store1.equals(store2)) {
-				c.setCellValue(i-1, c.seacrh_pattern("Account Number", 0).get(0).intValue(),store1.replace(".0", ""));
+				c.setCellValue(i-1, c.seacrh_pattern("Reference Code", 0).get(0).intValue(),store1.replace(".0", ""));
 
 				//System.out.println("i value"+i);
 				added = new ArrayList<String>();
