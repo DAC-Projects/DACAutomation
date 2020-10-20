@@ -140,4 +140,53 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 			Thread.sleep(5000);		
 			soft.assertAll();
 	}
+	
+	@Test(priority = 10, description = "Test to sort data and verify")
+	public void verifySortedLocationNumber() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.verifyLocationNumber();
+		addEvidence(CurrentState.getDriver(), "Test to verify data sorted", "yes");
+	}
+	
+	@Test(priority = 11, description = "Test to sort data and verify")
+	public void verifySortedName() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.verifyName();
+		addEvidence(CurrentState.getDriver(), "Test to verify data sorted", "yes");
+	}
+	
+	@Test(priority = 12, description = "Test to sort data and verify")
+	public void verifySortedAddress() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.verifyAddress();
+		addEvidence(CurrentState.getDriver(), "Test to verify data sorted", "yes");
+	}
+	
+	@Test(priority = 13, description = "Test to sort data and verify")
+	public void verifySortedCity() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.verifyCity();
+		addEvidence(CurrentState.getDriver(), "Test to verify data sorted", "yes");
+	}
+	
+	@Test(priority = 14, description = "Test to sort data and verify")
+	public void verifySortedState() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.verifyState();
+		addEvidence(CurrentState.getDriver(), "Test to verify data sorted", "yes");
+	}
+	
+	@Test(priority = 15, description = "Test to sort data and verify")
+	public void verifySortedPostCode() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.verifyPostCode();
+		addEvidence(CurrentState.getDriver(), "Test to verify data sorted", "yes");
+	}
+	
+	@Test(priority = 16, description = "Test to sort data and verify")
+	public void verifySortedPhone() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.verifyPhone();
+		addEvidence(CurrentState.getDriver(), "Test to verify data sorted", "yes");
+	}
 }

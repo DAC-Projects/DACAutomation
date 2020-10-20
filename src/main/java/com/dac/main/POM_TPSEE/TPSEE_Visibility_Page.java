@@ -231,6 +231,36 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//li[@id='liSS']")
 	public WebElement SocialSites;
+	
+	@FindBy(xpath = "//table[@id='visibility_results']//th[contains(text(),'Name')]")
+	private WebElement Namehead;
+	
+	private String Name = "(//table[@id='visibility_results']//tbody//td[2])";
+	
+	@FindBy(xpath = "//table[@id='visibility_results']//th[contains(text(),'Address')]")
+	private WebElement Addresshead;
+	
+	private String Address = "(//table[@id='visibility_results']//tbody//td[3])";
+	
+	@FindBy(xpath = "//table[@id='visibility_results']//th[contains(text(),'City')]")
+	private WebElement Cityhead;
+	
+	private String City = "(//table[@id='visibility_results']//tbody//td[4])";
+	
+	@FindBy(xpath = "//table[@id='visibility_results']//th[contains(text(),'St/Prov/Region')]")
+	private WebElement Statehead;
+	
+	private String State = "(//table[@id='visibility_results']//tbody//td[5])";
+	
+	@FindBy(xpath = "//table[@id='visibility_results']//th[contains(text(),'Postal Code')]")
+	private WebElement PostCodehead;
+	
+	private String PostCode = "(//table[@id='visibility_results']//tbody//td[6])";
+	
+	@FindBy(xpath = "//table[@id='visibility_results']//th[contains(text(),'Phone')]")
+	private WebElement Phonehead;
+	
+	private String Phone = "(//table[@id='visibility_results']//tbody//td[7])";
 
 	/*--------------------------- Sites Tabs------------------------*/
 
@@ -413,8 +443,13 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		}
 		System.out.println("The size is :" + size);
 		for (int k = 1; k <= newsize; k++) {
-			driver.findElement(By.xpath("(//*[@class = 'progress-bar' ])[" + k + "]")).click();
+			driver.findElement(By.xpath("(//*[contains(@class, 'progress-bar') ])[" + k + "]")).click();
 			System.out.println("Progress Bar clicked");
+			WebElement progressentry = driver.findElement(By.xpath("((//*[contains(@class, 'progress-bar')])/../../../div[contains(@class,'col-lg-1 bar-chart-column found-number')])["+ k +"]"));
+			String pentry = progressentry.getText();
+			System.out.println("The string entry is : " +pentry);
+			int proentry = Integer.parseInt(pentry);
+			System.out.println("The progress bar total number is : " +proentry);
 			waitForElement(progressdata, 40);
 			scrollByElement(progressdata);
 			Thread.sleep(5000);
@@ -430,8 +465,10 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 				int page = Integer.parseInt(n);
 				System.out.println("\n" + page);
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
-				String entiresText = driver.findElement(By.className("dataTables_info")).getText();
-				entiresText = entiresText.substring(entiresText.indexOf("("));
+				WebElement entry = driver.findElement(By.xpath("//div[@id='visibility_results_info']"));
+				int entrytext = NumOfentries(entry);
+				System.out.println("UI table entry is : " +entrytext);
+				soft.assertTrue(entrytext==proentry, "Table entry " +entrytext+ " not equals to found entry " +proentry);
 				WebElement TableTitle = driver.findElement(By.xpath("//*[@id='visibilityTableHeader']/h3"));
 				scrollByElement(TableTitle);
 				int count = 0;
@@ -476,8 +513,6 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 					}
 				}
 				System.out.println("Total number of entries in table : " + count);
-				Assert.assertTrue(entiresText.contains("" + count + ""),
-						"Table Data count matches with total enties count");
 				scrollByElement(progresstable);
 				System.out.println("UI Table Values :" + tableCellValues);
 				List<Map<String, String>> TableExport = getExporttableDataFound();
@@ -500,10 +535,34 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 					e.printStackTrace();
 				}
 			}
-			/*GoTo();
+			GoTo();
 			Thread.sleep(3000);
-			resultperpage(soft);*/
+			resultperpage(soft);
 		}
+	}
+	
+	public void verifyNameFound() throws InterruptedException {
+		TableSorting(Namehead, Name, EntryText, VisibityTableRow, progresstable);
+	}
+	
+	public void verifyAddressFound() throws InterruptedException {
+		TableSorting(Addresshead, Address, EntryText, VisibityTableRow, progresstable);
+	}
+	
+	public void verifyCityFound() throws InterruptedException {
+		TableSorting(Cityhead, City, EntryText, VisibityTableRow, progresstable);
+	}
+	
+	public void verifyStateFound() throws InterruptedException {
+		TableSorting(Statehead, State, EntryText, VisibityTableRow, progresstable);
+	}
+	
+	public void verifyPostCodeFound() throws InterruptedException {
+		TableSorting(PostCodehead, PostCode, EntryText, VisibityTableRow, progresstable);
+	}
+	
+	public void verifyPhoneFound() throws InterruptedException {
+		TableSorting(Phonehead, Phone, EntryText, VisibityTableRow, progresstable);
 	}
 
 	/**
@@ -531,6 +590,11 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 				action.doubleClick(driver.findElement(By.xpath("(//*[contains(@class , 'not-bar' )])[" + k + "]")))
 						.build().perform();
 				System.out.println("Progress Bar clicked");
+				WebElement progressentry = driver.findElement(By.xpath("(//*[contains(@class , 'col-lg-2 bar-chart-column not-number' )])[" + k + "]"));
+				String pentry = progressentry.getText();
+				System.out.println("The string entry is : " +pentry);
+				int proentry = Integer.parseInt(pentry);
+				System.out.println("The progress bar entry is :" +proentry);
 				waitForElement(progressdata, 40);
 				scrollByElement(progressdata);
 				if (driver.findElement(By.className("dataTables_info")).isDisplayed()) {
@@ -546,8 +610,10 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 					int page = Integer.parseInt(n);
 					System.out.println("\n" + page);
 					wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
-					String entiresText = driver.findElement(By.className("dataTables_info")).getText();
-					entiresText = entiresText.substring(entiresText.indexOf("("));
+					WebElement entry = driver.findElement(By.xpath("//div[@id='visibility_results_info']"));
+					int entrytext = NumOfentries(entry);
+					System.out.println("UI table entry is : " +entrytext);
+					soft.assertTrue(entrytext==proentry, "Table entry " +entrytext+ " not equals to not found " +proentry);
 					WebElement TableTitle = driver.findElement(By.xpath("//*[@id='visibilityTableHeader']/h3"));
 					scrollByElement(TableTitle);
 					int count = 0;
@@ -594,9 +660,6 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 
 					}
 					System.out.println("Total number of entries in table : " + count);
-					Assert.assertTrue(entiresText.contains("" + count + ""),
-							"Table Data count matches with total enties count");
-
 					System.out.println("UI Table Values :" + tableCellValues);
 					List<Map<String, String>> TableExport = getExporttableDataNotFound();
 					System.out.println("Excel File Values :" + TableExport);

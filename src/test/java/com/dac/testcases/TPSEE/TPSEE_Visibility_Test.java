@@ -68,7 +68,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
 	}
 	
-	@Test(priority = 3, description = "Test to verify report highlighted")
+/*	@Test(priority = 3, description = "Test to verify report highlighted")
 	public void VerifyReportHighlight() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.visibilityhightlight();
@@ -107,7 +107,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		}
 	}
 
-	/**
+	*//**
 	 * Test To get overall score and compare with dashboard values
 	 * 
 	 * @throws Exception
@@ -122,13 +122,13 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		Assert.assertEquals(score, ovrvwscr);
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Visibility page");
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
-	}*/
+	}
 
-	/**
+	*//**
 	 * Test to verify zoom functionality
 	 * 
 	 * @throws Exception
-	 */
+	 *//*
 
 	@Test(priority = 5, groups = { "smoke" }, description = "Verify Zoom Functionality")
 	public void gethighchartsdate() throws Exception {
@@ -181,7 +181,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		}
 	}
 
-	/**
+	*//**
 	 * Test for SiteTable data in Visibility Page
 	 * 
 	 * @throws Exception
@@ -197,9 +197,9 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Data of Directory Sites", "yes");
 		data.verifySocialSites();
 		addEvidence(CurrentState.getDriver(), "Data of Social Sites Tab", "yes");
-	}*/
+	}
 
-	/**
+	*//**
 	 * Test to apply filters
 	 * 
 	 * @param Group
@@ -208,7 +208,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * @param City
 	 * @param Location
 	 * @throws Exception
-	 */
+	 *//*
 	@Test(priority = 8, groups = { "smoke" }, description = "Verify Visibility page loads after filter applied")
 	public void verifyFilteringReportsVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -238,11 +238,11 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		}
 	}
 
-	/**
+	*//**
 	 * Test to export file as CSV
 	 * 
 	 * @throws Exception
-	 */
+	 *//*
 	@Test(priority = 9, groups = { "smoke" }, description = "Test for export file as CSV")
 	public void verifyOverviewReportnExportVisibilityCSV() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -250,11 +250,11 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
 	}
 
-	/**
+	*//**
 	 * Test to export file as XLSX
 	 * 
 	 * @throws Exception
-	 */
+	 *//*
 	@Test(priority = 10, groups = { "smoke" }, description = "Test for export file as XLSX")
 	public void verifyOverviewReportnExportVisibilityXLSX() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -262,11 +262,11 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
 	}
 
-	/**
+	*//**
 	 * Test to export as Current Date Pdf
 	 * 
 	 * @throws Exception
-	 */
+	 *//*
 	@Test(priority = 11, groups = { "smoke" }, description = "Test for export file as pdf for Current Date")
 	public void verifyexportcurrentpdf() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -274,11 +274,11 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
 	}
 
-	/**
+	*//**
 	 * Test to export a file as PDF of applied date
 	 * 
 	 * @throws Exception
-	 */
+	 *//*
 	@Test(priority = 12, groups = {
 			"smoke" }, dataProvider = "testData", description = "Test for export file as Visibility History pdf")
 	public void PDFHistoryExport(String from_day, String from_month, String from_year, String to_day, String to_month,
@@ -296,18 +296,18 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
 	}
 
-	/**
+	*//**
 	 * Test for Comparing Tooltip and overview report in Visibility Page
 	 * 
 	 * @throws Exception
-	 */
+	 *//*
 	@Test(priority = 13, groups = {
 			"smoke" }, description = "Test to compare ToolTip Value and Overall Visibility Score")
 	public void verifyOverviewReportnTooltipVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
 		addEvidence(CurrentState.getDriver(), "Tooltip values verified from Overview visibility report", "yes");
-	}
+	}*/
 
 	/**
 	 * Test for compare number of rows and data from export table and table data in
@@ -326,13 +326,55 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		soft.assertAll();
 		addEvidence(CurrentState.getDriver(), "Test to verify GoTo and Results Per Page", "yes");
 	}
+	
+	/*@Test(priority = 15, description = "Test to verify sorting data of name column")
+	public void verifyfoundnamecolumn() throws Exception {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.verifyNameFound();
+		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
+	}
+	
+	@Test(priority = 16, description = "Test to verify sorting data of Address column")
+	public void verifyfoundAddresscolumn() throws Exception {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.verifyAddressFound();
+		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
+	}
+	
+	@Test(priority = 17, description = "Test to verify sorting data of City column")
+	public void verifyfoundCitycolumn() throws Exception {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.verifyCityFound();
+		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
+	}
+	
+	@Test(priority = 18, description = "Test to verify sorting data of State column")
+	public void verifyfoundStatecolumn() throws Exception {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.verifyStateFound();
+		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
+	}
+	
+	@Test(priority = 19, description = "Test to verify sorting data of PostalCode column")
+	public void verifyfoundPostalCodecolumn() throws Exception {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.verifyPostCodeFound();
+		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
+	}
+	
+	@Test(priority = 20, description = "Test to verify sorting data of Phone Number column")
+	public void verifyfoundPhonecolumn() throws Exception {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.verifyPhoneFound();
+		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
+	}*/
 
 	/**
 	 * Test to verify Top button functionality
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 15, groups = { "smoke" }, description = "Verify Top Button")
+	@Test(priority = 21, groups = { "smoke" }, description = "Verify Top Button")
 	public void GetTopBtn() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.TopButton();
@@ -345,7 +387,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 16, groups = { "smoke" }, description = "Test for verifying progress bar in Visibility page")
+	@Test(priority = 22, groups = { "smoke" }, description = "Test for verifying progress bar in Visibility page")
 	public void numberofentriesnExporttableNotFoundVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.DataTableNotfound(soft);
@@ -356,6 +398,48 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		soft.assertAll();
 		addEvidence(CurrentState.getDriver(), "Test to verify GoTo and Results Per Page", "yes");
 	}
+	
+	/*@Test(priority = 23, description = "Test to verify sorting data of name column")
+	public void verifyNotfoundnamecolumn() throws Exception {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.verifyNameFound();
+		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
+	}
+	
+	@Test(priority = 24, description = "Test to verify sorting data of Address column")
+	public void verifyNotfoundAddresscolumn() throws Exception {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.verifyAddressFound();
+		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
+	}
+	
+	@Test(priority = 25, description = "Test to verify sorting data of City column")
+	public void verifyNotfoundCitycolumn() throws Exception {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.verifyCityFound();
+		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
+	}
+	
+	@Test(priority = 26, description = "Test to verify sorting data of State column")
+	public void verifyNotfoundStatecolumn() throws Exception {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.verifyStateFound();
+		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
+	}
+	
+	@Test(priority = 27, description = "Test to verify sorting data of PostalCode column")
+	public void verifyNotfoundPostalCodecolumn() throws Exception {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.verifyPostCodeFound();
+		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
+	}
+	
+	@Test(priority = 28, description = "Test to verify sorting data of Phone Number column")
+	public void verifyNotfoundPhonecolumn() throws Exception {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.verifyPhoneFound();
+		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
+	}*/
 
 	@SuppressWarnings("finally")
 	@DataProvider

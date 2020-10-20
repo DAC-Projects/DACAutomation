@@ -19,6 +19,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
@@ -53,7 +54,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 
 	/*-----------------------ScoresTable---------------------------*/
 
-	@FindBy(xpath = "//div[@id='divRankingTable']/table")
+	@FindBy(xpath = "//table[@id='rankingTable']")
 	private WebElement ScoresTable;
 
 	@FindBy(xpath = "//div[@id='divRankingTable']//thead")
@@ -75,7 +76,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//div[@id='keywordTableExportDropdown']//a[contains(text(),'Export as XLSX')]")
 	private WebElement Export_xlsx;
 
-	@FindBy(xpath = "//*[@id='page-content']//h1")
+	@FindBy(xpath = "//*[@class='page-title']")
 	private WebElement Title;
 
 	@FindBy(xpath = "//p[@class= 'lead']")
@@ -84,7 +85,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//table[@id='rankingDetail']")
 	private WebElement RankingTable;
 
-	@FindBy(xpath = "//div[@id='keyword_table_title']")
+	@FindBy(xpath = "//h4[@id='keyword_table_title']")
 	private WebElement RankingTableTitle;
 
 	@FindBy(xpath = "//table[@id='rankingDetail']//thead")
@@ -96,7 +97,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//div[@id='rankingDetail_info']")
 	private WebElement entiresText;
 
-	@FindBy(xpath = "//div[@class='col-sm-12'][1]")
+	@FindBy(xpath = "//div[@id='keywordBox'][1]")
 	private WebElement acckeypanel;
 
 	@FindBy(xpath = "(//div/a[@class='remove'])[last()]")
@@ -112,7 +113,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "(//div[@class='col-sm-12']//table)[2]")
 	private WebElement GroupKeypanel;
 
-	@FindBy(xpath = "(//div[contains(@class , 'selectize-input items')])[2]")
+	@FindBy(xpath = "//div[@id='divGroupKeywords']")
 	private WebElement GroupKeywords;
 
 	@FindBy(xpath = "//button[@id='btnSave']")
@@ -202,7 +203,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 							clickelement(removeacckey);
 							waitForElement(accountkeyword, 20);
 							AccountKeyword = acckeypanel
-									.findElement(By.xpath("(//div[@class='col-sm-12'][1]//input)[2]"));
+									.findElement(By.xpath("(//div[contains(@class,'selectize-input items')][1]//input)[1]"));
 							AccountKeyword.sendKeys(AccKey);
 							AccountKeyword.sendKeys(Keys.ENTER);
 						} else {
@@ -215,11 +216,13 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 					if (!GrKey.equals("None")) {
 						clickelement(GroupKeypanel);
 						waitForElement(Group, 20);
-						GroupKey = Group.findElement(By.xpath("//div[@data-value='" + GrKey + "']"));
+						Select select = new Select(Group);
+						select.selectByVisibleText(GrKey);
+						/*GroupKey = Group.findElement(By.xpath("//div[@data-value='" + GrKey + "']"));
 						waitForElement(GroupKey, 10);
-						clickelement(GroupKey);
+						clickelement(GroupKey);*/
 						waitUntilLoad(driver);
-						GroupKeyword = acckeypanel.findElement(By.xpath("(//div[@class='col-sm-12'][1]//input)[2]"));
+						GroupKeyword = acckeypanel.findElement(By.xpath("(//div[contains(@class,'selectize-input items')][1]//input)[2]"));
 						GroupKeyword.sendKeys(GrKeyword);
 						GroupKeyword.sendKeys(Keys.ENTER);
 					} else {
@@ -300,7 +303,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 			String entiresText = driver.findElement(By.className("dataTables_info")).getText();
 			entiresText = entiresText.substring(entiresText.indexOf("("));
-			WebElement TableTitle = driver.findElement(By.xpath("//div[@id='keyword_table_title']"));
+			WebElement TableTitle = driver.findElement(By.xpath("//h4[@id='keyword_table_title']"));
 			scrollByElement(TableTitle);
 			WebElement locationsText = driver.findElement(By.xpath("//table[@id='rankingDetail']//tbody//tr"));
 			scrollByElement(locationsText);
@@ -555,7 +558,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 		waitForElement(TitleText, 10);
 		String TitleTxt = TitleText.getText();
 		System.out.println("The title text for GR Report is :" + TitleTxt);
-		Assert.assertEquals("Google Ranking Report" + "\n" + "Ranking Info", Titl);
+		Assert.assertEquals("Google Ranking Report", Titl);
 		Assert.assertEquals(
 				"This report shows how a location's Google listing is ranking when potential customers search for keywords in Google Maps.",
 				TitleTxt);

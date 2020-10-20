@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Suite" parallel="none">
+	
+	<listeners>
+		<!-- <listener class-name="resources.IntegrationTestListener"></listener> -->
+		<listener class-name="resources.ExtentTestNGITestListener"></listener>
+	</listeners>
+	
+	<test name = "TransparenSeeBetaDup" >
+		<parameter name = "browser" value = "chrome"/>
+			<classes>
+				<class name="com.dac.testcases.TPSEE.TPSEE_DuplicateManagement_Test" />
+			</classes>
+	</test>
+</suite>

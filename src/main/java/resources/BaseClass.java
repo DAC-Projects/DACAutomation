@@ -116,9 +116,27 @@ public abstract class BaseClass {
 			return IAutoconst.deepfieldAccount;
 			//return IAutoconst.NandithaAccount;
 
-		case "TransparenSEE":
-			return IAutoconst.transparenSEE;
-
+		case "TransparenSEEBetaClient":
+			return IAutoconst.transparenSEEClientBeta;
+			
+		case "TransparenSeeBetaLocation":
+			return IAutoconst.transparenSEELocationBeta;
+			
+		case "TransparenSeeBetaDup" :
+			return IAutoconst.transparenSEEDupData;
+			
+		case "TransparenSeeBetaBingLocation" :
+			return IAutoconst.transparenSEEBingLocation;
+			
+		case "TransparenSEEStagingClient" :
+			return IAutoconst.transparenSEEStagingClient;
+			
+		case "TransparenSeeStagingLocation" :
+			return IAutoconst.transparenSEEStagingLocation;
+			
+		case "TransparenSeeClientBetaFace" :
+			return IAutoconst.transparenSEEFaceBetaClient;
+			
 		case "Sentiment Analysis":
 			return IAutoconst.neuralTuringTechAccount;
 		case "SA":
@@ -146,7 +164,7 @@ public abstract class BaseClass {
 			return IAutoconst.neuralturingtechStaging;
 
 		default:
-			return IAutoconst.transparenSEE;
+			return IAutoconst.transparenSEEClientBeta;
 		}
 
 	}

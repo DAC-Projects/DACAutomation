@@ -4,7 +4,6 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
-//import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +35,8 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
+	SoftAssert soft = new SoftAssert();
+	int sortrow;
 
 	// Navigating to TPSEE Content_Analysis page
 	public TPSEE_AllLocations_Page(WebDriver driver) {
@@ -109,7 +110,42 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 	
 	@FindBy(xpath = "//*[@id='all_locations']")
 	private WebElement AllLocationsPage;
-
+	
+	@FindBy(xpath = "//table[@id='locationTable']//th[contains(text(),'Location Number')]")
+	private WebElement LocationNumberhead;
+	
+	private String LocationNumber = "(//table[@id='locationTable']//tbody//td[1])";
+	
+	@FindBy(xpath = "//table[@id='locationTable']//th[contains(text(),'Name')]")
+	private WebElement Namehead;
+	
+	private String Name = "(//table[@id='locationTable']//tbody//td[2])";
+	
+	@FindBy(xpath = "//table[@id='locationTable']//th[contains(text(),'Address')]")
+	private WebElement Addresshead;
+	
+	private String Address = "(//table[@id='locationTable']//tbody//td[3])";
+	
+	@FindBy(xpath = "//table[@id='locationTable']//th[contains(text(),'City')]")
+	private WebElement Cityhead;
+	
+	private String City = "(//table[@id='locationTable']//tbody//td[4])";
+	
+	@FindBy(xpath = "//table[@id='locationTable']//th[contains(text(),'St/Prov/Region')]")
+	private WebElement Statehead;
+	
+	private String State = "(//table[@id='locationTable']//tbody//td[5])";
+	
+	@FindBy(xpath = "//table[@id='locationTable']//th[contains(text(),'Postal Code')]")
+	private WebElement PostCodehead;
+	
+	private String PostCode = "(//table[@id='locationTable']//tbody//td[6])";
+	
+	@FindBy(xpath = "//table[@id='locationTable']//th[contains(text(),'Phone')]")
+	private WebElement Phonehead;
+	
+	private String Phone = "(//table[@id='locationTable']//tbody//td[7])";
+	
 	/*-------------------------Pagination-----------------------*/
 
 	/*
@@ -123,7 +159,8 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 	}
 
 	Select select;
-
+	List<String> List1 = new ArrayList<String>();
+	
 	/**
 	 * This method is used to check whether data is there in table or not based on
 	 * the applied criteria
@@ -358,6 +395,7 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
 		Thread.sleep(3000);
 		ResultsperPage(soft, entiresText, ResultperPage);
+		
 	}
 	
 	public void GoTo() throws InterruptedException {
@@ -372,23 +410,31 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 		reporthighlight(AllLocationsPage, LocationSec);
 	}
 	
-	public void TableSorting() throws InterruptedException {
-		waitForElement(LocationTable, 40);
-		String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
-		int page = Integer.parseInt(n);
-		System.out.println("\n" + page);
-		int totalentries = NumOfentriesinPage(entiresText);
-		System.out.println("The total entries are :" +totalentries);
-		if (paginationNext.isDisplayed()) {
-			
-			// Code for Sorting and verify
-			
-			
-		} if (paginationNext.isEnabled()) {
-			JSWaiter.waitJQueryAngular();
-			scrollByElement(paginationNext);
-			paginationNext.click();
-			Thread.sleep(4000);
-		}
+	public void verifyLocationNumber() throws InterruptedException {
+		TableSorting(LocationNumberhead, LocationNumber, entiresText, LocationTableRow, LocationTable);
+	}
+	
+	public void verifyName() throws InterruptedException {
+		TableSorting(Namehead, Name, entiresText, LocationTableRow, LocationTable);
+	}
+	
+	public void verifyAddress() throws InterruptedException {
+		TableSorting(Addresshead, Address, entiresText, LocationTableRow, LocationTable);
+	}
+	
+	public void verifyCity() throws InterruptedException {
+		TableSorting(Cityhead, City, entiresText, LocationTableRow, LocationTable);
+	}
+	
+	public void verifyState() throws InterruptedException {
+		TableSorting(Statehead, State, entiresText, LocationTableRow, LocationTable);
+	}
+	
+	public void verifyPostCode() throws InterruptedException {
+		TableSorting(PostCodehead, PostCode, entiresText, LocationTableRow, LocationTable);
+	}
+	
+	public void verifyPhone() throws InterruptedException {
+		TableSorting(Phonehead, Phone, entiresText, LocationTableRow, LocationTable);
 	}
 }

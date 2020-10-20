@@ -89,7 +89,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//*[@id='incomplete_results']/thead")
 	private WebElement SiteLinkTableHeader;
 
-	@FindBy(xpath = "//div[@id='jump_to_table']//tbody//tr")
+	@FindBy(xpath = "//table[@id='incomplete_results']//tbody//tr")
 	private List<WebElement> SiteLinkTableRow;
 
 	@FindBy(xpath = "//table[@id='incomplete_results']")
@@ -356,7 +356,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 				String entiresText = driver.findElement(By.className("dataTables_info")).getText();
 				entiresText = entiresText.substring(entiresText.indexOf("("));
-				WebElement TableTitle = driver.findElement(By.xpath("//div[@id='incomplete_table_title']"));
+				WebElement TableTitle = driver.findElement(By.xpath("(//h4[@class='section-title'])[2]"));
 				scrollByElement(TableTitle);
 				String s = TableTitle.getText();
 				System.out.println("The vendor is :" + s);
@@ -414,7 +414,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 						}
 					}
 					System.out.println("Total number of entries in table : " + count);
-					Assert.assertTrue(entiresText.contains("" + count + ""),
+					soft.assertTrue(entiresText.contains("" + count + ""),
 							"Table Data count matches with total enties count");
 					scrollByElement(Tableresults);
 					System.out.println("UI Table Values :" + tableCellValues);
@@ -426,7 +426,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 					System.out.println("Excel File size is :" + XLSize);
 					if (UISize == XLSize) {
 						for (int i = 0; i <= UISize; i++) {
-							// assertTrue(tableCellValues.get(i).equals(TableExport.get(i)));
+							 soft.assertTrue(tableCellValues.get(i).equals(TableExport.get(i)));
 						}
 					}
 					deletefile();
@@ -446,11 +446,10 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 					e.printStackTrace();
 				}
 			}
-			
+		}			
 			GoTo();
 			Thread.sleep(3000);
-			resultperpage(soft);
-		}
+			resultperpage(soft);		
 	}
 
 	/*

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Suite" parallel="none">
+	
+	<listeners>
+		<!-- <listener class-name="resources.IntegrationTestListener"></listener> -->
+		<listener class-name="resources.ExtentTestNGITestListener"></listener>
+	</listeners>
+	
+	<test name = "TransparenSEEBetaClient" >
+		<parameter name = "browser" value = "chrome"/>
+			<classes>
+				<!-- <class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />  
+				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" /> -->
+				<!-- <class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" /> -->
+				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
+				<!-- <class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_KPINavigation_Test" /> -->
+			</classes>
+	</test>
+</suite>

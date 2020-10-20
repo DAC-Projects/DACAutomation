@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +42,6 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import com.dac.main.BasePage;
-import com.dac.main.Navigationpage;
 
 import resources.CurrentState;
 import resources.FileHandler;
@@ -55,6 +55,9 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	WebDriverWait wait;
 	String tooltipvalue;
 	List<WebElement> rows;
+	List<String> List1 = new ArrayList<String>();
+	int sortrow;
+	SoftAssert soft = new SoftAssert();
 
 	public TPSEE_abstractMethods(WebDriver driver) {
 		super(driver);
@@ -242,6 +245,20 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 
 	@FindBy(xpath = "//span[@class= 'walkme-action-destroy-0 wm-close-link' and contains(text(),'Okay')]")
 	private WebElement NotificationPopUp;
+	
+	
+
+	@FindBy(xpath = "(//*[@class='pagination']//a)[1]")
+	private WebElement paginationPrev;
+
+	@FindBy(xpath = "//ul[@class='pagination']//li[@class='active']")
+	private WebElement paginationFirst;
+
+	@FindBy(xpath = "(//*[@class='pagination']//a)[last()]")
+	private WebElement paginationNext;
+
+	@FindBy(xpath = "(//*[@class='pagination']//a)[last()]")
+	private List<WebElement> paginationLast;
 
 	/**
 	 * Get data using column name and sum for Bing and GMB Page
@@ -1687,6 +1704,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	}
 
 	public void ResultsperPage(SoftAssert soft, WebElement entry, WebElement results) throws InterruptedException {
+		if(driver.findElement(By.className("dataTables_info")).isDisplayed()) {
 		int totalentries = NumOfentries(entry);
 		System.out.println("The total number of entries are :" + totalentries);
 		int entryperPage;
@@ -1744,6 +1762,8 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			soft.assertEquals(100 , entryperPage);
 		} else {
 			System.out.println("No enough data to perform");
+		}
+		select.selectByVisibleText("10");
 		}
 	}
 	
@@ -1830,5 +1850,51 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		String text = ele.getAttribute("data-original-title");
 		System.out.println("The mouse hover text is :" +text);
 		Assert.assertEquals(text, txt);
+	}
+	
+	public void TableSorting(WebElement ele, String ele1, WebElement entry, List<WebElement> tablerow, WebElement table) throws InterruptedException {
+		waitForElement(table, 40);
+		String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
+		int page = Integer.parseInt(n);
+		System.out.println("\n" + page);
+		int totalentries = NumOfentriesinPage(entry);
+		System.out.println("The total entries are :" +totalentries);
+		if (paginationNext.isDisplayed()) {			
+			int count = 0;
+			if(ele.isDisplayed()) {
+				scrollByElement(ele);
+				ele.click();
+				for (int i = 1; i <= page; i++) {
+				JSWaiter.waitJQueryAngular();
+				List<WebElement> rows_table = tablerow; // To locate rows of table.
+				int rows_count = rows_table.size(); // To calculate no of rows In table.
+				count = count + rows_count;
+				for (sortrow = 1; sortrow <= rows_count; sortrow++) {
+					String celText = driver.findElement(By.xpath(ele1 + "["+sortrow+"]")).getText();
+					System.out.println("The value is :" +celText);
+					List1.add(celText);
+				}if (paginationNext.isEnabled()) {
+					JSWaiter.waitJQueryAngular();
+					scrollByElement(paginationNext);
+					paginationNext.click();
+					Thread.sleep(4000);
+				}
+			}
+			}else {
+				System.out.println("No column displayed");
+			}
+			System.out.println("The Final List is :" +List1);
+		} 
+		List<String> temp = new ArrayList<String>();
+		temp.addAll(List1);
+		System.out.println("The temporary list to compare data is :" +temp);
+		Collections.sort(temp);
+		System.out.println("The sorted temporary List is :" +temp);
+		if(List1.size() == temp.size()) {
+			for(int i = 0; i <= temp.size() - 1; i++) {
+				soft.assertTrue(List1.get(i).equalsIgnoreCase(temp.get(i)), "The value from UI is : " +List1.get(i)+ " and value after sorting is : " +temp.get(i));
+			}
+			soft.assertAll();
+		}	
 	}
 }
