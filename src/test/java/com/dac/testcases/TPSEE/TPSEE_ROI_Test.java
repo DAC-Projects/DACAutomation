@@ -57,16 +57,20 @@ public class TPSEE_ROI_Test  extends BaseClass{
 		 data.selectCalender_FromDate1((int)(Double.parseDouble(from_day)), from_month, (int)(Double.parseDouble(from_year)));
 		 data.selectCalender_ToDate1((int)(Double.parseDouble(to_day)), to_month, (int)(Double.parseDouble(to_year)));	
 		 data.GMB();
+		 addEvidence(CurrentState.getDriver(), "ROI values", "yes");
 		 np.navigateToROI();
+		 addEvidence(CurrentState.getDriver(), "ROI values", "yes");
 		 data.selectCalender_FromDate((int)(Double.parseDouble(from_day)), from_month, (int)(Double.parseDouble(from_year)));
 		 data.selectCalender_ToDate((int)(Double.parseDouble(to_day)), to_month, (int)(Double.parseDouble(to_year)));
 	 	 data.getNumberofDays_ROI();
+		 addEvidence(CurrentState.getDriver(), "ROI values", "yes");
 		 data.ROIvalues();
 		 data.val_pass();
 		  sum2=data.to();
 		  System.out.println("ASD"+sum2);
 		 data.avg();
 		 data.sel_options();
+		 addEvidence(CurrentState.getDriver(), "ROI values", "yes");
 		 data.Sym_veri();
 		 addEvidence(CurrentState.getDriver(), "Verifying the ROI values", "yes");
 	}
@@ -113,6 +117,7 @@ public class TPSEE_ROI_Test  extends BaseClass{
 	public void navigateToROI_Verify() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateToROI();
+		 addEvidence(CurrentState.getDriver(), "ROI values", "yes");
 		data = new TPSEE_ROI(CurrentState.getDriver());
 		data.ROIvalues();
 		data.tot(sum1);

@@ -515,7 +515,7 @@ public DTC_Google_Category (WebDriver driver) {
 	
 			//Assert.assertEquals(list2, wordList3);
 			System.out.println("CSV"+wordList1.size());
-			for (int i = 0; i < wordList1.size(); i++) {
+			/*for (int i = 0; i < wordList1.size(); i++) {
 			   String ag= wordList1.get(i);
 			   ag=ag.replaceAll("^\"|\"$", "");
 			   String ag1= wordList2.get(i);
@@ -534,7 +534,7 @@ public DTC_Google_Category (WebDriver driver) {
 				else{
 					System.out.println(list.get(i));
 				}
-				}
+				}*/
 				}
 			
 }

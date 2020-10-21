@@ -14,7 +14,7 @@ public interface TPSEERepository {
 	String Site_Name_pattern = "Sites(.*)\\.Name$";
 	String AccuracyExport = "AccuracyExport.xlsx";
 	String VisibilityExport = "VisibilityExport.xlsx";
-	String VisibilityExportPdf = "VisibilityExport.pdf";
+	//String VisibilityExportPdf = "VisibilityExport.pdf";
 	String ReviewExport = "ReviewExport.xlsx";
 	String CAExport = "CAExport.xlsx";
 	String Exportpath ="./downloads/";
@@ -29,4 +29,14 @@ public interface TPSEERepository {
 	String LocationExport = "LocationExport.xlsx";
 	String ReviewStreamExport = "ReviewStreamExport.xlsx";
 	String ReviewScoreExport = "ReviewScoreExport.xlsx";
+    String VisibilityExporttableFoundCSV = "VisibilityExporttableFoundCSV.xlsx";
+    String VisibilityExporttableFoundXLSX = "VisibilityExporttableFoundXLSX.xlsx";
+    String VisibilityExporttableNotFoundCSV = "VisibilityExporttableNotFoundcsv.xlsx";
+    String VisibilityExporttableNotFoundXLSX = "VisibilityExporttableNotFound.xlsx";
+    String VisibilityExportCSV = "VisibilityExportCSV.xlsx";
+    String VisibilityExportXLSX = "VisibilityExportXLSX.xlsx";
+    String VisibilityExportPdf = "VisibilityExport.pdf";
+    String VisibilityExportHistoryPdf = "VisibilityExportHistoryPdf.pdf";
+
+
 }

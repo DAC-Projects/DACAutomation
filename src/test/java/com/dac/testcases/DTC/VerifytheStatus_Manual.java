@@ -19,7 +19,11 @@ public class VerifytheStatus_Manual extends BaseClass {
 	   dtcLogin.pressYesKey();
 	}	
 	
-	
+	int manual_com=1;
+	int manual_can=2;
+	int manual_allcom=3;
+	int manual_allcan=4;
+
 	@Test( dependsOnMethods = { "launchBrowser"})
 	 public void complete() throws Exception {
 		  DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
@@ -28,10 +32,10 @@ public class VerifytheStatus_Manual extends BaseClass {
 				int count = 1;
 				ExcelHandler wb = new ExcelHandler("./data/Request_ID.xlsx", "Sheet1"); wb.deleteEmptyRows();
 					System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
-			         Manual_ID=wb.getCellValue(1, wb.seacrh_pattern("Manual_ID", 0).get(0).intValue());
+			         Manual_ID=wb.getCellValue(manual_com, wb.seacrh_pattern("Manual_ID", 0).get(0).intValue());
 			        System.out.println(Manual_ID);	
 			        String vendor="Bing";
-			     //  dtcLogin.verif_Status_complete(Manual_ID,vendor);
+			     dtcLogin.verif_Status_complete(Manual_ID,vendor);
 					count++;
 				}
 		  catch(Exception e)
@@ -48,9 +52,9 @@ public class VerifytheStatus_Manual extends BaseClass {
 				int count = 1;
 				ExcelHandler wb = new ExcelHandler("./data/Request_ID.xlsx", "Sheet1"); wb.deleteEmptyRows();
 					System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
-			         Manual_ID=wb.getCellValue(2, wb.seacrh_pattern("Manual_ID", 0).get(0).intValue());
+			         Manual_ID=wb.getCellValue(manual_can, wb.seacrh_pattern("Manual_ID", 0).get(0).intValue());
 			        System.out.println(Manual_ID);		
-			 	 // dtcLogin.verif_Status_cancel(Manual_ID);
+			 	  dtcLogin.verif_Status_cancel(Manual_ID);
 					count++;
 				}
 		  catch(Exception e)
@@ -69,9 +73,9 @@ public class VerifytheStatus_Manual extends BaseClass {
 				int count = 1;
 				ExcelHandler wb = new ExcelHandler("./data/Request_ID.xlsx", "Sheet1"); wb.deleteEmptyRows();
 					System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
-			         Manual_ID=wb.getCellValue(3, wb.seacrh_pattern("Manual_ID", 0).get(0).intValue());
+			         Manual_ID=wb.getCellValue(manual_allcom, wb.seacrh_pattern("Manual_ID", 0).get(0).intValue());
 			        System.out.println(Manual_ID);			        
-			 	    //dtcLogin.verif_Status_allcomplete(Manual_ID);
+			 	    dtcLogin.verif_Status_allcomplete(Manual_ID);
 					count++;
 				}
 		  catch(Exception e)
@@ -88,11 +92,10 @@ public class VerifytheStatus_Manual extends BaseClass {
 				int count = 1;
 				ExcelHandler wb = new ExcelHandler("./data/Request_ID.xlsx", "Sheet1"); wb.deleteEmptyRows();
 					System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
-			         Manual_ID=wb.getCellValue(4, wb.seacrh_pattern("Manual_ID", 0).get(0).intValue());
+			         Manual_ID=wb.getCellValue(manual_allcan, wb.seacrh_pattern("Manual_ID", 0).get(0).intValue());
 			        System.out.println(Manual_ID);
-			       // dtcLogin.verif_Status_allcancel(Manual_ID);
-					count++;
-				}
+			       dtcLogin.verif_Status_allcancel(Manual_ID);
+					count++;}
 		  catch(Exception e)
 		  {
 		  e.printStackTrace();
@@ -102,6 +105,8 @@ public class VerifytheStatus_Manual extends BaseClass {
 	@Test( dependsOnMethods = { "allcancel"})
 	 public void Other_venodrs() throws Exception {
 		  DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
+		  int othervendor=1;
+		  int APIvemdor=5;
 		  String apple_RqID=null;
 		  String zomato_RqID=null;
 		  String here_RqID=null;
@@ -114,18 +119,14 @@ public class VerifytheStatus_Manual extends BaseClass {
 		  int a=wb1.getRowCount();
 		  System.out.println(a);
 		  String LO_number = null,location_name=null;
-		  for(int i=1;i<=1;i++) {
-				LO_number = wb1.getCellValue(i, wb1.seacrh_pattern("LocationNumber", 0).get(0).intValue());
-				location_name =wb1.getCellValue(i, wb1.seacrh_pattern("LocationName", 0).get(0).intValue());
+				LO_number = wb1.getCellValue(othervendor, wb1.seacrh_pattern("LocationNumber", 0).get(0).intValue());
+				location_name =wb1.getCellValue(othervendor, wb1.seacrh_pattern("LocationName", 0).get(0).intValue());
 				System.out.println(LO_number);
-			}
-			  ExcelHandler wb11 = new ExcelHandler("./data/LocationSampleData.xlsx", "Sheet1");
+			    ExcelHandler wb11 = new ExcelHandler("./data/LocationSampleData.xlsx", "Sheet1");
 				wb11.deleteEmptyRows();
 				int a2=wb11.getRowCount();
 				System.out.println(a2);
-				for(int i=1;i<=1;i++) {
-					vendor=wb11.getCellValue(i, wb11.seacrh_pattern("Vendor", 0).get(0).intValue());
-				}
+			    vendor=wb11.getCellValue(othervendor, wb11.seacrh_pattern("Vendor", 0).get(0).intValue());
 				System.out.println("vendor"+vendor);
 		  try {	
 				int count = 1;
@@ -136,10 +137,10 @@ public class VerifytheStatus_Manual extends BaseClass {
 			        here_RqID = wb.getCellValue(1, wb.seacrh_pattern("Here_Request_ID", 0).get(0).intValue());
 			        tomtom_Request_ID = wb.getCellValue(1, wb.seacrh_pattern("tomtom_Request_ID", 0).get(0).intValue());
 			      	count++;}
-		  	catch(Exception e)
+		  	   catch(Exception e)
 		  		{
-		    e.printStackTrace();
-			addEvidence(CurrentState.getDriver(), "Manual", "yes");
+		       e.printStackTrace();
+			   addEvidence(CurrentState.getDriver(), "Manual", "yes");
 			}
 		  System.out.println(pageTitle);
 		  dtcLogin.API_Transmission();
@@ -148,18 +149,13 @@ public class VerifytheStatus_Manual extends BaseClass {
 		  wb111.deleteEmptyRows();
 		  int a1=wb111.getRowCount();
 		  System.out.println(a1);
-		  
-		 for(int i1=5;i1<=5;i1++) {
 				System.out.println("*******************  Scenarios : "+"Starts ****************************");
-				LO_number_API = wb111.getCellValue(i1, wb111.seacrh_pattern("LocationNumber", 0).get(0).intValue());
+				LO_number_API = wb111.getCellValue(APIvemdor, wb111.seacrh_pattern("LocationNumber", 0).get(0).intValue());
 				System.out.println(LO_number);
-			   }
+		        String[] parts = vendor.split(",");
+		        System.out.println(parts.length);
 		  
-		  
-		  String[] parts = vendor.split(",");
-		  System.out.println(parts.length);
-		  
-		  for(int i=0;i<parts.length;i++) {
+		    for(int i=0;i<parts.length;i++) {
 			  dtcLogin.API_Transmission_vendor(LO_number_API, parts[i]);
 			  System.out.println(parts[i]);
 			  addEvidence(CurrentState.getDriver(), "API", "yes");

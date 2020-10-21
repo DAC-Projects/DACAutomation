@@ -315,7 +315,6 @@ public class ExtentTestNGITestListener
       Throwable th = result.getThrowable();
       if (th != null) {
         System.out.println(th.getMessage());
-
         String error = th.getMessage().split("Session info")[0];
         ((ExtentTest) test.get()).log(Status.FAIL, error);
         //result.setThrowable(null);
@@ -344,7 +343,7 @@ public class ExtentTestNGITestListener
     if (browser.equalsIgnoreCase("Chrome")) {
 
 
-     WebDriverManager.chromedriver().version("83.0.4103.39").setup(); 
+     WebDriverManager.chromedriver().version("85.0.4183.83").setup(); 
 
 
      //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();

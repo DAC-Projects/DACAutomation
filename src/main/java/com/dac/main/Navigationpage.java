@@ -245,8 +245,8 @@ public class Navigationpage extends BasePage{
     	System.out.println("Waiting for page to load********");
     	waitUntilLoad(driver);
     }
-    public void navigateToESR() {
-	   	
+    public void navigateToESR() throws Exception {
+		Thread.sleep(10000);
     	action.moveToElement(Settings).perform();
     	waitForElement(ESR, 20);
     	action.moveToElement(ESR).perform();
@@ -255,7 +255,9 @@ public class Navigationpage extends BasePage{
     	waitUntilLoad(driver);
     }
     
-    public void navigateToROI() {
+    public void navigateToROI() throws Exception {
+    	Thread.sleep(10000);
+    	//Thread.sleep(10000);
     	clickelement(ROI);
     	System.out.println("Waiting for page to load********");
     	waitUntilLoad(driver);
