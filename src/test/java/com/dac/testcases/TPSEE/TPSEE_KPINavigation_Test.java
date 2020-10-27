@@ -41,9 +41,9 @@ public class TPSEE_KPINavigation_Test extends BaseClass{
 		data.navigateToGoogleRanking();
 	}
 	
-	@Test(priority = 6, description = "Test to naviagate to Review Insights")
+	/*@Test(priority = 6, description = "Test to naviagate to Review Insights")
 	public void navigateToReviewsInsightsKPI() throws Exception {
 		data = new TPSEE_KPI_Navigation(CurrentState.getDriver());
 		data.navigateToReviews();
-	}
+	}*/
 }

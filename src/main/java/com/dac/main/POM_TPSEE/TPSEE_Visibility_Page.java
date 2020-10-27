@@ -535,9 +535,9 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 					e.printStackTrace();
 				}
 			}
-			GoTo();
+			/*GoTo();
 			Thread.sleep(3000);
-			resultperpage(soft);
+			resultperpage(soft);*/
 		}
 	}
 	

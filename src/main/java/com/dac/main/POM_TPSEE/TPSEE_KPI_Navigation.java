@@ -52,6 +52,9 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//*[@id='page-content']//h1")
 	private WebElement CATitle;
+	
+	@FindBy(xpath = "//*[@class='page-title']")
+	private WebElement GRTitle;
 
 	@Override
 	public List<Map<String, String>> getOverviewReport() {
@@ -102,8 +105,7 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 	public void navigateToGoogleRanking() throws Exception {
 		KPIMouseHover(GoogleRanking, "Google Ranking score for all participating locations");
 		Thread.sleep(3000);
-		navigateKPI(GoogleRanking, CATitle, "Google Ranking Report"
-				+"\n" +"Ranking Info");
+		navigateKPI(GoogleRanking, GRTitle, "Google Ranking Report");
 		Thread.sleep(3000);
 		BaseClass.addEvidence(driver, "Test to navigate to Google Ranking", "yes");
 		clickelement(Dashboard);

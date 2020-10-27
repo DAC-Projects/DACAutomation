@@ -1764,6 +1764,8 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			System.out.println("No enough data to perform");
 		}
 		select.selectByVisibleText("10");
+		}else {
+			System.out.println("No data");
 		}
 	}
 	

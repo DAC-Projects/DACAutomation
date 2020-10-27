@@ -290,19 +290,19 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified Ranking export for Google Ranking", "yes");
 	}
 	
-	@Test(priority = 13, description ="Test to verify GoTo page")
+	/*@Test(priority = 13, description ="Test to verify GoTo page")
 	public void GOTO() throws InterruptedException {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.GoTo();
 	}
-	
-	@Test(priority = 14, description = "Test to verify Resultsperpage")
+	*/
+/*	@Test(priority = 14, description = "Test to verify Resultsperpage")
 	public void ResultsperPage() throws InterruptedException {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.resultperpage(soft);
 		soft.assertAll();
 		
-	}
+	}*/
 
 	/**
 	 * Test to verify Top button functionality

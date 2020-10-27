@@ -125,7 +125,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}	
 	
-	@Test(priority = 8, description = "Test to GoTo Page verification")
+	/*@Test(priority = 8, description = "Test to GoTo Page verification")
 	public void verifyGotoPage() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.GoTo();
@@ -139,9 +139,9 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 			addEvidence(CurrentState.getDriver(), "Test to verify Results per page", "yes");
 			Thread.sleep(5000);		
 			soft.assertAll();
-	}
+	}*/
 	
-	@Test(priority = 10, description = "Test to sort data and verify")
+/*	@Test(priority = 10, description = "Test to sort data and verify")
 	public void verifySortedLocationNumber() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.verifyLocationNumber();
@@ -188,5 +188,5 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.verifyPhone();
 		addEvidence(CurrentState.getDriver(), "Test to verify data sorted", "yes");
-	}
+	}*/
 }
