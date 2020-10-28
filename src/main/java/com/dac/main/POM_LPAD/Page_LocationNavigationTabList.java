@@ -139,7 +139,7 @@ public class Page_LocationNavigationTabList extends BasePage {
 			actions.moveToElement(btnOK).click().build().perform();//confirm purchase
 			Thread.sleep(3000);
 			if(btnOK.isDisplayed()) {
-				Thread.sleep(1000);
+				Thread.sleep(2000);
 				System.out.println("Complete Message Displayed");
 				clickelement(btnOK);//btnOK.click();//incomplete waring
 			}

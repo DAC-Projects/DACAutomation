@@ -39,14 +39,14 @@ public class Page_LPADLogin extends BasePage
 	
 	private  void setUserName(String un) throws InterruptedException {
 		
-		UserNameTB.sendKeys(un);
 		Thread.sleep(2000);
+		UserNameTB.sendKeys(un);
 	}
 	
 	private  void setPassword(String pwd) throws InterruptedException {
 	
-		PasswordTB.sendKeys(pwd);
 		Thread.sleep(2000);
+		PasswordTB.sendKeys(pwd);
 	}
 	private String getTitle() {
 		
@@ -59,15 +59,16 @@ public class Page_LPADLogin extends BasePage
 		
 	}
 	
-	private  void clickLogin() {
+	private  void clickLogin() throws InterruptedException {
+		Thread.sleep(2000);
 		System.out.println("Trying to Login");
 		clickelement(LoginBTN);
 		
 	}
 	
 	public  void LoginTOLPAD() throws InterruptedException {
+		Thread.sleep(10000);
 		driver.get(IAutoconst.LPADUrlBeta);
-		Thread.sleep(5000);
 		setUserName(IAutoconst.ResellerAdmin);
 		System.out.println(IAutoconst.ResellerAdmin);
 		setPassword(IAutoconst.ResellerPassword);

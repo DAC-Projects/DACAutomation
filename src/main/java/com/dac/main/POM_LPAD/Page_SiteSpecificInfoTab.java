@@ -277,7 +277,7 @@ public class Page_SiteSpecificInfoTab extends BasePage {
 		System.out.println("Clicking on Zomato-Edit Button");
 		js.executeScript("arguments[0].scrollIntoView(true);", btnZomatoEdit);
 		js.executeScript("arguments[0].click();",btnZomatoEdit);
-		Thread.sleep(2000);
+		Thread.sleep(5000);
 		setZomatoValue(values);
 	}
 	private void setAppleAmenities(ExcelHandler values) throws InterruptedException {

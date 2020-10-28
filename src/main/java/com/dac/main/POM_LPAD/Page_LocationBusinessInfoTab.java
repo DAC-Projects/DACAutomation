@@ -79,6 +79,9 @@ public class Page_LocationBusinessInfoTab extends BasePage {
 	@FindBy(xpath="//*[@id='tableHours']")
 	private WebElement tableHours;
 	
+	@FindBy(xpath="//*[contains(text(), 'Google Hours')]")
+	private WebElement GoogleHours;
+	
 	public Page_LocationBusinessInfoTab(WebDriver driver) {
 		super(driver);
 		this.driver=driver;
@@ -155,7 +158,7 @@ public class Page_LocationBusinessInfoTab extends BasePage {
 			elementType=driver.findElement(By.xpath("//*[@id='tablePayment']//*[contains(text(),'"+item+"')]//preceding-sibling::Input"));
 			Thread.sleep(2000);
 			strChecked=elementType.getAttribute("checked");
-			js.executeScript("arguments[0].scrollIntoView(true);", radioButton_24Hrs_SUNDAY);
+			js.executeScript("arguments[0].scrollIntoView(true);", GoogleHours);
 			if (!(strChecked==null)) {
 //				System.out.println(" is Checked");
 				strChecked=null;
