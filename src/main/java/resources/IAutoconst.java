@@ -23,8 +23,8 @@ public interface IAutoconst {
 	 password="DacQa123";
 
 	//account credentials
-	//String baseUrl="http://staging.manage.dacgroup.com:82/accounts/";
-	String baseUrl = "https://manage.dacgroup.com/accounts/";
+	String baseUrl="http://staging.manage.dacgroup.com:82/accounts/";
+	//String baseUrl = "https://manage.dacgroup.com/accounts/";
 	String[] competitiveAnalysis = {baseUrl+"competitive-analysis-test-account-beta-1", "mobittah98@yahoo.ca"};
 	String[] CFAccountBeta = {baseUrl + "deepfield-software-incorporated-beta", "bmobit@dacgroup.com"};
 	String[] deepfieldAccount = {baseUrl+"deepfield-software-incorporated-beta", "bmobit@dacgroup.com"};

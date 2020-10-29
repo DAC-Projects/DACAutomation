@@ -182,9 +182,9 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 				String State = wb.getCellValue(i, wb.seacrh_pattern("State", 0).get(0).intValue());
 				String City = wb.getCellValue(i, wb.seacrh_pattern("City", 0).get(0).intValue());
 				String Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
-				s.applyGlobalFilter(Group, CountryCode, State, City, Location);
+				s.LAVapplyGlobalFilter(Group, CountryCode, State, City, Location);
 				System.out.println(Group + ", " + CountryCode + ", " + State + ", " + City + ", " + Location);
-				s.clickApplyFilterBTN();
+				s.clickApplyFilterBTNLAV();
 				BaseClass.addEvidence(CurrentState.getDriver(), "Applied global filter: " + Group + ", " + CountryCode
 						+ ", " + State + ", " + City + ", " + Location + "", "yes");
 			}

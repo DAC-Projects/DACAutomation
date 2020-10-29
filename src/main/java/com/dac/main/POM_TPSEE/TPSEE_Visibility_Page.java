@@ -443,7 +443,10 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		}
 		System.out.println("The size is :" + size);
 		for (int k = 1; k <= newsize; k++) {
-			driver.findElement(By.xpath("(//*[contains(@class, 'progress-bar') ])[" + k + "]")).click();
+			Thread.sleep(3000);
+			WebElement ele = driver.findElement(By.xpath("(//*[contains(@class, 'progress-bar') ])[" + k + "]"));
+			scrollByElement(ele);
+			ele.click();
 			System.out.println("Progress Bar clicked");
 			WebElement progressentry = driver.findElement(By.xpath("((//*[contains(@class, 'progress-bar')])/../../../div[contains(@class,'col-lg-1 bar-chart-column found-number')])["+ k +"]"));
 			String pentry = progressentry.getText();
@@ -535,10 +538,10 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 					e.printStackTrace();
 				}
 			}
-			/*GoTo();
-			Thread.sleep(3000);
-			resultperpage(soft);*/
 		}
+		GoTo();
+		Thread.sleep(3000);
+		resultperpage(soft);
 	}
 	
 	public void verifyNameFound() throws InterruptedException {
@@ -580,17 +583,20 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		int newsize;
 		if (size > 3) {
 			newsize = 3;
+			System.out.println("The final size is :" +newsize);
 		} else {
 			newsize = size;
+			System.out.println("The final size is :" +newsize);
 		}
-		System.out.println("The size is :" + size);
+		System.out.println("The final size is :" +newsize);
 		for (int k = 1; k <= newsize; k++) {
 			try {
 				Thread.sleep(5000);
-				action.doubleClick(driver.findElement(By.xpath("(//*[contains(@class , 'not-bar' )])[" + k + "]")))
-						.build().perform();
+				WebElement ele = driver.findElement(By.xpath("(//*[contains(@class , 'not-bar' )])[" + k + "]"));
+				scrollByElement(ele);
+				action.doubleClick(ele).build().perform();
 				System.out.println("Progress Bar clicked");
-				WebElement progressentry = driver.findElement(By.xpath("(//*[contains(@class , 'col-lg-2 bar-chart-column not-number' )])[" + k + "]"));
+				WebElement progressentry = driver.findElement(By.xpath("(//div[contains(@class,'not-bar')]/../../../div[contains(@class,'col-lg-2 bar-chart-column not-number')])[" + k + "]"));
 				String pentry = progressentry.getText();
 				System.out.println("The string entry is : " +pentry);
 				int proentry = Integer.parseInt(pentry);
@@ -684,11 +690,10 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			/*GoTo();
-			Thread.sleep(3000);
-			resultperpage(soft);*/
 		}
-
+		GoTo();
+		Thread.sleep(3000);
+		resultperpage(soft);
 	}
 
 	/**
@@ -978,9 +983,11 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	public void visibilityhightlight() {
 		reporthighlight(Report,ReportSection);		
 	}
-	
+
 	public void resultperpage(SoftAssert soft) throws InterruptedException {
-		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
+		WebElement ele =driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])"));
+		scrollByElement(ele);
+		ele.click();
 		Thread.sleep(3000);
 		ResultsperPage(soft, EntryText, Resultperpage);
 	}

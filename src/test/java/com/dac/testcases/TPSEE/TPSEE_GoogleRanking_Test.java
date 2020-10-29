@@ -24,7 +24,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	TPSEE_GoogleRanking_Page data;
 	double score;
 	int location;
-	String grph = ".highcharts-label.highcharts-tooltip-box.highcharts-color-none";
+	String grph = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none";
 	int start;
 	int end;
 	int start1;
@@ -248,9 +248,9 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 				String State = wb.getCellValue(i, wb.seacrh_pattern("State", 0).get(0).intValue());
 				String City = wb.getCellValue(i, wb.seacrh_pattern("City", 0).get(0).intValue());
 				String Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
-				s.applyGlobalFilter(Group, CountryCode, State, City, Location);
+				s.LAVapplyGlobalFilter(Group, CountryCode, State, City, Location);
 				System.out.println(Group + ", " + CountryCode + ", " + State + ", " + City + ", " + Location);
-				s.clickApplyFilterBTN();
+				s.clickApplyFilterBTNLAV();
 				BaseClass.addEvidence(CurrentState.getDriver(), "Applied global filter: " + Group + ", " + CountryCode
 						+ ", " + State + ", " + City + ", " + Location + "", "yes");
 			}
@@ -271,7 +271,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	@Test(priority = 10, groups = { "smoke" }, description = "Test to get Tooltip Data")
 	public void verifyToolTipGoogleRanking() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
-		data.verifyGRHistoryGraph();
+		data.verifyHistoryGraph();
 		addEvidence(CurrentState.getDriver(), "Tooltip values verified from Google Ranking", "yes");
 	}
 
@@ -290,19 +290,19 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified Ranking export for Google Ranking", "yes");
 	}
 	
-	/*@Test(priority = 13, description ="Test to verify GoTo page")
+	@Test(priority = 13, description ="Test to verify GoTo page")
 	public void GOTO() throws InterruptedException {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.GoTo();
 	}
-	*/
-/*	@Test(priority = 14, description = "Test to verify Resultsperpage")
+	
+	@Test(priority = 14, description = "Test to verify Resultsperpage")
 	public void ResultsperPage() throws InterruptedException {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.resultperpage(soft);
 		soft.assertAll();
 		
-	}*/
+	}
 
 	/**
 	 * Test to verify Top button functionality

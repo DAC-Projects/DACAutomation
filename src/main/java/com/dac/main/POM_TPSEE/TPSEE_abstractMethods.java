@@ -559,7 +559,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		waitForElement(hstryGrph, 30);
 		scrollByElement(hstryGrph);
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth() / 2) - 2, 0).click().perform();
+		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth() / 2) - 1, 0).click().perform();
 		tooltipvalue = grphtooltip.getText();
 		System.out.println("\n Reading tooltipdata ********** \n");
 		System.out.println("\n tooltipvalue is \n" + tooltipvalue);
@@ -1763,7 +1763,9 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		} else {
 			System.out.println("No enough data to perform");
 		}
+		select = new Select(results);
 		select.selectByVisibleText("10");
+		Thread.sleep(3000);
 		}else {
 			System.out.println("No data");
 		}

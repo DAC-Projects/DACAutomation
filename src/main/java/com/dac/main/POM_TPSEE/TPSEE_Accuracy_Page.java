@@ -18,6 +18,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -91,16 +92,16 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "//div[contains(@class,'row scores-row')]")
 	private WebElement siteshow;
 
-	@FindBy(xpath = "//*[@id='inaccuracy_results']/tbody/tr")
+	@FindBy(xpath = "//*[@id='inaccuracy_results']/tbody/tr[@role='row']")
 	private List<WebElement> reviewTableRow;
 
-	@FindBy(xpath = "//*[@id='inaccuracy_table']/div[2]")
+	@FindBy(xpath = "//*[@id='inaccuracy_table']")
 	private WebElement titlehead;
 
-	@FindBy(xpath = "//input[@id='toggle-inaccuracies']")
+	@FindBy(xpath = "//label[contains(text(),'Show Inaccuracies Only')]")
 	private WebElement InAccuracychkBox;
 
-	@FindBy(xpath = "//input[@id='toggle_overridden']")
+	@FindBy(xpath = "//label[contains(text(),'Show Ignored Only')]")
 	private WebElement IgnoredchkBox;
 
 	@FindBy(xpath = "//*[@id='inaccuracy_results_info']")
@@ -145,7 +146,36 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "//div[@id='inaccuracy_results_info']")
 	private WebElement Entry;
 
-
+	@FindBy(xpath = "//label[@for='checkboxName']")
+	private WebElement IgnoreName;
+	
+	@FindBy(xpath = "//label[@for='checkboxAddress']")
+	private WebElement IgnoreAddress;
+	
+	@FindBy(xpath = "//label[@for='checkboxPhone']")
+	private WebElement IgnorePhone;
+	
+	@FindBy(xpath = "//button[@id='updateInaccuracies']")
+	private WebElement UpdateInaccuracyBtn;
+	
+	@FindBy(xpath = "//button[@class='btn btn-width-sm btn-success']")
+	private WebElement UpdateSuccessBtn;
+	
+	@FindBy(xpath = "(//table//td[@class='display-name incorrect-style']//button[contains(@class,'btn-xs btn-info ignore')])")
+	private List<WebElement> nameignore;
+	
+	String NameIgnore = "(//table//td[@class='display-name incorrect-style']//button[contains(@class,'btn-xs btn-info ignore')])";
+	
+	@FindBy(xpath = "(//table//td[@class='display-address incorrect-style']//button[contains(@class,'btn-xs btn-info ignore')])")
+	private List<WebElement> addressignore; 
+	
+	String AddressIgnore = "(//table//td[@class='display-address incorrect-style']//button[contains(@class,'btn-xs btn-info ignore')])";
+	
+	@FindBy(xpath = "(//table//td[@class='display-phone incorrect-style']//button[contains(@class,'btn-xs btn-info ignore')])")
+	private List<WebElement> phoneignore;
+	
+	String PhoneIgnore = "(//table//td[@class='display-phone incorrect-style']//button[contains(@class,'btn-xs btn-info ignore')])";
+	
 	/*-------------------------Pagination-----------------------*/
 	@FindBy(xpath = "(//*[@class='pagination']//a)")
 	private List<WebElement> pagination;
@@ -295,6 +325,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 
 	@SuppressWarnings("unused")
 	public void verifysitelinkdata(SoftAssert soft) throws Exception{
+		String data = null;
 		JSWaiter.waitJQueryAngular();
 		waitForElement(accuracysite, 40);
 		waitForElement(siteshow, 40);
@@ -307,9 +338,11 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		else {
 			newsize =size;
 		}
-		System.out.println("The size is :" +size);
+		System.out.println("The size is :" +newsize);
 		for(int k = 1; k<=newsize; k++) {
-			driver.findElement(By.xpath("(//div//a[@class='load-table'][contains(text(),'')])["+ k +"]")).click();
+			WebElement ele = driver.findElement(By.xpath("(//div//a[@class='load-table'][contains(text(),'')])["+ k +"]"));
+			scrollByElement(ele);
+			ele.click();
 			System.out.println("Vendor Clicked");
 			waitForElement(tableresult,40);
 			scrollByElement(tableresult);
@@ -327,7 +360,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 				String entiresText = driver.findElement(By.className("dataTables_info")).getText();
 				entiresText = entiresText.substring(entiresText.indexOf("("));
-				WebElement TableTitle = driver.findElement(By.xpath("//*[@id='inaccuracy_table_title']//div//span"));
+				WebElement TableTitle = driver.findElement(By.xpath("(//*[@id='inaccuracy_table_title']//div//span)[1]"));
 				String s = TableTitle.getText();
 				System.out.println("The Vendor is :" +s);
 				scrollByElement(TableTitle);
@@ -349,10 +382,12 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 									List<WebElement> headerTableRow=titlehead.findElements(By.tagName("th"));
 									String headerText = headerTableRow.get(column).getText(), celtext ="";
 									if(column==1 & row < rows_count) {
-										celtext = driver.findElement(By.xpath("(//*[@id='inaccuracy_results']/tbody/tr)["+ (row+1) +"]")).getText();
+										celtext = driver.findElement(By.xpath("(//*[@id='inaccuracy_results']/tbody/tr[@role='row'])["+ (row+1) +"]")).getText();
 										System.out.println("\n"+celtext);
+										data = celtext.replace("Ignore inaccuracy", "");
+										data = data.trim();
 									}
-									kMap.put("rowdata", celtext);
+									kMap.put("rowdata", data);
 									tableCellValues.add(kMap);
 									//System.out.println("Cell Value of row " + noOfRows + " and column " + headerText + " Is : " + celtext);
 								}	
@@ -390,17 +425,79 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 						e.printStackTrace();
 					}
 				}
-			}else if(driver.findElement(By.className("dataTables_empty")).isDisplayed()) {
+				}else if(driver.findElement(By.className("dataTables_empty")).isDisplayed()) {
 					try {
 						BaseClass.addEvidence(driver, "Data is not available for selected Filter", "yes");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
-			GoTo();
-			Thread.sleep(3000);
-			resultperpage(soft);
 			}
+		GoTo();
+		Thread.sleep(3000);
+		resultperpage(soft);
+	}
+	
+	public void VerifyUpdateInaccuracies(WebElement ele, String ele2, List<WebElement> ele3) throws InterruptedException {
+		scrollByElement(ele);
+		clickelement(ele);
+		if(driver.findElement(By.className("dataTables_info")).isDisplayed()) {
+			String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
+			int page = Integer.parseInt(n);
+			System.out.println("\n"+page);
+			if(paginationNext.isDisplayed()) {
+				for(int i=1;i<=page;i++) {
+					List < WebElement > rows_table = ele3;	//To locate rows of table. 
+					int rows_count = rows_table.size();	
+					for (int row = 1; row < rows_count; row++) { 
+						WebElement ele1 = driver.findElement(By.xpath(ele2 + "["+ row +"]"));
+						if(ele1.isDisplayed()) {
+						scrollByElement(ele1);
+						String verifycheck = ele1.getAttribute("class");
+						System.out.println("The class name is : "+verifycheck);
+						soft.assertTrue(verifycheck.contains("checked"));
+						}else {
+							System.out.println("No checkbox displayed");
+						}
+					}if(paginationNext.isEnabled()) {
+						scrollByElement(paginationNext);
+						paginationNext.click();
+						Thread.sleep(4000);
+					}
+					scrollByElement(UpdateInaccuracyBtn);
+					clickelement(UpdateInaccuracyBtn);
+					Thread.sleep(5000);
+					wait.until(ExpectedConditions.visibilityOf(UpdateSuccessBtn));
+					clickelement(UpdateSuccessBtn);
+				}
+			}
+		}else {
+			System.out.println("No Data Available");
+		}
+	}
+	
+	public void verifyupdateinaccuracyname() throws InterruptedException {
+		VerifyUpdateInaccuracies(IgnoreName, NameIgnore, nameignore);
+		Thread.sleep(3000);
+		WebElement ele =driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])"));
+		scrollByElement(ele);
+		ele.click();
+	}
+	
+	public void verifyupdateinaccuracyaddress() throws InterruptedException {
+		VerifyUpdateInaccuracies(IgnoreAddress, AddressIgnore, addressignore);
+		Thread.sleep(3000);
+		WebElement ele =driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])"));
+		scrollByElement(ele);
+		ele.click();
+	}
+	
+	public void verifyupdateinaccuracyphone() throws InterruptedException {
+		VerifyUpdateInaccuracies(IgnorePhone, PhoneIgnore, phoneignore);
+		Thread.sleep(3000);
+		WebElement ele =driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])"));
+		scrollByElement(ele);
+		ele.click();
 	}
 
 	/**
@@ -454,7 +551,8 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	 * Method to verify inaccuracy checkbox
 	 */
 	public void showinaccuracy() {
-		waitForElement(InAccuracychkBox, 10);
+		waitForElement(InAccuracychkBox, 15);
+		scrollByElement(InAccuracychkBox);
 		clickelement(InAccuracychkBox);
 		String var = ((JavascriptExecutor)driver).executeScript("return document.getElementById('toggle-inaccuracies').checked").toString();
 		System.out.println(var);
@@ -468,6 +566,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	 */
 	public void showignored() {
 		waitForElement(IgnoredchkBox, 10);
+		scrollByElement(IgnoredchkBox);
 		clickelement(IgnoredchkBox);
 		String var = ((JavascriptExecutor)driver).executeScript("return document.getElementById('toggle_overridden').checked").toString();
 		System.out.println(var);
@@ -913,14 +1012,17 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	}
 	
 	public void resultperpage(SoftAssert soft) throws InterruptedException {
-		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
+		WebElement ele =driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])"));
+		scrollByElement(ele);
+		ele.click();
 		Thread.sleep(3000);
 		ResultsperPage(soft, Entry, Resultperpage);
 	}
 	
 	public void GoTo() throws InterruptedException {
-		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
-		Thread.sleep(3000);
+		WebElement ele =driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])"));
+		scrollByElement(ele);
+		ele.click();
 		waitForElement(gotopage, 10);
 		scrollByElement(gotopage);
 		GoTopage(gotopage);

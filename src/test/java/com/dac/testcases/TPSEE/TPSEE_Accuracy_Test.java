@@ -331,13 +331,34 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		data.verifyPHNOTab();
 		addEvidence(CurrentState.getDriver(), "Data of Social Sites Tab", "yes");
 	}*/
+	
+	@Test(priority = 18, description = "Test to verify name ignore inaccuracy")
+	public void verifyNameInaccuracy() throws Exception {
+		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+		data.verifyupdateinaccuracyname();
+		addEvidence(CurrentState.getDriver(), "Test to verify name ignore inaccuracy", "yes");
+	}
+	
+	@Test(priority = 19, description = "Test to verify address inaccuracy")
+	public void  verifyAddressInaccuracy() throws Exception {
+		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+		data.verifyupdateinaccuracyaddress();
+		addEvidence(CurrentState.getDriver(), "Test to verify address inaccuracy", "yes");
+	}
+	
+	@Test(priority = 20, description = "Test to verify phone inaccuracy")
+	public void verifyPhoneInaccuracy() throws Exception {
+		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+		data.verifyupdateinaccuracyphone();
+		addEvidence(CurrentState.getDriver(), "Test to verify phone inaccuracy", "yes");
+	}
 
 	/**
 	 * Test to verify inaccuracy and ignored checkbox
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 18, groups = { "smoke" }, description = "Test for verifying site link data in Accuracy page")
+	@Test(priority = 21, groups = { "smoke" }, description = "Test for verifying site link data in Accuracy page")
 	public void verifycheckbox() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.showinaccuracy();
@@ -351,7 +372,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 19, groups = { "smoke" }, description = "Verify Top Button")
+	@Test(priority = 22, groups = { "smoke" }, description = "Verify Top Button")
 	public void GetTopBtn() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.TopButton();

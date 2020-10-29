@@ -64,7 +64,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//div[@id='completenessTableExportDropdown']//a[contains(text(),'Export as CSV')]")
 	private WebElement export1_csv;
 
-	@FindBy(xpath = " //div[@id='completenessTableExportDropdown']//a[contains(text(),'Export as XLSX')]")
+	@FindBy(xpath = "//div[@id='completenessTableExportDropdown']//a[contains(text(),'Export as XLSX')]")
 	private WebElement export1_xlsx;
 
 	@FindBy(xpath = "//table[@id='table_review']/tbody/tr")
@@ -83,7 +83,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//div[@id='incomplete_table']")
 	private WebElement SiteLinkTable;
 
-	@FindBy(xpath = "//div[@id='incomplete_table_title']")
+	@FindBy(xpath = "//h4[@class='section-title']//span")
 	private WebElement SiteLinkTabletitle;
 
 	@FindBy(xpath = "//*[@id='incomplete_results']/thead")
@@ -361,7 +361,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 				String s = TableTitle.getText();
 				System.out.println("The vendor is :" + s);
 				if (!s.contains("Yelp")) {
-					WebElement locationsText = driver.findElement(By.xpath("//*[@id='incomplete_results']//div"));
+					WebElement locationsText = driver.findElement(By.xpath("//*[@id='incomplete_results']//tr//td[2]"));
 					scrollByElement(locationsText);
 					int count = 0;
 					if (paginationNext.isDisplayed()) {
@@ -393,7 +393,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 									if (column == 1 & row < rows_count) {
 										celtext = driver
 												.findElement(By.xpath(
-														"(//*[@id='incomplete_results']//div)[" + (row + 1) + "]"))
+														"(//*[@id='incomplete_results']//tr//td[2])[" + (row + 1) + "]"))
 												.getText();
 									} else {
 										celtext = Columns_row.get(column).getText().trim(); // To retrieve text from
