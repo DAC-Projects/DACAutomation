@@ -2,9 +2,11 @@ package com.dac.testcases.TPSEE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -108,8 +110,8 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * Test to get SiteTable data
 	 * 
 	 * @throws Exception
-	 */
-	/*// Test to compare vendors in the application in Visibility Page
+	 *//*
+	// Test to compare vendors in the application in Visibility Page
 	@Test(priority = 6, groups = { "smoke" }, description = "Verify Site Vendors List")
 	public void comparevendorsListnverifySitevendors() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
@@ -136,7 +138,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
 	}*/
 
-	/*@SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	@Test(priority = 9, enabled = true, dataProvider = "testData",description = "Test for manual date selection" )
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
@@ -158,7 +160,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 			// Assert.assertEquals(togrph, tocal);
 			addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 		}
-	}*/
+	}
 
 	/**
 	 * Test to very Zoom Functionality
@@ -283,8 +285,11 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	@Test(priority = 14, groups = { "smoke" }, description = "Test for overview report and tooltip data")
 	public void verifyOverviewReportnTooltipAccuracy() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-		data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
+		data.verifyHistoryGraph1();
+		//data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
 		addEvidence(CurrentState.getDriver(), "Tooltip values verified from Overview Accuracy report", "yes");
+		data.comparegraphoverviewscore();
+		addEvidence(CurrentState.getDriver(), "Test to compare overview score and graph score", "yes");
 	}
 
 	/**

@@ -164,6 +164,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 
 	@FindBy(css = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none")
 	private WebElement grphtooltip;
+	
+	@FindBy(xpath = "//div[@class='highcharts-label highcharts-tooltip-box highcharts-color-none']//span//span[1]")
+	private WebElement grphtooltipDate;
+	
+	@FindBy(xpath = "//div[@class='highcharts-label highcharts-tooltip-box highcharts-color-none']//span")
+	private WebElement grphtooltipScore;
 
 	String grph = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none";
 
@@ -1489,7 +1495,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		String s = sc.replace("%", "");
 		double scores = Double.parseDouble(s);
 		BigDecimal bd = BigDecimal.valueOf(scores);
-		bd = bd.setScale(1, RoundingMode.HALF_UP);
+		bd = bd.setScale(2, RoundingMode.HALF_UP);
 		double finaloverviewscore = bd.doubleValue();
 		return finaloverviewscore;
 
@@ -1507,10 +1513,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		String sc = score.getAttribute("data-percent");
 		String s = sc.replace("%", "");
 		double scores = Double.parseDouble(s);
-		BigDecimal bd = BigDecimal.valueOf(scores);
+		/*BigDecimal bd = BigDecimal.valueOf(scores);
 		bd = bd.setScale(1, RoundingMode.HALF_UP);
-		double finaloverviewcascore = bd.doubleValue();
-		return finaloverviewcascore;
+		double finaloverviewcascore = bd.doubleValue();*/
+		return scores;
 	}
 
 	/**
@@ -1900,5 +1906,53 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			}
 			soft.assertAll();
 		}	
+	}
+	
+	public void verifyHistoryGraph1() throws ParseException {
+		String var = null;
+		var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
+				.toString();
+		System.out.println(var);
+		waitForElement(hstryGrph, 30);
+		scrollByElement(hstryGrph);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth() / 2) - 1, 0).click().perform();
+		tooltipvalue = grphtooltipDate.getText();
+		System.out.println("\n Reading tooltipdata ********** \n");
+		System.out.println("\n tooltipvalue is \n" + tooltipvalue);
+		String Yesterday = ((JavascriptExecutor) driver).executeScript(
+				"return moment().add({days: -1}).format(window.dateFormat.shortTemplate.PlainHtml.toUpperCase())")
+				.toString();
+		SimpleDateFormat formats = new SimpleDateFormat(var);
+		Date latest = formats.parse(Yesterday);
+		System.out.println("The latest date is : " +latest);
+		Date UIlatest = formats.parse(tooltipvalue);
+		System.out.println("The UI latest date is : " +UIlatest);
+		Assert.assertEquals(UIlatest, latest);
+	}
+	
+	public double verifygrphscore() {
+		String var = null;
+		var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
+				.toString();
+		System.out.println(var);
+		waitForElement(hstryGrph, 30);
+		scrollByElement(hstryGrph);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth() / 2) - 1, 0).click().perform();
+		tooltipvalue = grphtooltipScore.getText();
+		System.out.println("\n Reading tooltipdata ********** \n");
+		System.out.println("\n tooltipvalue is \n" + tooltipvalue);
+		tooltipvalue = tooltipvalue.substring(tooltipvalue.indexOf("V") + 6);
+		double scorevalue;
+		if(tooltipvalue.contains(">")) {
+			tooltipvalue = tooltipvalue.replace(">", "");
+			tooltipvalue = tooltipvalue.trim();
+			scorevalue = Double.parseDouble(tooltipvalue);
+		}else {
+			scorevalue = Double.parseDouble(tooltipvalue);
+		}
+		System.out.println("The graphscorevalue is : " +scorevalue);
+		return scorevalue;
 	}
 }

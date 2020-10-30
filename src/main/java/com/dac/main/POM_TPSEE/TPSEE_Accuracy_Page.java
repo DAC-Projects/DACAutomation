@@ -1027,4 +1027,12 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		scrollByElement(gotopage);
 		GoTopage(gotopage);
 	}
+	
+	public void comparegraphoverviewscore() {
+		double ovrviewscore = overviewscore(overviewlayout,overviewscore);
+		System.out.println("The overview panel score is : " +ovrviewscore);
+		double grphscore = verifygrphscore();
+		System.out.println("The graphscore is : " +grphscore);
+		Assert.assertEquals(ovrviewscore, grphscore);
+	}
 }

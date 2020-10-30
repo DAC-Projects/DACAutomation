@@ -202,13 +202,22 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	}
 
 	// Test for Tooltip and overview report in Content Analysis Page
-	@Test(priority = 9, groups = { "smoke" }, description = "Test to compare ToolTip Value and Overall Analysis Score")
+	@Test(priority = 9, groups = { "smoke" }, description = "Test to verify latest date in graph")
 	public void verifyOverviewReportnTooltipContentAnalysis() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
-		data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
+		data.verifyHistoryGraph1();
+		//data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
+		addEvidence(CurrentState.getDriver(), "Test to verify latest date in graph", "yes");
+	}
+	
+	@Test(priority = 10, description = "Test to compare ToolTip Value and Overall Analysis Score")
+	public void comparegrphnovrscore() throws Exception {
+		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
+		data.compareovrviewngraphscore();
 		addEvidence(CurrentState.getDriver(), "Tooltip values verified from Overview Content Analysis report", "yes");
 	}
-
+	
+	
 	@SuppressWarnings("finally")
 	@DataProvider
 	public String[][] testData() {
@@ -250,7 +259,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	}
 
 	// Test for export and overview report in Content Analysis Page
-	@Test(priority = 10, groups = { "smoke" }, description = "Test for overview export and export verification")
+	@Test(priority = 11, groups = { "smoke" }, description = "Test for overview export and export verification")
 	public void verifyTableDataoExport() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		data.SitelLinkData(soft);
@@ -279,7 +288,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 11, groups = { "smoke" }, description = "Verify Top Button")
+	@Test(priority = 12, groups = { "smoke" }, description = "Verify Top Button")
 	public void GetTopBtn() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		data.TopButton();

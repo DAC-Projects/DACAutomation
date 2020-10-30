@@ -124,6 +124,9 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "(//input[contains(@class , 'form-control')])[3]")
 	private WebElement gotopage;
+	
+	@FindBy(xpath = "//td[@class='center ranking'][1]")
+	private WebElement overallscore;
 
 	/*-----------------------Ranking Table---------------------------*/
 
@@ -511,6 +514,30 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 		}
 		System.out.println(score);
 		return score;
+	}
+	
+	public double overallscore() {
+		scrollByElement(overallscore);
+		String ovrscr = overallscore.getText();
+		System.out.println("Overall score is : " +ovrscr);
+		double overallscore;
+		if(ovrscr.contains(">")) {
+			ovrscr = ovrscr.replace(">", "");
+			ovrscr = ovrscr.trim();
+			overallscore = Double.parseDouble(ovrscr);
+		}else {
+			overallscore = Double.parseDouble(ovrscr);
+		}
+		System.out.println("The overall score is : " +overallscore);
+		return overallscore;
+	}
+	
+	public void comparegraphovrscr() {
+		double graphscore = verifygrphscore();
+		System.out.println("The graphical score is : " +graphscore);
+		double overallscore = overallscore();
+		System.out.println("The overall score is : " +overallscore);
+		Assert.assertEquals(graphscore, overallscore);
 	}
 
 	public int GRLoc()

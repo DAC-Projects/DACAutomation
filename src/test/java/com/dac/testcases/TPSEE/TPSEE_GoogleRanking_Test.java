@@ -271,11 +271,18 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	@Test(priority = 10, groups = { "smoke" }, description = "Test to get Tooltip Data")
 	public void verifyToolTipGoogleRanking() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
-		data.verifyHistoryGraph();
+		data.verifyHistoryGraph1();
 		addEvidence(CurrentState.getDriver(), "Tooltip values verified from Google Ranking", "yes");
 	}
+	
+	@Test(priority = 11, description = "Test to compare overall and graph score")
+	public void verifygraphscorenovrscore() throws Exception {
+		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
+		data.comparegraphovrscr();
+		addEvidence(CurrentState.getDriver(), "Test to compare overview and graph score", "yes");
+	}
 
-	@Test(priority = 11, groups = { "smoke" }, description = "Export as csv")
+	@Test(priority = 12, groups = { "smoke" }, description = "Export as csv")
 	public void exportascsv() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.GRDataTableExportCSV();
@@ -283,20 +290,20 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	}
 
 	// Test for export and overview report in Content Analysis Page
-	@Test(priority = 12, groups = { "smoke" }, description = "Test for Ranking export and export verification")
+	@Test(priority = 13, groups = { "smoke" }, description = "Test for Ranking export and export verification")
 	public void verifyTableDataoExport() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.compareexporttableDatanrankingdetails(data.RankingDataTable(), data.getRankingDataTableExport());
 		addEvidence(CurrentState.getDriver(), "Verified Ranking export for Google Ranking", "yes");
 	}
 	
-	@Test(priority = 13, description ="Test to verify GoTo page")
+	@Test(priority = 14, description ="Test to verify GoTo page")
 	public void GOTO() throws InterruptedException {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.GoTo();
 	}
 	
-	@Test(priority = 14, description = "Test to verify Resultsperpage")
+	@Test(priority = 15, description = "Test to verify Resultsperpage")
 	public void ResultsperPage() throws InterruptedException {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.resultperpage(soft);
@@ -309,7 +316,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 13, groups = { "smoke" }, description = "Verify Top Button")
+	@Test(priority = 16, groups = { "smoke" }, description = "Verify Top Button")
 	public void GetTopBtn() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.TopButton();

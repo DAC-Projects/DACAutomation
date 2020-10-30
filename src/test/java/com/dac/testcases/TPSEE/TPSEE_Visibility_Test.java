@@ -302,10 +302,18 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@Test(priority = 13, groups = {
-			"smoke" }, description = "Test to compare ToolTip Value and Overall Visibility Score")
+			"smoke" }, description = "Test to verify date in graph")
 	public void verifyOverviewReportnTooltipVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-		data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
+		data.verifyHistoryGraph1();
+		//data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
+		addEvidence(CurrentState.getDriver(), "Test to verify date in graph", "yes");
+	}
+	
+	@Test(priority =14, description = "Test to compare ToolTip Value and Overall Visibility Score")
+	public void compareovrgraph() throws Exception {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.compareovrscorengrphscore();
 		addEvidence(CurrentState.getDriver(), "Tooltip values verified from Overview visibility report", "yes");
 	}
 
@@ -315,7 +323,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 14, groups = { "smoke" }, description = "Test for verifying progress bar in Visibility page")
+	@Test(priority = 15, groups = { "smoke" }, description = "Test for verifying progress bar in Visibility page")
 	public void numberofentriesnExporttableVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.DataTablefound(soft);
@@ -327,42 +335,42 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Test to verify GoTo and Results Per Page", "yes");
 	}
 	
-	/*@Test(priority = 15, description = "Test to verify sorting data of name column")
+	/*@Test(priority = 16, description = "Test to verify sorting data of name column")
 	public void verifyfoundnamecolumn() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.verifyNameFound();
 		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
 	}
 	
-	@Test(priority = 16, description = "Test to verify sorting data of Address column")
+	@Test(priority = 17, description = "Test to verify sorting data of Address column")
 	public void verifyfoundAddresscolumn() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.verifyAddressFound();
 		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
 	}
 	
-	@Test(priority = 17, description = "Test to verify sorting data of City column")
+	@Test(priority = 18, description = "Test to verify sorting data of City column")
 	public void verifyfoundCitycolumn() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.verifyCityFound();
 		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
 	}
 	
-	@Test(priority = 18, description = "Test to verify sorting data of State column")
+	@Test(priority = 19, description = "Test to verify sorting data of State column")
 	public void verifyfoundStatecolumn() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.verifyStateFound();
 		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
 	}
 	
-	@Test(priority = 19, description = "Test to verify sorting data of PostalCode column")
+	@Test(priority = 20, description = "Test to verify sorting data of PostalCode column")
 	public void verifyfoundPostalCodecolumn() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.verifyPostCodeFound();
 		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
 	}
 	
-	@Test(priority = 20, description = "Test to verify sorting data of Phone Number column")
+	@Test(priority = 21, description = "Test to verify sorting data of Phone Number column")
 	public void verifyfoundPhonecolumn() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.verifyPhoneFound();
@@ -374,7 +382,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 21, groups = { "smoke" }, description = "Verify Top Button")
+	@Test(priority = 22, groups = { "smoke" }, description = "Verify Top Button")
 	public void GetTopBtn() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.TopButton();
@@ -387,7 +395,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 22, groups = { "smoke" }, description = "Test for verifying progress bar in Visibility page")
+	@Test(priority = 23, groups = { "smoke" }, description = "Test for verifying progress bar in Visibility page")
 	public void numberofentriesnExporttableNotFoundVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.DataTableNotfound(soft);
@@ -399,42 +407,42 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Test to verify GoTo and Results Per Page", "yes");
 	}
 	
-	/*@Test(priority = 23, description = "Test to verify sorting data of name column")
+	/*@Test(priority = 24, description = "Test to verify sorting data of name column")
 	public void verifyNotfoundnamecolumn() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.verifyNameFound();
 		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
 	}
 	
-	@Test(priority = 24, description = "Test to verify sorting data of Address column")
+	@Test(priority = 25, description = "Test to verify sorting data of Address column")
 	public void verifyNotfoundAddresscolumn() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.verifyAddressFound();
 		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
 	}
 	
-	@Test(priority = 25, description = "Test to verify sorting data of City column")
+	@Test(priority = 26, description = "Test to verify sorting data of City column")
 	public void verifyNotfoundCitycolumn() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.verifyCityFound();
 		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
 	}
 	
-	@Test(priority = 26, description = "Test to verify sorting data of State column")
+	@Test(priority = 27, description = "Test to verify sorting data of State column")
 	public void verifyNotfoundStatecolumn() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.verifyStateFound();
 		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
 	}
 	
-	@Test(priority = 27, description = "Test to verify sorting data of PostalCode column")
+	@Test(priority = 28, description = "Test to verify sorting data of PostalCode column")
 	public void verifyNotfoundPostalCodecolumn() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.verifyPostCodeFound();
 		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
 	}
 	
-	@Test(priority = 28, description = "Test to verify sorting data of Phone Number column")
+	@Test(priority = 29, description = "Test to verify sorting data of Phone Number column")
 	public void verifyNotfoundPhonecolumn() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.verifyPhoneFound();

@@ -880,6 +880,14 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		double score = overviewscore(overviewlayout, overviewscore);
 		return score;
 	}
+	
+	public void compareovrscorengrphscore() {
+		double ovrscore = overviewscore();
+		System.out.println("The overall score is : " +ovrscore);
+		double graphscore = verifygrphscore();
+		System.out.println("The graph score is : " +graphscore);
+		Assert.assertEquals(ovrscore, graphscore);
+	}
 
 	/**
 	 * To Verify Sites in ALL SITES Section

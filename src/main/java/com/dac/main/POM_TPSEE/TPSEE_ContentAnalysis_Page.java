@@ -321,6 +321,14 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 		double score = overviewcascore(Progress);
 		return score;
 	}
+	
+	public void compareovrviewngraphscore() {
+		double overallscore = overviewscore();
+		System.out.println("The overall score is : " +overallscore);
+		double graphscore = verifygrphscore();
+		System.out.println("The graph score is : " +graphscore);
+		Assert.assertEquals(overallscore, graphscore);
+	}
 
 	public void SitelLinkData(SoftAssert soft) throws Exception { 
 		JSWaiter.waitJQueryAngular();
