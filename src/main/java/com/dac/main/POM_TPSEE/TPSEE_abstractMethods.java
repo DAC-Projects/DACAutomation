@@ -1495,7 +1495,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		String s = sc.replace("%", "");
 		double scores = Double.parseDouble(s);
 		BigDecimal bd = BigDecimal.valueOf(scores);
-		bd = bd.setScale(2, RoundingMode.HALF_UP);
+		bd = bd.setScale(1, RoundingMode.HALF_UP);
 		double finaloverviewscore = bd.doubleValue();
 		return finaloverviewscore;
 
