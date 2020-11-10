@@ -84,10 +84,7 @@ public class SE_Export_Functionality extends BasePage  implements SE_Repository{
 	 
 		clickelement(export_btn);
 		Thread.sleep(5000);
-	/*	Thread.sleep(10000);
-		convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ConnectionExport));
-		System.out.println("The File Name is" +getLastModifiedFile(Exportpath));
-		*/
+	
 	}
 	
 	//convert exported file from csv to xlsx
@@ -241,25 +238,7 @@ int  size = b.length;
 				temlist.addAll(pagehandlinglocationtable);
 				System.out.println("The temp list is :" +temlist);
 				
-		/*		StringBuilder strbul=new StringBuilder();
-				for(String str : Locationaddress)
-				{
-					strbul.append(str);
-					//for adding comma between elements
-					strbul.append(",");
-				}
-				//just for removing last comma
-				//strbul.setLength(strbul.length()-1);
-				String str=strbul.toString();
-				
-				System.out.println("Converted String is " + str);
-				
-				String s1=str.replace("US", "New York");
-				
-				System.out.println("Replaced String is " + s1);
-				
-				List<String> myList = new ArrayList<String>(Arrays.asList(s1.split(",")));
-				System.out.println("The string converted array list is :" +myList);*/
+		
 				
 			SoftAssert soft = new SoftAssert();
 
@@ -341,12 +320,7 @@ int  size = b.length;
 					soft.assertTrue(str5.contains(str4),"Country:"+str5+" is not there in list:"+str4);
 					
 					
-				/*	soft.assertTrue(str1.contains(Locationaddress.get(i)),"Location Address  "+Locationaddress.get(i)+" is not there in list" +uidata[1]);
-					soft.assertTrue(str2.contains(Locationaddress.get(i)),"Location Address  "+Locationaddress.get(i)+" is not there in list");
-					soft.assertTrue(str3.contains(Locationaddress.get(i)),"Location Address  "+Locationaddress.get(i)+" is not there in list");
-					soft.assertTrue(str4.contains(Locationaddress.get(i)),"Location Address  "+Locationaddress.get(i)+" is not there in list");*/
-					
-				//	soft.assertTrue(Locationaddress.get(i).contains(temlist.get(i)),"Location Address  "+Locationaddress.get(i)+" is not there in list");
+				
 
 				}
 			}
@@ -412,8 +386,8 @@ int  size = b.length;
 				
 					System.out.println("Double quotes:"+result);
 					System.out.println("Single quotes:"+str9);
-					softpa.assertTrue(str9.contains(result),"Site Page Name "+result+" is not there in list");
-
+					//softpa.assertTrue(str9.contains(result),"Site Page Name "+result+" is not there in list");
+					softpa.assertTrue(result.contains(str9),"Site Page Name "+result+" is not there in list");
 				}
 				
 				
@@ -479,18 +453,9 @@ int  size = b.length;
 
 				}
 			}
+	
 			
-	/*	Sitepageurl.size();
-			if(pagelist.size()==Sitepageurl.size())
-			{
-				for(int i=0;i<=pagelist.size()-1;i++)
-				{
-					System.out.println("Page List "+pagelist.get(i));
-					System.out.println("Site Page URL "+Sitepageurl.get(i));
-					softpa.assertTrue(pagelist.get(i).contains(Sitepageurl.get(i)),"Site Page Url "+Sitepageurl.get(i)+" is not there in list");
-
-				}
-			}*/
+			
 			soft.assertAll();
 			softpa.assertAll();
 			if(paginationNext.isEnabled()) {
@@ -499,6 +464,11 @@ int  size = b.length;
     			Thread.sleep(4000);
     		}	 
 		
+		}
+		
+		public void globalFilterValidation()
+		{
+			
 		}
 }
 
