@@ -15,8 +15,9 @@
     <classes>
     	
     	
-	 	<class name= "com.dac.testcases.TPSEE.TPSEE_LocalReportsScoreChange_Test" /> 
+    	<class name= "com.dac.testcases.TPSEE.TPSEE_Login_Test" /> 
 	 	<!-- 
+	 	<class name= "com.dac.testcases.TPSEE.TPSEE_LocalReportsScoreChange_Test" /> 
     	<class name= "com.dac.testcases.TPSEE.TPSEE_ReviewNotifications_Test" /> 
 	 	<class name= "com.dac.testcases.TPSEE.TPSEE_ReviewStream_Test" /> 
 	 	<class name= "com.dac.testcases.TPSEE.TPSEE_Visibility_Test" /> 

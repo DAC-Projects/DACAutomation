@@ -35,7 +35,8 @@ public abstract class LaunchLPAD
 		 System.out.println("Before Test....Reading LPAD Credentials file");
 		 
 	Browser= "Chrome";
-	url= IAutoconst.LPADUrlBeta;
+//	url= IAutoconst.LPADUrlBeta;
+	url= IAutoconst.TSEE_url;
 	UserName=IAutoconst.ResellerAdmin;
 	Password=IAutoconst.ResellerPassword;
 	LocationDataExcelPath=IAutoconst.LocationDataExcelPath;

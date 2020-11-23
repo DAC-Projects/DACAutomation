@@ -43,7 +43,7 @@ public interface IAutoconst {
 //	String [] transparenSEE = {baseUrl +"international-location-test-account","chappel.mann+stl2@gmail.com"}; //- Location Manager
 	
 	String userLocale="IN";
-	
+	String TSEE_url="https://transparensee-dashboard-beta.azurewebsites.net/";
 	/*----------------LPAD Variables----------------*/
 	String LPADUrlBeta="https://dac-map-beta.azurewebsites.net/";
 	String ResellerAdmin="csee_external_reseller";
