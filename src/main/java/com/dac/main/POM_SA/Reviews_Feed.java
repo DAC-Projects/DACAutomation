@@ -1956,6 +1956,9 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 	}
 	
 	public void verifyDateSelected() throws ParseException {
+		String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat")
+				.toString();
+		SimpleDateFormat formats = new SimpleDateFormat(var);
 		JSWaiter.waitJQueryAngular();
 		List<Date> ReviewDates = new ArrayList<Date>();
 		Date FromDate = getFromDate();

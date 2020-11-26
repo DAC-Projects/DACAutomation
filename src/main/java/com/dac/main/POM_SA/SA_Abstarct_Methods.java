@@ -155,9 +155,6 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 	/*-------------------------Pagination-----------------------*/
 	
 	SoftAssert soft = new SoftAssert();
-	String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat")
-			.toString();
-	SimpleDateFormat formats = new SimpleDateFormat(var);
 	
 	public SA_Abstarct_Methods(WebDriver driver) {
 		super(driver);
@@ -886,6 +883,9 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 	 * @throws ParseException
 	 */
 	public Date getFromDate() throws ParseException {
+		String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat")
+				.toString();
+		SimpleDateFormat formats = new SimpleDateFormat(var);
 		String fromdate = ((JavascriptExecutor) driver).executeScript("return document.getElementById('dateFrom').value")
 				.toString();
 		System.out.println("The from date selected is :" +fromdate);
@@ -900,11 +900,23 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 	 * @throws ParseException
 	 */
 	public Date getToDate() throws ParseException {
+		String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat")
+				.toString();
+		SimpleDateFormat formats = new SimpleDateFormat(var);
 		String todate = ((JavascriptExecutor) driver).executeScript("return document.getElementById('dateTo').value")
 				.toString();
 		System.out.println("The to date selected is :" +todate);
 		Date finaltodate = formats.parse(todate);
 		System.out.println("The Date is :" +finaltodate);
 		return finaltodate;
+	}
+	
+	public void deletefile() {
+		File path = new File("./downloads");
+		File[] files = path.listFiles();
+		for (File file : files) {
+			System.out.println("Deleted filename :" + file.getName());
+			file.delete();
+		}
 	}
 }
