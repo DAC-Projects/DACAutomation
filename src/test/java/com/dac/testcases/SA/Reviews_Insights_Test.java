@@ -373,10 +373,18 @@ public class Reviews_Insights_Test extends BaseClass{
 		Thread.sleep(2000);
 		data.getDetractorScore();
 		Thread.sleep(2000);
-		data.CompareRNPSScore();
+		data.CompareRNPSScore(); 
 	}
 	
-	/*@Test(priority = 24, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider= "testData")
+	@Test(priority = 30, description = "Navigate back to Reviews Insights")
+	public void naviagateToInsights() throws Exception {
+		np = new Navigationpage(CurrentState.getDriver());
+		np.navigateToSA_ReviewsInsights();
+		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Insights", "yes");
+	}
+	
+	
+	@Test(priority = 31, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider= "testData")
 	public void DateFilter(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
@@ -392,36 +400,128 @@ public class Reviews_Insights_Test extends BaseClass{
 		addEvidence(CurrentState.getDriver(), "Test to verify Date", "yes");
 	}
 	
-	@Test(priority =23, description = "Test for date filter verification")
-	public void DateFilterVerification() throws Exception {
+	@Test(priority =32, description = "Test for date filter verification")
+	public void DateFilterVerification() throws Exception {  
 		data = new Reviews_Insights(CurrentState.getDriver());
 		VerifyReviewStarAvg();
-		Thread.sleep(2000);
-		VerifyTotalReviews();
-		Thread.sleep(2000);
+	} 
+	
+	@Test(priority = 33, description = "Test to verify Total reviews after applying date filter")
+	public void verifyDateTotReviews() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		VerifyTotalReviews(); 
+	}
+	
+	@Test(priority = 34, description = "Test to verify Positive Reco after applying date filter")
+	public void verifyPosReco() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
 		VerifyPositiveReco();
-		Thread.sleep(2000);
+	}
+	
+	@Test(priority = 35, description = "Test to verify Negative Reco after applying date filter")
+	public void verifyNegReco() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
 		VerifyNegativeReco();
-		Thread.sleep(2000);
+	}
+	
+	@Test(priority = 36, description = "Test to verify Review Response after applying date filter")
+	public void verifyResponse() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
 		VerifyResponse();
-		Thread.sleep(2000);
+	}
+	@Test(priority = 37, description = "Test to verify RNPS after applying date filter")
+	public void verifyRNPSScore() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
 		VerifyRNPS();
-		Thread.sleep(2000);
-		CompareDateAppliednChart();
-		Thread.sleep(2000);
+	}
+	
+	@Test(priority = 38, description = "Test to Date verification in chart after applying date filter")
+	public void chartDateVerify() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		CompareDateAppliednChart();	
+	}
+	
+	@Test(priority = 39, description = "Test to verify Chart and overview count after applying date filter")
+	public void verifyChartnOvrCount() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
 		compareChartCountnOvrCount();
-		Thread.sleep(2000);
+	}
+	
+	@Test(priority = 40, description = "Test to verify Facebook Count after applying date filter")
+	public void verifyFaceCount() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
 		compareFacebookCount();
-		Thread.sleep(2000);
-		verifyVisibilityOfHighchart();
-	} */
+	}
+	
+	@Test(priority = 41, description = "Test to navigate to Insights Page")
+	public void navigateInsights() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		navigateToReviewsFeed();
+	}
+	
+	
+	@Test(priority = 42, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider= "testData")
+	public void FeedDateFilter(String from_day, String from_month, String from_year, String to_day, String to_month,
+			String to_year) throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		data.selectCalender_FromDate(From_Date, (int) (Double.parseDouble(from_day)), from_month,
+				(int) (Double.parseDouble(from_year)));
+		Thread.sleep(3000);
+		data.selectCalender_ToDate(To_Date, (int) (Double.parseDouble(to_day)), to_month,
+				(int) (Double.parseDouble(to_year)));
+		Thread.sleep(3000);
+		data.clickApplyFilterBTN();
+		addEvidence(CurrentState.getDriver(), "Applied Global Filters", "yes");
+	}
+	
+	@Test(priority = 43, description = "Comparison of total reviews between reports after applying filter ")
+	public void FeedInsightsCompare() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		compareTotReviews();
+	}
+	
+	@Test(priority = 44, description = "Comparison of Positive reviews between reports after applying filter ")
+	public void verifyComPositiveCount() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		verifyPositiveCount(); 
+	}
+	
+	@Test(priority = 45, description = "Comparison of Negative reviews between reports after applying filter ")
+	public void verifyComNagativeCount() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		verifyNegativeCount();
+	}
+	
+	@Test(priority = 46, description = "Comparison of Reponse reviews between reports after applying filter ")
+	public void veifyResCount() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		VerifyResponseReviewCount();
+	}
+	
+	@Test(priority = 47, description = "Comparison of No Resonse reviews between reports after applying filter ")
+	public void VerifyNoResCount() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		VerifyNoResponseReviewCount();
+	}
+	
+	@Test(priority = 48, description = "Comparison of RNPS Score between reports after applying filter ")
+	public void verifyRNPS() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		getStarCount();
+	}
+	
+	@Test(priority = 49, description = "navigate to reviews insights ")
+	public void naviagtionInsights() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		naviagateToInsights();
+	}
 	
 	/**
 	 * Test to apply filter
 	 * @throws Exception
-	 *//*
-	@Test(priority = 5, description = "Test to apply Global Filter")
-	public void ApplyGlobalFilters() throws Exception {
+	 */
+	@Test(priority = 50, description = "Test to apply Global Filter")
+	public void ApplyGlobalFilters() throws Exception { 
 		data = new Reviews_Insights(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_Filter");
 		int count = 1;
@@ -441,7 +541,149 @@ public class Reviews_Insights_Test extends BaseClass{
 			addEvidence(CurrentState.getDriver(), "Applied global filter: " + Group + ", " + CountryCode + ", " + State
 					+ ", " + City + ", " + Location + "", "yes");
 		}
-	}*/
+	}
+	
+	
+	@Test(priority = 51, description = "Export file and calculate score")
+	public void ExportInsights() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		data.ExportInsightsFilter();
+		addEvidence(CurrentState.getDriver(), "Test to export", "yes");
+		Thread.sleep(3000);
+		data.ReadnverifyData();
+		addEvidence(CurrentState.getDriver(), "Test to validate scores", "yes");		
+	}
+	
+	@Test(priority =52, description = "Test for date filter verification")
+	public void LocationFilterVerification() throws Exception {  
+		data = new Reviews_Insights(CurrentState.getDriver());
+		VerifyReviewStarAvg();
+	} 
+	
+	@Test(priority = 53, description = "Test to verify Total reviews after applying location filter")
+	public void LocationverifyDateTotReviews() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		VerifyTotalReviews(); 
+	}
+	
+	@Test(priority = 54, description = "Test to verify Positive Reco after applying location filter")
+	public void LocationverifyPosReco() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		VerifyPositiveReco();
+	}
+	
+	@Test(priority = 55, description = "Test to verify Negative Reco after applying location filter")
+	public void LocationverifyNegReco() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		VerifyNegativeReco();
+	}
+	
+	@Test(priority = 56, description = "Test to verify Review Response after applying location filter")
+	public void LocationverifyResponse() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		VerifyResponse();
+	}
+	@Test(priority = 57, description = "Test to verify RNPS after applying location filter")
+	public void LocationverifyRNPSScore() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		VerifyRNPS();
+	}
+	
+	@Test(priority = 58, description = "Test to Date verification in chart after applying Location filter")
+	public void LocationchartDateVerify() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		CompareDateAppliednChart();	
+	}
+	
+	@Test(priority = 59, description = "Test to verify Chart and overview count after applying Location filter")
+	public void LocationverifyChartnOvrCount() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		compareChartCountnOvrCount();
+	}
+	
+	@Test(priority = 60, description = "Test to verify Facebook Count after applying date filter")
+	public void LocationverifyFaceCount() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		compareFacebookCount();
+	}
+	
+	@Test (priority = 61, description = "Test to navigate to Reviews Feed Page")
+	public void navigationFeed() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		navigateToReviewsFeed();
+	}
+	
+	/**
+	 * Test to apply filter
+	 * @throws Exception
+	 */
+	@Test(priority = 62, description = "Test to apply Global Filter")
+	public void FeedApplyGlobalFilters() throws Exception { 
+		data = new Reviews_Insights(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_Filter");
+		int count = 1;
+		for (int i = 1; i <= wb.getRowCount(); i++) {
+			System.out.println("*******************  Scenarios : " + count + "Starts ****************************");
+			if (i > 1)
+				CurrentState.getDriver().navigate().refresh();
+			data.waitUntilLoad(CurrentState.getDriver());
+			String Group = wb.getCellValue(i, wb.seacrh_pattern("Group", 0).get(0).intValue());
+			String CountryCode = wb.getCellValue(i, wb.seacrh_pattern("Country", 0).get(0).intValue());
+			String State = wb.getCellValue(i, wb.seacrh_pattern("State", 0).get(0).intValue());
+			String City = wb.getCellValue(i, wb.seacrh_pattern("City", 0).get(0).intValue());
+			String Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
+			data.applyGlobalFilter(Group, CountryCode, State, City, Location);
+			System.out.println(Group + ", " + CountryCode + ", " + State + ", " + City + ", " + Location);
+			data.clickApplyFilterBTN();
+			addEvidence(CurrentState.getDriver(), "Applied global filter: " + Group + ", " + CountryCode + ", " + State
+					+ ", " + City + ", " + Location + "", "yes");
+		}
+	}
+	
+	@Test(priority = 63, description = "Comparison of total reviews between reports after applying filter ")
+	public void LocationFeedInsightsCompare() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		compareTotReviews();
+	}
+	
+	@Test(priority = 64, description = "Comparison of Positive reviews between reports after applying filter ")
+	public void LocationverifyComPositiveCount() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		verifyPositiveCount(); 
+	}
+	
+	@Test(priority = 65, description = "Comparison of Negative reviews between reports after applying filter ")
+	public void LocationverifyComNagativeCount() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		verifyNegativeCount();
+	}
+	
+	@Test(priority = 66, description = "Comparison of Reponse reviews between reports after applying filter ")
+	public void LocationveifyResCount() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		VerifyResponseReviewCount();
+	}
+	
+	@Test(priority = 67, description = "Comparison of No Resonse reviews between reports after applying filter ")
+	public void LocationVerifyNoResCount() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		VerifyNoResponseReviewCount();
+	}
+	
+	@Test(priority = 68, description = "Comparison of RNPS Score between reports after applying filter ")
+	public void LocationverifyRNPS() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		getStarCount();
+	}
+	
+	@Test(priority = 69, description = "navigate to reviews insights ")
+	public void navigationInsights() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		naviagateToInsights();
+	}
+	
+	
+	
 	
 	@SuppressWarnings("finally")
 	@DataProvider

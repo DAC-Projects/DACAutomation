@@ -24,7 +24,7 @@ public interface IAutoconst {
 
 	//account credentials
 	String baseUrl="http://staging.manage.dacgroup.com:82/accounts/";
-	//String baseUrl = "https://manage.dacgroup.com/accounts/";
+	String baseUrlStaging = "https://manage.dacgroup.com/accounts/";
 	String[] competitiveAnalysis = {baseUrl+"competitive-analysis-test-account-beta-1", "mobittah98@yahoo.ca"};
 	String[] CFAccountBeta = {baseUrl + "deepfield-software-incorporated-beta", "bmobit@dacgroup.com"};
 	String[] deepfieldAccount = {baseUrl+"deepfield-software-incorporated-beta", "bmobit@dacgroup.com"};
@@ -33,14 +33,14 @@ public interface IAutoconst {
 	String[] transparenSEEBingLocation = {baseUrl+"aurify-brands-test-beta", "chappel.mann+loctest@gmail.com"}; // Location level - Bing
 	String[] transparenSEEClientBeta = {baseUrl+"automation-test-account-tsee-beta","amahadev@dacgroup.com"}; // Client Level User - Beta
 	String[] transparenSEELocationBeta = {baseUrl+"automation-test-account-tsee-beta","jmann@dacgroup.com"}; // Location Level User - Beta
-	String [] transparenSEEStagingClient = {baseUrl +"aurify-brands","abritton@dacgroup.com"};  // Client Level User - Staging
-	String [] transparenSEEStagingLocation = {baseUrl +"aurify-brands","p.pundyk@fieldsgoodchicken.com"}; // Location Level User - Staging
+	String [] transparenSEEStagingClient = {baseUrlStaging + "international-location-test-account", "chappel.mann+stc@gmail.com"}; //Client Level{baseUrl +"aurify-brands","abritton@dacgroup.com"};  // Client Level User - Staging
+	String [] transparenSEEStagingLocation = {baseUrlStaging +"aurify-brands","p.pundyk@fieldsgoodchicken.com"}; // Location Level User - Staging
 	String[] transparenSEEFaceBetaClient = {baseUrl + "international-account-beta-beta", "amahadev@dacgroup.com"};
 	String[] DRSClient = {baseUrl + "international-location-test-account", "chappel.mann+stc@gmail.com"}; //Client Level
 	String[] DRSLocation = {baseUrl + "international-location-test-account","chappel.mann+stl@gmail.com"}; // Location Level
 	String[] Fit4LessAccount = {baseUrl+"fit4less-beta", "1test@gmail.com"};
-	String[] neuralTuringTechAccount = {baseUrl+"neural-turing-tech-beta", "john.cena@dacgroup.com"};
-	String[] neuralturingtechStaging = {baseUrl + "neural-turing-tech" , "lzimerman@dacgroup.com"}; // Reviews Staging Approver
+	String[] neuralTuringTechAccount = {baseUrl+"neural-turing-tech-beta", "lzimerman@dacgroup.com"};
+	String[] neuralturingtechStaging = {baseUrlStaging + "neural-turing-tech" , "lzimerman@dacgroup.com"}; // Reviews Staging Approver
 	String[] SocialdeepFieldAccount = {baseUrl+"deepfield-software-incorporated-beta","vijayata_201989@yahoo.com"};
 	String[] SocialAutomationAccount = {baseUrl+"social-automation-beta","rohitmenon8055@gmail.com"};
 	String[] SocialAutomationAccountCreator = {baseUrl+"social-automation-beta","vrohitmenon@gmail.com"};

@@ -195,7 +195,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 
 	@FindBy(xpath = "//*[@id='Review']//dl[contains(@class,'dropdown star-filter')]")
 	private WebElement RatingFilter;
-	
+
 	@FindBy(xpath = "//div[@class='ownerResponse']")
 	private WebElement Response;
 
@@ -338,8 +338,8 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		scrollByElement(PositiveRecommendation);
 		String posreco = PositiveRecommendation.getText();
 		System.out.println("The string value of positive reco is :" + posreco);
-		// PosReco = Integer.parseInt(posreco);
-		PosReco = Integer.parseUnsignedInt(posreco);
+		PosReco = Integer.parseInt(posreco);
+		//PosReco = Integer.parseUnsignedInt(posreco);
 		System.out.println("The integer value of Positive Reco is :" + PosReco);
 		return PosReco;
 	}
@@ -496,10 +496,12 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		if (!(size == 0)) {
 			for (int i = 1; i <= size; i++) {
 				WebElement chart = driver.findElement(By.xpath(ele1 + "[" + i + "]"));
+				System.err.println("The xpath is : " +chart);
 				Thread.sleep(4000);
 				scrollByElement(chart);
 				action.moveToElement(chart).click().build().perform();
 				Thread.sleep(3000);
+				System.err.println("The xpath is : " +ToolTip);
 				charttext = ToolTip.getText();
 				System.out.println("The String value of review count is :" + charttext);
 				int count = Integer.parseInt(charttext);
@@ -534,7 +536,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		System.out.println("The three star total count is : " + Threestarcount);
 		int Fivestarcount = getChartData(FiveStarChart, Fivestarchart);
 		System.out.println("The five star count is :" + Fivestarcount);
-		int Recocount = getChartData(RecommendedChart, Recochart);
+		int Recocount = getChartData(RecommendedChart, Recochart);  
 		System.out.println("The total recommended count is :" + Recocount);
 		int Notrecocount = getChartData(NotRecommendedChart, Notrecochart);
 		System.out.println("The total not recommended count :" + Notrecocount);
@@ -585,7 +587,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	public void VerifyHighChartType(WebElement ele, String ele1, String ele2, String ele3, String ele4, String ele5,
 			WebElement ele8, WebElement ele9, WebElement ele10, WebElement ele11, List<WebElement> ele12,
 			List<WebElement> ele13, List<WebElement> ele14, List<WebElement> ele15, List<WebElement> ele16)
-			throws Exception {
+					throws Exception {
 		scrollByElement(ele);
 		clickelement(ele);
 		clickelement(ele8);
@@ -788,7 +790,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		clickelement(RatingFilter);
 		Thread.sleep(5000);
 		action.moveToElement(driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='Recommended'])[1]")))
-				.click().build().perform();
+		.click().build().perform();
 		JSWaiter.waitJQueryAngular();
 		clickelement(RatingFilter);
 		Thread.sleep(5000);
@@ -801,7 +803,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		clickelement(RatingFilter);
 		Thread.sleep(5000);
 		action.moveToElement(driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='All'])[2]"))).click()
-				.build().perform();
+		.build().perform();
 		clickelement(RatingFilter);
 		soft.assertAll();
 	}
@@ -812,7 +814,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		Thread.sleep(5000);
 		action.moveToElement(
 				driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='Not Recommended'])[1]"))).click() 
-				.build().perform();
+		.build().perform();
 		JSWaiter.waitJQueryAngular();
 		clickelement(RatingFilter);
 		Thread.sleep(5000);
@@ -825,11 +827,11 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		clickelement(RatingFilter);
 		Thread.sleep(5000);
 		action.moveToElement(driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='All'])[2]"))).click()
-				.build().perform();
+		.build().perform();
 		clickelement(RatingFilter);
 		soft.assertAll();
 	}
-	
+
 	public void verifyResponseCount() throws Exception {
 		scrollByElement(Response);
 		clickelement(Response);
@@ -853,7 +855,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		Thread.sleep(5000);
 		soft.assertAll();
 	}
-	
+
 	public void verifyNotResponseCount() throws Exception {
 		scrollByElement(Response);
 		clickelement(Response);
@@ -878,7 +880,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		Thread.sleep(5000);
 		soft.assertAll();
 	}
-	
+
 	public int getStarReviewCount(String Rating) {
 		scrollByElement(RatingFilter);
 		clickelement(RatingFilter);
@@ -895,32 +897,32 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		clickelement(RatingFilter);
 		return StarCount;		
 	}
-	
+
 	public void getOneStar() {		
 		OneStarCount = getStarReviewCount("1");
 		System.out.println("The one star count is : " +OneStarCount);
 	}
-	
+
 	public void getTwoStar() {		
 		TwoStarCount = getStarReviewCount("2");
 		System.out.println("The two star count is : " +TwoStarCount);
 	}
-	
+
 	public void getThreeStar() {		
 		ThreeStarCount = getStarReviewCount("3");
 		System.out.println("The three star count is : " +ThreeStarCount);
 	}
-	
+
 	public void getFourStar() {		
 		FourStarCount = getStarReviewCount("4");
 		System.out.println("The four star count is : " +FourStarCount);
 	}
-	
+
 	public void getFiveStar() {		
 		FiveStarCount = getStarReviewCount("5");
 		System.out.println("The five star count is : " +FiveStarCount);
 	}
-	
+
 	public void getTotalStarCount() {	
 		System.out.println("The one star count is : " +OneStarCount);
 		System.out.println("The two star count is : " +TwoStarCount);
@@ -930,7 +932,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		totalStarCount = (OneStarCount + TwoStarCount + ThreeStarCount + FourStarCount + FiveStarCount);
 		System.out.println("The total Star Count is : " +totalStarCount);
 	}
-	
+
 	public void getPromoterScore() {	
 		System.out.println("The five star count is : " +FiveStarCount);
 		System.out.println("The total Star Count is : " +totalStarCount);
@@ -945,14 +947,14 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		totThStarCount = (OneStarCount + TwoStarCount + ThreeStarCount);
 		System.out.println("The total count excluding 4 and 5 star count is : " +totThStarCount);
 	}
-	
+
 	public void getDetractorScore() {
 		System.out.println("The total Star Count is : " +totalStarCount);
 		System.out.println("The total count excluding 4 and 5 star count is : " +totThStarCount);
 		DeTractorScore = (Double.valueOf(totThStarCount))/(Double.valueOf(totalStarCount));
 		System.out.println("The Detractor score is : " +DeTractorScore);
 	}
-	
+
 	public void CompareRNPSScore() {	
 		System.out.println("The Detractor score is : " +DeTractorScore);
 		System.out.println("The promoter score is : " +PromotorScore);
@@ -965,5 +967,369 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		System.out.println("The String value is : " +RNPSCalc);
 		Assert.assertEquals(RNPSscore, RNPSCalc + "%");
 	}
-	
+
+	public void ExportInsightsFilter() throws InterruptedException, FileNotFoundException, IOException {
+		deletefile();
+		Thread.sleep(3000);
+		waitForElement(ExportBtn, 10);
+		scrollByElement(ExportBtn);
+		clickelement(ExportBtn);
+		Thread.sleep(4000);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + InsightsExport));
+		Thread.sleep(3000);
+	}
+
+	public 	List<String> readCsvDatausingCol(String path, int colnum) throws IOException {
+		String splitBy = ",";
+		BufferedReader br = new BufferedReader(new FileReader(path));
+		String line = br.readLine();
+		List<String> csvcollist = new ArrayList<String>();
+		while ((line = br.readLine()) !=null){
+			String[] b = line.split(splitBy);
+			csvcollist.add(b[colnum]);      
+		}
+		System.out.println("Data in Type column : " +csvcollist);
+		return csvcollist;
+	}
+
+	public void ReadnverifyData() throws IOException {
+		int Totrev = 0;
+		List<String> reviewTot = new ArrayList<String>();
+		double average;
+		List<String> avgrev = new ArrayList<String>();
+		int posrec;
+		List<String> Pos = new ArrayList<String>();
+		int negrec;
+		List<String> Neg = new ArrayList<String>();
+		int Responses = 0;
+		List<String> Res = new ArrayList<String>();
+		String RNPS;
+		List<String>rnps = new ArrayList<String>();
+		
+
+		TotReviews = TotalReviews();
+		System.out.println("The total Reviews from UI is : " +TotReviews);
+
+		averageStar = AverageStar();
+		System.out.println("The average star rating from UI is : " +averageStar);
+
+		PosReco = PositiveReco();
+		System.out.println("The positive recommendation from UI is : " +PosReco);
+
+		NegReco = NegativeReco();
+		System.out.println("The negative recommendation from UI is : " +NegReco);
+
+		Reviewresponse = reviewResponse();
+		System.out.println("The review Response from UI is :" +Reviewresponse);
+
+		RNPSscore = RNPSScore();
+		System.out.println("The RNPS Score from UI is : " +RNPSscore);
+
+		if (CurrentState.getBrowser().equals("chrome")) {
+			
+			//To verify tot reviews from XL and UI
+			reviewTot = readCsvDatausingCol(chromepath,10);
+			System.out.println("csv list contains : " + reviewTot.get(0));
+			if(reviewTot.get(0).contains("\"")) {
+			String revtot = reviewTot.get(0).replace("\"", "").trim();
+			System.out.println("The string val is : " +revtot);
+			Totrev = Integer.parseInt(revtot);
+			}else {
+				Totrev = Integer.parseInt(reviewTot.get(0));
+			}
+			System.out.println("The total reviews from XL is : " +Totrev );
+			soft.assertEquals(TotReviews, Totrev);
+
+			//To verify average from XL and UI
+			avgrev = readCsvDatausingCol(chromepath,12);
+			System.out.println("csv list contains : " + avgrev);
+			if(avgrev.get(0).contains("\"")) {
+				String avrev = avgrev.get(0).replace("\"", "").trim();
+				average = Double.parseDouble(avrev);
+			}else {
+				average = Double.parseDouble(avgrev.get(0));
+			}
+			BigDecimal bd = BigDecimal.valueOf(average);
+			bd = bd.setScale(1, RoundingMode.HALF_UP);
+			average = bd.doubleValue();
+			System.out.println("The average score from XL is : " +average);
+			soft.assertEquals(averageStar, average);
+			
+			//To verify positive reviews from XL and UI
+			Pos = readCsvDatausingCol(chromepath,14);
+			System.out.println("csv list contains : " + Pos);
+			if(Pos.get(0).contains("\"")) {
+				String Prev = Pos.get(0).replace("\"", "").trim();
+				posrec = Integer.parseInt(Prev);
+			}else {
+				posrec = Integer.parseInt(Pos.get(0));
+			}
+			System.out.println("The positive score from XL is : " +posrec);
+			soft.assertEquals(PosReco, posrec);
+
+			//To verify negative reviews from XL and UI
+			Neg = readCsvDatausingCol(chromepath,15);
+			System.out.println("csv list contains : " + Neg);
+			if(Neg.get(0).contains("\"")) {
+				String Nrev = Neg.get(0).replace("\"", "").trim();
+				negrec = Integer.parseInt(Nrev);
+			}else {
+				negrec = Integer.parseInt(Neg.get(0));
+			}			
+			System.out.println("The negative score from XL is : " +negrec);
+			soft.assertEquals(NegReco, negrec);
+
+			//To verify Response from XL and UI
+			Res = readCsvDatausingCol(chromepath,16);
+			System.out.println("csv list contains : " + Res);
+			if(Res.get(0).contains("\"")) {
+				String Resp = Res.get(0).replace("\"", "").trim();
+				Responses = Integer.parseInt(Resp);
+			}else{
+				Responses = Integer.parseInt(Res.get(0));
+			}			
+			System.out.println("The response score from XL is : " +Responses);
+			soft.assertEquals(Reviewresponse, Responses);
+
+			//To verify No Response from XL and UI
+			rnps = readCsvDatausingCol(chromepath,18);
+			System.out.println("csv list contains : " + rnps);
+			if(rnps.get(0).contains("\"")) {
+				RNPS = rnps.get(0).replace("\"", "").trim();
+			}else {
+				RNPS = rnps.get(0);
+			}
+			System.out.println("The rnps score from XL is : " +RNPS);
+			soft.assertEquals(RNPSscore, RNPS);
+			
+			
+			//To verify Response Rate from 
+			List<String> resrate = new ArrayList<String>();
+			double ResponseRate;
+			double resprate;
+			
+			resrate = readCsvDatausingCol(chromepath, 17);
+			if(resrate.get(0).contains("\"")) {
+				String Resprate = resrate.get(0).replace("\"", "").trim();
+				if(resrate.get(0).contains("%")) {
+					Resprate = Resprate.replace("%", "").trim();
+					ResponseRate = Double.parseDouble(Resprate);
+				}else {
+					ResponseRate = Double.parseDouble(Resprate);
+				}				
+			}else {
+				String Resprate = null;
+				if(resrate.get(0).contains("%")) {
+					Resprate = resrate.get(0).replace("%", "").replace("\"", "").trim();
+					ResponseRate = Double.parseDouble(Resprate);
+				}else {
+					ResponseRate = Double.parseDouble(Resprate);
+				}
+			}			
+			System.out.println("The Response Rate from XL is : " +ResponseRate);			
+			resprate = (Responses/Double.valueOf(Totrev))*100;
+			BigDecimal bd1 = BigDecimal.valueOf(resprate);
+			bd1 = bd1.setScale(2, RoundingMode.HALF_UP);
+			resprate = bd1.doubleValue();
+			System.out.println("The resprate calculated from XL is : " +resprate);
+			soft.assertEquals(ResponseRate, resprate);			
+		} else if (CurrentState.getBrowser().equals("IE")) {  			
+			//To verify tot reviews from XL and UI
+			reviewTot = readCsvDatausingCol(IEpath,10);
+			System.out.println("csv list contains : " + reviewTot.get(0));
+			if(reviewTot.get(0).contains("\"")) {
+			String revtot = reviewTot.get(0).replace("\"", "").trim();
+			System.out.println("The string val is : " +revtot);
+			Totrev = Integer.parseInt(revtot);
+			}else {
+				Totrev = Integer.parseInt(reviewTot.get(0));
+			}
+			System.out.println("The total reviews from XL is : " +Totrev );
+			soft.assertEquals(TotReviews, Totrev);
+
+			//To verify average from XL and UI
+			avgrev = readCsvDatausingCol(IEpath,12);
+			System.out.println("csv list contains : " + avgrev);
+			if(avgrev.get(0).contains("\"")) {
+				String avrev = avgrev.get(0).replace("\"", "").trim();
+				average = Double.parseDouble(avrev);
+			}else {
+				average = Double.parseDouble(avgrev.get(0));
+			}
+			System.out.println("The average score from XL is : " +average);
+			soft.assertEquals(averageStar, average);
+			
+			//To verify positive reviews from XL and UI
+			Pos = readCsvDatausingCol(IEpath,14);
+			System.out.println("csv list contains : " + Pos);
+			if(Pos.get(0).contains("\"")) {
+				String Prev = Pos.get(0).replace("\"", "").trim();
+				posrec = Integer.parseInt(Prev);
+			}else {
+				posrec = Integer.parseInt(Pos.get(0));
+			}
+			System.out.println("The positive score from XL is : " +posrec);
+			soft.assertEquals(PosReco, posrec);
+
+			//To verify negative reviews from XL and UI
+			Neg = readCsvDatausingCol(IEpath,15);
+			System.out.println("csv list contains : " + Neg);
+			if(Neg.get(0).contains("\"")) {
+				String Nrev = Neg.get(0).replace("\"", "").trim();
+				negrec = Integer.parseInt(Nrev);
+			}else {
+				negrec = Integer.parseInt(Neg.get(0));
+			}			
+			System.out.println("The negative score from XL is : " +negrec);
+			soft.assertEquals(NegReco, negrec);
+
+			//To verify Response from XL and UI
+			Res = readCsvDatausingCol(IEpath,16);
+			System.out.println("csv list contains : " + Res);
+			if(Res.get(0).contains("\"")) {
+				String Resp = Res.get(0).replace("\"", "").trim();
+				Responses = Integer.parseInt(Resp);
+			}else{
+				Responses = Integer.parseInt(Res.get(0));
+			}			
+			System.out.println("The response score from XL is : " +Responses);
+			soft.assertEquals(Reviewresponse, Responses);
+
+			//To verify No Response from XL and UI
+			rnps = readCsvDatausingCol(IEpath,18);
+			System.out.println("csv list contains : " + rnps);
+			if(rnps.get(0).contains("\"")) {
+				RNPS = rnps.get(0).replace("\"", "").trim();
+			}else {
+				RNPS = rnps.get(0);
+			}
+			System.out.println("The rnps score from XL is : " +RNPS);
+			soft.assertEquals(RNPSscore, RNPS);			
+			
+			//To verify Response Rate from 
+			List<String> resrate = new ArrayList<String>();
+			double ResponseRate;
+			double resprate;			
+			resrate = readCsvDatausingCol(IEpath, 17);
+			if(resrate.get(0).contains("\"")) {
+				String Resprate = resrate.get(0).replace("\"", "").trim();
+				if(resrate.get(0).contains("%")) {
+					Resprate = resrate.get(0).replace("%", "").trim();
+					ResponseRate = Double.parseDouble(Resprate);
+				}else {
+					ResponseRate = Double.parseDouble(Resprate);
+				}				
+			}else {
+				String Resprate = null;
+				if(resrate.get(0).contains("%")) {
+					Resprate = resrate.get(0).replace("%", "").trim();
+					ResponseRate = Double.parseDouble(Resprate);
+				}else {
+					ResponseRate = Double.parseDouble(Resprate);
+				}
+			}			
+			System.out.println("The Response Rate from XL is : " +ResponseRate);			
+			resprate = (ResponseRate/Double.valueOf(Totrev))*100;
+			resprate = (Responses/Double.valueOf(Totrev))*100;
+			BigDecimal bd = BigDecimal.valueOf(resprate);
+			bd = bd.setScale(2, RoundingMode.HALF_UP);
+			resprate = bd.doubleValue();
+			System.out.println("The resprate calculated from XL is : " +resprate);
+			soft.assertEquals(ResponseRate, resprate);
+			
+		} else if (CurrentState.getBrowser().equals("Firefox")) {    
+			//To verify tot reviews from XL and UI
+			reviewTot = readCsvDatausingCol(FFpath,10);
+			System.out.println("csv list contains : " + reviewTot.get(0));
+			if(reviewTot.get(0).contains("\"")) {
+			String revtot = reviewTot.get(0).replace("\"", "").trim();
+			System.out.println("The string val is : " +revtot);
+			Totrev = Integer.parseInt(revtot);
+			}else {
+				Totrev = Integer.parseInt(reviewTot.get(0));
+			}
+			System.out.println("The total reviews from XL is : " +Totrev );
+			soft.assertEquals(TotReviews, Totrev);
+
+			//To verify average from XL and UI
+			avgrev = readCsvDatausingCol(FFpath,12);
+			System.out.println("csv list contains : " + avgrev);
+			if(avgrev.get(0).contains("\"")) {
+				String avrev = avgrev.get(0).replace("\"", "").trim();
+				average = Double.parseDouble(avrev);
+			}else {
+				average = Double.parseDouble(avgrev.get(0));
+			}
+			System.out.println("The average score from XL is : " +average);
+			soft.assertEquals(averageStar, average);
+
+			
+			//To verify positive reviews from XL and UI
+			Pos = readCsvDatausingCol(FFpath,14);
+			System.out.println("csv list contains : " + Pos);
+			if(Pos.get(0).contains("\"")) {
+				String Prev = Pos.get(0).replace("\"", "").trim();
+				posrec = Integer.parseInt(Prev);
+			}else {
+				posrec = Integer.parseInt(Pos.get(0));
+			}
+			System.out.println("The positive score from XL is : " +posrec);
+			soft.assertEquals(PosReco, posrec);
+
+			//To verify negative reviews from XL and UI
+			Neg = readCsvDatausingCol(FFpath,15);
+			System.out.println("csv list contains : " + Neg);
+			if(Neg.get(0).contains("\"")) {
+				String Nrev = Neg.get(0).replace("\"", "").trim();
+				negrec = Integer.parseInt(Nrev);
+			}else {
+				negrec = Integer.parseInt(Neg.get(0));
+			}			
+			System.out.println("The negative score from XL is : " +negrec);
+			soft.assertEquals(NegReco, negrec);
+
+			//To verify No Response from XL and UI
+			rnps = readCsvDatausingCol(FFpath,18);
+			System.out.println("csv list contains : " + rnps);
+			if(rnps.get(0).contains("\"")) {
+				RNPS = rnps.get(0).replace("\"", "").trim();
+			}else {
+				RNPS = rnps.get(0);
+			}
+			System.out.println("The rnps score from XL is : " +RNPS);
+			soft.assertEquals(RNPSscore, RNPS);		
+			
+			//To verify Response Rate from 
+			List<String> resrate = new ArrayList<String>();
+			double ResponseRate;
+			double resprate;
+			
+			resrate = readCsvDatausingCol(FFpath, 17);
+			if(resrate.get(0).contains("\"")) {
+				String Resprate = resrate.get(0).replace("\"", "").trim();
+				if(resrate.get(0).contains("%")) {
+					Resprate = resrate.get(0).replace("%", "").trim();
+					ResponseRate = Double.parseDouble(Resprate);
+				}else {
+					ResponseRate = Double.parseDouble(Resprate);
+				}				
+			}else {
+				String Resprate = null;
+				if(resrate.get(0).contains("%")) {
+					Resprate = resrate.get(0).replace("%", "").trim();
+					ResponseRate = Double.parseDouble(Resprate);
+				}else {
+					ResponseRate = Double.parseDouble(Resprate);
+				}
+			}			
+			System.out.println("The Response Rate from XL is : " +ResponseRate);
+			resprate = (Responses/Double.valueOf(Totrev))*100;
+			BigDecimal bd = BigDecimal.valueOf(resprate);
+			bd = bd.setScale(2, RoundingMode.HALF_UP);
+			resprate = bd.doubleValue();
+			System.out.println("The resprate calculated from XL is : " +resprate);
+			soft.assertEquals(ResponseRate, resprate);
+		}
+		soft.assertAll();
+	}
 }
