@@ -709,6 +709,10 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		Thread.sleep(3000);
 	}
 
+	/**
+	 * To read data from CSV file
+	 * @throws IOException
+	 */
 	public void ReadDataCSV() throws IOException {
 		List<String> csvlist = new ArrayList<String>();
 		if (CurrentState.getBrowser().equals("chrome")) {
@@ -727,6 +731,12 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		deletefile();
 	}
 
+	/**
+	 * Read Data from CSV File
+	 * @param path
+	 * @return
+	 * @throws IOException
+	 */
 	@SuppressWarnings("resource")
 	public List<String> readCsvColdata(String path) throws IOException {
 		String splitBy = ",";
@@ -741,6 +751,10 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		return csvlist;
 	}
 
+	/**
+	 * To get Review Count from Feed Page
+	 * @return
+	 */
 	public int getreviewcount() {
 		boolean dataavailable = DataAvailable();
 		if (dataavailable == false) {
@@ -785,6 +799,10 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		Assert.assertEquals(TotReviews, ReviewFeedCount);
 	}
 
+	/**
+	 * To Apply recommended in rating filter and verify data
+	 * @throws Exception
+	 */
 	public void ApplyPositiveRatingnVerifyCount() throws Exception {
 		scrollByElement(RatingFilter);
 		clickelement(RatingFilter);
@@ -808,6 +826,10 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		soft.assertAll();
 	}
 
+	/**
+	 * To Apply not recommended in rating filter and verify data
+	 * @throws Exception
+	 */
 	public void ApplyNegativeRatingVerifyCount() throws Exception {
 		scrollByElement(RatingFilter);
 		clickelement(RatingFilter);
@@ -832,6 +854,10 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		soft.assertAll();
 	}
 
+	/**
+	 * To Apply response in Response filter and verify
+	 * @throws Exception
+	 */
 	public void verifyResponseCount() throws Exception {
 		scrollByElement(Response);
 		clickelement(Response);
@@ -856,6 +882,10 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		soft.assertAll();
 	}
 
+	/**
+	 * To Apply No response in Response filter and verify
+	 * @throws Exception
+	 */
 	public void verifyNotResponseCount() throws Exception {
 		scrollByElement(Response);
 		clickelement(Response);
@@ -881,6 +911,11 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		soft.assertAll();
 	}
 
+	/**
+	 * To apply rating filter and getting the review count
+	 * @param Rating
+	 * @return
+	 */
 	public int getStarReviewCount(String Rating) {
 		scrollByElement(RatingFilter);
 		clickelement(RatingFilter);
@@ -898,31 +933,49 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		return StarCount;		
 	}
 
+	/**
+	 * To get review Count of 1 star
+	 */
 	public void getOneStar() {		
 		OneStarCount = getStarReviewCount("1");
 		System.out.println("The one star count is : " +OneStarCount);
 	}
 
+	/**
+	 * To get review Count of 2 star
+	 */
 	public void getTwoStar() {		
 		TwoStarCount = getStarReviewCount("2");
 		System.out.println("The two star count is : " +TwoStarCount);
 	}
 
+	/**
+	 * To get review Count of 3 star
+	 */
 	public void getThreeStar() {		
 		ThreeStarCount = getStarReviewCount("3");
 		System.out.println("The three star count is : " +ThreeStarCount);
 	}
 
+	/**
+	 * To get review Count of 4 star
+	 */
 	public void getFourStar() {		
 		FourStarCount = getStarReviewCount("4");
 		System.out.println("The four star count is : " +FourStarCount);
 	}
 
+	/**
+	 * To get review Count of 5 star
+	 */
 	public void getFiveStar() {		
 		FiveStarCount = getStarReviewCount("5");
 		System.out.println("The five star count is : " +FiveStarCount);
 	}
 
+	/**
+	 * To calculate total star count
+	 */
 	public void getTotalStarCount() {	
 		System.out.println("The one star count is : " +OneStarCount);
 		System.out.println("The two star count is : " +TwoStarCount);
@@ -933,6 +986,9 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		System.out.println("The total Star Count is : " +totalStarCount);
 	}
 
+	/**
+	 * Calculating Promoter Score
+	 */
 	public void getPromoterScore() {	
 		System.out.println("The five star count is : " +FiveStarCount);
 		System.out.println("The total Star Count is : " +totalStarCount);
@@ -940,6 +996,9 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		System.out.println("The promoter score is : " +PromotorScore);
 	}
 
+	/**
+	 * Calculate total star count except 4 and 5 star
+	 */
 	public void getTotThreeScore() {
 		System.out.println("The one star count is : " +OneStarCount);
 		System.out.println("The two star count is : " +TwoStarCount);
@@ -948,6 +1007,9 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		System.out.println("The total count excluding 4 and 5 star count is : " +totThStarCount);
 	}
 
+	/**
+	 * Calculating Detractor Score
+	 */
 	public void getDetractorScore() {
 		System.out.println("The total Star Count is : " +totalStarCount);
 		System.out.println("The total count excluding 4 and 5 star count is : " +totThStarCount);
@@ -955,6 +1017,9 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		System.out.println("The Detractor score is : " +DeTractorScore);
 	}
 
+	/**
+	 * To Compare RNPS Score
+	 */
 	public void CompareRNPSScore() {	
 		System.out.println("The Detractor score is : " +DeTractorScore);
 		System.out.println("The promoter score is : " +PromotorScore);
@@ -968,6 +1033,12 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		Assert.assertEquals(RNPSscore, RNPSCalc + "%");
 	}
 
+	/**
+	 * To Export File
+	 * @throws InterruptedException
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	public void ExportInsightsFilter() throws InterruptedException, FileNotFoundException, IOException {
 		deletefile();
 		Thread.sleep(3000);
@@ -979,6 +1050,13 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		Thread.sleep(3000);
 	}
 
+	/**
+	 * To Read data from CSV using column number
+	 * @param path
+	 * @param colnum
+	 * @return
+	 * @throws IOException
+	 */
 	public 	List<String> readCsvDatausingCol(String path, int colnum) throws IOException {
 		String splitBy = ",";
 		BufferedReader br = new BufferedReader(new FileReader(path));
@@ -992,6 +1070,10 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		return csvcollist;
 	}
 
+	/**
+	 * Coparison between UI and XL/CSV
+	 * @throws IOException
+	 */
 	public void ReadnverifyData() throws IOException {
 		int Totrev = 0;
 		List<String> reviewTot = new ArrayList<String>();
