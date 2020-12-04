@@ -5,10 +5,12 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_SE.SE_Export_Functionality;
+import com.dac.main.POM_TPSEE.TPSEE_Accuracy_Page;
 import com.dac.main.POM_TPSEE.TPSEE_Groups;
 
 import resources.BaseClass;
 import resources.CurrentState;
+import resources.ExcelHandler;
 
 public class SE_Export_Functionality_Test extends BaseClass{
 	Navigationpage np;
@@ -33,9 +35,89 @@ public class SE_Export_Functionality_Test extends BaseClass{
 		exp.UILocationRead();
 		exp.UIPagesRead();
 		exp.excelRead_UIexcelcomparison();
-	//	exp.comparison();
+		
 	}
 
 	
+	@Test(priority= 5, groups = {
+	"smoke" }, description = "Verify Manage Pages page loads after filter applied")
+public void globalFilterValidation() throws Exception {
+exp = new SE_Export_Functionality(CurrentState.getDriver());
+try {	
+	int count = 1;
+	ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Configuration"); wb.deleteEmptyRows();
+	SE_Export_Functionality s = new SE_Export_Functionality(CurrentState.getDriver());
+	
+	for(int i=1;i<=wb.getRowCount();i++) {
+		System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
+		if(i>1) CurrentState.getDriver().navigate().refresh();
+		s.waitUntilLoad(CurrentState.getDriver());
+		
+		String Group = wb.getCellValue(i, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		String CountryCode = wb.getCellValue(i, wb.seacrh_pattern("Country", 0).get(0).intValue());
+		String State = wb.getCellValue(i, wb.seacrh_pattern("State", 0).get(0).intValue());
+		String City = wb.getCellValue(i, wb.seacrh_pattern("City", 0).get(0).intValue());
+		String Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
+		s.applyGlobalFilter(Group, CountryCode, State, City, Location);
+		System.out.println(Group+", "+CountryCode+", "+State+", "+City+", "+Location);
+		s.clickApplyFilterBTN();
+		BaseClass.addEvidence(CurrentState.getDriver(),
+				"Applied global filter: "+Group+", "+CountryCode+", "+State+", "+City+", "+Location+"", "yes");
+	}
+		}catch(Exception e) {
+	e.printStackTrace();
+}
+}
+	
+	@Test(priority= 6, groups = { "smoke" }, description = "Test for Renaming Excel")
+	public void exportAfterGlobalFilter() throws Exception{
+		exp = new SE_Export_Functionality(CurrentState.getDriver());
+		exp.exportFunctionality();
+		//exp.exportConnection();
+		exp.UILocationRead();
+		exp.UIPagesRead();
+		exp.excelRead_UIexcelcomparison();
+		
+	}
 
+	
+	@Test(priority= 3, groups = {
+	"smoke" }, description = "Verify Manage Pages page loads after filter applied")
+public void keywordSearchValidation() throws Exception {
+exp = new SE_Export_Functionality(CurrentState.getDriver());
+try {	
+	int count = 1;
+	ExcelHandler wb = new ExcelHandler("./data/KeyWordSearch.xlsx", "Configuration"); wb.deleteEmptyRows();
+	SE_Export_Functionality s = new SE_Export_Functionality(CurrentState.getDriver());
+	
+	for(int i=1;i<=wb.getRowCount();i++) {
+		System.out.println("*******************  Scenarios : "+ count +"Starts ****************************");
+		if(i>1) CurrentState.getDriver().navigate().refresh();
+		s.waitUntilLoad(CurrentState.getDriver());
+		
+		String keyword = wb.getCellValue(i, wb.seacrh_pattern("Keyword", 0).get(0).intValue());
+		
+		s.applyKeywordSearch(keyword);
+		System.out.println(keyword);
+		s.clickSearchApplyFilterBTN();
+		BaseClass.addEvidence(CurrentState.getDriver(),
+				"Applied keyword: "+keyword+"", "yes");
+	}
+		}catch(Exception e) {
+	e.printStackTrace();
+}
+}
+	
+	@Test(priority= 4, groups = { "smoke" }, description = "Test for Renaming Excel")
+	public void exportKeywordSearchFilter() throws Exception{
+		exp = new SE_Export_Functionality(CurrentState.getDriver());
+		exp.exportFunctionality();
+		//exp.exportConnection();
+		exp.UILocationRead();
+		exp.UIPagesRead();
+		exp.excelRead_UIexcelcomparison();
+		
+	}
+	
+	
 }
