@@ -97,8 +97,6 @@ public class Reviews_Insights_Test extends BaseClass {
 	public void verifyTootipText() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.tooltiptext();
-		addEvidence(CurrentState.getDriver(), "Test to verify tootip text for reviews, recommendations and responses",
-				"yes");
 	}
 
 	/**
@@ -110,7 +108,6 @@ public class Reviews_Insights_Test extends BaseClass {
 	public void VerifyLearnMoreText() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.verifyLearntext();
-		addEvidence(CurrentState.getDriver(), "Test to verify LearnMore Text", "yes");
 	}
 
 	/**
@@ -119,10 +116,9 @@ public class Reviews_Insights_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@Test(priority = 8, description = "Test to verify average star rating")
-	public void VerifyReviewStarAvg() throws Exception {
+	public void GetReviewStarAvg() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
-		data.AverageStar();
-		addEvidence(CurrentState.getDriver(), "Test to verify average star rating", "yes");
+		data.AverageStar(); 
 	}
 
 	/**
@@ -134,7 +130,6 @@ public class Reviews_Insights_Test extends BaseClass {
 	public void VerifyTotalReviews() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		totalreviews = data.TotalReviews();
-		addEvidence(CurrentState.getDriver(), "Test to verify total reviews", "yes");
 	}
 
 	/**
@@ -146,7 +141,6 @@ public class Reviews_Insights_Test extends BaseClass {
 	public void VerifyPositiveReco() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.PositiveReco();
-		addEvidence(CurrentState.getDriver(), "Test to verify Positive Recommendations", "yes");
 	}
 
 	/**
@@ -157,8 +151,7 @@ public class Reviews_Insights_Test extends BaseClass {
 	@Test(priority = 11, description = "Test to verify Negative Recommendations")
 	public void VerifyNegativeReco() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
-		data.NegativeReco();
-		addEvidence(CurrentState.getDriver(), "Test to verify Negative Recommendation", "yes");
+		data.NegativeReco(); 
 	}
 
 	/**
@@ -170,7 +163,6 @@ public class Reviews_Insights_Test extends BaseClass {
 	public void VerifyResponse() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.reviewResponse();
-		addEvidence(CurrentState.getDriver(), "Test to verify Response for Reviews", "yes");
 	}
 
 	/**
@@ -182,7 +174,6 @@ public class Reviews_Insights_Test extends BaseClass {
 	public void VerifyNoResponse() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.reviewNoResponse();
-		addEvidence(CurrentState.getDriver(), "Test to verify No Response for Reviews", "yes");
 	}
 
 	/**
@@ -194,7 +185,6 @@ public class Reviews_Insights_Test extends BaseClass {
 	public void VerifyRNPS() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.RNPSScore();
-		addEvidence(CurrentState.getDriver(), "Test to verify RNPS Score", "yes");
 	}
 
 	/**
@@ -203,7 +193,7 @@ public class Reviews_Insights_Test extends BaseClass {
 	@Test(priority = 15, description = "Test to compare KPI and Report score")
 	public void CompareKPIandReportValues() {
 		data = new Reviews_Insights(CurrentState.getDriver());
-		data.CompareKPIandReportReviewScore();
+		data.CompareKPIandReportReviewScore(); 
 	}
 
 	/**
@@ -214,7 +204,7 @@ public class Reviews_Insights_Test extends BaseClass {
 	@Test(priority = 16, description = "Test to compare applied and chart dates")
 	public void CompareDateAppliednChart() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
-		data.CompareAppliedDatenChartDate();
+		data.CompareAppliedDatenChartDate(); 
 		addEvidence(CurrentState.getDriver(), "Test to compare applied and chart dates", "yes");
 	}
 
@@ -226,9 +216,7 @@ public class Reviews_Insights_Test extends BaseClass {
 	@Test(priority = 17, description = "Test to read review count from chart and compare overview review count")
 	public void compareChartCountnOvrCount() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
-		data.compareChartnReviewCount();
-		addEvidence(CurrentState.getDriver(), "Test to read review count from chart and compare overview review count",
-				"yes");
+		data.compareChartnReviewCount(); 
 	}
 
 	/**
@@ -254,18 +242,11 @@ public class Reviews_Insights_Test extends BaseClass {
 	public void verifyVisibilityOfHighchart() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.verifyRecoHighchart();
-		addEvidence(CurrentState.getDriver(), "Test to verify visbility of highcharts of Recommended type", "yes");
 		data.verifyFiveStarHighChart();
-		addEvidence(CurrentState.getDriver(), "Test to verify visbility of highcharts of Five Stars type", "yes");
 		data.verifyThreeStarHighChart();
-		addEvidence(CurrentState.getDriver(), "Test to verify visbility of highcharts of Three Stars type", "yes");
 		data.verifyOneStarHighChart();
-		addEvidence(CurrentState.getDriver(), "Test to verify visbility of highcharts of One Star type", "yes");
 		data.verifyNotRecommendHighChart();
-		addEvidence(CurrentState.getDriver(), "Test to verify visbility of highcharts of Not Recommended type", "yes");
 		data.verifyNoAvailableHighChart();
-		addEvidence(CurrentState.getDriver(), "Test to verify visbility of highcharts of Not Available type", "yes");
-		soft.assertAll();
 	}
 
 	/**
@@ -301,42 +282,36 @@ public class Reviews_Insights_Test extends BaseClass {
 			try {
 				String OneMonth = "1m";
 				data.clickHighchartCriteria(OneMonth);
-				addEvidence(CurrentState.getDriver(), "one Month Zoom functionality", "yes");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			try {
 				String ThreeMonths = "3m";
 				data.clickHighchartCriteria(ThreeMonths);
-				addEvidence(CurrentState.getDriver(), "Three Month Zoom functionality", "yes");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			try {
 				String SixMonths = "6m";
 				data.clickHighchartCriteria(SixMonths);
-				addEvidence(CurrentState.getDriver(), "Six Month Zoom functionality", "yes");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			try {
 				String OneYear = "1y";
 				data.clickHighchartCriteria(OneYear);
-				addEvidence(CurrentState.getDriver(), "One Year Zoom functionality", "yes");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			try {
 				String YearToDate = "ytd";
 				data.clickHighchartCriteria(YearToDate);
-				addEvidence(CurrentState.getDriver(), "Year to Date Zoom functionality", "yes");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			try {
 				String ALLDATA = "all";
 				data.clickHighchartCriteria(ALLDATA);
-				addEvidence(CurrentState.getDriver(), "All Data Zoom functionality", "yes");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -419,26 +394,17 @@ public class Reviews_Insights_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@Test(priority = 29, description = "Test to get star rating count, calculate RNPS score and compare with Report")
-	public void getStarCount() throws InterruptedException {
+	public void CompareRNPSScore() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.getOneStar();
-		Thread.sleep(2000);
 		data.getTwoStar();
-		Thread.sleep(2000);
 		data.getThreeStar();
-		Thread.sleep(2000);
 		data.getFourStar();
-		Thread.sleep(2000);
 		data.getFiveStar();
-		Thread.sleep(2000);
 		data.getTotalStarCount();
-		Thread.sleep(2000);
 		data.getPromoterScore();
-		Thread.sleep(2000);
 		data.getTotThreeScore();
-		Thread.sleep(2000);
 		data.getDetractorScore();
-		Thread.sleep(2000);
 		data.CompareRNPSScore();
 	}
 
@@ -489,7 +455,7 @@ public class Reviews_Insights_Test extends BaseClass {
 	@Test(priority = 32, description = "Test for date filter verification")
 	public void DateFilterVerification() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
-		VerifyReviewStarAvg();
+		GetReviewStarAvg();
 	}
 
 	/**
@@ -679,7 +645,7 @@ public class Reviews_Insights_Test extends BaseClass {
 	@Test(priority = 48, description = "Comparison of RNPS Score between reports after applying filter ")
 	public void verifyRNPS() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
-		getStarCount();
+		CompareRNPSScore();
 	}
 
 	/**
@@ -732,7 +698,6 @@ public class Reviews_Insights_Test extends BaseClass {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.ExportInsightsFilter();
 		addEvidence(CurrentState.getDriver(), "Test to export", "yes");
-		Thread.sleep(3000);
 		data.ReadnverifyData();
 		addEvidence(CurrentState.getDriver(), "Test to validate scores", "yes");
 	}
@@ -745,7 +710,7 @@ public class Reviews_Insights_Test extends BaseClass {
 	@Test(priority = 52, description = "Test for date filter verification")
 	public void LocationFilterVerification() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
-		VerifyReviewStarAvg();
+		GetReviewStarAvg();
 	}
 
 	/**
@@ -939,7 +904,7 @@ public class Reviews_Insights_Test extends BaseClass {
 	@Test(priority = 68, description = "Comparison of RNPS Score between reports after applying filter ")
 	public void LocationverifyRNPS() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
-		getStarCount();
+		CompareRNPSScore();
 	}
 
 	/**

@@ -254,24 +254,28 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 
 	/**
 	 * Verify Tootip Text
+	 * @throws Exception 
 	 */
-	public void tooltiptext() {
+	public void tooltiptext() throws Exception {
 		waitForElement(ReviewsTooltip, 10);
-		scrollByElement(ReviewsTooltip);
+		scrollByElement(driver.findElement(By.xpath("//button[@id='btnApply']")));
 		action.moveToElement(ReviewsTooltip).click().perform();
+		BaseClass.addEvidence(driver, "Test to verify Review Tooltip", "yes");
 		String ReviewTooltiptext = Tootiptext.getText().trim();
 		System.out.println("The tooltiptext is :" + ReviewTooltiptext);
 		soft.assertEquals(ReviewTooltiptext,
 				"Average Star Rating sources include Google, YP.ca, Yelp, YP.com, Superpages and Facebook*.\n"
 						+ "The total number of reviews includes reviews from all sources (with and without star rating)\n"
 						+ "*Facebook reviews containing star ratings exist mostly prior to May 2018");
-		scrollByElement(RecommendationTooltip);
+		scrollByElement(driver.findElement(By.xpath("//button[@id='btnApply']")));
 		action.moveToElement(RecommendationTooltip).click().perform();
+		BaseClass.addEvidence(driver, "Test to verify Recommendation Tooltip", "yes");
 		String RecommendationTootiptext = Tootiptext.getText();
 		System.out.println("The tooltiptext is :" + RecommendationTootiptext);
 		soft.assertEquals(RecommendationTootiptext, "Source includes Facebook");
-		scrollByElement(ResponsesTooltip);
+		scrollByElement(driver.findElement(By.xpath("//button[@id='btnApply']")));
 		action.moveToElement(ResponsesTooltip).click().perform();
+		BaseClass.addEvidence(driver, "Test to verify responses tooltip", "yes");
 		String ResponseTooltipText = Tootiptext.getText();
 		System.out.println("The tooltiptext is :" + ResponseTooltipText);
 		soft.assertEquals(ResponseTooltipText,
@@ -281,8 +285,9 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 
 	/**
 	 * Verify Learn Text ToolTip
+	 * @throws Exception 
 	 */
-	public void verifyLearntext() {
+	public void verifyLearntext() throws Exception {
 		waitForElement(LearnMore, 10);
 		scrollByElement(LearnMore);
 		clickelement(LearnMore);
@@ -295,6 +300,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 				+ "Responses are grouped into 3 main areas Promoters, Passives & Detractors. Subtracting the percentage of Detractors from the percentage of Promoters yields the Review Net Promoter Score, which can range from a low of -100 (if every customer is a Detractor) to a high of 100 (if every customer is a Promoter). Any score over 0% is indicative that a brand has more promoters than detractors. The median average for any industry is a score of 16% and examples of real-life scores are Tesla with 97% and MasterCard with 5%.\n"
 				+ "Calculation: rNPS = % Promoters (5 star reviews) - % Detractors (1, 2 and 3 star reviews)\n"
 				+ "Note: Facebook Recommendations are not included in rNPS");
+		BaseClass.addEvidence(driver, "Test to verify LearnMore Text", "yes");
 		clickelement(close);
 	}
 
@@ -302,12 +308,14 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	 * Get Average star rating
 	 * 
 	 * @return
+	 * @throws Exception 
 	 */
-	public double AverageStar() {
+	public double AverageStar() throws Exception {
 		waitForElement(AverageStarRating, 10);
-		scrollByElement(AverageStarRating);
+		scrollByElement(PositiveRecommendation);
 		String avgscr = AverageStarRating.getText();
 		System.out.println("The average score string value is :" + avgscr);
+		BaseClass.addEvidence(driver, "Test to get average score and verify", "yes");
 		averageStar = Double.parseDouble(avgscr);
 		System.out.println("The double value of average score is :" + averageStar);
 		return averageStar;
@@ -320,7 +328,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	 */
 	public int TotalReviews() {
 		waitForElement(TotalReviews, 10);
-		scrollByElement(TotalReviews);
+		scrollByElement(PositiveRecommendation);
 		String totrev = TotalReviews.getText();
 		System.out.println("The string value of total reviews is :" + totrev);
 		TotReviews = Integer.parseInt(totrev);
@@ -332,12 +340,14 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	 * Get Positive Recommendation count
 	 * 
 	 * @return
+	 * @throws Exception 
 	 */
-	public int PositiveReco() {
+	public int PositiveReco() throws Exception {
 		waitForElement(PositiveRecommendation, 10);
 		scrollByElement(PositiveRecommendation);
 		String posreco = PositiveRecommendation.getText();
 		System.out.println("The string value of positive reco is :" + posreco);
+		BaseClass.addEvidence(driver, "Test to get Positive count and verify", "yes");
 		PosReco = Integer.parseInt(posreco);
 		// PosReco = Integer.parseUnsignedInt(posreco);
 		System.out.println("The integer value of Positive Reco is :" + PosReco);
@@ -348,12 +358,14 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	 * Get Negative Recommendation Count
 	 * 
 	 * @return
+	 * @throws Exception 
 	 */
-	public int NegativeReco() {
+	public int NegativeReco() throws Exception {
 		waitForElement(NegativeRecommendation, 10);
 		scrollByElement(NegativeRecommendation);
 		String negreco = NegativeRecommendation.getText();
 		System.out.println("The String value of negative reco is :" + negreco);
+		BaseClass.addEvidence(driver, "Test to get Negative count and verify", "yes");
 		NegReco = Integer.parseInt(negreco);
 		System.out.println("The integer value of negative Reco is :" + NegReco);
 		return NegReco;
@@ -363,12 +375,14 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	 * Get Response count
 	 * 
 	 * @return
+	 * @throws Exception 
 	 */
-	public int reviewResponse() {
+	public int reviewResponse() throws Exception {
 		waitForElement(ReviewsResponed, 10);
 		scrollByElement(ReviewsResponed);
 		String Response = ReviewsResponed.getText();
 		System.out.println("The String value of response is :" + Response);
+		BaseClass.addEvidence(driver, "Test to get Response count and verify", "yes");
 		Reviewresponse = Integer.parseInt(Response);
 		System.out.println("The integer value of response is :" + Reviewresponse);
 		return Reviewresponse;
@@ -378,12 +392,14 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	 * Get NO Response Count
 	 * 
 	 * @return
+	 * @throws Exception 
 	 */
-	public int reviewNoResponse() {
+	public int reviewNoResponse() throws Exception {
 		waitForElement(ReviewsNotResponded, 10);
 		scrollByElement(ReviewsNotResponded);
 		String NoResponse = ReviewsNotResponded.getText();
 		System.out.println("The String value of no response is :" + NoResponse);
+		BaseClass.addEvidence(driver, "Test to get No Response count and verify", "yes");
 		reviewNoresponse = Integer.parseInt(NoResponse);
 		System.out.println("The integer value of no response is :" + reviewNoresponse);
 		return reviewNoresponse;
@@ -393,11 +409,13 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	 * Get RNPS Score
 	 * 
 	 * @return
+	 * @throws Exception 
 	 */
-	public String RNPSScore() {
+	public String RNPSScore() throws Exception {
 		waitForElement(RNPSScore, 10);
 		scrollByElement(RNPSScore);
 		RNPSscore = RNPSScore.getText();
+		BaseClass.addEvidence(driver, "Test to get RNPS Score and verify", "yes");
 		System.out.println("The String value of RNPS Score is :" + RNPSscore);
 		return RNPSscore;
 	}
@@ -417,16 +435,17 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 
 	/**
 	 * Compare Applied and Highchart Date
-	 * 
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	public void CompareAppliedDatenChartDate() throws ParseException {
+	public void CompareAppliedDatenChartDate() throws Exception {
 		String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
 				.toString();
 		System.out.println("The date format is :" + var);
 		SimpleDateFormat formats = new SimpleDateFormat(var);
-		Date FromDate = getFromDate();
+		Date FromDate = getFromDate(); 
+		scrollByElement(driver.findElement(By.xpath("//*[@id='dateFrom']")));
 		System.out.println("The from date applied :" + FromDate);
+		BaseClass.addEvidence(driver, "Test to get date applied", "yes");
 		Date ToDate = getToDate();
 		System.out.println("The to date applied :" + ToDate);
 		String chartfrom = FromDateChart.getText();
@@ -501,7 +520,6 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 				scrollByElement(chart);
 				action.moveToElement(chart).click().build().perform();
 				Thread.sleep(3000);
-				System.err.println("The xpath is : " + ToolTip);
 				charttext = ToolTip.getText();
 				System.out.println("The String value of review count is :" + charttext);
 				int count = Integer.parseInt(charttext);
@@ -509,6 +527,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 				ChartReviewCount.add(count);
 				System.out.println("The List contains :" + ChartReviewCount);
 			}
+			BaseClass.addEvidence(driver, "Test to get review count from the chart", "yes");
 			System.out.println("The final list is :" + ChartReviewCount);
 			int listsize = ChartReviewCount.size();
 			System.out.println("The size of the List is :" + listsize);
@@ -545,6 +564,8 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		int TotalChartReviewCount = (Onestarcount + Threestarcount + Fivestarcount + Recocount + Notrecocount
 				+ Notavailcount);
 		System.out.println("The total chart review count is :" + TotalChartReviewCount);
+		scrollByElement(ReviewsResponed);
+		BaseClass.addEvidence(driver, "Test to verify Total Review Count with chart", "yes");
 		soft.assertEquals(TotalChartReviewCount, TotReviews);
 		soft.assertAll();
 	}
@@ -559,6 +580,8 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		System.out.println("The total recommended count is :" + Recocount);
 		int Notrecocount = getChartData(NotRecommendedChart, Notrecochart);
 		System.out.println("The total not recommended count :" + Notrecocount);
+		scrollByElement(ReviewsResponed);
+		BaseClass.addEvidence(driver, "Test to verify Positive and negative Review Count with chart", "yes");
 		soft.assertEquals(Recocount, PosReco);
 		soft.assertEquals(Notrecocount, NegReco);
 		soft.assertAll();
@@ -625,6 +648,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		clickelement(ele9);
 		clickelement(ele10);
 		clickelement(ele11);
+		soft.assertAll();
 	}
 
 	/**
@@ -757,10 +781,13 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	 * To get Review Count from Feed Page
 	 * 
 	 * @return
+	 * @throws Exception 
 	 */
-	public int getreviewcount() {
+	public int getreviewcount() throws Exception {
 		boolean dataavailable = DataAvailable();
 		if (dataavailable == false) {
+			scrollByElement(ReviewCount);
+			BaseClass.addEvidence(driver, "Test to get review count and verify", "yes");
 			int RCount = Integer.parseInt(ReviewCount.getText());
 			System.out.println("The Review Count is :" + RCount);
 			int rcnt = Integer.parseInt(ReviewExclude.getText());
@@ -810,12 +837,13 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	public void ApplyPositiveRatingnVerifyCount() throws Exception {
 		scrollByElement(RatingFilter);
 		clickelement(RatingFilter);
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 		action.moveToElement(driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='Recommended'])[1]")))
 				.click().build().perform();
 		JSWaiter.waitJQueryAngular();
 		clickelement(RatingFilter);
-		Thread.sleep(5000);
+		Thread.sleep(3000);
+		BaseClass.addEvidence(driver, "Test to apply recommend filter and verify count", "yes"); 
 		int PositiveReviewCount = getreviewcount();
 		System.out.println("The Positive Review Count is : " + PositiveReviewCount);
 		BaseClass.addEvidence(driver, "Test to verify positive count", "yes");
@@ -823,7 +851,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		soft.assertEquals(PosReco, PositiveReviewCount);
 		scrollByElement(RatingFilter);
 		clickelement(RatingFilter);
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 		action.moveToElement(driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='All'])[2]"))).click()
 				.build().perform();
 		clickelement(RatingFilter);
@@ -838,13 +866,14 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	public void ApplyNegativeRatingVerifyCount() throws Exception {
 		scrollByElement(RatingFilter);
 		clickelement(RatingFilter);
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 		action.moveToElement(
 				driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='Not Recommended'])[1]"))).click()
 				.build().perform();
 		JSWaiter.waitJQueryAngular();
 		clickelement(RatingFilter);
-		Thread.sleep(5000);
+		BaseClass.addEvidence(driver, "Test to apply not recommend filter and verify count", "yes");
+		Thread.sleep(3000);
 		int NegativeReviewCount = getreviewcount();
 		System.out.println("The Negative Review Count is : " + NegativeReviewCount);
 		BaseClass.addEvidence(driver, "Test to verify negative count", "yes");
@@ -852,7 +881,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		soft.assertEquals(NegReco, NegativeReviewCount);
 		scrollByElement(RatingFilter);
 		clickelement(RatingFilter);
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 		action.moveToElement(driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='All'])[2]"))).click()
 				.build().perform();
 		clickelement(RatingFilter);
@@ -867,10 +896,11 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	public void verifyResponseCount() throws Exception {
 		scrollByElement(Response);
 		clickelement(Response);
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 		driver.findElement(By.xpath("//div[@class='ownerResponse']//div[contains(text(),'Response')]")).click();
 		JSWaiter.waitJQueryAngular();
-		Thread.sleep(5000);
+		BaseClass.addEvidence(driver, "Test to apply Response filter and verify count", "yes");
+		Thread.sleep(3000);
 		int totalresponsereview = getreviewcount();
 		System.out.println("The total number of review response is : " + totalresponsereview);
 		System.out.println("The total number of review response from Insights is : " + Reviewresponse);
@@ -880,7 +910,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		clickelement(Response);
 		driver.findElement(By.xpath("//div[@class='ownerResponse']//div[contains(text(),'All')]")).click();
 		JSWaiter.waitJQueryAngular();
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 		soft.assertAll();
 	}
 
@@ -892,10 +922,11 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	public void verifyNotResponseCount() throws Exception {
 		scrollByElement(Response);
 		clickelement(Response);
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 		driver.findElement(By.xpath("//div[@class='ownerResponse']//div[contains(text(),'No Response')]")).click();
 		JSWaiter.waitJQueryAngular();
-		Thread.sleep(5000);
+		BaseClass.addEvidence(driver, "Test to apply No Response filter and verify count", "yes");
+		Thread.sleep(3000);
 		int totalresponsereview = getreviewcount();
 		System.out.println("The total number of review no response is : " + totalresponsereview);
 		System.out.println("The total number of review no response from Insights is : " + reviewNoresponse);
@@ -903,10 +934,10 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		BaseClass.addEvidence(driver, "Test to verify No response count for review", "yes");
 		scrollByElement(Response);
 		clickelement(Response);
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 		driver.findElement(By.xpath("//div[@class='ownerResponse']//div[contains(text(),'All')]")).click();
 		JSWaiter.waitJQueryAngular();
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 		soft.assertAll();
 	}
 
@@ -915,14 +946,16 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	 * 
 	 * @param Rating
 	 * @return
+	 * @throws Exception 
 	 */
-	public int getStarReviewCount(String Rating) {
+	public int getStarReviewCount(String Rating) throws Exception {
 		scrollByElement(RatingFilter);
 		clickelement(RatingFilter);
 		action.moveToElement(
 				driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='" + Rating.trim() + "'])[1]")))
 				.click().build().perform();
 		clickelement(RatingFilter);
+		BaseClass.addEvidence(driver, "Test to apply rating filter and verify count", "yes");
 		int StarCount = getreviewcount();
 		System.out.println("The total star count is : " + StarCount);
 		scrollByElement(RatingFilter);
@@ -935,40 +968,45 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 
 	/**
 	 * To get review Count of 1 star
+	 * @throws Exception 
 	 */
-	public void getOneStar() {
+	public void getOneStar() throws Exception {
 		OneStarCount = getStarReviewCount("1");
 		System.out.println("The one star count is : " + OneStarCount);
 	}
 
 	/**
 	 * To get review Count of 2 star
+	 * @throws Exception 
 	 */
-	public void getTwoStar() {
+	public void getTwoStar() throws Exception {
 		TwoStarCount = getStarReviewCount("2");
 		System.out.println("The two star count is : " + TwoStarCount);
 	}
 
 	/**
 	 * To get review Count of 3 star
+	 * @throws Exception 
 	 */
-	public void getThreeStar() {
+	public void getThreeStar() throws Exception {
 		ThreeStarCount = getStarReviewCount("3");
 		System.out.println("The three star count is : " + ThreeStarCount);
 	}
 
 	/**
 	 * To get review Count of 4 star
+	 * @throws Exception 
 	 */
-	public void getFourStar() {
+	public void getFourStar() throws Exception {
 		FourStarCount = getStarReviewCount("4");
 		System.out.println("The four star count is : " + FourStarCount);
 	}
 
 	/**
 	 * To get review Count of 5 star
+	 * @throws Exception 
 	 */
-	public void getFiveStar() {
+	public void getFiveStar() throws Exception {
 		FiveStarCount = getStarReviewCount("5");
 		System.out.println("The five star count is : " + FiveStarCount);
 	}
@@ -1074,10 +1112,9 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 
 	/**
 	 * Coparison between UI and XL/CSV
-	 * 
-	 * @throws IOException
+	 * @throws Exception 
 	 */
-	public void ReadnverifyData() throws IOException {
+	public void ReadnverifyData() throws Exception {
 		int Totrev = 0;
 		List<String> reviewTot = new ArrayList<String>();
 		double average;

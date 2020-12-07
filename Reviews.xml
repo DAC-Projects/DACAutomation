@@ -4,7 +4,7 @@
 		<listener class-name="resources.ExtentTestNGITestListener"></listener>
 	</listeners>
 	
-	<test name = "Sentiment Analysis">
+	<test name = "ReviewsBeta">
 		<parameter name="browser" value="chrome" />
 		<classes>
 			<!-- <class name="com.dac.testcases.TPSEE.TPSEE_Displayed_Review_Score_Test" />

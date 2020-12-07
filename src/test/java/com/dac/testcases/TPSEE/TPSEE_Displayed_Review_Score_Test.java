@@ -45,7 +45,7 @@ public class TPSEE_Displayed_Review_Score_Test extends BaseClass {
 	public void verifyText() throws Exception {
 		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
 		data.VerifyTitleText1("Displayed Review Score",
-				"The displayed review score for each location is what the star rating is on the listing for the previous day. The displayed star rating may be different from the average star rating for the site in the review report if these sites apply a different equation to calculate reviews using factors such as recency.");
+				"The displayed review score for each location is what the star rating is on the listing for the previous day. The displayed star rating may be different from the average star rating for the site in the review report if these sites apply a different equation to calculate reviews using factors such as recency. Read Manual");
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
 

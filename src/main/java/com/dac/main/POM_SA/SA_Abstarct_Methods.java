@@ -31,6 +31,7 @@ import org.testng.asserts.SoftAssert;
 
 import com.dac.main.BasePage;
 
+import resources.BaseClass;
 import resources.FileHandler;
 import resources.JSWaiter;
 import resources.formatConvert;
@@ -530,6 +531,8 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 			case "1m"  : 	try{
 								clickelement(highChart_1M);
 								if(eleClicked(highChart_1M)) {
+									scrollByElement(highchartSec);
+									BaseClass.addEvidence(driver, "Test to verify 1m zoom applied", "yes");
 									days = getNumberofDays();			
 									if(days >= 28 && days<=31 ) {
 										System.out.println("1 Month data is displayed");
@@ -548,6 +551,8 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 			case "3m"  : 	try{
 								clickelement(highChart_3M);
 								if(eleClicked(highChart_3M)) {
+									scrollByElement(highchartSec);
+									BaseClass.addEvidence(driver, "Test to verify 3m zoom applied", "yes");
 									days = getNumberofDays();
 									if(days>=90 && days<=92) {
 										System.out.println("3 Month data is displayed");
@@ -565,6 +570,8 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 			case "6m"  : 	try{
 								clickelement(highChart_6M);
 								if(eleClicked(highChart_6M)) {
+									scrollByElement(highchartSec);
+									BaseClass.addEvidence(driver, "Test to verify 6m zoom applied", "yes");
 									days = getNumberofDays();
 									if(days>=180 && days<=184) {
 										System.out.println("6 Month data is displayed");
@@ -582,6 +589,8 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 			case "ytd" : 	try{
 								clickelement(highChart_YTD);
 								if(eleClicked(highChart_YTD)) {
+									scrollByElement(highchartSec);
+									BaseClass.addEvidence(driver, "Test to verify ytd zoom applied", "yes");
 									days = getNumberofDays();
 								}else {
 									System.out.println("Element Not clicked");
@@ -594,6 +603,8 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 			case "1y"  : 	try{
 								clickelement(highChart_1y);
 								if(eleClicked(highChart_1y)) {
+									scrollByElement(highchartSec);
+									BaseClass.addEvidence(driver, "Test to verify 1y zoom applied", "yes");
 									days = getNumberofDays();
 									if(days>=364 && days<=366) {
 										System.out.println("1 Year data is displayed");
@@ -612,6 +623,8 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 			default    : 	try{
 								clickelement(highChart_All);
 								if(eleClicked(highChart_All)) {
+									scrollByElement(highchartSec);
+									BaseClass.addEvidence(driver, "Test to verify all zoom applied", "yes");
 									days = getNumberofDays();
 								}else {
 									System.out.println("Element not clicked");

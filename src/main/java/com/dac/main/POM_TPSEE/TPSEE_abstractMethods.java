@@ -285,7 +285,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		int col_num = 0;
 		System.out.println("" + col);
 		List<Double> score = new ArrayList<Double>();
-		for (int i = 0; i <= row.getLastCellNum(); i++) {
+		for (int i = 0; i < row.getLastCellNum(); i++) {
 			if ((row.getCell(i).toString()).equals(Col_Name)) {
 				col_num = i;
 				System.out.println("" + col_num);
@@ -300,28 +300,20 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			row = sh.getRow(j);
 			Cell cell = row.getCell(col_num);
 			if (cell != null) {
-				if (!(cell.getCellType() == Cell.CELL_TYPE_STRING)) {
-					String cellValue1 = Double.toString(cell.getNumericCellValue());
+				if ((cell.getCellType() == Cell.CELL_TYPE_STRING)) {
+					String cellValue1 = cell.getStringCellValue().toString();
 					System.out.println("Cell VAlue is :" + cellValue1);
 					if (!cellValue1.contains("N/A")) {
-						/*
-						 * s = cellValue1.replace("N/A", "0"); y = Double.parseDouble(s);
-						 * System.out.println("\n " +s); sum = sum+y;
-						 */
 						double cellValue = Double.parseDouble(cellValue1);
 						System.out.println(cellValue);
 						score.add(cellValue);
 					}
-				} else {
-					System.out.println("String Value");
-				}
-
+				} 
 				System.out.println("ArrayList contains :" + score);
 
 			} else {
 				System.out.println("Smt wrong");
 			}
-			wb.close();
 		}
 		int sizeOfList = score.size();
 		System.out.println("Size of List is :" + sizeOfList);
@@ -1494,10 +1486,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		String sc = score.getText();
 		String s = sc.replace("%", "");
 		double scores = Double.parseDouble(s);
-		BigDecimal bd = BigDecimal.valueOf(scores);
+		/*BigDecimal bd = BigDecimal.valueOf(scores);
 		bd = bd.setScale(1, RoundingMode.HALF_UP);
-		double finaloverviewscore = bd.doubleValue();
-		return finaloverviewscore;
+		double finaloverviewscore = bd.doubleValue();*/
+		return scores;
 
 	}
 
@@ -1744,17 +1736,6 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			entryperPage = NumOfentriesinPage(entry);
 			System.out.println("The entries per page is :" + entryperPage);
 			soft.assertEquals(50 , entryperPage);
-		} else {
-			System.out.println("No enough data to perform");
-		}
-		if (totalentries >= 75) {
-			scrollByElement(entry);
-			select = new Select(results);
-			select.selectByVisibleText("75");
-			Thread.sleep(5000);
-			entryperPage = NumOfentriesinPage(entry);
-			System.out.println("The entries per page is :" + entryperPage);
-			soft.assertEquals(75 , entryperPage);
 		} else {
 			System.out.println("No enough data to perform");
 		}
