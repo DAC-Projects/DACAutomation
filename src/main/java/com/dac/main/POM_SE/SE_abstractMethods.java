@@ -85,6 +85,10 @@ public abstract class SE_abstractMethods extends BasePage implements SE_Reposito
 	//Assigned Locations tab
 	@FindBy(xpath="//*[@id='tabsDiv']/div/div/ul/li[2]/a")
 	private WebElement AssignedLocationsTab;
+	
+	//Unassigned Locations tab
+	@FindBy(xpath="//*[@id='tabsDiv']/div/div/ul/li[3]/a")
+	private WebElement UnassignedLocationsTab;
 
 	
 	public void applyGlobalFilter(String Group, String CountryCode, String State, String City, String Location) {
@@ -182,4 +186,9 @@ public abstract class SE_abstractMethods extends BasePage implements SE_Reposito
 		clickelement(AssignedLocationsTab);
 	}
 
+	public void clickUnassignedLocationsTab()
+	{
+		JSWaiter.waitJQueryAngular();
+		clickelement(UnassignedLocationsTab);
+	}
 }
