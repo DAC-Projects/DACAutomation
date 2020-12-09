@@ -95,7 +95,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
 
-	@Test(priority = 4, groups = { "smoke" }, description = "Test for verify hover text")
+	/*@Test(priority = 4, groups = { "smoke" }, description = "Test for verify hover text")
 	public void verifyHoverText() throws Exception {
 		data = new TPSEE_GMB(CurrentState.getDriver());
 		data.verifyMouseHoverText();
@@ -646,7 +646,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 		}
 	}
 
-	/*@Test(priority = 37, enabled = true, dataProvider = "testData", description = "Test for Manual date selection")
+	@Test(priority = 37, enabled = true, dataProvider = "testData", description = "Test for Manual date selection")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		String UIdat = data.IsDataAvailable();
@@ -671,7 +671,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 		} else {
 			System.out.println("No Data Available for GMB");
 		}
-	}*/
+	}
 
 	@SuppressWarnings("finally")
 	@DataProvider
@@ -711,6 +711,6 @@ public class TPSEE_GMB_Test extends BaseClass {
 		} finally {
 			return data;
 		}
-	}
+	}*/
 
 }

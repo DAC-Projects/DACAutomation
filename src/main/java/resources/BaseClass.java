@@ -140,9 +140,9 @@ public abstract class BaseClass {
 		case "TransparenSeeClientBetaBing" :
 			return IAutoconst.transparenSEEDupData;
 			
-		case "Sentiment Analysis":
+		case "ReviewsBeta":
 			return IAutoconst.neuralTuringTechAccount;
-		case "SA":
+		case "ReviewsStaging":
 			return IAutoconst.neuralturingtechStaging;
 		// IAutoconst.Fit4LessAccount;
 		// IAutoconst.neuralTuringTechAccount;

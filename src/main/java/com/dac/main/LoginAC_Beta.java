@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import resources.CurrentState;
+import resources.IAutoconst;
 
 public class LoginAC_Beta {
 	
@@ -56,10 +57,13 @@ public class LoginAC_Beta {
 	}
 	
 	public void clickDashboardLink() {
+		if(IAutoconst.baseUrl.equals("http://staging.manage.dacgroup.com:82/accounts/")) {
 		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(Dashboard));
 		Dashboard.sendKeys(Keys.CONTROL, Keys.ENTER);
-		/*new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(Staging));
-		Staging.sendKeys(Keys.CONTROL, Keys.ENTER);*/
+		}else if(IAutoconst.baseUrlStaging.equals("https://manage.dacgroup.com/accounts/")) {
+		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(Staging));
+		Staging.sendKeys(Keys.CONTROL, Keys.ENTER);
+		}
 	}
 	
 	public void findUser(String data) {

@@ -11,6 +11,10 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -304,6 +308,14 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		exportVA(exportBtn, XLSXExport, exportdate, date, export);
 		Thread.sleep(15000);
 		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + VisibilityExportXLSX));
+		Workbook wb = new XSSFWorkbook(Exportpath + (CurrentState.getBrowser()+VisibilityExportXLSX));
+		Sheet sh = wb.getSheetAt(0);
+		Row row = sh.getRow(0);
+		int Last_row = sh.getLastRowNum();
+		System.out.println("The Last row number is : " +Last_row);
+		int totLocations = overviewlocation();
+		System.out.println("The total locations is : " +totLocations);
+		soft.assertEquals(totLocations, Last_row - 1);
 	}
 
 	/**

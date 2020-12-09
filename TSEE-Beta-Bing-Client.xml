@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Suite" parallel="none">
+	
+	<listeners>
+		<listener class-name="resources.ExtentTestNGITestListener"></listener>
+	</listeners>
+	
+	<test name = "TransparenSeeClientBetaBing" >
+		<parameter name = "browser" value = "chrome"/>
+			<classes>
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" /> 
+				
+			</classes>
+	</test>
+	
+	<test name = "TransparenSeeClientBetaBing" >
+		<parameter name = "browser" value = "chrome"/>
+			<classes>
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" /> 
+				
+			</classes>
+	</test>
+	
+</suite>

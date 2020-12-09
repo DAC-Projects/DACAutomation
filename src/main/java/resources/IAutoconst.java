@@ -39,7 +39,7 @@ public interface IAutoconst {
 	String[] DRSClient = {baseUrl + "international-location-test-account", "chappel.mann+stc@gmail.com"}; //Client Level
 	String[] DRSLocation = {baseUrl + "international-location-test-account","chappel.mann+stl@gmail.com"}; // Location Level
 	String[] Fit4LessAccount = {baseUrl+"fit4less-beta", "1test@gmail.com"};
-	String[] neuralTuringTechAccount = {baseUrl+"neural-turing-tech-beta", "lzimerman@dacgroup.com"};
+	String[] neuralTuringTechAccount = {baseUrl+"neural-turing-tech-beta", "skanna@dacgroup.com"};
 	String[] neuralturingtechStaging = {baseUrlStaging + "neural-turing-tech" , "lzimerman@dacgroup.com"}; // Reviews Staging Approver
 	String[] SocialdeepFieldAccount = {baseUrl+"deepfield-software-incorporated-beta","vijayata_201989@yahoo.com"};
 	String[] SocialAutomationAccount = {baseUrl+"social-automation-beta","rohitmenon8055@gmail.com"};

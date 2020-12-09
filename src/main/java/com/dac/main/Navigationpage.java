@@ -97,6 +97,9 @@ public class Navigationpage extends BasePage {
 
 	@FindBy(xpath = "//a[@href='/Review/ReviewFeed/']")
 	private WebElement ReviewFeed;
+	
+	@FindBy(xpath = "//a[@href='/ReviewInsights/Index']")
+	private WebElement ReviewInsights;
 
 	@FindBy(xpath = "//a[@href='/ReportCard/Index/']/span")
 	private WebElement ReportCard;
@@ -601,6 +604,14 @@ public class Navigationpage extends BasePage {
 		wait.until(ExpectedConditions.visibilityOf(ReviewFeed));
 		scrollByElement(ReviewFeed);
 		clickelement(ReviewFeed);
+		System.out.println("Waiting for page to load**********");
+	}
+	
+	public void navigateToSA_ReviewsInsights() {
+		JSWaiter.waitJQueryAngular();
+		wait.until(ExpectedConditions.visibilityOf(ReviewInsights));
+		scrollByElement(ReviewInsights);
+		clickelement(ReviewInsights);
 		System.out.println("Waiting for page to load**********");
 	}
 

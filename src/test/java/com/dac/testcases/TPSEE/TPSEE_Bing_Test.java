@@ -87,12 +87,12 @@ public class TPSEE_Bing_Test extends BaseClass {
 	public void verifyText() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		data.VerifyTitleText("Bing Places for Business",
-				"This report provides insights into the weekly number of impressions that occurred for each of your location(s) on Bing over time. This information is obtained from Bing and is on average two weeks behind.");
+				"This report provides insights into the weekly number of impressions that occurred for each of your location(s) on Bing over time. This information is obtained from Bing and is on average two weeks behind. Read Manual");
 
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
 
-	@Test(priority = 4, groups = { "smoke" }, description = "Test for verify hover text")
+	/*@Test(priority = 4, groups = { "smoke" }, description = "Test for verify hover text")
 	public void verifyHoverText() {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		data.GetHoverText("Total Impressions based on the selected weekly range. ");
@@ -259,7 +259,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 		}
 	}
 
-	/*@SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	@Test(priority = 11, dataProvider = "testData",description = "Verify manual date Selection")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
@@ -290,7 +290,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 		} else {
 			System.out.println("No Data Available");
 		}
-	}*/
+	}
 
 	//@SuppressWarnings("finally")
 	@DataProvider
@@ -330,5 +330,5 @@ public class TPSEE_Bing_Test extends BaseClass {
 		} finally {
 			return data;
 		}
-	}
+	}*/
 }

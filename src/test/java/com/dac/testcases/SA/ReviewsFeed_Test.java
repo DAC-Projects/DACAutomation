@@ -96,122 +96,111 @@ public class ReviewsFeed_Test extends BaseClass {
 	public void compareReviewCountandNumberofEntries() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.verifyReviewCount();
-		addEvidence(CurrentState.getDriver(), "Test to compare reviews count", "yes");
 	}
 
 	@Test(priority = 8, description = "Test to select source")
 	public void compareSourcewithReviewsTable() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.SelectSource();
-		addEvidence(CurrentState.getDriver(), "Test to apply source", "yes");
 	}
 
 	@Test(priority = 9, description = "Test to enter and verify tag")
 	public void comparetag() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.VerifyTag();
-		addEvidence(CurrentState.getDriver(), "Test to verify tags", "yes");
 	}
 
 	@Test(priority = 10, description = "Test to verify sentiment")
 	public void verifySentiment() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.applySentiment();
-		addEvidence(CurrentState.getDriver(), "Test to  compare sentiment", "yes");
 	}
 
 	@Test(priority = 11, description = "verify sorting of table by latest date")
 	public void verifyLatestDatesortbytable() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.VerifySortByNewest();
-		addEvidence(CurrentState.getDriver(), "Test to verify sortByTable Newest Date", "yes");
 	}
 
 	@Test(priority = 12, description = "verify sorting of table by oldest date")
 	public void verifyOldestDatesortbytable() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.VerifySortByOldest();
-		addEvidence(CurrentState.getDriver(), "Test to verify sortByTable Oldest Date", "yes");
 	}
 
 	@Test(priority = 13, description = "verify sorting of table by source")
 	public void verifySourcesortby() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.VerifySortSource();
-		addEvidence(CurrentState.getDriver(), "Test to verify sortbyTable Source", "yes");
 	}
 
 	@Test(priority = 14, description = "verify sorting of table by star rating")
 	public void verifyhigheststarratingsort() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.VerifyHighStar();
-		addEvidence(CurrentState.getDriver(), "Test to verify sorted by highest star rating", "yes");
 	}
 
 	@Test(priority = 15, description = "verify sorting of table by star rating")
 	public void verifyloweststarratingsort() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.VerifyLowStar();
-		addEvidence(CurrentState.getDriver(), "Test to verify sorted by lowest star rating", "yes");
 	}
 
 	@Test(priority = 16, description = "Test to verify Ref Code")
 	public void verifyRefCodeSort() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.verifySortReferenceCode();
-		addEvidence(CurrentState.getDriver(), "Test to verify ref code is sorted", "yes");
 	}
-	
+
 	@Test(priority = 17, description = "Test to verify Location Name sort")
 	public void verifyLocationNameSort() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.verifySortLocationName();
-		addEvidence(CurrentState.getDriver(), "Test to verify location name sorting", "yes");
 	}
-	
+
 	@Test(priority = 18, description = "Test to verify keyword")
 	public void verifyKeywordentered() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.KeywordSearch();
 	}
-	
+
 	@Test(priority = 19, description = "Test to verify response type")
 	public void verifyResponseType() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.SelectResponse();
 	}
-	
+
 	@Test(priority = 20, description = "Test to verify content filter")
 	public void verifyContentFilter() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.SelectContent();
 	}
-	
+
 	@Test(priority = 21, description = "Test to verify rating filter")
 	public void verifyratingfilter() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.SelectRating();
 	}
-	
+
 	@Test(priority = 22, description = "Test to verify sentiment category")
 	public void verifysentimentcategory() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.SelectSentimentcategory();
 	}
-	
+
 	@Test(priority = 23, description = "Test to verify top button")
 	public void verifymultisentiments() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.TopButton();
 	}
-	
+
 	@Test(priority = 24, description = "Test to verify sentiment combination")
 	public void sentimentcombination() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.selectsentandcatandverifyreview();
 	}
-	
-	@Test(priority = 25, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider= "testData")
+
+	@Test(priority = 25, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider = "testData")
 	public void DateFilter(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
@@ -234,6 +223,7 @@ public class ReviewsFeed_Test extends BaseClass {
 			ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_Zoom");
 			wb.deleteEmptyRows();
 			int rowCount = wb.getRowCount();
+
 			System.out.println("rowCount : " + rowCount);
 			data = new String[rowCount - 1][6];
 			data1 = new String[rowCount - 1][6];

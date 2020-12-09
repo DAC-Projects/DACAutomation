@@ -102,7 +102,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	public void verifyText() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.VerifyTitleText1("Accuracy Report",
-				"This report identifies the accuracy of a location by field, across the sites that are being monitored.");
+				"This report identifies the accuracy of a location by field, across the sites that are being monitored. Read Manual");
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
 
@@ -110,7 +110,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * Test to get SiteTable data
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	// Test to compare vendors in the application in Visibility Page
 	@Test(priority = 6, groups = { "smoke" }, description = "Verify Site Vendors List")
 	public void comparevendorsListnverifySitevendors() throws Exception {
@@ -118,7 +118,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		ArrayList<String> accuracyvendors = data.verifyAccuracySitevendors();
 		Assert.assertEquals(accuracyvendors, foundlistingVendors);
 		addEvidence(CurrentState.getDriver(), "Site Vendors in Content Analysis site vendors ", "yes");
-	}*/
+	}
 
 	/**
 	 * Test to Compare KPI Values with Report
@@ -126,7 +126,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * @throws Exception
 	 */
 
-	/*@Test(priority = 7, groups = { "smoke" }, description = "Test for compare KPI Values")
+	@Test(priority = 7, groups = { "smoke" }, description = "Test for compare KPI Values")
 	public void ovrviewlocscorecompare() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		Thread.sleep(5000);
@@ -136,7 +136,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		Assert.assertEquals(score, ovrvwscr);
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Visibility page");
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
-	}*/
+	}
 
 	@SuppressWarnings("unused")
 	@Test(priority = 9, enabled = true, dataProvider = "testData",description = "Test for manual date selection" )
@@ -321,7 +321,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 				"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
 	}
 
-	/*@Test(priority = 17, groups = { "smoke" }, description = "Test for verifying sitetable in Visibility page")
+	@Test(priority = 17, groups = { "smoke" }, description = "Test for verifying sitetable in Visibility page")
 	public void verifyTableHeaders() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.verifyAllTab();
@@ -335,7 +335,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		Thread.sleep(5000);
 		data.verifyPHNOTab();
 		addEvidence(CurrentState.getDriver(), "Data of Social Sites Tab", "yes");
-	}*/
+	}
 	
 	@Test(priority = 18, description = "Test to verify name ignore inaccuracy")
 	public void verifyNameInaccuracy() throws Exception {
@@ -479,6 +479,6 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 *                        addEvidence(CurrentState.getDriver(), "Site level
 	 *                        scores in Accuracy site table and overview Accuracy
 	 *                        export found matching for InAccuracy" , "yes"); }
-	 */
-
+	 *//*
+*/
 }

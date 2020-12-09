@@ -214,19 +214,19 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 							if (!text.contains("yelp")) {
 								String BName = driver.findElement(By.xpath(
 										"(//div[@class='reviewEnhancement']//div[@class='form-group col-xs-12'])[" + row
-										+ "]//div[@class='business-info']//div//strong"))
+												+ "]//div[@class='business-info']//div//strong"))
 										.getText();
 								System.out.println(BName);
 								Thread.sleep(2000);
 								String ReferenceNum = driver.findElement(By.xpath(
 										"(//div[@class='reviewEnhancement']//div[@class='form-group col-xs-12'])[" + row
-										+ "]//div[@class='reference-code']//div[2]"))
+												+ "]//div[@class='reference-code']//div[2]"))
 										.getText();
 								System.out.println(ReferenceNum);
 								Thread.sleep(2000);
 								String LinksUrl = driver.findElement(By.xpath(
 										"(//div[@class='reviewEnhancement']//div[@class='form-group col-xs-12'])[" + row
-										+ "]//*[@id='viewListingLink']"))
+												+ "]//*[@id='viewListingLink']"))
 										.getAttribute("href");
 								System.out.println(LinksUrl);
 								Thread.sleep(2000);
@@ -325,28 +325,32 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		}
 	}
 
-	
-	public 	List<String> readCsvColdata(String path, int colnum) throws IOException {
+	public List<String> readCsvColdata(String path, int colnum) throws IOException {
 		String splitBy = ",";
 		BufferedReader br = new BufferedReader(new FileReader(path));
-        String line = br.readLine();
-        List<String> csvcollist = new ArrayList<String>();
-        while ((line = br.readLine()) !=null){
-        	String[] b = line.split(splitBy);
-        	csvcollist.add(b[colnum].toString());      
-        }
-        System.out.println("Data in Type column : " +csvcollist);
+		String line = br.readLine();
+		List<String> csvcollist = new ArrayList<String>();
+		while ((line = br.readLine()) != null) {
+			String[] b = line.split(splitBy);
+			csvcollist.add(b[colnum].toString());
+		}
+		System.out.println("Data in Type column : " + csvcollist);
 		return csvcollist;
 	}
+
 	/**
 	 * Verify Review count and Number of entries in a table
+	 * 
+	 * @throws Exception
 	 */
-	public void verifyReviewCount() {
+	public void verifyReviewCount() throws Exception {
 		waitForElement(ReviewCount, 10);
 		boolean dataavailable = DataAvailable();
 		if (dataavailable == false) {
+			scrollByElement(ReviewCount);
 			int RCount = Integer.parseInt(ReviewCount.getText());
 			System.out.println("The Review Count is :" + RCount);
+			BaseClass.addEvidence(driver, "Test to verify review count", "yes");
 			int count = SANumOfentriesinPage(Entry);
 			System.out.println("The number of entries :" + count);
 			Assert.assertEquals(count, RCount);
@@ -402,11 +406,12 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 					clickelement(SourceFilter);
 					action.moveToElement(driver.findElement(
 							By.xpath("(//*[@id='filter-area']//input[@title='" + Vendor.trim() + "'])[1]"))).click()
-					.build().perform();
+							.build().perform();
 					System.out.println("Vendor selected" + Vendor);
 					waitUntilLoad(driver);
 					Thread.sleep(5000);
 					clickelement(SourceFilter);
+					BaseClass.addEvidence(driver, "Test to select source", "yes");
 				} else {
 					System.out.println("No Vendor selected");
 				}
@@ -455,6 +460,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 								soft.assertTrue(vendors.contains(vendorname), "vendor is :" + vendorname);
 							}
 						}
+						BaseClass.addEvidence(driver, "Test to compare source with reviews", "yes");
 						if (paginationNext.isEnabled()) {
 							scrollByElement(paginationNext);
 							paginationNext.click();
@@ -468,7 +474,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 			scrollByElement(SourceFilter);
 			clickelement(SourceFilter);
 			action.moveToElement(driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='All'])[1]")))
-			.click().build().perform();
+					.click().build().perform();
 			clickelement(SourceFilter);
 			waitUntilLoad(driver);
 			soft.assertAll();
@@ -496,14 +502,15 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 				if (!Rating.equalsIgnoreCase("null")) {
 					scrollByElement(RatingFilter);
 					clickelement(RatingFilter);
+					Thread.sleep(3000);
 					action.moveToElement(driver.findElement(
-							By.xpath("(//*[@id='filter-area']//input[@title='" + Rating.trim() + "'])[1]"))).click()
-					.build().perform();
+							By.xpath("(//*[@id='filter-area']//input[@title='"+Rating+"'])[1]"))).click()
+							.build().perform();
 					System.out.println("Rating selected" + Rating);
 					BaseClass.addEvidence(driver, "Select Rating", "yes");
 					waitUntilLoad(driver);
-					Thread.sleep(5000);
 					clickelement(RatingFilter);
+					Thread.sleep(3000);
 				} else {
 					System.out.println("No Rating selected");
 				}
@@ -512,11 +519,11 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 					compareratingwithreviews();
 					scrollByElement(RatingFilter);
 					clickelement(RatingFilter);
-					action.moveToElement(driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='All'])[2]"))).click()
-					.build().perform();
+					action.moveToElement(
+							driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='All'])[2]"))).click()
+							.build().perform();
 					clickelement(RatingFilter);
-				}
-				else {
+				} else {
 					System.out.println("No rating selected");
 				}
 			}
@@ -548,69 +555,91 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 						int size = Reviews.size();
 						System.out.println(size);
 						for (int j = 1; j <= size; j++) {
-							scrollByElement(driver
-									.findElement(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]")));
-							if (!Rating.equals("All") || !Rating.equals("Recommended")
-									|| !Rating.equals("Not Recommended") || !Rating.equals("No Rating")) {
-								List<WebElement> starrate = driver
-										.findElements(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j
-												+ "]//i[contains(@class,'yellow')]"));
-								BaseClass.addEvidence(driver, "Test to verify rating with filter", "yes");
-								int starratesize = starrate.size();
-								String sratesize = Integer.toString(starratesize);
-								System.out.println("The starrate size is :" + sratesize);
-								for (int k = 1; k <= wb.getRowCount(); k++) {
-									String XLrating = wb.getCellValue(k,
-											wb.seacrh_pattern("Rating", 0).get(0).intValue());
-									System.out.println("The vendors listed are :" + XLrating);
-									soft.assertTrue(XLrating.contains(sratesize),
-											"The rating from UI is " + sratesize + " is not present in " + XLrating);
-								}
-							} else if (Rating.equals("Recommended")) {
+							 if (Rating.equals("Recommended")) {
 								scrollByElement(driver.findElement(
 										By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]")));
-								String Recom = driver
-										.findElement(By
-												.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]//span"))
-										.getText();
-								BaseClass.addEvidence(driver, "Test to verify rating with filter", "yes");
-								System.out.println("The text is :" + Recom);
-								if (Recom.equals("Recommends")) {
-									for (int k = 1; k <= wb.getRowCount(); k++) {
-										String XLrating = wb.getCellValue(k,
-												wb.seacrh_pattern("Rating", 0).get(0).intValue());
-										System.out.println("The vendors listed are :" + XLrating);
-										soft.assertTrue(XLrating.contains("Recommended"),
-												"The rating from UI is " + Recom + " is not present in " + XLrating);
+								if (!(driver.findElement(By.xpath("(//span[contains(@class,'fivestars')])[" + j + "]"))
+										.getAttribute("class").contains("Yelp"))) {
+									String Recom = driver
+											.findElement(By.xpath(
+													"(//span[contains(@class,'fivestars')]//div)[" + j + "]//span"))
+											.getText();
+									BaseClass.addEvidence(driver, "Test to verify rating with filter", "yes");
+									System.out.println("The text is :" + Recom);
+									if (Recom.equals("Recommends")) {
+										for (int k = 1; k <= wb.getRowCount(); k++) {
+											String XLrating = wb.getCellValue(k,
+													wb.seacrh_pattern("Rating", 0).get(0).intValue());
+											System.out.println("The vendors listed are :" + XLrating);
+											soft.assertTrue(XLrating.contains("Recommended"), "The rating from UI is "
+													+ Recom + " is not present in " + XLrating);
+										}
+									} else {
+										soft.fail("Selected Rating is Recommended but not found");
 									}
 								} else {
-									soft.fail("Selected Rating is Recommended but not found");
+									System.out.println("The vendor is Yelp");
 								}
 							} else if (Rating.equals("Not Recommended")) {
 								scrollByElement(driver.findElement(
 										By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]")));
-								String NotRecom = driver
-										.findElement(By
-												.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]//span"))
-										.getText();
-								BaseClass.addEvidence(driver, "Test to verify rating with filter", "yes");
-								System.out.println("The text is :" + NotRecom);
-								if (NotRecom.equals("Doesn't Recommend")) {
-									for (int k = 1; k <= wb.getRowCount(); k++) {
-										String XLrating = wb.getCellValue(k,
-												wb.seacrh_pattern("Rating", 0).get(0).intValue());
-										System.out.println("The vendors listed are :" + XLrating);
-										soft.assertTrue(XLrating.contains("Not Recommended"),
-												"The rating from UI is " + NotRecom + " is not present in " + XLrating);
+								if (!(driver.findElement(By.xpath("(//span[contains(@class,'fivestars')])[" + j + "]"))
+										.getAttribute("class").contains("Yelp"))) {
+
+									String NotRecom = driver
+											.findElement(By.xpath(
+													"(//span[contains(@class,'fivestars')]//div)[" + j + "]//span"))
+											.getText();
+									BaseClass.addEvidence(driver, "Test to verify rating with filter", "yes");
+									System.out.println("The text is :" + NotRecom);
+									if (NotRecom.equals("Doesn't Recommend")) {
+										for (int k = 1; k <= wb.getRowCount(); k++) {
+											String XLrating = wb.getCellValue(k,
+													wb.seacrh_pattern("Rating", 0).get(0).intValue());
+											System.out.println("The vendors listed are :" + XLrating);
+											soft.assertTrue(XLrating.contains("Not Recommended"),
+													"The rating from UI is " + NotRecom + " is not present in "
+															+ XLrating);
+										}
+									} else {
+										soft.fail("Selected Rating is Not Recommended but not found");
 									}
 								} else {
-									soft.fail("Selected Rating is Not Recommended but not found");
+									System.out.println("The vendor is Yelp");
 								}
 							} else if (Rating.equals("No Rating")) {
 								WebElement UIstarrate = driver.findElement(
 										By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]"));
-								BaseClass.addEvidence(driver, "Test to verify rating with filter", "yes");
-								soft.assertTrue(!UIstarrate.isDisplayed());
+								if (!(driver.findElement(By.xpath("(//span[contains(@class,'fivestars')])[" + j + "]"))
+										.getAttribute("class").contains("Yelp"))) {
+									BaseClass.addEvidence(driver, "Test to verify rating with filter", "yes");
+									soft.assertTrue(!UIstarrate.isDisplayed());
+								} else {
+									System.out.println("Vendor is Yelp");
+								}
+							}else {
+								scrollByElement(driver
+										.findElement(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j + "]")));									
+										if (!(driver.findElement(By.xpath("(//span[contains(@class,'fivestars')])[" + j + "]"))
+												.getAttribute("class").contains("Yelp"))) {
+										List<WebElement> starrate = driver
+												.findElements(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + j
+														+ "]//i[contains(@class,'yellow')]"));
+										BaseClass.addEvidence(driver, "Test to verify rating with filter", "yes");
+										int starratesize = starrate.size();
+										// String sratesize = Integer.toString(starratesize);
+										String sratesize = String.valueOf(starratesize);
+										System.out.println("The starrate size is :" + sratesize);
+										for (int k = 1; k <= wb.getRowCount(); k++) {
+											String XLrating = wb.getCellValue(k,
+													wb.seacrh_pattern("Rating", 0).get(0).intValue());
+											System.out.println("The vendors listed are :" + XLrating);
+											soft.assertTrue(XLrating.contains(sratesize), "The rating from UI is "
+													+ sratesize + " is not present in " + XLrating);
+										}
+									} else {
+										System.out.println("The Vendor is Yelp");
+									}
 							}
 						}
 						if (paginationNext.isEnabled()) {
@@ -650,7 +679,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 					clickelement(Response);
 					driver.findElement(
 							By.xpath("//div[@class='ownerResponse']//div[contains(text(),'" + ONResponse + "')]"))
-					.click();
+							.click();
 					JSWaiter.waitJQueryAngular();
 					BaseClass.addEvidence(driver, "Test to select the response type", "yes");
 					verifyselectedResponse(ONResponse);
@@ -716,7 +745,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 										.findElement(By.xpath("(//div[@class='owner-name'])[" + j + "]"));
 								soft.assertTrue(
 										!(reponsebox.isDisplayed())
-										&& !(draftresponse.isDisplayed() && !(assistresponse.isDisplayed())),
+												&& !(draftresponse.isDisplayed() && !(assistresponse.isDisplayed())),
 										"One of the elements is displayed");
 							}
 						}
@@ -747,7 +776,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 	public void KeywordSearch() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Other_Filters");
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 		for (int i = 1; i <= wb.getRowCount(); i++) {
 			String Keyword = wb.getCellValue(i, wb.seacrh_pattern("Keywords", 0).get(0).intValue());
 			waitForElement(advanceSearch, 10);
@@ -842,6 +871,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 					System.out.println("No tags selected");
 				}
 			}
+			BaseClass.addEvidence(driver, "Test to enter tag", "yes");
 			if (!tags.equalsIgnoreCase("null")) {
 				compareTagswithreviews(tag);
 			} else {
@@ -897,6 +927,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 								}
 							}
 						}
+						BaseClass.addEvidence(driver, "Test to verify tag with reviews", "yes");
 						if (paginationNext.isEnabled()) {
 							scrollByElement(paginationNext);
 							paginationNext.click();
@@ -937,9 +968,10 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 					driver.findElement(By
 							.xpath("//div[@class='sentiment-score-filter']//div[@class = 'item' and contains(text(), '"
 									+ sentiment + "')]"))
-					.click();
+							.click();
 					waitUntilLoad(driver);
 					clickelement(advanceSearch);
+					BaseClass.addEvidence(driver, "Test to apply sentiment", "yes");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -951,7 +983,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		clickelement(SentimentTab);
 		driver.findElement(
 				By.xpath("//div[@class='sentiment-score-filter']//div[@class = 'item' and contains(text(), 'All')]"))
-		.click();
+				.click();
 		soft.assertAll();
 	}
 
@@ -999,8 +1031,10 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 								} else {
 									System.out.println("No Data Available");
 								}
+								BaseClass.addEvidence(driver, "Test to compare sentiment with reviews", "yes");
 								System.out.println(ReviewsSentiment);
-								soft.assertTrue(ReviewsSentiment.toLowerCase().contains(Text.toLowerCase()),"Sentiment selected "+ReviewsSentiment+" and UI sentiment "+Text+"");
+								soft.assertTrue(ReviewsSentiment.toLowerCase().contains(Text.toLowerCase()),
+										"Sentiment selected " + ReviewsSentiment + " and UI sentiment " + Text + "");
 							} else {
 								System.out.println("WebElement is not displayed");
 							}
@@ -1055,8 +1089,9 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		clickelement(clicksort);
 		Thread.sleep(3000);
 		action.moveToElement(driver.findElement(By.xpath("//div[text()='" + sorttype + "']"))).click().build()
-		.perform();
+				.perform();
 		JSWaiter.waitJQueryAngular();
+		BaseClass.addEvidence(driver, "Test to select Date Type", "yes");
 		boolean dataavailable = DataAvailable();
 		if (dataavailable == false) {
 			int lastpage = Integer
@@ -1081,6 +1116,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 							System.out.println("The Date List is :" + datelist);
 							// Thread.sleep(3000);
 						}
+						BaseClass.addEvidence(driver, "Test to compare reviews by date sorted", "yes");
 						if (paginationNext.isEnabled()) {
 							scrollByElement(paginationNext);
 							paginationNext.click();
@@ -1100,7 +1136,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 								soft.assertTrue(true, "Date is in ascending order");
 							} else {
 								Assert.fail("Date is not ascending order" + "First Date is :" + datelist.get(k)
-								+ "Second Date is :" + datelist.get(k++));
+										+ "Second Date is :" + datelist.get(k++));
 							}
 						} else if (sorttype.equals("Date - Oldest")) {
 							System.out.println(
@@ -1109,7 +1145,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 								soft.assertTrue(true, "Date is in descending order");
 							} else {
 								soft.fail("Date is not descending order" + "First Date is :" + datelist.get(k)
-								+ "Second Date is :" + datelist.get(k++));
+										+ "Second Date is :" + datelist.get(k++));
 							}
 						} else {
 							System.out.println("Specified data is not selected");
@@ -1160,8 +1196,9 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		clickelement(clicksort);
 		Thread.sleep(3000);
 		action.moveToElement(driver.findElement(By.xpath("//div[text()='" + sorttype + "']"))).click().build()
-		.perform();
+				.perform();
 		JSWaiter.waitJQueryAngular();
+		BaseClass.addEvidence(driver, "Test to apply sort by ref - code", "yes");
 		boolean dataavailable = DataAvailable();
 		if (dataavailable == false) {
 			int lastpage = Integer
@@ -1184,6 +1221,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 							RCode.add(referencecode);
 							System.out.println("The ref code list is :" + RCode);
 						}
+						BaseClass.addEvidence(driver, "Test to compare reviews with - sort type - Ref Code", "yes");
 						if (paginationNext.isEnabled()) {
 							scrollByElement(paginationNext);
 							paginationNext.click();
@@ -1228,8 +1266,9 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		clickelement(clicksort);
 		Thread.sleep(3000);
 		action.moveToElement(driver.findElement(By.xpath("//div[text()='" + sorttype + "']"))).click().build()
-		.perform();
+				.perform();
 		JSWaiter.waitJQueryAngular();
+		BaseClass.addEvidence(driver, "Test to select sort type by source", "yes");
 		boolean dataavailable = DataAvailable();
 		if (dataavailable == false) {
 			int lastpage = Integer
@@ -1254,6 +1293,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 							Source.add(vendorname);
 							System.out.println("The list contains :" + Source);
 						}
+						BaseClass.addEvidence(driver, "Test to verify reviews by source sorted type", "yes");
 						if (paginationNext.isEnabled()) {
 							scrollByElement(paginationNext);
 							paginationNext.click();
@@ -1301,8 +1341,9 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		clickelement(clicksort);
 		Thread.sleep(3000);
 		action.moveToElement(driver.findElement(By.xpath("//div[text()='" + sorttype + "']"))).click().build()
-		.perform();
+				.perform();
 		JSWaiter.waitJQueryAngular();
+		BaseClass.addEvidence(driver, "Test to apply sort by rating", "yes");
 		boolean dataavailable = DataAvailable();
 		if (dataavailable == false) {
 			int lastpage = Integer
@@ -1319,14 +1360,20 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 						for (int k = 1; k <= size; k++) {
 							scrollByElement(driver
 									.findElement(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + k + "]")));
-							List<WebElement> starrate = driver
-									.findElements(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + k
-											+ "]//i[contains(@class,'yellow')]"));
-							int starratesize = starrate.size();
-							System.out.println("The starrate size is :" + starratesize);
-							starvalue.add(starratesize);
-							System.out.println("The star value is :" + starvalue);
+							if (!(driver.findElement(By.xpath("(//span[contains(@class,'fivestars')])[" + k + "]"))
+									.getAttribute("class").contains("Yelp"))) {
+								List<WebElement> starrate = driver
+										.findElements(By.xpath("(//span[contains(@class,'fivestars')]//div)[" + k
+												+ "]//i[contains(@class,'yellow')]"));
+								int starratesize = starrate.size();
+								System.out.println("The starrate size is :" + starratesize);
+								starvalue.add(starratesize);
+								System.out.println("The star value is :" + starvalue);
+							} else {
+								System.out.println("The vendor is Yelp");
+							}
 						}
+						BaseClass.addEvidence(driver, "Test to compare reviews - sort by rating", "yes");
 						if (paginationNext.isEnabled()) {
 							scrollByElement(paginationNext);
 							paginationNext.click();
@@ -1410,8 +1457,9 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		clickelement(clicksort);
 		Thread.sleep(3000);
 		action.moveToElement(driver.findElement(By.xpath("//div[text()='" + sorttype + "']"))).click().build()
-		.perform();
+				.perform();
 		JSWaiter.waitJQueryAngular();
+		BaseClass.addEvidence(driver, "Test to apply sort filter - Location Name", "yes");
 		boolean dataavailable = DataAvailable();
 		if (dataavailable == false) {
 			int lastpage = Integer
@@ -1486,7 +1534,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 					clickelement(ContentSel);
 					driver.findElement(By.xpath(
 							"//div[@class='searchByContent']//div[contains(text(),'" + contentsel.trim() + "')]"))
-					.click();
+							.click();
 					JSWaiter.waitJQueryAngular();
 					BaseClass.addEvidence(driver, "Test to select the response type", "yes");
 					verifycontentfilter(contentsel);
@@ -1792,7 +1840,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 				driver.findElement(
 						By.xpath("//div[@class='sentiment-score-filter']//div[@class = 'item' and contains(text(), '"
 								+ sentiment + "')]"))
-				.click();
+						.click();
 				waitUntilLoad(driver);
 				for (int j = 0; j <= size - 1; j++) {
 					SenCatSel = SenCatList[j];
@@ -1809,7 +1857,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 						clickelement(SentimentCat);
 						driver.findElement(
 								By.xpath("(//div[@class='dropdown-multi'])[3]//li//label[contains(text(),'All')]"))
-						.click();
+								.click();
 						JSWaiter.waitJQueryAngular();
 						clickelement(SentimentCat);
 					}
@@ -1818,7 +1866,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 				clickelement(SentimentTab);
 				driver.findElement(By.xpath(
 						"//div[@class='sentiment-score-filter']//div[@class = 'item' and contains(text(), 'All')]"))
-				.click();
+						.click();
 				waitUntilLoad(driver);
 				clickelement(advanceSearch);
 			}
@@ -1954,17 +2002,16 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		scrollByElement(gotopage);
 		GoTopage(gotopage);
 	}
-	
+
 	public void verifyDateSelected() throws ParseException {
-		String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat")
-				.toString();
+		String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat").toString();
 		SimpleDateFormat formats = new SimpleDateFormat(var);
 		JSWaiter.waitJQueryAngular();
 		List<Date> ReviewDates = new ArrayList<Date>();
 		Date FromDate = getFromDate();
-		System.out.println("From Date selected is : " +FromDate);
+		System.out.println("From Date selected is : " + FromDate);
 		Date ToDate = getToDate();
-		System.out.println("To Date selected is : " +ToDate);
+		System.out.println("To Date selected is : " + ToDate);
 		waitForElement(ReviewSection, 10);
 		scrollByElement(ReviewSection);
 		waitForElement(paginationLast, 10);
@@ -1982,32 +2029,34 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 						int size = ReviewInfo.size();
 						System.out.println(size);
 						for (int k = 1; k <= size; k++) {
-							
-							WebElement date = driver.findElement(By.xpath("(//div[@class='date-text'])["+k+"]"));
+
+							WebElement date = driver.findElement(By.xpath("(//div[@class='date-text'])[" + k + "]"));
 							scrollByElement(date);
 							String reviewdate = date.getText();
-							System.out.println("Review Date is :" +reviewdate);
+							System.out.println("Review Date is :" + reviewdate);
 							Date UIDate = formats.parse(reviewdate);
-							ReviewDates.add(UIDate);	
+							ReviewDates.add(UIDate);
 							BaseClass.addEvidence(driver, "Test to get UI Date", "yes");
-							
-						} if (paginationNext.isEnabled()) {
+
+						}
+						if (paginationNext.isEnabled()) {
 							scrollByElement(paginationNext);
 							paginationNext.click();
 							Thread.sleep(4000);
 						}
 					}
-					System.out.println("The list consists of :" +ReviewDates);
-					for(int l =0; l<=ReviewDates.size()-1; l++) {
-						soft.assertTrue(ReviewDates.get(l).compareTo(FromDate)>=0 && ReviewDates.get(l).compareTo(ToDate)<=0);
+					System.out.println("The list consists of :" + ReviewDates);
+					for (int l = 0; l <= ReviewDates.size() - 1; l++) {
+						soft.assertTrue(ReviewDates.get(l).compareTo(FromDate) >= 0
+								&& ReviewDates.get(l).compareTo(ToDate) <= 0);
 					}
 				}
 				soft.assertAll();
-				
-			}catch(Exception e) {
+
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else {
+		} else {
 			System.out.println("No Data Available");
 		}
 	}

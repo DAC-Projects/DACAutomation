@@ -69,7 +69,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	public void verifyText() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		data.VerifyTitleText("Content Analysis Report",
-				"This report identifies how complete your listings' primary data is across the sites that are being monitored.");
+				"This report identifies how complete your listings' primary data is across the sites that are being monitored. Read Manual");
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
 
@@ -269,19 +269,19 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified overview export for Accuracy report", "yes");
 	}
 
-	/*
-	 * * //Test to compare vendors in the application in Visibility Page
-	 * 
-	 * @SuppressWarnings("unchecked")
-	 * 
-	 * @Test(dependsOnMethods = {"verifyTableDataoExport"},groups = {"smoke"},
-	 * description ="Verify Site Vendors List") public void
-	 * comparevendorsListnverifySitevendors() throws Exception{ data = new
-	 * TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
-	 * data.comparevendorsListnverifySitevendors(data.verifyAnalysisSitevendors(),
-	 * data.vendorsList()); addEvidence(CurrentState.getDriver(),
-	 * "Site Vendors in Content Analysis site vendors ", "yes"); }
-	 */
+	
+	/*  * //Test to compare vendors in the application in Visibility Page
+	  
+	  @SuppressWarnings("unchecked")
+	  
+	  @Test(dependsOnMethods = {"verifyTableDataoExport"},groups = {"smoke"},
+	  description ="Verify Site Vendors List") public void
+	  comparevendorsListnverifySitevendors() throws Exception{ data = new
+	  TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
+	  data.comparevendorsListnverifySitevendors(data.verifyAnalysisSitevendors(),
+	  data.vendorsList()); addEvidence(CurrentState.getDriver(),
+	  "Site Vendors in Content Analysis site vendors ", "yes"); }*/
+	 
 
 	/**
 	 * Test to verify Top button functionality

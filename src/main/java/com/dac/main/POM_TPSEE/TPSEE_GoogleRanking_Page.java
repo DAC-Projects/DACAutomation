@@ -38,7 +38,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 	Actions action;
 	WebDriverWait wait;
 
-	// Navigating to TPSEE Content_Analysis page
+	
 	public TPSEE_GoogleRanking_Page(WebDriver driver) {
 
 		super(driver);

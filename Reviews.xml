@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite name = "Suite">
+<suite name="Suite">
 	<listeners>
 		<listener class-name="resources.ExtentTestNGITestListener"></listener>
 	</listeners>
-	
-	<test name = "ReviewsBeta">
+
+	<test name="ReviewsBeta">
 		<parameter name="browser" value="chrome" />
 		<classes>
-			<!-- <class name="com.dac.testcases.TPSEE.TPSEE_Displayed_Review_Score_Test" />
-			<class name = "com.dac.testcases.SA.ReviewsFeed_Test"/>  -->
-			<class name = "com.dac.testcases.SA.Reviews_Insights_Test"/>
+			<!-- <class name="com.dac.testcases.TPSEE.TPSEE_Displayed_Review_Score_Test" 
+				/> -->
+			<class name="com.dac.testcases.SA.ReviewsFeed_Test" />
+			<!-- <class name = "com.dac.testcases.SA.Reviews_Insights_Test"/> -->
 		</classes>
 	</test>
 </suite>

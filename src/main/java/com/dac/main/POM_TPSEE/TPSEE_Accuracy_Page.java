@@ -11,6 +11,10 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -306,6 +310,14 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+AccuracyExportXLSX), "Sheet0").getExcelTable();
 		List<Map<String, String>> exportData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
+		Workbook wb = new XSSFWorkbook(Exportpath + (CurrentState.getBrowser()+AccuracyExportXLSX));
+		Sheet sh = wb.getSheetAt(0);
+		Row row = sh.getRow(0);
+		int Last_row = sh.getLastRowNum();
+		System.out.println("The Last row number is : " +Last_row);
+		int totLocations = overviewlocation();
+		System.out.println("The total locations is : " +totLocations);
+		soft.assertEquals(totLocations, Last_row - 1);
 		for (int col = 1; col < colSize; col++) {
 			Map<String, String> kMap = new HashMap<String, String>();
 			for (int i = 1; i < table.length; i++) {
@@ -330,7 +342,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		waitForElement(accuracysite, 40);
 		waitForElement(siteshow, 40);
 		scrollByElement(siteshow);
-		int size = sitelink.size();
+		int size = (sitelink.size())/2;
 		int newsize;
 		if(size>3) {
 			newsize=3;
@@ -438,7 +450,17 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		resultperpage(soft);
 	}
 	
+	
+	public boolean IsElementPresent(WebElement ele) {
+		if(ele.isDisplayed()) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 	public void VerifyUpdateInaccuracies(WebElement ele, String ele2, List<WebElement> ele3) throws InterruptedException {
+		boolean elepresent = IsElementPresent(ele);
+		if(elepresent == true) {
 		scrollByElement(ele);
 		clickelement(ele);
 		if(driver.findElement(By.className("dataTables_info")).isDisplayed()) {
@@ -473,6 +495,9 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			}
 		}else {
 			System.out.println("No Data Available");
+		}
+		}else {
+			System.out.println("Only single data is available");
 		}
 	}
 	
