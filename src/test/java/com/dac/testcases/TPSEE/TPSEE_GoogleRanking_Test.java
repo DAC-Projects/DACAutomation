@@ -85,7 +85,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to ContentAnalysis page from Dashboard", "yes");
 	}*/
 
-	/*// Test to verify Zoom Functionality
+	// Test to verify Zoom Functionality
 	@Test(priority = 5, groups = { "smoke" }, description = "Verify Zoom Functionality")
 	public void gethighchartsdate() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
@@ -311,15 +311,15 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		
 	}
 
-	*//**
+	/**
 	 * Test to verify Top button functionality
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 16, groups = { "smoke" }, description = "Verify Top Button")
 	public void GetTopBtn() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.TopButton();
 		addEvidence(CurrentState.getDriver(), "Top Button click verification", "yes");
-	}*/
+	}
 }

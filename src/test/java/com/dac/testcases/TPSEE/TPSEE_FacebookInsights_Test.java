@@ -59,7 +59,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * Test to Apply Filters
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 5, description = "Test to apply filters")
 	public void verifyFilteringReportsFacebook() throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
@@ -89,9 +89,9 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		}
 	}
 
-	*//**
+	/**
 	 * verification of date
-	 *//*
+	 */
 	@Test(priority = 6, description = "Test to verify graph")
 	public void verifyGraphncompareDate() {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
@@ -105,11 +105,11 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		}
 	}
 
-	*//**
+	/**
 	 * To verify zoom functionality
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 4, description = "Test to verify highcharts")
 	public void gethighchartsdate() throws Exception {
 		boolean datavalidation = data.IsDataAvailable();
@@ -164,7 +164,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		}
 	}
 
-	*//**
+	/**
 	 * To Verify manual date selection
 	 * 
 	 * @param from_day
@@ -174,7 +174,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * @param to_month
 	 * @param to_year
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 7, enabled = true, dataProvider = "testData")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
@@ -193,9 +193,9 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		}
 	}
 
-	*//**
+	/**
 	 * Test to verify Pie Chart Tooltip Data
-	 *//*
+	 */
 	@Test(priority = 8, description = "Test to verify Pie chart")
 	public void VerifyPieChartData() {
 		boolean datavalidation = data.IsDataAvailable();
@@ -205,11 +205,11 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		}
 	}
 
-	*//**
+	/**
 	 * Test to Export Data
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 9, description = "Test to verify Export")
 	public void Export() throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
@@ -230,11 +230,11 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		}
 	}
 
-	*//**
+	/**
 	 * Test to Compare UI ann XL Data
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 10, description = "Test to compare UI and XL")
 	public void CompareUIXLData() throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
@@ -273,11 +273,11 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		}
 	}
 
-	*//**
+	/**
 	 * Test Data for manual date selection
 	 * 
 	 * @return
-	 *//*
+	 */
 	@SuppressWarnings("finally")
 	@DataProvider
 	public String[][] testData() {
@@ -316,5 +316,5 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		} finally {
 			return data;
 		}
-	}*/
+	}
 }

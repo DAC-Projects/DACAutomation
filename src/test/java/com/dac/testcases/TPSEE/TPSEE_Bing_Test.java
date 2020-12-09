@@ -92,7 +92,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
 
-	/*@Test(priority = 4, groups = { "smoke" }, description = "Test for verify hover text")
+	@Test(priority = 4, groups = { "smoke" }, description = "Test for verify hover text")
 	public void verifyHoverText() {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		data.GetHoverText("Total Impressions based on the selected weekly range. ");
@@ -330,5 +330,5 @@ public class TPSEE_Bing_Test extends BaseClass {
 		} finally {
 			return data;
 		}
-	}*/
+	}
 }

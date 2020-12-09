@@ -95,7 +95,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
 
-	/*@Test(priority = 4, groups = { "smoke" }, description = "Test for verify hover text")
+	@Test(priority = 4, groups = { "smoke" }, description = "Test for verify hover text")
 	public void verifyHoverText() throws Exception {
 		data = new TPSEE_GMB(CurrentState.getDriver());
 		data.verifyMouseHoverText();
@@ -711,6 +711,6 @@ public class TPSEE_GMB_Test extends BaseClass {
 		} finally {
 			return data;
 		}
-	}*/
+	}
 
 }
