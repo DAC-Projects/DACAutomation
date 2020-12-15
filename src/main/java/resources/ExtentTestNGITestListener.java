@@ -339,11 +339,13 @@ public class ExtentTestNGITestListener
       file.mkdirs();
 
     String downloadFolder = System.getProperty("user.dir") + "\\downloads";
+    
+    String chromeversion = "87.0.4280.88";
 
     if (browser.equalsIgnoreCase("Chrome")) {
 
 
-     WebDriverManager.chromedriver().version("85.0.4183.83").setup(); 
+     WebDriverManager.chromedriver().version(chromeversion).setup(); 
 
 
      //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
@@ -352,6 +354,7 @@ public class ExtentTestNGITestListener
       chromePref.put("download.default_directory", downloadFolder);
       chromePref.put("download.prompt_for_download", "false");
       ChromeOptions options = new ChromeOptions();
+      options.addArguments("user-data-dir=C://Users/aneeshc//AppData//Local//Google//Chrome//User Data");
       options.addArguments("disable-infobars");
       options.setExperimentalOption("prefs", chromePref);
       //WebDriverManager.chromedriver().setup();
@@ -409,6 +412,29 @@ public class ExtentTestNGITestListener
       //This is the default wait for Explicit Waits
       wait = new WebDriverWait(driver,15);
 
+    }
+    else if (browser.equalsIgnoreCase("chromelocal")) {
+    	
+    	String userHome = System.getProperty("user.home");
+    	 WebDriverManager.chromedriver().version(chromeversion).setup(); 
+
+
+         //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
+
+          HashMap<String, Object> chromePref = new HashMap<>();
+          chromePref.put("download.default_directory", downloadFolder);
+          chromePref.put("download.prompt_for_download", "false");
+          ChromeOptions options = new ChromeOptions();
+          options.addArguments("disable-infobars");         
+      	options.addArguments("user-data-dir="+userHome+"//AppData//Local//Google//Chrome//User Data");
+      	 options.setExperimentalOption("prefs", chromePref);
+          //WebDriverManager.chromedriver().setup();
+          driver = new ChromeDriver(options);
+        //Send driver object to JSWaiter Class
+          JSWaiter.setDriver(driver);
+          //This is the default wait for Explicit Waits
+          wait = new WebDriverWait(driver,15);
+    	
     }
 
     driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);

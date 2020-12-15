@@ -6,7 +6,7 @@
 		<listener class-name="resources.ExtentTestNGITestListener"></listener> 
 	</listeners>
    <test name="DTC">
-  <parameter name="browser" value="chrome"/>
+  <parameter name="browser" value="chromelocal"/>
   <parameter name="appName" value="DTC" />
   <!--  <groups>	
 	<run>
@@ -14,7 +14,7 @@
 		</run>
       </groups> -->
          <classes>
-            <class name="com.dac.testcases.DTC.Apple_Transmission" />
+            <class name="com.dac.testcases.DTC.API_tranmission_set" />
         </classes>
         </test>   
          <!--   <test name="DTC_file">

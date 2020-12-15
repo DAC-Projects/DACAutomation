@@ -15,9 +15,9 @@ public class API_tranmission_set extends BaseClass{
 	public void launchBrowser() throws Exception {
 	CurrentState.getDriver().get(url);
 	   System.out.println(CurrentState.getDriver().getTitle());
-	   DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
-	   dtcLogin.submitLogin("adevaraj@dacgroup.com","laptop@123");
-	   dtcLogin.pressYesKey();
+//	   DTC_Transmission dtcLogin=new DTC_Transmission(CurrentState.getDriver());
+//	   dtcLogin.submitLogin("adevaraj@dacgroup.com","laptop@123");
+//	   dtcLogin.pressYesKey();
 	}    
 	
 	
