@@ -415,8 +415,46 @@ public DTC_Transmission (WebDriver driver) {
 		//System.out.println(ad2);	
 		Thread.sleep(1000);
 	}
-	
-	public void API_Transmission() throws Exception {
+	public void verif_Status_complete(String RID, String ven) throws InterruptedException {
+		String a="Complete";
+		Thread.sleep(3000);
+		System.out.println("Transmission");
+		mnuTransmission.click();
+		Manual_Transmission.click();
+		Thread.sleep(2000);
+		requestID.sendKeys(RID);
+		Thread.sleep(1000);
+		applyFilter.click();
+		Thread.sleep(2000);
+		String ad1=driver.findElement(By.xpath("//*[@id=\"transmissionlistTable\"]/tbody/tr[1]/td[5]")).getText();
+		System.out.println(ad1);
+		Assert.assertEquals(ad1, a);
+		String ad2=driver.findElement(By.xpath("//*[@id=\"transmissionlistTable\"]/tbody/tr[1]/td[9]")).getText();
+		System.out.println(ad2);
+		cli.click();
+		Thread.sleep(4000);
+		vendor.click();
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id=\"transmissionModal\"]/div/div/div[2]/div[1]/div[1]/form/div/div[2]/div/ul/li/a/label[contains(text(),'"+ven+"')]")).click();
+		Thread.sleep(1000);
+		//vendor_name.click();
+		Thread.sleep(1000);
+		vendor.click();
+		Thread.sleep(10000);
+		List<WebElement> els = driver.findElements(By.xpath("//*[@id='selctedlistTable']//label[text()='Complete']"));
+		for ( WebElement el : els ) {
+		    if (!el.isSelected()) {
+		        el.click(); }}
+		Thread.sleep(10000);
+		close_btn.click();
+		Thread.sleep(4000);
+		String ad12=driver.findElement(By.xpath("//*[@id=\"transmissionlistTable\"]/tbody/tr[1]/td[5]")).getText();
+		System.out.println(ad12);
+		Thread.sleep(4000);
+		String ad22=driver.findElement(By.xpath("//*[@id=\"transmissionlistTable\"]/tbody/tr[1]/td[9]")).getText();
+		System.out.println(ad22);	
+	}
+/*	public void API_Transmission() throws Exception {
 		wb1 = new ExcelHandler("./data/Request_ID.xlsx", "Sheet1");
 		System.out.println("Transmission");	
 		mnuTransmission.click();
@@ -1019,6 +1057,9 @@ public void tomtom_date(String id) throws Exception {
 	driver.findElement(By.xpath("//*[@id=\"tomtomreportparamTable\"]/tbody/tr[" + i + "]/td[9]")).click();
 		Thread.sleep(2000);
 		}}
-}}
+		
+}
+*/
+	}
 	
 
