@@ -109,6 +109,9 @@ public class Navigationpage extends BasePage {
 
 	@FindBy(xpath = "//a[@href='/Review/FrequentKeywords/']/span")
 	private WebElement FrequentKeywords;
+	
+	@FindBy(xpath = "//a[@href='/ResponseManagement/Index/']")
+	private WebElement ResponseManagement;
 
 	// ----------DashBoard Language--------------------
 
@@ -632,6 +635,12 @@ public class Navigationpage extends BasePage {
 	public void navigateToSA_CategorizedSentiment() {
 		clickelement(CategorizedSentiment);
 		System.out.println("Waiting for page to load**********");
+		waitUntilLoad(driver);
+	}
+	
+	public void navigateToResponseManagement() {
+		clickelement(ResponseManagement);
+		System.out.println("Waiting for page to load********");
 		waitUntilLoad(driver);
 	}
 

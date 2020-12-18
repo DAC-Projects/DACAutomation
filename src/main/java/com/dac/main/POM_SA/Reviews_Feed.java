@@ -145,6 +145,9 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 
 	@FindBy(xpath = "//div[@class='tooltips-container']")
 	private List<WebElement> SentimentContainer;
+	
+	@FindBy(xpath = "//button//span[contains(text(),'Cancel')]")
+	private WebElement CancelBtn;
 
 	/*-------------------------Pagination-----------------------*/
 
@@ -161,6 +164,14 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 	private WebElement paginationNext;
 
 	/*-------------------------Pagination-----------------------*/
+	
+	public void CancelWalkme() {
+		if(CancelBtn.isDisplayed()) {
+			clickelement(CancelBtn);
+		}else {
+			System.out.println("No Cancel Btn Displayed");
+		}
+	}
 
 	/**
 	 * Export Reviews
@@ -782,7 +793,9 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 			waitForElement(advanceSearch, 10);
 			clickelement(advanceSearch);
 			waitForElement(SearchKeyword, 20);
+			/*Thread.sleep(2000);
 			scrollByElement(SearchKeyword);
+			Thread.sleep(2000);*/
 			clickelement(SearchKeyword);
 			SearchKeyword.sendKeys(Keyword);
 			SearchKeyword.sendKeys(Keys.ENTER);

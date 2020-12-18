@@ -282,36 +282,42 @@ public class Reviews_Insights_Test extends BaseClass {
 			try {
 				String OneMonth = "1m";
 				data.clickHighchartCriteria(OneMonth);
+				data.CompareAppliedDatenChartDate();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			try {
 				String ThreeMonths = "3m";
 				data.clickHighchartCriteria(ThreeMonths);
+				data.CompareAppliedDatenChartDate();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			try {
 				String SixMonths = "6m";
 				data.clickHighchartCriteria(SixMonths);
+				data.CompareAppliedDatenChartDate();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			try {
 				String OneYear = "1y";
 				data.clickHighchartCriteria(OneYear);
+				data.CompareAppliedDatenChartDate();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			try {
 				String YearToDate = "ytd";
 				data.clickHighchartCriteria(YearToDate);
+				data.CompareAppliedDatenChartDate();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			try {
 				String ALLDATA = "all";
 				data.clickHighchartCriteria(ALLDATA);
+				data.CompareAppliedDatenChartDate();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -329,6 +335,9 @@ public class Reviews_Insights_Test extends BaseClass {
 	public void navigateToReviewsFeed() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateToSA_ReviewsFeed();
+		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes");
+		data = new Reviews_Insights(CurrentState.getDriver());
+		data.CancelWalkme();
 		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes");
 	}
 

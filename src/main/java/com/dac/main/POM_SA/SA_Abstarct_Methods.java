@@ -575,7 +575,6 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 							System.out.println("1 Month data is displayed");
 						} else {
 							System.out.println("Not 1 Month");
-							assert (false);
 						}
 					} else {
 						System.out.println("Element not clicked");

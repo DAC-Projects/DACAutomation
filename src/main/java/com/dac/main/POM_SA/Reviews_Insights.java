@@ -198,10 +198,22 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 
 	@FindBy(xpath = "//div[@class='ownerResponse']")
 	private WebElement Response;
+	
+	@FindBy(xpath = "//button//span[contains(text(),'Cancel')]")
+	private WebElement CancelBtn;
 
 	String chromepath = "./downloads/chromeLocationDataExportInsights.csv";
 	String IEpath = "./downloads/IELocationDataExportInsights.csv";
 	String FFpath = "./downloads/FFLocationDataExportInsights.csv";
+	
+	
+	public void CancelWalkme() {
+		if(CancelBtn.isDisplayed()) {
+			clickelement(CancelBtn);
+		}else {
+			System.out.println("No Cancel Btn Displayed");
+		}
+	}
 
 	/**
 	 * Get KPI Dashboard Score - Review Score

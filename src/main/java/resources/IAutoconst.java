@@ -33,7 +33,7 @@ public interface IAutoconst {
 	String[] transparenSEEBingLocation = {baseUrl+"aurify-brands-test-beta", "chappel.mann+loctest@gmail.com"}; // Location level - Bing
 	String[] transparenSEEClientBeta = {baseUrl+"automation-test-account-tsee-beta","amahadev@dacgroup.com"}; // Client Level User - Beta
 	String[] transparenSEELocationBeta = {baseUrl+"automation-test-account-tsee-beta","jmann@dacgroup.com"}; // Location Level User - Beta
-	String [] transparenSEEStagingClient = {baseUrlStaging + "international-location-test-account", "chappel.mann+stc@gmail.com"}; //Client Level{baseUrl +"aurify-brands","abritton@dacgroup.com"};  // Client Level User - Staging
+	String [] transparenSEEStagingClient = {baseUrlStaging + "aurify-brands", "abritton@dacgroup.com"}; //Client Level{baseUrl +"aurify-brands","abritton@dacgroup.com"};  // Client Level User - Staging
 	String [] transparenSEEStagingLocation = {baseUrlStaging +"aurify-brands","p.pundyk@fieldsgoodchicken.com"}; // Location Level User - Staging
 	String[] transparenSEEFaceBetaClient = {baseUrl + "international-account-beta-beta", "amahadev@dacgroup.com"};
 	String[] DRSClient = {baseUrl + "international-location-test-account", "chappel.mann+stc@gmail.com"}; //Client Level

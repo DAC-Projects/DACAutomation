@@ -29,6 +29,9 @@ public class ReviewsFeed_Test extends BaseClass {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateToSA_ReviewsFeed();
 		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes");
+		data = new Reviews_Feed(CurrentState.getDriver());
+		data.CancelWalkme();
+		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes");
 	}
 
 	@Test(priority = 2, description = "Test to verify active state of the report")
