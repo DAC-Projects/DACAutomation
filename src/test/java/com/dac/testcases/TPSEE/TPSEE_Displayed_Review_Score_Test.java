@@ -54,7 +54,7 @@ public class TPSEE_Displayed_Review_Score_Test extends BaseClass {
 		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
 		try {
 			int count = 1;
-			ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+			ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Displayed_Review_Score");
 			wb.deleteEmptyRows();
 			TPSEE_Displayed_Review_Score_Page s = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
 
