@@ -49,7 +49,7 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 	@FindBy(xpath = "//*[@class='menu transition visible']")
 	private WebElement filterDropDown;
 
-	@FindBy(id = "myGroups")
+	@FindBy(xpath = "(//*[@class='ui fluid search selection dropdown myGroups'])")
 	private WebElement fiterGroup;
 
 	@FindBy(css = "div.ui.fluid.search.selection.dropdown.myList")
@@ -191,7 +191,7 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 			if (!Group.equals("None")) {
 				clickelement(fiterGroup);
 				waitForElement(filterDropDown, 20);
-				group = fiterGroup.findElement(By.xpath("//div[@data-value='" + Group + "']"));
+				group = driver.findElement(By.xpath("(*//div[contains(@class,'ui fluid search selection dropdown myGroups')])//div[contains(text(),'" + Group + "')]"));
 				waitForElement(group, 10);
 				clickelement(group);
 				waitUntilLoad(driver);

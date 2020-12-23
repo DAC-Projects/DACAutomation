@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Suite">
+	<listeners>
+		<listener class-name="resources.ExtentTestNGITestListener"></listener>
+	</listeners>
+
+	<test name="ReviewsBetaGlobalFilter">
+		<parameter name="browser" value="chrome" />
+		<parameter name = "Filter" value = "1"/>
+		<classes>
+			<class name="com.dac.testcases.SA.ReviewsFeed_TextVerification_Test" /> 
+			<class name="com.dac.testcases.SA.ReviewsFeed_Sorting_nd_Export_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Source_and_Response_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Rating_and_Content_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Keyword_and_Tag_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Sentiment_and_Category_Verification_Test" />
+		</classes>
+	</test>
+	
+	<test name="ReviewsBetaGroupFilter">
+		<parameter name="browser" value="chrome" />
+		<parameter name = "Filter" value = "2"/>
+		<classes>
+			<class name="com.dac.testcases.SA.ReviewsFeed_TextVerification_Test" /> 
+			<class name="com.dac.testcases.SA.ReviewsFeed_Sorting_nd_Export_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Source_and_Response_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Rating_and_Content_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Keyword_and_Tag_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Sentiment_and_Category_Verification_Test" />
+		</classes>
+	</test>
+	
+	<test name="ReviewsBetaCountryFilter">
+		<parameter name="browser" value="chrome" />
+		<parameter name = "Filter" value = "3"/>
+		<classes>
+			<class name="com.dac.testcases.SA.ReviewsFeed_TextVerification_Test" /> 
+			<class name="com.dac.testcases.SA.ReviewsFeed_Sorting_nd_Export_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Source_and_Response_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Rating_and_Content_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Keyword_and_Tag_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Sentiment_and_Category_Verification_Test" />
+		</classes>
+	</test>
+	
+	<test name="ReviewsBetaStateFilter">
+		<parameter name="browser" value="chrome" />
+		<parameter name = "Filter" value = "4"/>
+		<classes>
+			<class name="com.dac.testcases.SA.ReviewsFeed_TextVerification_Test" /> 
+			<class name="com.dac.testcases.SA.ReviewsFeed_Sorting_nd_Export_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Source_and_Response_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Rating_and_Content_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Keyword_and_Tag_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Sentiment_and_Category_Verification_Test" />
+		</classes>
+	</test>
+	
+	<test name="ReviewsBetaCityFilter">
+		<parameter name="browser" value="chrome" />
+		<parameter name = "Filter" value = "5"/>
+		<classes>
+			<class name="com.dac.testcases.SA.ReviewsFeed_TextVerification_Test" /> 
+			<class name="com.dac.testcases.SA.ReviewsFeed_Sorting_nd_Export_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Source_and_Response_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Rating_and_Content_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Keyword_and_Tag_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Sentiment_and_Category_Verification_Test" />
+		</classes>
+	</test>
+	
+	<test name="ReviewsBetaLocationFilter">
+		<parameter name="browser" value="chrome" />
+		<parameter name = "Filter" value = "6"/>
+		<classes>
+			<class name="com.dac.testcases.SA.ReviewsFeed_TextVerification_Test" /> 
+			<class name="com.dac.testcases.SA.ReviewsFeed_Sorting_nd_Export_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Source_and_Response_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Rating_and_Content_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Keyword_and_Tag_Verification_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Sentiment_and_Category_Verification_Test" />
+		</classes>
+	</test>
+</suite>

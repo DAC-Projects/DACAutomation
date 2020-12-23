@@ -140,8 +140,24 @@ public abstract class BaseClass {
 		case "TransparenSeeClientBetaBing" :
 			return IAutoconst.transparenSEEDupData;
 			
-		case "ReviewsBeta":
+		case "ReviewsBetaGlobalFilter":
 			return IAutoconst.neuralTuringTechAccount;
+			
+		case "ReviewsBetaGroupFilter":
+			return IAutoconst.neuralTuringTechAccount;
+			
+		case "ReviewsBetaCountryFilter":
+			return IAutoconst.neuralTuringTechAccount;
+			
+		case "ReviewsBetaStateFilter":
+			return IAutoconst.neuralTuringTechAccount;
+			
+		case "ReviewsBetaCityFilter":
+			return IAutoconst.neuralTuringTechAccount;
+			
+		case "ReviewsBetaLocationFilter":
+			return IAutoconst.neuralTuringTechAccount;
+			
 		case "ReviewsStaging":
 			return IAutoconst.neuralturingtechStaging;
 		// IAutoconst.Fit4LessAccount;

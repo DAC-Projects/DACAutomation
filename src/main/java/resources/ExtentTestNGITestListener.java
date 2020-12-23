@@ -254,7 +254,7 @@ private static ThreadLocal<ArrayList<JasperPrint>> printList =new ThreadLocal();
     CurrentState.setDriver(null);
     
     if(!printList.get().isEmpty()) {
-        GenerateEvidenceReport.exportReport(printList.get(), "Report for "+testClass.getName());
+        GenerateEvidenceReport.exportReport(printList.get(), "Report for "+testClass.getName() + ((ExtentTest) test.get()).getModel() );
         printList.get().clear();}
   }
 
