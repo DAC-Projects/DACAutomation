@@ -1,5 +1,9 @@
 package com.dac.main.POM_SE;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,6 +12,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.ISuite;
 
 import com.dac.main.BasePage;
 import com.dac.main.POM_TPSEE.TPSEERepository;
@@ -89,6 +94,12 @@ public abstract class SE_abstractMethods extends BasePage implements SE_Reposito
 	//Unassigned Locations tab
 	@FindBy(xpath="//*[@id='tabsDiv']/div/div/ul/li[3]/a")
 	private WebElement UnassignedLocationsTab;
+	
+	//Brands Radio button
+	@FindBy(xpath="//*[@id='brands-radio-label']")
+	private WebElement BrandsRadioButton;
+	
+	
 
 	
 	public void applyGlobalFilter(String Group, String CountryCode, String State, String City, String Location) {
@@ -167,10 +178,10 @@ public abstract class SE_abstractMethods extends BasePage implements SE_Reposito
 	public void clickSearchApplyFilterBTN() throws InterruptedException
 	{
 		JSWaiter.waitJQueryAngular();
-		if(Apply_filter.isDisplayed()) {
+		//if(Apply_filter.isDisplayed()) {
 			clickelement(SearchApplyFilter);
 			Thread.sleep(3000);
-		}
+	//	}
 	}
 	
 	public void applyKeywordSearch(String Keyword)
@@ -191,4 +202,37 @@ public abstract class SE_abstractMethods extends BasePage implements SE_Reposito
 		JSWaiter.waitJQueryAngular();
 		clickelement(UnassignedLocationsTab);
 	}
+	
+	public void cickBrands()
+	{
+		JSWaiter.waitJQueryAngular();
+		clickelement(BrandsRadioButton);
+	}
+	
+	 public void onStart() {
+		//  System.out.println("Suite Name : "+ suite.getName());
+		  
+		  String[] folderCreate = { "./downloads" };
+		    System.out.println("folderCreate.toString() : "+folderCreate.toString());
+
+		    for (String folder : folderCreate) {
+		      File file = new File(folder);
+
+		      if (!file.exists()) {
+
+		       file.mkdirs();
+		      }
+
+		      try {
+				FileUtils.cleanDirectory(file);
+				 System.out.println("cleaned directory");
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("catch block");
+			}
+		    }
+	  	
+	  }
+	 
+	
 }

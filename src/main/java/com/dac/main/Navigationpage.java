@@ -64,6 +64,14 @@ public class Navigationpage extends BasePage{
 	@FindBy(xpath = "//ul[contains(@class,'settings-list dashboardColor')]")
 	private WebElement Group;
 	
+	@FindBy(xpath = "//button//span[@class='walkme-custom-balloon-button-text' and contains(text(),'Cancel')]")
+    private WebElement WalkMeCancel;
+
+ 
+
+    @FindBy(xpath = "//span[@class= 'walkme-action-destroy-0 wm-close-link' and contains(text(),'Okay')]")
+    private WebElement NotificationPopUp;
+	
 	//------------------------- SA and RRM -------------------------------------
 	
 	@FindBy(xpath = "//a[@href='/Review/ReviewReport/']")
@@ -172,6 +180,12 @@ public class Navigationpage extends BasePage{
     @FindBy(xpath="//div[text()='Facebook']/../../..//input[@id='manage-button']")
     private WebElement SE_FacebookManagePages;
     
+    @FindBy(xpath="//div[text()='Google My Business']/../../..//input[@id='manage-button']")
+    private WebElement SE_GoogleManagePages;
+    
+  //Manage Connections Link
+  	@FindBy(xpath="//a[text()='Manage Connections']")
+  	private WebElement ManageConnections;
    
     
     public void  navigateTPSEE_Visibility() {
@@ -226,6 +240,15 @@ public class Navigationpage extends BasePage{
     	//action.moveToElement(AllGroups).click().perform();
     	System.out.println("Waiting for page to load********");
     	waitUntilLoad(driver);
+    	try {
+    		clickwalkme();
+    	}catch(Exception e) {
+    		System.out.println("No walkme displayed");
+    	}try {
+    		clickNotificationPopUp();
+    	}catch(Exception e) {
+    		System.out.println("No notification popup displayed");
+    	}
     }
     
     public void navigateToReviewStream() {
@@ -368,6 +391,20 @@ public void navigateToFacebookManagePages() { // Navigate to Facebook ManagesPag
     	System.out.println("Waiting for page to load********");
     	waitUntilLoad(driver);
     }
+
+public void navigateToGoogleManagePages() { // Navigate to Google ManagesPage
+   	
+	  
+	clickelement(SE_GoogleManagePages);
+	System.out.println("Waiting for page to load********");
+	waitUntilLoad(driver);
+}
+
+public void clickManageConnectionslink() // Navigate to Manage Connections page
+{
+	 JSWaiter.waitJQueryAngular();
+		clickelement(ManageConnections);
+}
 	
 	/** To click on TSEE_Accuracy link in LHS to navigate to TSEE_Accuracy page   */
 	public void navigateToTSEE_Accuracy() {
@@ -548,9 +585,34 @@ public void navigateToFacebookManagePages() { // Navigate to Facebook ManagesPag
 							   break;
 							 
 				default		 : System.out.println("Selected wrong Language Code or Contry Code please check and Execute once again");
+				
+				
 				}
 			}
 	}
+	/**
+     * To Click on Cancel Walkme Snippet
+     */
+     public void clickwalkme() {
+            JSWaiter.waitJQueryAngular();
+            if (WalkMeCancel.isDisplayed()) {
+                   clickelement(WalkMeCancel);
+            } else {
+                   System.out.println("No Walkme Displayed");
+            }
+     }
+
+     /**
+     * To Click on Okay Notification PopUp
+     */
+     public void clickNotificationPopUp() {
+            JSWaiter.waitJQueryAngular();
+            if (NotificationPopUp.isDisplayed()) {
+                   clickelement(NotificationPopUp);
+            } else {
+                   System.out.println("No Notification Displayed");
+            }
+     }
 
 
 }

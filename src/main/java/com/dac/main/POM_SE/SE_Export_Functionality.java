@@ -32,9 +32,14 @@ import resources.formatConvert;
 public class SE_Export_Functionality extends  SE_abstractMethods  {
 	public static final String delimiter = ",";
 	public static List<String> locationtable = new ArrayList<String>();
+	public static List<String> brandtable = new ArrayList<String>();
 	public static List<String> pagetable = new ArrayList<String>();
+	public static List<String> brandpagetable = new ArrayList<String>();
 	public static List<String> pagehandlinglocationtable = new ArrayList<String>();
+	public static List<String> pagehandlingbrandtable = new ArrayList<String>();
 	public static List<String> pagehandlingpagetable = new ArrayList<String>();
+	public static List<String> pagehandlingpagetablebrands = new ArrayList<String>();
+
 	public String[] uidata;
 
 	
@@ -79,7 +84,8 @@ public class SE_Export_Functionality extends  SE_abstractMethods  {
 	private WebElement loc;
 	@FindBy(xpath = "//th[contains(text(), 'Facebook Page')]")
 	private WebElement fbpage;
-	
+	@FindBy(xpath="//th[contains(text(),'Brand / Other')]")
+	private WebElement brand;
 	
 
 	
@@ -115,7 +121,7 @@ public class SE_Export_Functionality extends  SE_abstractMethods  {
 				 System.out.println("The location column text : " +text);
 				 locationtable.add(text);
 			 }
-			 System.out.println("Te final list of locations : " +locationtable);
+			 System.out.println("The final list of locations : " +locationtable);
 			 
 			 
 		}
@@ -135,6 +141,39 @@ public class SE_Export_Functionality extends  SE_abstractMethods  {
 			 System.out.println("Te final list of pages : " +pagetable);
 		}
 		
+		public void UIBrandRead()
+		{
+			 List<WebElement> li = driver.findElements(By.xpath("//td[@class = 'locations-cell']"));
+			 int size =  li.size();
+			 System.out.println("The size of elements :" +size);
+			 String text;
+			 
+			// List<String> locationtable = new ArrayList<String>();
+			 for(int i=1; i<=size; i++) {
+				 text = driver.findElement(By.xpath("(//td[@class='locations-cell'])["+ i +"]")).getText();
+				 System.out.println("The Brand column text : " +text);
+				 brandtable.add(text);
+			 }
+			 System.out.println("The final list of Brands : " +brandtable);
+			 
+			 
+		}
+		
+		public void UIPagesReadInBrands()
+		{
+			List<WebElement> pa = driver.findElements(By.xpath("//td[@class = 'pages-cell']"));
+			 int pa_size =  pa.size();
+			 System.out.println("The size of elements :" +pa_size);
+			 String pa_text;
+			
+			 for(int i=1; i<=pa_size; i++) {
+				 pa_text = driver.findElement(By.xpath("(//td[@class='pages-cell'])["+ i +"]")).getText();
+				 System.out.println("The pages column text : " +pa_text);
+				 brandpagetable.add(pa_text);
+			 }
+			 System.out.println("Te final list of pages : " +brandpagetable);
+		}
+		
 		public void excelRead_UIexcelcomparison() throws IOException, InterruptedException
 		{
 			
@@ -150,6 +189,73 @@ public class SE_Export_Functionality extends  SE_abstractMethods  {
 			ArrayList<String> Sitepagename = new ArrayList<String>();
 			ArrayList<String> Sitepageaddress = new ArrayList<String>();
 			ArrayList<String> Sitepageurl = new ArrayList<String>();
+			
+			JSWaiter.waitJQueryAngular();
+			if(!driver.findElements(By.xpath("//*[@id='table-pagination-cell']/td/div[1]/div[2]/ul")).isEmpty())
+			{
+				String n = driver.findElement(By.xpath("(//*[@class='pagination pull-right']//a)[last()-1]")).getText();
+				int page = Integer.parseInt(n);
+				System.out.println("\n"+page);
+				
+				for(int i=1;i<=page;i++)
+				{
+					int rowcount = tablerow.size() - 1;
+					System.out.println("Rowcount :"+rowcount);
+					for(int j = 1; j<=rowcount; j++) {
+						
+						//you need to write the code for retrieving data from UI
+						
+						String pagehandlingtext = driver.findElement(By.xpath("(//td[@class='locations-cell'])["+ j +"]")).getText();
+						 System.out.println("The location column text page handling : " +pagehandlingtext);
+						 pagehandlinglocationtable.add(pagehandlingtext);
+						 
+						 String pagehandlingtext1 = driver.findElement(By.xpath("(//td[@class='pages-cell'])["+ j +"]")).getText();
+						 System.out.println("The pages column text : " +pagehandlingtext1);
+						 pagehandlingpagetable.add(pagehandlingtext1);
+						 
+					}
+					if(paginationNext.isEnabled()) {
+		    			scrollByElement(paginationNext);
+		    			paginationNext.click();
+		    			Thread.sleep(4000);
+		    		}	 
+				}
+		
+			/*	you can write code for retrieving data from XL 
+				Write the code for comparing data between UI and XL*/
+				
+			
+				
+			/*	soft.assertAll();
+				softpa.assertAll();
+				if(paginationNext.isEnabled()) {
+	    			scrollByElement(paginationNext);
+	    			paginationNext.click();
+	    			Thread.sleep(4000);
+	    		}	 */
+				
+			}
+			
+			else
+			{
+				System.out.println("No pagination");
+				int rowcount = tablerow.size() - 1;
+				System.out.println("Rowcount :"+rowcount);
+				for(int j = 1; j<=rowcount; j++) {
+					
+					//you need to write the code for retrieving data from UI
+					
+					String pagehandlingtext = driver.findElement(By.xpath("(//td[@class='locations-cell'])["+ j +"]")).getText();
+					 System.out.println("The location column text page handling : " +pagehandlingtext);
+					 pagehandlinglocationtable.add(pagehandlingtext);
+					 
+					 String pagehandlingtext1 = driver.findElement(By.xpath("(//td[@class='pages-cell'])["+ j +"]")).getText();
+					 System.out.println("The pages column text : " +pagehandlingtext1);
+					 pagehandlingpagetable.add(pagehandlingtext1);
+					 
+				}
+			}
+	
 			
 			
  			BufferedReader br = new BufferedReader(new FileReader("C://Users//rohitm//git//DACAutomation//downloads//Connection Manage Pages-Location_Brand Export.csv"));
@@ -206,6 +312,7 @@ int  size = b.length;
 			System.out.println("Data in Site Page Name column : " +Sitepagename);
 			System.out.println("Data in Site Page Address column : " +Sitepageaddress);
 			System.out.println("Data in Site Page Url column : " +Sitepageurl); 
+		
 			
 				
 				ArrayList<String> temlist = new ArrayList<String>();
@@ -223,7 +330,10 @@ int  size = b.length;
 			{
 				for(int i=0;i<=temlist.size()-1;i++)
 				{
+					
 					soft.assertTrue(Type.get(i).contains(location),"Type "+Type.get(i)+" is not there in list");
+					
+					
 
 				}
 			}
@@ -429,7 +539,24 @@ int  size = b.length;
 			}
 	
 				
-			JSWaiter.waitJQueryAngular();
+			
+			
+		}
+		
+		public void excelRead_UIexcelcomparisonBrands() throws IOException, InterruptedException
+		{
+			String splitBy = ",";
+			String brandType=brand.getText();
+			String sitename = fbpage.getText();
+			ArrayList<String> brandTypeExcel = new ArrayList<String>();
+			ArrayList<String> brandName = new ArrayList<String>();
+			ArrayList<String> brandDescription = new ArrayList<String>();
+			ArrayList<String> Site = new ArrayList<String>();
+			ArrayList<String> Sitepagename = new ArrayList<String>();
+			ArrayList<String> Sitepageaddress = new ArrayList<String>();
+			ArrayList<String> Sitepageurl = new ArrayList<String>();
+			
+		JSWaiter.waitJQueryAngular();
 			if(!driver.findElements(By.xpath("//*[@id='table-pagination-cell']/td/div[1]/div[2]/ul")).isEmpty())
 			{
 				String n = driver.findElement(By.xpath("(//*[@class='pagination pull-right']//a)[last()-1]")).getText();
@@ -444,13 +571,13 @@ int  size = b.length;
 						
 						//you need to write the code for retrieving data from UI
 						
-						String pagehandlingtext = driver.findElement(By.xpath("(//td[@class='locations-cell'])["+ j +"]")).getText();
-						 System.out.println("The location column text page handling : " +pagehandlingtext);
-						 pagehandlinglocationtable.add(pagehandlingtext);
+						String pagehandlingtext2 = driver.findElement(By.xpath("(//td[@class='locations-cell'])["+ j +"]")).getText();
+						 System.out.println("The Brand column text page handling : " +pagehandlingtext2);
+						 pagehandlingbrandtable.add(pagehandlingtext2);
 						 
-						 String pagehandlingtext1 = driver.findElement(By.xpath("(//td[@class='pages-cell'])["+ j +"]")).getText();
-						 System.out.println("The pages column text : " +pagehandlingtext1);
-						 pagehandlingpagetable.add(pagehandlingtext1);
+						 String pagehandlingtext3 = driver.findElement(By.xpath("(//td[@class='pages-cell'])["+ j +"]")).getText();
+						 System.out.println("The pages column text : " +pagehandlingtext3);
+						 pagehandlingpagetablebrands.add(pagehandlingtext3);
 						 
 					}
 					if(paginationNext.isEnabled()) {
@@ -460,31 +587,243 @@ int  size = b.length;
 		    		}	 
 				}
 		
-			/*	you can write code for retrieving data from XL 
-				Write the code for comparing data between UI and XL*/
-				
-			
-				
-			/*	soft.assertAll();
-				softpa.assertAll();
-				if(paginationNext.isEnabled()) {
-	    			scrollByElement(paginationNext);
-	    			paginationNext.click();
-	    			Thread.sleep(4000);
-	    		}	 */
+	
 				
 			}
 			
 			else
 			{
 				System.out.println("No pagination");
+				
+					int rowcount = tablerow.size() - 1;
+					System.out.println("Rowcount :"+rowcount);
+					for(int j = 1; j<=rowcount; j++) {
+						
+						//you need to write the code for retrieving data from UI
+						
+						String pagehandlingtext2 = driver.findElement(By.xpath("(//td[@class='locations-cell'])["+ j +"]")).getText();
+						 System.out.println("The Brand column text page handling : " +pagehandlingtext2);
+						 pagehandlingbrandtable.add(pagehandlingtext2);
+						 
+						 String pagehandlingtext3 = driver.findElement(By.xpath("(//td[@class='pages-cell'])["+ j +"]")).getText();
+						 System.out.println("The pages column text : " +pagehandlingtext3);
+						 pagehandlingpagetablebrands.add(pagehandlingtext3);
+						 
+					}
+		
 			}
 			
-		}
+			
+			
+ 			BufferedReader br1 = new BufferedReader(new FileReader("C://Users//rohitm//git//DACAutomation//downloads//Connection Manage Pages-Location_Brand Export.csv"));
+			String line1 = br1.readLine();
+			while ((line1 = br1.readLine()) !=null){
+			String[] b1 = line1.split(splitBy);
+			
+			int  size1 = b1.length;
+			if(size1>0)
+				brandTypeExcel.add(b1[0]);
+			else
+				brandTypeExcel.add("");
+			if(size1>1)
+				brandName.add(b1[1]);
+			else
+				brandName.add("");
+			if(size1>2)
+				brandDescription.add(b1[2]);
+			else
+				brandDescription.add("");
+			
+			if(size1>3)
+				Site.add(b1[3]);
+			else
+				Site.add("");
+			if(size1>4)
+				Sitepagename.add(b1[4]);
+			else
+				Sitepagename.add("");
+			if(size1>5)
+				Sitepageaddress.add(b1[5]);
+			else
+				Sitepageaddress.add("");
+			if(size1>6)
+				Sitepageurl.add(b1[6]);
+			else
+				Sitepageurl.add("");
+			
+			System.out.println("Data in Type column : " +brandTypeExcel); 
+			System.out.println("Data in Brand Name column : " +brandName); 
+			System.out.println("Data in Brand Description column : " +brandDescription);
+			System.out.println("Data in Site column : " +Site); 
+			System.out.println("Data in Site Page Name column : " +Sitepagename);
+			System.out.println("Data in Site Page Address column : " +Sitepageaddress);
+			System.out.println("Data in Site Page Url column : " +Sitepageurl); 
+			
+			ArrayList<String> temlist1 = new ArrayList<String>();
+			temlist1.addAll(pagehandlingbrandtable);
+			System.out.println("The temp list is :" +temlist1);
+			
+			SoftAssert soft = new SoftAssert();
+
+			temlist1.size();
+			
+			brandTypeExcel.size();
+			if(temlist1.size()==brandTypeExcel.size())
+			{
+				for(int i=0;i<=temlist1.size()-1;i++)
+				{
+					
+						soft.assertTrue(brandTypeExcel.get(i).contains(brandType),"Type "+brandTypeExcel.get(i)+" is not there in list");	
+
+				}
+			}
+			
+			brandName.size();
+			if(temlist1.size()==brandName.size()) {
+				for(int i =0; i<= temlist1.size() - 1; i++) {
+					uidata = temlist1.get(i).split(",");
+					System.out.println("Brand Name "+uidata[0]);
+					soft.assertTrue(uidata[0].contains(brandName.get(i)),"Location Number "+brandName.get(i)+" is not there in list");
+	
+				}
+				
+			}
+			
+			ArrayList<String> pagelist = new ArrayList<String>();
+			pagelist.addAll(pagehandlingpagetablebrands);
+			System.out.println("The temp1 list is :" +pagelist);
+
+		SoftAssert softpa = new SoftAssert();
+
+		pagelist.size();
 		
+		brandTypeExcel.size();
+			
+			Site.size();
+			if(pagelist.size()==Site.size())
+			{
+				for(int i=0;i<=pagelist.size()-1;i++)
+				{
+					System.out.println(Site.get(i));
+					System.out.println(sitename);
+				
+					softpa.assertTrue(sitename.contains(Site.get(i)),"Site  "+Site.get(i)+" is not there in list");
+
+				}
+			}
+			
+			Sitepagename.size();
+			
+			if(pagelist.size()==Sitepagename.size())
+				
+			{
+				String str9;
+				String str10="";
+				for(int i=0;i<=pagelist.size()-1;i++)
+				{
+					uidata = pagelist.get(i).split(",");
+					int n2=uidata.length;
+					System.out.println("Site Page Name "+uidata[0]);
+					
+					
+					
+					if(n2>1)
+					{
+						str9= uidata[0];
+						str10= Sitepagename.get(i);
+					}
+					else {
+						str9="";
+						str10="";
+					}
+					
+					System.out.println("UIDATA 0 "+uidata[0]);
+					System.out.println("STR 9 "+str9);
+					
+					System.out.println("STR 10 "+str10);
+					
+					String result = str10.replaceAll("[-+^:â€œ€™]","");
+				
+					str9 = str9.replaceAll("’","");
+				
+					System.out.println("Double quotes:"+result);
+					System.out.println("Single quotes:"+str9);
+					//softpa.assertTrue(str9.contains(result),"Site Page Name "+result+" is not there in list");
+					softpa.assertTrue(result.contains(str9),"Site Page Name "+result+" is not there in list");
+				}
+				
+				
+			}
+			
+			Sitepageaddress.size();
+			if(pagelist.size()==Sitepageaddress.size())
+			{
+				String str5;
+				String str6;
+				String str7;
+				String str8;
+				for(int i=0;i<pagelist.size();i++)
+				{
+					uidata = pagelist.get(i).split(",");
+					int n1=uidata.length;
+					System.out.println(n1);
+					if(n1>2) {
+					 str5= uidata[1].trim();
+					}
+					else {
+						str5="";	
+					}
+					if(n1>3)
+					{
+						str6= uidata[2].trim();
+					}
+					else
+					{
+						str6="";
+					}
+					
+					if(n1>4)
+					{
+						str7= uidata[3].trim();
+					}
+					else
+					{
+						str7="";
+					}
+					if(n1>5)
+					{
+						str8= uidata[4].trim();
+					}
+					else
+					{
+						str8="";
+					}
+					 
+					 
+					System.out.println("data: 1 "+str5);
+					System.out.println("data: 2 "+str6);
+					System.out.println("data: 3 "+str7);
+					System.out.println("data: 4 "+str8);
+				
+					System.out.println("data of page address: "+Sitepageaddress.get(i));
+					softpa.assertTrue(Sitepageaddress.get(i).contains(str5),"Page Address  "+Sitepageaddress.get(i)+" is not there in list");
+					softpa.assertTrue(Sitepageaddress.get(i).contains(str6),"Page Address  "+Sitepageaddress.get(i)+" is not there in list");
+					softpa.assertTrue(Sitepageaddress.get(i).contains(str7),"Page Address  "+Sitepageaddress.get(i)+" is not there in list");
+					softpa.assertTrue(Sitepageaddress.get(i).contains(str8),"Page Address  "+Sitepageaddress.get(i)+" is not there in list");
+					
+				//	softpa.assertTrue(pagelist.get(i).contains(Sitepageaddress.get(i)),"Site Page Address "+Sitepageaddress.get(i)+" is not there in list");
+
+				}
+			}
 	
 			
 		
+			
+		}
+			
+		}
+			
+		}
 		
-}
+
 
