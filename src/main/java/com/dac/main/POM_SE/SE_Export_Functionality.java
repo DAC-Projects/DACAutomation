@@ -84,9 +84,12 @@ public class SE_Export_Functionality extends  SE_abstractMethods  {
 	private WebElement loc;
 	@FindBy(xpath = "//th[contains(text(), 'Facebook Page')]")
 	private WebElement fbpage;
+	@FindBy(xpath="//th[contains(text(), 'Google My Business Page')]")
+	private WebElement gmbpage;
 	@FindBy(xpath="//th[contains(text(),'Brand / Other')]")
 	private WebElement brand;
-	
+	@FindBy(xpath="//*[@class='media-body padding-top-5']")
+	private WebElement vendor;
 
 	
 	public void exportFunctionality() throws InterruptedException, FileNotFoundException, IOException{
@@ -179,7 +182,16 @@ public class SE_Export_Functionality extends  SE_abstractMethods  {
 			
 			String splitBy = ",";
 			String location = loc.getText();
-			String sitename = fbpage.getText();
+			String sitename;
+			if(vendor.getText()=="Facebook")
+			{	
+				sitename = fbpage.getText();
+			}
+			else if(vendor.getText()=="Google");
+			{
+				 sitename = gmbpage.getText();
+			}
+			
 			ArrayList<String> Type = new ArrayList<String>();
 			ArrayList<String> Locationnumber = new ArrayList<String>();
 			ArrayList<String> Clientref = new ArrayList<String>();
