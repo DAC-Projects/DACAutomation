@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -15,6 +16,7 @@ import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
 
+
 public class Reviews_Insights_Test extends BaseClass {
 
 	Navigationpage np;
@@ -23,7 +25,6 @@ public class Reviews_Insights_Test extends BaseClass {
 	SoftAssert soft = new SoftAssert();
 	String From_Date = "//*[@id='dateFrom']";
 	String To_Date = "//*[@id='dateTo']";
-	static int totalreviews;
 
 	/**
 	 * Test to get Score from KPI Dashboard
@@ -129,7 +130,7 @@ public class Reviews_Insights_Test extends BaseClass {
 	@Test(priority = 9, description = "Test to verify total reviews")
 	public void VerifyTotalReviews() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
-		totalreviews = data.TotalReviews();
+		data.TotalReviews();
 	}
 
 	/**
@@ -338,7 +339,7 @@ public class Reviews_Insights_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes");
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.CancelWalkme();
-		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes");
+		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes"); 
 	}
 
 	/**
@@ -438,7 +439,7 @@ public class Reviews_Insights_Test extends BaseClass {
 	 * @param to_day
 	 * @param to_month
 	 * @param to_year
-	 * @throws Exception
+	 * @throws Exception 
 	 */
 	@Test(priority = 31, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider = "testData")
 	public void DateFilter(String from_day, String from_month, String from_year, String to_day, String to_month,
@@ -446,9 +447,9 @@ public class Reviews_Insights_Test extends BaseClass {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.selectCalender_FromDate(From_Date, (int) (Double.parseDouble(from_day)), from_month,
 				(int) (Double.parseDouble(from_year)));
-		Thread.sleep(3000);
+		Thread.sleep(3000); 
 		data.selectCalender_ToDate(To_Date, (int) (Double.parseDouble(to_day)), to_month,
-				(int) (Double.parseDouble(to_year)));
+				(int) (Double.parseDouble(to_year))); 
 		Thread.sleep(3000);
 		data.clickApplyFilterBTN();
 		addEvidence(CurrentState.getDriver(), "Applied Global Filters", "yes");
@@ -464,7 +465,7 @@ public class Reviews_Insights_Test extends BaseClass {
 	@Test(priority = 32, description = "Test for date filter verification")
 	public void DateFilterVerification() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
-		GetReviewStarAvg();
+		GetReviewStarAvg(); 
 	}
 
 	/**
@@ -530,7 +531,7 @@ public class Reviews_Insights_Test extends BaseClass {
 	@Test(priority = 38, description = "Test to Date verification in chart after applying date filter")
 	public void chartDateVerify() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
-		CompareDateAppliednChart();
+		CompareDateAppliednChart(); 
 	}
 
 	/**
@@ -552,7 +553,7 @@ public class Reviews_Insights_Test extends BaseClass {
 	@Test(priority = 40, description = "Test to verify Facebook Count after applying date filter")
 	public void verifyFaceCount() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
-		compareFacebookCount();
+		compareFacebookCount(); 
 	}
 
 	/**
@@ -565,6 +566,8 @@ public class Reviews_Insights_Test extends BaseClass {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		navigateToReviewsFeed();
 	}
+	
+	
 
 	/**
 	 * Test to apply date Filter
@@ -600,7 +603,7 @@ public class Reviews_Insights_Test extends BaseClass {
 	public void FeedInsightsCompare() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		compareTotReviews();
-	}
+	} 
 
 	/**
 	 * Test to verify positive count after applying date filter
@@ -667,7 +670,7 @@ public class Reviews_Insights_Test extends BaseClass {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		naviagateToInsights();
 	}
-
+  
 	/**
 	 * Test to apply filter
 	 * 
@@ -676,7 +679,7 @@ public class Reviews_Insights_Test extends BaseClass {
 	@Test(priority = 50, description = "Test to apply Global Filter")
 	public void ApplyGlobalFilters() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
-		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_Filter");
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_Insights");
 		int count = 1;
 		for (int i = 1; i <= wb.getRowCount(); i++) {
 			System.out.println("*******************  Scenarios : " + count + "Starts ****************************");
@@ -720,7 +723,7 @@ public class Reviews_Insights_Test extends BaseClass {
 	public void LocationFilterVerification() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		GetReviewStarAvg();
-	}
+	}  
 
 	/**
 	 * Test to verify total reviews after applying location filter
@@ -819,7 +822,7 @@ public class Reviews_Insights_Test extends BaseClass {
 	@Test(priority = 61, description = "Test to navigate to Reviews Feed Page")
 	public void navigationFeed() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
-		navigateToReviewsFeed();
+		navigateToReviewsFeed(); 
 	}
 
 	/**
@@ -830,7 +833,7 @@ public class Reviews_Insights_Test extends BaseClass {
 	@Test(priority = 62, description = "Test to apply Global Filter")
 	public void FeedApplyGlobalFilters() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
-		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_Filter");
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_Insights");
 		int count = 1;
 		for (int i = 1; i <= wb.getRowCount(); i++) {
 			System.out.println("*******************  Scenarios : " + count + "Starts ****************************");
@@ -849,7 +852,7 @@ public class Reviews_Insights_Test extends BaseClass {
 					+ ", " + City + ", " + Location + "", "yes");
 		}
 	}
-
+ 
 	/**
 	 * Test to compare Total reviews after applying location filter
 	 * 
@@ -858,7 +861,7 @@ public class Reviews_Insights_Test extends BaseClass {
 	@Test(priority = 63, description = "Comparison of total reviews between reports after applying filter ")
 	public void LocationFeedInsightsCompare() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
-		compareTotReviews();
+		compareTotReviews(); 
 	}
 
 	/**

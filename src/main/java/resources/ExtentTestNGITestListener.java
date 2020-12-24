@@ -55,6 +55,8 @@ private static ThreadLocal parentTest = new ThreadLocal();
 private static ThreadLocal test = new ThreadLocal();
   @SuppressWarnings({ "unchecked", "rawtypes" })
 private static ThreadLocal<ArrayList<JasperPrint>> printList =new ThreadLocal();
+  
+  
     
   
   /**
@@ -254,7 +256,7 @@ private static ThreadLocal<ArrayList<JasperPrint>> printList =new ThreadLocal();
     CurrentState.setDriver(null);
     
     if(!printList.get().isEmpty()) {
-        GenerateEvidenceReport.exportReport(printList.get(), "Report for "+testClass.getName() + ((ExtentTest) test.get()).getModel() );
+        GenerateEvidenceReport.exportReport(printList.get(), "Report for "+testClass.getName() + "_" + testClass.getXmlTest().getName() );
         printList.get().clear();}
   }
 
@@ -264,15 +266,15 @@ private static ThreadLocal<ArrayList<JasperPrint>> printList =new ThreadLocal();
    * 
    * @see org.testng.ITestListener#onFinish(org.testng.ITestContext)	*/
   @Override
-  public synchronized void onFinish(ITestContext context) {
+  public synchronized void onFinish(ITestContext context) { 
     extent.flush();
     if (CurrentState.getDriver() != null) {
       CurrentState.getDriver().quit();
     }
     
-//    if(!printList.get().isEmpty()) {
-//      GenerateEvidenceReport.exportReport(printList.get(), "Report for "+context.getName());
-//      printList.get().clear();}
+    /*if(!printList.get().isEmpty()) {
+      GenerateEvidenceReport.exportReport(printList.get(), "Report for "+context.getName());
+      printList.get().clear();}*/
 
   }
 

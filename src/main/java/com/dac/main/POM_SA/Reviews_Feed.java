@@ -203,11 +203,13 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 		waitForElement(paginationLast, 10);
 		boolean dataavailable = DataAvailable();
 		if (dataavailable == false) {
+			clickelement(driver.findElement(By.xpath("(//*[@class='pagination']//a)[2]")));
 			int numberofentries = NumOfentriesinPage(Entry);
 			System.out.println("The number of entries :" + numberofentries);
 			int lastpage = Integer
 					.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
 			System.out.println("Last Page Number is :" + lastpage);
+			
 			waitForElement(paginationPrev, 10);
 			clickelement(paginationPrev);
 			try {
@@ -290,6 +292,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 					Thread.sleep(1000);
 					XLSource = readCsvColdata(chromepath, 2);
 					Thread.sleep(1000);
+					deletefile();
 				}
 				if (CurrentState.getBrowser().equals("IE")) {
 					XLBname = readCsvColdata(IEpath, 4);
@@ -300,6 +303,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 					Thread.sleep(1000);
 					XLSource = readCsvColdata(IEpath, 2);
 					Thread.sleep(1000);
+					deletefile();
 				}
 				if (CurrentState.getBrowser().equals("Firefox")) {
 					XLBname = readCsvColdata(FFpath, 4);
@@ -310,6 +314,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 					Thread.sleep(1000);
 					XLSource = readCsvColdata(FFpath, 2);
 					Thread.sleep(1000);
+					deletefile();
 				}
 				soft.assertEquals(XLBname.size(), BusinssName.size());
 				// Assert.assertEquals(expected, actual);
@@ -983,8 +988,8 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 									+ sentiment + "')]"))
 							.click();
 					waitUntilLoad(driver);
-					clickelement(advanceSearch);
 					BaseClass.addEvidence(driver, "Test to apply sentiment", "yes");
+					clickelement(advanceSearch);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

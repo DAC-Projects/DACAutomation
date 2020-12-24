@@ -3,6 +3,7 @@ package com.dac.testcases.SA;
 import java.util.Arrays;
 
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -15,6 +16,7 @@ import resources.ExcelHandler;
 
 public class ReviewsFeed_Test extends BaseClass {
 
+	
 	Navigationpage np;
 	Reviews_Feed data;
 	String[] VendorList;
@@ -49,28 +51,26 @@ public class ReviewsFeed_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Test to verify title and title text", "yes");
 	}
 
+	
+	@Parameters({ "Filter" })
 	@Test(priority = 4, description = "Test to apply Global Filter")
-	public void ApplyGlobalFilters() throws Exception {
+	
+	public void selectFilters(int Filter) throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_Filter");
-		int count = 1;
-		for (int i = 1; i <= wb.getRowCount(); i++) {
-			System.out.println("*******************  Scenarios : " + count + "Starts ****************************");
-			if (i > 1)
-				CurrentState.getDriver().navigate().refresh();
-			data.waitUntilLoad(CurrentState.getDriver());
-			String Group = wb.getCellValue(i, wb.seacrh_pattern("Group", 0).get(0).intValue());
-			String CountryCode = wb.getCellValue(i, wb.seacrh_pattern("Country", 0).get(0).intValue());
-			String State = wb.getCellValue(i, wb.seacrh_pattern("State", 0).get(0).intValue());
-			String City = wb.getCellValue(i, wb.seacrh_pattern("City", 0).get(0).intValue());
-			String Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
-			data.applyGlobalFilter(Group, CountryCode, State, City, Location);
-			System.out.println(Group + ", " + CountryCode + ", " + State + ", " + City + ", " + Location);
-			data.clickApplyFilterBTN();
-			addEvidence(CurrentState.getDriver(), "Applied global filter: " + Group + ", " + CountryCode + ", " + State
-					+ ", " + City + ", " + Location + "", "yes");
-		}
+		data.waitUntilLoad(CurrentState.getDriver());
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		String CountryCode = wb.getCellValue(Filter, wb.seacrh_pattern("Country", 0).get(0).intValue());
+		String State = wb.getCellValue(Filter, wb.seacrh_pattern("State", 0).get(0).intValue());
+		String City = wb.getCellValue(Filter, wb.seacrh_pattern("City", 0).get(0).intValue());
+		String Location = wb.getCellValue(Filter, wb.seacrh_pattern("Location", 0).get(0).intValue());
+		data.applyGlobalFilter(Group, CountryCode, State, City, Location);
+		data.clickApplyFilterBTN();
+		addEvidence(CurrentState.getDriver(), "Applied global filter: " + Group + ", " + CountryCode + ", " + State
+				+ ", " + City + ", " + Location + "", "yes");
 	}
+	
+	
 
 	@Test(priority = 5, description = "Test to Export Location Data")
 	public void ExportLocation() throws Exception {

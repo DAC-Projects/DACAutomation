@@ -106,6 +106,9 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	@FindBy(xpath = "//div[@class='message multi-review']//span[@class='average-score']")
 	private WebElement AverageStarRating;
 
+	@FindBy(xpath = "//div[@id='review_summary']")
+	private WebElement OverAllScore;
+	
 	@FindBy(xpath = "//div[@class='message multi-review']//span[@class='count']")
 	private WebElement TotalReviews;
 
@@ -324,7 +327,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	 */
 	public double AverageStar() throws Exception {
 		waitForElement(AverageStarRating, 10);
-		scrollByElement(PositiveRecommendation);
+		scrollByElement(OverAllScore);
 		String avgscr = AverageStarRating.getText();
 		System.out.println("The average score string value is :" + avgscr);
 		BaseClass.addEvidence(driver, "Test to get average score and verify", "yes");
@@ -340,7 +343,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	 */
 	public int TotalReviews() {
 		waitForElement(TotalReviews, 10);
-		scrollByElement(PositiveRecommendation);
+		scrollByElement(OverAllScore);
 		String totrev = TotalReviews.getText();
 		System.out.println("The string value of total reviews is :" + totrev);
 		TotReviews = Integer.parseInt(totrev);
@@ -356,10 +359,10 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	 */
 	public int PositiveReco() throws Exception {
 		waitForElement(PositiveRecommendation, 10);
-		scrollByElement(PositiveRecommendation);
+		scrollByElement(OverAllScore);
 		String posreco = PositiveRecommendation.getText();
 		System.out.println("The string value of positive reco is :" + posreco);
-		BaseClass.addEvidence(driver, "Test to get Positive count and verify", "yes");
+		//BaseClass.addEvidence(driver, "Test to get Positive count and verify", "yes");
 		PosReco = Integer.parseInt(posreco);
 		// PosReco = Integer.parseUnsignedInt(posreco);
 		System.out.println("The integer value of Positive Reco is :" + PosReco);
@@ -374,10 +377,10 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	 */
 	public int NegativeReco() throws Exception {
 		waitForElement(NegativeRecommendation, 10);
-		scrollByElement(NegativeRecommendation);
+		scrollByElement(OverAllScore);
 		String negreco = NegativeRecommendation.getText();
 		System.out.println("The String value of negative reco is :" + negreco);
-		BaseClass.addEvidence(driver, "Test to get Negative count and verify", "yes");
+		//BaseClass.addEvidence(driver, "Test to get Negative count and verify", "yes");
 		NegReco = Integer.parseInt(negreco);
 		System.out.println("The integer value of negative Reco is :" + NegReco);
 		return NegReco;
@@ -391,10 +394,10 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	 */
 	public int reviewResponse() throws Exception {
 		waitForElement(ReviewsResponed, 10);
-		scrollByElement(ReviewsResponed);
+		scrollByElement(OverAllScore);
 		String Response = ReviewsResponed.getText();
 		System.out.println("The String value of response is :" + Response);
-		BaseClass.addEvidence(driver, "Test to get Response count and verify", "yes");
+		//BaseClass.addEvidence(driver, "Test to get Response count and verify", "yes");
 		Reviewresponse = Integer.parseInt(Response);
 		System.out.println("The integer value of response is :" + Reviewresponse);
 		return Reviewresponse;
@@ -408,10 +411,10 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	 */
 	public int reviewNoResponse() throws Exception {
 		waitForElement(ReviewsNotResponded, 10);
-		scrollByElement(ReviewsNotResponded);
+		scrollByElement(OverAllScore);
 		String NoResponse = ReviewsNotResponded.getText();
 		System.out.println("The String value of no response is :" + NoResponse);
-		BaseClass.addEvidence(driver, "Test to get No Response count and verify", "yes");
+		//BaseClass.addEvidence(driver, "Test to get No Response count and verify", "yes");
 		reviewNoresponse = Integer.parseInt(NoResponse);
 		System.out.println("The integer value of no response is :" + reviewNoresponse);
 		return reviewNoresponse;
@@ -425,9 +428,9 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	 */
 	public String RNPSScore() throws Exception {
 		waitForElement(RNPSScore, 10);
-		scrollByElement(RNPSScore);
+		scrollByElement(OverAllScore);
 		RNPSscore = RNPSScore.getText();
-		BaseClass.addEvidence(driver, "Test to get RNPS Score and verify", "yes");
+		//BaseClass.addEvidence(driver, "Test to get RNPS Score and verify", "yes");
 		System.out.println("The String value of RNPS Score is :" + RNPSscore);
 		return RNPSscore;
 	}
@@ -740,7 +743,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		waitForElement(ExportBtn, 10);
 		scrollByElement(ExportBtn);
 		clickelement(ExportBtn);
-		Thread.sleep(4000);
+		Thread.sleep(6000);
 		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + InsightsExport));
 		Thread.sleep(3000);
 	}
@@ -1074,6 +1077,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		System.out.println("The Detractor score is : " + DeTractorScore);
 		System.out.println("The promoter score is : " + PromotorScore);
 		double RNPSScoreCalculation = (PromotorScore - DeTractorScore) * 100;
+		System.out.println("The RNPS Score Calculation is : " +RNPSScoreCalculation);
 		BigDecimal bd = BigDecimal.valueOf(RNPSScoreCalculation);
 		bd = bd.setScale(2, RoundingMode.HALF_UP);
 		RNPSScoreCalculation = bd.doubleValue();
