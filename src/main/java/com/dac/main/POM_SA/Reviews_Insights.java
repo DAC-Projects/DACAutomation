@@ -1045,8 +1045,12 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	public void getPromoterScore() {
 		System.out.println("The five star count is : " + FiveStarCount);
 		System.out.println("The total Star Count is : " + totalStarCount);
+		if(!(FiveStarCount == 0) && !(totalStarCount == 0)) {
 		PromotorScore = (Double.valueOf(FiveStarCount)) / (Double.valueOf(totalStarCount));
 		System.out.println("The promoter score is : " + PromotorScore);
+		}else {
+			PromotorScore = 0.00;
+		}
 	}
 
 	/**
@@ -1066,8 +1070,12 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	public void getDetractorScore() {
 		System.out.println("The total Star Count is : " + totalStarCount);
 		System.out.println("The total count excluding 4 and 5 star count is : " + totThStarCount);
+		if(!(totThStarCount == 0) && !(totalStarCount == 0)) {
 		DeTractorScore = (Double.valueOf(totThStarCount)) / (Double.valueOf(totalStarCount));
 		System.out.println("The Detractor score is : " + DeTractorScore);
+		}else {
+			DeTractorScore = 0.00;
+		}
 	}
 
 	/**
@@ -1076,14 +1084,19 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	public void CompareRNPSScore() {
 		System.out.println("The Detractor score is : " + DeTractorScore);
 		System.out.println("The promoter score is : " + PromotorScore);
+		String RNPSCalc = null;
+		if(!(PromotorScore == 0.0) && !(DeTractorScore == 0.0)) {
 		double RNPSScoreCalculation = (PromotorScore - DeTractorScore) * 100;
 		System.out.println("The RNPS Score Calculation is : " +RNPSScoreCalculation);
 		BigDecimal bd = BigDecimal.valueOf(RNPSScoreCalculation);
 		bd = bd.setScale(2, RoundingMode.HALF_UP);
 		RNPSScoreCalculation = bd.doubleValue();
 		System.out.println("The RNPS Score is : " + RNPSScoreCalculation);
-		String RNPSCalc = Double.toString(RNPSScoreCalculation);
+		RNPSCalc = Double.toString(RNPSScoreCalculation);
 		System.out.println("The String value is : " + RNPSCalc);
+		}else {
+			RNPSCalc = "0.00";
+		}
 		Assert.assertEquals(RNPSscore, RNPSCalc + "%");
 	}
 
