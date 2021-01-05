@@ -31,14 +31,14 @@ import resources.formatConvert;
 
 public class SE_Export_Functionality extends  SE_abstractMethods  {
 	public static final String delimiter = ",";
-	public static List<String> locationtable = new ArrayList<String>();
-	public static List<String> brandtable = new ArrayList<String>();
-	public static List<String> pagetable = new ArrayList<String>();
-	public static List<String> brandpagetable = new ArrayList<String>();
-	public static List<String> pagehandlinglocationtable = new ArrayList<String>();
-	public static List<String> pagehandlingbrandtable = new ArrayList<String>();
-	public static List<String> pagehandlingpagetable = new ArrayList<String>();
-	public static List<String> pagehandlingpagetablebrands = new ArrayList<String>();
+	//public static List<String> locationtable = new ArrayList<String>();
+	//public static List<String> brandtable = new ArrayList<String>();
+	//public static List<String> pagetable = new ArrayList<String>();
+	//public static List<String> brandpagetable = new ArrayList<String>();
+	//public static List<String> pagehandlinglocationtable = new ArrayList<String>();
+	//public static List<String> pagehandlingbrandtable = new ArrayList<String>();
+	//public static List<String> pagehandlingpagetable = new ArrayList<String>();
+//	public static List<String> pagehandlingpagetablebrands = new ArrayList<String>();
 
 	public String[] uidata;
 
@@ -86,6 +86,10 @@ public class SE_Export_Functionality extends  SE_abstractMethods  {
 	private WebElement fbpage;
 	@FindBy(xpath="//th[contains(text(), 'Google My Business Page')]")
 	private WebElement gmbpage;
+	@FindBy(xpath="//th[contains(text(), 'Twitter Page')]")
+	private WebElement twitterpage;
+	@FindBy(xpath="//th[contains(text(), 'YouTube Page')]")
+	private WebElement youtubepage;
 	@FindBy(xpath="//th[contains(text(),'Brand / Other')]")
 	private WebElement brand;
 	@FindBy(xpath="//*[@class='media-body padding-top-5']")
@@ -113,6 +117,7 @@ public class SE_Export_Functionality extends  SE_abstractMethods  {
 		
 		public void UILocationRead()
 		{
+			List<String> locationtable = new ArrayList<String>();
 			 List<WebElement> li = driver.findElements(By.xpath("//td[@class = 'locations-cell']"));
 			 int size =  li.size();
 			 System.out.println("The size of elements :" +size);
@@ -131,6 +136,7 @@ public class SE_Export_Functionality extends  SE_abstractMethods  {
 		
 		public void UIPagesRead()
 		{
+			List<String> pagetable = new ArrayList<String>();
 			List<WebElement> pa = driver.findElements(By.xpath("//td[@class = 'pages-cell']"));
 			 int pa_size =  pa.size();
 			 System.out.println("The size of elements :" +pa_size);
@@ -146,6 +152,8 @@ public class SE_Export_Functionality extends  SE_abstractMethods  {
 		
 		public void UIBrandRead()
 		{
+			
+			List<String> brandtable = new ArrayList<String>();
 			 List<WebElement> li = driver.findElements(By.xpath("//td[@class = 'locations-cell']"));
 			 int size =  li.size();
 			 System.out.println("The size of elements :" +size);
@@ -164,6 +172,7 @@ public class SE_Export_Functionality extends  SE_abstractMethods  {
 		
 		public void UIPagesReadInBrands()
 		{
+			List<String> brandpagetable = new ArrayList<String>();
 			List<WebElement> pa = driver.findElements(By.xpath("//td[@class = 'pages-cell']"));
 			 int pa_size =  pa.size();
 			 System.out.println("The size of elements :" +pa_size);
@@ -179,17 +188,29 @@ public class SE_Export_Functionality extends  SE_abstractMethods  {
 		
 		public void excelRead_UIexcelcomparison() throws IOException, InterruptedException
 		{
-			
+			List<String> pagehandlinglocationtable = new ArrayList<String>();
+			List<String> locationtable = new ArrayList<String>();
+			List<String> pagehandlingpagetable = new ArrayList<String>();
 			String splitBy = ",";
 			String location = loc.getText();
-			String sitename;
-			if(vendor.getText()=="Facebook")
+			String theVendor = vendor.getText();
+			String sitename = null;
+			if(theVendor.equals("Facebook"))
 			{	
 				sitename = fbpage.getText();
 			}
-			else if(vendor.getText()=="Google");
+			else if(theVendor.equals("Google"))
+				{
+					 sitename = gmbpage.getText();
+				}else
+			if(theVendor.equals("Twitter"))
 			{
-				 sitename = gmbpage.getText();
+				 sitename = twitterpage.getText();
+			}else
+			 if(theVendor.equals("YouTube"))			{
+				sitename = youtubepage.getText();
+			}else {
+				System.out.println("No vendors available");
 			}
 			
 			ArrayList<String> Type = new ArrayList<String>();
@@ -268,7 +289,7 @@ public class SE_Export_Functionality extends  SE_abstractMethods  {
 				}
 			}
 	
-			
+	
 			
  			BufferedReader br = new BufferedReader(new FileReader("C://Users//rohitm//git//DACAutomation//downloads//Connection Manage Pages-Location_Brand Export.csv"));
 			String line = br.readLine();
@@ -557,9 +578,31 @@ int  size = b.length;
 		
 		public void excelRead_UIexcelcomparisonBrands() throws IOException, InterruptedException
 		{
+			List<String> pagehandlingpagetablebrands = new ArrayList<String>();
+			List<String> pagehandlingbrandtable = new ArrayList<String>();
+			List<String> brandtable = new ArrayList<String>();
 			String splitBy = ",";
 			String brandType=brand.getText();
-			String sitename = fbpage.getText();
+			String theVendor = vendor.getText();
+			String sitename = null;
+			if(theVendor.equals("Facebook"))
+			{	
+				sitename = fbpage.getText();
+			}
+			else if(theVendor.equals("Google"))
+				{
+					 sitename = gmbpage.getText();
+				}else
+			if(theVendor.equals("Twitter"))
+			{
+				 sitename = twitterpage.getText();
+			}else
+			 if(theVendor.equals("YouTube"))			{
+				sitename = youtubepage.getText();
+			}else {
+				System.out.println("No vendors available");
+			}
+			
 			ArrayList<String> brandTypeExcel = new ArrayList<String>();
 			ArrayList<String> brandName = new ArrayList<String>();
 			ArrayList<String> brandDescription = new ArrayList<String>();
