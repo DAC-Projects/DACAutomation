@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.ui.context.support.UiApplicationContextUtils;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.dac.main.BasePage;
@@ -70,10 +72,24 @@ public class SA_FrequentKeywords_Test extends BaseClass {
 	public void verifyScore() throws Exception {
 		SA_FrequentKeywords_Page fk = new SA_FrequentKeywords_Page(CurrentState.getDriver());
 		String kw=exlScore[0];
-		String uiScore=fk.getFKScore(kw);
-		Thread.sleep(5000);
-		System.out.println("uiScore : "+uiScore);
-		addEvidence(CurrentState.getDriver(), "Score Verification Completed", "yes");
+		String uifkScore=fk.getFKScore(kw);
+		Thread.sleep(3000);
+		System.out.println("uiScore : "+uifkScore);
+		String uiSc[]=uifkScore.split(" ");
+		String xlScore=exlScore[2];
+		String xlCount=exlScore[1];
+		String fkScore=uiSc[1];
+		String fkCount=uiSc[2];
+		System.out.println("Score "+xlScore+" : "+fkScore);
+		System.out.println("Count "+xlCount+" : "+fkCount);
+//		for (String element: uiSc) {
+//            System.out.println(element);
+//        }
+		
+		Assert.assertTrue(fkScore.trim().contains(xlScore.trim()), "Score Verification Failed");//assertTrue(exlScore[1].trim(), uiSc[2].trim());
+		Assert.assertTrue(fkCount.trim().contains(xlCount.trim()), "Count Verification Failed");//Assert.assertEquals(exlScore[2].trim(), uiSc[1].trim());
+		
+		addEvidence(CurrentState.getDriver(), "Score Verification", "yes");
 	}
 	/*
 	/**
