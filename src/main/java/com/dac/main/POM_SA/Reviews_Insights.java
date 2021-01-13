@@ -1,6 +1,8 @@
 package com.dac.main.POM_SA;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -12,6 +14,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -108,7 +115,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 
 	@FindBy(xpath = "//div[@id='review_summary']")
 	private WebElement OverAllScore;
-	
+
 	@FindBy(xpath = "//div[@class='message multi-review']//span[@class='count']")
 	private WebElement TotalReviews;
 
@@ -201,15 +208,15 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 
 	@FindBy(xpath = "//div[@class='ownerResponse']")
 	private WebElement Response;
-	
+
 	@FindBy(xpath = "//button//span[contains(text(),'Cancel')]")
 	private WebElement CancelBtn;
 
 	String chromepath = "./downloads/chromeLocationDataExportInsights.csv";
 	String IEpath = "./downloads/IELocationDataExportInsights.csv";
 	String FFpath = "./downloads/FFLocationDataExportInsights.csv";
-	
-	
+
+
 	public void CancelWalkme() {
 		if(CancelBtn.isDisplayed()) {
 			clickelement(CancelBtn);
@@ -328,7 +335,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	public double AverageStar() throws Exception {
 		waitForElement(AverageStarRating, 10);
 		scrollByElement(OverAllScore);
-		String avgscr = AverageStarRating.getText();
+		String avgscr = AverageStarRating.getAttribute("innerText");
 		System.out.println("The average score string value is :" + avgscr);
 		BaseClass.addEvidence(driver, "Test to get average score and verify", "yes");
 		averageStar = Double.parseDouble(avgscr);
@@ -344,7 +351,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	public int TotalReviews() {
 		waitForElement(TotalReviews, 10);
 		scrollByElement(OverAllScore);
-		String totrev = TotalReviews.getText();
+		String totrev = TotalReviews.getAttribute("innerText");
 		System.out.println("The string value of total reviews is :" + totrev);
 		TotReviews = Integer.parseInt(totrev);
 		System.out.println("The integer value of total reviews is :" + TotReviews);
@@ -625,7 +632,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	public void VerifyHighChartType(WebElement ele, String ele1, String ele2, String ele3, String ele4, String ele5,
 			WebElement ele8, WebElement ele9, WebElement ele10, WebElement ele11, List<WebElement> ele12,
 			List<WebElement> ele13, List<WebElement> ele14, List<WebElement> ele15, List<WebElement> ele16)
-			throws Exception {
+					throws Exception {
 		scrollByElement(ele);
 		clickelement(ele);
 		clickelement(ele8);
@@ -854,7 +861,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		clickelement(RatingFilter);
 		Thread.sleep(3000);
 		action.moveToElement(driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='Recommended'])[1]")))
-				.click().build().perform();
+		.click().build().perform();
 		JSWaiter.waitJQueryAngular();
 		clickelement(RatingFilter);
 		Thread.sleep(3000);
@@ -868,7 +875,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		clickelement(RatingFilter);
 		Thread.sleep(3000);
 		action.moveToElement(driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='All'])[2]"))).click()
-				.build().perform();
+		.build().perform();
 		clickelement(RatingFilter);
 		soft.assertAll();
 	}
@@ -884,7 +891,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		Thread.sleep(3000);
 		action.moveToElement(
 				driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='Not Recommended'])[1]"))).click()
-				.build().perform();
+		.build().perform();
 		JSWaiter.waitJQueryAngular();
 		clickelement(RatingFilter);
 		BaseClass.addEvidence(driver, "Test to apply not recommend filter and verify count", "yes");
@@ -898,7 +905,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		clickelement(RatingFilter);
 		Thread.sleep(3000);
 		action.moveToElement(driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='All'])[2]"))).click()
-				.build().perform();
+		.build().perform();
 		clickelement(RatingFilter);
 		soft.assertAll();
 	}
@@ -968,7 +975,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		clickelement(RatingFilter);
 		action.moveToElement(
 				driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='" + Rating.trim() + "'])[1]")))
-				.click().build().perform();
+		.click().build().perform();
 		clickelement(RatingFilter);
 		BaseClass.addEvidence(driver, "Test to apply rating filter and verify count", "yes");
 		int StarCount = getreviewcount();
@@ -976,7 +983,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		scrollByElement(RatingFilter);
 		clickelement(RatingFilter);
 		action.moveToElement(driver.findElement(By.xpath("(//*[@id='filter-area']//input[@title='All'])[2]"))).click()
-				.build().perform();
+		.build().perform();
 		clickelement(RatingFilter);
 		return StarCount;
 	}
@@ -1046,8 +1053,8 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		System.out.println("The five star count is : " + FiveStarCount);
 		System.out.println("The total Star Count is : " + totalStarCount);
 		if(!(FiveStarCount == 0) && !(totalStarCount == 0)) {
-		PromotorScore = (Double.valueOf(FiveStarCount)) / (Double.valueOf(totalStarCount));
-		System.out.println("The promoter score is : " + PromotorScore);
+			PromotorScore = (Double.valueOf(FiveStarCount)) / (Double.valueOf(totalStarCount));
+			System.out.println("The promoter score is : " + PromotorScore);
 		}else {
 			PromotorScore = 0.00;
 		}
@@ -1071,8 +1078,8 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		System.out.println("The total Star Count is : " + totalStarCount);
 		System.out.println("The total count excluding 4 and 5 star count is : " + totThStarCount);
 		if(!(totThStarCount == 0) && !(totalStarCount == 0)) {
-		DeTractorScore = (Double.valueOf(totThStarCount)) / (Double.valueOf(totalStarCount));
-		System.out.println("The Detractor score is : " + DeTractorScore);
+			DeTractorScore = (Double.valueOf(totThStarCount)) / (Double.valueOf(totalStarCount));
+			System.out.println("The Detractor score is : " + DeTractorScore);
 		}else {
 			DeTractorScore = 0.00;
 		}
@@ -1086,14 +1093,14 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		System.out.println("The promoter score is : " + PromotorScore);
 		String RNPSCalc = null;
 		if(!(PromotorScore == 0.0) && !(DeTractorScore == 0.0)) {
-		double RNPSScoreCalculation = (PromotorScore - DeTractorScore) * 100;
-		System.out.println("The RNPS Score Calculation is : " +RNPSScoreCalculation);
-		BigDecimal bd = BigDecimal.valueOf(RNPSScoreCalculation);
-		bd = bd.setScale(2, RoundingMode.HALF_UP);
-		RNPSScoreCalculation = bd.doubleValue();
-		System.out.println("The RNPS Score is : " + RNPSScoreCalculation);
-		RNPSCalc = Double.toString(RNPSScoreCalculation);
-		System.out.println("The String value is : " + RNPSCalc);
+			double RNPSScoreCalculation = (PromotorScore - DeTractorScore) * 100;
+			System.out.println("The RNPS Score Calculation is : " +RNPSScoreCalculation);
+			BigDecimal bd = BigDecimal.valueOf(RNPSScoreCalculation);
+			bd = bd.setScale(2, RoundingMode.HALF_UP);
+			RNPSScoreCalculation = bd.doubleValue();
+			System.out.println("The RNPS Score is : " + RNPSScoreCalculation);
+			RNPSCalc = Double.toString(RNPSScoreCalculation);
+			System.out.println("The String value is : " + RNPSCalc);
 		}else {
 			RNPSCalc = "0.00";
 		}
@@ -1115,6 +1122,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		clickelement(ExportBtn);
 		Thread.sleep(4000);
 		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + InsightsExport));
+		//convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + InsightsExport));
 		Thread.sleep(3000);
 	}
 
@@ -1126,24 +1134,96 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	 * @return
 	 * @throws IOException
 	 */
-	public List<String> readCsvDatausingCol(String path, int colnum) throws IOException {
+	@SuppressWarnings("resource")
+	public List<String> readCsvDatausingCol(String path, int column) throws IOException {
+		//int column = getcolnumusingname(name, path);
 		String splitBy = ",";
 		BufferedReader br = new BufferedReader(new FileReader(path));
 		String line = br.readLine();
 		List<String> csvcollist = new ArrayList<String>();
+		
 		while ((line = br.readLine()) != null) {
 			String[] b = line.split(splitBy);
-			csvcollist.add(b[colnum]);
+			csvcollist.add(b[column]);
 		}
 		System.out.println("Data in Type column : " + csvcollist);
+		
 		return csvcollist;
 	}
+
+
+
+	@SuppressWarnings("deprecation")
+	public List<String> readDataUsingColName(String path, String Col_Name) throws IOException{
+		FileInputStream excelFilePath = new FileInputStream(new File(path)); // or specify the path directly
+		Workbook wb = new XSSFWorkbook(excelFilePath);
+		Sheet sh = wb.getSheetAt(0);
+		Row row = sh.getRow(0);
+		int col = row.getLastCellNum();
+		int Last_row = sh.getLastRowNum();
+		int col_num = 0;
+		System.out.println("" + col);
+		ArrayList<String> Collist = new ArrayList<String>();
+		for (int i = 0; i <= row.getLastCellNum(); i++) {
+			if ((row.getCell(i).toString()).equals(Col_Name)) {
+				col_num = i;
+				System.out.println("" + col_num);
+			} else {
+				col_num = -1;
+			}
+		}
+		String cellValue = null;
+		if(!(col_num == -1)) {
+			for (int j = 1; j <= Last_row; j++) {
+				row = sh.getRow(j);
+				Cell cell = row.getCell(col_num);
+				if (cell != null) {
+					if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+						cellValue = cell.getStringCellValue().toString();
+						Collist.add(cellValue);
+					}
+					System.out.println("The column List consists of :" + Collist);
+					wb.close();
+				}
+			}
+		}else {
+			System.out.println("No column found");
+		}
+		return Collist;
+	}
+
+
+	@SuppressWarnings("resource")
+	public int getcolnumusingname(String name,String path) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(path));
+		String header = br.readLine();
+		int j = -1;
+		if (header != null) {
+			String[] columns = header.split(",");
+			System.out.println("The contents are : " +columns);
+			int size = columns.length;
+			System.out.println("The size is : " +size);
+			for(int i = 0; i <= size - 1; i++) {
+				String x = columns[i].replace("\"", "").trim();
+				System.out.println("The header name is : " +x);
+				System.out.println("The name passing at run time : " +name);
+				if(x.equals(name)) {
+					j = i;
+					System.out.println("The column number is : " +j);
+				}
+			}
+		}else {
+			System.out.println("There are no headers");
+		}
+		return j;
+	} 
 
 	/**
 	 * Coparison between UI and XL/CSV
 	 * @throws Exception 
 	 */
 	public void ReadnverifyData() throws Exception {
+
 		int Totrev = 0;
 		List<String> reviewTot = new ArrayList<String>();
 		double average;
@@ -1174,11 +1254,17 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 
 		RNPSscore = RNPSScore();
 		System.out.println("The RNPS Score from UI is : " + RNPSscore);
+		
 
+		int column = 0;
+		
 		if (CurrentState.getBrowser().equals("chrome")) {
 
 			// To verify tot reviews from XL and UI
-			reviewTot = readCsvDatausingCol(chromepath, 10);
+			column = getcolnumusingname("Total Reviews", chromepath);
+			if(!(column == -1)) {
+			reviewTot = readCsvDatausingCol(chromepath, column);
+			//reviewTot = GetDataUsingColNameCSV(chromepath, "Total Reviews");
 			System.out.println("csv list contains : " + reviewTot.get(0));
 			if (reviewTot.get(0).contains("\"")) {
 				String revtot = reviewTot.get(0).replace("\"", "").trim();
@@ -1189,9 +1275,15 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 			}
 			System.out.println("The total reviews from XL is : " + Totrev);
 			soft.assertEquals(TotReviews, Totrev);
+			}else {
+				System.out.println("No Column found with the name");
+			}
 
 			// To verify average from XL and UI
-			avgrev = readCsvDatausingCol(chromepath, 12);
+			//avgrev = readCsvDatausingCol(chromepath, 12);
+			column = getcolnumusingname("Star Rating", chromepath);
+			if(!(column == -1)) {
+			avgrev = readCsvDatausingCol(chromepath, column);
 			System.out.println("csv list contains : " + avgrev);
 			if (avgrev.get(0).contains("\"")) {
 				String avrev = avgrev.get(0).replace("\"", "").trim();
@@ -1204,9 +1296,16 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 			average = bd.doubleValue();
 			System.out.println("The average score from XL is : " + average);
 			soft.assertEquals(averageStar, average);
-
+			}else {
+				System.out.println("No column found with the name");
+			}
+			
+			
 			// To verify positive reviews from XL and UI
-			Pos = readCsvDatausingCol(chromepath, 14);
+			//Pos = readCsvDatausingCol(chromepath, 14);
+			column = getcolnumusingname("Positive Recommendations", chromepath);
+			if(!(column == -1)) {
+			Pos = readCsvDatausingCol(chromepath, column);
 			System.out.println("csv list contains : " + Pos);
 			if (Pos.get(0).contains("\"")) {
 				String Prev = Pos.get(0).replace("\"", "").trim();
@@ -1216,9 +1315,16 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 			}
 			System.out.println("The positive score from XL is : " + posrec);
 			soft.assertEquals(PosReco, posrec);
+			}else {
+				System.out.println("No column name found");
+			}
 
 			// To verify negative reviews from XL and UI
-			Neg = readCsvDatausingCol(chromepath, 15);
+			//Neg = readCsvDatausingCol(chromepath, 15);
+			
+			column = getcolnumusingname("Negative Recommendations", chromepath);
+			if(!(column == -1)) {
+			Neg = readCsvDatausingCol(chromepath, column);
 			System.out.println("csv list contains : " + Neg);
 			if (Neg.get(0).contains("\"")) {
 				String Nrev = Neg.get(0).replace("\"", "").trim();
@@ -1228,9 +1334,16 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 			}
 			System.out.println("The negative score from XL is : " + negrec);
 			soft.assertEquals(NegReco, negrec);
+			}else {
+				System.out.println("No coulumn name found");
+			}
 
 			// To verify Response from XL and UI
-			Res = readCsvDatausingCol(chromepath, 16);
+			//Res = readCsvDatausingCol(chromepath, 16);
+			
+			column = getcolnumusingname("Total Responses", chromepath);
+			if(!(column == -1)) {
+			Res = readCsvDatausingCol(chromepath, column);
 			System.out.println("csv list contains : " + Res);
 			if (Res.get(0).contains("\"")) {
 				String Resp = Res.get(0).replace("\"", "").trim();
@@ -1240,9 +1353,15 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 			}
 			System.out.println("The response score from XL is : " + Responses);
 			soft.assertEquals(Reviewresponse, Responses);
+			}else {
+				System.out.println("No column name found");
+			}
 
-			// To verify No Response from XL and UI
-			rnps = readCsvDatausingCol(chromepath, 18);
+			// To verify RNPS from XL and UI
+			//rnps = readCsvDatausingCol(chromepath, 18);
+			column = getcolnumusingname("Review Net Promoter Score", chromepath);
+			if(!(column == -1)) {
+			rnps = readCsvDatausingCol(chromepath, column);
 			System.out.println("csv list contains : " + rnps);
 			if (rnps.get(0).contains("\"")) {
 				RNPS = rnps.get(0).replace("\"", "").trim();
@@ -1251,13 +1370,21 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 			}
 			System.out.println("The rnps score from XL is : " + RNPS);
 			soft.assertEquals(RNPSscore, RNPS);
+			
+			}else {
+				System.out.println("No column found");
+			}
 
 			// To verify Response Rate from
 			List<String> resrate = new ArrayList<String>();
 			double ResponseRate;
 			double resprate;
 
-			resrate = readCsvDatausingCol(chromepath, 17);
+			//resrate = readCsvDatausingCol(chromepath, 17);
+			
+			column = getcolnumusingname("Response Rate", chromepath);
+			if(!(column == -1)) {
+			resrate = readCsvDatausingCol(chromepath, column);
 			if (resrate.get(0).contains("\"")) {
 				String Resprate = resrate.get(0).replace("\"", "").trim();
 				if (resrate.get(0).contains("%")) {
@@ -1267,7 +1394,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 					ResponseRate = Double.parseDouble(Resprate);
 				}
 			} else {
-				String Resprate = null;
+				String Resprate = "0.00";
 				if (resrate.get(0).contains("%")) {
 					Resprate = resrate.get(0).replace("%", "").replace("\"", "").trim();
 					ResponseRate = Double.parseDouble(Resprate);
@@ -1282,7 +1409,8 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 			resprate = bd1.doubleValue();
 			System.out.println("The resprate calculated from XL is : " + resprate);
 			soft.assertEquals(ResponseRate, resprate);
-		} else if (CurrentState.getBrowser().equals("IE")) {
+		} 
+		}/*else if (CurrentState.getBrowser().equals("IE")) {
 			// To verify tot reviews from XL and UI
 			reviewTot = readCsvDatausingCol(IEpath, 10);
 			System.out.println("csv list contains : " + reviewTot.get(0));
@@ -1477,7 +1605,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 			resprate = bd.doubleValue();
 			System.out.println("The resprate calculated from XL is : " + resprate);
 			soft.assertEquals(ResponseRate, resprate);
-		}
+		}*/
 		soft.assertAll();
 	}
 }

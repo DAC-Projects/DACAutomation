@@ -163,6 +163,9 @@ public abstract class BaseClass {
 		// IAutoconst.Fit4LessAccount;
 		// IAutoconst.neuralTuringTechAccount;
 			
+		case "ResponseManagementCreator" :
+			return IAutoconst.neuralResponseBeta;
+			
 			case "DRS" :
 				return IAutoconst.DRSClient;
 			case "DRS1" :

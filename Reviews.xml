@@ -6,11 +6,12 @@
 
 	<test name="ReviewsBeta">
 		<parameter name="browser" value="chrome" />
+		<parameter name = "Filter" value = "1"/>
 		<classes>
-			<!-- <class name="com.dac.testcases.TPSEE.TPSEE_Displayed_Review_Score_Test" />
-			<class name="com.dac.testcases.SA.ReviewsFeed_Test" />  -->
-			<class name = "com.dac.testcases.SA.Reviews_Insights_Test"/>
-			<!-- <class name = "com.dac.testcases.SA.Response_Management_Test"/> -->
+			<!-- <class name="com.dac.testcases.TPSEE.TPSEE_Displayed_Review_Score_Test" /> -->
+			<class name="com.dac.testcases.SA.ReviewsFeed_Test" /> 
+			<!-- <class name = "com.dac.testcases.SA.Reviews_Insights_Test"/>
+			<class name = "com.dac.testcases.SA.Response_Management_Test"/> -->
 		</classes>
 	</test>
 </suite>

@@ -32,7 +32,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigation to Facebook Page", "yes");
 		Thread.sleep(5000);
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
-		data.clickDone();
+	//	data.clickDone();
 	}
 
 	@Test(priority = 2, description = "Test to verify highlight of report")

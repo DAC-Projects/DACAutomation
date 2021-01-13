@@ -1,5 +1,9 @@
 package resources;
+
+import org.testng.annotations.Parameters;
+
 // Auth centre login properties
+@Parameters({"User"})
 public interface IAutoconst {
 	
 	String CHROME_KEY="webdriver.chrome.driver";
@@ -21,7 +25,8 @@ public interface IAutoconst {
 
 	 email="amahadev@dacgroup.com",
 	 password="DacQa123";
-
+	
+	//String data;
 	//account credentials
 	String baseUrl="http://staging.manage.dacgroup.com:82/accounts/";
 	String baseUrlStaging = "https://manage.dacgroup.com/accounts/";
@@ -41,9 +46,10 @@ public interface IAutoconst {
 	String[] Fit4LessAccount = {baseUrl+"fit4less-beta", "1test@gmail.com"};
 	String[] neuralTuringTechAccount = {baseUrl+"neural-turing-tech-beta", "skanna@dacgroup.com"};
 	String[] neuralturingtechStaging = {baseUrlStaging + "neural-turing-tech" , "lzimerman@dacgroup.com"}; // Reviews Staging Approver
+	String[] neuralResponseBeta = {baseUrl+"neural-turing-tech-beta","amahadev@dacgroup.com"}; // Response Management
 	String[] SocialdeepFieldAccount = {baseUrl+"deepfield-software-incorporated-beta","vijayata_201989@yahoo.com"};
-	String[] SocialAutomationAccount = {baseUrl+"social-automation-beta","rohitmenon8055@gmail.com"};
-	String[] SocialAutomationAccountCreator = {baseUrl+"social-automation-beta","vrohitmenon@gmail.com"};
+	String[] SocialAutomationAccount = {baseUrl+"social-beings-beta","rohit.watson@gmail.com"};
+	String[] SocialAutomationAccountCreator = {baseUrl+"social-beings-beta","vrohitmenon@gmail.com"};
 	String userLocale = "IN";
 	/*----------------LPAD Variables----------------*/
     String LPADUrlBeta="https://dac-map-beta.azurewebsites.net/";

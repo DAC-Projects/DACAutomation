@@ -43,6 +43,7 @@ import org.testng.asserts.SoftAssert;
 
 import com.dac.main.BasePage;
 
+import resources.BaseClass;
 import resources.CurrentState;
 import resources.FileHandler;
 import resources.JSWaiter;
@@ -146,6 +147,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	
 	@FindBy(css = "div.tsee-location-filter.row")
 	public WebElement LAVfilter_Panel;
+	
+	@FindBy(xpath = "//div[@id='singleLocationReport']//div[@class='location-address']")
+	public WebElement Location_Filter_Address;
+	
+	@FindBy(xpath = "//div[@id='singleLocationReport']//div[@class='item-content']")
+	public WebElement Site_Location_Address;
 
 	/*------------------------ Filter Criteria ------------------------*/
 
@@ -1553,6 +1560,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	 */
 	private void selectCalender_Date(String calenderField, int day_d, String month_MMM, int year_YYYY) {
 		// clickelement(calenderField);
+		scrollByElement(hstryGrph);
 		driver.findElement(By.xpath(calenderField)).click();
 		int diff = year_YYYY - Integer.parseInt(currentYear_DatePicker.getText());
 		if (diff != 0) {
@@ -1936,4 +1944,57 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		System.out.println("The graphscorevalue is : " +scorevalue);
 		return scorevalue;
 	}
+	
+	
+	public void verifyLocationFilterAddress(String text) throws Exception {
+		waitForElement(Location_Filter_Address, 5);
+		scrollByElement(Location_Filter_Address);
+		String LocationDetails = Location_Filter_Address.getText();
+		System.out.println("The Location Panel Address is : " +LocationDetails);
+		BaseClass.addEvidence(driver, "Test to verify location details from location panel", "yes");
+		Assert.assertTrue(LocationDetails.contains(text));
+	}
+	
+	public void verifyLocationFilterSiteAddress(String text) {
+		waitForElement(Site_Location_Address, 5);
+		scrollByElement(Site_Location_Address);
+		List<WebElement> Site_Loc_Add = driver.findElements(By.xpath("(//div[@id='singleLocationReport']//div[@class='item-content'])"));
+		int size = Site_Loc_Add.size();
+		System.out.println("The size of the list is : " +size);
+		List<WebElement> Site_Details = driver.findElements(By.xpath("(//div[@id='singleLocationReport']//span[@class='item-name'])"));
+		for(int i = 1 ; i <= size; i++) {
+			String Site = driver.findElement(By.xpath("(//div[@id='singleLocationReport']//span[@class='item-name'])["+ i +"]")).getText();
+			System.out.println("The vendor site is : " +Site);
+			String Loc_Details = driver.findElement(By.xpath("(//div[@id='singleLocationReport']//div[@class='item-content'])["+ i +"]")).getText();
+			System.out.println("The Location details : " +Loc_Details);
+			soft.assertTrue(Loc_Details.contains(text), "The Vendor site is " +Site+ "and Location Details is " +Loc_Details+ 
+					"The Location details from the location filter is : " +text);
+		}
+		soft.assertAll();
+	}
+	
+	public void verifyVendorSites() {
+		List<String> Vendors = verifyfoundSitevendors();
+		System.out.println("The List of vendors is : " +Vendors);
+		List<WebElement> Site_Details = driver.findElements(By.xpath("(//div[@id='singleLocationReport']//span[@class='item-name'])"));
+		int size = Site_Details.size();
+		List<String> SiteDetails = new ArrayList<String>();
+		System.out.println("The size of vendors list : " +size);
+		for (int i = 1; i <= size; i++) {
+			String VName = driver.findElement(By.xpath("(//div[@id='singleLocationReport']//span[@class='item-name'])["+ i +"]")).getText();
+			System.out.println("The vendor name is : " +VName);
+			SiteDetails.add(VName);
+		}
+		System.out.println("The final list of location vendors : " +SiteDetails);
+		int Vsize = SiteDetails.size();
+		System.out.println("The vendor size is : " +Vsize);
+		if(size == Vsize) {
+			for(int i = 0; i <= Vsize - 1; i++ ) {
+				soft.assertTrue(Vendors.contains(SiteDetails.get(i)), "The Vendor Site is : " +SiteDetails.get(i)+ "from location details");
+			}
+		}else {
+			System.out.println("List are not equal");
+		}
+	}
+	
 }

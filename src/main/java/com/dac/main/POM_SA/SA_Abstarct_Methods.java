@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +15,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -99,6 +106,9 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 
 	@FindBy(xpath = "//*[@class='row reviewEnhancement']")
 	private WebElement ReviewSection;
+	
+	@FindBy(xpath = "//button//span[contains(text(),'Cancel')]")
+	private WebElement CancelBtn;
 
 	/*------------------------ Filter Criteria ------------------------*/
 
@@ -438,16 +448,38 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 	 * @param export
 	 * @throws FileNotFoundException
 	 * @throws IOException
+	 * @throws InterruptedException 
 	 */
-	public void convertExports(String filename, String export) throws FileNotFoundException, IOException {
+	public void convertExports(String filename, String export) throws FileNotFoundException, IOException, InterruptedException {
 		String report_export = new formatConvert(Exportpath + filename).convertFile("xlsx");
+		//String report_export = csvToXLSX(getLastModifiedFile(Exportpath), (Exportpath + "Insights"));
 		FileHandler.renameTo(new File(Exportpath + report_export), Exportpath + export);
 	}
 
 	public void renamefile(String filename, String export) throws FileNotFoundException, IOException {
 		FileHandler.renameTo(new File(Exportpath + filename), Exportpath + export);
 	}
-
+	
+	
+	public List<String> GetDataUsingColNameCSV(String filename, String colName) throws IOException{
+		List<String> ColList = new ArrayList<String>();
+		 Reader reader = Files.newBufferedReader(Paths.get(filename));
+         CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
+                 .withHeader(colName)
+                 .withIgnoreHeaderCase()
+                 .withTrim());
+         System.out.println("The column name is : " +csvParser);
+         {
+        	 for (CSVRecord csvRecord : csvParser) {
+        		 String Data = csvRecord.get(colName);
+        		 System.out.println("The data is : " +Data);
+        		 ColList.add(Data);
+        	 }
+        	 System.out.println("The final list consists of : " +ColList);
+         }
+		return ColList;
+	}
+	
 	/**
 	 * Get the date from highcharts section
 	 * 
@@ -957,6 +989,14 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 		for (File file : files) {
 			System.out.println("Deleted filename :" + file.getName());
 			file.delete();
+		}
+	}
+	
+	public void CancelWalkme() {
+		if(CancelBtn.isDisplayed()) {
+			clickelement(CancelBtn);
+		}else {
+			System.out.println("No Cancel Btn Displayed");
 		}
 	}
 }

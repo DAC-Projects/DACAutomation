@@ -73,7 +73,7 @@ public class Reviews_Insights_and_Feed_DataVerification_LocationFilter_Test exte
 	 * Test to verify average star rating
 	 * 
 	 * @throws Exception
-	 */
+	 *//*
 	@Test(priority = 4, description = "Test to verify average star rating")
 	public void GetReviewStarAvg() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
@@ -87,45 +87,36 @@ public class Reviews_Insights_and_Feed_DataVerification_LocationFilter_Test exte
 	}
 
 	
-	/**
-	 * Test to compare KPI and Report score
-	 */
-	@Test(priority = 5, description = "Test to compare KPI and Report score")
-	public void CompareKPIandReportValues() {
-		data = new Reviews_Insights(CurrentState.getDriver());
-		data.CompareKPIandReportReviewScore(); 
-	}
-
-	/**
+	*//**
 	 * Test to compare applied and chart dates
 	 * 
 	 * @throws Exception
-	 */
-	@Test(priority = 6, description = "Test to compare applied and chart dates")
+	 *//*
+	@Test(priority = 5, description = "Test to compare applied and chart dates")
 	public void CompareDateAppliednChart() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.CompareAppliedDatenChartDate(); 
 		addEvidence(CurrentState.getDriver(), "Test to compare applied and chart dates", "yes");
 	}
 
-	/**
+	*//**
 	 * Test to read review count from chart and compare overview review count
 	 * 
 	 * @throws Exception
-	 */
-	@Test(priority = 7, description = "Test to read review count from chart and compare overview review count")
+	 *//*
+	@Test(priority = 6, description = "Test to read review count from chart and compare overview review count")
 	public void compareChartCountnOvrCount() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.compareChartnReviewCount(); 
 	}
 
-	/**
+	*//**
 	 * Test to read Recommended and Not Recommended from chart and compare with
 	 * overview Recommended count
 	 * 
 	 * @throws Exception
-	 */
-	@Test(priority = 8, description = "Test to read Reco and Not Reco from chart and compare with overview reco count")
+	 *//*
+	@Test(priority = 7, description = "Test to read Reco and Not Reco from chart and compare with overview reco count")
 	public void compareFacebookCount() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.FacebookVerify();
@@ -133,12 +124,12 @@ public class Reviews_Insights_and_Feed_DataVerification_LocationFilter_Test exte
 				"Test to read Reco and Not Reco from chart and compare with overview reco count", "yes");
 	}
 	
-	/**
+	*//**
 	 * Test to navigate to Reviews Feed
 	 * 
 	 * @throws Exception
-	 */
-	@Test(priority = 9, description = "Test to Navigate to Reviews Feed Page")
+	 *//*
+	@Test(priority = 8, description = "Test to Navigate to Reviews Feed Page")
 	public void navigateToReviewsFeed() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateToSA_ReviewsFeed();
@@ -148,12 +139,12 @@ public class Reviews_Insights_and_Feed_DataVerification_LocationFilter_Test exte
 		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes"); 
 	}
 	
-	/**
+	*//**
 	 * Test to apply filter
 	 * 
 	 * @throws Exception
-	 */
-	@Test(priority = 10, description = "Test to apply Global Filter")
+	 *//*
+	@Test(priority = 9, description = "Test to apply Global Filter")
 	public void FeedApplyGlobalFilters() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_Insights");
@@ -176,68 +167,68 @@ public class Reviews_Insights_and_Feed_DataVerification_LocationFilter_Test exte
 		}
 	}
 
-	/**
+	*//**
 	 * Test to Compare Count between Feed and Insights
 	 * 
 	 * @throws Exception
-	 */
-	@Test(priority = 11, description = "Test to verify total reviews")
+	 *//*
+	@Test(priority = 10, description = "Test to verify total reviews")
 	public void compareTotReviews() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.compareReviewCountbetReports();
 	}
 
-	/**
+	*//**
 	 * Test to Compare Positive Count between Feed and Insights
 	 * 
 	 * @throws Exception
-	 */
-	@Test(priority = 12, description = "Test to verify positive review count")
+	 *//*
+	@Test(priority = 11, description = "Test to verify positive review count")
 	public void verifyPositiveCount() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.ApplyPositiveRatingnVerifyCount();
 	}
 
-	/**
+	*//**
 	 * Test to Compare Negative Count between Feed and Insights
 	 * 
 	 * @throws Exception
-	 */
-	@Test(priority = 13, description = "Test to verify negative review count")
+	 *//*
+	@Test(priority = 12, description = "Test to verify negative review count")
 	public void verifyNegativeCount() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.ApplyNegativeRatingVerifyCount();
 	}
 
-	/**
+	*//**
 	 * Test to Compare Response Count between Feed and Insights
 	 * 
 	 * @throws Exception
-	 */
-	@Test(priority = 14, description = "Test to verify Response Review Count")
+	 *//*
+	@Test(priority = 13, description = "Test to verify Response Review Count")
 	public void VerifyResponseReviewCount() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.verifyResponseCount();
 
 	}
 
-	/**
+	*//**
 	 * Test to Compare No Response Count between Feed and Insights
 	 * 
 	 * @throws Exception
-	 */
-	@Test(priority = 15, description = "Test to verify No Response Review Count")
+	 *//*
+	@Test(priority = 14, description = "Test to verify No Response Review Count")
 	public void VerifyNoResponseReviewCount() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.verifyNotResponseCount();
 	}
 
-	/**
+	*//**
 	 * Test to Compare RNPS Score between Feed and Insights
 	 * 
 	 * @throws Exception
-	 */
-	@Test(priority = 16, description = "Test to get star rating count, calculate RNPS score and compare with Report")
+	 *//*
+	@Test(priority = 15, description = "Test to get star rating count, calculate RNPS score and compare with Report")
 	public void CompareRNPSScore() throws Exception {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.getOneStar();
@@ -250,5 +241,5 @@ public class Reviews_Insights_and_Feed_DataVerification_LocationFilter_Test exte
 		data.getTotThreeScore();
 		data.getDetractorScore();
 		data.CompareRNPSScore();
-	}
+	}*/
 }
