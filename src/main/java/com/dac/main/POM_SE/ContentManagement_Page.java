@@ -16,10 +16,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import com.dac.main.BasePage;
 
-import junit.framework.Assert;
 import resources.BaseClass;
 import resources.CurrentState;
 
@@ -48,10 +48,10 @@ public class ContentManagement_Page extends BasePage {
 	@FindBy(xpath = "//input[@id='txtSearchTextUnpublished']")
 	private WebElement UnpublishedTextSearch;
 
-	@FindBy(xpath = "//select[@id='ddlTypeUnpublished']")
+	@FindBy(xpath = "(//div[@class='form-control selection ui dropdown'])[1]")
 	private WebElement UnpublishedType;
 
-	@FindBy(xpath = "//select[@id='ddlStatusUnpublished']")
+	@FindBy(xpath = "(//div[@class='form-control selection ui dropdown'])[2]")
 	private WebElement UnpublishedStatus;
 
 	@FindBy(xpath = "//table[@id='tblUnpublishedItems']")
@@ -75,22 +75,22 @@ public class ContentManagement_Page extends BasePage {
 	@FindBy(xpath = "//button[@class='btn btn-xs btn-danger btn-block btn-delete']")
 	private WebElement DeleteButton;
 
-	@FindBy(xpath = "//div[@id='deleteConfirmModal']//button[@class='btn btn-danger btn-modal-yes']")
+	@FindBy(xpath = "//div[@class='modal-footer']//button[@class='btn btn-width-sm btn-primary']")
 	private WebElement UnDeleteConfirm;
 
-	@FindBy(xpath = "//div[@id='deleteSuccessModal']//button[@class='btn btn-success btn-block']")
+	@FindBy(xpath = "//div[@class='modal-footer']//button[@class='btn btn-width-sm btn-success']")
 	private WebElement UnDeleteSuccess;
 
-	@FindBy(xpath = "//div[@id='approveConfirmModal']//button[@class='btn btn-success btn-modal-yes']")
+	@FindBy(xpath = "//div[@class='modal-footer']//button[@class='btn btn-width-sm btn-primary']")
 	private WebElement ConfirmApprove;
 
-	@FindBy(xpath = "//div[@id='approveSuccessModal']//button[@class='btn btn-success btn-block']")
+	@FindBy(xpath = "//div[@class='modal-footer']//button[@class='btn btn-width-sm btn-success']")
 	private WebElement SuccessApprove;
 
-	@FindBy(xpath = "//div[@id='rejectConfirmModal']//button[@class='btn btn-warning btn-modal-yes']")
+	@FindBy(xpath = "//div[@class='modal-footer']//button[@class='btn btn-width-sm btn-primary']")
 	private WebElement ConfirmReject;
 
-	@FindBy(xpath = "//div[@id='rejectSuccessModal']//button[@class ='btn btn-success btn-block' ]")
+	@FindBy(xpath = "//div[@class='modal-footer']//button[@class='btn btn-width-sm btn-success']")
 	private WebElement SuccessReject;
 	/*-----------------------------------Unpublished Part-----------------------------------------------------*/
 
@@ -113,28 +113,28 @@ public class ContentManagement_Page extends BasePage {
 	@FindBy(xpath = "//*[@id='formPublished']")
 	private WebElement PublishedSection;
 
-	@FindBy(xpath = "//*[@class='container-fluid']//input[@id='txtSearchTextPublished']")
+	@FindBy(xpath = "//input[@id='txtSearchTextPublished']")
 	private WebElement PublishedTextSearch;
 
-	@FindBy(xpath = "//*[@class='container-fluid']//select[@id='ddlTypePublished']")
+	@FindBy(xpath = "(//div[@class='form-control selection ui dropdown'])[3]")
 	private WebElement PublishedType;
 
 	@FindBy(xpath = "//*[@class='container-fluid']//a[@class='btn btn-xs btn-primary btn-block link-view']")
 	private WebElement PublishedView;
 
-	@FindBy(xpath = "//*[@class='container-fluid']//button[@id='btnPublished']")
+	@FindBy(xpath = "//button[@id='btnPublished']")
 	private WebElement PublishedSearch;
 
-	@FindBy(xpath = "//*[@class='container-fluid']//table[@id='tblPublishedItems']")
+	@FindBy(xpath = "//table[@id='tblPublishedItems']")
 	private WebElement PublishedTable;
 
-	@FindBy(xpath = "//*[@class='container-fluid']//table[@id='tblPublishedItems']//tbody//tr")
+	@FindBy(xpath = "//table[@id='tblPublishedItems']//tbody//tr")
 	private List<WebElement> PublishedTableRow;
 
-	@FindBy(xpath = "//div[@id='deletePublishedConfirmModal']//button[@class='btn btn-danger btn-modal-yes']")
+	@FindBy(xpath = "//button[@class='btn btn-width-sm btn-primary']")
 	private WebElement PubDeleteConfirm;
 
-	@FindBy(xpath = "//div[@id='deletePublishedSuccessModal']//button[@class='btn btn-success btn-block']")
+	@FindBy(xpath = "//button[@class='btn btn-width-sm btn-success']")
 	private WebElement PubDeleteSuccess;
 
 	/*-----------------------------------Published Part-----------------------------------------------------*/
@@ -233,13 +233,21 @@ public class ContentManagement_Page extends BasePage {
 	 * To select type of unpublished content
 	 * 
 	 * @param Type
+	 * @throws InterruptedException 
 	 */
-	public void SearchUnpublishedUsingType(String Type) {
-		scrollByElement(UnpublishedType);
+	public void SearchUnpublishedUsingType(String Type) throws InterruptedException {
+		/*scrollByElement(UnpublishedType);
 		Select Types = new Select(UnpublishedType);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		Types.selectByVisibleText(Type);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		clickelement(UnpublishedSearch);*/
+		scrollByElement(UnpublishedType);
+		clickelement(UnpublishedType);
+		System.out.println("The type is : " +Type);
+		Thread.sleep(3000);
+		WebElement type = driver.findElement(By.xpath("//div[contains(@class,'item') and contains(text(),'"+Type+"')]"));
+		clickelement(type);
 		clickelement(UnpublishedSearch);
 	}
 
@@ -318,7 +326,7 @@ public class ContentManagement_Page extends BasePage {
 	 */
 	@SuppressWarnings("unused")
 	public void SearchPublishedKeyinTable(String Text) throws Exception {
-		scrollByElement(PublishedTable);
+		scrollByElement(PublishedTable); 
 		if (driver.findElement(By.xpath("//*[@id='tblPublishedItems_info']")).isDisplayed()) {
 			String n = driver
 					.findElement(
@@ -327,7 +335,7 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Published Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(
-					By.xpath("//*[@class='container-fluid']//table[@id='tblPublishedItems']")));
+					By.xpath("//table[@id='tblPublishedItems']")));
 			int entiresText =NumOfentries(driver
 					.findElement(By.xpath("//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
@@ -348,7 +356,7 @@ public class ContentManagement_Page extends BasePage {
 						// row.
 						for (int col = 1; col < columns_count; col++) {
 							if (celtext = driver.findElement(By
-									.xpath("(//*[@class='container-fluid']//table[@id='tblPublishedItems']//tbody//tr)["
+									.xpath("(//table[@id='tblPublishedItems']//tbody//tr)["
 											+ (row) + "]//td[" + (col + 1) + "]"))
 									.getText().contains(Text))
 								;
@@ -372,13 +380,21 @@ public class ContentManagement_Page extends BasePage {
 	 * To select type of Published content
 	 * 
 	 * @param Type
+	 * @throws InterruptedException 
 	 */
-	public void SearchPublishedUsingType(String Type) {
-		scrollByElement(PublishedType);
+	public void SearchPublishedUsingType(String Type) throws InterruptedException {
+		/*scrollByElement(PublishedType);
 		Select Types = new Select(PublishedType);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		Types.selectByVisibleText(Type);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		clickelement(PublishedSearch);*/
+		scrollByElement(PublishedType);
+		clickelement(PublishedType);
+		System.out.println("The type is : " +Type);
+		Thread.sleep(3000);
+		WebElement type = driver.findElement(By.xpath("(//div[contains(@class,'form-control selection ui dropdown')])[3]//div[contains(@class,'item') and contains(text(),'"+Type+"')]"));
+		clickelement(type);
 		clickelement(PublishedSearch);
 	}
 
@@ -399,9 +415,9 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Published Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(
-					By.xpath("//*[@class='container-fluid']//table[@id='tblPublishedItems']")));
+					By.xpath("//table[@id='tblPublishedItems']")));
 			int entiresText = NumOfentries(driver.findElement(By.xpath(
-					"//*[@class='container-fluid']//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
+					"//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			int count = 0;
 			if (PubpaginationNext.isDisplayed()) {
@@ -412,7 +428,7 @@ public class ContentManagement_Page extends BasePage {
 					count = count + rows_count;
 					for (int row = 1; row < rows_count; row++) {
 						String celtext = driver.findElement(
-								By.xpath("(//*[@class='container-fluid']//table[@id='tblPublishedItems']//tbody//tr)["
+								By.xpath("(//table[@id='tblPublishedItems']//tbody//tr)["
 										+ (row) + "]//td[6]"))
 								.getText();
 						System.out.println("CellText is :" + celtext);
@@ -441,23 +457,29 @@ public class ContentManagement_Page extends BasePage {
 	}
 
 	/**
-	 * To select multiple elements
+	 * To select multiple elements 
+	 * @throws InterruptedException 
 	 */
 	public void SearchTextnType(WebElement SearchTxt, WebElement Type, WebElement SearchBTN, String Text,
-			String Typesel) {
+			String Typesel) throws InterruptedException {
 		scrollByElement(SearchTxt);
 		SearchTxt.sendKeys(Text);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		Select Types = new Select(Type);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		Types.selectByVisibleText(Typesel);
-		clickelement(SearchBTN);
+		scrollByElement(Type);
+		clickelement(Type);
+		System.out.println("The type is : " +Typesel);
+		Thread.sleep(3000);
+		WebElement type = driver.findElement(By.xpath("(//div[contains(@class,'form-control selection ui dropdown')])[3]//div[contains(@class,'item') and contains(text(),'"+Typesel+"')]"));
+		Thread.sleep(3000);
+		clickelement(type);
+		clickelement(SearchBTN); 
 	}
 
 	/**
 	 * To search with text and Type
+	 * @throws InterruptedException 
 	 */
-	public void UnpublishedTXTTypeSearch(String Text, String Type) {
+	public void UnpublishedTXTTypeSearch(String Text, String Type) throws InterruptedException {
 		SearchTextnType(UnpublishedTextSearch, UnpublishedType, UnpublishedSearch, Text, Type);
 	}
 
@@ -517,8 +539,9 @@ public class ContentManagement_Page extends BasePage {
 
 	/**
 	 * To enter keyword and type to search in published table
+	 * @throws InterruptedException 
 	 */
-	public void PublishedTXTTypeSearch(String Text, String Type) {
+	public void PublishedTXTTypeSearch(String Text, String Type) throws InterruptedException {
 		SearchTextnType(PublishedTextSearch, PublishedType, PublishedSearch, Text, Type);
 	}
 
@@ -533,9 +556,9 @@ public class ContentManagement_Page extends BasePage {
 			int page = Integer.parseInt(n);
 			System.out.println("Last Page Number of Published Table is : " + page);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(
-					By.xpath("//*[@class='container-fluid']//table[@id='tblPublishedItems']")));
+					By.xpath("//table[@id='tblPublishedItems']")));
 			int entiresText =  NumOfentries(driver.findElement(By.xpath(
-					"//*[@class='container-fluid']//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
+					"//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + entiresText);
 			int count = 0;
 			boolean celtext = false;
@@ -554,11 +577,11 @@ public class ContentManagement_Page extends BasePage {
 						// row.
 						for (int col = 1; col < columns_count; col++) {
 							if ((celtext = driver.findElement(By
-									.xpath("(//*[@class='container-fluid']//table[@id='tblPublishedItems']//tbody//tr)["
+									.xpath("(//table[@id='tblPublishedItems']//tbody//tr)["
 											+ (row) + "]//td[" + (col + 1) + "]"))
 									.getText().contains(Text))
 									&& (celtext = driver.findElement(By.xpath(
-											"(//*[@class='container-fluid']//table[@id='tblPublishedItems']//tbody//tr)["
+											"(//table[@id='tblPublishedItems']//tbody//tr)["
 													+ (row) + "]//td[6]//strong"))
 											.getText().contains(Type)))
 								;
@@ -598,15 +621,23 @@ public class ContentManagement_Page extends BasePage {
 
 	/**
 	 * To search with Status
+	 * @throws InterruptedException 
 	 * 
 	 */
-	public void SearchStatus(String StatText) {
-		scrollByElement(UnpublishedStatus);
+	public void SearchStatus(String StatText) throws InterruptedException {
+		/*scrollByElement(UnpublishedStatus);
 		Select stat = new Select(UnpublishedStatus);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		stat.selectByVisibleText(StatText);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		clickelement(UnpublishedSearch);
+		clickelement(UnpublishedSearch);*/
+		scrollByElement(UnpublishedStatus);
+		clickelement(UnpublishedStatus);
+		Thread.sleep(4000);
+		System.out.println("The status selected is : " +StatText);
+		WebElement status = driver.findElement(By.xpath("//div[contains(@class,'item') and contains(text(),'"+StatText+"')]"));
+		clickelement(status);
+		
 	}
 
 	/**
@@ -636,20 +667,20 @@ public class ContentManagement_Page extends BasePage {
 					for (int row = 1; row < rows_count; row++) {
 						if (StatText.equalsIgnoreCase("Pending Approval")) {
 							assertTrue(driver.findElement(By.xpath(
-									"(//button[@class='btn btn-xs btn-success btn-block btn-approve'])[" + row + "]"))
+									"(//button[@class='btn btn-outline-primary btn-xs btn-block btn-icon btn-approve'])[" + row + "]"))
 									.isDisplayed());
 							System.out.println("Approve Button Displayed");
 							assertTrue(driver.findElement(By.xpath(
-									"(//button[@class='btn btn-xs btn-warning btn-block btn-reject'])[" + row + "]"))
+									"(//button[@class='btn btn-outline-primary btn-xs btn-block btn-icon btn-reject'])[" + row + "]"))
 									.isDisplayed());
 							System.out.println("Reject button is displayed");
 							assertTrue(driver
 									.findElement(By.xpath(
-											"(//a[@class='btn btn-xs btn-default btn-block link-edit'])[" + row + "]"))
+											"(//a[@class='btn btn-outline-primary btn-xs btn-block btn-icon link-edit'])[" + row + "]"))
 									.isDisplayed());
 							System.out.println("Edit Link is displayed");
 							assertTrue(driver.findElement(By.xpath(
-									"(//button[@class='btn btn-xs btn-danger btn-block btn-delete'])[" + row + "]"))
+									"(//button[@class='btn btn-outline-primary btn-xs btn-block btn-icon btn-delete'])[" + row + "]"))
 									.isDisplayed());
 							System.out.println("Delete Button is displayed");
 
@@ -661,31 +692,31 @@ public class ContentManagement_Page extends BasePage {
 							System.out.println("Resubmit Button is Displayed");
 							assertTrue(driver
 									.findElement(By.xpath(
-											"(//a[@class='btn btn-xs btn-default btn-block link-edit'])[" + row + "]"))
+											"(//a[@class='btn btn-outline-primary btn-xs btn-block btn-icon link-edit'])[" + row + "]"))
 									.isDisplayed());
 							System.out.println("Edit Link is displayed");
 							assertTrue(driver.findElement(By.xpath(
-									"(//button[@class='btn btn-xs btn-danger btn-block btn-delete'])[" + row + "]"))
+									"(//button[@class='btn btn-outline-primary btn-xs btn-block btn-icon btn-delete'])[" + row + "]"))
 									.isDisplayed());
 							System.out.println("Delete Button is displayed");
 						} else if (StatText.equalsIgnoreCase("Approved Scheduled")) {
 							assertTrue(driver
 									.findElement(By.xpath(
-											"(//a[@class='btn btn-xs btn-default btn-block link-edit'])[" + row + "]"))
+											"(//a[@class='btn btn-outline-primary btn-xs btn-block btn-icon link-edit'])[" + row + "]"))
 									.isDisplayed());
 							System.out.println("Edit Link is displayed");
 							assertTrue(driver.findElement(By.xpath(
-									"(//button[@class='btn btn-xs btn-danger btn-block btn-delete'])[" + row + "]"))
+									"(//button[@class='btn btn-outline-primary btn-xs btn-block btn-icon btn-delete'])[" + row + "]"))
 									.isDisplayed());
 							System.out.println("Delete Button is displayed");
 						} else if (StatText.equalsIgnoreCase("Rejected")) {
 							assertTrue(driver
 									.findElement(By.xpath(
-											"(//a[@class='btn btn-xs btn-default btn-block link-edit'])[" + row + "]"))
+											"(//a[@class='btn btn-outline-primary btn-xs btn-block btn-icon link-edit'])[" + row + "]"))
 									.isDisplayed());
 							System.out.println("Edit Link is displayed");
 							assertTrue(driver.findElement(By.xpath(
-									"(//button[@class='btn btn-xs btn-danger btn-block btn-delete'])[" + row + "]"))
+									"(//button[@class='btn btn-outline-primary btn-xs btn-block btn-icon btn-delete'])[" + row + "]"))
 									.isDisplayed());
 							System.out.println("Delete Button is displayed");
 						}
@@ -794,12 +825,15 @@ public class ContentManagement_Page extends BasePage {
 
 	/**
 	 * To delete data from the published table using type
+	 * @throws InterruptedException 
 	 */
-	public void DeleteDataPublishedTableusingType(String Type) {
+	public void DeleteDataPublishedTableusingType(String Type) throws InterruptedException {
 		scrollByElement(PublishedType);
-		Select Types = new Select(PublishedType);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		Types.selectByVisibleText(Type);
+		clickelement(PublishedType);
+		System.out.println("The type is : " +Type);
+		Thread.sleep(3000);
+		WebElement type = driver.findElement(By.xpath("(//div[contains(@class,'form-control selection ui dropdown')])[3]//div[contains(@class,'item') and contains(text(),'"+Type+"')]"));
+		clickelement(type);
 		clickelement(PublishedSearch);
 		waitForElement(PublishedTable, 10);
 		scrollByElement(PublishedTable);
@@ -828,8 +862,7 @@ public class ContentManagement_Page extends BasePage {
 						System.out.println("Type selected is POM :" + cellText);
 						if (cellText.contains("Comment") || cellText.contains("Reply")) {
 							action.moveToElement(driver.findElement(By.xpath(
-									"(//*[@id='tblPublishedItems']//button[@class='btn btn-xs btn-danger btn-block btn-delete'])["
-											+ row + "]")))
+									"(//*[@id='tblPublishedItems']//button[@class='btn btn-outline-primary btn-xs btn-block btn-icon btn-delete'])["+row+"]")))
 									.click().build().perform();
 							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 							clickelement(PubDeleteConfirm);
@@ -845,14 +878,12 @@ public class ContentManagement_Page extends BasePage {
 					}
 				}
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			int changedentiresText = NumOfentries(driver
-					.findElement(By.xpath("//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
-			System.out.println("The total entries in a table is :" + changedentiresText);
 			int pubchangedentiresText = NumOfentries(driver
 					.findElement(By.xpath("//div[@id='tblPublishedItems_info' and @class='dataTables_info']")));
 			System.out.println("The total entries in a table is :" + pubchangedentiresText);
 			if(!(pubchangedentiresText== 0)) {
-				assertTrue(pubchangedentiresText > entiresText);
+				//assertTrue(pubchangedentiresText < entiresText);
+				Assert.assertEquals(pubchangedentiresText, entiresText - 1);
 				}
 			}
 		} else {
@@ -862,12 +893,15 @@ public class ContentManagement_Page extends BasePage {
 
 	/**
 	 * To delete data from the published table using type
+	 * @throws InterruptedException 
 	 */
-	public void DeleteDataUnPublishedTableusingType(String Type) {
+	public void DeleteDataUnPublishedTableusingType(String Type) throws InterruptedException {
 		scrollByElement(UnpublishedType);
-		Select Types = new Select(UnpublishedType);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		Types.selectByVisibleText(Type);
+		clickelement(UnpublishedType);
+		System.out.println("The type is : " +Type);
+		Thread.sleep(3000);
+		WebElement type = driver.findElement(By.xpath("//div[contains(@class,'item') and contains(text(),'"+Type+"')]"));
+		clickelement(type);
 		clickelement(UnpublishedSearch);
 		waitForElement(UnpublishedTable, 10);
 		scrollByElement(UnpublishedTable);
@@ -895,7 +929,7 @@ public class ContentManagement_Page extends BasePage {
 						System.out.println("Type selected is POM :" + cellText);
 						if (cellText.contains("Post") || cellText.contains("Comment") || cellText.contains("Reply")) {
 							driver.findElement(By.xpath(
-									"(//*[@id='tblUnpublishedItems']//button[@class='btn btn-xs btn-danger btn-block btn-delete'])["
+									"(//button[@class='btn btn-outline-primary btn-xs btn-block btn-icon btn-delete'])["
 											+ row + "]"))
 									.click();
 							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -927,12 +961,15 @@ public class ContentManagement_Page extends BasePage {
 
 	/**
 	 * To delete data from the published table using Status
+	 * @throws InterruptedException 
 	 */
-	public void DeleteDataUnPublishedTableusingStatus(String Status) {
+	public void DeleteDataUnPublishedTableusingStatus(String Status) throws InterruptedException {
 		scrollByElement(UnpublishedStatus);
-		Select Types = new Select(UnpublishedStatus);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		Types.selectByVisibleText(Status);
+		clickelement(UnpublishedStatus);
+		Thread.sleep(4000);
+		System.out.println("The status selected is : " +Status);
+		WebElement status = driver.findElement(By.xpath("//div[contains(@class,'item') and contains(text(),'"+Status+"')]"));
+		clickelement(status);
 		clickelement(UnpublishedSearch);
 		waitForElement(UnpublishedTable, 10);
 		scrollByElement(UnpublishedTable);
@@ -959,15 +996,15 @@ public class ContentManagement_Page extends BasePage {
 								.getText();
 						System.out.println("Type selected is POM :" + cellText);
 						if (driver.findElement(By.xpath(
-								"(//*[@id='tblUnpublishedItems']//button[@class='btn btn-xs btn-danger btn-block btn-delete'])["
+								"(//*[@id='tblUnpublishedItems']//button[@class='btn btn-outline-primary btn-xs btn-block btn-icon btn-delete'])["
 										+ row + "]"))
 								.isDisplayed()) {
 							driver.findElement(By.xpath(
-									"(//*[@id='tblUnpublishedItems']//button[@class='btn btn-xs btn-danger btn-block btn-delete'])["
+									"(//*[@id='tblUnpublishedItems']//button[@class='btn btn-outline-primary btn-xs btn-block btn-icon btn-delete'])["
 											+ row + "]"))
 									.click();
 							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-							clickelement(UnDeleteConfirm);
+							clickelement(UnDeleteConfirm); 
 							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 							clickelement(UnDeleteSuccess);
 							System.out.println("Deleted");
@@ -997,16 +1034,21 @@ public class ContentManagement_Page extends BasePage {
 
 	/**
 	 * To delete data from the published table using type and status
+	 * @throws InterruptedException 
 	 */
-	public void DeleteDataUnPublishedTableusingTypenStatus(String Type, String Status) {
+	public void DeleteDataUnPublishedTableusingTypenStatus(String Type, String Status) throws InterruptedException {
 		scrollByElement(UnpublishedType);
-		Select Types = new Select(UnpublishedType);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		Types.selectByVisibleText(Type);
-		Select Stat = new Select(UnpublishedStatus);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		Stat.selectByVisibleText(Status);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		clickelement(UnpublishedType);
+		System.out.println("The type is : " +Type);
+		Thread.sleep(3000);
+		WebElement type = driver.findElement(By.xpath("//div[contains(@class,'item') and contains(text(),'"+Type+"')]"));
+		clickelement(type);
+		scrollByElement(UnpublishedStatus);
+		clickelement(UnpublishedStatus);
+		Thread.sleep(4000);
+		System.out.println("The status selected is : " +Status);
+		WebElement status = driver.findElement(By.xpath("//div[contains(@class,'item') and contains(text(),'"+Status+"')]"));
+		clickelement(status);
 		clickelement(UnpublishedSearch);
 		waitForElement(UnpublishedTable, 10);
 		scrollByElement(UnpublishedTable);
@@ -1033,16 +1075,21 @@ public class ContentManagement_Page extends BasePage {
 								.getText();
 						System.out.println("Type selected is POM :" + cellText);
 						if (cellText.contains("Post") || cellText.contains("Comment") || cellText.contains("Reply")) {
+							cellText = driver
+									.findElement(
+											By.xpath("(//table[@id='tblUnpublishedItems']//tbody//tr)[" + row + "]//td[6]"))
+									.getText();
+							System.out.println("Type selected is POM :" + cellText);
 							if (driver.findElement(By.xpath(
-									"(//*[@id='tblUnpublishedItems']//button[@class='btn btn-xs btn-danger btn-block btn-delete'])["
+									"(//*[@id='tblUnpublishedItems']//button[@class='btn btn-outline-primary btn-xs btn-block btn-icon btn-delete'])["
 											+ row + "]"))
 									.isDisplayed()) {
 								driver.findElement(By.xpath(
-										"(//*[@id='tblUnpublishedItems']//button[@class='btn btn-xs btn-danger btn-block btn-delete'])["
+										"(//*[@id='tblUnpublishedItems']//button[@class='btn btn-outline-primary btn-xs btn-block btn-icon btn-delete'])["
 												+ row + "]"))
 										.click();
 								driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-								clickelement(UnDeleteConfirm);
+								clickelement(UnDeleteConfirm); 
 								driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 								clickelement(UnDeleteSuccess);
 								System.out.println("Deleted");
@@ -1071,18 +1118,15 @@ public class ContentManagement_Page extends BasePage {
 
 	/**
 	 * Test to approve using Type and Status
+	 * @throws InterruptedException 
 	 */
-	public void ApprovePost(String Type, String Status) {
-		waitForElement(UnpublishedType, 10);
-		scrollByElement(UnpublishedType);
-		Select Types = new Select(UnpublishedType);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		Types.selectByVisibleText(Type);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		Select Types1 = new Select(UnpublishedStatus);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		Types1.selectByVisibleText(Status);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	public void ApprovePost(String Type, String Status) throws InterruptedException {
+		scrollByElement(UnpublishedStatus);
+		clickelement(UnpublishedStatus);
+		Thread.sleep(4000);
+		System.out.println("The status selected is : " +Status);
+		WebElement status = driver.findElement(By.xpath("//div[contains(@class,'item') and contains(text(),'"+Status+"')]"));
+		clickelement(status);
 		clickelement(UnpublishedSearch);
 		waitForElement(UnpublishedTable, 10);
 		scrollByElement(UnpublishedTable);
@@ -1110,10 +1154,10 @@ public class ContentManagement_Page extends BasePage {
 						System.out.println("Type selected is POM :" + cellText);
 						if (cellText.contains("Post") || cellText.contains("Comment") || cellText.contains("Reply")) {
 							driver.findElement(By.xpath(
-									"(//button[@class='btn btn-xs btn-success btn-block btn-approve'])[" + row + "]"))
+									"(//button[@class='btn btn-outline-primary btn-xs btn-block btn-icon btn-approve'])[" + row + "]"))
 									.click();
 							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-							clickelement(ConfirmApprove);
+							clickelement(ConfirmApprove); 
 							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 							clickelement(SuccessApprove);
 							System.out.println("Post Approved");
@@ -1141,18 +1185,23 @@ public class ContentManagement_Page extends BasePage {
 
 	/**
 	 * Reject Post using Type and Status
+	 * @throws InterruptedException 
 	 */
-	public void RejectPost(String Type, String Status) {
+	public void RejectPost(String Type, String Status) throws InterruptedException {
 		waitForElement(UnpublishedType, 10);
 		scrollByElement(UnpublishedType);
-		Select Types = new Select(UnpublishedType);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		Types.selectByVisibleText(Type);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		Select Types1 = new Select(UnpublishedStatus);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		Types1.selectByVisibleText(Status);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		scrollByElement(UnpublishedType);
+		clickelement(UnpublishedType);
+		System.out.println("The type is : " +Type);
+		Thread.sleep(3000);
+		WebElement type = driver.findElement(By.xpath("//div[contains(@class,'item') and contains(text(),'"+Type+"')]"));
+		clickelement(type);
+		scrollByElement(UnpublishedStatus);
+		clickelement(UnpublishedStatus);
+		Thread.sleep(4000);
+		System.out.println("The status selected is : " +Status);
+		WebElement status = driver.findElement(By.xpath("//div[contains(@class,'item') and contains(text(),'"+Status+"')]"));
+		clickelement(status);
 		clickelement(UnpublishedSearch);
 		waitForElement(UnpublishedTable, 10);
 		scrollByElement(UnpublishedTable);
@@ -1180,10 +1229,10 @@ public class ContentManagement_Page extends BasePage {
 						System.out.println("Type selected is POM :" + cellText);
 						if (cellText.contains("Post") || cellText.contains("Comment") || cellText.contains("Reply")) {
 							driver.findElement(By.xpath(
-									"(//button[@class='btn btn-xs btn-warning btn-block btn-reject'])[" + row + "]"))
+									"(//button[@class='btn btn-outline-primary btn-xs btn-block btn-icon btn-reject'])[" + row + "]"))
 									.click();
 							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-							clickelement(ConfirmReject);
+							clickelement(ConfirmReject); 
 							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 							clickelement(SuccessReject);
 							System.out.println("Post Rejected");
@@ -1211,14 +1260,15 @@ public class ContentManagement_Page extends BasePage {
 
 	/**
 	 * Test to approve using Type
+	 * @throws InterruptedException 
 	 */
-	public void ApprovePostWithType(String Type) {
-		waitForElement(UnpublishedType, 10);
+	public void ApprovePostWithType(String Type) throws InterruptedException {
 		scrollByElement(UnpublishedType);
-		Select Types = new Select(UnpublishedType);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		Types.selectByVisibleText(Type);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		clickelement(UnpublishedType);
+		System.out.println("The type is : " +Type);
+		Thread.sleep(3000);
+		WebElement type = driver.findElement(By.xpath("//div[contains(@class,'item') and contains(text(),'"+Type+"')]"));
+		clickelement(type);
 		clickelement(UnpublishedSearch);
 		waitForElement(UnpublishedTable, 10);
 		scrollByElement(UnpublishedTable);
@@ -1246,7 +1296,7 @@ public class ContentManagement_Page extends BasePage {
 						System.out.println("Type selected is POM :" + cellText);
 						if (cellText.contains("Post") || cellText.contains("Comment") || cellText.contains("Reply")) {
 							driver.findElement(By.xpath(
-									"(//button[@class='btn btn-xs btn-success btn-block btn-approve'])[" + row + "]"))
+									"(//button[@class='btn btn-outline-primary btn-xs btn-block btn-icon btn-approve'])[" + row + "]"))
 									.click();
 							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 							clickelement(ConfirmApprove);
@@ -1284,14 +1334,15 @@ public class ContentManagement_Page extends BasePage {
 
 	/**
 	 * Reject Post using Type
+	 * @throws InterruptedException 
 	 */
-	public void RejectPostWithType(String Type) {
-		waitForElement(UnpublishedType, 10);
+	public void RejectPostWithType(String Type) throws InterruptedException {
 		scrollByElement(UnpublishedType);
-		Select Types = new Select(UnpublishedType);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		Types.selectByVisibleText(Type);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		clickelement(UnpublishedType);
+		System.out.println("The type is : " +Type);
+		Thread.sleep(3000);
+		WebElement type = driver.findElement(By.xpath("//div[contains(@class,'item') and contains(text(),'"+Type+"')]"));
+		clickelement(type);
 		clickelement(UnpublishedSearch);
 		waitForElement(UnpublishedTable, 10);
 		scrollByElement(UnpublishedTable);
@@ -1319,7 +1370,7 @@ public class ContentManagement_Page extends BasePage {
 						System.out.println("Type selected is POM :" + cellText);
 						if (cellText.contains("Post") || cellText.contains("Comment") || cellText.contains("Reply")) {
 							driver.findElement(By.xpath(
-									"(//button[@class='btn btn-xs btn-warning btn-block btn-reject'])[" + row + "]"))
+									"(//button[@class='btn btn-outline-primary btn-xs btn-block btn-icon btn-reject'])[" + row + "]"))
 									.click();
 							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 							clickelement(ConfirmReject);
@@ -1357,16 +1408,24 @@ public class ContentManagement_Page extends BasePage {
 
 	/**
 	 * Test to approve using Type and Status
+	 * @throws InterruptedException 
 	 */
-	public void ApprovePost3Criteria(String Type, String Status, String Key) {
-		waitForElement(UnpublishedType, 10);
+	public void ApprovePost3Criteria(String Type, String Status, String Key) throws InterruptedException {
+		waitForElement(UnpublishedTextSearch, 10);
 		UnpublishedTextSearch.sendKeys(Key);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		scrollByElement(UnpublishedType);
-		Select Types = new Select(UnpublishedType);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		Types.selectByVisibleText(Type);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		scrollByElement(UnpublishedType);
+		clickelement(UnpublishedType);
+		System.out.println("The type is : " +Type);
+		Thread.sleep(3000);
+		WebElement type = driver.findElement(By.xpath("//div[contains(@class,'item') and contains(text(),'"+Type+"')]"));
+		clickelement(type);
+		scrollByElement(UnpublishedStatus);
+		clickelement(UnpublishedStatus);
+		Thread.sleep(4000);
+		System.out.println("The status selected is : " +Status);
+		WebElement status = driver.findElement(By.xpath("//div[contains(@class,'item') and contains(text(),'"+Status+"')]"));
+		clickelement(status);
 		clickelement(UnpublishedSearch);
 		waitForElement(UnpublishedTable, 10);
 		scrollByElement(UnpublishedTable);
@@ -1399,8 +1458,8 @@ public class ContentManagement_Page extends BasePage {
 						if (cellText.contains("Post") || cellText.contains("Comment") || cellText.contains("Reply")
 								&& ((Status.equalsIgnoreCase("Pending Approval"))) && (celText.contains(Key))) {
 							driver.findElement(By.xpath(
-									"(//button[@class='btn btn-xs btn-success btn-block btn-approve'])[" + row + "]"))
-									.click();
+									"(//button[@class='btn btn-outline-primary btn-xs btn-block btn-icon btn-approve'])[" + row + "]"))
+									.click(); 
 							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 							clickelement(ConfirmApprove);
 							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -1437,16 +1496,24 @@ public class ContentManagement_Page extends BasePage {
 
 	/**
 	 * Reject Post using Type and Status
+	 * @throws InterruptedException 
 	 */
-	public void RejectPost3Criteria(String Type, String Status, String Key) {
-		waitForElement(UnpublishedType, 10);
+	public void RejectPost3Criteria(String Type, String Status, String Key) throws InterruptedException {
+		waitForElement(UnpublishedTextSearch, 10);
 		UnpublishedTextSearch.sendKeys(Key);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		scrollByElement(UnpublishedType);
-		Select Types = new Select(UnpublishedType);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		Types.selectByVisibleText(Type);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		scrollByElement(UnpublishedType);
+		clickelement(UnpublishedType);
+		System.out.println("The type is : " +Type);
+		Thread.sleep(3000);
+		WebElement type = driver.findElement(By.xpath("//div[contains(@class,'item') and contains(text(),'"+Type+"')]"));
+		clickelement(type);
+		scrollByElement(UnpublishedStatus);
+		clickelement(UnpublishedStatus);
+		Thread.sleep(4000);
+		System.out.println("The status selected is : " +Status);
+		WebElement status = driver.findElement(By.xpath("//div[contains(@class,'item') and contains(text(),'"+Status+"')]"));
+		clickelement(status);
 		clickelement(UnpublishedSearch);
 		waitForElement(UnpublishedTable, 10);
 		scrollByElement(UnpublishedTable);
@@ -1479,7 +1546,7 @@ public class ContentManagement_Page extends BasePage {
 						if (cellText.contains("Post") || cellText.contains("Comment") || cellText.contains("Reply")
 								&& ((Status.equalsIgnoreCase("Pending Approval"))) && (celText.contains(Key))) {
 							driver.findElement(By.xpath(
-									"(//button[@class='btn btn-xs btn-warning btn-block btn-reject'])[" + row + "]"))
+									"(//button[@class='btn btn-outline-primary btn-xs btn-block btn-icon btn-reject'])[" + row + "]"))
 									.click();
 							driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 							clickelement(ConfirmReject);

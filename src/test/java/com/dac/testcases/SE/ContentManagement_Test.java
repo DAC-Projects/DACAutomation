@@ -284,7 +284,7 @@ public class ContentManagement_Test extends BaseClass {
 				addEvidence(CurrentState.getDriver(), "Post Approval", "yes");
 				CurrentState.getDriver().navigate().refresh();
 			} else {
-				System.out.println("Data cannot be deleted with given status or Type");
+				System.out.println("Data cannot be approved with given status or Type");
 			}
 		}
 	}
