@@ -37,7 +37,9 @@ public interface IAutoconst {
 	String[] transparenSEEDupData = {baseUrl+"aurify-brands-test-beta", "jmohan@dacgroup.com"}; // Duplicate Management and data syndication - Beta
 	String[] transparenSEEBingLocation = {baseUrl+"aurify-brands-test-beta", "chappel.mann+loctest@gmail.com"}; // Location level - Bing
 	String[] transparenSEEClientBeta = {baseUrl+"automation-test-account-tsee-beta","amahadev@dacgroup.com"}; // Client Level User - Beta
+	//String[] transparenSEEStagingClient = {baseUrlStaging + "international-location-test-account", "chappel.mann+stc@gmail.com"}; // Client Level - International Account
 	String[] transparenSEELocationBeta = {baseUrl+"automation-test-account-tsee-beta","jmann@dacgroup.com"}; // Location Level User - Beta
+	//String [] transparenSEEStagingLocation = {baseUrlStaging +"international-location-test-account","chappel.mann+stl@gmail.com"};
 	String [] transparenSEEStagingClient = {baseUrlStaging + "aurify-brands", "abritton@dacgroup.com"}; //Client Level{baseUrl +"aurify-brands","abritton@dacgroup.com"};  // Client Level User - Staging
 	String [] transparenSEEStagingLocation = {baseUrlStaging +"aurify-brands","p.pundyk@fieldsgoodchicken.com"}; // Location Level User - Staging
 	String[] transparenSEEFaceBetaClient = {baseUrl + "international-account-beta-beta", "amahadev@dacgroup.com"};
@@ -45,7 +47,7 @@ public interface IAutoconst {
 	String[] DRSLocation = {baseUrl + "international-location-test-account","chappel.mann+stl@gmail.com"}; // Location Level
 	String[] Fit4LessAccount = {baseUrl+"fit4less-beta", "1test@gmail.com"};
 	String[] neuralTuringTechAccount = {baseUrl+"neural-turing-tech-beta", "skanna@dacgroup.com"};
-	String[] neuralturingtechStaging = {baseUrlStaging + "neural-turing-tech" , "lzimerman@dacgroup.com"}; // Reviews Staging Approver
+	//String[] neuralTuringTechAccount = {baseUrlStaging + "neural-turing-tech" , "lzimerman@dacgroup.com"}; // Reviews Staging Approver
 	String[] neuralResponseBeta = {baseUrl+"neural-turing-tech-beta","amahadev@dacgroup.com"}; // Response Management
 	String[] SocialdeepFieldAccount = {baseUrl+"deepfield-software-incorporated-beta","vijayata_201989@yahoo.com"};
 	String[] SocialAutomationAccount = {baseUrl+"social-beings-beta","rohit.watson@gmail.com"};

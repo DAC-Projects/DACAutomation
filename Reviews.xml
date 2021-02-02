@@ -4,14 +4,18 @@
 		<listener class-name="resources.ExtentTestNGITestListener"></listener>
 	</listeners>
 
-	<test name="ReviewsBeta">
+	<test name="ReviewsBetaGlobalFilter">
 		<parameter name="browser" value="chrome" />
 		<parameter name = "Filter" value = "1"/>
 		<classes>
-			<!-- <class name="com.dac.testcases.TPSEE.TPSEE_Displayed_Review_Score_Test" /> -->
-			<class name="com.dac.testcases.SA.ReviewsFeed_Test" /> 
+			<!-- <class name="com.dac.testcases.TPSEE.TPSEE_Displayed_Review_Score_Test" />
+			<class name="com.dac.testcases.SA.ReviewsFeed_Test" />  -->
 			<!-- <class name = "com.dac.testcases.SA.Reviews_Insights_Test"/>
 			<class name = "com.dac.testcases.SA.Response_Management_Test"/> -->
+			<!-- <class name = "com.dac.testcases.SA.ReviewsFeed_RespondToReviews_Source_Rating_Content_Test"/> -->
+			<class name = "com.dac.testcases.SA.ReviewsFeed_RespondToReviews_Sentiment_Category_Content_Test"/>
+			<!-- <class name = "com.dac.testcases.SA.ReviewsFeed_RespondToReviews_Keyword_Tag_Test"/>
+			<class name = "com.dac.testcases.SA.ReviewsFeed_Sorting_nd_Export_Verification_Test"/> -->
 		</classes>
 	</test>
 </suite>

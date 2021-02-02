@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Suite">
+	<listeners>
+		<listener class-name="resources.ExtentTestNGITestListener"></listener>
+	</listeners>
+	
+
+	
+	<test name="ResponseManagementCreator">
+		<parameter name="browser" value="chrome" />		
+		<classes>
+			<class name="com.dac.testcases.SA.Response_Management_Creator_AddOrEdit_Response" />
+		</classes>
+	</test>
+	
+</suite>

@@ -158,8 +158,8 @@ public abstract class BaseClass {
 		case "ReviewsBetaLocationFilter":
 			return IAutoconst.neuralTuringTechAccount;
 			
-		case "ReviewsStaging":
-			return IAutoconst.neuralturingtechStaging;
+		/*case "ReviewsStaging":
+			return IAutoconst.neuralturingtechStaging;*/
 		// IAutoconst.Fit4LessAccount;
 		// IAutoconst.neuralTuringTechAccount;
 			
@@ -182,8 +182,8 @@ public abstract class BaseClass {
 		case "CFBeta" :
 			return IAutoconst.CFAccountBeta;
 			
-		case "Reviews Staging" :
-			return IAutoconst.neuralturingtechStaging;
+		/*case "Reviews Staging" :
+			return IAutoconst.neuralturingtechStaging;*/
 
 		default:
 			return IAutoconst.transparenSEEClientBeta;

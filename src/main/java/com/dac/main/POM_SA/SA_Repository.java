@@ -6,5 +6,6 @@ public interface SA_Repository {
 	String LocationDataExport = "LocationDataExport.csv";
 	String ReviewExport = "ReviewExport.xlsx";
 	String InsightsExport = "LocationDataExportInsights.csv";
+	String ResLocationDataExport = "ResLocationDataExport.csv";
 	
 }
