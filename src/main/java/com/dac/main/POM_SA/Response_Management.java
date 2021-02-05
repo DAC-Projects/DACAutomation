@@ -94,6 +94,8 @@ public class Response_Management extends SA_Abstarct_Methods {
 	@FindBy(xpath = "//div[@class='card-body']//h5//span")
 	private WebElement ResponseStatus;
 
+	//	@FindBy(xpath = "")
+
 	/*-------------------------Pagination-----------------------*/
 
 	@FindBy(xpath = "(//*[@class='pagination']//a)")
@@ -182,8 +184,9 @@ public class Response_Management extends SA_Abstarct_Methods {
 	 * @throws Exception
 	 */
 	public int getHistoryCount() throws Exception {
-		int Count = 0;
-		if (ViewHistoryLink.isDisplayed()) {
+		int Count = 1;
+		boolean link = HistoryLink();
+		if (link == true) {
 			clickelement(ViewHistoryLink);
 			String count = HistoryCount.getText();
 			System.out.println("The activity count is : " + count);
@@ -199,6 +202,19 @@ public class Response_Management extends SA_Abstarct_Methods {
 		}
 	}
 
+	public boolean HistoryLink() {
+		boolean b = false;
+		try {
+			if (ViewHistoryLink.isDisplayed()) {
+				b = true;
+				return b;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
+
 	/**
 	 * To get the activity count
 	 * 
@@ -207,7 +223,8 @@ public class Response_Management extends SA_Abstarct_Methods {
 	 */
 	public String getHistoryStatus() throws Exception {
 		String Status = null;
-		if (ViewHistoryLink.isDisplayed()) {
+		boolean link = HistoryLink();
+		if (link == true) {
 			clickelement(ViewHistoryLink);
 			Status = HstryStatus.getText();
 			System.out.println("The Status is : " + Status);
@@ -240,7 +257,7 @@ public class Response_Management extends SA_Abstarct_Methods {
 		soft.assertTrue((hstrycountafterEdit == hstrycountbeforeEdit + 1), "Count has not increased");
 		Resp = ResponseText.getText();
 		System.out.println("The Response Text is : " + Resp);
-		soft.assertTrue(Resp.contains(" + </b>"), "Text doesn't contains + </b>");
+		soft.assertTrue(Resp.contains("+ </b>"), "Text doesn't contains + </b>");
 		String Status = getHistoryStatus();
 		System.out.println("The Status is : " + Status);
 		String Stat = driver.findElement(By.xpath("(//span[@class='response-status'])[1]")).getText();
@@ -251,12 +268,16 @@ public class Response_Management extends SA_Abstarct_Methods {
 
 	/**
 	 * To Delete the Response
+	 * @throws InterruptedException 
 	 */
-	public void DeleteResponse() {
+	public void DeleteResponse() throws InterruptedException {
 		int numberofentriesbeforeDelete = NumOfentriesinPage(Entry);
 		System.out.println("The Number of entries is : " + numberofentriesbeforeDelete);
 		scrollByElement(DeleteResponse);
 		clickelement(DeleteResponse);
+		Thread.sleep(3000);
+		WebElement DelConfirm = driver.findElement(By.xpath("//button[@class='btn btn-width-sm btn-primary']"));
+		clickelement(DelConfirm);
 		int numberofentriesafterDelete = NumOfentriesinPage(Entry);
 		System.out.println("The Number of entries is : " + numberofentriesafterDelete);
 		Assert.assertTrue((numberofentriesafterDelete == numberofentriesbeforeDelete - 1), "Count has not decreased");
@@ -271,18 +292,19 @@ public class Response_Management extends SA_Abstarct_Methods {
 		waitForElement(AdvancedLink, 10);
 		clickelement(AdvancedLink);
 		clickelement(TagInput);
-		TagInput.sendKeys("Automation");
+		TagInput.sendKeys("Avi");
 		TagInput.sendKeys(Keys.ENTER);
-
+		JSWaiter.waitJQueryAngular();
 		WebElement AddLink = driver.findElement(By.xpath("(//a[@class='add-owner-response-btn enabled'])"));
+		scrollByElement(AddLink);
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
 		executor.executeScript("arguments[0].click();", AddLink);
-		//clickelement(AddLink);
+		// clickelement(AddLink);
 		Thread.sleep(5000);
 		waitForElement(EnterResponseText, 10);
 		clickelement(EnterResponseText);
 		if (EnterResponseText.isDisplayed()) {
-			EnterResponseText.sendKeys("Thanks for your Review!! Automated Response");
+			EnterResponseText.sendKeys("Thanks for your Response!! Automated Response");
 			clickelement(ResponseSubmit);
 			Thread.sleep(5000);
 			clickelement(ResponseConfirm);
@@ -296,8 +318,142 @@ public class Response_Management extends SA_Abstarct_Methods {
 			System.out.println("No text field found");
 			soft.fail("Failed to create response");
 		}
-
 		soft.assertAll();
-
 	}
+
+	/**
+	 * To Approve Response
+	 * @throws Exception
+	 */
+	public void ApproveResponse() throws Exception {
+		WebElement stattext = driver.findElement(By.xpath("//div[@id='v1-table']//div[contains(text(),'Thanks for your Response!')]/following::div//span[@class='response-status']"));
+		String text = stattext.getText();
+		System.out.println("The status is : " +text);
+		BaseClass.addEvidence(driver, "Test to approve response", "yes");
+		if(text.equals("Pending Approval")) {
+			WebElement ApproveBtn = driver.findElement(By.xpath(
+					"((//div[@id='v1-table']//div[contains(text(),'Thanks for your Response!')]/following::div[@class='btn-group']//button[@id='btnApprove'])[1])"));
+			clickelement(ApproveBtn);
+			BaseClass.addEvidence(driver, "Data table after approve of response", "yes");
+		}else {
+			System.out.println("Expected status not available");
+		}
+	}
+
+	public void RejectResponse() throws Exception {
+		WebElement stattext = driver.findElement(By.xpath("//div[@id='v1-table']//div[contains(text(),'Thanks for your Response!')]/following::div//span[@class='response-status']"));
+		String text = stattext.getText();
+		System.out.println("The status is : " +text);
+		BaseClass.addEvidence(driver, "Test to approve response", "yes");
+		if(text.equals("Pending Approval")) {
+			WebElement RejectBtn = driver.findElement(By.xpath(
+					"((//div[@id='v1-table']//div[contains(text(),'Thanks for your Response!')]/following::div[@class='btn-group']//button[@id='btnReject'])[1])"));
+			clickelement(RejectBtn);
+			Thread.sleep(3000);
+			WebElement RejectCom = driver.findElement(By.xpath("//textarea[@id='rejectComments']"));
+			clickelement(RejectCom);
+			RejectCom.sendKeys("Please add few more details");
+			WebElement RejectConfirm = driver.findElement(By.xpath("//button[contains(text(),'Reject')]"));
+			clickelement(RejectConfirm);
+		}else {
+			System.out.println("Expected status not available");
+		}
+	}
+
+	/**
+	 * To Approve Response with Comments
+	 * @throws Exception
+	 */
+	public void ApproveResponsewithComments() throws Exception {
+		WebElement stattext = driver.findElement(By.xpath("//div[@id='v1-table']//div[contains(text(),'Thanks for your Response!')]/following::div//span[@class='response-status']"));
+		String text = stattext.getText();
+		System.out.println("The status is : " +text);
+		BaseClass.addEvidence(driver, "Test to approve response", "yes");
+		if(text.equals("Pending Approval")) {
+			WebElement ApproveBtn = driver.findElement(By.xpath(
+					"((//div[@id='v1-table']//div[contains(text(),'Thanks')]/following::div[@class='btn-group']//button[@class='btn-approve-dd dropdown-toggle dropdown-toggle-split paddingtop-button'])[1])"));
+			clickelement(ApproveBtn);
+			WebElement Approve = driver.findElement(By.xpath(
+					"(//span[@class='approveComment' and contains(text(), 'Approve with comment')])[1]"));
+			clickelement(Approve);
+			BaseClass.addEvidence(driver, "Data table after approve of response", "yes");
+			WebElement ApproveConfirm = driver.findElement(By.xpath("//textarea[@id='approveComments']"));
+			clickelement(ApproveConfirm);
+			ApproveConfirm.sendKeys("Response Approved");
+			BaseClass.addEvidence(driver, "Data table after approve of response", "yes");
+			WebElement ApproveComments = driver.findElement(By.xpath("//button[@class='btn btn-primary']"));
+			clickelement(ApproveComments);
+		}else {
+			System.out.println("Expected status not available");
+		}
+	}
+
+	public void DeleteApprovedResponse() throws Exception {
+		waitForElement(AdvancedLink, 10);
+		clickelement(AdvancedLink);
+		clickelement(TagInput);
+		TagInput.sendKeys("Avi");
+		TagInput.sendKeys(Keys.ENTER);
+		JSWaiter.waitJQueryAngular();
+		scrollByElement(driver.findElement(By.xpath("//div[@class='owner-responses rrm']")));
+		WebElement Stat = driver.findElement(By.xpath("//div[@class='status-login-container']"));
+		String text = Stat.getText();
+		System.out.println("The status is : " +text);
+		BaseClass.addEvidence(driver, "Test to delete Approved Response", "yes");
+		if(text.equals("Completed")) {		
+			WebElement DeleteBtn = driver.findElement(By.xpath("(//div[@class='delete-edit-container']//a)[2]"));
+			clickelement(DeleteBtn);
+			Thread.sleep(3000);
+			WebElement DeleteConfirm = driver.findElement(By.xpath("//button[contains(text(),'Yes')]"));
+			clickelement(DeleteConfirm);
+			JSWaiter.waitJQueryAngular();
+			BaseClass.addEvidence(driver, "Test to Confirm delete Approved Response", "yes");
+			WebElement DeleteSuccess = driver.findElement(By.xpath("//button[contains(text(),'Ok')]"));
+			clickelement(DeleteSuccess);
+			Thread.sleep(2000);
+			driver.navigate().refresh();
+			verifyDeletedResponse();
+		}else {
+			System.out.println("No status expected found");			
+		}
+	}
+
+	public void verifyRejectResponse() throws Exception {
+		waitForElement(AdvancedLink, 10);
+		clickelement(AdvancedLink);
+		clickelement(TagInput);
+		TagInput.sendKeys("Avi");
+		TagInput.sendKeys(Keys.ENTER);
+		JSWaiter.waitJQueryAngular();
+		Thread.sleep(3000);
+		scrollByElement(driver.findElement(By.xpath("(//div[@class='form-group col-xs-12'])[2]")));
+		WebElement Stat = driver.findElement(By.xpath("//h5[@class='card-title']//span"));
+		scrollByElement(Stat);
+		String text = Stat.getText();
+		System.out.println("The status is : " +text);
+		BaseClass.addEvidence(driver, "Test to delete Reject Response", "yes");
+		if(text.equals("Rejected")) {
+			Assert.assertTrue(true, "Expected Status is not available");
+		}else {
+			Assert.fail("Expected Status is not available");
+		}
+	}
+
+	public void verifyDeletedResponse() throws Exception {
+		waitForElement(AdvancedLink, 10);
+		clickelement(AdvancedLink);
+		clickelement(TagInput);
+		TagInput.sendKeys("Avi");
+		TagInput.sendKeys(Keys.ENTER);
+		JSWaiter.waitJQueryAngular();
+		WebElement AddLink = driver.findElement(By.xpath("(//a[@class='add-owner-response-btn enabled'])"));
+		scrollByElement(AddLink);
+		BaseClass.addEvidence(driver, "Test to verify Response Deleted", "yes");
+		if(AddLink.isDisplayed()) {
+			Assert.assertTrue(true, "Link is not displayed");
+		}else {
+			Assert.fail("No Link Displayed");
+		}
+	}
+
 }

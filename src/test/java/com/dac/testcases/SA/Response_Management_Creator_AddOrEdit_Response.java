@@ -8,7 +8,7 @@ import com.dac.main.POM_SA.Response_Management;
 import resources.BaseClass;
 import resources.CurrentState;
 
-public class Response_Management_Creator_AddOrEdit_Response extends BaseClass{
+public class Response_Management_Creator_AddOrEdit_Response extends BaseClass {
 
 	Navigationpage np;
 	Response_Management data;

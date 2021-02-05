@@ -166,6 +166,9 @@ public abstract class BaseClass {
 		case "ResponseManagementCreator" :
 			return IAutoconst.neuralResponseBeta;
 			
+		case "ResponseManagementApprover" :
+			return IAutoconst.neuralTuringTechAccount;
+			
 			case "DRS" :
 				return IAutoconst.DRSClient;
 			case "DRS1" :
