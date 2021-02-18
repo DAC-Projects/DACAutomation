@@ -61,12 +61,15 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//button[@id='loading-btn']")
 	private WebElement SaveBtn;
 	
+	@FindBy(xpath = "//button[text()='Ok']")
+	private WebElement OkCreateBtn;
+	
 	@FindBy(xpath = "//button[@id='btnPreviewGroup']")
 	private WebElement PreviewBtn;
 	
 	//@FindBy(xpath = "//*[@value='Or']")
 	//@FindBy(xpath = "//input[@id='form-or']")
-	@FindBy(xpath = "//input[@id='form-or']//following-sibling::label")
+	@FindBy(xpath = "//input[@id='formOr']")
 	private WebElement radio_or;
 	
 	/*---------------------- View Group ----------------*/
@@ -130,6 +133,8 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 	//@FindBy(xpath="//button[@class='btn btn-width-sm btn-primary']")
 	@FindBy(xpath="//button[text()='Yes']")
 	private WebElement Ok_btn;
+	@FindBy(xpath="//button[text()='Ok']")
+	private WebElement Delete_ok_btn;
 	/*-------------------------To Delete-----------------------*/
 	
 	/*-------------------------Pagination-----------------------*/
@@ -185,7 +190,7 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		/*SearchText1.sendKeys(Search_Term);*/
 		clickelement(PreviewBtn);
 		clickelement(SaveBtn);
-		
+		clickelement(OkCreateBtn);
 		
 	}
 	
@@ -193,7 +198,8 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 	{
 		
 		ArrayList<String> rules = new ArrayList();
-		WebElement View_btn=driver.findElement(By.xpath("//a[@class='view-group'][@data-name='"+Groupname+"']"));
+		//WebElement View_btn=driver.findElement(By.xpath("//a[@class='view-group'][@data-name='"+Groupname+"']"));
+		WebElement View_btn=driver.findElement(By.xpath("(//td[@class='sort-name-col sorting_1' and contains(text(),'"+Groupname+"')])//following-sibling::td[5]//a[@class='view-group']"));
 		Thread.sleep(5000);	
 		//save.click();
 		View_btn.click();
@@ -219,7 +225,8 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 	public void edit_Group(String Groupname, String Group1, String Description, String CountryField, String FilterCondition, String Search_Term, String CountryField1, String FilterCondition1, String Search_Term1, String CountryField2, String FilterCondition2, String Search_Term2) throws InterruptedException
 	{
 		
-		WebElement Edit_btn=driver.findElement(By.xpath("//*[@id='btnEdit'][@value='"+Groupname+"']"));
+		//WebElement Edit_btn=driver.findElement(By.xpath("//*[@id='btnEdit'][@value='"+Groupname+"']"));
+		WebElement Edit_btn=driver.findElement(By.xpath("(//td[@class='sort-name-col sorting_1' and contains(text(),'"+Groupname+"')])//following-sibling::td[5]//a[@class='edit-group']"));
 		Thread.sleep(5000);
 		
 		//save.click();
@@ -272,6 +279,7 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		SearchText2.sendKeys(Search_Term2);
 		clickelement(PreviewBtn);
 		clickelement(SaveBtn);
+		clickelement(OkCreateBtn);
 	}
 	
 	public void addFilter_Group(String Group, String Description, String CountryField, String FilterCondition, String Search_Term, String CountryField1, String FilterCondition1, String Search_Term1, String CountryField2, String FilterCondition2, String Search_Term2, String connector) throws InterruptedException
@@ -295,12 +303,14 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		System.out.println(connector);
 		
 		
-		if(connector.equals("OR"))
+	/*	if(connector.equals("OR"))
 		{
 		//driver.findElement(By.xpath("//*[@value='Or']")).click();
+			Thread.sleep(5000);
 			clickelement(radio_or);
 			
-		}
+			
+		} */
 		Select country1 = new Select(driver.findElement(By.xpath("//*[@id='select-field-2']")));
 		Thread.sleep(5000);
 		country1.selectByVisibleText(CountryField1);
@@ -327,9 +337,22 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		//SearchText.sendKeys(Search_Term);	
 		SearchText2.sendKeys(Search_Term2);
 		
+		if(connector.equals("OR"))
+		{
+		//driver.findElement(By.xpath("//*[@value='Or']")).click();
+			Thread.sleep(5000);
+		//	clickelement(radio_or);
+			//scrollByElement(radio_or);
+			Actions act=new Actions(driver);
+			act.moveToElement(radio_or).click().perform();
+			
+		//	radio_or.click();
+			
+		} 
+		
 		clickelement(PreviewBtn);
 		clickelement(SaveBtn);
-		
+		clickelement(OkCreateBtn);
 		
 		
 		
@@ -342,9 +365,9 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		int page = Integer.parseInt(n);
 		System.out.println("\n"+page);
 		//wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("table_groups_info")));
+		//wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("table_groups_info")));
 		//String entiresText = driver.findElement(By.className("dataTables_info")).getText();
-		String entiresText = driver.findElement(By.id("table_groups_info")).getText();
+	//	String entiresText = driver.findElement(By.id("table_groups_info")).getText();
 		int count = 0;
 	    if(paginationNext.isDisplayed()) {
 	    	for(int i=1;i<=page;i++) {	//Loop will execute till the all the row of table completes.
@@ -353,9 +376,11 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 	    		//String celtext = driver.findElement(By.xpath("*//tr//td[@class='sort-name-col sorting_1'][contains(text(),'')]")).getText();
 	    			System.out.println("\n"+celtext);
 	    					if(celtext.equals(Group)) {
-	    						WebElement Delete_btn=driver.findElement(By.xpath("//*[@class='remove-group'][@data-name= '"+Group+"']"));
-	    						Delete_btn.click();
-	    						Ok_btn.click();	
+	    					//	WebElement Delete_btn=driver.findElement(By.xpath("//*[@class='remove-group'][@data-name= '"+Group+"']"));
+	    						WebElement Delete_btn=driver.findElement(By.xpath(("(//td[@class='sort-name-col sorting_1' and contains(text(),'"+Group+"')])//following-sibling::td[5]//a[@class='remove-group']")));
+	    						 clickelement(Delete_btn);
+	    							clickelement(Ok_btn);
+	    						clickelement(Delete_ok_btn);
 	    						break;
 	    			}
 	    				
@@ -380,12 +405,24 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		
 	
 		
-		WebElement View_btn=driver.findElement(By.xpath("//a[@class='view-group'][@data-name='"+Groupname+"']"));
+	//	WebElement View_btn=driver.findElement(By.xpath("//a[@class='view-group'][@data-name='"+Groupname+"']"));
+		WebElement View_btn=driver.findElement(By.xpath("(//td[@class='sort-name-col sorting_1' and contains(text(),'"+Groupname+"')])//following-sibling::td[5]//a[@class='view-group']"));
 		Thread.sleep(5000);	
 		//save.click();
 		View_btn.click();
 		Thread.sleep(5000);
-		
+
+		String x1 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[0].value").toString();
+		System.out.println(x1);
+		rules1.add(x1);
+		Thread.sleep(5000);
+		String y1 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[1].value").toString();;
+		System.out.println(y1);
+		rules1.add(y1);
+		Thread.sleep(5000);
+		String z1 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[2].value").toString();;
+		System.out.println(z1);
+		rules1.add(z1);	
 	
 		String x2 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[3].value").toString();
 		System.out.println(x2);
@@ -411,23 +448,15 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		System.out.println(z3);
 		rules1.add(z3);	
 		
-		String x1 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[0].value").toString();
-		System.out.println(x1);
-		rules1.add(x1);
-		Thread.sleep(5000);
-		String y1 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[1].value").toString();;
-		System.out.println(y1);
-		rules1.add(y1);
-		Thread.sleep(5000);
-		String z1 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[2].value").toString();;
-		System.out.println(z1);
-		rules1.add(z1);			
+				
 		return rules1;
 	}
 	
 	public String rulename() {
 		
-		String con = ((JavascriptExecutor)driver).executeScript("return $('#myModal .btn.btn-xs.btn-primary').text()").toString();
+	//	String con = ((JavascriptExecutor)driver).executeScript("return $('#myModal .btn.btn-xs.btn-primary').text()").toString();
+	//	String con = driver.findElement(By.xpath("//label[text()='OR']")).getText();
+		String con = driver.findElement(By.xpath("//*[@class='btn btn-xs btn-primary']")).getText();
 		clickelement(close_btn);
 		return con;
 	}
@@ -438,12 +467,24 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		
 	
 		
-		WebElement View_btn=driver.findElement(By.xpath("//a[@class='view-group'][@data-name='"+Groupname+"']"));
+		//WebElement View_btn=driver.findElement(By.xpath("//a[@class='view-group'][@data-name='"+Groupname+"']"));
+		WebElement View_btn=driver.findElement(By.xpath("(//td[@class='sort-name-col sorting_1' and contains(text(),'"+Groupname+"')])//following-sibling::td[5]//a[@class='view-group']"));
 		Thread.sleep(5000);	
 		//save.click();
 		View_btn.click();
 		Thread.sleep(5000);
 		
+		String x1 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[0].value").toString();
+		System.out.println(x1);
+		rules1.add(x1);
+		Thread.sleep(5000);
+		String y1 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[1].value").toString();;
+		System.out.println(y1);
+		rules1.add(y1);
+		Thread.sleep(5000);
+		String z1 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[2].value").toString();;
+		System.out.println(z1);
+		rules1.add(z1);		
 	
 		String x2 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[3].value").toString();
 		System.out.println(x2);
@@ -457,17 +498,7 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		System.out.println(z2);
 		rules1.add(z2);
 		
-		String x1 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[0].value").toString();
-		System.out.println(x1);
-		rules1.add(x1);
-		Thread.sleep(5000);
-		String y1 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[1].value").toString();;
-		System.out.println(y1);
-		rules1.add(y1);
-		Thread.sleep(5000);
-		String z1 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[2].value").toString();;
-		System.out.println(z1);
-		rules1.add(z1);		
+		
 		
 		String x3 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[6].value").toString();
 		System.out.println(x3);
@@ -520,6 +551,7 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		}
 		clickelement(PreviewBtn);
 		clickelement(SaveBtn);
+		clickelement(OkCreateBtn);
 	
 		
 	}
@@ -530,24 +562,12 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		
 	
 		
-		WebElement View_btn=driver.findElement(By.xpath("//a[@class='view-group'][@data-name='"+Groupname+"']"));
+		//WebElement View_btn=driver.findElement(By.xpath("//a[@class='view-group'][@data-name='"+Groupname+"']"));
+		WebElement View_btn=driver.findElement(By.xpath("(//td[@class='sort-name-col sorting_1' and contains(text(),'"+Groupname+"')])//following-sibling::td[5]//a[@class='view-group']"));
 		Thread.sleep(5000);	
 		//save.click();
 		View_btn.click();
 		Thread.sleep(5000);
-		
-	
-		String x2 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[3].value").toString();
-		System.out.println(x2);
-		rules1.add(x2);
-		Thread.sleep(5000);
-		String y2 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[4].value").toString();;
-		System.out.println(y2);
-		rules1.add(y2);
-		Thread.sleep(5000);
-		String z2 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[5].value").toString();;
-		System.out.println(z2);
-		rules1.add(z2);
 		
 		String x1 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[0].value").toString();
 		System.out.println(x1);
@@ -560,6 +580,20 @@ public class TPSEE_Groups extends TPSEE_abstractMethods {
 		String z1 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[2].value").toString();;
 		System.out.println(z1);
 		rules1.add(z1);	
+		
+		String x2 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[3].value").toString();
+		System.out.println(x2);
+		rules1.add(x2);
+		Thread.sleep(5000);
+		String y2 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[4].value").toString();;
+		System.out.println(y2);
+		rules1.add(y2);
+		Thread.sleep(5000);
+		String z2 = ((JavascriptExecutor)driver).executeScript("return document.getElementsByName('builder-basic_rule_0_value_0')[5].value").toString();;
+		System.out.println(z2);
+		rules1.add(z2);
+		
+	
 		
 		
 		return rules1;
