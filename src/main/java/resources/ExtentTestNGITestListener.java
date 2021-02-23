@@ -333,19 +333,22 @@ public class ExtentTestNGITestListener
 	  WebDriverWait wait;
     WebDriver driver = null;
 
-    File file = new File("./downloads");
+    File file = new File(".//downloads");
     if (!file.exists())
       file.mkdirs();
 
-    String downloadFolder = System.getProperty("user.dir") + "/downloads";
+    String downloadFolder = System.getProperty("user.dir") + "\\downloads";
 
     if (browser.equalsIgnoreCase("Chrome")) {
+    	
+    	//WebDriverManager.chromedriver().version("86.0.4240.22").setup(); 
+    	WebDriverManager.chromedriver().version("87.0.4280.88").setup(); 
+    	//WebDriverManager.chromedriver().version("85.0.4183.87").setup(); 
+    //	WebDriverManager.chromedriver().version("85.0.4183.38").setup(); 
+  //  WebDriverManager.chromedriver().version("84.0.4147.30").setup(); 
+    //	WebDriverManager.chromedriver().version("83.0.4103.39").setup();
 
-
-     WebDriverManager.chromedriver().version("83.0.4103.39").setup(); 
-
-
-     //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
+   // WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
 
       HashMap<String, Object> chromePref = new HashMap<>();
       chromePref.put("download.default_directory", downloadFolder);

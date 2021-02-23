@@ -199,7 +199,7 @@ public class SE_Export_Functionality extends  SE_abstractMethods  {
 			{	
 				sitename = fbpage.getText();
 			}
-			else if(theVendor.equals("Google"))
+			else if(theVendor.equals("Google My Business"))
 				{
 					 sitename = gmbpage.getText();
 				}else

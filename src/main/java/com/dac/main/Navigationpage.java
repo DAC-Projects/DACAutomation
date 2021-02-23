@@ -183,6 +183,12 @@ public class Navigationpage extends BasePage{
     @FindBy(xpath="//div[text()='Google My Business']/../../..//input[@id='manage-button']")
     private WebElement SE_GoogleManagePages;
     
+    @FindBy(xpath="//div[text()='Twitter']/../../..//input[@id='manage-button']")
+    private WebElement SE_TwitterManagePages;
+    
+    @FindBy(xpath="//div[text()='YouTube']/../../..//input[@id='manage-button']")
+    private WebElement SE_YouTubeManagePages;
+    
   //Manage Connections Link
   	@FindBy(xpath="//a[text()='Manage Connections']")
   	private WebElement ManageConnections;
@@ -396,6 +402,22 @@ public void navigateToGoogleManagePages() { // Navigate to Google ManagesPage
    	
 	  
 	clickelement(SE_GoogleManagePages);
+	System.out.println("Waiting for page to load********");
+	waitUntilLoad(driver);
+}
+
+public void navigateToTwitterManagePages() { // Navigate to Google ManagesPage
+   	
+	  
+	clickelement(SE_TwitterManagePages);
+	System.out.println("Waiting for page to load********");
+	waitUntilLoad(driver);
+}
+
+public void navigateToYouTubeManagePages() { // Navigate to Google ManagesPage
+   	
+	  
+	clickelement(SE_YouTubeManagePages);
 	System.out.println("Waiting for page to load********");
 	waitUntilLoad(driver);
 }

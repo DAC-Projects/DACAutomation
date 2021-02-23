@@ -105,6 +105,9 @@ public abstract class BaseClass {
         	   //IAutoconst.Fit4LessAccount;
         	   //IAutoconst.neuralTuringTechAccount;
         
+    case "Config":
+    	return IAutoconst.Configuration;
+        
 
     default:
       return IAutoconst.transparenSEE;
