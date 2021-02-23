@@ -12,41 +12,22 @@ import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
 
-public class Response_Management_Approver_Reject extends BaseClass {
+public class Response_Management_VendorSite_Verification extends BaseClass {
 	
 	Navigationpage np;
 	Response_Management data;
 	String From_Date = "//*[@id='dateFrom']";
 	String To_Date = "//*[@id='dateTo']";
 	
-	@Test(priority = 1, description = "Test to navigate to Response Management Page")
-	public void NavigateToResponseManagement() throws Exception {
-		np = new Navigationpage(CurrentState.getDriver());
-		np.navigateToResponseManagement();
-		addEvidence(CurrentState.getDriver(), "Test to navigate to Response Management Page", "yes");
-	}
 	
-	@Test(priority = 2, description = "Test to change the status to pending approval")
-	public void ChangeStatusToPending() throws Exception{
-		data = new Response_Management(CurrentState.getDriver());
-		data.selectPendingStatus();
-		addEvidence(CurrentState.getDriver(), "Test to change status to pending approval", "yes");
-	}
-	
-	@Test(priority = 3, description = "Test to Approve Response")
-	public void RejectResponse() throws Exception {
-		data = new Response_Management(CurrentState.getDriver());
-		data.RejectResponse();		
-	}
-	
-	@Test(priority = 4, description = "Test to navigate to Reviews Feed")
+	@Test(priority = 1, description = "Test to navigate to Reviews Feed Page")
 	public void NavigateToReviewsFeed() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateToSA_ReviewsFeed();
-		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes");
+		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed Page", "yes");
 	}
 	
-	@Test(priority = 5, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider = "testData")
+	@Test(priority = 2, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider = "testData")
 	public void DateFilter(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		data = new Response_Management(CurrentState.getDriver());
@@ -101,41 +82,20 @@ public class Response_Management_Approver_Reject extends BaseClass {
 		}
 	}
 	
-	@Test(priority = 6, description = "Test to verify Status")
-	public void VerifyStatus() throws Exception {
+	@Test(priority = 3, description = "Test to add Response")
+	public void AddResponseApprover() throws Exception {
 		data = new Response_Management(CurrentState.getDriver());
-		data.verifyRejectResponse(); 
-	}
-	
-	@Test(priority = 7, description = "Test to navigate to Response Management Page")
-	public void NavigateToResponseManagemen() throws Exception {
-		np = new Navigationpage(CurrentState.getDriver());
-		np.navigateToResponseManagement();
-		addEvidence(CurrentState.getDriver(), "Test to navigate to Response Management Page", "yes");
-	}
-	
-	@Test(priority = 8, description = "Test to change status to Rejected")
-	public void ChangeStatustoReject() throws Exception {
-		data = new Response_Management(CurrentState.getDriver());
-		data.SelectRejectStatus();
-		addEvidence(CurrentState.getDriver(), "Test to change status to Rejected", "yes");
-	}
-	
-	@Test(priority = 9, description = "Test to delete Response")
-	public void DeleteRejectedResponse() throws Exception {
-		data = new Response_Management(CurrentState.getDriver());
-		data.DeleteResponse();
-		addEvidence(CurrentState.getDriver(), "Test to delete the response", "yes");
+		data.AddResponseApprover();		
 	}
 
-	@Test(priority = 10, description = "Test to navigate to Reviews Feed")
-	public void NavigateToReviewsFee() throws Exception {
-		np = new Navigationpage(CurrentState.getDriver());
-		np.navigateToSA_ReviewsFeed();
-		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes");
+	@Test(priority = 4, description = "Test to verify Listing of vendor site")
+	public void verifyListing() throws Exception {
+		data = new Response_Management(CurrentState.getDriver());
+		data.verifystatusandResponse();
+		CurrentState.getDriver().navigate().refresh();
 	}
 	
-	@Test(priority = 11, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider = "testData")
+	@Test(priority = 5, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider = "testData")
 	public void DateFilter1(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		data = new Response_Management(CurrentState.getDriver());
@@ -148,11 +108,31 @@ public class Response_Management_Approver_Reject extends BaseClass {
 		data.clickApplyFilterBTN();
 		addEvidence(CurrentState.getDriver(), "Applied Global Filters", "yes");
 	}
-
 	
-	@Test(priority = 12, description = "Test to verify Response Deleted")
-	public void VerifyResponseDeleted() throws Exception {
+	@Test(priority = 6, description = "Test to delete response")
+	public void DeleteResponse() throws Exception {
+		data = new Response_Management(CurrentState.getDriver());
+		data.DeleteApprovedResponseApprover();
+	}
+	
+	@Test(priority = 7, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider = "testData")
+	public void DateFilter2(String from_day, String from_month, String from_year, String to_day, String to_month,
+			String to_year) throws Exception {
+		data = new Response_Management(CurrentState.getDriver());
+		data.selectCalender_FromDate(From_Date, (int) (Double.parseDouble(from_day)), from_month,
+				(int) (Double.parseDouble(from_year)));
+		Thread.sleep(3000);
+		data.selectCalender_ToDate(To_Date, (int) (Double.parseDouble(to_day)), to_month,
+				(int) (Double.parseDouble(to_year)));
+		Thread.sleep(3000);
+		data.clickApplyFilterBTN();
+		addEvidence(CurrentState.getDriver(), "Applied Global Filters", "yes");
+	}
+	
+	@Test(priority = 8, description = "Test to delete response")
+	public void VerifyDeletedResponse() throws Exception {
 		data = new Response_Management(CurrentState.getDriver());
 		data.verifyDeletedResponse();
 	}
+
 }

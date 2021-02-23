@@ -4,8 +4,6 @@
 		<listener class-name="resources.ExtentTestNGITestListener"></listener>
 	</listeners>
 	
-
-	
 	<test name="ResponseManagementCreator">
 		<parameter name="browser" value="chrome" />		
 		<classes>
@@ -13,4 +11,11 @@
 		</classes>
 	</test>
 	
+	<test name = "ResponseManagementApprover">
+		<parameter name = "browser" value = "chrome" />
+		<classes>
+			<class name = "com.dac.testcases.SA.Response_Management_Approver" />
+		</classes>
+	</test>
+
 </suite>

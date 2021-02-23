@@ -1,5 +1,9 @@
 package com.dac.main.POM_SA;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -93,9 +97,25 @@ public class Response_Management extends SA_Abstarct_Methods {
 
 	@FindBy(xpath = "//div[@class='card-body']//h5//span")
 	private WebElement ResponseStatus;
+	
+	@FindBy(xpath = "(//*[@class='reviewEnhancement'])[1]")
+	private WebElement ReviewSection;
 
-	//	@FindBy(xpath = "")
-
+	@FindBy(xpath = "//*[@id='Review']//*[@class='business-info']")
+	private List<WebElement> ReviewInfo;
+	
+	@FindBy(xpath = "//button[@data-tooltip='Search reviews']")
+	private WebElement SearchBtnGMap;
+	
+	@FindBy(xpath = "//input[@aria-label='Search reviews']")
+	private WebElement SearchTxt;
+	
+	@FindBy(xpath = "//a[@id='viewListingLink']")
+	private WebElement ListingLink;
+	
+	@FindBy(xpath = "//div[contains(text(),'Thanks for your Review')]")
+	private WebElement ResponseTitleGMap;
+	
 	/*-------------------------Pagination-----------------------*/
 
 	@FindBy(xpath = "(//*[@class='pagination']//a)")
@@ -274,7 +294,7 @@ public class Response_Management extends SA_Abstarct_Methods {
 		int numberofentriesbeforeDelete = NumOfentriesinPage(Entry);
 		System.out.println("The Number of entries is : " + numberofentriesbeforeDelete);
 		scrollByElement(DeleteResponse);
-		clickelement(DeleteResponse);
+		clickelement(DeleteResponse); 
 		Thread.sleep(3000);
 		WebElement DelConfirm = driver.findElement(By.xpath("//button[@class='btn btn-width-sm btn-primary']"));
 		clickelement(DelConfirm);
@@ -304,7 +324,7 @@ public class Response_Management extends SA_Abstarct_Methods {
 		waitForElement(EnterResponseText, 10);
 		clickelement(EnterResponseText);
 		if (EnterResponseText.isDisplayed()) {
-			EnterResponseText.sendKeys("Thanks for your Response!! Automated Response");
+			EnterResponseText.sendKeys("Thanks for your Review!! Automated Response");
 			clickelement(ResponseSubmit);
 			Thread.sleep(5000);
 			clickelement(ResponseConfirm);
@@ -320,19 +340,56 @@ public class Response_Management extends SA_Abstarct_Methods {
 		}
 		soft.assertAll();
 	}
+	
+	
+	public void clickManageLink() {
+		WebElement manage = driver.findElement(By.xpath("//a[contains(text(),'Manage')]"));
+		scrollByElement(manage);
+		clickelement(manage);
+	}
+	
+	public void AddResponseApprover() throws Exception {
+		waitForElement(AdvancedLink, 10);
+		clickelement(AdvancedLink);
+		clickelement(TagInput);
+		TagInput.sendKeys("Avi");
+		TagInput.sendKeys(Keys.ENTER);
+		JSWaiter.waitJQueryAngular();
+		WebElement AddLink = driver.findElement(By.xpath("(//a[@class='add-owner-response-btn enabled'])"));
+		scrollByElement(AddLink);
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+		executor.executeScript("arguments[0].click();", AddLink);
+		// clickelement(AddLink);
+		Thread.sleep(5000);
+		waitForElement(EnterResponseText, 10);
+		clickelement(EnterResponseText);
+		if (EnterResponseText.isDisplayed()) {
+			EnterResponseText.sendKeys("Thanks for your Review!! Automated Response");
+			clickelement(ResponseSubmit);
+			Thread.sleep(5000);
+			clickelement(ResponseConfirm);
+			Thread.sleep(5000);
+			scrollByElement(driver.findElement(By.xpath("//div[@class='status-login-container']")));
+			BaseClass.addEvidence(CurrentState.getDriver(), "Test to add response", "yes");
+			Assert.assertTrue(driver.findElement(By.xpath("//div[@class='status-login-container']")).isDisplayed(), "Container not displayed");
+		}else {
+			System.out.println("");
+			Assert.fail("Response cannot be added");
+		}
+	}
 
 	/**
 	 * To Approve Response
 	 * @throws Exception
 	 */
 	public void ApproveResponse() throws Exception {
-		WebElement stattext = driver.findElement(By.xpath("//div[@id='v1-table']//div[contains(text(),'Thanks for your Response!')]/following::div//span[@class='response-status']"));
+		WebElement stattext = driver.findElement(By.xpath("//div[@id='v1-table']//div[contains(text(),'Thanks for your Review!')]/following::div//span[@class='response-status']"));
 		String text = stattext.getText();
 		System.out.println("The status is : " +text);
 		BaseClass.addEvidence(driver, "Test to approve response", "yes");
 		if(text.equals("Pending Approval")) {
 			WebElement ApproveBtn = driver.findElement(By.xpath(
-					"((//div[@id='v1-table']//div[contains(text(),'Thanks for your Response!')]/following::div[@class='btn-group']//button[@id='btnApprove'])[1])"));
+					"((//div[@id='v1-table']//div[contains(text(),'Thanks for your Review!')]/following::div[@class='btn-group']//button[@id='btnApprove'])[1])"));
 			clickelement(ApproveBtn);
 			BaseClass.addEvidence(driver, "Data table after approve of response", "yes");
 		}else {
@@ -341,13 +398,13 @@ public class Response_Management extends SA_Abstarct_Methods {
 	}
 
 	public void RejectResponse() throws Exception {
-		WebElement stattext = driver.findElement(By.xpath("//div[@id='v1-table']//div[contains(text(),'Thanks for your Response!')]/following::div//span[@class='response-status']"));
+		WebElement stattext = driver.findElement(By.xpath("//div[@id='v1-table']//div[contains(text(),'Thanks for your Review!')]/following::div//span[@class='response-status']"));
 		String text = stattext.getText();
 		System.out.println("The status is : " +text);
 		BaseClass.addEvidence(driver, "Test to approve response", "yes");
 		if(text.equals("Pending Approval")) {
 			WebElement RejectBtn = driver.findElement(By.xpath(
-					"((//div[@id='v1-table']//div[contains(text(),'Thanks for your Response!')]/following::div[@class='btn-group']//button[@id='btnReject'])[1])"));
+					"((//div[@id='v1-table']//div[contains(text(),'Thanks for your Review!')]/following::div[@class='btn-group']//button[@id='btnReject'])[1])"));
 			clickelement(RejectBtn);
 			Thread.sleep(3000);
 			WebElement RejectCom = driver.findElement(By.xpath("//textarea[@id='rejectComments']"));
@@ -365,7 +422,7 @@ public class Response_Management extends SA_Abstarct_Methods {
 	 * @throws Exception
 	 */
 	public void ApproveResponsewithComments() throws Exception {
-		WebElement stattext = driver.findElement(By.xpath("//div[@id='v1-table']//div[contains(text(),'Thanks for your Response!')]/following::div//span[@class='response-status']"));
+		WebElement stattext = driver.findElement(By.xpath("//div[@id='v1-table']//div[contains(text(),'Thanks for your Review!')]/following::div//span[@class='response-status']"));
 		String text = stattext.getText();
 		System.out.println("The status is : " +text);
 		BaseClass.addEvidence(driver, "Test to approve response", "yes");
@@ -388,7 +445,9 @@ public class Response_Management extends SA_Abstarct_Methods {
 		}
 	}
 
-	public void DeleteApprovedResponse() throws Exception {
+	
+	
+	public void DeleteApprovedResponseApprover() throws Exception {
 		waitForElement(AdvancedLink, 10);
 		clickelement(AdvancedLink);
 		clickelement(TagInput);
@@ -412,12 +471,12 @@ public class Response_Management extends SA_Abstarct_Methods {
 			clickelement(DeleteSuccess);
 			Thread.sleep(2000);
 			driver.navigate().refresh();
-			verifyDeletedResponse();
 		}else {
 			System.out.println("No status expected found");			
 		}
 	}
-
+	
+	
 	public void verifyRejectResponse() throws Exception {
 		waitForElement(AdvancedLink, 10);
 		clickelement(AdvancedLink);
@@ -456,4 +515,141 @@ public class Response_Management extends SA_Abstarct_Methods {
 		}
 	}
 
+	public void verifyDateSelected() throws ParseException {
+		String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat").toString();
+		SimpleDateFormat formats = new SimpleDateFormat(var);
+		JSWaiter.waitJQueryAngular();
+		List<Date> ReviewDates = new ArrayList<Date>();
+		Date FromDate = getFromDate();
+		System.out.println("From Date selected is : " + FromDate);
+		Date ToDate = getToDate();
+		System.out.println("To Date selected is : " + ToDate);
+		waitForElement(ReviewSection, 10);
+		scrollByElement(ReviewSection);
+		waitForElement(paginationLast, 10);
+		boolean dataavailable = DataAvailable();
+		if (dataavailable == false) {
+			int lastpage = Integer
+					.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
+			System.out.println("Last Page Number is :" + lastpage);
+			waitForElement(paginationPrev, 10);
+			clickelement(paginationPrev);
+			try {
+				if (paginationNext.isDisplayed()) {
+					for (int j = 1; j <= lastpage; j++) {
+						JSWaiter.waitJQueryAngular();
+						int size = ReviewInfo.size();
+						System.out.println(size);
+						for (int k = 1; k <= size; k++) {
+
+							WebElement date = driver.findElement(By.xpath("(//div[@class='date-text'])[" + k + "]"));
+							scrollByElement(date);
+							String reviewdate = date.getText();
+							System.out.println("Review Date is :" + reviewdate);
+							Date UIDate = formats.parse(reviewdate);
+							ReviewDates.add(UIDate);
+							BaseClass.addEvidence(driver, "Test to get UI Date", "yes");
+
+						}
+						if (paginationNext.isEnabled()) {
+							scrollByElement(paginationNext);
+							paginationNext.click();
+							Thread.sleep(4000);
+						}
+					}
+					System.out.println("The list consists of :" + ReviewDates);
+					for (int l = 0; l <= ReviewDates.size() - 1; l++) {
+						soft.assertTrue(ReviewDates.get(l).compareTo(FromDate) >= 0
+								&& ReviewDates.get(l).compareTo(ToDate) <= 0);
+					}
+				}
+				soft.assertAll();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("No Data Available");
+		}
+	}
+
+	/**
+	 * Method that returns data is available or not in the table
+	 * 
+	 * @return
+	 */
+	public boolean DataAvailable() {
+		String text = driver.findElement(By.xpath("(//div[@class='form-group'])[2]")).getText();
+		System.out.println("The text is :" + text);
+		if (text.equals("No data available")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	
+	public void verifystatusandResponse() throws Exception {
+		clickelement(AdvancedLink);
+		clickelement(TagInput);
+		TagInput.sendKeys("Avi"); 
+		TagInput.sendKeys(Keys.ENTER);
+		String stat = driver.findElement(By.xpath("//span[@class='status-text completed']")).getText();
+		System.out.println("The Status is : " +stat);
+		BaseClass.addEvidence(driver, "Test to verify status", "yes");
+		if(stat.equals("Completed")) {
+			Thread.sleep(10000);
+			clickOnLinknVerifyResponse();
+		}else{
+			System.out.println("Status is not completed");
+			Assert.fail("Status is not completed");
+		}
+	}
+	
+	public void clickOnLinknVerifyResponse() throws Exception {
+		if(ListingLink.isDisplayed()) {
+			// Store the current window handle
+			String winHandleBefore = driver.getWindowHandle();
+			clickelement(ListingLink);
+			// Switch to new window opened
+			for(String winHandle : driver.getWindowHandles()){
+			    driver.switchTo().window(winHandle);
+			}	
+			scrollByElement(SearchBtnGMap);
+			clickelement(SearchBtnGMap);
+			clickelement(SearchTxt);
+			SearchTxt.sendKeys("This location is on Scarboro - a bit far but worth the drive. (21-01-05)");
+			SearchTxt.sendKeys(Keys.ENTER);
+			Thread.sleep(5000);
+			WebElement PersonReviewed = driver.findElement(By.xpath("//div[@class='section-review-title']//span[contains(text(),'Greene Sydes')]"));
+			if(PersonReviewed.isDisplayed()) {
+				scrollByElement(PersonReviewed);
+				scrollByElement(ResponseTitleGMap);
+				clickelement(ResponseTitleGMap);
+				String responsetext = ResponseTitleGMap.getText();
+				System.out.println("The Response text is : " +responsetext);
+				soft.assertEquals(responsetext, "Thanks for your Review!! Automated Response"); 
+				Thread.sleep(5000);
+				BaseClass.addEvidence(driver, "Test to verify Response in Vendor Site", "yes");
+				soft.assertTrue(ResponseTitleGMap.isDisplayed(), "Response Not Displayed");
+			}else {
+				soft.fail("The review is not displayed");
+			}
+			// Close the new window, if that window no more required
+			driver.close();
+			// Switch back to original browser (first window)
+			driver.switchTo().window(winHandleBefore);		
+			Thread.sleep(5000);
+			soft.assertAll();
+		}
+	}
+	
+	
+	public void verifyStatus() throws Exception {
+		WebElement stattext = driver.findElement(By.xpath("//div[@id='v1-table']//div[contains(text(),'Thanks for your Review!')]/following::div//span[@class='response-status']"));
+		String text = stattext.getText();
+		System.out.println("The status is : " +text);
+		BaseClass.addEvidence(driver, "Test to approve response", "yes");
+		Assert.assertEquals(text, "Pending Approval");
+	}
 }
