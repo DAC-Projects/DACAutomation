@@ -646,7 +646,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 		}
 	}
 
-	@Test(priority = 37, enabled = true, dataProvider = "testData", description = "Test for Manual date selection")
+	/*@Test(priority = 37, enabled = true, dataProvider = "testData", description = "Test for Manual date selection")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		String UIdat = data.IsDataAvailable();
@@ -671,7 +671,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 		} else {
 			System.out.println("No Data Available for GMB");
 		}
-	}
+	}*/
 
 	@SuppressWarnings("finally")
 	@DataProvider

@@ -30,13 +30,13 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 
 	/*----------------------------------Locators----------------------------------------------*/
 
-	@FindBy(xpath = "//div[@class='big-stats tooltip-info']//span")
+	@FindBy(xpath = "//span[@id='totalView']")
 	private WebElement Impressions;
 
 	@FindBy(xpath = "//*[contains(@class,'highcharts-label highcharts-tooltip-box highcharts-color-none')]")
 	private WebElement grphtooltip;
 
-	@FindBy(xpath = "//button[@class='btn btn-primary dropdown-toggle export-dropdown-btn']")
+	@FindBy(xpath = "//button[@id='exportButton']")
 	private WebElement export;
 
 	@FindBy(xpath = "//a[contains(text(), 'Export as XLSX')]")
@@ -78,7 +78,7 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 	@FindBy(className = "ui-datepicker-year")
 	private WebElement currentYear_DatePicker;
 
-	@FindBy(xpath = "//*[@class='big-stats tooltip-info']")
+	@FindBy(xpath = "//*[@class='big-stats']")
 	private WebElement MousehoverText;
 	
 	@FindBy(xpath = "//li[@id='bing_places_report']")
@@ -96,7 +96,7 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 		JSWaiter.waitJQueryAngular();
 		datavalidatation = driver.findElement(By.xpath("//*[@class='highcharts-title']")).getText();
 		if (!datavalidatation.equals("There is currently not enough data from Bing to display this report")) {
-			if (export.isDisplayed() && export.isEnabled()) {
+			if (export.isDisplayed() && export.isEnabled()) { 
 				wait.until(ExpectedConditions.visibilityOf(export));
 				action.moveToElement(export).click(export).perform();
 			}
@@ -199,7 +199,7 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 			if (CurrentState.getBrowser().equals("Firefox")) {
 				x = GetDataUsingColName(FFpath, "Impression");
 			}
-			WebElement Impressions = driver.findElement(By.xpath("//div[@class='big-stats tooltip-info']//span"));
+			WebElement Impressions = driver.findElement(By.xpath("//span[@id='totalView']"));
 			int TotalImpressions = getImpressions(Impressions);
 			//Assert.assertEquals(x, TotalImpressions, "Count is equal");
 		} else {
@@ -214,7 +214,7 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 
 	public void GetHoverText(String Exp_Text) {
 		waitForElement(Impressions, 10);
-		String Text = MousehoverText.getAttribute("data-original-title");
+		String Text = MousehoverText.getAttribute("data-original-title"); 
 		System.out.println(Text);
 		Assert.assertEquals(Exp_Text, Text);
 	}

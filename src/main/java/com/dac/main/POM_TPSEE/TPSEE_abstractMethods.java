@@ -1773,6 +1773,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		clickelement(GoTo);
 		GoTo.clear();
 		if(totalpage>1) {
+		clickelement(GoTo);	
 		GoTo.sendKeys("2");
 		GoTo.sendKeys(Keys.ENTER);
 		Thread.sleep(5000);

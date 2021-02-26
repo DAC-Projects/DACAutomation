@@ -86,7 +86,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 	@Test(priority = 3, groups = { "smoke" }, description = "Test for verify title and description")
 	public void verifyText() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
-		data.VerifyTitleText("Bing Places for Business",
+		data.VerifyTitleText1("Bing Places for Business",
 				"This report provides insights into the weekly number of impressions that occurred for each of your location(s) on Bing over time. This information is obtained from Bing and is on average two weeks behind. Read Manual");
 
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
@@ -257,7 +257,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 				e.printStackTrace();
 			}
 		}
-	}
+	} 
 
 	@SuppressWarnings("unused")
 	@Test(priority = 11, dataProvider = "testData",description = "Verify manual date Selection")

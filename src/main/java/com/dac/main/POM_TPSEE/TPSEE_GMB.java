@@ -113,7 +113,7 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//span[@id='customerTotal']")
 	private WebElement TotalActions;
 
-	@FindBy(xpath = "//button[@class='btn btn-primary dropdown-toggle export-dropdown-btn']")
+	@FindBy(xpath = "//button[@class='btn btn-primary btn-width-md btn-icon dropdown-toggle pull-right']")
 	private WebElement export;
 
 	@FindBy(xpath = "//a[contains(text(), 'Export as CSV')]")
