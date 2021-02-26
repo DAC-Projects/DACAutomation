@@ -121,7 +121,7 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 	public void LoginDTC() throws Exception {
 		DTC_Duplicate_Management dtcLogin = new DTC_Duplicate_Management(driver);
 		DTC_Navigation navi = new DTC_Navigation(driver);
-		dtcLogin.submitLogin("adevaraj@dacgroup.com", "laptop@123");
+		dtcLogin.submitLogin("amahadev@dacgroup.com", "Covidindia20");
 		dtcLogin.pressYesKey();
 		String pageTitle = dtcLogin.getTitle(driver);
 		navi.Dup();

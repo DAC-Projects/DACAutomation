@@ -68,7 +68,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
 	}
 	
-/*	@Test(priority = 3, description = "Test to verify report highlighted")
+	@Test(priority = 3, description = "Test to verify report highlighted")
 	public void VerifyReportHighlight() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.visibilityhightlight();
@@ -105,7 +105,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 			// Assert.assertEquals(togrph, tocal);
 			addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 		}
-	}*/
+	}
 
 	/**
 	 * Test To get overall score and compare with dashboard values
@@ -124,11 +124,11 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
 	}*/
 
-/*	*//**
+	/**
 	 * Test to verify zoom functionality
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 
 	@Test(priority = 5, groups = { "smoke" }, description = "Verify Zoom Functionality")
 	public void gethighchartsdate() throws Exception {
@@ -179,7 +179,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}*/
+	}
 
 /*	*//**
 	 * Test for SiteTable data in Visibility Page
@@ -238,11 +238,11 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		}
 	}
 
-/*	*//**
+	/**
 	 * Test to export file as CSV
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 9, groups = { "smoke" }, description = "Test for export file as CSV")
 	public void verifyOverviewReportnExportVisibilityCSV() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -250,11 +250,11 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
 	}
 
-	*//**
+	/**
 	 * Test to export file as XLSX
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 10, groups = { "smoke" }, description = "Test for export file as XLSX")
 	public void verifyOverviewReportnExportVisibilityXLSX() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -262,11 +262,11 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
 	}
 
-	*//**
+	/**
 	 * Test to export as Current Date Pdf
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 11, groups = { "smoke" }, description = "Test for export file as pdf for Current Date")
 	public void verifyexportcurrentpdf() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -274,7 +274,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
 	}
 
-	*//**
+	/**
 	 * Test to export a file as PDF of applied date
 	 * 
 	 * @throws Exception
@@ -294,13 +294,13 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		Thread.sleep(5000);
 		data.hstrypdfexport();
 		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
-	}
+	}*/
 
-	*//**
+	/**
 	 * Test for Comparing Tooltip and overview report in Visibility Page
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 13, groups = {
 			"smoke" }, description = "Test to verify date in graph")
 	public void verifyOverviewReportnTooltipVisibility() throws Exception {
@@ -317,12 +317,12 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Tooltip values verified from Overview visibility report", "yes");
 	}
 
-	*//**
+	/**
 	 * Test for compare number of rows and data from export table and table data in
 	 * Visibility Page
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 15, groups = { "smoke" }, description = "Test for verifying progress bar in Visibility page")
 	public void numberofentriesnExporttableVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -333,7 +333,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		data.exporttablefoundCSV();
 		soft.assertAll();
 		addEvidence(CurrentState.getDriver(), "Test to verify GoTo and Results Per Page", "yes");
-	}*/
+	}
 	
 	/*@Test(priority = 16, description = "Test to verify sorting data of name column")
 	public void verifyfoundnamecolumn() throws Exception {
@@ -381,7 +381,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * Test to verify Top button functionality
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 22, groups = { "smoke" }, description = "Verify Top Button")
 	public void GetTopBtn() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -389,12 +389,12 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Top Button click verification", "yes");
 	}
 
-	*//**
+	/**
 	 * Test for compare number of rows and data from export table and table data in
 	 * Visibility Page
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 23, groups = { "smoke" }, description = "Test for verifying progress bar in Visibility page")
 	public void numberofentriesnExporttableNotFoundVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -405,7 +405,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		data.exporttableNotfoundCSV();
 		soft.assertAll();
 		addEvidence(CurrentState.getDriver(), "Test to verify GoTo and Results Per Page", "yes");
-	}*/
+	}
 	
 /*	@Test(priority = 24, description = "Test to verify sorting data of name column")
 	public void verifyNotfoundnamecolumn() throws Exception {

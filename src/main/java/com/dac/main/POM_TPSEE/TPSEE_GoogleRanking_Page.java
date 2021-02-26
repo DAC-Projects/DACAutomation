@@ -338,9 +338,11 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 										.findElement(By
 												.xpath("(//*[@id='rankingDetail']/tbody/tr/td)[" + (row + 1) + "]"))
 										.getText();
+								System.out.println("text is  :" +celtext);
 							} else {
 								celtext = Columns_row.get(column).getText().trim(); // To retrieve text from that
 																					// specific cell.
+								System.out.println("text is  :" +celtext);
 							}
 							kMap.put("Location", celtext);
 							tableCellValues.add(kMap);
@@ -352,7 +354,6 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 						JSWaiter.waitJQueryAngular();
 						scrollByElement(paginationNext);
 						paginationNext.click();
-						Thread.sleep(4000);
 					}
 				}
 			}

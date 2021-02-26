@@ -100,7 +100,7 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 		System.out.println("Page Title is : " + Title);
 		String TitleText = PageTitletext.getText();
 		System.out.println("The title text  is :" + TitleText);
-		String PgeTitle = "Syndication Status";
+		String PgeTitle = "Listing Verification";
 		String TitleTxt = "Below are locations participating in data syndication and the current status of each vendor supported in this report.";
 		Assert.assertEquals(Title, PgeTitle);
 		Assert.assertEquals(TitleText, TitleTxt);

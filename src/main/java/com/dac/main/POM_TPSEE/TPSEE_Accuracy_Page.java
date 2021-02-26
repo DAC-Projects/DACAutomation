@@ -1037,20 +1037,43 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	}
 	
 	public void resultperpage(SoftAssert soft) throws InterruptedException {
+		boolean ret = IsDataAvailable();
+		if(ret == true) {
 		WebElement ele =driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])"));
 		scrollByElement(ele);
 		ele.click();
 		Thread.sleep(3000);
 		ResultsperPage(soft, Entry, Resultperpage);
+		}else {
+			System.out.println("No Data Available");
+		}
 	}
 	
 	public void GoTo() throws InterruptedException {
+		boolean ret = IsDataAvailable();
+		if(ret == true) {
 		WebElement ele =driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])"));
 		scrollByElement(ele);
 		ele.click();
 		waitForElement(gotopage, 10);
 		scrollByElement(gotopage);
 		GoTopage(gotopage);
+		}else {
+			System.out.println("No Data Availabale");
+		}
+	}
+	
+	public boolean IsDataAvailable() {
+		boolean ret = false;
+		WebElement x = driver.findElement(By.xpath("//table[@id='inaccuracy_results']//td"));
+		String y = x.getText();
+		System.out.println("The string value is : " +y);
+		if(!(y.equals("No data available in table"))) {
+			ret = true;
+		}else {
+			ret = false;
+		}
+		return ret;
 	}
 	
 	public void comparegraphoverviewscore() {

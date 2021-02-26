@@ -21,10 +21,7 @@
 	<test name = "TransparenSeeBetaBingLocation" >
 		<parameter name = "browser" value = "chrome"/>
 			<classes>
-				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" /> 
-				
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" /> 			
 			</classes>
-	</test>
-	
-	
+	</test>	
 </suite>

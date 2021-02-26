@@ -46,7 +46,7 @@ public class TPSEE_Syndication_Status_DTC_API extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "To Verify Title and Title Text", "yes");
 	}
 
-	@Test(priority = 5, description = "To verify Status of vendor after DTC API transmission")
+/*	@Test(priority = 5, description = "To verify Status of vendor after DTC API transmission")
 	public void verifyDTCAPI() throws Exception {
 		data = new TPSEE_Syndication_Status_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/LocationSampleData.xlsx", "BasicInfo");
@@ -97,5 +97,5 @@ public class TPSEE_Syndication_Status_DTC_API extends BaseClass {
 			soft.assertAll();
 			addEvidence(CurrentState.getDriver(), "To verify status of Vendors processed in DTC", "yes");
 		}
-	}
+	}*/
 }

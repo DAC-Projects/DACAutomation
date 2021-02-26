@@ -59,7 +59,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to ContentAnalysis page from Dashboard", "yes");
 	}
 	
-/*	@Test(priority = 3, description = "Test to verify highlight of report")
+	@Test(priority = 3, description = "Test to verify highlight of report")
 	public void VerifyAccuracyHighlight() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		data.ContentAnalysishighlight();
@@ -74,7 +74,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
 
-	// CAScorenLoc
+	/*// CAScorenLoc
 	@Test(priority = 4, groups = { "smoke" }, description = "Test for navigating to ContentAnalysis page")
 	public void Verifyscorenloc() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
@@ -86,7 +86,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Accuracy page");
 		addEvidence(CurrentState.getDriver(), "Navigate to ContentAnalysis page from Dashboard", "yes");
 	}
-
+*/
 	// Test to verify Zoom Functionality
 	@Test(priority = 5, groups = { "smoke" }, description = "Verify Zoom Functionality")
 	public void gethighchartsdate() throws Exception {
@@ -161,7 +161,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 			// Assert.assertEquals(togrph, tocal);
 			addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 		}
-	}*/
+	}
 
 	@Test(priority = 7, groups = { "smoke" }, description = "Verify Content Analysis page loads after filter applied")
 	public void verifyFilteringReportsContentAnalysis() throws Exception {
@@ -194,7 +194,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		}
 	}
 
-/*	// Test for export and overview report in Content Analysis Page
+	// Test for export and overview report in Content Analysis Page
 	@Test(priority = 8, groups = { "smoke" }, description = "Test for overview export and export verification")
 	public void verifyOverviewReportnExportContentAnalysis() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
@@ -268,7 +268,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		// data.compareexporttableDatannumberofentries(data.SitelLinkData(),
 		// data.getSiteLinkExporttableData());
 		addEvidence(CurrentState.getDriver(), "Verified overview export for Accuracy report", "yes");
-	}*/
+	}
 
 	
 	/*  * //Test to compare vendors in the application in Visibility Page
@@ -288,13 +288,13 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	 * Test to verify Top button functionality
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 12, groups = { "smoke" }, description = "Verify Top Button")
 	public void GetTopBtn() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		data.TopButton();
 		addEvidence(CurrentState.getDriver(), "Top Button click verification", "yes");
-	}*/
+	}
 	
 	@Test(priority = 13, description = "Test to verify location details")
 	public void VerifyLocationDetailsLocationTab() throws Exception {
