@@ -88,7 +88,9 @@ public class ReviewsFeed_Sorting_nd_Export_Verification_Test extends BaseClass {
 	@Test(priority = 10, description = "Test to Export Location Data")
 	public void ExportLocation() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
-		data.LocationExport();
+		data.LocationCSVExport();
+		Thread.sleep(3000);
+		data.LocationXLSXExport();
 		addEvidence(CurrentState.getDriver(), "Test to export", "yes");
 	}
 

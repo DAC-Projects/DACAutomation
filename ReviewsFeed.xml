@@ -11,12 +11,13 @@
 		<parameter name="browser" value="chrome" />
 		<parameter name = "Filter" value = "1"/>		
 		<classes>
-			<class name="com.dac.testcases.SA.ReviewsFeed_TextVerification_Test" /> 
-			<!-- <class name="com.dac.testcases.SA.ReviewsFeed_Sorting_nd_Export_Verification_Test" />
+			<!-- <class name="com.dac.testcases.SA.ReviewsFeed_TextVerification_Test" /> 
+			<class name="com.dac.testcases.SA.ReviewsFeed_Sorting_nd_Export_Verification_Test" />
 			<class name="com.dac.testcases.SA.ReviewsFeed_Source_and_Response_Verification_Test" />
 			<class name="com.dac.testcases.SA.ReviewsFeed_Rating_and_Content_Verification_Test" />
 			<class name="com.dac.testcases.SA.ReviewsFeed_Keyword_and_Tag_Verification_Test" />
-			<class name="com.dac.testcases.SA.ReviewsFeed_Sentiment_and_Category_Verification_Test" /> -->
+			<class name="com.dac.testcases.SA.ReviewsFeed_Sentiment_and_Category_Verification_Test" />
+			<class name = "com.dac.testcases.SA.Reviews_Feed_DateFilter_Verification_Test"/> -->
 		</classes>
 	</test>
 	

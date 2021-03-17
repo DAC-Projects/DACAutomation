@@ -25,9 +25,9 @@ public class Reviews_Feed_DateFilter_Verification_Test extends BaseClass {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateToSA_ReviewsFeed();
 		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes");
-		data = new Reviews_Feed(CurrentState.getDriver());
+		/*data = new Reviews_Feed(CurrentState.getDriver());
 		data.CancelWalkme();
-		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes");
+		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes");*/
 	}
 	
 	@Parameters({ "Filter" })

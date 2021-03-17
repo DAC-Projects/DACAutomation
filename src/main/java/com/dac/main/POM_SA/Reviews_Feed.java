@@ -37,10 +37,36 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 	Actions action;
 	WebDriverWait wait;
 	SoftAssert soft = new SoftAssert();
-	List<String> ReferenceNumber = new ArrayList<String>();
-	List<String> URL = new ArrayList<String>();
-	List<String> BusinssName = new ArrayList<String>();
-	List<String> Location = new ArrayList<String>();
+	
+	List<String> XLReferenceNumber = new ArrayList<String>();
+	List<String> XLURL = new ArrayList<String>();
+	List<String> XLBusinssName = new ArrayList<String>();
+	List<String> XLAddress = new ArrayList<String>();
+	List<String> XLCity = new ArrayList<String>();
+	List<String> XLState = new ArrayList<String>();
+	List<String> XLPostCode = new ArrayList<String>();
+	List<String> XLPhone = new ArrayList<String>();
+	List<String> XLReviewDate = new ArrayList<String>();
+	List<String> XLReview = new ArrayList<String>();
+	List<String> XLAuthor = new ArrayList<String>();
+	List<String> XLStarRating = new ArrayList<String>();
+	List<String> XLTags = new ArrayList<String>();
+	List<String> XLResponseDate = new ArrayList<String>();
+	List<String> XLResponse = new ArrayList<String>();
+	List<String> XLSource = new ArrayList<String>();
+	List<String> UIReferenceNumber = new ArrayList<String>();
+	List<String> UIURL = new ArrayList<String>();
+	List<String> UIBusinssName = new ArrayList<String>();
+	List<String> UIAddress = new ArrayList<String>();
+	List<String> UIReviewDate = new ArrayList<String>();
+	List<String> UIReview = new ArrayList<String>();
+	List<String> UIAuthor = new ArrayList<String>();
+	List<String> UIStarRating = new ArrayList<String>();
+	List<String> UITags = new ArrayList<String>();
+	List<String> UIResponseDate = new ArrayList<String>();
+	List<String> UIResponse = new ArrayList<String>();
+	List<String> UISource = new ArrayList<String>();
+	
 	String Vendor = null;
 	String Rating = null;
 	String ONResponse;
@@ -56,6 +82,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 	String[] sentimentlist;
 	String tag = null;
 	Select select;
+	
 
 	public Reviews_Feed(WebDriver driver) {
 		super(driver);
@@ -80,7 +107,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 	@FindBy(xpath = "(//select[@id='pageSize'])[1]")
 	private WebElement ResultperPage;
 
-	@FindBy(xpath = "(//input[@class='page-input form-control form-control-sm'])[1]")
+	@FindBy(xpath = "(//input[contains(@class,'page-input form-control form-control-sm')])[1]")
 	private WebElement gotopage;
 
 	@FindBy(xpath = "(//span[@id='review_totalcounts'])[1]")
@@ -154,6 +181,12 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 	
 	@FindBy(xpath = "//*[@class='tooltip-container-Notices']//p")
 	private WebElement NoticeText;
+	
+	@FindBy(xpath = "//a[contains(text(),'Export as CSV')]")
+	private WebElement csvexport;
+
+	@FindBy(xpath = "//a[contains(text(),'Export as XLSX')]")
+	private WebElement XLSXExport;
 
 	/*-------------------------Pagination-----------------------*/
 
@@ -192,11 +225,35 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 	 * @throws InterruptedException
 	 */
 
-	public void LocationExport() throws FileNotFoundException, IOException, InterruptedException {
+	/*public void LocationExport() throws FileNotFoundException, IOException, InterruptedException {
 		scrollByElement(LocationExport);
 		clickelement(LocationExport);
 		Thread.sleep(3000);
 		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + LocationDataExport));
+	}*/
+	
+	/**
+	 * Export as CSV
+	 * @throws InterruptedException
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public void LocationCSVExport() throws InterruptedException, FileNotFoundException, IOException {
+		LocationExport(LocationExport, csvexport);
+		Thread.sleep(4000);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + LocationDataExportCSV));
+	}
+	
+	/**
+	 * Export as XLSX
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	public void LocationXLSXExport() throws FileNotFoundException, IOException, InterruptedException {
+		LocationExport(LocationExport, XLSXExport);
+		Thread.sleep(4000);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + LocationDataExportXLSX));
 	}
 	
 	public void verifyNotice() throws Exception {
@@ -246,6 +303,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 			try {
 				if (paginationNext.isDisplayed()) {
 					for (int i = 1; i <= lastpage; i++) {
+						
 						List<WebElement> rows_table = BusinessName;
 						int rows_count = rows_table.size();
 						for (int row = 1; row <= rows_count; row++) {
@@ -256,6 +314,10 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 									.getAttribute("href");
 							Thread.sleep(2000);
 							if (!text.contains("yelp")) {
+								String Address = driver.findElement(By.xpath("(//div[@class='reviewEnhancement']//div[@class='form-group col-xs-12'])[" + row
+																					  +"]//div[@class='business-info']//div")).getText();
+								System.out.println(Address);
+								Thread.sleep(2000);
 								String BName = driver.findElement(By.xpath(
 										"(//div[@class='reviewEnhancement']//div[@class='form-group col-xs-12'])[" + row
 												+ "]//div[@class='business-info']//div//strong"))
@@ -268,6 +330,33 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 										.getText();
 								System.out.println(ReferenceNum);
 								Thread.sleep(2000);
+								WebElement src = driver.findElement(
+										By.xpath("(//*[@id='Review']//div//img[@class = 'source-thumb'])[" + row + "]"));
+								scrollByElement(src);
+								String sourcenme = src.getAttribute("src").toLowerCase();
+								System.out.println(sourcenme);
+								String vendorname = getSource(sourcenme);
+								System.out.println("The Vendor name is :" + vendorname);
+								WebElement Author = driver.findElement(By.xpath("(//div[@class='author'])["+ row +"]"));
+								scrollByElement(Author);
+								String AuthorName = Author.getText();
+								System.out.println("The Author name is : " +AuthorName);
+								WebElement ReviewDate = driver.findElement(By.xpath("(//div[@class='date-text'])["+ row +"]"));
+								scrollByElement(ReviewDate);
+								String reviewDate = ReviewDate.getText();
+								System.out.println("The Date is : " +reviewDate);
+								WebElement Review = driver.findElement(By.xpath("(//div[@class='review-content'])["+ row +"]"));
+								scrollByElement(Review);
+								String review = Review.getText();
+								System.out.println("The Review is : " +review);
+								WebElement ResponseDate = driver.findElement(By.xpath("(//div[@class='response-date'])["+ row +"]"));
+								scrollByElement(ResponseDate);
+								String ResDate = ResponseDate.getText();
+								System.out.println("The response date is : " +ResDate);
+								WebElement Responsetxt = driver.findElement(By.xpath("(//div[@class='response-text'])["+ row +"]"));
+								scrollByElement(Responsetxt);
+								String Restxt = Responsetxt.getText();
+								System.out.println("The Response text is : " +Restxt);
 								String LinksUrl = driver.findElement(By.xpath(
 										"(//div[@class='reviewEnhancement']//div[@class='form-group col-xs-12'])[" + row
 												+ "]//*[@id='viewListingLink']"))
@@ -284,9 +373,17 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 								} else {
 									System.out.println("No filter applied");
 								}
-								BusinssName.add(BName);
-								ReferenceNumber.add(ReferenceNum);
-								URL.add(LinksUrl);
+								
+								UIReferenceNumber.add(ReferenceNum);
+								UIAddress.add(Address);
+								UIAuthor.add(AuthorName);
+								UIBusinssName.add(BName);
+								UIReviewDate.add(reviewDate);
+								UIReview.add(review);
+								UISource.add(vendorname);
+								UIResponseDate.add(ResDate);
+								UIResponse.add(Restxt);
+								UIURL.add(LinksUrl);
 								// System.out.println(text);
 							} else {
 								System.out.println("Yelp is displayed");
@@ -299,55 +396,234 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 						}
 					}
 				}
-				System.out.println("Business Name in Review : " + BusinssName);
-				System.out.println("Reference Code in Review :" + ReferenceNumber);
-				System.out.println("Link Listing in Review :" + URL);
+				System.out.println("Business Name in Review : " + UIBusinssName);
+				System.out.println("Reference Code in Review :" + UIReferenceNumber);
+				System.out.println("Link Listing in Review :" + UIURL);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			try {
-				String chromepath = "./downloads/chromeLocationDataExport.xlsx";
-				String IEpath = "./downloads/IELocationDataExport.xlsx";
-				String FFpath = "./downloads/FFLocationDataExport.xlsx";
-				List<String> XLBname = new ArrayList<String>();
+				String chromepath = "./downloads/chromeLocationDataExportxlsx.xlsx";
+				String IEpath = "./downloads/IELocationDataExportxlsx.xlsx";
+				String FFpath = "./downloads/FFLocationDataExportxlsx.xlsx";
+				/*List<String> XLBname = new ArrayList<String>();
 				List<String> XLRefCode = new ArrayList<String>();
 				List<String> XLURL = new ArrayList<String>();
-				List<String> XLSource = new ArrayList<String>();
+				List<String> XLSource = new ArrayList<String>();*/
 
 				if (CurrentState.getBrowser().equals("chrome")) {
-					XLBname = readCsvColdata(chromepath, 4);
+					XLBusinssName = GetDataUsingColName(chromepath, "Business Name");
 					Thread.sleep(1000);
-					XLRefCode = readCsvColdata(chromepath, 1);
+					System.out.println("The Business Name from Xl is : " +XLBusinssName);
+					XLReferenceNumber = GetDataUsingColName(chromepath, "Reference Code");
 					Thread.sleep(1000);
-					XLURL = readCsvColdata(chromepath, 3);
+					XLURL = GetDataUsingColName(chromepath, "URL");
 					Thread.sleep(1000);
-					XLSource = readCsvColdata(chromepath, 2);
+					XLSource = GetDataUsingColName(chromepath, "Source");
+					Thread.sleep(1000);
+					XLAddress = GetDataUsingColName(chromepath, "Address");
+					Thread.sleep(1000);
+					XLCity = GetDataUsingColName(chromepath, "City");
+					Thread.sleep(1000);
+					XLState = GetDataUsingColName(chromepath, "St/Prov/Region");
+					Thread.sleep(1000);
+					XLPostCode = GetDataUsingColName(chromepath, "Postal Code");
+					Thread.sleep(1000);
+					XLPhone = GetDataUsingColName(chromepath, "Phone");
+					Thread.sleep(1000);
+					XLReviewDate = GetDataUsingColName(chromepath, "Date");
+					Thread.sleep(1000);
+					XLReview = GetDataUsingColName(chromepath, "Review");
+					Thread.sleep(1000);
+					XLAuthor = GetDataUsingColName(chromepath, "Author");
+					Thread.sleep(1000);
+					XLResponseDate = GetDataUsingColName(chromepath, "Owner Response Date");
+					Thread.sleep(1000);
+					XLResponse = GetDataUsingColName(chromepath, "Owner Response");
 					Thread.sleep(1000);
 					deletefile();
 				}
 				if (CurrentState.getBrowser().equals("IE")) {
-					XLBname = readCsvColdata(IEpath, 4);
+					XLBusinssName = GetDataUsingColName(IEpath, "Business Name");
 					Thread.sleep(1000);
-					XLRefCode = readCsvColdata(IEpath, 1);
+					XLReferenceNumber = GetDataUsingColName(IEpath, "Reference Code");
 					Thread.sleep(1000);
-					XLURL = readCsvColdata(IEpath, 3);
+					XLURL = GetDataUsingColName(IEpath, "URL");
 					Thread.sleep(1000);
-					XLSource = readCsvColdata(IEpath, 2);
+					XLSource = GetDataUsingColName(IEpath, "Source");
+					Thread.sleep(1000);
+					XLAddress = GetDataUsingColName(IEpath, "Address");
+					Thread.sleep(1000);
+					XLCity = GetDataUsingColName(IEpath, "City");
+					Thread.sleep(1000);
+					XLState = GetDataUsingColName(IEpath, "St/Prov/Region");
+					Thread.sleep(1000);
+					XLPostCode = GetDataUsingColName(IEpath, "Postal Code");
+					Thread.sleep(1000);
+					XLPhone = GetDataUsingColName(IEpath, "Phone");
+					Thread.sleep(1000);
+					XLReviewDate = GetDataUsingColName(IEpath, "Date");
+					Thread.sleep(1000);
+					XLReview = GetDataUsingColName(IEpath, "Review");
+					Thread.sleep(1000);
+					XLAuthor = GetDataUsingColName(IEpath, "Author");
+					Thread.sleep(1000);
+					XLResponseDate = GetDataUsingColName(IEpath, "Owner Response Date");
+					Thread.sleep(1000);
+					XLResponse = GetDataUsingColName(IEpath, "Owner Response");
 					Thread.sleep(1000);
 					deletefile();
 				}
 				if (CurrentState.getBrowser().equals("Firefox")) {
-					XLBname = readCsvColdata(FFpath, 4);
+					XLBusinssName = GetDataUsingColName(FFpath, "Business Name");
 					Thread.sleep(1000);
-					XLRefCode = readCsvColdata(FFpath, 1);
+					XLReferenceNumber = GetDataUsingColName(FFpath, "Reference Code");
 					Thread.sleep(1000);
-					XLURL = readCsvColdata(FFpath, 3);
+					XLURL = GetDataUsingColName(FFpath, "URL");
 					Thread.sleep(1000);
-					XLSource = readCsvColdata(FFpath, 2);
+					XLSource = GetDataUsingColName(FFpath, "Source");
+					Thread.sleep(1000);
+					XLAddress = GetDataUsingColName(FFpath, "Address");
+					Thread.sleep(1000);
+					XLCity = GetDataUsingColName(FFpath, "City");
+					Thread.sleep(1000);
+					XLState = GetDataUsingColName(FFpath, "St/Prov/Region");
+					Thread.sleep(1000);
+					XLPostCode = GetDataUsingColName(FFpath, "Postal Code");
+					Thread.sleep(1000);
+					XLPhone = GetDataUsingColName(FFpath, "Phone");
+					Thread.sleep(1000);
+					XLReviewDate = GetDataUsingColName(FFpath, "Date");
+					Thread.sleep(1000);
+					XLReview = GetDataUsingColName(FFpath, "Review");
+					Thread.sleep(1000);
+					XLAuthor = GetDataUsingColName(FFpath, "Author");
+					Thread.sleep(1000);
+					XLResponseDate = GetDataUsingColName(FFpath, "Owner Response Date");
+					Thread.sleep(1000);
+					XLResponse = GetDataUsingColName(FFpath, "Owner Response");
 					Thread.sleep(1000);
 					deletefile();
 				}
-				soft.assertEquals(XLBname.size(), BusinssName.size());
+				int size;
+				if(XLBusinssName.size() == UIBusinssName.size()) {
+					size = XLBusinssName.size();
+					for(int i = 0 ; i < size ; i++) {
+						soft.assertTrue(XLBusinssName.get(i).equals(UIBusinssName.get(i)));
+					}
+				}else {
+					soft.fail("Lists are not equal");
+				}
+				
+				if(XLAddress.size() == UIAddress.size()) {
+					size = XLAddress.size();
+					for(int i = 0 ; i < size ; i++) {
+						soft.assertTrue(UIAddress.get(i).contains(XLAddress.get(i)));
+					}
+				}else {
+					soft.fail("Lists are not equal");
+				}
+				
+				if(UIAddress.size() == XLCity.size()) {
+					size = UIAddress.size();
+					for(int i = 0; i < size; i++) {
+						soft.assertTrue(UIAddress.get(i).contains(XLCity.get(i)));
+					}
+				}else {
+					soft.fail("Lists are not equal");
+				}
+				
+				if(UIAddress.size() == XLState.size()) {
+					size = UIAddress.size();
+					for(int i = 0; i < size; i++) {
+						soft.assertTrue(UIAddress.get(i).contains(XLState.get(i)));
+					}
+				}else {
+					soft.fail("Lists are not equal");
+				}
+				
+				if(UIAddress.size() == XLPostCode.size()) {
+					size = UIAddress.size();
+					for(int i = 0; i < size; i++) {
+						soft.assertTrue(UIAddress.get(i).contains(XLPostCode.get(i)));
+					}
+				}else {
+					soft.fail("Lists are not equal");
+				}
+				
+				if(UIAddress.size() == XLPhone.size()) {
+					size = UIAddress.size();
+					for(int i = 0; i < size; i++) {
+						soft.assertTrue(UIAddress.get(i).contains(XLPhone.get(i)));
+					}
+				}else {
+					soft.fail("Lists are not equal");
+				}
+				
+				if(UIReviewDate.size() == XLReviewDate.size()) {
+					size = UIReviewDate.size();
+					for(int i = 0; i < size; i++) {
+						soft.assertTrue(UIReviewDate.get(i).equals(XLReviewDate.get(i)));
+					}
+				}else {
+					soft.fail("Lists are not equal");
+				}
+				
+				if(UIReview.size() == XLReview.size()) {
+					size = UIReview.size();
+					for(int i = 0; i < size; i++) {
+						soft.assertTrue(UIReview.get(i).equals(XLReview.get(i)));
+					}
+				}else {
+					soft.fail("Lists are not equal");
+				}
+				
+				if(UIAuthor.size() == XLAuthor.size()) {
+					size = UIAuthor.size();
+					for(int i = 0; i < size; i++) {
+						soft.assertTrue(UIAuthor.get(i).equals(XLAuthor.get(i)));
+					}
+				}else {
+					soft.fail("Lists are not equal");
+				}
+				
+				if(UIResponseDate.size() == XLResponseDate.size()) {
+					size = UIResponseDate.size();
+					for(int i = 0; i < size; i++) {
+						soft.assertTrue(UIResponseDate.get(i).equals(XLResponseDate.get(i)));
+					}
+				}else {
+					soft.fail("Lists are not equal");
+				}
+				
+				if(UIResponse.size() == XLResponse.size()) {
+					size = UIResponse.size();
+					for(int i = 0; i < size; i++) {
+						soft.assertTrue(UIResponse.get(i).equals(XLResponse.get(i)));
+					}
+				}else {
+					soft.fail("Lists are not equal");
+				}
+				
+				if(UIResponseDate.size() == XLResponseDate.size()) {
+					size = UIResponseDate.size();
+					for(int i = 0; i < size; i++) {
+						soft.assertTrue(UIResponseDate.get(i).equals(XLResponseDate.get(i)));
+					}
+				}else {
+					soft.fail("Lists are not equal");
+				}
+				
+				if(UIURL.size() == XLURL.size()) {
+					size = UIURL.size();
+					for(int i = 0; i < size; i++) {
+						soft.assertTrue(UIURL.get(i).equals(XLURL.get(i)));
+					}
+				}else {
+					soft.fail("Lists are not equal");
+				}
+				
+				/*soft.assertEquals(XLBname.size(), BusinssName.size());
 				// Assert.assertEquals(expected, actual);
 				soft.assertEquals(XLBname, BusinssName);
 				soft.assertEquals(XLRefCode.size(), ReferenceNumber.size());
@@ -359,7 +635,7 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 					for (int i = 0; i <= XLSource.size() - 1; i++) {
 						XLSource.get(i).contains(URL.get(i));
 					}
-				}
+				}*/
 				resultperpage(soft);
 				Thread.sleep(5000);
 				GoTo();
@@ -2109,5 +2385,4 @@ public class Reviews_Feed extends SA_Abstarct_Methods {
 			System.out.println("No Data Available");
 		}
 	}
-
 }

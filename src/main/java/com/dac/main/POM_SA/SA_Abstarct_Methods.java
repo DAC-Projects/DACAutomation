@@ -718,7 +718,7 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 	 * @return
 	 * @throws Exception
 	 */
-	@SuppressWarnings("deprecation")
+	/*@SuppressWarnings("deprecation")
 	public ArrayList<String> GetDataUsingColName(String PathofXL, String Col_Name) throws Exception {
 		FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
 		Workbook wb = new XSSFWorkbook(excelFilePath);
@@ -750,7 +750,7 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 		System.out.println("From Excel:" + ExportData);
 		wb.close();
 		return ExportData;
-	}
+	}*/
 
 	/**
 	 * Top button fuctionality
@@ -937,13 +937,14 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 		int totalpage = Integer.parseInt(n);
 		clickelement(GoTo);
 		GoTo.clear();
+		clickelement(GoTo);
 		if (totalpage > 1) {
 			GoTo.sendKeys("2");
 			GoTo.sendKeys(Keys.ENTER);
 			Thread.sleep(5000);
 			String classname = driver.findElement(By.xpath("(//*[@class='pagination'])//li[3]")).getAttribute("class");
 			System.out.println("The class name is :" + classname);
-			Assert.assertEquals(classname, "paginate_button active");
+			Assert.assertEquals(classname, "active");
 		} else {
 			System.out.println("No more pages found");
 		}
@@ -998,5 +999,51 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 		}else {
 			System.out.println("No Cancel Btn Displayed");
 		}
+	}
+	
+	public void LocationExport(WebElement Export, WebElement ExportType) throws InterruptedException {
+		scrollByElement(Export);
+		clickelement(Export);
+		Thread.sleep(3000);
+		scrollByElement(ExportType);
+		clickelement(ExportType);
+	}
+	
+	@SuppressWarnings("deprecation")
+	public List<String> GetDataUsingColName(String PathofXL, String Col_Name) throws Exception {
+		FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
+		Workbook wb = new XSSFWorkbook(excelFilePath);
+		Sheet sh = wb.getSheetAt(0);
+		Row row = sh.getRow(0);
+		int col = row.getLastCellNum();
+		int Last_row = sh.getLastRowNum();
+		int col_num = 0;
+		System.out.println("" + col);
+		List<String> ColData = new ArrayList<String>();
+		System.out.println("The column name is : " +Col_Name);
+		for (int i = 0; i < row.getLastCellNum(); i++) {
+			if ((row.getCell(i).toString()).equals(Col_Name)) {
+				col_num = i;
+				System.out.println("" + col_num);
+			}
+		}
+		String cellValue = null;
+		for (int j = 1; j <= Last_row; j++) {
+			row = sh.getRow(j);
+			Cell cell = row.getCell(col_num);
+			if (cell != null) {
+				if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+					cellValue = cell.getStringCellValue().toString();
+					if(!(cellValue.equals(""))) {
+					ColData.add(cellValue);
+					}else {
+						System.out.println("No value in the cell");
+					}
+				}
+				System.out.println(":" + ColData);
+				wb.close();
+			}
+		}
+		return ColData;
 	}
 }

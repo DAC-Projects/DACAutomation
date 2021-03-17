@@ -12,10 +12,10 @@
 			<class name="com.dac.testcases.SA.ReviewsFeed_Test" />  -->
 			<!-- <class name = "com.dac.testcases.SA.Reviews_Insights_Test"/>
 			<class name = "com.dac.testcases.SA.Response_Management_Test"/> -->
-			<!-- <class name = "com.dac.testcases.SA.ReviewsFeed_RespondToReviews_Source_Rating_Content_Test"/> -->
+			<!-- <class name = "com.dac.testcases.SA.ReviewsFeed_RespondToReviews_Source_Rating_Content_Test"/>
 			<class name = "com.dac.testcases.SA.ReviewsFeed_RespondToReviews_Sentiment_Category_Content_Test"/>
-			<!-- <class name = "com.dac.testcases.SA.ReviewsFeed_RespondToReviews_Keyword_Tag_Test"/>
-			<class name = "com.dac.testcases.SA.ReviewsFeed_Sorting_nd_Export_Verification_Test"/> -->
+			<class name = "com.dac.testcases.SA.ReviewsFeed_RespondToReviews_Keyword_Tag_Test"/> -->
+			<class name = "com.dac.testcases.SA.ReviewsFeed_Sorting_nd_Export_Verification_Test"/>
 		</classes>
 	</test>
 </suite>
