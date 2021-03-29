@@ -271,9 +271,9 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	}
 
 	
-	/*  * //Test to compare vendors in the application in Visibility Page
+	   //Test to compare vendors in the application in Visibility Page
 	  
-	  @SuppressWarnings("unchecked")
+	/*  @SuppressWarnings("unchecked")
 	  
 	  @Test(dependsOnMethods = {"verifyTableDataoExport"},groups = {"smoke"},
 	  description ="Verify Site Vendors List") public void
@@ -319,6 +319,26 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 			data.verifyLocationFilterSiteAddress(Location);
 		}else {
 			System.out.println("No location selected");
+		}
+	}
+	
+	@Test(priority = 15, description = "Test to verify filter data is in order")
+	public void verifyFilterDataOrder() throws Exception {
+		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
+		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
+		String Country1 = wb1.getCellValue(1, wb1.seacrh_pattern("Country", 0).get(0).intValue());
+		if(Country1.equals("null")) {
+			CurrentState.getDriver().navigate().refresh();
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "FilterOrder");
+		wb.deleteEmptyRows();
+		String Group = wb.getCellValue(1, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		String CountryCode = wb.getCellValue(1, wb.seacrh_pattern("Country", 0).get(0).intValue());
+		String State = wb.getCellValue(1, wb.seacrh_pattern("State", 0).get(0).intValue());
+		String City = wb.getCellValue(1, wb.seacrh_pattern("City", 0).get(0).intValue());
+		String Location = wb.getCellValue(1, wb.seacrh_pattern("Location", 0).get(0).intValue());
+		data.GetDataListnVerifyOrder(Group, CountryCode, State, City, Location);
+		}else {
+			System.out.println("The group is not empty");
 		}
 	}
 

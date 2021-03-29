@@ -14,6 +14,7 @@ import org.testng.asserts.SoftAssert;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_Accuracy_Page;
+import com.dac.main.POM_TPSEE.TPSEE_AllLocations_Page;
 import com.dac.main.POM_TPSEE.TPSEE_Visibility_Page;
 
 import resources.BaseClass;
@@ -320,6 +321,26 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(),
 				"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
 	}
+	
+	@Test(priority = 17, description = "Test to verify filter data is in order")
+	public void verifyFilterDataOrder() throws Exception {
+		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
+		String Country1 = wb1.getCellValue(1, wb1.seacrh_pattern("Country", 0).get(0).intValue());
+		if(Country1.equals("null")) {
+			CurrentState.getDriver().navigate().refresh();
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "FilterOrder");
+		wb.deleteEmptyRows();
+		String Group = wb.getCellValue(1, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		String CountryCode = wb.getCellValue(1, wb.seacrh_pattern("Country", 0).get(0).intValue());
+		String State = wb.getCellValue(1, wb.seacrh_pattern("State", 0).get(0).intValue());
+		String City = wb.getCellValue(1, wb.seacrh_pattern("City", 0).get(0).intValue());
+		String Location = wb.getCellValue(1, wb.seacrh_pattern("Location", 0).get(0).intValue());
+		data.GetDataListnVerifyOrder(Group, CountryCode, State, City, Location);
+		}else {
+			System.out.println("The group is not empty");
+		}
+	}
 
 /*	@Test(priority = 17, groups = { "smoke" }, description = "Test for verifying sitetable in Visibility page")
 	public void verifyTableHeaders() throws Exception {
@@ -424,7 +445,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		}
 	}
 	
-	@Test(priority = 23, description = "Test to verify location details")
+	/*@Test(priority = 23, description = "Test to verify location details")
 	public void VerifyLocationDetailsLocationTab() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
@@ -449,7 +470,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 			System.out.println("No location selected");
 		}
 	}
-
+*/
 	/**
 	 * // Test for compare number of rows from export table and table data in
 	 *

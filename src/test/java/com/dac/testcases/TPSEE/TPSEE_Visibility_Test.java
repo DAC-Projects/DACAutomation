@@ -12,6 +12,7 @@ import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
+import com.dac.main.POM_TPSEE.TPSEE_ContentAnalysis_Page;
 import com.dac.main.POM_TPSEE.TPSEE_Visibility_Page;
 
 import resources.BaseClass;
@@ -278,7 +279,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * Test to export a file as PDF of applied date
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 12, groups = {
 			"smoke" }, dataProvider = "testData", description = "Test for export file as Visibility History pdf")
 	public void PDFHistoryExport(String from_day, String from_month, String from_year, String to_day, String to_month,
@@ -294,7 +295,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		Thread.sleep(5000);
 		data.hstrypdfexport();
 		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
-	}*/
+	}
 
 	/**
 	 * Test for Comparing Tooltip and overview report in Visibility Page
@@ -512,6 +513,26 @@ public class TPSEE_Visibility_Test extends BaseClass {
 			data.verifyLocationFilterSiteAddress(Location);
 		}else {
 			System.out.println("No location selected");
+		}
+	}
+	
+	@Test(priority = 32, description = "Test to verify filter data is in order")
+	public void verifyFilterDataOrder() throws Exception {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
+		String Country1 = wb1.getCellValue(1, wb1.seacrh_pattern("Country", 0).get(0).intValue());
+		if(Country1.equals("null")) {
+			CurrentState.getDriver().navigate().refresh();
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "FilterOrder");
+		wb.deleteEmptyRows();
+		String Group = wb.getCellValue(1, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		String CountryCode = wb.getCellValue(1, wb.seacrh_pattern("Country", 0).get(0).intValue());
+		String State = wb.getCellValue(1, wb.seacrh_pattern("State", 0).get(0).intValue());
+		String City = wb.getCellValue(1, wb.seacrh_pattern("City", 0).get(0).intValue());
+		String Location = wb.getCellValue(1, wb.seacrh_pattern("Location", 0).get(0).intValue());
+		data.GetDataListnVerifyOrder(Group, CountryCode, State, City, Location);
+		}else {
+			System.out.println("The group is not empty");
 		}
 	}
 }

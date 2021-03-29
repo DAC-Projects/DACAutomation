@@ -11,6 +11,7 @@ import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
+import com.dac.main.POM_TPSEE.TPSEE_GMB;
 import com.dac.main.POM_TPSEE.TPSEE_GoogleRanking_Page;
 
 import resources.BaseClass;
@@ -321,5 +322,25 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.TopButton();
 		addEvidence(CurrentState.getDriver(), "Top Button click verification", "yes");
+	}
+	
+	@Test(priority = 17, description = "Test to verify filter data is in order")
+	public void verifyFilterDataOrder() throws Exception {
+		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
+		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
+		String Country1 = wb1.getCellValue(1, wb1.seacrh_pattern("Country", 0).get(0).intValue());
+		if(Country1.equals("null")) {
+			CurrentState.getDriver().navigate().refresh();
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "FilterOrder");
+		wb.deleteEmptyRows();
+		String Group = wb.getCellValue(1, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		String CountryCode = wb.getCellValue(1, wb.seacrh_pattern("Country", 0).get(0).intValue());
+		String State = wb.getCellValue(1, wb.seacrh_pattern("State", 0).get(0).intValue());
+		String City = wb.getCellValue(1, wb.seacrh_pattern("City", 0).get(0).intValue());
+		String Location = wb.getCellValue(1, wb.seacrh_pattern("Location", 0).get(0).intValue());
+		data.GetDataListnVerifyOrder(Group, CountryCode, State, City, Location);
+		}else {
+			System.out.println("The group is not empty");
+		}
 	}
 }

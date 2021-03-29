@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
+import com.dac.main.POM_TPSEE.TPSEE_Accuracy_Page;
 import com.dac.main.POM_TPSEE.TPSEE_Bing_Page;
 import com.dac.main.POM_TPSEE.TPSEE_GoogleRanking_Page;
 
@@ -289,6 +290,26 @@ public class TPSEE_Bing_Test extends BaseClass {
 			}
 		} else {
 			System.out.println("No Data Available");
+		}
+	}
+	
+	@Test(priority = 12, description = "Test to verify filter data is in order")
+	public void verifyFilterDataOrderBingFacebook() throws Exception {
+		data = new TPSEE_Bing_Page(CurrentState.getDriver());
+		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "Bing");
+		String Country1 = wb1.getCellValue(1, wb1.seacrh_pattern("Country", 0).get(0).intValue());
+		if(Country1.equals("null")) {
+			CurrentState.getDriver().navigate().refresh();
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "FilterOrderBing");
+		wb.deleteEmptyRows();
+		String Group = wb.getCellValue(1, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		String CountryCode = wb.getCellValue(1, wb.seacrh_pattern("Country", 0).get(0).intValue());
+		String State = wb.getCellValue(1, wb.seacrh_pattern("State", 0).get(0).intValue());
+		String City = wb.getCellValue(1, wb.seacrh_pattern("City", 0).get(0).intValue());
+		String Location = wb.getCellValue(1, wb.seacrh_pattern("Location", 0).get(0).intValue());
+		data.GetDataListnVerifyOrderBingFacebook(Group, CountryCode, State, City, Location);
+		}else {
+			System.out.println("The group is not empty");
 		}
 	}
 

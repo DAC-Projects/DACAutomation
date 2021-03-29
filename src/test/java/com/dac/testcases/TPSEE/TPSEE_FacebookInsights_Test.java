@@ -65,7 +65,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		try {
 			int count = 1;
-			ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+			ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Facebook");
 			wb.deleteEmptyRows();
 			TPSEE_FacebookInsights_Page s = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 			for (int i = 1; i <= wb.getRowCount(); i++) {
@@ -175,7 +175,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * @param to_year
 	 * @throws Exception
 	 */
-/*	@Test(priority = 7, enabled = true, dataProvider = "testData")
+	@Test(priority = 7, enabled = true, dataProvider = "testData")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
@@ -191,7 +191,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 				CurrentState.getDriver().navigate().refresh();
 			}
 		}
-	}*/
+	}
 
 	/**
 	 * Test to verify Pie Chart Tooltip Data
@@ -270,6 +270,27 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	@Test(priority = 11, description = "Test to verify filter data is in order")
+	public void verifyFilterDataOrderBingFacebook() throws Exception {
+		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
+		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
+		String Country1 = wb1.getCellValue(1, wb1.seacrh_pattern("Country", 0).get(0).intValue());
+		if(Country1.equals("null")) {
+			CurrentState.getDriver().navigate().refresh();
+			data.clickDone();
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "FilterOrderFacebook");
+		wb.deleteEmptyRows();
+		String Group = wb.getCellValue(1, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		String CountryCode = wb.getCellValue(1, wb.seacrh_pattern("Country", 0).get(0).intValue());
+		String State = wb.getCellValue(1, wb.seacrh_pattern("State", 0).get(0).intValue());
+		String City = wb.getCellValue(1, wb.seacrh_pattern("City", 0).get(0).intValue());
+		String Location = wb.getCellValue(1, wb.seacrh_pattern("Location", 0).get(0).intValue());
+		data.GetDataListnVerifyOrderBingFacebook(Group, CountryCode, State, City, Location);
+		}else {
+			System.out.println("The group is not empty");
 		}
 	}
 

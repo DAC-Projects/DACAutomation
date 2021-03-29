@@ -144,7 +144,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "//select[@name='inaccuracy_results_length']")
 	private WebElement Resultperpage;
 	
-	@FindBy(xpath = "//input[@class='page-input form-control form-control-sm']")
+	@FindBy(xpath = "//input[contains(@class,'page-input form-control form-control-sm'])")
 	private WebElement gotopage;
 	
 	@FindBy(xpath = "//div[@id='inaccuracy_results_info']")

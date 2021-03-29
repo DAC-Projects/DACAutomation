@@ -12,6 +12,7 @@ import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_GMB;
 import com.dac.main.POM_TPSEE.TPSEE_GoogleRanking_Page;
+import com.dac.main.POM_TPSEE.TPSEE_Visibility_Page;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -120,9 +121,9 @@ public class TPSEE_GMB_Test extends BaseClass {
 				String State = wb.getCellValue(i, wb.seacrh_pattern("State", 0).get(0).intValue());
 				String City = wb.getCellValue(i, wb.seacrh_pattern("City", 0).get(0).intValue());
 				String Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
-				s.applyGlobalFilter(Group, CountryCode, State, City, Location);
+				s.LAVapplyGlobalFilter(Group, CountryCode, State, City, Location);
 				System.out.println(Group + ", " + CountryCode + ", " + State + ", " + City + ", " + Location);
-				s.clickApplyFilterBTN();
+				s.clickApplyFilterBTNLAV();
 				BaseClass.addEvidence(CurrentState.getDriver(), "Applied global filter: " + Group + ", " + CountryCode
 						+ ", " + State + ", " + City + ", " + Location + "", "yes");
 			}
@@ -646,7 +647,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 		}
 	}
 
-	/*@Test(priority = 37, enabled = true, dataProvider = "testData", description = "Test for Manual date selection")
+	@Test(priority = 37, enabled = true, dataProvider = "testData", description = "Test for Manual date selection")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		String UIdat = data.IsDataAvailable();
@@ -671,7 +672,33 @@ public class TPSEE_GMB_Test extends BaseClass {
 		} else {
 			System.out.println("No Data Available for GMB");
 		}
-	}*/
+	}
+	
+	@Test(priority = 38, description = "Test to verify filter data is in order")
+	public void verifyFilterDataOrder() throws Exception {
+		data = new TPSEE_GMB(CurrentState.getDriver());
+		np = new Navigationpage(CurrentState.getDriver());
+		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
+		String Country1 = wb1.getCellValue(1, wb1.seacrh_pattern("Country", 0).get(0).intValue());
+		if(Country1.equals("null")) {
+			CurrentState.getDriver().navigate().refresh();
+			try {
+				np.clickNotificationPopUp();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "FilterOrder");
+		wb.deleteEmptyRows();
+		String Group = wb.getCellValue(1, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		String CountryCode = wb.getCellValue(1, wb.seacrh_pattern("Country", 0).get(0).intValue());
+		String State = wb.getCellValue(1, wb.seacrh_pattern("State", 0).get(0).intValue());
+		String City = wb.getCellValue(1, wb.seacrh_pattern("City", 0).get(0).intValue());
+		String Location = wb.getCellValue(1, wb.seacrh_pattern("Location", 0).get(0).intValue());
+		data.GetDataListnVerifyOrder(Group, CountryCode, State, City, Location);
+		}else {
+			System.out.println("The group is not empty");
+		}
+	}
 
 	@SuppressWarnings("finally")
 	@DataProvider
