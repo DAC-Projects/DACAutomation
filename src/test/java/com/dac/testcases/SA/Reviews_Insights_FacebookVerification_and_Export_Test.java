@@ -80,7 +80,7 @@ public class Reviews_Insights_FacebookVerification_and_Export_Test extends BaseC
 	 * 
 	 * @throws IOException
 	 */
-	@Test(priority = 6, description = "Test to verify data in CSV")
+	@Test(priority = 6, description = "Test to verify data in CSV" , dependsOnMethods = {"ExportLocationData"})
 	public void verifyCSVData() throws IOException {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.ReadDataCSV();

@@ -9,13 +9,13 @@
 	<test name="ReviewsBetaGlobalFilter">
 		<parameter name="browser" value="chrome" />		
 		<classes>
-			<!-- <class name="com.dac.testcases.SA.Reviews_Insights_TextVerification_Test" />
+			<class name="com.dac.testcases.SA.Reviews_Insights_TextVerification_Test" />
 			<class name="com.dac.testcases.SA.Reviews_Insights_KPIVerification_Test" />
 			<class name="com.dac.testcases.SA.Review_Insights_HighChartVerification_Test" />
 			<class name="com.dac.testcases.SA.Reviews_Insights_FacebookVerification_and_Export_Test" />
-			<class name="com.dac.testcases.SA.ReviewsInsights_Feed_DataComparison_GlobalFilter_Test" /> 
-			<class name="com.dac.testcases.SA.Reviews_Insights_and_Feed_DateFilterDataVerication_Test" />    -->
-			<class name="com.dac.testcases.SA.Reviews_Insights_and_Feed_DataVerification_LocationFilter_Test" />
+			<class name="com.dac.testcases.SA.ReviewsInsights_Feed_DataComparison_GlobalFilter_Test" />
+			<class name="com.dac.testcases.SA.Reviews_Insights_and_Feed_DateFilterDataVerication_Test" />    
+			<class name="com.dac.testcases.SA.Reviews_Insights_and_Feed_LocationFilter_Test" />
 		</classes>
 	</test>
 	

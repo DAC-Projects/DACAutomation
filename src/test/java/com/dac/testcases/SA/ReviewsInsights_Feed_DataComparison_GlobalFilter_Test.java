@@ -51,9 +51,9 @@ public class ReviewsInsights_Feed_DataComparison_GlobalFilter_Test extends BaseC
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateToSA_ReviewsFeed();
 		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes");
-		data = new Reviews_Insights(CurrentState.getDriver());
+		/*data = new Reviews_Insights(CurrentState.getDriver());
 		data.CancelWalkme();
-		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes"); 
+		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes"); */
 	}
 
 	/**

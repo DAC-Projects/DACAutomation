@@ -1118,12 +1118,17 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 		deletefile();
 		Thread.sleep(3000);
 		waitForElement(ExportBtn, 10);
-		scrollByElement(ExportBtn);
+		scrollByElement(ExportBtn); 
+		if(ExportBtn.isEnabled()) {
 		clickelement(ExportBtn);
 		Thread.sleep(4000);
 		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + InsightsExport));
 		//convertExports(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + InsightsExport));
 		Thread.sleep(3000);
+		}else {
+			System.out.println("Export Button is disabled");
+			Assert.fail("Export is disabled");
+		}
 	}
 
 	/**

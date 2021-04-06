@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -40,6 +41,7 @@ public class Reviews_Feed_Response_To_Reviews extends SA_Abstarct_Methods{
 	List<String> URL = new ArrayList<String>();
 	List<String> BusinssName = new ArrayList<String>();
 	List<String> Location = new ArrayList<String>();
+	public static String time_Stamp;
 	String Vendor = null;
 	String Rating = null;
 	String contentsel;
@@ -177,6 +179,19 @@ public class Reviews_Feed_Response_To_Reviews extends SA_Abstarct_Methods{
 
 	@FindBy(xpath = "(//div[@id='RespondToReviews']//*[@class='pagination']//a)[last()]")
 	private WebElement paginationNext;
+	
+	
+	@FindBy(xpath = "(//div[@id='Review']//*[@class='pagination']//a)")
+	private List<WebElement> pagination1;
+
+	@FindBy(xpath = "(//div[@id='Review']//*[@class='pagination']//a)[1]")
+	private WebElement paginationPrev1;
+
+	@FindBy(xpath = "(//div[@id='Review']//*[@class='pagination']//a)[last()-1]")
+	private WebElement paginationLast1;
+
+	@FindBy(xpath = "(//div[@id='Review']//*[@class='pagination']//a)[last()]")
+	private WebElement paginationNext1;
 
 	/*-------------------------Pagination-----------------------*/
 	/**********************Locators End******************************/
@@ -1980,7 +1995,7 @@ public class Reviews_Feed_Response_To_Reviews extends SA_Abstarct_Methods{
 			waitForElement(paginationPrev, 10);
 			clickelement(paginationPrev);
 			WebElement sentiment;
-			try {
+			try { 
 				if (paginationNext.isDisplayed()) {
 					int size = SentimentContainer.size();
 					System.out.println("The size is :" + size);
@@ -2088,5 +2103,178 @@ public class Reviews_Feed_Response_To_Reviews extends SA_Abstarct_Methods{
 		scrollByElement(gotopage);
 		GoTopage(gotopage);
 	}
+	
+	public void verifyReviewsCount() throws Exception {
+		waitForElement(ReviewCount, 10);
+		boolean dataavailable = DataAvailable();
+		if (dataavailable == false) {
+			scrollByElement(ReviewCount);
+			int RCount = Integer.parseInt(ReviewCount.getText());
+			System.out.println("The Review Count is :" + RCount);
+			BaseClass.addEvidence(driver, "Test to verify review count", "yes");
+			int count = SANumOfentriesinPage(Entry);
+			System.out.println("The number of entries :" + count);
+			soft.assertEquals(count, RCount);
+			int lastpage = Integer
+					.parseInt(driver.findElement(By.xpath("(//*[@id='RespondToReviews']//*[@class='pagination']//a)[last()-1]")).getText());
+			System.out.println("Last Page Number is :" + lastpage);
+			waitForElement(paginationPrev, 10);
+			clickelement(paginationPrev);
+			int linkcount = 0;
+			try {
+				if (paginationNext.isDisplayed()) {
+					List<WebElement> Link = driver.findElements(By.xpath("//div[@id='RespondToReviews']//a[contains(text(),'Add Owner Response')]"));
+					int size = Link.size();
+					for (int j = 1; j <= size; j++) {
+						WebElement ele = driver.findElement(By.xpath("(//div[@id='RespondToReviews']//a[contains(text(),'Add Owner Response')])["+ j +"]"));
+						scrollByElement(ele);
+						linkcount = linkcount+1;
+						System.out.println("The link count is : " +linkcount);
+					} if (paginationNext.isEnabled()) {
+						scrollByElement(paginationNext);
+						paginationNext.click();
+						JSWaiter.waitJQueryAngular();
+					}
+					System.out.println("The total count is : " +linkcount);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			soft.assertEquals(linkcount, RCount);
+			soft.assertAll();
+		} else {
+			System.out.println("No Data Available");
+		}
+	}
+	
+	
+	public int getReviewCount() throws Exception {
+		waitForElement(ReviewCount, 10);
+		int RCount = 0;
+		boolean dataavailable = DataAvailable();
+		if (dataavailable == false) {
+			scrollByElement(ReviewCount);
+			RCount = Integer.parseInt(ReviewCount.getText());
+			BaseClass.addEvidence(driver, "Test to get Review count", "yes");
+			System.out.println("The Review Count is :" + RCount);
+		}
+		return RCount;
+	}	
+	
+	
+	public boolean BadReview() {
+		boolean b =false;
+		try {
+		WebElement ele = driver.findElement(By.xpath("(//div[@class='modal-dialog']//button[@data-dismiss='modal']/following::div//h3[@class='modal-title'])/../..//button[@data-dismiss='modal']"));
+		if(ele.isDisplayed()) {
+			clickelement(ele);
+			b = true;
+		}else {
+			b = false;
+		}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
+	
+	public void AddResponse(String Response) {
+		boolean dataavailable = DataAvailable();
+		if (dataavailable == false) {
+			int lastpage = Integer
+					.parseInt(driver.findElement(By.xpath("(//*[@id='RespondToReviews']//*[@class='pagination']//a)[last()-1]")).getText());
+			System.out.println("Last Page Number is :" + lastpage);
+			waitForElement(paginationPrev, 10);
+			clickelement(paginationPrev);
+			
+			try {
+			Outer :	if (paginationNext.isDisplayed()) {
+					List<WebElement> AddLinks = driver.findElements(By.xpath("//div[@id='RespondToReviews']//a[contains(text(),'Add Owner Response')]"));
+					int size = AddLinks.size();
+					for(int i = 1; i <= size; i++ ) {
+						WebElement AddLink = driver.findElement(By.xpath("(//div[@id='RespondToReviews']//a[contains(text(),'Add Owner Response')])["+ i +"]"));
+						clickelement(AddLink);
+						boolean b = BadReview();
+						if(b==false) {
+						/*WebElement ele = driver.findElement(By.xpath("(//div[@class='modal-dialog']//button[@data-dismiss='modal']/following::div//h3[@class='modal-title'])/../..//button[@data-dismiss='modal']"));
+						if(!(ele.isDisplayed())) {*/
+							time_Stamp = timeStamp();
+							System.out.println("The time stamp is : " +time_Stamp);
+							WebElement ele1 = driver.findElement(By.xpath("(//textarea[@placeholder='Enter response here'])["+ i +"]"));
+							scrollByElement(ele1);
+							clickelement(ele1);
+							ele1.sendKeys(Response + time_Stamp);
+							WebElement ele2 = driver.findElement(By.xpath("(//button[contains(text(),'Submit')])["+ i +"]"));
+							clickelement(ele2);
+							WebElement ele3 = driver.findElement(By.xpath("(//button[contains(text(), 'Ok')])"));
+							clickelement(ele3);
+							JSWaiter.waitJQueryAngular();
+							break Outer;
+						}else {
+							System.out.println("Cannot be added because it's a bad review");
+						}
+					}if (paginationNext.isEnabled()) {
+						scrollByElement(paginationNext);
+						paginationNext.click();
+						JSWaiter.waitJQueryAngular();
+					}
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else {
+			System.out.println("No Data Available");
+		}
+	}
+	
+	public String timeStamp() {
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
+		String formattedDate = sdf.format(date);
+		System.out.println("Timestamp is :"+formattedDate);
+		return formattedDate;		
+	}
+	
+	public void clickonReviews() {
+		WebElement RevTab = driver.findElement(By.xpath("//li[@id='liReview']"));
+		scrollByElement(RevTab);
+		clickelement(RevTab);
+		JSWaiter.waitJQueryAngular();
+	}
 
+	public void VerifyResponse(String Response) {
+		boolean dataavailable = DataAvailable();
+		if (dataavailable == false) {
+			int lastpage = Integer
+					.parseInt(driver.findElement(By.xpath("(//*[@id='Review']//*[@class='pagination']//a)[last()-1]")).getText());
+			System.out.println("Last Page Number is :" + lastpage);
+			waitForElement(paginationPrev1, 10);
+			clickelement(paginationPrev1);
+			try {
+			Outer :	if (paginationNext1.isDisplayed()) {
+					List<WebElement> AddLinks = driver.findElements(By.xpath("//div[@class='owner-responses rrm']"));
+					int size = AddLinks.size();
+					for(int i = 1; i <= size; i++ ) {
+						WebElement ResponseText = driver.findElement(By.xpath("(//div[@class='owner-responses rrm'])["+ i +"]"));
+						scrollByElement(ResponseText);
+						String txt = ResponseText.getText();
+						System.out.println("The Response text is : " +txt);
+						BaseClass.addEvidence(driver, "Test to verify response added", "yes");
+						if(txt.contains(Response + time_Stamp)) {
+							break Outer;
+						}
+					}if (paginationNext1.isEnabled()) {
+						scrollByElement(paginationNext1);
+						paginationNext1.click();
+						JSWaiter.waitJQueryAngular();
+					}
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else {
+			System.out.println("No Data Available");
+		}
+	}
+	
 }
