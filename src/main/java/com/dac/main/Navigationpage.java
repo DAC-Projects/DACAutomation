@@ -167,6 +167,12 @@ public class Navigationpage extends BasePage{
     
 	@FindBy(xpath="//a[@href='/CompetitiveAnalysis/Review']/span")
 	private WebElement CA_Reviewpage;
+	//----------------SC--------------
+	@FindBy(xpath="//*[@id='social-media-post']/a")
+	private WebElement SC_Posts;
+	
+	@FindBy(xpath="//*[@id='socialMediaContentManagement']/a")
+	private WebElement SC_ContentManagement;
 
   //---------------------- TransparenSEE-------------------------------
     @FindBy(id="VA")
@@ -429,6 +435,21 @@ public class Navigationpage extends BasePage{
 		waitUntilLoad(driver);
 	}
 	
+	/** To click on Social Posts link in LHS to navigate to Social Posts page   */
+	public void navigateToSC_Posts() {
+		wait.until(ExpectedConditions.visibilityOf(SC_Posts));
+		scrollByElement(SC_Posts);
+		clickelement(SC_Posts);
+		waitUntilLoad(driver);
+	}
+	
+	/** To click on Content Management link in LHS to navigate to Content Management page   */
+	public void navigateToSC_ContentManagement() {
+		wait.until(ExpectedConditions.visibilityOf(SC_ContentManagement));
+		scrollByElement(SC_ContentManagement);
+		clickelement(SC_ContentManagement);
+		waitUntilLoad(driver);
+	}
 	private void DB_LangList() {
 		clickelement(DBLangLink);
 		clickelement(DBLangPopUp);

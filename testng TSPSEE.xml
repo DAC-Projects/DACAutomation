@@ -15,10 +15,13 @@
     <classes>
     	
     	
-    	<class name= "com.dac.testcases.TPSEE.TPSEE_Login_Test" /> 
+		<class name= "com.dac.testcases.SC.SC_SocialPostsApprover_Test" /> 
 	 	<!-- 
-	 	<class name= "com.dac.testcases.TPSEE.TPSEE_LocalReportsScoreChange_Test" /> 
+		<class name= "com.dac.testcases.SC.SC_SocialPostsCreator_Test" /> 
+    	<class name= "com.dac.testcases.SA.SA_FrequentKeywords_Test" /> 
     	<class name= "com.dac.testcases.TPSEE.TPSEE_ReviewNotifications_Test" /> 
+    	<class name= "com.dac.testcases.TPSEE.TPSEE_Login_Test" /> 
+	 	<class name= "com.dac.testcases.TPSEE.TPSEE_LocalReportsScoreChange_Test" /> 
 	 	<class name= "com.dac.testcases.TPSEE.TPSEE_ReviewStream_Test" /> 
 	 	<class name= "com.dac.testcases.TPSEE.TPSEE_Visibility_Test" /> 
 	  	<class name= "com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" /> 
@@ -27,7 +30,8 @@
 		 <class name= "com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />  
 		<class name= "com.dac.testcases.TPSEE.TPSEE_Groups_Test" /> 
 		<class name= "com.dac.testcases.TPSEE.TPSEE_ReviewStream_Test" /> 
-		<class name= "com.dac.testcases.TPSEE.TPSEE_DisplayedReviewScore_Test" /> -->
+		<class name= "com.dac.testcases.TPSEE.TPSEE_DisplayedReviewScore_Test" /> 
+		-->
      </classes>
  </test>
 </suite>

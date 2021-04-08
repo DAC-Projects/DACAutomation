@@ -23,8 +23,8 @@ public interface IAutoconst {
 	 password="DAC@12345";
 
 	//account credentials
-//	String baseUrl="http://staging.manage.dacgroup.com:82/accounts/";
-	String baseUrl="https://manage.dacgroup.com/accounts/";//Staging URL
+//	String baseUrl="https://manage.dacgroup.com/accounts/";//Staging URL
+	String baseUrl="http://staging.manage.dacgroup.com:82/accounts/";
 	
 	String[] competitiveAnalysis = {baseUrl+"competitive-analysis-test-account-beta-1", "mobittah98@yahoo.ca"};
 	String[] deepfieldAccount = {baseUrl+"deepfield-software-incorporated-beta", "bmobit@dacgroup.com"};
@@ -35,11 +35,15 @@ public interface IAutoconst {
 	
 	//beta
 //	String[] transparenSEE = {baseUrl+"aurify-brands-test-beta", "jmohan@dacgroup.com"}; 
+//	String[] transparenSEE = {baseUrl+"fit4less-beta", "skanna@dacgroup.com"}; 
+	String[] transparenSEE = {baseUrl+"social-beings-beta", "rohit.watson@gmail.com"}; //SC Approver
+//	String[] transparenSEE = {baseUrl+"social-beings-beta", "vrohitmenon@gmail.com"}; //SC Creator
+	
 //	String[] transparenSEE = {baseUrl+"automation-test-account-tsee-beta","amahadev@dacgroup.com"};//Account Owner
 //	String[] transparenSEE = {baseUrl+"automation-test-account-tsee-beta","jmann@dacgroup.com"}; //Location Manager
 	
 	//Staging
-	String[] transparenSEE = {baseUrl+"international-location-test-account","chappel.mann+stc@gmail.com"};//Account Owner
+//	String[] transparenSEE = {baseUrl+"international-location-test-account","chappel.mann+stc@gmail.com"};//Account Owner
 //	String [] transparenSEE = {baseUrl +"international-location-test-account","chappel.mann+stl2@gmail.com"}; //- Location Manager
 	
 	String userLocale="IN";
