@@ -336,7 +336,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Test to verify GoTo and Results Per Page", "yes");
 	}
 	
-	/*@Test(priority = 16, description = "Test to verify sorting data of name column")
+	@Test(priority = 16, description = "Test to verify sorting data of name column")
 	public void verifyfoundnamecolumn() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.verifyNameFound();
@@ -376,7 +376,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.verifyPhoneFound();
 		addEvidence(CurrentState.getDriver(), "Test to verify name is sorted or not", "yes");
-	}*/
+	}
 
 	/**
 	 * Test to verify Top button functionality

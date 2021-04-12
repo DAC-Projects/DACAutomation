@@ -273,68 +273,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	@FindBy(xpath = "(//*[@class='pagination']//a)[last()]")
 	private List<WebElement> paginationLast;
 
-	/**
-	 * Get data using column name and sum for Bing and GMB Page
-	 * 
-	 * @param PathofXL
-	 * @param Col_Name
-	 * @return
-	 * @throws Exception
-	 */
-	@SuppressWarnings({ "unused", "deprecation" })
-	public double GetDRSDataUsingColName(String PathofXL, String Col_Name) throws Exception {
-		FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
-		Workbook wb = new XSSFWorkbook(excelFilePath);
-		Sheet sh = wb.getSheetAt(0);
-		Row row = sh.getRow(0);
-		int col = row.getLastCellNum();
-		int Last_row = sh.getLastRowNum();
-		int col_num = 0;
-		System.out.println("" + col);
-		List<Double> score = new ArrayList<Double>();
-		for (int i = 0; i < row.getLastCellNum(); i++) {
-			if ((row.getCell(i).toString()).equals(Col_Name)) {
-				col_num = i;
-				System.out.println("" + col_num);
-			}
-		}
-		String s = null;
-		double y = 0;
-		double sum = 0;
-		double average = 0;
-		double finalaverage = 0.00;
-		for (int j = 1; j <= Last_row; j++) {
-			row = sh.getRow(j);
-			Cell cell = row.getCell(col_num);
-			if (cell != null) {
-				if ((cell.getCellType() == Cell.CELL_TYPE_STRING)) {
-					String cellValue1 = cell.getStringCellValue().toString();
-					System.out.println("Cell VAlue is :" + cellValue1);
-					if (!cellValue1.contains("N/A")) {
-						double cellValue = Double.parseDouble(cellValue1);
-						System.out.println(cellValue);
-						score.add(cellValue);
-					}
-				}
-				System.out.println("ArrayList contains :" + score);
-
-			} else {
-				System.out.println("Smt wrong");
-			}
-		}
-		int sizeOfList = score.size();
-		System.out.println("Size of List is :" + sizeOfList);
-		for (int i = 0; i <= sizeOfList - 1; i++) {
-			sum = sum + score.get(i);
-		}
-		System.out.println("Total sum is :" + sum);
-		average = sum / sizeOfList;
-		BigDecimal bd = BigDecimal.valueOf(average);
-		bd = bd.setScale(1, RoundingMode.HALF_UP);
-		finalaverage = bd.doubleValue();
-		System.out.println("Final Average Score:" + finalaverage);
-		return finalaverage;
-	}
+	
 
 	/**
 	 * @param Group
@@ -1213,7 +1152,8 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		if (ExportBtn.isDisplayed() & ExportBtn.isEnabled()) {
 			scrollByElement(ExportBtn);
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			action.moveToElement(ExportBtn).click().perform();
+			//action.moveToElement(ExportBtn).click().perform();
+			ExportBtn.click();
 			Thread.sleep(20000);
 		}
 		if (LinkClick.isDisplayed() & LinkClick.isEnabled()) {
@@ -1868,8 +1808,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	 * @param year_YYYY
 	 */
 	private void selectCalender_Date(String calenderField, int day_d, String month_MMM, int year_YYYY) {
-		// clickelement(calenderField);
-		scrollByElement(hstryGrph);
+//		scrollByElement(hstryGrph);
 		driver.findElement(By.xpath(calenderField)).click();
 		int diff = year_YYYY - Integer.parseInt(currentYear_DatePicker.getText());
 		if (diff != 0) {

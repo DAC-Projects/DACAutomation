@@ -26,6 +26,7 @@ public class Response_Management extends SA_Abstarct_Methods {
 
 	static String status;
 	SoftAssert soft = new SoftAssert();
+	public static String time_Stamp;
 
 	public Response_Management(WebDriver driver) {
 		super(driver);
@@ -652,4 +653,81 @@ public class Response_Management extends SA_Abstarct_Methods {
 		BaseClass.addEvidence(driver, "Test to approve response", "yes");
 		Assert.assertEquals(text, "Pending Approval");
 	}
+	
+	public boolean BadReview() {
+		boolean b =false;
+		try {
+		List<WebElement> ele = /*driver.findElement(By.xpath("(//div[@class='modal-dialog']//button[@data-dismiss='modal']/following::div//h3[@class='modal-title'])/../..//button[@data-dismiss='modal']"));
+						*/ driver.findElements(By.xpath("//button[@data-value='false' and contains(text(),'Close')]"));
+		int size = ele.size();
+		if(size > 0) {
+			driver.findElement(By.xpath("//button[@data-value='false' and contains(text(),'Close')]")).click();
+			b = true;
+		}else {
+			b = false;
+		}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
+	
+	public void AddResponse(String Response) {
+		boolean dataavailable = DataAvailable();
+		if (dataavailable == false) {
+			int lastpage = Integer
+					.parseInt(driver.findElement(By.xpath("(//*[@id='Review']//*[@class='pagination']//a)[last()-1]")).getText());
+			System.out.println("Last Page Number is :" + lastpage);
+			waitForElement(paginationPrev, 10);
+			clickelement(paginationPrev);
+			
+			try {
+			Outer :	if (paginationNext.isDisplayed()) {
+					List<WebElement> AddLinks = driver.findElements(By.xpath("//div[@id='Review']//a[contains(text(),'Add Owner Response')]"));
+					int size = AddLinks.size();
+					for(int i = 1; i <= size; i++ ) {
+						WebElement AddLink = driver.findElement(By.xpath("(//div[@id='Review']//a[contains(text(),'Add Owner Response')])["+ i +"]"));
+						clickelement(AddLink);
+						Thread.sleep(5000);
+						boolean b = BadReview();
+						if(b==false) {
+						//WebElement ele = driver.findElement(By.xpath("(//div[@class='modal-dialog']//button[@data-dismiss='modal']/following::div//h3[@class='modal-title'])/../..//button[@data-dismiss='modal']"));
+						//if(!(driver.findElement(By.xpath("//button[@data-value='false' and contains(text(),'Close')]")).isDisplayed())) {
+							time_Stamp = timeStamp();
+							System.out.println("The time stamp is : " +time_Stamp);
+							WebElement ele1 = driver.findElement(By.xpath("(//textarea[@placeholder='Enter response here'])["+ i +"]"));
+							scrollByElement(ele1);
+							clickelement(ele1);
+							ele1.sendKeys(Response + time_Stamp);
+							WebElement ele2 = driver.findElement(By.xpath("(//button[contains(text(),'Submit')])["+ i +"]"));
+							clickelement(ele2);
+							WebElement ele3 = driver.findElement(By.xpath("(//button[contains(text(), 'Ok')])"));
+							clickelement(ele3);
+							JSWaiter.waitJQueryAngular();
+							break Outer;
+						}else {
+							System.out.println("Cannot be added because it's a bad review");
+						}
+					}if (paginationNext.isEnabled()) {
+						scrollByElement(paginationNext);
+						paginationNext.click();
+						JSWaiter.waitJQueryAngular();
+					}
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else {
+			System.out.println("No Data Available");
+		}
+	}
+	
+	public String timeStamp() {
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
+		String formattedDate = sdf.format(date);
+		System.out.println("Timestamp is :"+formattedDate);
+		return formattedDate;		
+	}
+
 }

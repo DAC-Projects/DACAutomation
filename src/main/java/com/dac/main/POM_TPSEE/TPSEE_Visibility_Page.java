@@ -346,7 +346,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	public void exporthistoryvisibilityrptPDF() throws FileNotFoundException, InterruptedException, IOException {
 		JSWaiter.waitJQueryAngular();
 		exporthistrybtn(exportBtn, pdfexport, historypdf);
-		// exportasPDFHistory(exportBtn, pdfexport, historypdf, hstrybtn, pdfclick);
+		//exportasPDFHistory(exportBtn, pdfexport, historypdf, hstrybtn, pdfclick);
 
 	}
 
@@ -357,7 +357,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + VisibilityExportHistoryPdf));
 		verifyfileextension();
 		clickelement(close);
-	}
+		}
 
 	/**
 	 * 
