@@ -15,7 +15,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.dac.main.BasePage;
-import com.dac.testcases.LPAD.LaunchLPAD;
 
 
 public class Page_LocationNavigationTabList extends BasePage {
