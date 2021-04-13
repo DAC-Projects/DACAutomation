@@ -10,7 +10,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 import com.dac.main.BasePage;
-import com.dac.main.POM_LPAD.GetColmunNumber;
 import com.dac.main.POM_LPAD.Page_LPADHome;
 import com.dac.main.POM_LPAD.Page_LPADLogin;
 

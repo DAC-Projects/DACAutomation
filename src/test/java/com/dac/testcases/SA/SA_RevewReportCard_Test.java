@@ -16,7 +16,6 @@ import com.dac.main.Navigationpage;
 import com.dac.main.POM_SA.SA_ReviewReportCard_Page;
 import com.dac.main.POM_SA.SA_gatherData;
 
-import junit.framework.Assert;
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;

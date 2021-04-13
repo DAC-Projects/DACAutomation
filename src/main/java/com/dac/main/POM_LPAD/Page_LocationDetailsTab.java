@@ -16,7 +16,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.dac.main.BasePage;
-import com.dac.testcases.LPAD.LaunchLPAD;
 
 import resources.ExcelHandler;
 import resources.IAutoconst;

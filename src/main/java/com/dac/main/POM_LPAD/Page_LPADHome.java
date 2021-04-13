@@ -21,7 +21,6 @@ import org.testng.Assert;
 import com.aventstack.extentreports.Status;
 import com.dac.main.BasePage;
 
-import junit.framework.AssertionFailedError;
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.IAutoconst;
