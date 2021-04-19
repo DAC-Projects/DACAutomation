@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -31,6 +33,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -264,6 +267,18 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 		JSWaiter.waitJQueryAngular();
 		if (Apply_filter.isDisplayed()) {
 			clickelement(Apply_filter);
+			Thread.sleep(3000);
+		}
+	}
+	
+	/**
+	 * This method used to click on the Apply Filter button
+	 */
+	public void clickApplyFilterBTNDRS() throws InterruptedException {
+		JSWaiter.waitJQueryAngular();
+		WebElement ele = driver.findElement(By.xpath("//button[@id='apply_filter']"));
+		if (ele.isDisplayed()) {
+			clickelement(ele);
 			Thread.sleep(3000);
 		}
 	}
@@ -1045,5 +1060,94 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 			}
 		}
 		return ColData;
+	}
+	
+	/**
+	 * Get data using column name and sum for Bing and GMB Page
+	 * 
+	 * @param PathofXL
+	 * @param Col_Name
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings({ "unused", "deprecation" })
+	public double GetDRSDataUsingColName(String PathofXL, String Col_Name) throws Exception {
+		FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
+		Workbook wb = new XSSFWorkbook(excelFilePath);
+		Sheet sh = wb.getSheetAt(0);
+		Row row = sh.getRow(0);
+		int col = row.getLastCellNum();
+		int Last_row = sh.getLastRowNum();
+		int col_num = 0;
+		System.out.println("" + col);
+		List<Double> score = new ArrayList<Double>();
+		for (int i = 0; i < row.getLastCellNum(); i++) {
+			if ((row.getCell(i).toString()).equals(Col_Name)) {
+				col_num = i;
+				System.out.println("" + col_num);
+			}
+		}
+		String s = null;
+		double y = 0;
+		double sum = 0;
+		double average = 0;
+		double finalaverage = 0.00;
+		for (int j = 1; j <= Last_row; j++) {
+			row = sh.getRow(j);
+			Cell cell = row.getCell(col_num);
+			if (cell != null) {
+				if ((cell.getCellType() == Cell.CELL_TYPE_STRING)) {
+					String cellValue1 = cell.getStringCellValue().toString();
+					System.out.println("Cell VAlue is :" + cellValue1);
+					if (!cellValue1.contains("N/A")) {
+						double cellValue = Double.parseDouble(cellValue1);
+						System.out.println(cellValue);
+						score.add(cellValue);
+					}
+				}
+				System.out.println("ArrayList contains :" + score);
+
+			} else {
+				System.out.println("Smt wrong");
+			}
+		}
+		int sizeOfList = score.size();
+		System.out.println("Size of List is :" + sizeOfList);
+		for (int i = 0; i <= sizeOfList - 1; i++) {
+			sum = sum + score.get(i);
+		}
+		System.out.println("Total sum is :" + sum);
+		average = sum / sizeOfList;
+		BigDecimal bd = BigDecimal.valueOf(average);
+		bd = bd.setScale(1, RoundingMode.HALF_UP);
+		finalaverage = bd.doubleValue();
+		System.out.println("Final Average Score:" + finalaverage);
+		return finalaverage;
+	}
+	
+	/**
+	 * Export as CSV/XLSX of overall report
+	 * 
+	 * @param ExportType
+	 * @param ExportBtn
+	 * @throws InterruptedException
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public void exportVATable(WebElement ExportType, WebElement ExportBtn)
+			throws InterruptedException, FileNotFoundException, IOException {
+		JSWaiter.waitJQueryAngular();
+		if (ExportType.isDisplayed() && ExportType.isEnabled()) {
+			wait.until(ExpectedConditions.visibilityOf(ExportType));
+			scrollByElement(ExportType);
+			ExportType.click();
+			Thread.sleep(5000);
+		}
+		if (ExportBtn.isDisplayed() && ExportBtn.isEnabled()) {
+			wait.until(ExpectedConditions.visibilityOf(ExportBtn));
+			scrollByElement(ExportBtn);
+			ExportBtn.click();
+			Thread.sleep(5000);
+		}
 	}
 }
