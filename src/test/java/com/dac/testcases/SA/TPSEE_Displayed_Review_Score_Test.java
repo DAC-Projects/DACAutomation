@@ -34,7 +34,7 @@ public class TPSEE_Displayed_Review_Score_Test extends BaseClass {
 		// Assert.assertFalse( "sample error", true);
 	}
 	
-/*	@Test(priority = 2, description = "Test to verify highlight of report")
+	@Test(priority = 2, description = "Test to verify highlight of report")
 	public void VerifyDRSHighlight() throws Exception {
 		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
 		data.DRShighlight();
@@ -47,7 +47,7 @@ public class TPSEE_Displayed_Review_Score_Test extends BaseClass {
 		data.verifyTitle("Displayed Review Score",
 				"The displayed review score for each location is what the star rating is on the listing for the previous day. The displayed star rating may be different from the average star rating for the site in the review report if these sites apply a different equation to calculate reviews using factors such as recency. Read Manual");
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
-	}*/
+	}
 
 	@Test(priority = 4, groups = { "smoke" }, description = "Verify Displayed Riview page loads after filter applied")
 	public void verifyFilteringReportsDisplayedReview() throws Exception {
