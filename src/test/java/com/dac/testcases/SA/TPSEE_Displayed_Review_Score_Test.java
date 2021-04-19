@@ -1,4 +1,4 @@
-package com.dac.testcases.TPSEE;
+package com.dac.testcases.SA;
 
 import java.util.List;
 import java.util.Map;
@@ -8,7 +8,7 @@ import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
-import com.dac.main.POM_TPSEE.TPSEE_Displayed_Review_Score_Page;
+import com.dac.main.POM_SA.TPSEE_Displayed_Review_Score_Page;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -34,7 +34,7 @@ public class TPSEE_Displayed_Review_Score_Test extends BaseClass {
 		// Assert.assertFalse( "sample error", true);
 	}
 	
-	@Test(priority = 2, description = "Test to verify highlight of report")
+/*	@Test(priority = 2, description = "Test to verify highlight of report")
 	public void VerifyDRSHighlight() throws Exception {
 		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
 		data.DRShighlight();
@@ -44,10 +44,10 @@ public class TPSEE_Displayed_Review_Score_Test extends BaseClass {
 	@Test(priority = 3, groups = {"smoke" }, description = "Test for verifying title and description of report")
 	public void verifyText() throws Exception {
 		data = new TPSEE_Displayed_Review_Score_Page(CurrentState.getDriver());
-		data.VerifyTitleText1("Displayed Review Score",
+		data.verifyTitle("Displayed Review Score",
 				"The displayed review score for each location is what the star rating is on the listing for the previous day. The displayed star rating may be different from the average star rating for the site in the review report if these sites apply a different equation to calculate reviews using factors such as recency. Read Manual");
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
-	}
+	}*/
 
 	@Test(priority = 4, groups = { "smoke" }, description = "Verify Displayed Riview page loads after filter applied")
 	public void verifyFilteringReportsDisplayedReview() throws Exception {
@@ -71,7 +71,7 @@ public class TPSEE_Displayed_Review_Score_Test extends BaseClass {
 				String Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
 				s.applyGlobalFilter(Group, CountryCode, State, City, Location);
 				System.out.println(Group + ", " + CountryCode + ", " + State + ", " + City + ", " + Location);
-				s.clickApplyFilterBTN();
+				s.clickApplyFilterBTNDRS();
 				BaseClass.addEvidence(CurrentState.getDriver(), "Applied global filter: " + Group + ", " + CountryCode
 						+ ", " + State + ", " + City + ", " + Location + "", "yes");
 			}

@@ -1,4 +1,4 @@
-package com.dac.main.POM_TPSEE;
+package com.dac.main.POM_SA;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,13 +19,14 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import com.dac.main.BasePage;
+import com.dac.main.POM_TPSEE.TPSEE_abstractMethods;
 
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
 import resources.JSWaiter;
 
-public class TPSEE_Displayed_Review_Score_Page extends TPSEE_abstractMethods{
+public class TPSEE_Displayed_Review_Score_Page extends SA_Abstarct_Methods{
 	
 	public static List<Map<String, String>> tableCellValues = new ArrayList<Map<String, String>>();
 	WebDriver driver;
@@ -39,12 +40,6 @@ public class TPSEE_Displayed_Review_Score_Page extends TPSEE_abstractMethods{
 		wait = new WebDriverWait(driver, 30);
 		action = new Actions(driver);
 		PageFactory.initElements(driver, this);
-	}
-
-	@Override
-	public List<Map<String, String>> getOverviewReport() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 
