@@ -59,7 +59,7 @@ public class ExtentTestNGITestListener
    * 
    * @throws IOException
    */
-  @Override
+ @Override
   public void onStart(ISuite suite) {
 	  System.out.println("Suite Name : "+ suite.getName());
 	  
@@ -237,8 +237,8 @@ public class ExtentTestNGITestListener
   @Override
   public synchronized void onAfterClass(ITestClass testClass) {
    
-    CurrentState.getDriver().quit();
-    CurrentState.setDriver(null);
+ //   CurrentState.getDriver().quit();
+ //   CurrentState.setDriver(null);
   }
 
   /**
@@ -350,6 +350,7 @@ public class ExtentTestNGITestListener
     //	WebDriverManager.chromedriver().version("83.0.4103.39").setup();
 
    // WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
+
 
       HashMap<String, Object> chromePref = new HashMap<>();
       chromePref.put("download.default_directory", downloadFolder);

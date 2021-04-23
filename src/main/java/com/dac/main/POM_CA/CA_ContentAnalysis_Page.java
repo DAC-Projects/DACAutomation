@@ -72,15 +72,15 @@ public class CA_ContentAnalysis_Page extends CA_abstractMethods {
 		scrollByElement(caOverviewReport);
 		Map<String, String> kMap;
 		List<Map<String, String>> ovrwRprtData = new ArrayList<Map<String, String>>();
-		
-	
+
+
 		for(WebElement row: competitors) {
-		  kMap = new HashMap<String, String>();
-	    kMap.put("compName", row.findElement(By.xpath(compName)).getText().trim());
-	    kMap.put("score",  row.findElement(By.xpath(compScore)).getText().trim());
-      System.out.println("");
-      ovrwRprtData.add(kMap);
-	    
+			kMap = new HashMap<String, String>();
+			kMap.put("compName", row.findElement(By.xpath(compName)).getText().trim());
+			kMap.put("score",  row.findElement(By.xpath(compScore)).getText().trim());
+			System.out.println("");
+			ovrwRprtData.add(kMap);
+
 		}
 
 		return ovrwRprtData;
@@ -119,4 +119,34 @@ public class CA_ContentAnalysis_Page extends CA_abstractMethods {
 
 	}
 
+	public void calculateContentAnalysisScore() throws Exception {
+		String[][] table = new ExcelHandler(Exportpath + CAExport, "Sheet0").getExcelTable();
+
+		double[] FinScore = new double[table[0].length-1];		
+		double[] score = new double[table.length-2];
+		int counter;
+
+		for (int j=0;j<table[0].length-1;j++) {
+			double totScore = 0;
+			counter = 0;
+			for(int i=0;i<table.length-2;i++) {
+				score[i] = Double.parseDouble(table[i+2][j+1]);
+				if(score[i]!=0.0) {
+					counter = counter+1;
+				}
+				totScore = totScore + score[i];	
+			}
+			if(j==0) {
+				FinScore[j] = Math.round((totScore/score.length)*100.0)/100.0;
+				System.out.println("double array value"+j+":" + Arrays.toString(score) );
+			}
+			else {
+				FinScore[j] = Math.round((totScore/counter)*100.0)/100.0;
+			}
+		}
+		System.out.println(Arrays.toString(FinScore));
+		for(int i=0;i<table.length-2;i++) {		
+			Assert.assertEquals(FinScore[i], Double.parseDouble(table[1][i+1]));
+		}
+	}
 }
