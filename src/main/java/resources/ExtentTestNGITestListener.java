@@ -342,7 +342,8 @@ public class ExtentTestNGITestListener
     if (browser.equalsIgnoreCase("Chrome")) {
     	
     	//WebDriverManager.chromedriver().version("86.0.4240.22").setup(); 
-    	WebDriverManager.chromedriver().version("87.0.4280.88").setup(); 
+    	WebDriverManager.chromedriver().version("89.0.4389.23").setup();
+    	//WebDriverManager.chromedriver().version("87.0.4280.88").setup(); 
     	//WebDriverManager.chromedriver().version("85.0.4183.87").setup(); 
     //	WebDriverManager.chromedriver().version("85.0.4183.38").setup(); 
   //  WebDriverManager.chromedriver().version("84.0.4147.30").setup(); 
