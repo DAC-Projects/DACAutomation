@@ -1,8 +1,10 @@
 package com.dac.main.POM_TPSEE;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -121,5 +123,82 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 		clickelement(Dashboard);
 		Thread.sleep(3000);
 	}
+	
+	public void VerifyOrder() {
+		List<WebElement> Reports = driver.findElements(By.xpath("//span[@class='kpi-url-text']"));
+		List<String> Report = new ArrayList<String>();
+		int size = Reports.size();
+		for (int i = 1; i <= size; i++) {
+			String reportname = driver.findElement(By.xpath("(//span[@class='kpi-url-text'])["+ i +"]")).getText();
+			System.out.println("Report name is : " +reportname);
+			Report.add(reportname);
+		}
+		System.out.println("The reports are : " +Report);
+		List<String> ReportsOrder = new ArrayList<String>();
+		ReportsOrder.add("Locations");
+		ReportsOrder.add("Visibility");
+		ReportsOrder.add("Accuracy");
+		ReportsOrder.add("Analysis");
+		ReportsOrder.add("Ranking");
+		ReportsOrder.add("Reviews");
+		System.out.println("The Order of the reports are : " +ReportsOrder);
+		int ReportsOrdersize = ReportsOrder.size();
+		System.out.println("The ReportsOrder Array size is : " +ReportsOrdersize);
+		int Reportsize = Report.size();
+		System.out.println("The UI Report size is : " +Reportsize);
+		if(ReportsOrdersize == Reportsize) {
+			for (int i = 0; i <= Reportsize-1; i++){
+				soft.assertTrue(Report.get(i).equals(ReportsOrder.get(i)), "The UI Report " +Report.get(i) + "compared with " +ReportsOrder.get(i));
+			}
+		}		
+		soft.assertAll();
+	}
 
+	public void verifyIconsizeandtextsize() {
+		String font;
+		List<WebElement> Reportnamesize = driver.findElements(By.xpath("(//div[@class='infobox-data kpi-url'])"));
+		int size = Reportnamesize.size();
+		System.out.println("The size is : " +size);
+		for(int i = 1; i <= size; i++) {
+			font = driver.findElement(By.xpath("(//div[@class='infobox-data kpi-url'])["+ i +"]")).getCssValue("font-size");
+			System.out.println("The font size is : " +font);
+			soft.assertEquals(font, "13px", "The size of : " +i);
+		}
+		WebElement Locations = driver.findElement(By.xpath("//span[@class='infobox-data-number locations-value kpi-number']"));
+		font = Locations.getCssValue("font-size");
+		System.out.println("The font size of locations is : " +font);
+		soft.assertEquals(font, "30px", "The size of Locations KPI");
+		WebElement Visibility = driver.findElement(By.xpath("//span[@id='visibility_kpi_value']"));
+		font = Visibility.getCssValue("font-size");
+		System.out.println("Visibility font is : " +font);
+		soft.assertEquals(font, "18px", "The size of Visibility KPI");
+		WebElement Accuracy = driver.findElement(By.xpath("(//span[@id='accuracy_kpi_value'])"));
+		font = Accuracy.getCssValue("font-size");
+		System.out.println("Accuracy font is : " +font);
+		soft.assertEquals(font, "18px", "The size of Accuracy KPI");
+		WebElement Analysis = driver.findElement(By.xpath("(//span[@id='contentAnalysis_kpi_value'])"));
+		font = Analysis.getCssValue("font-size");
+		System.out.println("Analysis font is : " +font);
+		soft.assertEquals(font, "18px" , "The size of Analysis KPI");
+		WebElement Ranking = driver.findElement(By.xpath("(//span[@id='ranking_count_kpi_value'])"));
+		font = Ranking.getCssValue("font-size");
+		System.out.println("Ranking size is : " +font);
+		soft.assertEquals(font, "18px", "The size of Ranking KPI");
+		WebElement Reviews = driver.findElement(By.xpath("(//div[@id='kpi_reviews_count_box'])//span"));
+		font = Reviews.getCssValue("font-size");
+		System.out.println("Reviews font is : " +font);
+		soft.assertEquals(font, "18px", "The size of Reviews KPI");
+		List<WebElement> ReportIcon = driver.findElements(By.xpath("(//img[@class='svg_icon'])"));
+		int iconsize = ReportIcon.size();
+		for(int j = 1; j <= iconsize; j++) {
+			WebElement icon = driver.findElement(By.xpath("(//img[@class='svg_icon'])["+ j +"]"));
+			String height = icon.getCssValue("height");
+			System.out.println("The height is : " +height);
+			String width = icon.getCssValue("width");
+			System.out.println("The width is : " +width);
+			soft.assertEquals(height, "30px" , "The height of : " +j);
+			soft.assertEquals(width, "30px", "The width of : " +j);
+		}
+		soft.assertAll();
+	}
 }

@@ -46,4 +46,16 @@ public class TPSEE_KPINavigation_Test extends BaseClass{
 		data = new TPSEE_KPI_Navigation(CurrentState.getDriver());
 		data.navigateToReviews();
 	}*/
+	
+	@Test(priority = 7, description = "Test to verify the order of the reports")
+	public void VerifyOrderofReports() {
+		data = new TPSEE_KPI_Navigation(CurrentState.getDriver());
+		data.VerifyOrder();
+	}
+	
+	@Test(priority = 8, description = "Test to verify font size of text and icon size")
+	public void VerifyIconandFontSize() {
+		data = new TPSEE_KPI_Navigation(CurrentState.getDriver());
+		data.verifyIconsizeandtextsize();
+	}
 }
