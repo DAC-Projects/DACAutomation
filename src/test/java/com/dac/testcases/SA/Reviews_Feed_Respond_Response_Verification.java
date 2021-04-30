@@ -14,6 +14,7 @@ public class Reviews_Feed_Respond_Response_Verification extends BaseClass {
 	
 	Navigationpage np;
 	Reviews_Feed_Response_To_Reviews data;
+	int RCountBefore;
 	
 	@Test(priority = 1 , description = "Test to navigate to Reviews Feed" )
 	public void NavigateToReviewsFeed() throws Exception {
@@ -41,22 +42,31 @@ public class Reviews_Feed_Respond_Response_Verification extends BaseClass {
 		data = new Reviews_Feed_Response_To_Reviews(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_Feed");
 		for (int i = 1; i <= wb.getRowCount(); i++) {
-		String ReviewSelected = wb.getCellValue(1, wb.seacrh_pattern("Review", 0).get(0).intValue());
-		System.out.println("The Review selected is : " +ReviewSelected);
 		String ResponseSelected = wb.getCellValue(1, wb.seacrh_pattern("Response", 0).get(0).intValue());
 		System.out.println("The Response to be added is : " +ResponseSelected);
-		int RCountBefore = data.getReviewCount();
+		RCountBefore = data.getReviewCount();
 		System.out.println("The Review Count before Adding Response is : " +RCountBefore);
 		data.AddResponse(ResponseSelected);
-		Thread.sleep(3000);
-		data.clickonReviews();
-		Thread.sleep(3000);
-		data.VerifyResponse(ResponseSelected);
-		Thread.sleep(3000);
-		data.ClickResToReviews();
-		int RCountAfter = data.getReviewCount();
-		System.out.println("The review count after adding response is : " +RCountAfter);
-		Assert.assertEquals(RCountAfter, RCountBefore - 1);
+		}
+	}
+	
+	@Test(priority = 5, description = "Test to verify response", dependsOnMethods = {"VerifyResponseAdded"})
+	public void verifyresponse() throws Exception {
+		data = new Reviews_Feed_Response_To_Reviews(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_Feed");
+		for (int i = 1; i <= wb.getRowCount(); i++) {
+			String ResponseSelected = wb.getCellValue(1, wb.seacrh_pattern("Response", 0).get(0).intValue());
+			System.out.println("The Response to be added is : " +ResponseSelected);
+			Thread.sleep(3000);
+			data.clickonReviews();
+			Thread.sleep(3000);
+			data.VerifyResponse(ResponseSelected);
+			Thread.sleep(3000);
+			data.ClickResToReviews();
+			Thread.sleep(3000);
+			int RCountAfter = data.getReviewCount();
+			System.out.println("The review count after adding response is : " +RCountAfter);
+			Assert.assertEquals(RCountAfter, RCountBefore - 1);
 		}
 	}
 }

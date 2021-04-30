@@ -2,7 +2,6 @@
 <suite name="Suite">
 	<listeners>
 		<listener class-name="resources.ExtentTestNGITestListener"></listener>
-		<parameter name = "data" value = "xyz"/>
 	</listeners>
 	
 
@@ -19,7 +18,7 @@
 			<class name="com.dac.testcases.SA.ReviewsFeed_Sentiment_and_Category_Verification_Test" />
 			<class name = "com.dac.testcases.SA.Reviews_Feed_DateFilter_Verification_Test"/>
 			<class name = "com.dac.testcases.SA.Reviews_Feed_Respond_Response_Verification"/>
-			<class name="com.dac.testcases.TPSEE.TPSEE_Displayed_Review_Score_Test" />
+			<class name="com.dac.testcases.SA.TPSEE_Displayed_Review_Score_Test" />
 		</classes>
 	</test>
 	
@@ -32,7 +31,7 @@
 			<class name="com.dac.testcases.SA.ReviewsFeed_Rating_and_Content_Verification_Test" />
 			<class name="com.dac.testcases.SA.ReviewsFeed_Keyword_and_Tag_Verification_Test" />
 			<class name="com.dac.testcases.SA.ReviewsFeed_Sentiment_and_Category_Verification_Test" />
-			<class name="com.dac.testcases.TPSEE.TPSEE_Displayed_Review_Score_Test" />
+			<class name="com.dac.testcases.SA.TPSEE_Displayed_Review_Score_Test" />
 		</classes>
 	</test> 
 	
@@ -45,7 +44,7 @@
 			<class name="com.dac.testcases.SA.ReviewsFeed_Rating_and_Content_Verification_Test" />
 			<class name="com.dac.testcases.SA.ReviewsFeed_Keyword_and_Tag_Verification_Test" />
 			<class name="com.dac.testcases.SA.ReviewsFeed_Sentiment_and_Category_Verification_Test" />
-			<class name="com.dac.testcases.TPSEE.TPSEE_Displayed_Review_Score_Test" />
+			<class name="com.dac.testcases.SA.TPSEE_Displayed_Review_Score_Test" />
 		</classes>
 	</test>
 	
@@ -58,7 +57,7 @@
 			<class name="com.dac.testcases.SA.ReviewsFeed_Rating_and_Content_Verification_Test" />
 			<class name="com.dac.testcases.SA.ReviewsFeed_Keyword_and_Tag_Verification_Test" />
 			<class name="com.dac.testcases.SA.ReviewsFeed_Sentiment_and_Category_Verification_Test" />
-			<class name="com.dac.testcases.TPSEE.TPSEE_Displayed_Review_Score_Test" />
+			<class name="com.dac.testcases.SA.TPSEE_Displayed_Review_Score_Test" />
 		</classes>
 	</test>
 	
@@ -71,7 +70,7 @@
 			<class name="com.dac.testcases.SA.ReviewsFeed_Rating_and_Content_Verification_Test" />
 			<class name="com.dac.testcases.SA.ReviewsFeed_Keyword_and_Tag_Verification_Test" />
 			<class name="com.dac.testcases.SA.ReviewsFeed_Sentiment_and_Category_Verification_Test" />
-			<class name="com.dac.testcases.TPSEE.TPSEE_Displayed_Review_Score_Test" />
+			<class name="com.dac.testcases.SA.TPSEE_Displayed_Review_Score_Test" />
 		</classes>
 	</test>
 	
@@ -84,7 +83,7 @@
 			<class name="com.dac.testcases.SA.ReviewsFeed_Rating_and_Content_Verification_Test" />
 			<class name="com.dac.testcases.SA.ReviewsFeed_Keyword_and_Tag_Verification_Test" />
 			<class name="com.dac.testcases.SA.ReviewsFeed_Sentiment_and_Category_Verification_Test" />
-			<class name="com.dac.testcases.TPSEE.TPSEE_Displayed_Review_Score_Test" />
+			<class name="com.dac.testcases.SA.TPSEE_Displayed_Review_Score_Test" />
 		</classes>
 	</test>
 </suite>

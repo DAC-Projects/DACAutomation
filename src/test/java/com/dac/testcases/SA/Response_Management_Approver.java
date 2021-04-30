@@ -1,8 +1,5 @@
 package com.dac.testcases.SA;
 
-import java.util.Arrays;
-
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.dac.main.Navigationpage;
@@ -19,41 +16,66 @@ public class Response_Management_Approver extends BaseClass {
 	String From_Date = "//*[@id='dateFrom']";
 	String To_Date = "//*[@id='dateTo']";
 	
-	@Test(priority = 1, description = "Test to navigate to Response Management Page")
+	
+	@Test(priority = 1, description = "Test to navigate to Reviews Feed Page")
+	public void navigateToReviewsFeed() throws Exception {
+		np = new Navigationpage(CurrentState.getDriver());
+		np.navigateToSA_ReviewsFeed();
+		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes");
+	}
+	
+	@Test(priority = 2, description = "Test to verify reponse added", dependsOnMethods = {"navigateToReviewsFeed"})
+	public void verifyResponseAdded() throws Exception{
+		data = new Response_Management(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_Feed");
+		for (int i = 1; i <= wb.getRowCount(); i++) {
+			String ResponseSelected = wb.getCellValue(1, wb.seacrh_pattern("Response", 0).get(0).intValue());
+			System.out.println("The Response to be added is : " +ResponseSelected);
+			data.verifyresponse(ResponseSelected);
+			}
+	}
+	
+	
+	@Test(priority = 3, description = "Test to navigate to Response Management Page", dependsOnMethods = {"verifyResponseAdded"})
 	public void NavigateToResponseManagement() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateToResponseManagement();
 		addEvidence(CurrentState.getDriver(), "Test to navigate to Response Management Page", "yes");
 	}
 	
-	@Test(priority = 2, description = "Test to verify Title and Title Text")
+	@Test(priority = 4, description = "Test to verify Title and Title Text", dependsOnMethods = {"NavigateToResponseManagement"})
 	public void verifyTitlenText() throws Exception {
 		data = new Response_Management(CurrentState.getDriver());
 		data.verifyTitle("Review Response Management", "The Response Management page provides a designated area to view and manage review responses that have been drafted by users with different permission levels.");
 		addEvidence(CurrentState.getDriver(), "Test to verify title and title text", "yes");
 	}
 	
-	@Test(priority = 3, description = "Test to change the status to pending approval")
+	@Test(priority = 5, description = "Test to change the status to pending approval", dependsOnMethods = {"verifyTitlenText"})
 	public void ChangeStatusToPending() throws Exception{
 		data = new Response_Management(CurrentState.getDriver());
 		data.selectPendingStatus();
 		addEvidence(CurrentState.getDriver(), "Test to change status to pending approval", "yes");
 	}
 	
-	@Test(priority = 4, description = "Test to Approve Response")
+	@Test(priority = 6, description = "Test to Approve Response", dependsOnMethods = {"ChangeStatusToPending"})
 	public void ApproveResponseWithoutComments() throws Exception {
 		data = new Response_Management(CurrentState.getDriver());
-		data.ApproveResponse();		
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_Feed");
+		for (int i = 1; i <= wb.getRowCount(); i++) {
+			String ResponseSelected = wb.getCellValue(1, wb.seacrh_pattern("Response", 0).get(0).intValue());
+			System.out.println("The Response to be added is : " +ResponseSelected);
+			data.ApproveResponse(ResponseSelected);	
+		}
 	}
 	
-	@Test(priority =5, description = "Test to navigate to Reviews Feed")
+	@Test(priority =7, description = "Test to navigate to Reviews Feed" , dependsOnMethods = {"ApproveResponseWithoutComments"})
 	public void NavigateToReviewsFeed() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateToSA_ReviewsFeed();
 		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes");
 	}
 	
-	@Test(priority = 6, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider = "testData")
+/*	@Test(priority = 6, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider = "testData")
 	public void DateFilter(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		data = new Response_Management(CurrentState.getDriver());
@@ -120,18 +142,25 @@ public class Response_Management_Approver extends BaseClass {
 		Thread.sleep(3000);
 		data.clickApplyFilterBTN();
 		addEvidence(CurrentState.getDriver(), "Applied Global Filters", "yes");
-	}
-
+	}*/
 	
-	@Test(priority = 8, description = "Test to delete the resposnse")
+	
+	
+	@Test(priority = 8, description = "Test to delete the resposnse", dependsOnMethods = {"NavigateToReviewsFeed"})
 	public void deleteresponse() throws Exception {
 		data = new Response_Management(CurrentState.getDriver());
-		data.DeleteApprovedResponseApprover();
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_Feed");
+		for (int i = 1; i <= wb.getRowCount(); i++) {
+			String ResponseSelected = wb.getCellValue(1, wb.seacrh_pattern("Response", 0).get(0).intValue());
+			System.out.println("The Response to be added is : " +ResponseSelected);
+			data.DeleteApprovedResponseApprover(ResponseSelected);
+			CurrentState.getDriver().navigate().refresh();
+		}
 		
 	}
 	
 	
-	@Test(priority = 9, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider = "testData")
+	/*@Test(priority = 9, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider = "testData")
 	public void DateFilter2(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		data = new Response_Management(CurrentState.getDriver());
@@ -143,10 +172,10 @@ public class Response_Management_Approver extends BaseClass {
 		Thread.sleep(3000);
 		data.clickApplyFilterBTN();
 		addEvidence(CurrentState.getDriver(), "Applied Global Filters", "yes");
-	}
+	}*/
 
 	
-	@Test(priority = 10, description = "Test to verify Response Deleted")
+	@Test(priority = 9, description = "Test to verify Response Deleted", dependsOnMethods = {"deleteresponse"})
 	public void VerifyResponseDeleted() throws Exception {
 		data = new Response_Management(CurrentState.getDriver());
 		data.verifyDeletedResponse();

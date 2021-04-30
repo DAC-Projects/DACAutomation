@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -213,9 +212,6 @@ public class Reviews_Feed_Response_To_Reviews extends SA_Abstarct_Methods{
 		soft.assertEquals(txt1, "1. Yelp data is not eligible to be exported from our Dashboard.");
 		soft.assertEquals(txt2, "2. Google reviews were disabled for all accounts from March 20th to April 9th 2020 due to Covid19 restrictions.");
 		soft.assertAll();
-	//	Assert.assertEquals(Noticetext, "1. Yelp data is not eligible to be exported from our Dashboard. \r\n" + 
-		//		"        2. Google reviews were disabled for all accounts from March 20th to April 9th 2020 due to Covid19 restrictions.");
-		//Assert.assertEquals(actual, expected);
 	}
 	
 	
@@ -564,20 +560,6 @@ public class Reviews_Feed_Response_To_Reviews extends SA_Abstarct_Methods{
 				}else {
 					soft.fail("Lists are not equal");
 				}
-				
-				/*soft.assertEquals(XLBname.size(), BusinssName.size());
-				// Assert.assertEquals(expected, actual);
-				soft.assertEquals(XLBname, BusinssName);
-				soft.assertEquals(XLRefCode.size(), ReferenceNumber.size());
-				soft.assertEquals(XLRefCode, ReferenceNumber);
-				soft.assertEquals(XLURL.size(), URL.size());
-				soft.assertEquals(XLURL, URL);
-				soft.assertEquals(XLSource.size(), URL.size());
-				if (XLSource.size() == URL.size()) {
-					for (int i = 0; i <= XLSource.size() - 1; i++) {
-						XLSource.get(i).contains(URL.get(i));
-					}
-				}*/
 				resultperpage(soft);
 				Thread.sleep(5000);
 				GoTo();
@@ -590,18 +572,7 @@ public class Reviews_Feed_Response_To_Reviews extends SA_Abstarct_Methods{
 		}
 	}
 
-	public List<String> readCsvColdata(String path, int colnum) throws IOException {
-		String splitBy = ",";
-		BufferedReader br = new BufferedReader(new FileReader(path));
-		String line = br.readLine();
-		List<String> csvcollist = new ArrayList<String>();
-		while ((line = br.readLine()) != null) {
-			String[] b = line.split(splitBy);
-			csvcollist.add(b[colnum].toString());
-		}
-		System.out.println("Data in Type column : " + csvcollist);
-		return csvcollist;
-	}
+	
 
 	/**
 	 * Verify Review count and Number of entries in a table
@@ -938,9 +909,6 @@ public class Reviews_Feed_Response_To_Reviews extends SA_Abstarct_Methods{
 			waitForElement(advanceSearch, 10);
 			clickelement(advanceSearch);
 			waitForElement(SearchKeyword, 20);
-			/*Thread.sleep(2000);
-			scrollByElement(SearchKeyword);
-			Thread.sleep(2000);*/
 			clickelement(SearchKeyword);
 			SearchKeyword.sendKeys(Keyword);
 			SearchKeyword.sendKeys(Keys.ENTER);
@@ -1246,10 +1214,6 @@ public class Reviews_Feed_Response_To_Reviews extends SA_Abstarct_Methods{
 		scrollByElement(clicksort);
 		clickelement(clicksort);
 		Thread.sleep(3000);
-		/*WebElement Sort = driver.findElement(By.xpath("(//div[contains(@class,'item') and contains(text(),'" +sorttype+ "')])[2]"));
-		scrollByElement(Sort);
-		action.moveToElement(Sort).click().build();*/
-		//clickelement(Sort);
 		action.moveToElement(driver.findElement(By.xpath("(//div[contains(@class,'item') and contains(text(),'" +sorttype+ "')])[2]"))).click().build()
 				.perform();
 		JSWaiter.waitJQueryAngular();
@@ -1276,7 +1240,6 @@ public class Reviews_Feed_Response_To_Reviews extends SA_Abstarct_Methods{
 							System.out.println("Converted Date is :" + FinalUIDate);
 							datelist.add(FinalUIDate);
 							System.out.println("The Date List is :" + datelist);
-							// Thread.sleep(3000);
 						}
 						BaseClass.addEvidence(driver, "Test to compare reviews by date sorted", "yes");
 						if (paginationNext.isEnabled()) {
@@ -1597,12 +1560,6 @@ public class Reviews_Feed_Response_To_Reviews extends SA_Abstarct_Methods{
 		soft.assertAll();
 	}
 
-	/**
-	 * Verify report tab highlight
-	 *//*
-	public void Review_Feed_Highlight() {
-		reporthighlight(Review_FeedPage, ReviewsSection);
-	}*/
 
 	/**
 	 * Verify Sort Function using location name
@@ -2165,9 +2122,10 @@ public class Reviews_Feed_Response_To_Reviews extends SA_Abstarct_Methods{
 	public boolean BadReview() {
 		boolean b =false;
 		try {
-		WebElement ele = driver.findElement(By.xpath("(//div[@class='modal-dialog']//button[@data-dismiss='modal']/following::div//h3[@class='modal-title'])/../..//button[@data-dismiss='modal']"));
-		if(ele.isDisplayed()) {
-			clickelement(ele);
+		List<WebElement> ele = driver.findElements(By.xpath("//button[@data-value='false' and contains(text(),'Close')]"));
+		int size = ele.size();
+		if(size > 0) {
+			driver.findElement(By.xpath("//button[@data-value='false' and contains(text(),'Close')]")).click();
 			b = true;
 		}else {
 			b = false;
@@ -2178,51 +2136,85 @@ public class Reviews_Feed_Response_To_Reviews extends SA_Abstarct_Methods{
 		return b;
 	}
 	
-	public void AddResponse(String Response) {
+	
+	public void AddResponse(String Response) { 
 		boolean dataavailable = DataAvailable();
+		
 		if (dataavailable == false) {
-			int lastpage = Integer
-					.parseInt(driver.findElement(By.xpath("(//*[@id='RespondToReviews']//*[@class='pagination']//a)[last()-1]")).getText());
+			boolean x = true;
+			int lastpage = Integer.parseInt(
+					driver.findElement(By.xpath("(//*[@id='RespondToReviews']//*[@class='pagination']//a)[last()-1]")).getText());
 			System.out.println("Last Page Number is :" + lastpage);
 			waitForElement(paginationPrev, 10);
 			clickelement(paginationPrev);
-			
+
 			try {
-			Outer :	if (paginationNext.isDisplayed()) {
-					List<WebElement> AddLinks = driver.findElements(By.xpath("//div[@id='RespondToReviews']//a[contains(text(),'Add Owner Response')]"));
-					int size = AddLinks.size();
-					for(int i = 1; i <= size; i++ ) {
-						WebElement AddLink = driver.findElement(By.xpath("(//div[@id='RespondToReviews']//a[contains(text(),'Add Owner Response')])["+ i +"]"));
-						clickelement(AddLink);
-						boolean b = BadReview();
-						if(b==false) {
-						/*WebElement ele = driver.findElement(By.xpath("(//div[@class='modal-dialog']//button[@data-dismiss='modal']/following::div//h3[@class='modal-title'])/../..//button[@data-dismiss='modal']"));
-						if(!(ele.isDisplayed())) {*/
-							time_Stamp = timeStamp();
-							System.out.println("The time stamp is : " +time_Stamp);
-							WebElement ele1 = driver.findElement(By.xpath("(//textarea[@placeholder='Enter response here'])["+ i +"]"));
-							scrollByElement(ele1);
-							clickelement(ele1);
-							ele1.sendKeys(Response + time_Stamp);
-							WebElement ele2 = driver.findElement(By.xpath("(//button[contains(text(),'Submit')])["+ i +"]"));
-							clickelement(ele2);
-							WebElement ele3 = driver.findElement(By.xpath("(//button[contains(text(), 'Ok')])"));
-							clickelement(ele3);
-							JSWaiter.waitJQueryAngular();
-							break Outer;
-						}else {
-							System.out.println("Cannot be added because it's a bad review");
+
+				Outer: if (paginationNext.isDisplayed()) {
+					for (int j = 1; j <= lastpage; j++) {
+						List<WebElement> ReviewContent = driver
+							.findElements(By.xpath("(//*[@id='RespondToReviews']//div[@class='review-content'])"));
+						int size = ReviewContent.size();
+
+						for (int i = 1; i <= size; i++) {
+							WebElement ele = driver.findElement(By.xpath("(//*[@id='RespondToReviews']//div[@class='review-content'])["+ i +"]"));
+							if(ele.isDisplayed()) {
+								scrollByElement(ele);
+								String Review = ele.getText();
+								System.out.println("The Review selected is : " +Review);
+								try{
+									if((driver.findElement(
+											By.xpath("((//*[@id='RespondToReviews']//div[@class='review-content'])[" + i + "]//following-sibling::div//a[contains(@class,'add-owner-response-btn')])"))).isDisplayed()) {
+										clickelement(driver.findElement(
+												By.xpath("((//*[@id='RespondToReviews']//div[@class='review-content'])[" + i + "]//following-sibling::div//a[contains(@class,'add-owner-response-btn')])")));
+										Thread.sleep(5000);
+										boolean b = BadReview();
+										if (b == false) {
+											time_Stamp = timeStamp();
+											System.out.println("The time stamp is : " + time_Stamp);
+											WebElement ele1 = driver.findElement(
+													By.xpath("(//*[@id='RespondToReviews']//div[@class='review-content'])["+ i +"]//following-sibling::div//textarea[@placeholder='Enter response here']"));
+											scrollByElement(ele1);
+											clickelement(ele1);
+											ele1.sendKeys(Response + time_Stamp);
+											BaseClass.addEvidence(driver, "Test to add Response", "yes");
+											WebElement ele2 = driver
+													.findElement(By.xpath("(//div[@class='review-content'])["+ i +"]//following-sibling::div//button[contains(text(),'Submit')]"));
+											clickelement(ele2);
+											WebElement ele3 = driver.findElement(By.xpath("(//button[contains(text(), 'Ok')])"));
+											clickelement(ele3);
+											JSWaiter.waitJQueryAngular();
+											x = false;
+											break Outer;
+										}else {
+											System.out.println("Cannot be added because it's a bad review");
+										}	
+									}else {
+										System.out.println("No Link found");
+									}
+								}catch(Exception e) {
+									e.printStackTrace();
+								}
+								}
+										 else {
+								System.out.println("No Review found");
+							}
 						}
-					}if (paginationNext.isEnabled()) {
-						scrollByElement(paginationNext);
-						paginationNext.click();
-						JSWaiter.waitJQueryAngular();
+						if (paginationNext.isEnabled()) {
+							scrollByElement(paginationNext);
+							paginationNext.click();
+							JSWaiter.waitJQueryAngular();
+						}
 					}
 				}
-			}catch(Exception e) {
+
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else {
+			if (x == true) {
+			Assert.fail("Failes because of bad review");
+			}
+		} else {
 			System.out.println("No Data Available");
 		}
 	}

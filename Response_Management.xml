@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<suite name = "Response Management">
-	<suite-files>
-		<suite-file path = "ResponseManagement_ApproveWithoutComments.xml" />
-		<suite-file path = "ResponseManagement_ApproveWithComments.xml" />
-		<suite-file path = "ResponseManagement_Reject.xml" />
-		<suite-file path = "Response_Management_VendorVerification.xml" />
-	</suite-files>
-</suite>

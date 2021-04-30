@@ -3,7 +3,6 @@ package com.dac.testcases.SA;
 import org.testng.annotations.Test;
 
 import com.dac.main.Navigationpage;
-import com.dac.main.POM_SA.Reviews_Feed;
 import com.dac.main.POM_SA.Reviews_Feed_Response_To_Reviews;
 
 import resources.BaseClass;

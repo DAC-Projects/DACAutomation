@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 

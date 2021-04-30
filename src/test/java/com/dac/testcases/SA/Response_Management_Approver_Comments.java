@@ -1,8 +1,5 @@
 package com.dac.testcases.SA;
 
-import java.util.Arrays;
-
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.dac.main.Navigationpage;
@@ -11,6 +8,7 @@ import com.dac.main.POM_SA.Response_Management;
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
+import resources.JSWaiter;
 
 public class Response_Management_Approver_Comments extends BaseClass {
 	
@@ -19,34 +17,60 @@ public class Response_Management_Approver_Comments extends BaseClass {
 	String From_Date = "//*[@id='dateFrom']";
 	String To_Date = "//*[@id='dateTo']";
 	
-	@Test(priority = 1, description = "Test to navigate to Response Management Page")
+	
+	@Test(priority = 1, description = "Test to navigate to Reviews Feed Page")
+	public void navigateToReviewsFeed() throws Exception {
+		np = new Navigationpage(CurrentState.getDriver());
+		np.navigateToSA_ReviewsFeed();
+		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes");
+	}
+	
+	@Test(priority = 2, description = "Test to verify reponse added", dependsOnMethods = {"navigateToReviewsFeed"})
+	public void verifyResponseAdded() throws Exception{
+		data = new Response_Management(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_Feed");
+		for (int i = 1; i <= wb.getRowCount(); i++) {
+			String ResponseSelected = wb.getCellValue(1, wb.seacrh_pattern("Response", 0).get(0).intValue());
+			System.out.println("The Response to be added is : " +ResponseSelected);
+			data.verifyresponse(ResponseSelected);
+			}
+		}
+	
+	
+	@Test(priority = 3, description = "Test to navigate to Response Management Page")
 	public void NavigateToResponseManagement() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateToResponseManagement();
 		addEvidence(CurrentState.getDriver(), "Test to navigate to Response Management Page", "yes");
 	}
 	
-	@Test(priority = 2, description = "Test to change the status to pending approval")
+	@Test(priority = 4, description = "Test to change the status to pending approval")
 	public void ChangeStatusToPending() throws Exception{
 		data = new Response_Management(CurrentState.getDriver());
 		data.selectPendingStatus();
 		addEvidence(CurrentState.getDriver(), "Test to change status to pending approval", "yes");
 	}
 	
-	@Test(priority = 3, description = "Test to Approve the Response with Comments")
+	@Test(priority = 5, description = "Test to Approve the Response with Comments")
 	public void ApprovewithComments() throws Exception {
 		data = new Response_Management(CurrentState.getDriver());
-		data.ApproveResponsewithComments();
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_Feed");
+		for (int i = 1; i <= wb.getRowCount(); i++) {
+			String ResponseSelected = wb.getCellValue(1, wb.seacrh_pattern("Response", 0).get(0).intValue());
+			System.out.println("The Response to be added is : " +ResponseSelected);
+			data.ApproveResponsewithComments(ResponseSelected);
+		}
 	}
 	
-	@Test(priority = 4, description = "Test to navigate to Reviews Feed Page")
+	@Test(priority = 6, description = "Test to navigate to Reviews Feed Page", dependsOnMethods = {"ApprovewithComments"})
 	public void NavigateToReviewsFeed() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateToSA_ReviewsFeed();
+		JSWaiter.waitJQueryAngular();
 		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed Page", "yes");
 	}
 	
-	@Test(priority = 5, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider = "testData")
+	/*@Test(priority = 5, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider = "testData")
 	public void DateFilter(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		data = new Response_Management(CurrentState.getDriver());
@@ -99,18 +123,23 @@ public class Response_Management_Approver_Comments extends BaseClass {
 		} finally {
 			return data;
 		}
-	}
+	}*/
 	
 	
-	@Test(priority = 6, description = "Test to verify Listing of vendor site")
+	@Test(priority = 7, description = "Test to verify Listing of vendor site", dependsOnMethods = {"NavigateToReviewsFeed"})
 	public void verifyListing() throws Exception {
 		data = new Response_Management(CurrentState.getDriver());
-		data.verifystatusandResponse();
-		CurrentState.getDriver().navigate().refresh();
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_Feed");
+		for (int i = 1; i <= wb.getRowCount(); i++) {
+			String ResponseSelected = wb.getCellValue(1, wb.seacrh_pattern("Response", 0).get(0).intValue());
+			System.out.println("The Response to be added is : " +ResponseSelected);
+			data.verifystatusandResponse(ResponseSelected);
+			CurrentState.getDriver().navigate().refresh();
+		}
 	}
 	
 	
-	@Test(priority = 7, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider = "testData")
+	/*@Test(priority = 7, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider = "testData")
 	public void DateFilter1(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		data = new Response_Management(CurrentState.getDriver());
@@ -122,18 +151,24 @@ public class Response_Management_Approver_Comments extends BaseClass {
 		Thread.sleep(3000);
 		data.clickApplyFilterBTN();
 		addEvidence(CurrentState.getDriver(), "Applied Global Filters", "yes");
-	}
+	}*/
 	
 	
-	@Test(priority = 8, description = "Test to delete the resposnse")
+	@Test(priority = 8, description = "Test to delete the resposnse", dependsOnMethods = {"verifyListing"})
 	public void deleteresponse() throws Exception {
 		data = new Response_Management(CurrentState.getDriver());
-		data.DeleteApprovedResponseApprover();
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Reviews_Feed");
+		for (int i = 1; i <= wb.getRowCount(); i++) {
+			String ResponseSelected = wb.getCellValue(1, wb.seacrh_pattern("Response", 0).get(0).intValue());
+			System.out.println("The Response to be added is : " +ResponseSelected);
+			data.DeleteApprovedResponseApprover(ResponseSelected);
+			CurrentState.getDriver().navigate().refresh();
+		}
 		
 	}
 	
 	
-	@Test(priority = 9, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider = "testData")
+	/*@Test(priority = 9, description = "Test to verify date selected in Date filter and check with reviews table", dataProvider = "testData")
 	public void DateFilter2(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		data = new Response_Management(CurrentState.getDriver());
@@ -146,9 +181,9 @@ public class Response_Management_Approver_Comments extends BaseClass {
 		data.clickApplyFilterBTN();
 		addEvidence(CurrentState.getDriver(), "Applied Global Filters", "yes");
 	}
-
+*/
 	
-	@Test(priority = 10, description = "Test to verify Response Deleted")
+	@Test(priority = 9, description = "Test to verify Response Deleted" , dependsOnMethods = {"deleteresponse"})
 	public void VerifyResponseDeleted() throws Exception {
 		data = new Response_Management(CurrentState.getDriver());
 		data.verifyDeletedResponse();
