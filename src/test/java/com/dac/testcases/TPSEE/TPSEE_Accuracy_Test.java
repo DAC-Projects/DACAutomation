@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -224,30 +225,27 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
+	@Parameters({ "Filter" })
 	@Test(priority = 11, groups = { "smoke" }, description = "Verify Accuracy page loads after filter applied")
-	public void verifyFilteringReportsAccuracy() throws Exception {
+	public void verifyFilteringReportsAccuracy(int Filter) throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		try {
 			int count = 1;
 			ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
 			wb.deleteEmptyRows();
 			TPSEE_Accuracy_Page s = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-			for (int i = 1; i <= wb.getRowCount(); i++) {
 				System.out.println("*******************  Scenarios : " + count + "Starts ****************************");
-				if (i > 1)
-					CurrentState.getDriver().navigate().refresh();
 				s.waitUntilLoad(CurrentState.getDriver());
-				String Group = wb.getCellValue(i, wb.seacrh_pattern("Group", 0).get(0).intValue());
-				String CountryCode = wb.getCellValue(i, wb.seacrh_pattern("Country", 0).get(0).intValue());
-				String State = wb.getCellValue(i, wb.seacrh_pattern("State", 0).get(0).intValue());
-				String City = wb.getCellValue(i, wb.seacrh_pattern("City", 0).get(0).intValue());
-				String Location = wb.getCellValue(i, wb.seacrh_pattern("Location", 0).get(0).intValue());
+				String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+				String CountryCode = wb.getCellValue(Filter, wb.seacrh_pattern("Country", 0).get(0).intValue());
+				String State = wb.getCellValue(Filter, wb.seacrh_pattern("State", 0).get(0).intValue());
+				String City = wb.getCellValue(Filter, wb.seacrh_pattern("City", 0).get(0).intValue());
+				String Location = wb.getCellValue(Filter, wb.seacrh_pattern("Location", 0).get(0).intValue());
 				s.LAVapplyGlobalFilter(Group, CountryCode, State, City, Location);
 				System.out.println(Group + ", " + CountryCode + ", " + State + ", " + City + ", " + Location);
 				s.clickApplyFilterBTNLAV();
 				BaseClass.addEvidence(CurrentState.getDriver(), "Applied global filter: " + Group + ", " + CountryCode
 						+ ", " + State + ", " + City + ", " + Location + "", "yes");
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -335,8 +333,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		String CountryCode = wb.getCellValue(1, wb.seacrh_pattern("Country", 0).get(0).intValue());
 		String State = wb.getCellValue(1, wb.seacrh_pattern("State", 0).get(0).intValue());
 		String City = wb.getCellValue(1, wb.seacrh_pattern("City", 0).get(0).intValue());
-		String Location = wb.getCellValue(1, wb.seacrh_pattern("Location", 0).get(0).intValue());
-		data.GetDataListnVerifyOrder(Group, CountryCode, State, City, Location);
+		data.GetDataListnVerifyOrder(Group, CountryCode, State, City);
 		}else {
 			System.out.println("The group is not empty");
 		}

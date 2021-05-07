@@ -16,7 +16,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -43,7 +42,6 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import com.dac.main.BasePage;
-import com.google.common.collect.Ordering;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -392,12 +390,11 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	
 	
 
-	public void GetDataListnVerifyOrder(String Group, String CountryCode, String State, String City, String Location) {
+	public void GetDataListnVerifyOrder(String Group, String CountryCode, String State, String City) {
 		List<String> Groups = new ArrayList<String>();
 		List<String> Country = new ArrayList<String>();
 		List<String> States = new ArrayList<String>();
 		List<String> Cities = new ArrayList<String>();
-		List<String> Locations = new ArrayList<String>();
 		try {
 			waitForElement(LAVfilter_Panel, 25);
 			waitUntilLoad(driver);
@@ -506,33 +503,6 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				for (int i = 0; i < Cities.size(); i++) {
 					soft.assertTrue(Cities.get(i).equals(citty.get(i)), "The group doesnot match is : " + Cities.get(i) + "with " +ciity.get(i));
 					
-				}
-			} else {
-				System.out.println("Lists not equal");
-			}
-			
-			clickelement(LAVFilterlocation);
-			waitForElement(filterDropDown, 20);
-			List<WebElement> locations = driver.findElements(By.xpath("((*//div[contains(@class,'selection ui dropdown fluid search')])[5]//div[contains(@class,'item')]//strong)"));
-			Locations = getList(locations);
-			System.out.println("The list of Locations contains : " + Locations);
-			BaseClass.addEvidence(driver, "Test to get data from Location filter and verify the order", "yes");
-			WebElement location = driver.findElement(By.xpath(
-					"(*//div[contains(@class,'selection ui dropdown fluid search')])[5]//div[contains(@class,'item') and contains(text(),'"
-							+ Location + "')]"));
-			waitForElement(location, 10);
-			Thread.sleep(1000);
-			clickelement(location);
-			waitUntilLoad(driver);
-			
-			
-			List<String> Locationss = new ArrayList<String>();
-			Locationss.addAll(Locations);
-			Collections.sort(Locationss);
-			System.out.println("Locations after sorted : " +Locationss);
-			if (Locations.size() == Locationss.size()) {
-				for (int i = 0; i < Locations.size(); i++) {
-					soft.assertTrue(Locations.get(i).equals(Locationss.get(i)), "The locations which didnot match are " +Locations.get(i) + " and " +Locationss.get(i));
 				}
 			} else {
 				System.out.println("Lists not equal");
@@ -2061,7 +2031,8 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	public void navigateKPI(WebElement ele, WebElement ele1, String title) throws InterruptedException {
 		waitForElement(ele, 10);
 		scrollByElement(ele);
-		clickelement(ele);
+	//	clickelement(ele);
+		action.moveToElement(ele).click().build().perform();
 		try {
 			clickwalkme();
 		} catch (Exception e) {

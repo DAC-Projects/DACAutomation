@@ -362,10 +362,10 @@ public WebDriver openBrowser(String browser) throws IOException {
     if (browser.equalsIgnoreCase("Chrome")) {
 
 
-   WebDriverManager.chromedriver().version("88.0.4324.27").setup(); 
+    	WebDriverManager.chromedriver().version("90.0.4430.24").setup(); 
 
 
-    //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
+  //  WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
 
     HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
     		chromePrefs.put("profile.default_content_settings.popups", 0);

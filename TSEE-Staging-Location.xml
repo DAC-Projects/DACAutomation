@@ -2,22 +2,97 @@
 <suite name="Suite" parallel="none">
 	
 	<listeners>
-		<!-- <listener class-name="resources.IntegrationTestListener"></listener> -->
 		<listener class-name="resources.ExtentTestNGITestListener"></listener>
 	</listeners>
 	
-	<test name = "TransparenSeeStagingLocation" >
+	<test name = "TransparenSeeStagingLocationGlobal" >
 		<parameter name = "browser" value = "chrome"/>
+		<parameter name = "Filter" value = "1"/>
 			<classes>
-				<!-- <class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
 				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />  
 				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />  -->
+			 	<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" /> 
 				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" />
-				<!-- <class name="com.dac.testcases.TPSEE.TPSEE_KPINavigation_Test" /> -->				
+				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" />			
 			</classes>
 	</test>
+	
+	<test name = "TransparenSeeStagingLocationGroup" >
+		<parameter name = "browser" value = "chrome"/>
+		<parameter name = "Filter" value = "2"/>
+			<classes>
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />  
+				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
+			 	<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" />			
+			</classes>
+	</test>
+	
+	<test name = "TransparenSeeStagingLocationCountry" >
+		<parameter name = "browser" value = "chrome"/>
+		<parameter name = "Filter" value = "3"/>
+			<classes>
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />  
+				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
+			 	<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" />			
+			</classes>
+	</test>
+	
+	<test name = "TransparenSeeStagingLocationState" >
+		<parameter name = "browser" value = "chrome"/>
+		<parameter name = "Filter" value = "4"/>
+			<classes>
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />  
+				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
+			 	<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" />			
+			</classes>
+	</test>
+	
+	<test name = "TransparenSeeStagingLocationCity" >
+		<parameter name = "browser" value = "chrome"/>
+		<parameter name = "Filter" value = "5"/>
+			<classes>
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />  
+				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
+			 	<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" />			
+			</classes>
+	</test>
+	
+	<test name = "TransparenSeeStagingLocation" >
+		<parameter name = "browser" value = "chrome"/>
+		<parameter name = "Filter" value = "6"/>
+			<classes>
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />  
+				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
+			 	<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" />			
+			</classes>
+	</test>
+	
 </suite>

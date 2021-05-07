@@ -6,22 +6,88 @@
 		<listener class-name="resources.ExtentTestNGITestListener"></listener>
 	</listeners>
 	
-	<test name = "TransparenSeeBetaLocation" >
+	<test name = "TransparenSeeBetaLocationGlobal" >
 		<parameter name = "browser" value = "chrome"/>
+		<parameter name = "Filter" value = "1"/>
 			<classes>
 				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
 				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />						
 			</classes>
 	</test>
 	
-	<test name = "TransparenSeeBetaBingLocation" >
+	<test name = "TransparenSeeBetaLocationGroup" >
+		<parameter name = "browser" value = "chrome"/>
+		<parameter name = "Filter" value = "2"/>
+			<classes>
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />						
+			</classes>
+	</test>
+	
+	<test name = "TransparenSeeBetaLocationCountry" >
+		<parameter name = "browser" value = "chrome"/>
+		<parameter name = "Filter" value = "3"/>
+			<classes>
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />						
+			</classes>
+	</test>
+	
+	<test name = "TransparenSeeBetaLocationState" >
+		<parameter name = "browser" value = "chrome"/>
+		<parameter name = "Filter" value = "4"/>
+			<classes>
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />						
+			</classes>
+	</test> 
+	
+	<test name = "TransparenSeeBetaLocationCity" >
+		<parameter name = "browser" value = "chrome"/>
+		<parameter name = "Filter" value = "5"/>
+			<classes>
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />						
+			</classes>
+	</test>
+	
+	<test name = "TransparenSeeBetaLocationLoc" >
+		<parameter name = "browser" value = "chrome"/>
+		<parameter name = "Filter" value = "6"/>
+			<classes>
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />						
+			</classes>
+	</test>
+	
+	<!-- <test name = "TransparenSeeBetaBingLocation" >
 		<parameter name = "browser" value = "chrome"/>
 			<classes>
-				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" /> 			
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" /> 	
 			</classes>
-	</test>	
+	</test>	 -->
 </suite>

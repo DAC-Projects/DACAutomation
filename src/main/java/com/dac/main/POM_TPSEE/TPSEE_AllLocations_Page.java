@@ -265,7 +265,7 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 		} catch (AWTException e) {
 			e.printStackTrace();
 		}
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + LocationExportCSV));
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + LocationExportCSV ));
 		Thread.sleep(5000);
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
 	}

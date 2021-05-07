@@ -116,10 +116,43 @@ public abstract class BaseClass {
 			return IAutoconst.deepfieldAccount;
 			//return IAutoconst.NandithaAccount;
 
-		case "TransparenSEEBetaClient":
+		case "TransparenSEEBetaClientGlobal":
+			return IAutoconst.transparenSEEClientBeta;
+			
+		case "TransparenSEEBetaClientGroup":
+			return IAutoconst.transparenSEEClientBeta;
+			
+		case "TransparenSEEBetaClientCountry":
+			return IAutoconst.transparenSEEClientBeta;
+			
+		case "TransparenSEEBetaClientState":
+			return IAutoconst.transparenSEEClientBeta;
+			
+		case "TransparenSEEBetaClientCity":
+			return IAutoconst.transparenSEEClientBeta;
+			
+		case "TransparenSEEBetaClientLocation":
 			return IAutoconst.transparenSEEClientBeta;
 			
 		case "TransparenSeeBetaLocation":
+			return IAutoconst.transparenSEELocationBeta;
+			
+		case "TransparenSeeBetaLocationGlobal":
+			return IAutoconst.transparenSEELocationBeta;
+			
+		case "TransparenSeeBetaLocationGroup":
+			return IAutoconst.transparenSEELocationBeta;
+			
+		case "TransparenSeeBetaLocationCountry":
+			return IAutoconst.transparenSEELocationBeta;
+			
+		case "TransparenSeeBetaLocationState":
+			return IAutoconst.transparenSEELocationBeta;
+			
+		case "TransparenSeeBetaLocationCity":
+			return IAutoconst.transparenSEELocationBeta;
+			
+		case "TransparenSeeBetaLocationLoc":
 			return IAutoconst.transparenSEELocationBeta;
 			
 		case "TransparenSeeBetaDup" :
@@ -128,10 +161,40 @@ public abstract class BaseClass {
 		case "TransparenSeeBetaBingLocation" :
 			return IAutoconst.transparenSEEBingLocation;
 			
-		case "TransparenSEEStagingClient" :
+		case "TransparenSEEStagingClientGlobal" :
 			return IAutoconst.transparenSEEStagingClient;
 			
-		case "TransparenSeeStagingLocation" :
+		case "TransparenSEEStagingClientGroup" :
+			return IAutoconst.transparenSEEStagingClient;
+			
+		case "TransparenSEEStagingClientCountry" :
+			return IAutoconst.transparenSEEStagingClient;
+			
+		case "TransparenSEEStagingClientState" :
+			return IAutoconst.transparenSEEStagingClient;
+			
+		case "TransparenSEEStagingClientCity" :
+			return IAutoconst.transparenSEEStagingClient;
+			
+		case "TransparenSEEStagingClientLocation" :
+			return IAutoconst.transparenSEEStagingClient;
+			
+		case "TransparenSeeStagingLocationGlobal" :
+			return IAutoconst.transparenSEEStagingLocation;
+			
+		case "TransparenSeeStagingLocationGroup" :
+			return IAutoconst.transparenSEEStagingLocation;
+			
+		case "TransparenSeeStagingLocationCountry" :
+			return IAutoconst.transparenSEEStagingLocation;
+			
+		case "TransparenSeeStagingLocationState" :
+			return IAutoconst.transparenSEEStagingLocation;
+			
+		case "TransparenSeeStagingLocationCity" :
+			return IAutoconst.transparenSEEStagingLocation;
+			
+		case "TransparenSeeStagingLocationLoc" :
 			return IAutoconst.transparenSEEStagingLocation;
 			
 		case "TransparenSeeClientBetaFace" :
@@ -165,9 +228,11 @@ public abstract class BaseClass {
 			
 		case "ResponseManagementCreator" :
 			return IAutoconst.neuralResponseBeta;
+			//return IAutoconst.OssingtonBetaCreator;
 			
 		case "ResponseManagementApprover" :
 			return IAutoconst.neuralTuringTechAccount;
+			//return IAutoconst.OssingtonBeta;
 			
 			case "DRS" :
 				return IAutoconst.DRSClient;
