@@ -106,7 +106,7 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//div[contains(text(),'Less-than 3 stars')]")
 	private WebElement customLessThan3stars;
 	/*-----------Pagination--------*/
-	@FindBy(xpath = "//li[@class='paginate_button ']")
+	@FindBy(xpath = "//ul[@class='pagination']/li")
 	private List<WebElement> TotalPages;
 	
 	@FindBy(xpath = "//ul[@class='pagination']")
@@ -149,8 +149,7 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 		
 //		JSWaiter.waitJQueryAngular();
 		System.out.println("createEmailNotification "+ newData);
-//		scrollByElement(pagination);
-//		pagination();
+		
 		loop:
 		for(int i=1;i<=5;i++) {
 			try {
@@ -163,7 +162,6 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 		}
 			
 		CreateReviewNotification(ExcelData,newData);
-		
 		verifyEmailNotification(ExcelData, newData);
 		
 		System.out.println("Notification Created and Verified");
@@ -294,7 +292,8 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 		String[] data = new String[1];
 //		JSWaiter.waitJQueryAngular();
 		System.out.println("verifyEmailNotification "+ row);
-		
+		scrollByElement(pagination);
+		pagination();
 //		scrollByElement(notificationTableTitle);
 		int uiRow=getRowIndex(configuration[row][0]);
 		System.out.println("uiRow  "+ uiRow);
@@ -337,7 +336,8 @@ public class TPSEE_ReviewNotifications_Page extends TPSEE_abstractMethods {
 		WebElement btnDelete,btnConfirmOK,successOK;
 //		JSWaiter.waitJQueryAngular();
 		System.out.println("Delete Review Notification "+ excelRow);
-		
+		scrollByElement(pagination);
+		pagination();
 //		scrollByElement(notificationTableTitle);
 //		Thread.sleep(2000);
 		btnDelete=getDeleteButtonRow(ExcelData[excelRow][0]);
@@ -452,13 +452,14 @@ public static String[] GetStringArray(ArrayList<String> arr)
 
     return str; 
 }
-private void pagination() {
+private void pagination() {//in progress
 	List < WebElement > pages = TotalPages;
-	int pageSize = pages.size();	
-	System.out.println("Total Pages : "+pageSize +" + 1");
-	if (pageSize>0) {
-		WebElement page= driver.findElement(By.xpath("//li[@class='paginate_button '][" + pageSize + "]/a"));
-//		System.out.println("Clicked on Page: "+pageSize);
+	int pageSize = pages.size()-2;	
+//	System.out.println("Total Pages : "+pageSize +" + 1");
+	if (pageSize>1) {
+		WebElement page= driver.findElement(By.xpath("//ul[@class='pagination']/li/a[.=" + pageSize + "]"));
+		//ul[@class='pagination']/li[.='3']
+		System.out.println("Clicked on Page: "+pageSize);
 		
 		clickelement(page);
 	}

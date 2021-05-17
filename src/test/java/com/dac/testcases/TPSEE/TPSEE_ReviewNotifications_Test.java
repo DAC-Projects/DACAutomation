@@ -40,7 +40,8 @@ public class TPSEE_ReviewNotifications_Test extends BaseClass {
 						CurrentState.getLogger().log(Status.PASS, "Notification Created and Verified");
 						addEvidence(CurrentState.getDriver(), "New Review Notification Created", "yes");
 					}
-	//Test for Edit Email Notification
+	
+			//Test for Edit Email Notification
 			@SuppressWarnings("unchecked")
 			@Test(dependsOnMethods = { "createEmailNotification"}, groups = {
 									"smoke" }, description = "TC: Updating Review Notification")
