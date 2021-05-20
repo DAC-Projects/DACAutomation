@@ -454,15 +454,11 @@ public static String[] GetStringArray(ArrayList<String> arr)
 }
 private void pagination() {//in progress
 	List < WebElement > pages = TotalPages;
-	int pageSize = pages.size()-2;	
+	int pageSize = pages.size()-1;	
 //	System.out.println("Total Pages : "+pageSize +" + 1");
-	if (pageSize>1) {
-		WebElement page= driver.findElement(By.xpath("//ul[@class='pagination']/li/a[.=" + pageSize + "]"));
-		//ul[@class='pagination']/li[.='3']
+	WebElement page= driver.findElement(By.xpath("//ul[@class='pagination']/li[" + pageSize + "]/a"));
 		System.out.println("Clicked on Page: "+pageSize);
-		
-		clickelement(page);
-	}
+	clickelement(page);
 }
 
 
