@@ -17,15 +17,13 @@ public class TPSEE_Site_Order extends TPSEE_abstractMethods {
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
-	
+
 	List<String> SiteList = new ArrayList<String>();
 	List<String> VendorList = new ArrayList<String>();
-	
+
 	@FindBy(xpath = "(//div[@class='col-lg-2 bar-chart-column'])")
 	private WebElement site;
-	
-	
-	
+
 	public TPSEE_Site_Order(WebDriver driver) {
 		super(driver);
 		this.driver = driver;
@@ -39,42 +37,53 @@ public class TPSEE_Site_Order extends TPSEE_abstractMethods {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public List<String> getSiteList(){
-	
+
+	/**
+	 * to get site list from site order page
+	 * 
+	 * @return
+	 */
+	public List<String> getSiteList() {
+
 		String site;
 		List<WebElement> Sitelist = driver.findElements(By.xpath("(//div[@class='ui-sortable-handle']//img)"));
 		int size = Sitelist.size();
-		System.out.println("The size of element list : " +size);
-		for(int i = 1; i <= size; i++ ) {
-			site = driver.findElement(By.xpath("(//div[@class='ui-sortable-handle']//img)["+ i +"]")).getAttribute("id");
-			System.out.println("The site is : " +site);
+		System.out.println("The size of element list : " + size);
+		for (int i = 1; i <= size; i++) {
+			site = driver.findElement(By.xpath("(//div[@class='ui-sortable-handle']//img)[" + i + "]"))
+					.getAttribute("id");
+			System.out.println("The site is : " + site);
 			SiteList.add(site);
 		}
-		System.out.println("The site list is : " +SiteList);
+		System.out.println("The site list is : " + SiteList);
 		return SiteList;
 	}
-	
-	public List<String> getVisibilitySite(){
-		
+
+	/**
+	 * to get vendors from visibility page
+	 * 
+	 * @return
+	 */
+	public List<String> getVisibilitySite() {
+
 		String vendor;
 		List<WebElement> Vendors = driver.findElements(By.xpath("(//div[@class='col-lg-2 bar-chart-column'])"));
 		scrollByElement(driver.findElement(By.xpath("(//div[@class='col-lg-2 bar-chart-column'])")));
 		int size = Vendors.size();
-		System.out.println("The size of web element is : " +size);
-		for(int i = 1; i <= size; i++) {
-			vendor = driver.findElement(By.xpath("(//div[@class='col-lg-2 bar-chart-column'])["+ i +"]")).getText();
-			System.out.println("The Vendor is : " +vendor);
-			if(vendor.equals("YP.com")) {
+		System.out.println("The size of web element is : " + size);
+		for (int i = 1; i <= size; i++) {
+			vendor = driver.findElement(By.xpath("(//div[@class='col-lg-2 bar-chart-column'])[" + i + "]")).getText();
+			System.out.println("The Vendor is : " + vendor);
+			if (vendor.equals("YP.com")) {
 				vendor = "YellowpagesCom";
-			}else if(vendor.equals("YP.ca")) {
+			} else if (vendor.equals("YP.ca")) {
 				vendor = "Yellowpages";
 			}
 			VendorList.add(vendor);
 		}
-		System.out.println("Vendor List contains : " +VendorList);
+		System.out.println("Vendor List contains : " + VendorList);
 		return VendorList;
-		
+
 	}
-	
+
 }

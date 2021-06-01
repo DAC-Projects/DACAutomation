@@ -1,6 +1,7 @@
 package com.dac.main.POM_TPSEE;// To store constant values
+
 public interface TPSEERepository {
-	
+
 	String User = "UserId";
 	String UserID = "58f658ece0264678337dc4c1";
 
@@ -19,7 +20,7 @@ public interface TPSEERepository {
 	String VisibilityExportHistoryPdf = "VisibilityExportHistoryPdf.pdf";
 	String ReviewExport = "ReviewExport.xlsx";
 	String CAExport = "CAExport.xlsx";
-	String Exportpath ="./downloads/";
+	String Exportpath = "./downloads/";
 	String VisibilityExporttableFoundCSV = "VisibilityExporttableFoundCSV.xlsx";
 	String VisibilityExporttableFoundXLSX = "VisibilityExporttableFoundXLSX.xlsx";
 	String VisibilityExporttableNotFoundCSV = "VisibilityExporttableNotFoundcsv.xlsx";

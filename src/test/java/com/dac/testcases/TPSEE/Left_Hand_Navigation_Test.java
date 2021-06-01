@@ -8,12 +8,13 @@ import resources.CurrentState;
 import resources.JSWaiter;
 
 public class Left_Hand_Navigation_Test extends BaseClass {
-	
+
 	Navigationpage np;
 	TPSEE_LeftHand_Navigation data;
-	
+
 	/**
 	 * Test to verify All Locations active state
+	 * 
 	 * @throws Exception
 	 */
 	@Test(priority = 1, description = "Test to verify active state of All Locations")
@@ -25,9 +26,10 @@ public class Left_Hand_Navigation_Test extends BaseClass {
 		data.AllLocationshightlight();
 		addEvidence(CurrentState.getDriver(), "Test to verify active state of all locations page", "yes");
 	}
-	
+
 	/**
 	 * Test to verify Visibility active state
+	 * 
 	 * @throws Exception
 	 */
 	@Test(priority = 2, description = "Test to verify active state of Visibilty Report")
@@ -39,9 +41,10 @@ public class Left_Hand_Navigation_Test extends BaseClass {
 		data.visibilityhightlight();
 		addEvidence(CurrentState.getDriver(), "Test to verify active state of Visibility Report", "yes");
 	}
-	
+
 	/**
 	 * Test to verify Accuracy active state
+	 * 
 	 * @throws Exception
 	 */
 	@Test(priority = 3, description = "Test to verify active state of Accuracy Report")
@@ -53,9 +56,10 @@ public class Left_Hand_Navigation_Test extends BaseClass {
 		data.accuracyhightlight();
 		addEvidence(CurrentState.getDriver(), "Test to verify active state of Visibility Report", "yes");
 	}
-	
+
 	/**
 	 * Test to verify Analysis active state
+	 * 
 	 * @throws Exception
 	 */
 	@Test(priority = 4, description = "Test to verify active state of Content Analysis Report")
@@ -67,9 +71,10 @@ public class Left_Hand_Navigation_Test extends BaseClass {
 		data.contentanalysishightlight();
 		addEvidence(CurrentState.getDriver(), "Test to verify active state of Content Analysis Report", "yes");
 	}
-	
+
 	/**
 	 * Test to verify Google Ranking active state
+	 * 
 	 * @throws Exception
 	 */
 	@Test(priority = 5, description = "Test to verify active state of Google Ranking Report")
@@ -81,9 +86,10 @@ public class Left_Hand_Navigation_Test extends BaseClass {
 		data.GoogleRankinghightlight();
 		addEvidence(CurrentState.getDriver(), "Test to verify active state of Google Ranking Report", "yes");
 	}
-	
+
 	/**
 	 * Test to verify Duplicate Management active state
+	 * 
 	 * @throws Exception
 	 */
 	@Test(priority = 6, description = "Test to verify active state of Duplicate Management")
@@ -95,9 +101,10 @@ public class Left_Hand_Navigation_Test extends BaseClass {
 		data.Duplicatehightlight();
 		addEvidence(CurrentState.getDriver(), "Test to verify active state of Duplicate Management Report", "yes");
 	}
-	
+
 	/**
 	 * Test to verify Listing Verification active state
+	 * 
 	 * @throws Exception
 	 */
 	@Test(priority = 7, description = "Test to verify active state of Listing Verification Report")
@@ -109,9 +116,10 @@ public class Left_Hand_Navigation_Test extends BaseClass {
 		data.ListingVerificationhightlight();
 		addEvidence(CurrentState.getDriver(), "Test to verify active state of Listing Verification Report", "yes");
 	}
-	
+
 	/**
 	 * Test to verify Local Rank Plus active state
+	 * 
 	 * @throws Exception
 	 */
 	@Test(priority = 8, description = "Test to verify active state of Local Rank Plus Report")
@@ -123,9 +131,10 @@ public class Left_Hand_Navigation_Test extends BaseClass {
 		data.LocalRankPlushightlight();
 		addEvidence(CurrentState.getDriver(), "Test to verify active state of Local Rank Plus Report", "yes");
 	}
-	
+
 	/**
 	 * Test to verify Google My Business active state
+	 * 
 	 * @throws Exception
 	 */
 	@Test(priority = 9, description = "Test to verify active state of Google My Business Report")
@@ -137,9 +146,10 @@ public class Left_Hand_Navigation_Test extends BaseClass {
 		data.GoogleMyBusinesshightlight();
 		addEvidence(CurrentState.getDriver(), "Test to verify active state of Google My Business Report", "yes");
 	}
-	
+
 	/**
 	 * Test to verify Facebook Insights active state
+	 * 
 	 * @throws Exception
 	 */
 	@Test(priority = 10, description = "Test to verify active state of Facebook Insights Report")
@@ -152,9 +162,10 @@ public class Left_Hand_Navigation_Test extends BaseClass {
 		data.FacebookInsightshightlight();
 		addEvidence(CurrentState.getDriver(), "Test to verify active state of Facebook Insights Report", "yes");
 	}
-	
+
 	/**
 	 * Test to verify Bing Places for Business active state
+	 * 
 	 * @throws Exception
 	 */
 	@Test(priority = 11, description = "Test to verify active state of Bing Places for Business Report")

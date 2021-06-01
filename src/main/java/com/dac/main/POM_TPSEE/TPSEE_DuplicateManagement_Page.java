@@ -25,7 +25,6 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
-	
 
 	public TPSEE_DuplicateManagement_Page(WebDriver driver) {
 		super(driver);
@@ -63,13 +62,13 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//input[@class='form-control input-sm']")
 	private WebElement SearchBox;
-	
+
 	@FindBy(xpath = "//div[@class='c-search-input']//button")
 	private WebElement SearchBtn;
-	
+
 	@FindBy(xpath = "//*[@id='duplicate-table_filter']//div//input")
 	private WebElement ComPenSearchbox;
-	
+
 	@FindBy(xpath = "//*[@id='duplicate-table_filter']//div//button")
 	private WebElement ComPenSearchBtn;
 
@@ -141,19 +140,19 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//button[@id ='btn_ignore_potential_duplicate']")
 	private WebElement Ignore_Confirmation;
-	
+
 	@FindBy(xpath = "//*[@id='reports']")
 	private WebElement DupSec;
-	
+
 	@FindBy(xpath = "//li[@id='duplicate_management_report']")
 	private WebElement DupPage;
-	
+
 	@FindBy(xpath = "//select[@name='duplicate-table_length']")
 	private WebElement Resultperpage;
-	
+
 	@FindBy(xpath = "(//input[contains(@class,'form-control')])[4]")
 	private WebElement gotopage;
-	
+
 	@FindBy(xpath = "//div[@id='duplicate-table_info']")
 	private WebElement Entry;
 
@@ -308,7 +307,7 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 					}
 				}
 			}
-		}else {
+		} else {
 			System.out.println("No Data Available in the table");
 			return null;
 		}
@@ -316,8 +315,7 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		ComPenSearchbox.clear();
 		return LocationNumber;
 	}
-	
-	
+
 	/**
 	 * To verify the status of the location
 	 * 
@@ -326,7 +324,8 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	public void verifyCompleteTab(String PhNumber, String Text, String timestamp) throws InterruptedException, ParseException {
+	public void verifyCompleteTab(String PhNumber, String Text, String timestamp)
+			throws InterruptedException, ParseException {
 		driver.navigate().refresh();
 		String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
 				.toString();
@@ -359,14 +358,14 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 						List<WebElement> rows_table = Dup_TableRow;
 						int rows_count = rows_table.size(); // To calculate no of rows In table.
 						count = count + rows_count;
-						for (int row = 0; row < rows_count -1; row++) {
+						for (int row = 0; row < rows_count - 1; row++) {
 							String celtext = driver
 									.findElement(By
 											.xpath("//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[2]/div"))
 									.getText();
 							System.out.println("The celText is :" + celtext);
 							if (celtext.contains(LocNum)) {
-								Date todaysDate = getTodaysDate(); 
+								Date todaysDate = getTodaysDate();
 								System.out.println("Today's Date is :" + todaysDate);
 								String date = driver.findElement(By.xpath("(//*[@id='duplicate-table']/tbody/tr["
 										+ (row + 1)
@@ -378,24 +377,30 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 								Date displayeddate = formats.parse(finalDate);
 								System.out.println("Displayed Date is : " + displayeddate);
 								if (todaysDate.equals(displayeddate)) {
-									String ExtNotes = driver.findElement(By.xpath("(//*[@id='duplicate-table']/tbody/tr["+(row+1)+"]/td[2]/div/parent::*/following-sibling::td[2]//div[@class='duplicate-note']//span)[1]")).getText();
-									System.out.println("External Notes is :" +ExtNotes);
-									if(ExtNotes.equalsIgnoreCase(timestamp)) {
-									String StatusText = driver.findElement(By.xpath(
-											"//*[@id='duplicate-table']/tbody/tr[" + (row + 1) + "]/td[4]/div/div[3]"))
+									String ExtNotes = driver
+											.findElement(By.xpath("(//*[@id='duplicate-table']/tbody/tr[" + (row + 1)
+													+ "]/td[2]/div/parent::*/following-sibling::td[2]//div[@class='duplicate-note']//span)[1]"))
 											.getText();
-									assertTrue(StatusText.contains(Text));
-									if (driver.findElement(By.xpath(ClickMore + "[" + (row + 1) + "]")).isDisplayed()) {
-										driver.findElement(By.xpath(ClickMore + "[" + (row + 1) + "]")).click();
-										System.out.println();
-									} else {
-										System.out.println("No More Link displayed");
-									}
+									System.out.println("External Notes is :" + ExtNotes);
+									if (ExtNotes.equalsIgnoreCase(timestamp)) {
+										String StatusText = driver
+												.findElement(By.xpath("//*[@id='duplicate-table']/tbody/tr[" + (row + 1)
+														+ "]/td[4]/div/div[3]"))
+												.getText();
+										assertTrue(StatusText.contains(Text));
+										if (driver.findElement(By.xpath(ClickMore + "[" + (row + 1) + "]"))
+												.isDisplayed()) {
+											driver.findElement(By.xpath(ClickMore + "[" + (row + 1) + "]")).click();
+											System.out.println();
+										} else {
+											System.out.println("No More Link displayed");
+										}
 									}
 								}
 								break Outer;
 							}
-						} if (Page_Next.isEnabled()) {
+						}
+						if (Page_Next.isEnabled()) {
 							scrollByElement(Page_Next);
 							Page_Next.click();
 							Thread.sleep(4000);
@@ -537,7 +542,8 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 							Assert.assertEquals(entiresText1, entiresText - 1);
 							break Outer;
 						}
-					} if (Page_Next.isEnabled()) {
+					}
+					if (Page_Next.isEnabled()) {
 						scrollByElement(Page_Next);
 						Page_Next.click();
 						Thread.sleep(4000);
@@ -600,7 +606,8 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 							System.out.println("Action Performed is : Fix");
 							break Outer;
 						}
-					} if (Page_Next.isEnabled()) {
+					}
+					if (Page_Next.isEnabled()) {
 						scrollByElement(Page_Next);
 						Page_Next.click();
 						Thread.sleep(4000);
@@ -675,13 +682,14 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 						} else {
 							System.out.println("Location Number doesn't exist");
 						}
-					}if (Page_Next.isEnabled()) {
+					}
+					if (Page_Next.isEnabled()) {
 						scrollByElement(Page_Next);
 						Page_Next.click();
 						Thread.sleep(4000);
 					}
 				}
-				
+
 			}
 		} else {
 			System.out.println("No Data Available");
@@ -690,7 +698,17 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		ComPenSearchbox.clear();
 	}
 
-	public void VerifyFix_PendingTab(String LocNum, String Status, String timestamp) throws InterruptedException, ParseException {
+	/**
+	 * to verify the potential fixed from pending tab
+	 * 
+	 * @param LocNum
+	 * @param Status
+	 * @param timestamp
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	public void VerifyFix_PendingTab(String LocNum, String Status, String timestamp)
+			throws InterruptedException, ParseException {
 		String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
 				.toString();
 		SimpleDateFormat formats = new SimpleDateFormat(var);
@@ -736,21 +754,25 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 							if (todaysDate.equals(displayeddate)) {
 								int entiresText1 = NumOfentries(Dup_Table_Info);
 								System.out.println("Final entries in Table is :" + entiresText1);
-								String ExtNotes = driver.findElement(By.xpath("(//*[@id='duplicate-table']/tbody/tr["+(row+1)+"]/td[2]/div/parent::*/following-sibling::td[2]//div[@class='duplicate-note']//span)[1]")).getText();
-								System.out.println("External Notes is :" +ExtNotes);
-								if(ExtNotes.equalsIgnoreCase(timestamp)) {
-								if (!Status.equals("New") || !Status.equals("In Progress")) {
-									Assert.assertEquals(entiresText1, entiresText - 1);
-								} else {
-									Assert.assertEquals(entiresText1, entiresText);
-								}
+								String ExtNotes = driver.findElement(By.xpath("(//*[@id='duplicate-table']/tbody/tr["
+										+ (row + 1)
+										+ "]/td[2]/div/parent::*/following-sibling::td[2]//div[@class='duplicate-note']//span)[1]"))
+										.getText();
+								System.out.println("External Notes is :" + ExtNotes);
+								if (ExtNotes.equalsIgnoreCase(timestamp)) {
+									if (!Status.equals("New") || !Status.equals("In Progress")) {
+										Assert.assertEquals(entiresText1, entiresText - 1);
+									} else {
+										Assert.assertEquals(entiresText1, entiresText);
+									}
 								}
 								break Outer;
 							} else {
 								System.out.println("Location Number doesn't exist");
 							}
 						}
-					} if (Page_Next.isEnabled()) {
+					}
+					if (Page_Next.isEnabled()) {
 						scrollByElement(Page_Next);
 						Page_Next.click();
 						Thread.sleep(4000);
@@ -764,6 +786,12 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		ComPenSearchbox.clear();
 	}
 
+	/**
+	 * to get current date
+	 * 
+	 * @return
+	 * @throws ParseException
+	 */
 	public Date getTodaysDate() throws ParseException {
 		String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
 				.toString();
@@ -777,13 +805,24 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		System.out.println(todaydate);
 		return todaydate;
 	}
-	
+
+	/**
+	 * to verify results per page
+	 * 
+	 * @param soft
+	 * @throws InterruptedException
+	 */
 	public void resultperpage(SoftAssert soft) throws InterruptedException {
 		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
 		Thread.sleep(3000);
 		ResultsperPage(soft, Entry, Resultperpage);
 	}
-	
+
+	/**
+	 * to verify goto page
+	 * 
+	 * @throws InterruptedException
+	 */
 	public void GoTo() throws InterruptedException {
 		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
 		Thread.sleep(3000);

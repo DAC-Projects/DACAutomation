@@ -5,7 +5,6 @@ import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
-import com.dac.main.POM_TPSEE.TPSEE_GoogleRanking_Page;
 import com.dac.main.POM_TPSEE.TPSEE_Syndication_Status_Page;
 
 import resources.BaseClass;

@@ -554,6 +554,10 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "To Verify Status Unable to 'process", "yes");
 	}
 	
+	/**
+	 * test to delete potential duplicate 
+	 * @throws Exception
+	 */
 	@Test(priority = 31, description = "Test to change the status in DTC")
 	public void DTC_Pot__Delete() throws Exception {
 		DTC_Duplicate_Management dtcLogin = new DTC_Duplicate_Management(driver);
@@ -569,6 +573,10 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		driver.quit();
 	}
 	
+	/**
+	 * test to verify status of deleted potential
+	 * @throws Exception
+	 */
 	@Test(priority = 32, description = "Test to verify the status in TSEE")
 	public void verify_Pot_Status_Deleted() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
@@ -581,6 +589,10 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "To Verify Status Unable to 'process", "yes");
 	}
 	
+	/**
+	 * test to verify potential duplicate
+	 * @throws Exception
+	 */
 	@Test(priority = 33, description = "Test to ignore Duplicate")
 	public void verifyPotentialDup() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
@@ -592,6 +604,10 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		
 	}
 	
+	/**
+	 * test to verify goto page
+	 * @throws Exception
+	 */
 	@Test(priority = 34, description = "Test to GoTo Page verification")
 	public void verifyGotoPage() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());
@@ -599,6 +615,10 @@ public class TPSEE_DuplicateManagement_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Test to verify GoTo Page", "yes");
 	}
 	
+	/**
+	 * test to verify results per page
+	 * @throws Exception
+	 */
 	@Test(priority = 35, description = "Test to results per page")
 	public void verifyResultperPage() throws Exception {
 		data = new TPSEE_DuplicateManagement_Page(CurrentState.getDriver());

@@ -75,19 +75,19 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//*[@id='syndication-table_info']")
 	private WebElement TotalEntries;
-	
+
 	@FindBy(xpath = "//li[@id='reports']")
 	private WebElement SyndicationSec;
-	
+
 	@FindBy(xpath = "//li[@id='syndication_status_report']")
 	private WebElement SyndicationPage;
-	
+
 	@FindBy(xpath = "//select[@name='syndication-table_length']")
 	private WebElement Resultperpage;
-	
+
 	@FindBy(xpath = "//input[contains(@class,'page-input form-control form-control-sm')]")
 	private WebElement gotopage;
-	
+
 	@FindBy(xpath = "//div[@id='syndication-table_info']")
 	private WebElement Entry;
 
@@ -141,39 +141,41 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 		System.out.println("The VendorList contains" + VendorList);
 	}
 
-
-
 	/**
 	 * Verify status of each vendor
+	 * 
 	 * @param Vendor
 	 * @param XLStatus
 	 * @param row
 	 * @param soft
-	 * @throws Exception 
+	 * @throws Exception
 	 */
-	public void verifyStatus(String Vendor, String XLStatus, int row, SoftAssert soft, String LocationNumber) throws Exception {
+	public void verifyStatus(String Vendor, String XLStatus, int row, SoftAssert soft, String LocationNumber)
+			throws Exception {
 		String UIstatus = "";
 		List<WebElement> vendortablerow = driver.findElements(
 				By.xpath("(//tbody//tr[@role='row'])[" + row + "]//div[@class='table-listing-details']//tbody//tr"));
 		int size = vendortablerow.size();
 		System.out.println("The size of vendor table is :" + size);
-			WebElement x = driver.findElement(By.xpath("(//tbody//tr[@role='row'])[" + row
-					+ "]//div[@class='table-listing-details']//tbody//td[contains(text(),'" + Vendor + "')]"));
-			scrollByElement(x);
-			if (x.isDisplayed()) {
-				UIstatus = driver.findElement(By.xpath("(//tbody//tr[@role='row'])[" + row
-						+ "]//div[@class='table-listing-details']//tbody//td[contains(text(),'" + Vendor
-						+ "')]//following-sibling::td[1]")).getAttribute("innerText");
-				System.out.println("Status of Vendor is :" + UIstatus);
-				BaseClass.addEvidence(CurrentState.getDriver(), "Verify vendors", "yes");
-				soft.assertEquals(UIstatus, XLStatus,"The Location Number is "+LocationNumber+" The Vendor is "+Vendor+" UI Status is "+UIstatus+" and XL Status is "+XLStatus+"");
-			} else {
-				System.out.println("Vendor is not displayed");
-			}
+		WebElement x = driver.findElement(By.xpath("(//tbody//tr[@role='row'])[" + row
+				+ "]//div[@class='table-listing-details']//tbody//td[contains(text(),'" + Vendor + "')]"));
+		scrollByElement(x);
+		if (x.isDisplayed()) {
+			UIstatus = driver.findElement(By.xpath("(//tbody//tr[@role='row'])[" + row
+					+ "]//div[@class='table-listing-details']//tbody//td[contains(text(),'" + Vendor
+					+ "')]//following-sibling::td[1]")).getAttribute("innerText");
+			System.out.println("Status of Vendor is :" + UIstatus);
+			BaseClass.addEvidence(CurrentState.getDriver(), "Verify vendors", "yes");
+			soft.assertEquals(UIstatus, XLStatus, "The Location Number is " + LocationNumber + " The Vendor is "
+					+ Vendor + " UI Status is " + UIstatus + " and XL Status is " + XLStatus + "");
+		} else {
+			System.out.println("Vendor is not displayed");
+		}
 	}
 
 	/**
 	 * Get row number for the provided location Number
+	 * 
 	 * @param LocationNumber
 	 * @return
 	 * @throws ParseException
@@ -226,6 +228,7 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 
 	/**
 	 * Verify Date Submitted for each vendors
+	 * 
 	 * @param row
 	 * @param Vendor
 	 * @param soft
@@ -246,15 +249,16 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 				+ "]//div[@class='table-listing-details']//tbody//td[contains(text(),'" + Vendor
 				+ "')]//following-sibling::td[2]")).getAttribute("innerText");
 		System.out.println("Date is :" + date);
-		if(!date.equals("-")) {
-		Date UIDate = formats.parse(date);
-		System.out.println("UI Date is :" + UIDate);
-		soft.assertEquals(todaydate, UIDate);
-		}		
+		if (!date.equals("-")) {
+			Date UIDate = formats.parse(date);
+			System.out.println("UI Date is :" + UIDate);
+			soft.assertEquals(todaydate, UIDate);
+		}
 	}
 
 	/**
 	 * Verify Notes of vendors provided
+	 * 
 	 * @param Vendor
 	 * @param row
 	 * @param soft
@@ -281,9 +285,10 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 			soft.assertEquals(Notes, "Weekly Submissions");
 		}
 	}
-	
+
 	/**
 	 * Get row number for the provided location Number
+	 * 
 	 * @param LocationNumber
 	 * @return
 	 * @throws ParseException
@@ -324,13 +329,24 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 			}
 		}
 	}
-	
+
+	/**
+	 * to verify results per page
+	 * 
+	 * @param soft
+	 * @throws InterruptedException
+	 */
 	public void resultperpage(SoftAssert soft) throws InterruptedException {
 		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
 		Thread.sleep(3000);
 		ResultsperPage(soft, Entry, Resultperpage);
 	}
-	
+
+	/**
+	 * to verify goto page
+	 * 
+	 * @throws InterruptedException
+	 */
 	public void GoTo() throws InterruptedException {
 		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
 		Thread.sleep(3000);

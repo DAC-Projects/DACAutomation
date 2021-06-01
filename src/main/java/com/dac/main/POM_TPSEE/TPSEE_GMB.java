@@ -208,10 +208,10 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//div[@id='photoViewsIndex']//span[@class='infobox-content'][contains(text(),'Customer')]")
 	private WebElement PhCust;
-	
+
 	@FindBy(xpath = "//li[@id='google_places_report']")
 	private WebElement GMBPage;
-	
+
 	@FindBy(xpath = "//li[@id='local_analytics']")
 	private WebElement GMBSec;
 
@@ -223,6 +223,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		return null;
 	}
 
+	/**
+	 * to get action graph data
+	 */
 	public void verifyCustomerActionsGraph() {
 
 		// display tool tip
@@ -238,6 +241,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		System.out.println("\n tooltipvalue is \n" + custtooltipvalue);
 	}
 
+	/**
+	 * to get listing graph data
+	 */
 	public void verifyWhereListingGraph() {
 
 		// display tool tip
@@ -254,6 +260,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		System.out.println("\n tooltipvalue is \n" + WhereListingtooltipvalue);
 	}
 
+	/**
+	 * to get photo view graph data
+	 */
 	public void verifyPhotoViewGraph() {
 
 		// display tool tip
@@ -270,6 +279,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		System.out.println("\n tooltipvalue is \n" + PhViewtooltipvalue);
 	}
 
+	/**
+	 * to get photo qty graph data
+	 */
 	public void verifyPhotoQtyGraph() {
 
 		// display tool tip
@@ -285,6 +297,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		System.out.println("\n tooltipvalue is \n" + PhQtytooltipvalue);
 	}
 
+	/**
+	 * to get HOw listing graph data
+	 */
 	public void verifyHowListingGraph() {
 
 		// display tool tip
@@ -301,6 +316,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		System.out.println("\n tooltipvalue is \n" + PhViewtooltipvalue);
 	}
 
+	/**
+	 * Export as CSV
+	 */
 	public void exportcsvGMB() throws InterruptedException, FileNotFoundException, IOException {
 
 		JSWaiter.waitJQueryAngular();
@@ -317,6 +335,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		}
 	}
 
+	/**
+	 * Export as XLSX
+	 */
 	public void exportXLSXGMB(String file) throws InterruptedException, FileNotFoundException, IOException {
 
 		JSWaiter.waitJQueryAngular();
@@ -336,6 +357,14 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		}
 	}
 
+	/**
+	 * to get UI text
+	 * 
+	 * @param e
+	 * @param f
+	 * @param g
+	 * @return
+	 */
 	public int GetUIText(WebElement e, WebElement f, WebElement g) {
 		Value = e.getText();
 		Value1 = f.getText();
@@ -345,6 +374,13 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		return sum;
 	}
 
+	/**
+	 * to get UI text
+	 * 
+	 * @param e
+	 * @param f
+	 * @return
+	 */
 	public int GetUIText2(WebElement e, WebElement f) {
 		Value = e.getText();
 		Value1 = f.getText();
@@ -353,6 +389,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		return sum;
 	}
 
+	/**
+	 * to get UI text
+	 * 
+	 * @param e
+	 * @return
+	 */
 	public int GetUIText3(WebElement e) {
 		Value = e.getText();
 		int sum = convertint(Value);
@@ -360,6 +402,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		return sum;
 	}
 
+	/**
+	 * to convert string to int
+	 * 
+	 * @param s
+	 * @return
+	 */
 	public int convertint(String s) {
 		int Tot = 0;
 		if (s.contains(",")) {
@@ -373,6 +421,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		return Tot;
 	}
 
+	/**
+	 * to verify customer action data
+	 */
 	public void CustomerAction() {
 		try {
 			JSWaiter.waitJQueryAngular();
@@ -390,6 +441,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		}
 	}
 
+	/**
+	 * to verify where listing data
+	 */
 	public void WhereListingFound() {
 
 		JSWaiter.waitJQueryAngular();
@@ -411,6 +465,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		}
 	}
 
+	/**
+	 * to verify how listing data
+	 */
 	public void HowListingFound() {
 
 		JSWaiter.waitJQueryAngular();
@@ -433,6 +490,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		}
 	}
 
+	/**
+	 * to verify photo view data
+	 */
 	public void PhotoViews() {
 
 		JSWaiter.waitJQueryAngular();
@@ -451,6 +511,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		System.out.println("Count is equal \n");
 	}
 
+	/**
+	 * to verify customer action web visits data
+	 */
 	public void VerifyCustomerActiononWebVisits() {
 
 		try {
@@ -478,6 +541,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		}
 	}
 
+	/**
+	 * to verify customer action directory data
+	 */
 	public void VerifyCustomerActiononWebReqDirectory() {
 
 		try {
@@ -505,6 +571,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		}
 	}
 
+	/**
+	 * to verify customer action phone call data
+	 */
 	public void VerifyCustomerActiononPhCalls() {
 
 		try {
@@ -532,6 +601,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		}
 	}
 
+	/**
+	 * to verify where listing search data
+	 */
 	public void WhereListingSearchFound() {
 
 		JSWaiter.waitJQueryAngular();
@@ -558,6 +630,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		}
 	}
 
+	/**
+	 * to verify where listing map data
+	 */
 	public void WhereListingMapFound() {
 
 		JSWaiter.waitJQueryAngular();
@@ -586,6 +661,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		}
 	}
 
+	/**
+	 * to verify how listing discovery data
+	 */
 	public void HowListingDiscoveryFound() {
 
 		JSWaiter.waitJQueryAngular();
@@ -612,6 +690,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 	}
 
+	/**
+	 * to verify how listing directory data
+	 */
 	public void HowListingDirFound() {
 
 		JSWaiter.waitJQueryAngular();
@@ -638,6 +719,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 	}
 
+	/**
+	 * to verify how listing brand data
+	 */
 	public void HowListingBrandFound() {
 
 		JSWaiter.waitJQueryAngular();
@@ -663,6 +747,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		}
 	}
 
+	/**
+	 * to verify Owner photo views data
+	 */
 	public void OwnerPhotoViews() {
 
 		JSWaiter.waitJQueryAngular();
@@ -684,6 +771,9 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		}
 	}
 
+	/**
+	 * to verify customer photo view data
+	 */
 	public void CustomerPhotoViews() {
 
 		JSWaiter.waitJQueryAngular();
@@ -705,6 +795,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		}
 	}
 
+	/**
+	 * to compare UI and XL data of web actions
+	 * 
+	 * @param filename
+	 * @throws Exception
+	 */
 	public void CompareUIXLWebActions(String filename) throws Exception {
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		int x = GetDataUsingColName(filename, "Website Actions");
@@ -714,6 +810,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 	}
 
+	/**
+	 * to compare UI and XL data of req dir actions
+	 * 
+	 * @param filename
+	 * @throws Exception
+	 */
 	public void CompareUIXLReqDirActions(String filename) throws Exception {
 
 		int x = GetDataUsingColName(filename, "Request Directions Actions");
@@ -723,6 +825,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 	}
 
+	/**
+	 * to compare UI and XL data of phone calls
+	 * 
+	 * @param filename
+	 * @throws Exception
+	 */
 	public void CompareUIXLPhCalls(String filename) throws Exception {
 
 		int x = GetDataUsingColName(filename, "Phone Call Actions");
@@ -732,6 +840,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 	}
 
+	/**
+	 * to compare UI and XL data of total actions
+	 * 
+	 * @param filename
+	 * @throws Exception
+	 */
 	public void CompareUIXLTotActions(String filename) throws Exception {
 
 		int x = GetDataUsingColName(filename, "Total Actions");
@@ -741,6 +855,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 	}
 
+	/**
+	 * to compare UI and XL data of where search
+	 * 
+	 * @param filename
+	 * @throws Exception
+	 */
 	public void CompareUIXLWhereSearch(String filename) throws Exception {
 
 		int x = GetDataUsingColName(filename, "Search Views");
@@ -750,6 +870,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 	}
 
+	/**
+	 * to compare UI and XL data of listing map
+	 * 
+	 * @param filename
+	 * @throws Exception
+	 */
 	public void CompareUIXLWhereMap(String filename) throws Exception {
 
 		int x = GetDataUsingColName(filename, "Maps Views");
@@ -759,6 +885,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 	}
 
+	/**
+	 * to compare UI and XL data of total views
+	 * 
+	 * @param filename
+	 * @throws Exception
+	 */
 	public void CompareUIXLWhereTotalViews(String filename) throws Exception {
 
 		int x = GetDataUsingColName(filename, "Total Views");
@@ -768,6 +900,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 	}
 
+	/**
+	 * to compare UI and XL data of discovery
+	 * 
+	 * @param filename
+	 * @throws Exception
+	 */
 	public void CompareUIXLDiscovery(String filename) throws Exception {
 
 		int x = GetDataUsingColName(filename, "Discovery");
@@ -777,6 +915,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 	}
 
+	/**
+	 * to compare UI and XL data of direct
+	 * 
+	 * @param filename
+	 * @throws Exception
+	 */
 	public void CompareUIXLDirect(String filename) throws Exception {
 
 		int x = GetDataUsingColName(filename, "Direct");
@@ -786,6 +930,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 	}
 
+	/**
+	 * to compare UI and XL data of brand
+	 * 
+	 * @param filename
+	 * @throws Exception
+	 */
 	public void CompareUIXLBranded(String filename) throws Exception {
 
 		int x = GetDataUsingColName(filename, "Branded");
@@ -795,6 +945,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 	}
 
+	/**
+	 * to compare UI and XL data of total search
+	 * 
+	 * @param filename
+	 * @throws Exception
+	 */
 	public void CompareUIXLTotalSearch(String filename) throws Exception {
 
 		int x = GetDataUsingColName(filename, "Total Searches");
@@ -804,6 +960,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 	}
 
+	/**
+	 * to compare UI and XL data of phone view
+	 * 
+	 * @param filename
+	 * @throws Exception
+	 */
 	public void CompareUIXLOwnerPhView(String filename) throws Exception {
 
 		int x = GetDataUsingColName(filename, "Owner Photo Views");
@@ -813,6 +975,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 	}
 
+	/**
+	 * to compare UI and XL data of customer photo view
+	 * 
+	 * @param filename
+	 * @throws Exception
+	 */
 	public void CompareUIXLCustPhView(String filename) throws Exception {
 
 		int x = GetDataUsingColName(filename, "Customer Photo Views");
@@ -822,6 +990,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 	}
 
+	/**
+	 * to compare UI and XL data of total photo view
+	 * 
+	 * @param filename
+	 * @throws Exception
+	 */
 	public void CompareUIXLTotPhView(String filename) throws Exception {
 
 		int x = GetDataUsingColName(filename, "Total Photo Views");
@@ -830,12 +1004,23 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		Assert.assertEquals(x, total, "Count is equal");
 	}
 
+	/**
+	 * to verify if data is available
+	 * 
+	 * @return
+	 */
 	public String IsDataAvailable() {
 		String data = driver.findElement(By.xpath("//*[@class='highcharts-title']")).getText();
 		return data;
-		
+
 	}
 
+	/**
+	 * to verify title and title text
+	 * 
+	 * @param Tit
+	 * @param titText
+	 */
 	public void VerifyGMBTitleText(String Tit, String titText) {
 		JSWaiter.waitJQueryAngular();
 		SoftAssert soft = new SoftAssert();
@@ -850,6 +1035,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		soft.assertAll();
 	}
 
+	/**
+	 * to get hover text
+	 * 
+	 * @param Tet
+	 * @param e
+	 */
 	public void GetHoverText(String Tet, WebElement e) {
 		JSWaiter.waitJQueryAngular();
 		waitForElement(e, 5);
@@ -861,6 +1052,11 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 		Assert.assertEquals(Tet, Text);
 	}
 
+	/**
+	 * to verify mouse hover text
+	 * 
+	 * @throws Exception
+	 */
 	public void verifyMouseHoverText() throws Exception {
 		try {
 			GetHoverText(

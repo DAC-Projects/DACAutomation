@@ -22,7 +22,7 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
-	
+
 	public TPSEE_KPI_Navigation(WebDriver driver) {
 		super(driver);
 		this.driver = driver;
@@ -57,16 +57,16 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//*[@id='page-content']//h1")
 	private WebElement CATitle;
-	
+
 	@FindBy(xpath = "//*[@class='page-title']")
 	private WebElement GRTitle;
-	
+
 	@FindBy(xpath = "//div[contains(@class,'btn btn-app btn-primary ace-settings-btn')]")
 	private WebElement HideKPI;
-	
+
 	@FindBy(xpath = "//*[@id='lang-flag']")
 	private WebElement Lang;
-	
+
 	@FindBy(xpath = "//div[@id='lang-popup']//div")
 	private List<WebElement> LangList;
 
@@ -78,6 +78,7 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 
 	/**
 	 * Navigate to All Locations from KPI and verify title and title text
+	 * 
 	 * @throws Exception
 	 */
 	public void navigateToAllLocations() throws Exception {
@@ -92,6 +93,7 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 
 	/**
 	 * Navigate to Visibility Report from KPI and verify title and title text
+	 * 
 	 * @throws Exception
 	 */
 	public void navigateToVisibilityRpt() throws Exception {
@@ -106,6 +108,7 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 
 	/**
 	 * Navigate to Accuracy Report from KPI and verify title and title text
+	 * 
 	 * @throws Exception
 	 */
 	public void navigateToAccuracyReport() throws Exception {
@@ -120,6 +123,7 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 
 	/**
 	 * Navigate to Content Analysis from KPI and verify title and title text
+	 * 
 	 * @throws Exception
 	 */
 	public void navigateToContentAnalysis() throws Exception {
@@ -134,6 +138,7 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 
 	/**
 	 * Navigate to Google Ranking from KPI and verify title and title text
+	 * 
 	 * @throws Exception
 	 */
 	public void navigateToGoogleRanking() throws Exception {
@@ -148,6 +153,7 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 
 	/**
 	 * Navigate to Reviews from KPI and verify title and title text
+	 * 
 	 * @throws Exception
 	 */
 	public void navigateToReviews() throws Exception {
@@ -159,7 +165,7 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 		clickelement(Dashboard);
 		Thread.sleep(3000);
 	}
-	
+
 	/**
 	 * Verify the order of Reports in KPI Dashboard
 	 */
@@ -168,11 +174,11 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 		List<String> Report = new ArrayList<String>();
 		int size = Reports.size();
 		for (int i = 1; i <= size; i++) {
-			String reportname = driver.findElement(By.xpath("(//span[@class='kpi-url-text'])["+ i +"]")).getText();
-			System.out.println("Report name is : " +reportname);
+			String reportname = driver.findElement(By.xpath("(//span[@class='kpi-url-text'])[" + i + "]")).getText();
+			System.out.println("Report name is : " + reportname);
 			Report.add(reportname);
 		}
-		System.out.println("The reports are : " +Report);
+		System.out.println("The reports are : " + Report);
 		List<String> ReportsOrder = new ArrayList<String>();
 		ReportsOrder.add("Locations");
 		ReportsOrder.add("Visibility");
@@ -180,16 +186,17 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 		ReportsOrder.add("Analysis");
 		ReportsOrder.add("Ranking");
 		ReportsOrder.add("Reviews");
-		System.out.println("The Order of the reports are : " +ReportsOrder);
+		System.out.println("The Order of the reports are : " + ReportsOrder);
 		int ReportsOrdersize = ReportsOrder.size();
-		System.out.println("The ReportsOrder Array size is : " +ReportsOrdersize);
+		System.out.println("The ReportsOrder Array size is : " + ReportsOrdersize);
 		int Reportsize = Report.size();
-		System.out.println("The UI Report size is : " +Reportsize);
-		if(ReportsOrdersize == Reportsize) {
-			for (int i = 0; i <= Reportsize-1; i++){
-				soft.assertTrue(Report.get(i).equals(ReportsOrder.get(i)), "The UI Report " +Report.get(i) + "compared with " +ReportsOrder.get(i));
+		System.out.println("The UI Report size is : " + Reportsize);
+		if (ReportsOrdersize == Reportsize) {
+			for (int i = 0; i <= Reportsize - 1; i++) {
+				soft.assertTrue(Report.get(i).equals(ReportsOrder.get(i)),
+						"The UI Report " + Report.get(i) + "compared with " + ReportsOrder.get(i));
 			}
-		}		
+		}
 		soft.assertAll();
 	}
 
@@ -201,65 +208,69 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 		String font;
 		List<WebElement> Reportnamesize = driver.findElements(By.xpath("(//div[@class='infobox-data kpi-url'])"));
 		int size = Reportnamesize.size();
-		System.out.println("The size is : " +size);
-		for(int i = 1; i <= size; i++) {
-			font = driver.findElement(By.xpath("(//div[@class='infobox-data kpi-url'])["+ i +"]")).getCssValue("font-size");
-			System.out.println("The font size is : " +font);
-			soft.assertEquals(font, "13px", "The size of : " +i);
+		System.out.println("The size is : " + size);
+		for (int i = 1; i <= size; i++) {
+			font = driver.findElement(By.xpath("(//div[@class='infobox-data kpi-url'])[" + i + "]"))
+					.getCssValue("font-size");
+			System.out.println("The font size is : " + font);
+			soft.assertEquals(font, "13px", "The size of : " + i);
 		}
-		WebElement Locations = driver.findElement(By.xpath("//span[@class='infobox-data-number locations-value kpi-number']"));
+		WebElement Locations = driver
+				.findElement(By.xpath("//span[@class='infobox-data-number locations-value kpi-number']"));
 		font = Locations.getCssValue("font-size");
-		System.out.println("The font size of locations is : " +font);
+		System.out.println("The font size of locations is : " + font);
 		soft.assertEquals(font, "30px", "The size of Locations KPI");
 		WebElement Visibility = driver.findElement(By.xpath("//span[@id='visibility_kpi_value']"));
 		font = Visibility.getCssValue("font-size");
-		System.out.println("Visibility font is : " +font);
+		System.out.println("Visibility font is : " + font);
 		soft.assertEquals(font, "18px", "The size of Visibility KPI");
 		WebElement Accuracy = driver.findElement(By.xpath("(//span[@id='accuracy_kpi_value'])"));
 		font = Accuracy.getCssValue("font-size");
-		System.out.println("Accuracy font is : " +font);
+		System.out.println("Accuracy font is : " + font);
 		soft.assertEquals(font, "18px", "The size of Accuracy KPI");
 		WebElement Analysis = driver.findElement(By.xpath("(//span[@id='contentAnalysis_kpi_value'])"));
 		font = Analysis.getCssValue("font-size");
-		System.out.println("Analysis font is : " +font);
-		soft.assertEquals(font, "18px" , "The size of Analysis KPI");
+		System.out.println("Analysis font is : " + font);
+		soft.assertEquals(font, "18px", "The size of Analysis KPI");
 		WebElement Ranking = driver.findElement(By.xpath("(//span[@id='ranking_count_kpi_value'])"));
 		font = Ranking.getCssValue("font-size");
-		System.out.println("Ranking size is : " +font);
+		System.out.println("Ranking size is : " + font);
 		soft.assertEquals(font, "18px", "The size of Ranking KPI");
 		WebElement Reviews = driver.findElement(By.xpath("(//div[@id='kpi_reviews_count_box'])//span"));
 		font = Reviews.getCssValue("font-size");
-		System.out.println("Reviews font is : " +font);
+		System.out.println("Reviews font is : " + font);
 		soft.assertEquals(font, "18px", "The size of Reviews KPI");
 		List<WebElement> ReportIcon = driver.findElements(By.xpath("(//img[@class='svg_icon'])"));
 		int iconsize = ReportIcon.size();
-		for(int j = 1; j <= iconsize; j++) {
-			WebElement icon = driver.findElement(By.xpath("(//img[@class='svg_icon'])["+ j +"]"));
+		for (int j = 1; j <= iconsize; j++) {
+			WebElement icon = driver.findElement(By.xpath("(//img[@class='svg_icon'])[" + j + "]"));
 			String height = icon.getCssValue("height");
-			System.out.println("The height is : " +height);
+			System.out.println("The height is : " + height);
 			String width = icon.getCssValue("width");
-			System.out.println("The width is : " +width);
-			soft.assertEquals(height, "30px" , "The height of : " +j);
-			soft.assertEquals(width, "30px", "The width of : " +j);
+			System.out.println("The width is : " + width);
+			soft.assertEquals(height, "30px", "The height of : " + j);
+			soft.assertEquals(width, "30px", "The width of : " + j);
 		}
 		soft.assertAll();
 	}
-	
+
 	/**
 	 * To verify hiding the KPI Dashboard
+	 * 
 	 * @throws Exception
 	 */
 	public void HideandVerify() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		clickelement(HideKPI);
 		String classname = HideKPI.getAttribute("class");
-		System.out.println("The class name is : " +classname);
+		System.out.println("The class name is : " + classname);
 		BaseClass.addEvidence(CurrentState.getDriver(), "Test to hide and verify KPI", "yes");
 		Assert.assertEquals(classname, "btn btn-app btn-primary ace-settings-btn");
 	}
-	
+
 	/**
 	 * Test to verify languages listed
+	 * 
 	 * @throws Exception
 	 */
 	public void getLangListnVerify() throws Exception {
@@ -269,13 +280,13 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 		List<String> languagelist = new ArrayList<String>();
 		List<String> LanguageList = new ArrayList<String>();
 		int size = LangList.size();
-		System.out.println("The size of language is : " +size);
-		for(int i = 1; i <= size; i++) {
-			String Language = driver.findElement(By.xpath("(//div[@id='lang-popup']//div)["+ i +"]")).getText();
-			System.out.println("The language is : " +Language);
+		System.out.println("The size of language is : " + size);
+		for (int i = 1; i <= size; i++) {
+			String Language = driver.findElement(By.xpath("(//div[@id='lang-popup']//div)[" + i + "]")).getText();
+			System.out.println("The language is : " + Language);
 			LanguageList.add(Language);
 		}
-		System.out.println("The language list contains : " +LanguageList);
+		System.out.println("The language list contains : " + LanguageList);
 		languagelist.add("Deutsch");
 		languagelist.add("English");
 		languagelist.add("Español");
@@ -283,15 +294,16 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 		languagelist.add("Français");
 		languagelist.add("Français");
 		languagelist.add("Italiano");
-		System.out.println("The language list should be : " +languagelist);
+		System.out.println("The language list should be : " + languagelist);
 		CurrentState.getDriver().navigate().refresh();
 		JSWaiter.waitForJQueryLoad();
-		if(languagelist.size() == LanguageList.size()) {
-		for(int j = 0; j < languagelist.size() - 1; j++) {
-			soft.assertTrue(languagelist.get(j).equals(LanguageList.get(j)), "The language is not equal and selected from expected is : "+languagelist.get(j) +
-			"The UI selected value is : " +LanguageList.get(j));
-		}
-		}else {
+		if (languagelist.size() == LanguageList.size()) {
+			for (int j = 0; j < languagelist.size() - 1; j++) {
+				soft.assertTrue(languagelist.get(j).equals(LanguageList.get(j)),
+						"The language is not equal and selected from expected is : " + languagelist.get(j)
+								+ "The UI selected value is : " + LanguageList.get(j));
+			}
+		} else {
 			soft.fail("Language list size are not equal");
 		}
 		soft.assertAll();

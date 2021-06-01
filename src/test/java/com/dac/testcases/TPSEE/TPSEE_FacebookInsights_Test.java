@@ -7,7 +7,6 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
-import com.dac.main.POM_TPSEE.TPSEE_Bing_Page;
 import com.dac.main.POM_TPSEE.TPSEE_FacebookInsights_Page;
 import resources.BaseClass;
 import resources.CurrentState;
@@ -266,6 +265,10 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		}
 	}
 	
+	/**
+	 * test to verify filter data order
+	 * @throws Exception
+	 */
 	@Test(priority = 10, description = "Test to verify filter data is in order")
 	public void verifyFilterDataOrderBingFacebook() throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());

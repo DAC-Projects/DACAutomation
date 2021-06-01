@@ -22,8 +22,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
-import com.dac.main.BasePage;
-
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
@@ -38,7 +36,7 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 	SoftAssert soft = new SoftAssert();
 	int sortrow;
 	static String time_stamp;
-	
+
 	public TPSEE_AllLocations_Page(WebDriver driver) {
 
 		super(driver);
@@ -104,48 +102,48 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//p[@class='lead']")
 	private WebElement PageTitletext;
-	
+
 	@FindBy(xpath = "//*[@id='locations']")
 	private WebElement LocationSec;
-	
+
 	@FindBy(xpath = "//*[@id='all_locations']")
 	private WebElement AllLocationsPage;
-	
+
 	@FindBy(xpath = "//table[@id='locationTable']//th[contains(text(),'Location Number')]")
 	private WebElement LocationNumberhead;
-	
+
 	private String LocationNumber = "(//table[@id='locationTable']//tbody//td[1])";
-	
+
 	@FindBy(xpath = "//table[@id='locationTable']//th[contains(text(),'Name')]")
 	private WebElement Namehead;
-	
+
 	private String Name = "(//table[@id='locationTable']//tbody//td[2])";
-	
+
 	@FindBy(xpath = "//table[@id='locationTable']//th[contains(text(),'Address')]")
 	private WebElement Addresshead;
-	
+
 	private String Address = "(//table[@id='locationTable']//tbody//td[3])";
-	
+
 	@FindBy(xpath = "//table[@id='locationTable']//th[contains(text(),'City')]")
 	private WebElement Cityhead;
-	
+
 	private String City = "(//table[@id='locationTable']//tbody//td[4])";
-	
+
 	@FindBy(xpath = "//table[@id='locationTable']//th[contains(text(),'St/Prov/Region')]")
 	private WebElement Statehead;
-	
+
 	private String State = "(//table[@id='locationTable']//tbody//td[5])";
-	
+
 	@FindBy(xpath = "//table[@id='locationTable']//th[contains(text(),'Postal Code')]")
 	private WebElement PostCodehead;
-	
+
 	private String PostCode = "(//table[@id='locationTable']//tbody//td[6])";
-	
+
 	@FindBy(xpath = "//table[@id='locationTable']//th[contains(text(),'Phone')]")
 	private WebElement Phonehead;
-	
+
 	private String Phone = "(//table[@id='locationTable']//tbody//td[7])";
-	
+
 	/*-------------------------Pagination-----------------------*/
 
 	/*
@@ -160,7 +158,7 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 
 	Select select;
 	List<String> List1 = new ArrayList<String>();
-	
+
 	/**
 	 * This method is used to check whether data is there in table or not based on
 	 * the applied criteria
@@ -180,7 +178,12 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 		return false;
 	}
 
-	// Get UI table
+	/**
+	 * to get UI table data
+	 * 
+	 * @return
+	 * @throws InterruptedException
+	 */
 	public List<Map<String, String>> LocationDataTable() throws InterruptedException {
 		JSWaiter.waitJQueryAngular();
 		waitForElement(LocationTable, 5);
@@ -201,23 +204,24 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 				Map<String, String> kMap = new HashMap<String, String>();
 				for (int row = 0; row < rows_count; row++) {
 					List<WebElement> Columns_row = rows_table.get(row).findElements(By.tagName("td")); // To locate
-																										// columns(cells)
-																										// of that
-																										// specific row.
+					// columns(cells)
+					// of that
+					// specific row.
 					int columns_count = Columns_row.size(); // To calculate no of columns (cells). In that specific row.
 					// System.out.println("Number of cells In Row " + noOfRows + " are " +
 					// columns_count);
 					for (int column = 0; column < columns_count; column++) { // Loop will execute till the last cell of
-																				// that specific row.
+						// that specific row.
 						List<WebElement> headerTableRow = LocationTableHeader.findElements(By.tagName("th"));
 						String headerText = headerTableRow.get(column).getText(), celtext = "";
 						if (column == 1 & row < rows_count) {
 							celtext = driver
-									.findElement(
-											By.xpath("(//table[@id='locationTable']//tbody//tr//td)[" + (row + 1) + "]"))									.getText();
+									.findElement(By
+											.xpath("(//table[@id='locationTable']//tbody//tr//td)[" + (row + 1) + "]"))
+									.getText();
 						} else {
 							celtext = Columns_row.get(column).getText().trim(); // To retrieve text from that specific
-																				// cell.
+							// cell.
 						}
 						kMap.put("Location", celtext);
 						tableCellValues.add(kMap);
@@ -265,7 +269,7 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 			e.printStackTrace();
 		}
 		time_stamp = timeStamp();
-		System.out.println("The timestamp is : " +time_stamp);
+		System.out.println("The timestamp is : " + time_stamp);
 		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + LocationExportCSV));
 		Thread.sleep(5000);
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
@@ -296,17 +300,22 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 			e.printStackTrace();
 		}
 		time_stamp = timeStamp();
-		System.out.println("The timestamp is : " +time_stamp);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + LocationExportXLSX ));
+		System.out.println("The timestamp is : " + time_stamp);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + LocationExportXLSX));
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
 		BaseClass.addEvidence(CurrentState.getDriver(), "Download XLSX File", "yes");
 	}
 
-	// Get Excel into Map
+	/**
+	 * to get data form XLSX
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	public List<Map<String, String>> getLocationDataTableExport() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		LocationDataTableExportXLSX();
-		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser() + time_stamp + LocationExportXLSX ),
+		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser() + time_stamp + LocationExportXLSX),
 				"Location_List").getExcelTable();
 		List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
@@ -321,7 +330,12 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 		return exporttableData;
 	}
 
-	// Compare UI and Excel
+	/**
+	 * to compare UI and XL
+	 * 
+	 * @param LocationDataTable
+	 * @param getLocationDataTableExport
+	 */
 	public void compareExprttoAnalysisSiteLinkData(List<Map<String, String>> LocationDataTable,
 			List<Map<String, String>> getLocationDataTableExport) {
 
@@ -334,44 +348,7 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 		}
 	}
 
-	// Compare UI and Excel
-	public void compareXlData_UIdata() throws Exception {
-		JSWaiter.waitJQueryAngular();
-		List<WebElement> Columns_row = LocationTableHeader.findElements(By.tagName("th"));
-		int col_count = Columns_row.size();
-		String newfilename = BasePage.getLastModifiedFile("./downloads");
-		// String newfilename = new
-		// formatConvert("./downloads/"+fileName).convertFile("xlsx");
-		ExcelHandler a = new ExcelHandler("./downloads/" + newfilename, "Sheet0");
-		a.deleteEmptyRows();
-		int xlRowCount = new ExcelHandler("./downloads/" + newfilename, "Sheet0").getRowCount();
-		int count = 0;
-		for (int i = 1; i < xlRowCount; i++) {
-			col_count = a.getColCount(i);
-			for (int j = 0; j <= col_count; j++) {
-				String cellValue = a.getCellValue(i, j + 1).trim();
-				if (cellValue.contains("%"))
-					cellValue = new String("" + Double.parseDouble(cellValue.replace("%", "")) + "%");
-				if (cellValue.length() != 0 & cellValue != null) {
-					Map<String, String> uiTableCellValue = tableCellValues.get(count);
-					if (uiTableCellValue.containsValue(cellValue)) { // | uiTableCellValue.equals(cellValue)
-						Assert.assertTrue(uiTableCellValue.containsValue(cellValue),
-								uiTableCellValue + " is matches with Downloaded Excel value : " + cellValue);
-					} else {
-						Assert.assertTrue(false,
-								uiTableCellValue + " is NOT matches with Downloaded Excel value : " + cellValue);
-					}
-
-					if (j < 1 | j > 5)
-						count++;
-				}
-			}
-		}
-		CurrentState.getLogger().info("UI table data matches with Exported Excel Data");
-		Assert.assertTrue(true, "UI table data matches with Exported Excel Data");
-		tableCellValues.clear();
-	}
-
+	
 	/**
 	 * To get Overview Location count
 	 * 
@@ -382,6 +359,12 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 		return totloc;
 	}
 
+	/**
+	 * to verify title and title text
+	 * 
+	 * @param Tit
+	 * @param titText
+	 */
 	public void VerifyLocationsTitleText(String Tit, String titText) {
 
 		waitForElement(PageTitle, 10);
@@ -392,14 +375,25 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 		Assert.assertEquals(Tit, Title);
 		Assert.assertEquals(titText, TitleText);
 	}
-	
+
+	/**
+	 * to verify results per page
+	 * 
+	 * @param soft
+	 * @throws InterruptedException
+	 */
 	public void resultperpage(SoftAssert soft) throws InterruptedException {
 		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
 		JSWaiter.waitJQueryAngular();
 		ResultsperPage(soft, entiresText, ResultperPage);
-		
+
 	}
-	
+
+	/**
+	 * to verify goto page
+	 * 
+	 * @throws InterruptedException
+	 */
 	public void GoTo() throws InterruptedException {
 		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
 		JSWaiter.waitJQueryAngular();
@@ -407,33 +401,66 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 		scrollByElement(GoToPage);
 		GoTopage(GoToPage);
 	}
-	
-	
-	
+
+	/**
+	 * to verify table sort - Location Number
+	 * 
+	 * @throws InterruptedException
+	 */
 	public void verifyLocationNumber() throws InterruptedException {
 		TableSorting(LocationNumberhead, LocationNumber, entiresText, LocationTableRow, LocationTable);
 	}
-	
+
+	/**
+	 * to verify table sort - Name
+	 * 
+	 * @throws InterruptedException
+	 */
 	public void verifyName() throws InterruptedException {
 		TableSorting(Namehead, Name, entiresText, LocationTableRow, LocationTable);
 	}
-	
+
+	/**
+	 * to verify table sort - Address
+	 * 
+	 * @throws InterruptedException
+	 */
 	public void verifyAddress() throws InterruptedException {
 		TableSorting(Addresshead, Address, entiresText, LocationTableRow, LocationTable);
 	}
-	
+
+	/**
+	 * to verify table sort - City
+	 * 
+	 * @throws InterruptedException
+	 */
 	public void verifyCity() throws InterruptedException {
 		TableSorting(Cityhead, City, entiresText, LocationTableRow, LocationTable);
 	}
-	
+
+	/**
+	 * to verify table sort - State
+	 * 
+	 * @throws InterruptedException
+	 */
 	public void verifyState() throws InterruptedException {
 		TableSorting(Statehead, State, entiresText, LocationTableRow, LocationTable);
 	}
-	
+
+	/**
+	 * to verify table sort - Post Code
+	 * 
+	 * @throws InterruptedException
+	 */
 	public void verifyPostCode() throws InterruptedException {
 		TableSorting(PostCodehead, PostCode, entiresText, LocationTableRow, LocationTable);
 	}
-	
+
+	/**
+	 * to verify table sort - Phone
+	 * 
+	 * @throws InterruptedException
+	 */
 	public void verifyPhone() throws InterruptedException {
 		TableSorting(Phonehead, Phone, entiresText, LocationTableRow, LocationTable);
 	}

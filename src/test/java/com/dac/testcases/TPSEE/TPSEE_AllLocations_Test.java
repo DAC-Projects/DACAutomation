@@ -41,6 +41,10 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
 	}
 
+	/**
+	 * test to navigate to All Locations Page
+	 * @throws Exception
+	 */
 	@Test(priority = 2, groups = { "smoke" }, description = "Test for navigating to All Locations page")
 	public void navigateToAllLocationsPage() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
@@ -51,6 +55,10 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		// Assert.assertFalse( "sample error", true);
 	}
 	
+	/**
+	 * test to verify title and title text
+	 * @throws Exception
+	 */
 	@Test(priority = 3, groups = { "smoke" }, description = "Test for verify title and description")
 	public void verifyText() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
@@ -76,6 +84,11 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
 	}
 
+	/**
+	 * test to apply filters
+	 * @param Filter
+	 * @throws Exception
+	 */
 	@Parameters({ "Filter" })
 	@Test(priority = 5, groups = { "smoke" }, description = "Verify All Locations page loads after filter applied")
 	public void verifyFilteringReportsnavigateToAllLocations(int Filter) throws Exception {
@@ -103,6 +116,10 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		}
 	}
 
+	/**
+	 * test to export as CSV
+	 * @throws Exception
+	 */
 	@Test(priority = 6, description = "Export as csv")
 	public void exportascsv() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
@@ -110,6 +127,10 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}
 	
+	/**
+	 * test to compare UI and XL data
+	 * @throws Exception
+	 */
 	@Test(priority = 7, description = "Test for Location export and export verification")
 	public void verifyTableDataoExport() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
@@ -117,6 +138,10 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}	
 	
+	/**
+	 * test to verify goto page
+	 * @throws Exception
+	 */
 	@Test(priority = 8, description = "Test to GoTo Page verification")
 	public void verifyGotoPage() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
@@ -124,6 +149,10 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Test to verify GoTo Page", "yes");
 	}
 	
+	/**
+	 * test to verify results per page
+	 * @throws Exception
+	 */
 	@Test(priority = 9, description = "Test to results per page")
 	public void verifyResultperPage() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
@@ -133,6 +162,11 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		soft.assertAll();
 	}
 	
+	/**
+	 * test to verify filter data order
+	 * @param Filter
+	 * @throws Exception
+	 */
 	@Parameters({ "Filter" })
 	@Test(priority = 10, description = "Test to verify filter data is in order")
 	public void verifyFilterDataOrder(String Filter) throws Exception {

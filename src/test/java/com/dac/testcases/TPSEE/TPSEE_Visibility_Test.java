@@ -70,6 +70,10 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
 	}
 	
+	/**
+	 * test to verify title and title text
+	 * @throws Exception
+	 */
 	@Test(priority = 3, groups = { "smoke" }, description = "Test for verifying title and description of report")
 	public void verifyText() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -78,6 +82,16 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
 
+	/**
+	 * test to set calendar date
+	 * @param from_day
+	 * @param from_month
+	 * @param from_year
+	 * @param to_day
+	 * @param to_month
+	 * @param to_year
+	 * @throws Exception
+	 */
 	@SuppressWarnings("unused")
 	@Test(priority = 6, enabled = true, dataProvider = "testData", description = "Manual date selection")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
@@ -302,6 +316,10 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Test to verify date in graph", "yes");
 	}
 	
+	/**
+	 * test to compare overall and graph score
+	 * @throws Exception
+	 */
 	@Test(priority =14, description = "Test to compare ToolTip Value and Overall Visibility Score")
 	public void compareovrgraph() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -479,6 +497,11 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		}
 	}
 	
+	/**
+	 * test to verify location details
+	 * @param Filter
+	 * @throws Exception
+	 */
 	@Parameters({ "Filter" })
 	@Test(priority = 30, description = "Test to verify location details")
 	public void VerifyLocationDetailsLocationTab(int Filter) throws Exception {
@@ -493,6 +516,11 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		}
 	}
 	
+	/**
+	 * test to verify location details in site location tab
+	 * @param Filter
+	 * @throws Exception
+	 */
 	@Parameters({ "Filter" })
 	@Test(priority = 31, description = "Test to verify location details of vendors sites")
 	public void VerifySiteLocationTab(int Filter) throws Exception {
@@ -507,6 +535,11 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		}
 	}
 	
+	/**
+	 * test to verify filter data order
+	 * @param Filter
+	 * @throws Exception
+	 */
 	@Parameters({ "Filter" })
 	@Test(priority = 32, description = "Test to verify filter data is in order")
 	public void verifyFilterDataOrder(int Filter) throws Exception {

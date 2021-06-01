@@ -20,8 +20,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
-import com.dac.main.BasePage;
-
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
@@ -35,7 +33,6 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 	WebDriverWait wait;
 	static String time_stamp;
 
-	// Navigating to TPSEE Content_Analysis page
 	public TPSEE_ContentAnalysis_Page(WebDriver driver) {
 
 		super(driver);
@@ -131,16 +128,16 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 
 	@FindBy(css = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none>span>span.bold")
 	private WebElement scorenloc;
-	
+
 	@FindBy(xpath = "//*[@id='completeness_report']")
 	private WebElement ContentAnalysisPage;
-	
+
 	@FindBy(xpath = "//*[@id='reports']")
 	private WebElement ContentAnalysisSec;
-	
+
 	@FindBy(xpath = "//select[@name='incomplete_results_length']")
 	private WebElement Resultperpage;
-	
+
 	@FindBy(xpath = "//input[contains(@class , 'form-control')]")
 	private WebElement gotopage;
 
@@ -149,20 +146,9 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 	 * Ends---------------------------------------
 	 */
 
-	/*
-	 * //Download Excel public void exportvisibilityrpt() throws
-	 * InterruptedException, FileNotFoundException, IOException{
-	 * JSWaiter.waitJQueryAngular(); if(export.isEnabled() & export.isDisplayed()) {
-	 * wait.until(ExpectedConditions.visibilityOf(export));
-	 * action.moveToElement(export).click(export).perform();
-	 * convertExports(getLastModifiedFile(Exportpath),
-	 * (CurrentState.getBrowser()+ContentAnalysisExportXLSX)); Thread.sleep(5000);
-	 * CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile(
-	 * "./downloads")); }else {
-	 * System.out.println("No Data Available in ContentAnalysis Page"); } }
+	/**
+	 * to get overview score
 	 */
-
-	// Get Overview Score
 	@Override
 	public List<Map<String, String>> getOverviewReport() {
 		JSWaiter.waitJQueryAngular();
@@ -192,8 +178,9 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 		JSWaiter.waitJQueryAngular();
 		exportVATable(export1, export1_csv);
 		time_stamp = timeStamp();
-		System.out.println("The timestamp is : " +time_stamp);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + ContentAnalysisExportCSV));
+		System.out.println("The timestamp is : " + time_stamp);
+		renamefile(getLastModifiedFile(Exportpath),
+				(CurrentState.getBrowser() + time_stamp + ContentAnalysisExportCSV));
 		Thread.sleep(2000);
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
 	}
@@ -209,31 +196,24 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 		JSWaiter.waitJQueryAngular();
 		exportVATable(export1, export1_xlsx);
 		time_stamp = timeStamp();
-		System.out.println("The timestamp is : " +time_stamp);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + ContentAnalysisExportXLSX));
+		System.out.println("The timestamp is : " + time_stamp);
+		renamefile(getLastModifiedFile(Exportpath),
+				(CurrentState.getBrowser() + time_stamp + ContentAnalysisExportXLSX));
 		Thread.sleep(2000);
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
 	}
 
-	/*
-	 * //Download Export public void exportcontentanalysisrpt() throws
-	 * InterruptedException, FileNotFoundException, IOException { // TODO
-	 * Auto-generated method stub JSWaiter.waitJQueryAngular();
-	 * if(export.isDisplayed() && export.isEnabled()) {
-	 * wait.until(ExpectedConditions.visibilityOf(export));
-	 * action.moveToElement(export).click(export).perform(); Thread.sleep(5000);
-	 * convertExports(getLastModifiedFile(Exportpath),
-	 * (CurrentState.getBrowser()+ContentAnalysisExportXLSX)); Thread.sleep(5000);
-	 * CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile(
-	 * "./downloads")); }else {
-	 * System.out.println("No Data Available in Content Analysis Page"); } }
+	/**
+	 * store XLSX data in a map
+	 * 
+	 * @return
+	 * @throws Exception
 	 */
-
-	// Store Excel into Map
 	public List<Map<String, String>> getExportData() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		ContentAnalysisExportXLSX();
-		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser() + time_stamp + ContentAnalysisExportXLSX),
+		String[][] table = new ExcelHandler(
+				Exportpath + (CurrentState.getBrowser() + time_stamp + ContentAnalysisExportXLSX),
 				"ContentAnalysis_Report").getExcelTable();
 		List<Map<String, String>> exportData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
@@ -249,72 +229,6 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 		return exportData;
 	}
 
-	@SuppressWarnings("unused")
-	public List<Map<String, String>> AnalysisSiteData() throws InterruptedException {
-		JSWaiter.waitJQueryAngular();
-		if (contentsiteTable.isDisplayed()) {
-			// WebElement vendorname= driver.findElement(By.xpath("//*[@class='logo-img
-			// img-responsive sourceImg']"));
-			WebElement completeAnalysis = driver
-					.findElement(By.xpath("//*[@class='easy-pie-chart percentage easyPieChart']"));
-			scrollByElement(completeAnalysis);
-			int count = 0;
-			// Loop will execute till the all the row of table completes.
-			scrollByElement(completeAnalysis);
-			List<WebElement> rows_table = SiteTableRow; // To locate rows of table.
-			int rows_count = rows_table.size(); // To calculate no of rows In table.
-			count = count + rows_count;
-			Map<String, String> kMap = new HashMap<String, String>();
-			for (int row = 0; row < rows_count; row++) {
-				List<WebElement> Columns_row = rows_table.get(row).findElements(By.tagName("td"));// To locate
-																									// columns(cells) of
-																									// that specific
-																									// row.
-				int columns_count = Columns_row.size(); // To calculate no of columns (cells). In that specific row.
-
-				// System.out.println("Number of cells In Row " + noOfRows + " are " +
-				// columns_count);
-				for (int column = 0; column < columns_count; column++) { // Loop will execute till the last cell of that
-																			// specific row.
-					List<WebElement> headerTableRow = SiteTableHeader.findElements(By.tagName("th"));
-					String headerText = headerTableRow.get(column).getText(), vendorname = "", celtext = "";
-					if (column == 1 & row < rows_count) {
-						vendorname = driver
-								.findElement(By
-										.xpath("(//*[@class='logo-img img-responsive sourceImg'])[" + (row + 1) + "]"))
-								.getAttribute("id");
-						celtext = driver.findElement(By.xpath(
-								"(//*[contains(@class,'easy-pie-chart percentage easyPieChart')])[" + (row + 1) + "]"))
-								.getAttribute("data-percent");
-					} else {
-						celtext = Columns_row.get(column).getText().trim(); // To retrieve text from that specific cell.
-					}
-					kMap.put("rowdata", celtext);
-					tableCellValues.add(kMap);
-					// System.out.println("Cell Value of row " + noOfRows + vendorname +" and column
-					// " + headerText + " Is : " + celtext);
-				}
-				// System.out.println("-------------------------------------------------- ");
-			}
-
-			System.out.println("Total number of entries in table : " + rows_count);
-		}
-		return tableCellValues;
-	}
-
-	public void compareExprttoAnalysisSiteData(List<Map<String, String>> exportData,
-			List<Map<String, String>> analysisSiteData) {
-
-		for (Map<String, String> m1 : exportData) {
-			for (Map<String, String> m2 : analysisSiteData) {
-				if (m1.get("rowdata").equals(m2.get("rowdata"))) {
-					Assert.assertEquals(m1.size(), m2.size() - 1);
-					Assert.assertEquals(m1.get("rowdata"), m2.get("rowdata"));
-				}
-			}
-		}
-	}
-
 	/**
 	 * To get Overview Score
 	 * 
@@ -324,16 +238,24 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 		double score = overviewcascore(Progress);
 		return score;
 	}
-	
+
+	/**
+	 * compare overview and graph score
+	 */
 	public void compareovrviewngraphscore() {
 		double overallscore = overviewscore();
-		System.out.println("The overall score is : " +overallscore);
+		System.out.println("The overall score is : " + overallscore);
 		double graphscore = verifygrphscore();
-		System.out.println("The graph score is : " +graphscore);
+		System.out.println("The graph score is : " + graphscore);
 		Assert.assertEquals(overallscore, graphscore);
 	}
 
-	public void SitelLinkData() throws Exception { 
+	/**
+	 * compare UI and XL data
+	 * 
+	 * @throws Exception
+	 */
+	public void SitelLinkData() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		waitForElement(contentsiteTable, 5);
 		scrollByElement(contentsiteTable);
@@ -384,31 +306,30 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 							Map<String, String> kMap = new HashMap<String, String>();
 							for (int row = 0; row < rows_count; row++) {
 								List<WebElement> Columns_row = rows_table.get(row).findElements(By.tagName("td")); // To
-																													// locate
-																													// columns(cells)
-																													// of
-																													// that
-																													// specific
-																													// row.
+								// locate
+								// columns(cells)
+								// of
+								// that
+								// specific
+								// row.
 								int columns_count = Columns_row.size(); // To calculate no of columns (cells). In that
-																		// specific row.
+								// specific row.
 
 								// System.out.println("Number of cells In Row " + noOfRows + " are " +
 								// columns_count);
 								for (int column = 1; column < columns_count; column++) { // Loop will execute till the
-																							// last cell of that
-																							// specific row.
+									// last cell of that
+									// specific row.
 									List<WebElement> headerTableRow = SiteLinkTableHeader
 											.findElements(By.tagName("th"));
 									String headerText = headerTableRow.get(column).getText(), celtext = "";
 									if (column == 1 & row < rows_count) {
-										celtext = driver
-												.findElement(By.xpath(
-														"(//*[@id='incomplete_results']//tr//td[2])[" + (row + 1) + "]"))
+										celtext = driver.findElement(By
+												.xpath("(//*[@id='incomplete_results']//tr//td[2])[" + (row + 1) + "]"))
 												.getText();
 									} else {
 										celtext = Columns_row.get(column).getText().trim(); // To retrieve text from
-																							// that specific cell.
+										// that specific cell.
 									}
 									kMap.put("Location", celtext);
 									tableCellValues.add(kMap);
@@ -437,10 +358,10 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 					System.out.println("Excel File size is :" + XLSize);
 					if (UISize == XLSize) {
 						for (int i = 0; i <= UISize; i++) {
-							 soft.assertTrue(tableCellValues.get(i).equals(TableExport.get(i)));
+							soft.assertTrue(tableCellValues.get(i).equals(TableExport.get(i)));
 						}
 					}
-					//deletefile();
+					// deletefile();
 					tableCellValues.clear();
 					scrollByElement(contentsiteTable);
 				} else {
@@ -457,20 +378,11 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 					e.printStackTrace();
 				}
 			}
-		}			
-			GoTo();
-			Thread.sleep(3000);
-			resultperpage(soft);		
+		}
+		GoTo();
+		Thread.sleep(3000);
+		resultperpage(soft);
 	}
-
-	/*
-	 * public void SiteLinkexporttable() throws FileNotFoundException, IOException,
-	 * InterruptedException { waitForElement(SiteLinkTable, 40);
-	 * waitForElement(TableExport, 40); //scrollByElement(TableExport);
-	 * JSWaiter.waitUntilJQueryReady(); download(CurrentState.getBrowser(),
-	 * TableExport, 30); convertExports(getLastModifiedFile(Exportpath),
-	 * (CurrentState.getBrowser()+ContentAnalysisSiteExportXLSX)); }
-	 */
 
 	/**
 	 * exporting progress bar table data CSV
@@ -483,8 +395,9 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 		JSWaiter.waitJQueryAngular();
 		exportVATable(TableExport, TableExport_csv);
 		time_stamp = timeStamp();
-		System.out.println("The timestamp is : " +time_stamp);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + ContentAnalysisSiteExportCSV));
+		System.out.println("The timestamp is : " + time_stamp);
+		renamefile(getLastModifiedFile(Exportpath),
+				(CurrentState.getBrowser() + time_stamp + ContentAnalysisSiteExportCSV));
 		Thread.sleep(2000);
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
 	}
@@ -500,16 +413,24 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 		JSWaiter.waitJQueryAngular();
 		exportVATable(TableExport, TableExport_xlsx);
 		time_stamp = timeStamp();
-		System.out.println("The timestamp is : " +time_stamp);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + ContentAnalysisSiteExportXLSX));
+		System.out.println("The timestamp is : " + time_stamp);
+		renamefile(getLastModifiedFile(Exportpath),
+				(CurrentState.getBrowser() + time_stamp + ContentAnalysisSiteExportXLSX));
 		Thread.sleep(2000);
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
 	}
 
+	/**
+	 * to get XLSX data
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	public List<Map<String, String>> getSiteLinkExporttableData() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		ContentAnalysisSiteExportXLSX();
-		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser() + time_stamp + ContentAnalysisSiteExportXLSX),
+		String[][] table = new ExcelHandler(
+				Exportpath + (CurrentState.getBrowser() + time_stamp + ContentAnalysisSiteExportXLSX),
 				"Content_Analysis").getExcelTable();
 		List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
@@ -524,44 +445,11 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 		return exporttableData;
 	}
 
-	public void compareXlData_UIdata() throws Exception {
-		JSWaiter.waitJQueryAngular();
-		List<WebElement> Columns_row = SiteLinkTableHeader.findElements(By.tagName("th"));
-		int col_count = Columns_row.size();
-		String newfilename = BasePage.getLastModifiedFile("./downloads");
-		// String newfilename = new
-		// formatConvert("./downloads/"+fileName).convertFile("xlsx");
-		ExcelHandler a = new ExcelHandler("./downloads/" + newfilename, "Sheet0");
-		a.deleteEmptyRows();
-		int xlRowCount = new ExcelHandler("./downloads/" + newfilename, "Sheet0").getRowCount();
-		int count = 0;
-		for (int i = 1; i < xlRowCount; i++) {
-			col_count = a.getColCount(i);
-			for (int j = 0; j <= col_count; j++) {
-				String cellValue = a.getCellValue(i, j + 1).trim();
-				if (cellValue.contains("%"))
-					cellValue = new String("" + Double.parseDouble(cellValue.replace("%", "")) + "%");
-				if (cellValue.length() != 0 & cellValue != null) {
-					Map<String, String> uiTableCellValue = tableCellValues.get(count);
-					if (uiTableCellValue.containsValue(cellValue)) { // | uiTableCellValue.equals(cellValue)
-						Assert.assertTrue(uiTableCellValue.containsValue(cellValue),
-								uiTableCellValue + " is matches with Downloaded Excel value : " + cellValue);
-					} else {
-						Assert.assertTrue(false,
-								uiTableCellValue + " is NOT matches with Downloaded Excel value : " + cellValue);
-					}
-
-					if (j < 1 | j > 5)
-						count++;
-				}
-			}
-		}
-		CurrentState.getLogger().info("UI table data matches with Exported Excel Data");
-		Assert.assertTrue(true, "UI table data matches with Exported Excel Data");
-		tableCellValues.clear();
-	}
-
-	// To get Vendors List displaying in the application
+	/**
+	 * to get vendors available in content analysis
+	 * 
+	 * @return
+	 */
 	public List<Map<String, String>> verifyAnalysisSitevendors() {
 		JSWaiter.waitJQueryAngular();
 		waitForElement(vendorslist, 5);
@@ -587,20 +475,16 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 		return Vendors;
 	}
 
-	public void compareexporttableDatannumberofentries(List<Map<String, String>> sitelLinkData,
-			List<Map<String, String>> siteLinkExporttableData) {
-
-		for (Map<String, String> m1 : sitelLinkData) {
-			for (Map<String, String> m2 : siteLinkExporttableData) {
-				if (m1.get("rowdata").equals(m2.get("rowdata"))) {
-					Assert.assertEquals(m1.size(), m2.size());
-					Assert.assertEquals(m1.get("rowdata").contains(m2.get("rowdata")), true);
-				}
-			}
-		}
-
-	}
-
+	/**
+	 * get CA score from graph
+	 * 
+	 * @return
+	 * @throws ParseException
+	 * @throws                       bsh.ParseException
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public double CAScore()
 			throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
 		waitForElement(hstryGrph, 5);
@@ -617,6 +501,16 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 		return score;
 	}
 
+	/**
+	 * to get number of locations from graph
+	 * 
+	 * @return
+	 * @throws ParseException
+	 * @throws                       bsh.ParseException
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public int CALoc()
 			throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
 		waitForElement(hstryGrph, 5);
@@ -632,26 +526,115 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 		System.out.println(numberoflocations);
 		return numberoflocations;
 	}
-	
+
+	/**
+	 * to verify results per page
+	 * 
+	 * @param soft
+	 * @throws InterruptedException
+	 */
 	public void resultperpage(SoftAssert soft) throws InterruptedException {
 		if (driver.findElement(By.className("dataTables_info")).isDisplayed()) {
-		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
-		Thread.sleep(2000);
-		ResultsperPage(soft, entiresText, Resultperpage);
-		}else {
+			driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
+			Thread.sleep(2000);
+			ResultsperPage(soft, entiresText, Resultperpage);
+		} else {
 			System.out.println("No Data Available");
 		}
 	}
-	
+
+	/**
+	 * to verify goto page
+	 * 
+	 * @throws InterruptedException
+	 */
 	public void GoTo() throws InterruptedException {
 		if (driver.findElement(By.className("dataTables_info")).isDisplayed()) {
-		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
-		Thread.sleep(2000);
-		waitForElement(gotopage, 10);
-		scrollByElement(gotopage);
-		GoTopage(gotopage);
-		}else {
+			driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
+			Thread.sleep(2000);
+			waitForElement(gotopage, 10);
+			scrollByElement(gotopage);
+			GoTopage(gotopage);
+		} else {
 			System.out.println("No Data available");
+		}
+	}
+
+	/**
+	 * test to get UI site values
+	 * 
+	 * @return
+	 * @throws InterruptedException
+	 */
+	@SuppressWarnings("unused")
+	public List<Map<String, String>> AnalysisSiteData() throws InterruptedException {
+		JSWaiter.waitJQueryAngular();
+		if (contentsiteTable.isDisplayed()) {
+			// WebElement vendorname= driver.findElement(By.xpath("//*[@class='logo-img
+			// img-responsive sourceImg']"));
+			WebElement completeAnalysis = driver
+					.findElement(By.xpath("//*[@class='easy-pie-chart percentage easyPieChart']"));
+			scrollByElement(completeAnalysis);
+			int count = 0;
+			// Loop will execute till the all the row of table completes.
+			scrollByElement(completeAnalysis);
+			List<WebElement> rows_table = SiteTableRow; // To locate rows of table.
+			int rows_count = rows_table.size(); // To calculate no of rows In table.
+			count = count + rows_count;
+			Map<String, String> kMap = new HashMap<String, String>();
+			for (int row = 0; row < rows_count; row++) {
+				List<WebElement> Columns_row = rows_table.get(row).findElements(By.tagName("td"));// To locate
+				// columns(cells) of
+				// that specific
+				// row.
+				int columns_count = Columns_row.size(); // To calculate no of columns (cells). In that specific row.
+
+				// System.out.println("Number of cells In Row " + noOfRows + " are " +
+				// columns_count);
+				for (int column = 0; column < columns_count; column++) { // Loop will execute till the last cell of that
+					// specific row.
+					List<WebElement> headerTableRow = SiteTableHeader.findElements(By.tagName("th"));
+					String headerText = headerTableRow.get(column).getText(), vendorname = "", celtext = "";
+					if (column == 1 & row < rows_count) {
+						vendorname = driver
+								.findElement(By
+										.xpath("(//*[@class='logo-img img-responsive sourceImg'])[" + (row + 1) + "]"))
+								.getAttribute("id");
+						celtext = driver.findElement(By.xpath(
+								"(//*[contains(@class,'easy-pie-chart percentage easyPieChart')])[" + (row + 1) + "]"))
+								.getAttribute("data-percent");
+					} else {
+						celtext = Columns_row.get(column).getText().trim(); // To retrieve text from that specific cell.
+					}
+					kMap.put("rowdata", celtext);
+					tableCellValues.add(kMap);
+					// System.out.println("Cell Value of row " + noOfRows + vendorname +" and column
+					// " + headerText + " Is : " + celtext);
+				}
+				// System.out.println("-------------------------------------------------- ");
+			}
+
+			System.out.println("Total number of entries in table : " + rows_count);
+		}
+		return tableCellValues;
+	}
+
+	/**
+	 * compare UI and XL
+	 * 
+	 * @param exportData
+	 * @param analysisSiteData
+	 */
+	public void compareExprttoAnalysisSiteData(List<Map<String, String>> exportData,
+			List<Map<String, String>> analysisSiteData) {
+
+		for (Map<String, String> m1 : exportData) {
+			for (Map<String, String> m2 : analysisSiteData) {
+				if (m1.get("rowdata").equals(m2.get("rowdata"))) {
+					Assert.assertEquals(m1.size(), m2.size() - 1);
+					Assert.assertEquals(m1.get("rowdata"), m2.get("rowdata"));
+				}
+			}
 		}
 	}
 }

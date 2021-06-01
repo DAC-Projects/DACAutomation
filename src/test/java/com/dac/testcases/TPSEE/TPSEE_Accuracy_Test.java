@@ -15,7 +15,6 @@ import org.testng.asserts.SoftAssert;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_Accuracy_Page;
-import com.dac.main.POM_TPSEE.TPSEE_AllLocations_Page;
 import com.dac.main.POM_TPSEE.TPSEE_Visibility_Page;
 
 import resources.BaseClass;
@@ -132,8 +131,19 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
 	}
 
+	/**
+	 * to set date
+	 * 
+	 * @param from_day
+	 * @param from_month
+	 * @param from_year
+	 * @param to_day
+	 * @param to_month
+	 * @param to_year
+	 * @throws Exception
+	 */
 	@SuppressWarnings("unused")
-	@Test(priority = 9, enabled = true, dataProvider = "testData",description = "Test for manual date selection" )
+	@Test(priority = 9, enabled = true, dataProvider = "testData", description = "Test for manual date selection")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 
@@ -226,18 +236,18 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 			ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
 			wb.deleteEmptyRows();
 			TPSEE_Accuracy_Page s = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-				System.out.println("*******************  Scenarios : " + count + "Starts ****************************");
-				s.waitUntilLoad(CurrentState.getDriver());
-				String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
-				String CountryCode = wb.getCellValue(Filter, wb.seacrh_pattern("Country", 0).get(0).intValue());
-				String State = wb.getCellValue(Filter, wb.seacrh_pattern("State", 0).get(0).intValue());
-				String City = wb.getCellValue(Filter, wb.seacrh_pattern("City", 0).get(0).intValue());
-				String Location = wb.getCellValue(Filter, wb.seacrh_pattern("Location", 0).get(0).intValue());
-				s.LAVapplyGlobalFilter(Group, CountryCode, State, City, Location);
-				System.out.println(Group + ", " + CountryCode + ", " + State + ", " + City + ", " + Location);
-				s.clickApplyFilterBTNLAV();
-				BaseClass.addEvidence(CurrentState.getDriver(), "Applied global filter: " + Group + ", " + CountryCode
-						+ ", " + State + ", " + City + ", " + Location + "", "yes");
+			System.out.println("*******************  Scenarios : " + count + "Starts ****************************");
+			s.waitUntilLoad(CurrentState.getDriver());
+			String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+			String CountryCode = wb.getCellValue(Filter, wb.seacrh_pattern("Country", 0).get(0).intValue());
+			String State = wb.getCellValue(Filter, wb.seacrh_pattern("State", 0).get(0).intValue());
+			String City = wb.getCellValue(Filter, wb.seacrh_pattern("City", 0).get(0).intValue());
+			String Location = wb.getCellValue(Filter, wb.seacrh_pattern("Location", 0).get(0).intValue());
+			s.LAVapplyGlobalFilter(Group, CountryCode, State, City, Location);
+			System.out.println(Group + ", " + CountryCode + ", " + State + ", " + City + ", " + Location);
+			s.clickApplyFilterBTNLAV();
+			BaseClass.addEvidence(CurrentState.getDriver(), "Applied global filter: " + Group + ", " + CountryCode
+					+ ", " + State + ", " + City + ", " + Location + "", "yes");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -308,7 +318,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(),
 				"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
 	}
-	
+
 	/**
 	 * Test to verify inaccuracy and ignored checkbox
 	 * 
@@ -323,7 +333,12 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 				"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
 		soft.assertAll();
 	}
-	
+
+	/**
+	 * test to verify table headers
+	 * 
+	 * @throws Exception
+	 */
 	@Test(priority = 18, groups = { "smoke" }, description = "Test for verifying sitetable in Visibility page")
 	public void verifyTableHeaders() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
@@ -340,7 +355,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Data of Social Sites Tab", "yes");
 		soft.assertAll();
 	}
-	
+
 	/**
 	 * Test to verify Top Button
 	 * 
@@ -352,79 +367,92 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		data.TopButton();
 		addEvidence(CurrentState.getDriver(), "Top Button click verification", "yes");
 	}
-	
-	@Parameters({"Filter"})
+
+	/**
+	 * test to verify location address
+	 * 
+	 * @param Filter
+	 * @throws Exception
+	 */
+	@Parameters({ "Filter" })
 	@Test(priority = 20, description = "Test to verify location details")
 	public void VerifyLocationDetailsLocationTab(int Filter) throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
 		String Location = wb.getCellValue(Filter, wb.seacrh_pattern("Location", 0).get(0).intValue());
-		System.out.println("The Location selected is :" +Location);
-		if(!Location.equals("null")) {
+		System.out.println("The Location selected is :" + Location);
+		if (!Location.equals("null")) {
 			data.verifyLocationFilterAddress(Location);
-		}else {
+		} else {
 			System.out.println("No location selected");
 		}
 	}
-	
-	@Parameters({"Filter"})
+
+	/**
+	 * test to verify location details from site location tab
+	 * 
+	 * @param Filter
+	 * @throws Exception
+	 */
+	@Parameters({ "Filter" })
 	@Test(priority = 21, description = "Test to verify location details of vendors sites")
 	public void VerifySiteLocationTab(int Filter) throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
 		String Location = wb.getCellValue(Filter, wb.seacrh_pattern("Location", 0).get(0).intValue());
-		System.out.println("The Location selected is :" +Location);
-		if(!Location.equals("null")) {
+		System.out.println("The Location selected is :" + Location);
+		if (!Location.equals("null")) {
 			data.verifyLocationFilterSiteAddress(Location);
-		}else {
+		} else {
 			System.out.println("No location selected");
 		}
 	}
-	
-	@Parameters({"Filter"})
+
+	/**
+	 * test to verify filter data order
+	 * 
+	 * @param Filter
+	 * @throws Exception
+	 */
+	@Parameters({ "Filter" })
 	@Test(priority = 22, description = "Test to verify filter data is in order")
 	public void verifyFilterDataOrder(int Filter) throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
+		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
 		String Country1 = wb1.getCellValue(Filter, wb1.seacrh_pattern("Country", 0).get(0).intValue());
-		if(Country1.equals("null")) {
+		if (Country1.equals("null")) {
 			CurrentState.getDriver().navigate().refresh();
-		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "FilterOrder");
-		wb.deleteEmptyRows();
-		String Group = wb.getCellValue(1, wb.seacrh_pattern("Group", 0).get(0).intValue());
-		String CountryCode = wb.getCellValue(1, wb.seacrh_pattern("Country", 0).get(0).intValue());
-		String State = wb.getCellValue(1, wb.seacrh_pattern("State", 0).get(0).intValue());
-		String City = wb.getCellValue(1, wb.seacrh_pattern("City", 0).get(0).intValue());
-		data.GetDataListnVerifyOrder(Group, CountryCode, State, City);
-		}else {
+			ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "FilterOrder");
+			wb.deleteEmptyRows();
+			String Group = wb.getCellValue(1, wb.seacrh_pattern("Group", 0).get(0).intValue());
+			String CountryCode = wb.getCellValue(1, wb.seacrh_pattern("Country", 0).get(0).intValue());
+			String State = wb.getCellValue(1, wb.seacrh_pattern("State", 0).get(0).intValue());
+			String City = wb.getCellValue(1, wb.seacrh_pattern("City", 0).get(0).intValue());
+			data.GetDataListnVerifyOrder(Group, CountryCode, State, City);
+		} else {
 			System.out.println("The group is not empty");
 		}
 	}
-	
-	/*@Test(priority = 18, description = "Test to verify name ignore inaccuracy")
-	public void verifyNameInaccuracy() throws Exception {
-		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-		data.verifyupdateinaccuracyname();
-		addEvidence(CurrentState.getDriver(), "Test to verify name ignore inaccuracy", "yes");
-	}
-	
-	@Test(priority = 19, description = "Test to verify address inaccuracy")
-	public void  verifyAddressInaccuracy() throws Exception {
-		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-		data.verifyupdateinaccuracyaddress();
-		addEvidence(CurrentState.getDriver(), "Test to verify address inaccuracy", "yes");
-	}
-	
-	@Test(priority = 20, description = "Test to verify phone inaccuracy")
-	public void verifyPhoneInaccuracy() throws Exception {
-		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-		data.verifyupdateinaccuracyphone();
-		addEvidence(CurrentState.getDriver(), "Test to verify phone inaccuracy", "yes");
-	}*/
 
-	
-
-	
+	/*
+	 * @Test(priority = 18, description = "Test to verify name ignore inaccuracy")
+	 * public void verifyNameInaccuracy() throws Exception { data = new
+	 * TPSEE_Accuracy_Page(CurrentState.getDriver());
+	 * data.verifyupdateinaccuracyname(); addEvidence(CurrentState.getDriver(),
+	 * "Test to verify name ignore inaccuracy", "yes"); }
+	 * 
+	 * @Test(priority = 19, description = "Test to verify address inaccuracy")
+	 * public void verifyAddressInaccuracy() throws Exception { data = new
+	 * TPSEE_Accuracy_Page(CurrentState.getDriver());
+	 * data.verifyupdateinaccuracyaddress(); addEvidence(CurrentState.getDriver(),
+	 * "Test to verify address inaccuracy", "yes"); }
+	 * 
+	 * @Test(priority = 20, description = "Test to verify phone inaccuracy") public
+	 * void verifyPhoneInaccuracy() throws Exception { data = new
+	 * TPSEE_Accuracy_Page(CurrentState.getDriver());
+	 * data.verifyupdateinaccuracyphone(); addEvidence(CurrentState.getDriver(),
+	 * "Test to verify phone inaccuracy", "yes"); }
+	 */
 
 	@SuppressWarnings("finally")
 	@DataProvider
@@ -465,8 +493,6 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 			return data;
 		}
 	}
-	
-	
 
 	/**
 	 * // Test for compare number of rows from export table and table data in
@@ -524,5 +550,5 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 *                        scores in Accuracy site table and overview Accuracy
 	 *                        export found matching for InAccuracy" , "yes"); }
 	 *//*
-*/
+		*/
 }

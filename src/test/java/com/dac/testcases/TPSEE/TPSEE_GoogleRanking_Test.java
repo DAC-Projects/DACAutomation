@@ -52,6 +52,10 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
 	}
 
+	/**
+	 * test to navigate to Google Ranking
+	 * @throws Exception
+	 */
 	@Test(priority = 2, groups = { "smoke" }, description = "Test for navigating to Google Ranking page")
 	public void navigateToGoogleRankingPage() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
@@ -60,6 +64,10 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Google Ranking page from Dashboard", "yes");
 	}
 	
+	/**
+	 * test to verify title and title text
+	 * @throws Exception
+	 */
 	@Test(priority = 3, groups = {"smoke" }, description = "Test for verifying title and description of report")
 	public void verifytitle() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
@@ -67,7 +75,10 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "verification f title", "yes");
 	}
 
-	// GRScorenLoc
+	/**
+	 * test to compare KPI and Report score and data
+	 * @throws Exception
+	 */
 	@Test(priority = 4, groups = { "smoke" }, description = "Test for navigating to ContentAnalysis page")
 	public void Verifyscorenloc() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
@@ -80,7 +91,10 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to ContentAnalysis page from Dashboard", "yes");
 	}
 
-	// Test to verify Zoom Functionality
+	/**
+	 * test to verify zoom functionality
+	 * @throws Exception
+	 */
 	@Test(priority = 5, groups = { "smoke" }, description = "Verify Zoom Functionality")
 	public void gethighchartsdate() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
@@ -132,6 +146,16 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		}
 	}
 
+	/**
+	 * test to set calendar date
+	 * @param from_day
+	 * @param from_month
+	 * @param from_year
+	 * @param to_day
+	 * @param to_month
+	 * @param to_year
+	 * @throws Exception
+	 */
 	@SuppressWarnings("unused")
 	@Test(priority = 6, enabled = true, dataProvider = "testData", description = "Test for Manual date selection")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
@@ -196,6 +220,10 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		}
 	}
 
+	/**
+	 * test to apply keywords
+	 * @throws Exception
+	 */
 	@Test(priority = 7, groups = { "smoke" }, description = "Add Account Level and Group Level Keyword")
 	public void verifyApplyKeywords() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
@@ -222,6 +250,11 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		}
 	}
 
+	/**
+	 * test to apply filter
+	 * @param Filter
+	 * @throws Exception
+	 */
 	@Parameters({ "Filter" })
 	@Test(priority = 8, groups = { "smoke" }, description = "Verify Google Ranking page loads after filter applied")
 	public void verifyFilteringReportsnavigateToGoogleRanking(int Filter) throws Exception {
@@ -249,7 +282,10 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		}
 	}
 
-	// Test for export and overview report in Content Analysis Page
+	/**
+	 * verify ranking score
+	 * @throws Exception
+	 */
 	@Test(priority = 9, groups = { "smoke" }, description = "Test for Ranking scores Data")
 	public void verifyRankingScoreDataGoogleRanking() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
@@ -257,7 +293,10 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified Ranking Score for Google Ranking", "yes");
 	}
 
-	// Test for Tooltip and overview report in Content Analysis Page
+	/**
+	 * verify tooltip data
+	 * @throws Exception
+	 */
 	@Test(priority = 10, groups = { "smoke" }, description = "Test to get Tooltip Data")
 	public void verifyToolTipGoogleRanking() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
@@ -265,6 +304,10 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Tooltip values verified from Google Ranking", "yes");
 	}
 	
+	/**
+	 * compare graph and overall score
+	 * @throws Exception
+	 */
 	@Test(priority = 11, description = "Test to compare overall and graph score")
 	public void verifygraphscorenovrscore() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
@@ -272,6 +315,10 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Test to compare overview and graph score", "yes");
 	}
 
+	/**
+	 * Export as CSV
+	 * @throws Exception
+	 */
 	@Test(priority = 12, groups = { "smoke" }, description = "Export as csv")
 	public void exportascsv() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
@@ -279,7 +326,11 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}
 
-	// Test for export and overview report in Content Analysis Page
+
+	/**
+	 * Compare UI and XL data
+	 * @throws Exception
+	 */
 	@Test(priority = 13, groups = { "smoke" }, description = "Test for Ranking export and export verification")
 	public void verifyTableDataoExport() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
@@ -287,12 +338,20 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified Ranking export for Google Ranking", "yes");
 	}
 	
+	/**
+	 * test to goto page 
+	 * @throws InterruptedException
+	 */
 	@Test(priority = 14, description ="Test to verify GoTo page")
 	public void GOTO() throws InterruptedException {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.GoTo();
 	}
 	
+	/**
+	 * test to verify results per page
+	 * @throws InterruptedException
+	 */
 	@Test(priority = 15, description = "Test to verify Resultsperpage")
 	public void ResultsperPage() throws InterruptedException {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
@@ -313,6 +372,11 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Top Button click verification", "yes");
 	}
 	
+	/**
+	 * test to verify filter data order
+	 * @param Filter
+	 * @throws Exception
+	 */
 	@Parameters({"Filter"})
 	@Test(priority = 17, description = "Test to verify filter data is in order")
 	public void verifyFilterDataOrder(int Filter) throws Exception {

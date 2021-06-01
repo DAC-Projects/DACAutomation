@@ -28,6 +28,10 @@ public class TPSEE_Syndication_Status_LPAD_Loc_DeActivate extends BaseClass{
 		addEvidence(CurrentState.getDriver(), "To Navigate to Syndication Report Page", "yes");
 	}
 	
+	/**
+	 * test to verify deactivating location
+	 * @throws Exception
+	 */
 	@Test(priority = 2, description = "Verify Location Number deactivated")
 	public void DeActivateScenario() throws Exception {
 		data = new TPSEE_Syndication_Status_Page(CurrentState.getDriver());

@@ -80,10 +80,10 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//*[@class='big-stats']")
 	private WebElement MousehoverText;
-	
+
 	@FindBy(xpath = "//li[@id='bing_places_report']")
 	private WebElement BingPage;
-	
+
 	@FindBy(xpath = "//li[@id='local_analytics']")
 	private WebElement BingSec;
 
@@ -91,17 +91,23 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 
 	String datavalidatation;
 
-	// Exporting Bing Report
+	/**
+	 * Export as CSV
+	 * 
+	 * @throws InterruptedException
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	public void exportCSVBing() throws InterruptedException, FileNotFoundException, IOException {
 		JSWaiter.waitJQueryAngular();
 		datavalidatation = driver.findElement(By.xpath("//*[@class='highcharts-title']")).getText();
 		if (!datavalidatation.equals("There is currently not enough data from Bing to display this report")) {
-			if (export.isDisplayed() && export.isEnabled()) { 
+			if (export.isDisplayed() && export.isEnabled()) {
 				wait.until(ExpectedConditions.visibilityOf(export));
 				action.moveToElement(export).click(export).perform();
 			}
 			if (CSVExport.isDisplayed() && CSVExport.isEnabled()) {
-				wait.until(ExpectedConditions.visibilityOf(XLSXExport));
+				wait.until(ExpectedConditions.visibilityOf(CSVExport));
 				CSVExport.click();
 				Thread.sleep(5000);
 				getLastModifiedFile(Exportpath);
@@ -113,6 +119,14 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 		}
 	}
 
+	/**
+	 * Export as XLSX
+	 * 
+	 * @param file
+	 * @throws InterruptedException
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	public void exportXLSXBing(String file) throws InterruptedException, FileNotFoundException, IOException {
 
 		JSWaiter.waitJQueryAngular();
@@ -136,7 +150,13 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 		}
 	}
 
-	// Getting Impressions from UI
+	/**
+	 * get UI impression count
+	 * 
+	 * @param a
+	 * @return
+	 * @throws Exception
+	 */
 	public int getImpressions(WebElement a) throws Exception {
 		JSWaiter.waitJQueryAngular();
 		int Impressions = 0;
@@ -185,7 +205,15 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 		}
 	}
 
-	// Compare UI and exported Impression
+	/**
+	 * Compare UI and XL impression count
+	 * 
+	 * @param chromepath
+	 * @param IEpath
+	 * @param FFpath
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unused")
 	public void compareUInExportImpressions(String chromepath, String IEpath, String FFpath) throws Exception {
 		datavalidatation = driver.findElement(By.xpath("//*[@class='highcharts-title']")).getText();
 		if (!datavalidatation.equals("There is currently not enough data from Bing to display this report")) {
@@ -201,20 +229,30 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 			}
 			WebElement Impressions = driver.findElement(By.xpath("//span[@id='totalView']"));
 			int TotalImpressions = getImpressions(Impressions);
-			//Assert.assertEquals(x, TotalImpressions, "Count is equal");
+			// Assert.assertEquals(x, TotalImpressions, "Count is equal");
 		} else {
 			System.out.println("No Data for Bing");
 		}
 	}
 
+	/**
+	 * to verify if data available
+	 * 
+	 * @return
+	 */
 	public String validdata() {
 		String Isdataavailable = driver.findElement(By.xpath("//*[@class='highcharts-title']")).getText();
 		return Isdataavailable;
 	}
 
+	/**
+	 * to verify mouse hover text
+	 * 
+	 * @param Exp_Text
+	 */
 	public void GetHoverText(String Exp_Text) {
 		waitForElement(Impressions, 10);
-		String Text = MousehoverText.getAttribute("data-original-title"); 
+		String Text = MousehoverText.getAttribute("data-original-title");
 		System.out.println(Text);
 		Assert.assertEquals(Exp_Text, Text);
 	}

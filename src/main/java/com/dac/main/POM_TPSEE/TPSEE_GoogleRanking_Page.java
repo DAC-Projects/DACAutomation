@@ -24,8 +24,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
-import com.dac.main.BasePage;
-
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
@@ -39,7 +37,6 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 	WebDriverWait wait;
 	static String time_stamp;
 
-	
 	public TPSEE_GoogleRanking_Page(WebDriver driver) {
 
 		super(driver);
@@ -125,7 +122,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "(//input[contains(@class , 'form-control')])[3]")
 	private WebElement gotopage;
-	
+
 	@FindBy(xpath = "//td[@class='center ranking'][1]")
 	private WebElement overallscore;
 
@@ -173,6 +170,11 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 		return null;
 	}
 
+	/**
+	 * to verify if keyword is disabled
+	 * 
+	 * @return
+	 */
 	public boolean verifykeyword() {
 		scrollByElement(accountkeyword);
 		String classname = accountkeyword.getAttribute("class");
@@ -184,6 +186,14 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 		}
 	}
 
+	/**
+	 * to apply group and account level keyword
+	 * 
+	 * @param AccKey
+	 * @param GrKey
+	 * @param GrKeyword
+	 */
+	@SuppressWarnings("unused")
 	public void applyKeywords(String AccKey, String GrKey, String GrKeyword) {
 		JSWaiter.waitJQueryAngular();
 		WebElement AccountKeyword, GroupKey, GroupKeyword;
@@ -207,8 +217,8 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 						if (removeacckey.isDisplayed()) {
 							clickelement(removeacckey);
 							waitForElement(accountkeyword, 5);
-							AccountKeyword = acckeypanel
-									.findElement(By.xpath("(//div[contains(@class,'selectize-input items')][1]//input)[1]"));
+							AccountKeyword = acckeypanel.findElement(
+									By.xpath("(//div[contains(@class,'selectize-input items')][1]//input)[1]"));
 							AccountKeyword.sendKeys(AccKey);
 							AccountKeyword.sendKeys(Keys.ENTER);
 						} else {
@@ -223,11 +233,13 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 						waitForElement(Group, 5);
 						Select select = new Select(Group);
 						select.selectByVisibleText(GrKey);
-						/*GroupKey = Group.findElement(By.xpath("//div[@data-value='" + GrKey + "']"));
-						waitForElement(GroupKey, 10);
-						clickelement(GroupKey);*/
+						/*
+						 * GroupKey = Group.findElement(By.xpath("//div[@data-value='" + GrKey + "']"));
+						 * waitForElement(GroupKey, 10); clickelement(GroupKey);
+						 */
 						waitUntilLoad(driver);
-						GroupKeyword = acckeypanel.findElement(By.xpath("(//div[contains(@class,'selectize-input items')][1]//input)[2]"));
+						GroupKeyword = acckeypanel.findElement(
+								By.xpath("(//div[contains(@class,'selectize-input items')][1]//input)[2]"));
 						GroupKeyword.sendKeys(GrKeyword);
 						GroupKeyword.sendKeys(Keys.ENTER);
 					} else {
@@ -247,6 +259,12 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 
 	}
 
+	/**
+	 * to get UI score data
+	 * 
+	 * @return
+	 * @throws InterruptedException
+	 */
 	public List<Map<String, String>> RankingScoresData() throws InterruptedException {
 		JSWaiter.waitJQueryAngular();
 		if (ScoresTable.isDisplayed()) {
@@ -263,15 +281,15 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 			Map<String, String> kMap = new HashMap<String, String>();
 			for (int row = 0; row < rows_count; row++) {
 				List<WebElement> Columns_row = rows_table.get(row).findElements(By.tagName("td"));// To locate
-																									// columns(cells) of
-																									// that specific
-																									// row.
+				// columns(cells) of
+				// that specific
+				// row.
 				int columns_count = Columns_row.size(); // To calculate no of columns (cells). In that specific row.
 				int noOfRows = row + 1;
 				// System.out.println("Number of cells In Row " + noOfRows + " are " +
 				// columns_count);
 				for (int column = 0; column < columns_count; column++) { // Loop will execute till the last cell of that
-																			// specific row.
+					// specific row.
 					List<WebElement> headerTableRow = ScoresTableHeader.findElements(By.tagName("th"));
 					String headerText = headerTableRow.get(column).getText(), vendorname = "", celtext = "";
 					if (column == 1 & row < rows_count) {
@@ -296,6 +314,12 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 		return tableCellValues;
 	}
 
+	/**
+	 * to get UI table data
+	 * 
+	 * @return
+	 * @throws InterruptedException
+	 */
 	public List<Map<String, String>> RankingDataTable() throws InterruptedException {
 		JSWaiter.waitJQueryAngular();
 		waitForElement(RankingTable, 5);
@@ -322,29 +346,29 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 					Map<String, String> kMap = new HashMap<String, String>();
 					for (int row = 0; row < rows_count; row++) {
 						List<WebElement> Columns_row = rows_table.get(row).findElements(By.tagName("div")); // To locate
-																											// columns(cells)
-																											// of that
-																											// specific
-																											// row.
+						// columns(cells)
+						// of that
+						// specific
+						// row.
 						int columns_count = Columns_row.size(); // To calculate no of columns (cells). In that specific
-																// row.
+						// row.
 
 						// System.out.println("Number of cells In Row " + noOfRows + " are " +
 						// columns_count);
 						for (int column = 0; column < columns_count; column++) { // Loop will execute till the last cell
-																					// of that specific row.
+							// of that specific row.
 							List<WebElement> headerTableRow = RankingTableHeader.findElements(By.tagName("th"));
 							String headerText = headerTableRow.get(column).getText(), celtext = "";
 							if (column == 1 & row < rows_count) {
 								celtext = driver
-										.findElement(By
-												.xpath("(//*[@id='rankingDetail']/tbody/tr/td)[" + (row + 1) + "]"))
+										.findElement(
+												By.xpath("(//*[@id='rankingDetail']/tbody/tr/td)[" + (row + 1) + "]"))
 										.getText();
-								System.out.println("text is  :" +celtext);
+								System.out.println("text is  :" + celtext);
 							} else {
 								celtext = Columns_row.get(column).getText().trim(); // To retrieve text from that
-																					// specific cell.
-								System.out.println("text is  :" +celtext);
+								// specific cell.
+								System.out.println("text is  :" + celtext);
 							}
 							kMap.put("Location", celtext);
 							tableCellValues.add(kMap);
@@ -385,7 +409,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 		exportVATable(Export, Export_csv);
 		Thread.sleep(10000);
 		time_stamp = timeStamp();
-		System.out.println("The timestamp is : " +time_stamp);
+		System.out.println("The timestamp is : " + time_stamp);
 		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + GoogleRankingExportCSV));
 		Thread.sleep(2000);
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
@@ -403,17 +427,24 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 		exportVATable(Export, Export_xlsx);
 		Thread.sleep(10000);
 		time_stamp = timeStamp();
-		System.out.println("The timestamp is : " +time_stamp);
+		System.out.println("The timestamp is : " + time_stamp);
 		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + GoogleRankingExportXLSX));
 		Thread.sleep(2000);
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
 	}
 
+	/**
+	 * to get XL data
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	public List<Map<String, String>> getRankingDataTableExport() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		GRDataTableExportXLSX();
-		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser() + time_stamp + GoogleRankingExportXLSX),
-				"Google_Ranking").getExcelTable();
+		String[][] table = new ExcelHandler(
+				Exportpath + (CurrentState.getBrowser() + time_stamp + GoogleRankingExportXLSX), "Google_Ranking")
+						.getExcelTable();
 		List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
 		for (int col = 1; col < colSize; col++) {
@@ -427,6 +458,12 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 		return exporttableData;
 	}
 
+	/**
+	 * compare UI and XL data
+	 * 
+	 * @param RankingDataTable
+	 * @param getRankingDataTableExport
+	 */
 	@SuppressWarnings("unlikely-arg-type")
 	public void compareExprttoAnalysisSiteLinkData(List<Map<String, String>> RankingDataTable,
 			List<Map<String, String>> getRankingDataTableExport) {
@@ -439,43 +476,12 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 		}
 	}
 
-	public void compareXlData_UIdata() throws Exception {
-		JSWaiter.waitJQueryAngular();
-		List<WebElement> Columns_row = RankingTableHeader.findElements(By.tagName("th"));
-		int col_count = Columns_row.size();
-		String newfilename = BasePage.getLastModifiedFile("./downloads");
-		// String newfilename = new
-		// formatConvert("./downloads/"+fileName).convertFile("xlsx");
-		ExcelHandler a = new ExcelHandler("./downloads/" + newfilename, "Sheet0");
-		a.deleteEmptyRows();
-		int xlRowCount = new ExcelHandler("./downloads/" + newfilename, "Sheet0").getRowCount();
-		int count = 0;
-		for (int i = 1; i < xlRowCount; i++) {
-			col_count = a.getColCount(i);
-			for (int j = 0; j <= col_count; j++) {
-				String cellValue = a.getCellValue(i, j + 1).trim();
-				if (cellValue.contains("%"))
-					cellValue = new String("" + Double.parseDouble(cellValue.replace("%", "")) + "%");
-				if (cellValue.length() != 0 & cellValue != null) {
-					Map<String, String> uiTableCellValue = tableCellValues.get(count);
-					if (uiTableCellValue.containsValue(cellValue)) { // | uiTableCellValue.equals(cellValue)
-						Assert.assertTrue(uiTableCellValue.containsValue(cellValue),
-								uiTableCellValue + " is matches with Downloaded Excel value : " + cellValue);
-					} else {
-						Assert.assertTrue(false,
-								uiTableCellValue + " is NOT matches with Downloaded Excel value : " + cellValue);
-					}
 
-					if (j < 1 | j > 5)
-						count++;
-				}
-			}
-		}
-		CurrentState.getLogger().info("UI table data matches with Exported Excel Data");
-		Assert.assertTrue(true, "UI table data matches with Exported Excel Data");
-		tableCellValues.clear();
-	}
-
+	/**
+	 * to click on apply keyword
+	 * 
+	 * @throws InterruptedException
+	 */
 	public void clickApplyKeyword() throws InterruptedException {
 		// TODO Auto-generated method stub
 
@@ -488,6 +494,12 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 
 	}
 
+	/**
+	 * compare data of UI and XL
+	 * 
+	 * @param rankingDataTable
+	 * @param rankingDataTableExport
+	 */
 	public void compareexporttableDatanrankingdetails(List<Map<String, String>> rankingDataTable,
 			List<Map<String, String>> rankingDataTableExport) {
 		// TODO Auto-generated method stub
@@ -502,6 +514,16 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 
 	}
 
+	/**
+	 * to get GR score from graph
+	 * 
+	 * @return
+	 * @throws ParseException
+	 * @throws                       bsh.ParseException
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public double GRScore()
 			throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
 		JSWaiter.waitJQueryAngular();
@@ -509,36 +531,54 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 		scrollByElement(hstryGrph);
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth()) / 2 - 2, 0).click().perform();
-		String tooltipvalue = GRScore.getText(); 
-		
+		String tooltipvalue = GRScore.getText();
+
 		double score = Double.parseDouble(tooltipvalue);
 		return score;
 	}
-	
+
+	/**
+	 * to get overall score
+	 * 
+	 * @return
+	 */
 	public double overallscore() {
 		scrollByElement(overallscore);
 		String ovrscr = overallscore.getText();
-		System.out.println("Overall score is : " +ovrscr);
+		System.out.println("Overall score is : " + ovrscr);
 		double overallscore;
-		if(ovrscr.contains(">")) {
+		if (ovrscr.contains(">")) {
 			ovrscr = ovrscr.replace(">", "");
 			ovrscr = ovrscr.trim();
 			overallscore = Double.parseDouble(ovrscr);
-		}else {
+		} else {
 			overallscore = Double.parseDouble(ovrscr);
 		}
-		System.out.println("The overall score is : " +overallscore);
+		System.out.println("The overall score is : " + overallscore);
 		return overallscore;
 	}
-	
+
+	/**
+	 * to compare overall and graph score
+	 */
 	public void comparegraphovrscr() {
 		double graphscore = verifygrphscore();
-		System.out.println("The graphical score is : " +graphscore);
+		System.out.println("The graphical score is : " + graphscore);
 		double overallscore = overallscore();
-		System.out.println("The overall score is : " +overallscore);
+		System.out.println("The overall score is : " + overallscore);
 		Assert.assertEquals(graphscore, overallscore);
 	}
 
+	/**
+	 * to get GR location
+	 * 
+	 * @return
+	 * @throws ParseException
+	 * @throws                       bsh.ParseException
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public int GRLoc()
 			throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
 		JSWaiter.waitJQueryAngular();
@@ -579,6 +619,9 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 		return tooltipdata;
 	}
 
+	/**
+	 * to verify title and title text
+	 */
 	public void VerifyGRText() {
 		JSWaiter.waitJQueryAngular();
 		waitForElement(Title, 5);
@@ -593,6 +636,12 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 				TitleTxt);
 	}
 
+	/**
+	 * to verify results per page
+	 * 
+	 * @param soft
+	 * @throws InterruptedException
+	 */
 	public void resultperpage(SoftAssert soft) throws InterruptedException {
 		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
 		JSWaiter.waitJQueryAngular();
@@ -600,6 +649,11 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 		ResultsperPage(soft, entiresText, Resultperpage);
 	}
 
+	/**
+	 * to verify goto page
+	 * 
+	 * @throws InterruptedException
+	 */
 	public void GoTo() throws InterruptedException {
 		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
 		JSWaiter.waitJQueryAngular();

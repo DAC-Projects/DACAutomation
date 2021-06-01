@@ -38,7 +38,6 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 
 		return null;
 	}
-	
 
 	/*-----------------------------------Locators---------------------------------------------------*/
 	@FindBy(xpath = "//*[@id='page-content']//h2")
@@ -148,13 +147,13 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "(//*[name()='rect' and @class='highcharts-plot-background'])[6]")
 	private WebElement CheckInsGraphSec;
-	
+
 	@FindBy(xpath = "//button//span[@class='walkme-custom-balloon-button-text']")
 	private WebElement DoneBtn;
-	
+
 	@FindBy(xpath = "//li[@id='facebook_insights']")
 	private WebElement FacebookPage;
-	
+
 	@FindBy(xpath = "//li[@id='local_analytics']")
 	private WebElement FacebookSec;
 
@@ -162,27 +161,38 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 
 	/*-----------------------------------Locators---------------------------------------------------*/
 
-	
+	/**
+	 * to verify if Done button present in Beta
+	 * 
+	 * @return
+	 */
 	public boolean Done() {
-		if((driver.findElement(By.xpath("//button//span[@class='walkme-custom-balloon-button-text']"))).isDisplayed()) {
+		if ((driver.findElement(By.xpath("//button//span[@class='walkme-custom-balloon-button-text']")))
+				.isDisplayed()) {
 			return true;
-		}else {
-		return false;
+		} else {
+			return false;
 		}
 	}
-	
+
+	/**
+	 * to click on Done button in Beta
+	 * 
+	 * @return
+	 */
 	public void clickDone() {
 		boolean done = Done();
-		try {	
-		if(done == true) {
-			driver.findElement(By.xpath("//button//span[@class='walkme-custom-balloon-button-text']")).click();
-		}else {
-			System.out.println("NO Button Displayed");
-		}
-		}catch(Exception e) {
+		try {
+			if (done == true) {
+				driver.findElement(By.xpath("//button//span[@class='walkme-custom-balloon-button-text']")).click();
+			} else {
+				System.out.println("NO Button Displayed");
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * To Verify Title and Title Text
 	 * 
@@ -552,7 +562,7 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 				Date ImpressionDate = verifyFBHistorygraph(PageImpressionGrph, PageImpressionGrphSec);
 				System.out.println("Impression Date is :" + ImpressionDate);
 				Date CalDate = getCurrenttoDate();
-				System.out.println("Calender to Dtae is :" +CalDate);
+				System.out.println("Calender to Dtae is :" + CalDate);
 				System.out.println("Calender Date is :" + CalDate);
 				Assert.assertEquals(ImpressionDate, CalDate);
 				BaseClass.addEvidence(CurrentState.getDriver(), "To Verify Impression Graph Date", "yes");

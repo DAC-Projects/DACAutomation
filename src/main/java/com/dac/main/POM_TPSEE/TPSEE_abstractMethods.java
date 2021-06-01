@@ -55,7 +55,6 @@ import resources.FileHandler;
 import resources.JSWaiter;
 import resources.formatConvert;
 
-
 public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERepository {
 
 	WebDriver driver;
@@ -278,8 +277,6 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	@FindBy(xpath = "(//*[@class='pagination']//a)[last()]")
 	private List<WebElement> paginationLast;
 
-	
-
 	/**
 	 * @param Group
 	 * @param Country
@@ -363,37 +360,42 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		waitUntilLoad(driver);
 	}
 
+	/**
+	 * To get the list of groups,countries,states,city,locations
+	 */
 	public List<String> getList(List<WebElement> ele) {
 		List<String> data = new ArrayList<String>();
 		int size = ele.size();
 		System.out.println("The size of webelemnt is : " + size);
 		for (WebElement webElement : ele) {
-			String dat = webElement.getText(); 
+			String dat = webElement.getText();
 			System.out.println("The data is : " + dat);
-				data.add(dat);
-				System.out.println("The list contains : " + data);
-				if(data.contains("None")) {
-					data.remove("None");
-					System.out.println("The data contains after removing None : " +data);
-				} else if(data.contains("All Countries")) {
-					data.remove("All Countries");
-					System.out.println("The data contains after removing All Countries : " +data);
-				} else if(data.contains("All States")) {
-					data.remove("All States");
-					System.out.println("The data contains after removing All States : " +data);
-				} else if(data.contains("All Cities")) {
-					data.remove("All Cities");
-					System.out.println("The data contains after removing All Cities : " +data);
-				} else if(data.contains("All Locations")) {
-					data.remove("All Locations");
-					System.out.println("The data contains after removing All Locations : " +data);
-				}
+			data.add(dat);
+			System.out.println("The list contains : " + data);
+			if (data.contains("None")) {
+				data.remove("None");
+				System.out.println("The data contains after removing None : " + data);
+			} else if (data.contains("All Countries")) {
+				data.remove("All Countries");
+				System.out.println("The data contains after removing All Countries : " + data);
+			} else if (data.contains("All States")) {
+				data.remove("All States");
+				System.out.println("The data contains after removing All States : " + data);
+			} else if (data.contains("All Cities")) {
+				data.remove("All Cities");
+				System.out.println("The data contains after removing All Cities : " + data);
+			} else if (data.contains("All Locations")) {
+				data.remove("All Locations");
+				System.out.println("The data contains after removing All Locations : " + data);
+			}
 		}
 		return data;
 	}
-	
-	
 
+	/**
+	 * 
+	 * To verify the order of filter data
+	 */
 	public void GetDataListnVerifyOrder(String Group, String CountryCode, String State, String City) {
 		List<String> Groups = new ArrayList<String>();
 		List<String> Country = new ArrayList<String>();
@@ -402,9 +404,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		try {
 			waitForElement(LAVfilter_Panel, 10);
 			waitUntilLoad(driver);
-			clickelement(LAVfiterGroup); 
+			clickelement(LAVfiterGroup);
 			waitForElement(filterDropDown, 5);
-		//	BaseClass.addEvidence(driver, "Test to get data from group filter and verify the order", "yes");
+			// BaseClass.addEvidence(driver, "Test to get data from group filter and verify
+			// the order", "yes");
 			List<WebElement> grps = driver.findElements(By.xpath(
 					"((*//div[contains(@class,'selection ui dropdown fluid search')])[1]//div[contains(@class,'item')])"));
 			Groups = getList(grps);
@@ -415,23 +418,24 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			waitForElement(group, 5);
 			clickelement(group);
 			waitUntilLoad(driver);
-			
+
 			List<String> groupss = new ArrayList<String>();
 			groupss.addAll(Groups);
 			Collections.sort(groupss);
-			System.out.println("The groups after sorted : " +groupss);
+			System.out.println("The groups after sorted : " + groupss);
 			if (Groups.size() == groupss.size()) {
 				for (int i = 0; i < Groups.size(); i++) {
-					soft.assertTrue(Groups.get(i).equals(groupss.get(i)), "The group doesnot match is : " + Groups.get(i) + "with " +groupss.get(i));
+					soft.assertTrue(Groups.get(i).equals(groupss.get(i)),
+							"The group doesnot match is : " + Groups.get(i) + "with " + groupss.get(i));
 				}
 			} else {
 				System.out.println("Lists not equal");
 			}
-			
-			
+
 			clickelement(LAVFilterCountry);
 			waitForElement(filterDropDown, 10);
-			List<WebElement> contry = driver.findElements(By.xpath("((*//div[contains(@class,'selection ui dropdown fluid search')])[2]//div[contains(@class,'item')])"));
+			List<WebElement> contry = driver.findElements(By.xpath(
+					"((*//div[contains(@class,'selection ui dropdown fluid search')])[2]//div[contains(@class,'item')])"));
 			Country = getList(contry);
 			System.out.println("The list of country contains : " + Country);
 			WebElement country = driver.findElement(By.xpath(
@@ -440,23 +444,24 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			waitForElement(country, 5);
 			clickelement(country);
 			waitUntilLoad(driver);
-			
+
 			List<String> coontry = new ArrayList<String>();
 			coontry.addAll(Country);
 			Collections.sort(coontry);
-			System.out.println("The Countries after sort : " +coontry);
+			System.out.println("The Countries after sort : " + coontry);
 			if (Country.size() == coontry.size()) {
 				for (int i = 0; i < Country.size(); i++) {
-					soft.assertTrue(Country.get(i).equals(coontry.get(i)), "The Country doesnot match is : " + Country.get(i) + "with " +coontry.get(i));
+					soft.assertTrue(Country.get(i).equals(coontry.get(i)),
+							"The Country doesnot match is : " + Country.get(i) + "with " + coontry.get(i));
 				}
 			} else {
-				//System.out.println("Lists not equal");
+				// System.out.println("Lists not equal");
 			}
 
-			
 			clickelement(LAVFilterState);
 			waitForElement(filterDropDown, 10);
-			List<WebElement> sttate = driver.findElements(By.xpath("((*//div[contains(@class,'selection ui dropdown fluid search')])[3]//div[contains(@class,'item')])"));
+			List<WebElement> sttate = driver.findElements(By.xpath(
+					"((*//div[contains(@class,'selection ui dropdown fluid search')])[3]//div[contains(@class,'item')])"));
 			States = getList(sttate);
 			System.out.println("The list of state contains : " + States);
 			WebElement state = driver.findElement(By.xpath(
@@ -465,42 +470,46 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			waitForElement(state, 5);
 			clickelement(state);
 			waitUntilLoad(driver);
-			
+
 			List<String> staate = new ArrayList<String>();
 			staate.addAll(States);
 			Collections.sort(staate);
-			System.out.println("The States after sorted : " +staate);
+			System.out.println("The States after sorted : " + staate);
 			if (States.size() == staate.size()) {
 				for (int i = 0; i < States.size(); i++) {
-					soft.assertTrue(States.get(i).equals(staate.get(i)), "The group doesnot match is : " + States.get(i) + "with " +staate.get(i));
-					
+					soft.assertTrue(States.get(i).equals(staate.get(i)),
+							"The group doesnot match is : " + States.get(i) + "with " + staate.get(i));
+
 				}
 			} else {
 				System.out.println("Lists not equal");
 			}
-			
+
 			Thread.sleep(3000);
-			clickelement(LAVFilterCity);  
+			clickelement(LAVFilterCity);
 			waitForElement(filterDropDown, 10);
-			List<WebElement> ciity = driver.findElements(By.xpath("((*//div[contains(@class,'selection ui dropdown fluid search')])[4]//div[contains(@class,'item')])"));
+			List<WebElement> ciity = driver.findElements(By.xpath(
+					"((*//div[contains(@class,'selection ui dropdown fluid search')])[4]//div[contains(@class,'item')])"));
 			Cities = getList(ciity);
 			System.out.println("The list of cities contains : " + Cities);
-		//	BaseClass.addEvidence(driver, "Test to get data from City filter and verify the order", "yes");
+			// BaseClass.addEvidence(driver, "Test to get data from City filter and verify
+			// the order", "yes");
 			WebElement city = driver.findElement(By.xpath(
 					"(*//div[contains(@class,'selection ui dropdown fluid search')])[4]//div[contains(@class,'item') and contains(text(),'"
 							+ City + "')]"));
 			waitForElement(city, 5);
 			clickelement(city);
 			waitUntilLoad(driver);
-			
+
 			List<String> citty = new ArrayList<String>();
 			citty.addAll(Cities);
 			Collections.sort(citty);
-			System.out.println("The Cities after sorted : " +citty);
+			System.out.println("The Cities after sorted : " + citty);
 			if (Cities.size() == citty.size()) {
 				for (int i = 0; i < Cities.size(); i++) {
-					soft.assertTrue(Cities.get(i).equals(citty.get(i)), "The group doesnot match is : " + Cities.get(i) + "with " +ciity.get(i));
-					
+					soft.assertTrue(Cities.get(i).equals(citty.get(i)),
+							"The group doesnot match is : " + Cities.get(i) + "with " + ciity.get(i));
+
 				}
 			} else {
 				System.out.println("Lists not equal");
@@ -591,9 +600,18 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		}
 		waitUntilLoad(driver);
 	}
-	
-	
-	public void GetDataListnVerifyOrderBingFacebook(String Group, String CountryCode, String State, String City, String Location) {
+
+	/**
+	 * to get and verify order of filter
+	 * 
+	 * @param Group
+	 * @param CountryCode
+	 * @param State
+	 * @param City
+	 * @param Location
+	 */
+	public void GetDataListnVerifyOrderBingFacebook(String Group, String CountryCode, String State, String City,
+			String Location) {
 		List<String> Groups = new ArrayList<String>();
 		List<String> Country = new ArrayList<String>();
 		List<String> States = new ArrayList<String>();
@@ -601,102 +619,110 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		try {
 			waitForElement(filter_Panel, 10);
 			waitUntilLoad(driver);
-			clickelement(fiterGroup); 
+			clickelement(fiterGroup);
 			waitForElement(filterDropDown, 10);
-			List<WebElement> grps = driver.findElements(By.xpath(
-					"//*[@id = 'myGroups']//div[contains(@class,'item')]"));
+			List<WebElement> grps = driver
+					.findElements(By.xpath("//*[@id = 'myGroups']//div[contains(@class,'item')]"));
 			Groups = getList(grps);
 			System.out.println("The list of groups contains : " + Groups);
-			WebElement group = driver.findElement(By.xpath(
-					"//*[@id = 'myGroups']//div[contains(@class,'item') and contains(text(),'" + Group + "')]"));
+			WebElement group = driver.findElement(By
+					.xpath("//*[@id = 'myGroups']//div[contains(@class,'item') and contains(text(),'" + Group + "')]"));
 			waitForElement(group, 5);
 			clickelement(group);
 			waitUntilLoad(driver);
-			
+
 			List<String> groupss = new ArrayList<String>();
 			groupss.addAll(Groups);
 			Collections.sort(groupss);
-			System.out.println("The groups after sorted : " +groupss);
+			System.out.println("The groups after sorted : " + groupss);
 			if (Groups.size() == groupss.size()) {
 				for (int i = 0; i < Groups.size(); i++) {
-					soft.assertTrue(Groups.get(i).equals(groupss.get(i)), "The group doesnot match is : " + Groups.get(i) + "with " +groupss.get(i));
+					soft.assertTrue(Groups.get(i).equals(groupss.get(i)),
+							"The group doesnot match is : " + Groups.get(i) + "with " + groupss.get(i));
 				}
 			} else {
 				System.out.println("Lists not equal");
 			}
-			
-			
+
 			clickelement(FilterCountry);
 			waitForElement(filterDropDown, 10);
-			List<WebElement> contry = driver.findElements(By.xpath("(//*[contains(@class,'myList')])[1]//div[contains(@class,'item')]"));
+			List<WebElement> contry = driver
+					.findElements(By.xpath("(//*[contains(@class,'myList')])[1]//div[contains(@class,'item')]"));
 			Country = getList(contry);
 			System.out.println("The list of country contains : " + Country);
-			WebElement country = driver.findElement(By.xpath(
-					"(//*[contains(@class,'myList')])[1]//div[contains(@class,'item') and contains(text(),'"+ CountryCode.toUpperCase() + "')]"));
+			WebElement country = driver.findElement(
+					By.xpath("(//*[contains(@class,'myList')])[1]//div[contains(@class,'item') and contains(text(),'"
+							+ CountryCode.toUpperCase() + "')]"));
 			waitForElement(country, 5);
 			clickelement(country);
 			waitUntilLoad(driver);
-			
+
 			List<String> coontry = new ArrayList<String>();
 			coontry.addAll(Country);
 			Collections.sort(coontry);
-			System.out.println("The Countries after sort : " +coontry);
+			System.out.println("The Countries after sort : " + coontry);
 			if (Country.size() == coontry.size()) {
 				for (int i = 0; i < Country.size(); i++) {
-					soft.assertTrue(Country.get(i).equals(coontry.get(i)), "The group doesnot match is : " + Country.get(i) + "with " +coontry.get(i));
+					soft.assertTrue(Country.get(i).equals(coontry.get(i)),
+							"The group doesnot match is : " + Country.get(i) + "with " + coontry.get(i));
 				}
 			} else {
-				//System.out.println("Lists not equal");
+				// System.out.println("Lists not equal");
 			}
 
-			
 			clickelement(FilterState);
 			waitForElement(filterDropDown, 10);
-			List<WebElement> sttate = driver.findElements(By.xpath("(//*[contains(@class,'myList')])[2]//div[contains(@class,'item')]"));
+			List<WebElement> sttate = driver
+					.findElements(By.xpath("(//*[contains(@class,'myList')])[2]//div[contains(@class,'item')]"));
 			States = getList(sttate);
 			System.out.println("The list of state contains : " + States);
-		//	BaseClass.addEvidence(driver, "Test to get data from State filter and verify the order", "yes");
-			WebElement state = driver.findElement(By.xpath(
-					"(//*[contains(@class,'myList')])[2]//div[contains(@class,'item') and contains(text(),'"
+			// BaseClass.addEvidence(driver, "Test to get data from State filter and verify
+			// the order", "yes");
+			WebElement state = driver.findElement(
+					By.xpath("(//*[contains(@class,'myList')])[2]//div[contains(@class,'item') and contains(text(),'"
 							+ State + "')]"));
 			waitForElement(state, 5);
 			clickelement(state);
 			waitUntilLoad(driver);
-			
+
 			List<String> staate = new ArrayList<String>();
 			staate.addAll(States);
 			Collections.sort(staate);
-			System.out.println("The States after sorted : " +staate);
+			System.out.println("The States after sorted : " + staate);
 			if (States.size() == staate.size()) {
 				for (int i = 0; i < States.size(); i++) {
-					soft.assertTrue(States.get(i).equals(staate.get(i)), "The group doesnot match is : " + States.get(i) + "with " +staate.get(i));
-					
+					soft.assertTrue(States.get(i).equals(staate.get(i)),
+							"The group doesnot match is : " + States.get(i) + "with " + staate.get(i));
+
 				}
 			} else {
 				System.out.println("Lists not equal");
 			}
-			
-			clickelement(FilterCity);  
+
+			clickelement(FilterCity);
 			waitForElement(filterDropDown, 10);
-			List<WebElement> ciity = driver.findElements(By.xpath("(//*[contains(@class,'myList')])[3]//div[contains(@class,'item')]"));
+			List<WebElement> ciity = driver
+					.findElements(By.xpath("(//*[contains(@class,'myList')])[3]//div[contains(@class,'item')]"));
 			Cities = getList(ciity);
 			System.out.println("The list of cities contains : " + Cities);
-		//	BaseClass.addEvidence(driver, "Test to get data from City filter and verify the order", "yes");
-			WebElement city = driver.findElement(By.xpath(
-					"(//*[contains(@class,'myList')])[3]//div[contains(@class,'item') and contains(text(),'"
+			// BaseClass.addEvidence(driver, "Test to get data from City filter and verify
+			// the order", "yes");
+			WebElement city = driver.findElement(
+					By.xpath("(//*[contains(@class,'myList')])[3]//div[contains(@class,'item') and contains(text(),'"
 							+ City + "')]"));
 			waitForElement(city, 5);
 			clickelement(city);
 			waitUntilLoad(driver);
-			
+
 			List<String> citty = new ArrayList<String>();
 			citty.addAll(Cities);
 			Collections.sort(citty);
-			System.out.println("The Cities after sorted : " +citty);
+			System.out.println("The Cities after sorted : " + citty);
 			if (Cities.size() == citty.size()) {
 				for (int i = 0; i < Cities.size(); i++) {
-					soft.assertTrue(Cities.get(i).equals(citty.get(i)), "The group doesnot match is : " + Cities.get(i) + "with " +citty.get(i));
-					
+					soft.assertTrue(Cities.get(i).equals(citty.get(i)),
+							"The group doesnot match is : " + Cities.get(i) + "with " + citty.get(i));
+
 				}
 			} else {
 				System.out.println("Lists not equal");
@@ -1112,7 +1138,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		if (ExportBtn.isDisplayed() & ExportBtn.isEnabled()) {
 			scrollByElement(ExportBtn);
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			//action.moveToElement(ExportBtn).click().perform();
+			// action.moveToElement(ExportBtn).click().perform();
 			ExportBtn.click();
 			Thread.sleep(20000);
 		}
@@ -1758,7 +1784,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	 * @param year_YYYY
 	 */
 	private void selectCalender_Date(String calenderField, int day_d, String month_MMM, int year_YYYY) {
-//		scrollByElement(hstryGrph);
+		// scrollByElement(hstryGrph);
 		driver.findElement(By.xpath(calenderField)).click();
 		int diff = year_YYYY - Integer.parseInt(currentYear_DatePicker.getText());
 		if (diff != 0) {
@@ -1871,6 +1897,9 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		return foundVendors;
 	}
 
+	/**
+	 * To delete the file from download folder
+	 */
 	public void deletefile() {
 		File path = new File("./downloads");
 		File[] files = path.listFiles();
@@ -1880,6 +1909,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		}
 	}
 
+	/**
+	 * to verify title and title text
+	 * 
+	 * @param Tit
+	 * @param titText
+	 */
 	public void VerifyTitleText(String Tit, String titText) {
 
 		waitForElement(PageTitle, 10);
@@ -1891,6 +1926,15 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		Assert.assertEquals(titText, TitleText);
 	}
 
+	/**
+	 * to export csv/xlsx
+	 * 
+	 * @param ExportBtn
+	 * @param ExportType
+	 * @throws FileNotFoundException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
 	public void Download(WebElement ExportBtn, WebElement ExportType)
 			throws FileNotFoundException, InterruptedException, IOException {
 		try {
@@ -1909,6 +1953,14 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		}
 	}
 
+	/**
+	 * to verify results per page
+	 * 
+	 * @param soft
+	 * @param entry
+	 * @param results
+	 * @throws InterruptedException
+	 */
 	public void ResultsperPage(SoftAssert soft, WebElement entry, WebElement results) throws InterruptedException {
 		if (driver.findElement(By.className("dataTables_info")).isDisplayed()) {
 			int totalentries = NumOfentries(entry);
@@ -1966,6 +2018,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		}
 	}
 
+	/**
+	 * to verify goto page
+	 * 
+	 * @param GoTo
+	 * @throws InterruptedException
+	 */
 	public void GoTopage(WebElement GoTo) throws InterruptedException {
 		scrollByElement(GoTo);
 		String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
@@ -1985,6 +2043,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		}
 	}
 
+	/**
+	 * to verify title and title text
+	 * 
+	 * @param Tit
+	 * @param titText
+	 */
 	public void VerifyTitleText1(String Tit, String titText) {
 
 		waitForElement(PageTitle1, 10);
@@ -1996,6 +2060,14 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		Assert.assertEquals(titText, TitleText);
 	}
 
+	/**
+	 * navigation from KPI
+	 * 
+	 * @param ele
+	 * @param ele1
+	 * @param title
+	 * @throws InterruptedException
+	 */
 	public void navigateKPI(WebElement ele, WebElement ele1, String title) throws InterruptedException {
 		waitForElement(ele, 10);
 		scrollByElement(ele);
@@ -2015,6 +2087,9 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		Assert.assertEquals(Title, title);
 	}
 
+	/**
+	 * to click on walkme cancel
+	 */
 	public void clickwalkme() {
 		JSWaiter.waitJQueryAngular();
 		if (WalkMeCancel.isDisplayed()) {
@@ -2024,6 +2099,9 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		}
 	}
 
+	/**
+	 * to click on ok notification
+	 */
 	public void clickNotificationPopUp() {
 		JSWaiter.waitJQueryAngular();
 		if (NotificationPopUp.isDisplayed()) {
@@ -2033,6 +2111,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		}
 	}
 
+	/**
+	 * to verify mousehover text KPI
+	 * 
+	 * @param ele
+	 * @param txt
+	 */
 	public void KPIMouseHover(WebElement ele, String txt) {
 		action.moveToElement(ele);
 		String text = ele.getAttribute("data-original-title");
@@ -2040,6 +2124,16 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		Assert.assertEquals(text, txt);
 	}
 
+	/**
+	 * to verify table sorting
+	 * 
+	 * @param ele
+	 * @param ele1
+	 * @param entry
+	 * @param tablerow
+	 * @param table
+	 * @throws InterruptedException
+	 */
 	public void TableSorting(WebElement ele, String ele1, WebElement entry, List<WebElement> tablerow, WebElement table)
 			throws InterruptedException {
 		JSWaiter.waitJQueryAngular();
@@ -2090,6 +2184,11 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		}
 	}
 
+	/**
+	 * to verify history graph
+	 * 
+	 * @throws ParseException
+	 */
 	public void verifyHistoryGraph1() throws ParseException {
 		String var = null;
 		var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
@@ -2114,6 +2213,11 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		Assert.assertEquals(UIlatest, latest);
 	}
 
+	/**
+	 * to verify graph score
+	 * 
+	 * @return
+	 */
 	public double verifygrphscore() {
 		String var = null;
 		var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
@@ -2140,6 +2244,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		return scorevalue;
 	}
 
+	/**
+	 * to verify location filter address
+	 * 
+	 * @param text
+	 * @throws Exception
+	 */
 	public void verifyLocationFilterAddress(String text) throws Exception {
 		waitForElement(Location_Filter_Address, 5);
 		scrollByElement(Location_Filter_Address);
@@ -2149,6 +2259,11 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		Assert.assertTrue(LocationDetails.contains(text));
 	}
 
+	/**
+	 * to verify location address with site location
+	 * 
+	 * @param text
+	 */
 	public void verifyLocationFilterSiteAddress(String text) {
 		waitForElement(Site_Location_Address, 5);
 		scrollByElement(Site_Location_Address);
@@ -2173,6 +2288,9 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		soft.assertAll();
 	}
 
+	/**
+	 * to verify vendors
+	 */
 	public void verifyVendorSites() {
 		List<String> Vendors = verifyfoundSitevendors();
 		System.out.println("The List of vendors is : " + Vendors);
@@ -2200,7 +2318,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			System.out.println("List are not equal");
 		}
 	}
-	
+
+	/**
+	 * to get current time and date
+	 * 
+	 * @return
+	 */
 	public String timeStamp() {
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
@@ -2208,14 +2331,20 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		System.out.println("Timestamp is :" + formattedDate);
 		return formattedDate;
 	}
-	
-	
+
+	/**
+	 * to verify status code of the url
+	 * 
+	 * @param Url
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
 	public void VerifyStatusCode(String Url) throws ClientProtocolException, IOException {
 		CloseableHttpClient httpClient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet(Url); //http get request
-		CloseableHttpResponse closebaleHttpResponse =  httpClient.execute(httpget); //hit the GET URL
+		HttpGet httpget = new HttpGet(Url); // http get request
+		CloseableHttpResponse closebaleHttpResponse = httpClient.execute(httpget); // hit the GET URL
 		int statusCode = closebaleHttpResponse.getStatusLine().getStatusCode();
-		System.out.println("Status Code--->"+ statusCode);
+		System.out.println("Status Code--->" + statusCode);
 		Assert.assertEquals(statusCode, 200, "Status code is not 200");
 	}
 
