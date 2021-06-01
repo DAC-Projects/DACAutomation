@@ -11,8 +11,11 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import resources.BaseClass;
+import resources.CurrentState;
+import resources.JSWaiter;
 
 public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 
@@ -57,6 +60,15 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 	
 	@FindBy(xpath = "//*[@class='page-title']")
 	private WebElement GRTitle;
+	
+	@FindBy(xpath = "//div[contains(@class,'btn btn-app btn-primary ace-settings-btn')]")
+	private WebElement HideKPI;
+	
+	@FindBy(xpath = "//*[@id='lang-flag']")
+	private WebElement Lang;
+	
+	@FindBy(xpath = "//div[@id='lang-popup']//div")
+	private List<WebElement> LangList;
 
 	@Override
 	public List<Map<String, String>> getOverviewReport() {
@@ -64,6 +76,10 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 		return null;
 	}
 
+	/**
+	 * Navigate to All Locations from KPI and verify title and title text
+	 * @throws Exception
+	 */
 	public void navigateToAllLocations() throws Exception {
 		KPIMouseHover(AllLocations, "Number of participating locations");
 		Thread.sleep(3000);
@@ -74,6 +90,10 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 		Thread.sleep(3000);
 	}
 
+	/**
+	 * Navigate to Visibility Report from KPI and verify title and title text
+	 * @throws Exception
+	 */
 	public void navigateToVisibilityRpt() throws Exception {
 		KPIMouseHover(VisibilityReport, "Visibility score for all participating locations");
 		Thread.sleep(3000);
@@ -84,6 +104,10 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 		Thread.sleep(3000);
 	}
 
+	/**
+	 * Navigate to Accuracy Report from KPI and verify title and title text
+	 * @throws Exception
+	 */
 	public void navigateToAccuracyReport() throws Exception {
 		KPIMouseHover(AccuracyReport, "Accuracy score for all found listings");
 		Thread.sleep(3000);
@@ -94,6 +118,10 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 		Thread.sleep(3000);
 	}
 
+	/**
+	 * Navigate to Content Analysis from KPI and verify title and title text
+	 * @throws Exception
+	 */
 	public void navigateToContentAnalysis() throws Exception {
 		KPIMouseHover(ContentAnalysis, "Content Analysis score for all found locations");
 		Thread.sleep(3000);
@@ -104,6 +132,10 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 		Thread.sleep(3000);
 	}
 
+	/**
+	 * Navigate to Google Ranking from KPI and verify title and title text
+	 * @throws Exception
+	 */
 	public void navigateToGoogleRanking() throws Exception {
 		KPIMouseHover(GoogleRanking, "Google Ranking score for all participating locations");
 		Thread.sleep(3000);
@@ -114,6 +146,10 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 		Thread.sleep(3000);
 	}
 
+	/**
+	 * Navigate to Reviews from KPI and verify title and title text
+	 * @throws Exception
+	 */
 	public void navigateToReviews() throws Exception {
 		KPIMouseHover(ReviewInsights, "Average review score of participating locations over the last month");
 		Thread.sleep(3000);
@@ -124,6 +160,9 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 		Thread.sleep(3000);
 	}
 	
+	/**
+	 * Verify the order of Reports in KPI Dashboard
+	 */
 	public void VerifyOrder() {
 		List<WebElement> Reports = driver.findElements(By.xpath("//span[@class='kpi-url-text']"));
 		List<String> Report = new ArrayList<String>();
@@ -154,6 +193,10 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 		soft.assertAll();
 	}
 
+	/**
+	 * 
+	 * Verify icon size and text of reports in KPI Dashboard
+	 */
 	public void verifyIconsizeandtextsize() {
 		String font;
 		List<WebElement> Reportnamesize = driver.findElements(By.xpath("(//div[@class='infobox-data kpi-url'])"));
@@ -198,6 +241,58 @@ public class TPSEE_KPI_Navigation extends TPSEE_abstractMethods {
 			System.out.println("The width is : " +width);
 			soft.assertEquals(height, "30px" , "The height of : " +j);
 			soft.assertEquals(width, "30px", "The width of : " +j);
+		}
+		soft.assertAll();
+	}
+	
+	/**
+	 * To verify hiding the KPI Dashboard
+	 * @throws Exception
+	 */
+	public void HideandVerify() throws Exception {
+		JSWaiter.waitJQueryAngular();
+		clickelement(HideKPI);
+		String classname = HideKPI.getAttribute("class");
+		System.out.println("The class name is : " +classname);
+		BaseClass.addEvidence(CurrentState.getDriver(), "Test to hide and verify KPI", "yes");
+		Assert.assertEquals(classname, "btn btn-app btn-primary ace-settings-btn");
+	}
+	
+	/**
+	 * Test to verify languages listed
+	 * @throws Exception
+	 */
+	public void getLangListnVerify() throws Exception {
+		JSWaiter.waitJQueryAngular();
+		clickelement(Lang);
+		BaseClass.addEvidence(CurrentState.getDriver(), "To verify languages", "yes");
+		List<String> languagelist = new ArrayList<String>();
+		List<String> LanguageList = new ArrayList<String>();
+		int size = LangList.size();
+		System.out.println("The size of language is : " +size);
+		for(int i = 1; i <= size; i++) {
+			String Language = driver.findElement(By.xpath("(//div[@id='lang-popup']//div)["+ i +"]")).getText();
+			System.out.println("The language is : " +Language);
+			LanguageList.add(Language);
+		}
+		System.out.println("The language list contains : " +LanguageList);
+		languagelist.add("Deutsch");
+		languagelist.add("English");
+		languagelist.add("Español");
+		languagelist.add("Español");
+		languagelist.add("Français");
+		languagelist.add("Français");
+		languagelist.add("Italiano");
+		System.out.println("The language list should be : " +languagelist);
+		CurrentState.getDriver().navigate().refresh();
+		JSWaiter.waitForJQueryLoad();
+		if(languagelist.size() == LanguageList.size()) {
+		for(int j = 0; j < languagelist.size() - 1; j++) {
+			soft.assertTrue(languagelist.get(j).equals(LanguageList.get(j)), "The language is not equal and selected from expected is : "+languagelist.get(j) +
+			"The UI selected value is : " +LanguageList.get(j));
+		}
+		}else {
+			soft.fail("Language list size are not equal");
 		}
 		soft.assertAll();
 	}

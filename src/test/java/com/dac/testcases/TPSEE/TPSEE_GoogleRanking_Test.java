@@ -12,7 +12,6 @@ import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
-import com.dac.main.POM_TPSEE.TPSEE_GMB;
 import com.dac.main.POM_TPSEE.TPSEE_GoogleRanking_Page;
 
 import resources.BaseClass;
@@ -39,7 +38,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	 * Test to get dashboard scores
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@SuppressWarnings("static-access")
 	@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
 	public void GetKPIValues() throws Exception {
@@ -51,7 +50,7 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		System.out.println(location);
 		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
-	}*/
+	}
 
 	@Test(priority = 2, groups = { "smoke" }, description = "Test for navigating to Google Ranking page")
 	public void navigateToGoogleRankingPage() throws Exception {
@@ -61,31 +60,25 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Google Ranking page from Dashboard", "yes");
 	}
 	
-	@Test(priority = 3, description = "Test to verify highlight of report")
-	public void VerifyGRHighlight() throws Exception {
-		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
-		data.GoogleRankinghighlight();
-		addEvidence(CurrentState.getDriver(), "Test to verify report highlight", "yes");
-	}
-
-	@Test(priority = 4, groups = {"smoke" }, description = "Test for verifying title and description of report")
+	@Test(priority = 3, groups = {"smoke" }, description = "Test for verifying title and description of report")
 	public void verifytitle() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		data.VerifyGRText();
 		addEvidence(CurrentState.getDriver(), "verification f title", "yes");
 	}
 
-	/*// GRScorenLoc
-	@Test(priority = 3, groups = { "smoke" }, description = "Test for navigating to ContentAnalysis page")
+	// GRScorenLoc
+	@Test(priority = 4, groups = { "smoke" }, description = "Test for navigating to ContentAnalysis page")
 	public void Verifyscorenloc() throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		double GRscore = data.GRScore();
-		Assert.assertEquals(GRscore, score);
+		soft.assertEquals(GRscore, score);
 		int GRLoc = data.GRLoc();
-		Assert.assertEquals(GRLoc, location);
+		soft.assertEquals(GRLoc, location);
+		soft.assertAll();
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Accuracy page");
 		addEvidence(CurrentState.getDriver(), "Navigate to ContentAnalysis page from Dashboard", "yes");
-	}*/
+	}
 
 	// Test to verify Zoom Functionality
 	@Test(priority = 5, groups = { "smoke" }, description = "Verify Zoom Functionality")
@@ -153,11 +146,11 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 					(int) (Double.parseDouble(to_year)));
 			addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 			Date fromcal = data.getCurrentfromDate();
-			Date fromgrph = data.verifyinitialHistoryGraph(start, end, grph);
+			//Date fromgrph = data.verifyinitialHistoryGraph(start, end, grph);
 			addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 			// Assert.assertEquals(fromgrph, fromcal);
 			Date tocal = data.getCurrenttoDate();
-			Date togrph = data.verifyfinalHistorygraph(2, 0, grph);
+			//Date togrph = data.verifyfinalHistorygraph(2, 0, grph);
 			// Assert.assertEquals(togrph, tocal);
 			addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 		}
@@ -320,11 +313,12 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Top Button click verification", "yes");
 	}
 	
+	@Parameters({"Filter"})
 	@Test(priority = 17, description = "Test to verify filter data is in order")
-	public void verifyFilterDataOrder() throws Exception {
+	public void verifyFilterDataOrder(int Filter) throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
-		String Country1 = wb1.getCellValue(1, wb1.seacrh_pattern("Country", 0).get(0).intValue());
+		String Country1 = wb1.getCellValue(Filter, wb1.seacrh_pattern("Country", 0).get(0).intValue());
 		if(Country1.equals("null")) {
 			CurrentState.getDriver().navigate().refresh();
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "FilterOrder");

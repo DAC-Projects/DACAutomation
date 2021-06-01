@@ -37,13 +37,13 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 	WebDriverWait wait;
 	SoftAssert soft = new SoftAssert();
 	int sortrow;
-
-	// Navigating to TPSEE Content_Analysis page
+	static String time_stamp;
+	
 	public TPSEE_AllLocations_Page(WebDriver driver) {
 
 		super(driver);
 		this.driver = driver;
-		wait = new WebDriverWait(driver, 30);
+		wait = new WebDriverWait(driver, 10);
 		action = new Actions(driver);
 		PageFactory.initElements(driver, this);
 	}
@@ -73,7 +73,7 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//*[@id='locationTable_info']")
 	private WebElement entiresText;
 
-	@FindBy(xpath = "//*[@id='location-table']/h3")
+	@FindBy(xpath = "//*[@id='allLocations']//h4")
 	private WebElement loc;
 
 	@FindBy(xpath = "//select[@name='locationTable_length']")
@@ -176,14 +176,14 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 			BaseClass.addEvidence(driver, "Data is not available for selected Filter", "yes");
 			return false;
 		}
-		waitForElement(LocationTable, 20);
+		waitForElement(LocationTable, 10);
 		return false;
 	}
 
 	// Get UI table
 	public List<Map<String, String>> LocationDataTable() throws InterruptedException {
 		JSWaiter.waitJQueryAngular();
-		waitForElement(LocationTable, 40);
+		waitForElement(LocationTable, 5);
 		System.out.println("\n reading table data********************* \n");
 		String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
 		int page = Integer.parseInt(n);
@@ -247,13 +247,12 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 	 */
 	public void LocationDataTableExportCSV() throws FileNotFoundException, IOException, InterruptedException {
 		JSWaiter.waitJQueryAngular();
-
 		try {
 			exportVATable(Export, Export_csv);
-			Thread.sleep(4000);
+			Thread.sleep(1000);
 			Robot robot = new Robot();
-			robot.setAutoDelay(5000);
-			Thread.sleep(3000);
+			robot.setAutoDelay(2000);
+			Thread.sleep(1000);
 			robot.keyPress(KeyEvent.VK_ALT);
 			robot.keyPress(KeyEvent.VK_S);
 			Thread.sleep(1000);
@@ -265,7 +264,9 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 		} catch (AWTException e) {
 			e.printStackTrace();
 		}
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + LocationExportCSV ));
+		time_stamp = timeStamp();
+		System.out.println("The timestamp is : " +time_stamp);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + LocationExportCSV));
 		Thread.sleep(5000);
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
 	}
@@ -279,10 +280,10 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 		JSWaiter.waitJQueryAngular();
 		try {
 			exportVATable(Export, Export_xlsx);
-			Thread.sleep(4000);
+			Thread.sleep(1000);
 			Robot robot = new Robot();
-			robot.setAutoDelay(5000);
-			Thread.sleep(3000);
+			robot.setAutoDelay(2000);
+			Thread.sleep(1000);
 			robot.keyPress(KeyEvent.VK_ALT);
 			robot.keyPress(KeyEvent.VK_S);
 			Thread.sleep(1000);
@@ -294,8 +295,9 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 		} catch (AWTException e) {
 			e.printStackTrace();
 		}
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + LocationExportXLSX));
-		Thread.sleep(5000);
+		time_stamp = timeStamp();
+		System.out.println("The timestamp is : " +time_stamp);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + LocationExportXLSX ));
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
 		BaseClass.addEvidence(CurrentState.getDriver(), "Download XLSX File", "yes");
 	}
@@ -304,7 +306,7 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 	public List<Map<String, String>> getLocationDataTableExport() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		LocationDataTableExportXLSX();
-		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser() + LocationExportXLSX),
+		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser() + time_stamp + LocationExportXLSX ),
 				"Location_List").getExcelTable();
 		List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
@@ -393,22 +395,20 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 	
 	public void resultperpage(SoftAssert soft) throws InterruptedException {
 		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
-		Thread.sleep(3000);
+		JSWaiter.waitJQueryAngular();
 		ResultsperPage(soft, entiresText, ResultperPage);
 		
 	}
 	
 	public void GoTo() throws InterruptedException {
 		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
-		Thread.sleep(3000);
+		JSWaiter.waitJQueryAngular();
 		waitForElement(GoToPage, 10);
 		scrollByElement(GoToPage);
 		GoTopage(GoToPage);
 	}
 	
-	public void Locationhighlight() {
-		reporthighlight(AllLocationsPage, LocationSec);
-	}
+	
 	
 	public void verifyLocationNumber() throws InterruptedException {
 		TableSorting(LocationNumberhead, LocationNumber, entiresText, LocationTableRow, LocationTable);

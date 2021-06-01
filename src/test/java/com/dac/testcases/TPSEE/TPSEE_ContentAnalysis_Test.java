@@ -40,7 +40,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	/*@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
+	@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
 	public void GetKPIValues() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		Thread.sleep(10000);
@@ -50,7 +50,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		System.out.println(location);
 		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
-	}*/
+	}
 
 	@Test(priority = 2, groups = { "smoke" }, description = "Test for navigating to ContentAnalysis page")
 	public void navigateToContentAnalysisPage() throws Exception {
@@ -60,13 +60,6 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to ContentAnalysis page from Dashboard", "yes");
 	}
 	
-	@Test(priority = 3, description = "Test to verify highlight of report")
-	public void VerifyAccuracyHighlight() throws Exception {
-		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
-		data.ContentAnalysishighlight();
-		addEvidence(CurrentState.getDriver(), "Test to verify report highlight", "yes");
-	}
-
 	@Test(priority = 3, groups = { "smoke" }, description = "Test for verifying title and description of report")
 	public void verifyText() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
@@ -75,19 +68,19 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
 	}
 
-	/*// CAScorenLoc
+	// CAScorenLoc
 	@Test(priority = 4, groups = { "smoke" }, description = "Test for navigating to ContentAnalysis page")
 	public void Verifyscorenloc() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
-		Thread.sleep(3000);
 		double CAscore = data.CAScore();
-		Assert.assertEquals(CAscore, score);
+		soft.assertEquals(CAscore, score);
 		int CALoc = data.CALoc();
-		Assert.assertEquals(CALoc, location);
+		soft.assertEquals(CALoc, location);
+		soft.assertAll();
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Accuracy page");
 		addEvidence(CurrentState.getDriver(), "Navigate to ContentAnalysis page from Dashboard", "yes");
 	}
-*/
+
 	// Test to verify Zoom Functionality
 	@Test(priority = 5, groups = { "smoke" }, description = "Verify Zoom Functionality")
 	public void gethighchartsdate() throws Exception {
@@ -204,7 +197,6 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	public void verifyOverviewReportnTooltipContentAnalysis() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		data.verifyHistoryGraph1();
-		//data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
 		addEvidence(CurrentState.getDriver(), "Test to verify latest date in graph", "yes");
 	}
 	
@@ -260,10 +252,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	@Test(priority = 11, groups = { "smoke" }, description = "Test for overview export and export verification")
 	public void verifyTableDataoExport() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
-		data.SitelLinkData(soft);
-		soft.assertAll();
-		// data.compareexporttableDatannumberofentries(data.SitelLinkData(),
-		// data.getSiteLinkExporttableData());
+		data.SitelLinkData();
 		addEvidence(CurrentState.getDriver(), "Verified overview export for Accuracy report", "yes");
 	}
 
@@ -293,11 +282,12 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Top Button click verification", "yes");
 	}
 	
+	@Parameters({"Filter"})
 	@Test(priority = 13, description = "Test to verify location details")
-	public void VerifyLocationDetailsLocationTab() throws Exception {
+	public void VerifyLocationDetailsLocationTab(int Filter) throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
-		String Location = wb.getCellValue(1, wb.seacrh_pattern("Location", 0).get(0).intValue());
+		String Location = wb.getCellValue(Filter, wb.seacrh_pattern("Location", 0).get(0).intValue());
 		System.out.println("The Location selected is :" +Location);
 		if(!Location.equals("null")) {
 			data.verifyLocationFilterAddress(Location);
@@ -306,11 +296,12 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		}
 	}
 	
+	@Parameters({"Filter"})
 	@Test(priority = 14, description = "Test to verify location details of vendors sites")
-	public void VerifySiteLocationTab() throws Exception {
+	public void VerifySiteLocationTab(int Filter) throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
-		String Location = wb.getCellValue(1, wb.seacrh_pattern("Location", 0).get(0).intValue());
+		String Location = wb.getCellValue(Filter, wb.seacrh_pattern("Location", 0).get(0).intValue());
 		System.out.println("The Location selected is :" +Location);
 		if(!Location.equals("null")) {
 			data.verifyLocationFilterSiteAddress(Location);
@@ -319,11 +310,12 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		}
 	}
 	
+	@Parameters({"Filter"})
 	@Test(priority = 15, description = "Test to verify filter data is in order")
-	public void verifyFilterDataOrder() throws Exception {
+	public void verifyFilterDataOrder(int Filter) throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
-		String Country1 = wb1.getCellValue(1, wb1.seacrh_pattern("Country", 0).get(0).intValue());
+		String Country1 = wb1.getCellValue(Filter, wb1.seacrh_pattern("Country", 0).get(0).intValue());
 		if(Country1.equals("null")) {
 			CurrentState.getDriver().navigate().refresh();
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "FilterOrder");

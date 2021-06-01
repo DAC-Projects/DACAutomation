@@ -127,7 +127,6 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 				XLSXExport.click();
 				Thread.sleep(5000);
 				renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + file));
-				Thread.sleep(6000);
 				CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile(Exportpath));
 			} else {
 				System.out.println("No Data Available in GMB");
@@ -168,9 +167,10 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 		// display tool tip
 		datavalidatation = driver.findElement(By.xpath("//*[@class='highcharts-title']")).getText();
 		if (!datavalidatation.equals("There is currently not enough data from Bing to display this report")) {
-			waitForElement(hstryGrph, 30);
+			JSWaiter.waitJQueryAngular();
+			waitForElement(hstryGrph, 5);
 			scrollByElement(hstryGrph);
-			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 			action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth() / 2) - 2, 0).click().perform();
 
 			// read the tooltip variables
@@ -217,9 +217,5 @@ public class TPSEE_Bing_Page extends TPSEE_abstractMethods {
 		String Text = MousehoverText.getAttribute("data-original-title"); 
 		System.out.println(Text);
 		Assert.assertEquals(Exp_Text, Text);
-	}
-
-	public void Binghighlight() {
-		reporthighlight(BingPage, BingSec);
 	}
 }

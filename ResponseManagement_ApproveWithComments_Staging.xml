@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Suite">
+	<listeners>
+		<listener class-name="resources.ExtentTestNGITestListener"></listener>
+	</listeners>
+	
+	<test name="ResponseManagementCreatorStaging">
+		<parameter name="browser" value="chrome" />		
+		<classes>
+			<class name="com.dac.testcases.SA.Response_Management_Without_Edit" />
+		</classes>
+	</test>
+	
+	<test name = "neuralTuringTechAccountStaging">
+		<parameter name = "browser" value = "chrome" />
+		<classes>
+			<class name = "com.dac.testcases.SA.Response_Management_Approver_Comments" />
+		</classes>
+	</test>
+	
+</suite>

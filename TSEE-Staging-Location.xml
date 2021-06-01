@@ -43,8 +43,8 @@
 				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />  
 				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
-			 	<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" /> 
+			 	<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" />			
 			</classes>
@@ -73,14 +73,14 @@
 				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />  
 				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
-			 	<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
+			 	<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" /> 
 				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" /> 
 				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" />			
 			</classes>
 	</test>
 	
-	<test name = "TransparenSeeStagingLocation" >
+	<test name = "TransparenSeeStagingLocationLoc" >
 		<parameter name = "browser" value = "chrome"/>
 		<parameter name = "Filter" value = "6"/>
 			<classes>

@@ -22,6 +22,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.Header;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -48,6 +54,7 @@ import resources.CurrentState;
 import resources.FileHandler;
 import resources.JSWaiter;
 import resources.formatConvert;
+
 
 public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERepository {
 
@@ -295,59 +302,56 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				|| Location.equalsIgnoreCase("null"))
 			Location = "All Locations";
 		try {
-			waitForElement(LAVfilter_Panel, 25);
+			waitForElement(LAVfilter_Panel, 10);
 			waitUntilLoad(driver);
 			if (!Group.equals("None")) {
 				clickelement(LAVfiterGroup);
-				waitForElement(filterDropDown, 20);
+				waitForElement(filterDropDown, 10);
 				group = driver.findElement(By.xpath(
 						"(*//div[contains(@class,'selection ui dropdown fluid search')])[1]//div[contains(@class,'item') and contains(text(),'"
 								+ Group + "')]"));
-				waitForElement(group, 10);
+				waitForElement(group, 5);
 				clickelement(group);
 				waitUntilLoad(driver);
 			}
 			if (!CountryCode.equals("All Countries")) {
 				clickelement(LAVFilterCountry);
-				waitForElement(filterDropDown, 20);
+				waitForElement(filterDropDown, 10);
 				country = driver.findElement(By.xpath(
 						"(*//div[contains(@class,'selection ui dropdown fluid search')])[2]//div[contains(@class,'item') and contains(text(),'"
 								+ CountryCode.toUpperCase() + "')]"));
 				// (//*[contains(@class,'myList')])[1]//div[contains(text(),'US')]"+CountryCode.toUpperCase()+"']
-				waitForElement(country, 10);
-				Thread.sleep(1000);
+				waitForElement(country, 5);
 				clickelement(country);
 				waitUntilLoad(driver);
 			}
 			if (!State.equals("All States")) {
 				clickelement(LAVFilterState);
-				waitForElement(filterDropDown, 20);
+				waitForElement(filterDropDown, 10);
 				state = driver.findElement(By.xpath(
 						"(*//div[contains(@class,'selection ui dropdown fluid search')])[3]//div[contains(@class,'item') and contains(text(),'"
 								+ State + "')]"));
-				waitForElement(state, 10);
-				Thread.sleep(1000);
+				waitForElement(state, 5);
 				clickelement(state);
 				waitUntilLoad(driver);
 			}
 			if (!City.equals("All Cities")) {
 				clickelement(LAVFilterCity);
-				waitForElement(filterDropDown, 20);
+				waitForElement(filterDropDown, 10);
 				city = driver.findElement(By.xpath(
 						"(*//div[contains(@class,'selection ui dropdown fluid search')])[4]//div[contains(@class,'item') and contains(text(),'"
 								+ City + "')]"));
-				waitForElement(city, 10);
-				Thread.sleep(1000);
+				waitForElement(city, 5);
 				clickelement(city);
 				waitUntilLoad(driver);
 			}
 			if (!Location.equals("All Locations")) {
 				clickelement(LAVFilterlocation);
-				waitForElement(filterDropDown, 20);
+				waitForElement(filterDropDown, 10);
 				location = driver.findElement(By.xpath(
 						"(*//div[contains(@class,'selection ui dropdown fluid search')])[5]//div[contains(@class,'item') and contains(text(),'"
 								+ Location + "')]"));
-				waitForElement(location, 10);
+				waitForElement(location, 5);
 				Thread.sleep(1000);
 				clickelement(location);
 				waitUntilLoad(driver);
@@ -396,10 +400,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		List<String> States = new ArrayList<String>();
 		List<String> Cities = new ArrayList<String>();
 		try {
-			waitForElement(LAVfilter_Panel, 25);
+			waitForElement(LAVfilter_Panel, 10);
 			waitUntilLoad(driver);
 			clickelement(LAVfiterGroup); 
-			waitForElement(filterDropDown, 20);
+			waitForElement(filterDropDown, 5);
 		//	BaseClass.addEvidence(driver, "Test to get data from group filter and verify the order", "yes");
 			List<WebElement> grps = driver.findElements(By.xpath(
 					"((*//div[contains(@class,'selection ui dropdown fluid search')])[1]//div[contains(@class,'item')])"));
@@ -408,7 +412,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			WebElement group = driver.findElement(By.xpath(
 					"(*//div[contains(@class,'selection ui dropdown fluid search')])[1]//div[contains(@class,'item') and contains(text(),'"
 							+ Group + "')]"));
-			waitForElement(group, 10);
+			waitForElement(group, 5);
 			clickelement(group);
 			waitUntilLoad(driver);
 			
@@ -426,17 +430,14 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			
 			
 			clickelement(LAVFilterCountry);
-			waitForElement(filterDropDown, 20);
+			waitForElement(filterDropDown, 10);
 			List<WebElement> contry = driver.findElements(By.xpath("((*//div[contains(@class,'selection ui dropdown fluid search')])[2]//div[contains(@class,'item')])"));
 			Country = getList(contry);
 			System.out.println("The list of country contains : " + Country);
-		//	BaseClass.addEvidence(driver, "Test to get data from Country filter and verify the order", "yes");
 			WebElement country = driver.findElement(By.xpath(
 					"(*//div[contains(@class,'selection ui dropdown fluid search')])[2]//div[contains(@class,'item') and contains(text(),'"
 							+ CountryCode.toUpperCase() + "')]"));
-			// (//*[contains(@class,'myList')])[1]//div[contains(text(),'US')]"+CountryCode.toUpperCase()+"']
-			waitForElement(country, 10);
-			Thread.sleep(1000);
+			waitForElement(country, 5);
 			clickelement(country);
 			waitUntilLoad(driver);
 			
@@ -454,16 +455,14 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 
 			
 			clickelement(LAVFilterState);
-			waitForElement(filterDropDown, 20);
+			waitForElement(filterDropDown, 10);
 			List<WebElement> sttate = driver.findElements(By.xpath("((*//div[contains(@class,'selection ui dropdown fluid search')])[3]//div[contains(@class,'item')])"));
 			States = getList(sttate);
 			System.out.println("The list of state contains : " + States);
-		//	BaseClass.addEvidence(driver, "Test to get data from State filter and verify the order", "yes");
 			WebElement state = driver.findElement(By.xpath(
 					"(*//div[contains(@class,'selection ui dropdown fluid search')])[3]//div[contains(@class,'item') and contains(text(),'"
 							+ State + "')]"));
-			waitForElement(state, 10);
-			Thread.sleep(1000);
+			waitForElement(state, 5);
 			clickelement(state);
 			waitUntilLoad(driver);
 			
@@ -482,7 +481,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			
 			Thread.sleep(3000);
 			clickelement(LAVFilterCity);  
-			waitForElement(filterDropDown, 20);
+			waitForElement(filterDropDown, 10);
 			List<WebElement> ciity = driver.findElements(By.xpath("((*//div[contains(@class,'selection ui dropdown fluid search')])[4]//div[contains(@class,'item')])"));
 			Cities = getList(ciity);
 			System.out.println("The list of cities contains : " + Cities);
@@ -490,8 +489,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			WebElement city = driver.findElement(By.xpath(
 					"(*//div[contains(@class,'selection ui dropdown fluid search')])[4]//div[contains(@class,'item') and contains(text(),'"
 							+ City + "')]"));
-			waitForElement(city, 10);
-			Thread.sleep(2000);
+			waitForElement(city, 5);
 			clickelement(city);
 			waitUntilLoad(driver);
 			
@@ -538,57 +536,52 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				|| Location.equalsIgnoreCase("null"))
 			Location = "All Locations";
 		try {
-			waitForElement(filter_Panel, 25);
+			waitForElement(filter_Panel, 10);
 			waitUntilLoad(driver);
 			if (!Group.equals("None")) {
 				clickelement(fiterGroup);
-				waitForElement(filterDropDown, 20);
+				waitForElement(filterDropDown, 10);
 				group = fiterGroup.findElement(By.xpath(
 						"//*[@id = 'myGroups']//div[contains(@class,'item') and contains(text(),'" + Group + "')]"));
-				waitForElement(group, 10);
+				waitForElement(group, 5);
 				clickelement(group);
 				waitUntilLoad(driver);
 			}
 			if (!CountryCode.equals("All Countries")) {
 				clickelement(FilterCountry);
-				waitForElement(filterDropDown, 20);
+				waitForElement(filterDropDown, 10);
 				country = driver.findElement(By
 						.xpath("(//*[contains(@class,'myList')])[1]//div[contains(@class,'item') and contains(text(),'"
 								+ CountryCode.toUpperCase() + "')]"));
-				// (//*[contains(@class,'myList')])[1]//div[contains(text(),'US')]"+CountryCode.toUpperCase()+"']
-				waitForElement(country, 10);
-				Thread.sleep(1000);
+				waitForElement(country, 5);
 				clickelement(country);
 				waitUntilLoad(driver);
 			}
 			if (!State.equals("All States")) {
 				clickelement(FilterState);
-				waitForElement(filterDropDown, 20);
+				waitForElement(filterDropDown, 10);
 				state = FilterState.findElement(
 						By.xpath("(//*[contains(@class,'myList')])[2]//div[contains(text(),'" + State + "')]"));
 				// (//*[contains(@class,'myList')])[2]//div[@data-value=contains(text(),'Illinois')]"+State+"
-				waitForElement(state, 10);
-				Thread.sleep(1000);
+				waitForElement(state, 5);
 				clickelement(state);
 				waitUntilLoad(driver);
 			}
 			if (!City.equals("All Cities")) {
 				clickelement(FilterCity);
-				waitForElement(filterDropDown, 20);
+				waitForElement(filterDropDown, 10);
 				city = FilterCity.findElement(
 						By.xpath("(//*[contains(@class,'myList')])[3]//div[contains(text(),'" + City + "')]"));
-				waitForElement(city, 10);
-				Thread.sleep(1000);
+				waitForElement(city, 5);
 				clickelement(city);
 				waitUntilLoad(driver);
 			}
 			if (!Location.equals("All Locations")) {
 				clickelement(Filterlocation);
-				waitForElement(filterDropDown, 20);
+				waitForElement(filterDropDown, 10);
 				location = Filterlocation.findElement(
 						By.xpath("(//*[contains(@class,'myList')])[4]//div[contains(text(),'" + Location + "')]"));
-				waitForElement(location, 10);
-				Thread.sleep(1000);
+				waitForElement(location, 5);
 				clickelement(location);
 				waitUntilLoad(driver);
 			}
@@ -606,18 +599,17 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		List<String> States = new ArrayList<String>();
 		List<String> Cities = new ArrayList<String>();
 		try {
-			waitForElement(filter_Panel, 25);
+			waitForElement(filter_Panel, 10);
 			waitUntilLoad(driver);
 			clickelement(fiterGroup); 
-			waitForElement(filterDropDown, 20);
-		//	BaseClass.addEvidence(driver, "Test to get data from group filter and verify the order", "yes");
+			waitForElement(filterDropDown, 10);
 			List<WebElement> grps = driver.findElements(By.xpath(
 					"//*[@id = 'myGroups']//div[contains(@class,'item')]"));
 			Groups = getList(grps);
 			System.out.println("The list of groups contains : " + Groups);
 			WebElement group = driver.findElement(By.xpath(
 					"//*[@id = 'myGroups']//div[contains(@class,'item') and contains(text(),'" + Group + "')]"));
-			waitForElement(group, 10);
+			waitForElement(group, 5);
 			clickelement(group);
 			waitUntilLoad(driver);
 			
@@ -635,16 +627,13 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			
 			
 			clickelement(FilterCountry);
-			waitForElement(filterDropDown, 20);
+			waitForElement(filterDropDown, 10);
 			List<WebElement> contry = driver.findElements(By.xpath("(//*[contains(@class,'myList')])[1]//div[contains(@class,'item')]"));
 			Country = getList(contry);
 			System.out.println("The list of country contains : " + Country);
-		//	BaseClass.addEvidence(driver, "Test to get data from Country filter and verify the order", "yes");
 			WebElement country = driver.findElement(By.xpath(
 					"(//*[contains(@class,'myList')])[1]//div[contains(@class,'item') and contains(text(),'"+ CountryCode.toUpperCase() + "')]"));
-			// (//*[contains(@class,'myList')])[1]//div[contains(text(),'US')]"+CountryCode.toUpperCase()+"']
-			waitForElement(country, 10);
-			Thread.sleep(1000);
+			waitForElement(country, 5);
 			clickelement(country);
 			waitUntilLoad(driver);
 			
@@ -662,7 +651,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 
 			
 			clickelement(FilterState);
-			waitForElement(filterDropDown, 20);
+			waitForElement(filterDropDown, 10);
 			List<WebElement> sttate = driver.findElements(By.xpath("(//*[contains(@class,'myList')])[2]//div[contains(@class,'item')]"));
 			States = getList(sttate);
 			System.out.println("The list of state contains : " + States);
@@ -670,8 +659,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			WebElement state = driver.findElement(By.xpath(
 					"(//*[contains(@class,'myList')])[2]//div[contains(@class,'item') and contains(text(),'"
 							+ State + "')]"));
-			waitForElement(state, 10);
-			Thread.sleep(1000);
+			waitForElement(state, 5);
 			clickelement(state);
 			waitUntilLoad(driver);
 			
@@ -689,7 +677,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			}
 			
 			clickelement(FilterCity);  
-			waitForElement(filterDropDown, 20);
+			waitForElement(filterDropDown, 10);
 			List<WebElement> ciity = driver.findElements(By.xpath("(//*[contains(@class,'myList')])[3]//div[contains(@class,'item')]"));
 			Cities = getList(ciity);
 			System.out.println("The list of cities contains : " + Cities);
@@ -697,8 +685,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			WebElement city = driver.findElement(By.xpath(
 					"(//*[contains(@class,'myList')])[3]//div[contains(@class,'item') and contains(text(),'"
 							+ City + "')]"));
-			waitForElement(city, 10);
-			Thread.sleep(1000);
+			waitForElement(city, 5);
 			clickelement(city);
 			waitUntilLoad(driver);
 			
@@ -729,7 +716,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		JSWaiter.waitJQueryAngular();
 		if (Apply_filter.isDisplayed()) {
 			clickelement(Apply_filter);
-			Thread.sleep(3000);
+			Thread.sleep(1000);
 		}
 	}
 
@@ -740,7 +727,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		JSWaiter.waitJQueryAngular();
 		if (LAV_Apply_Filter.isDisplayed()) {
 			clickelement(LAV_Apply_Filter);
-			Thread.sleep(3000);
+			Thread.sleep(1000);
 		}
 	}
 
@@ -779,9 +766,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	 * @return History graph value read
 	 */
 	public List<Map<String, String>> verifyHistoryGraph() {
-		waitForElement(hstryGrph, 30);
+		JSWaiter.waitJQueryAngular();
+		waitForElement(hstryGrph, 10);
 		scrollByElement(hstryGrph);
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth() / 2) - 1, 0).click().perform();
 		tooltipvalue = grphtooltip.getText();
 		System.out.println("\n Reading tooltipdata ********** \n");
@@ -817,7 +805,8 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	 * @to read site table values
 	 */
 	public List<Map<String, String>> verifySitetable() {
-		waitForElement(siteTable, 30);
+		JSWaiter.waitJQueryAngular();
+		waitForElement(siteTable, 10);
 		scrollByElement(siteTable);
 		System.out.println("\n Reading site table********** \n");
 		List<Map<String, String>> siteTableData = new ArrayList<Map<String, String>>();
@@ -877,7 +866,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	 */
 	public ArrayList<String> verifySitevendors() {
 		JSWaiter.waitJQueryAngular();
-		waitForElement(vendorslist, 40);
+		waitForElement(vendorslist, 10);
 		scrollByElement(vendorslist);
 		ArrayList<String> Vendors = new ArrayList<String>();
 		List<WebElement> elements = driver.findElements(By.xpath("//*[@class='col-lg-2 bar-chart-column']"));
@@ -901,7 +890,8 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	 * @return
 	 */
 	public List<Map<String, String>> verifyaccuracySitetable() {
-		waitForElement(accuracysite, 30);
+		JSWaiter.waitJQueryAngular();
+		waitForElement(accuracysite, 10);
 		scrollByElement(accuracysite);
 		System.out.println("\n Reading accuracy site table********** \n");
 		List<Map<String, String>> accuracysiteTableData = new ArrayList<Map<String, String>>();
@@ -997,7 +987,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		int col_num = 0;
 		System.out.println("" + col);
 		ArrayList<String> sites = new ArrayList<String>();
-		for (int i = 0; i <= row.getLastCellNum(); i++) {
+		for (int i = 0; i <= row.getLastCellNum() - 1; i++) {
 			if ((row.getCell(i).toString()).equals(Col_Name)) {
 				col_num = i;
 				System.out.println("" + col_num);
@@ -1146,17 +1136,17 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	 */
 	public void exporthistrybtn(WebElement ExportDropdown, WebElement ExportType, WebElement SelectPDF)
 			throws InterruptedException, FileNotFoundException, IOException {
-		Thread.sleep(5000);
 
 		if (ExportDropdown.isDisplayed() & ExportDropdown.isEnabled()) {
+			scrollByElement(ExportDropdown);
 			wait.until(ExpectedConditions.visibilityOf(ExportDropdown));
 			action.moveToElement(ExportDropdown).click().perform();
-			Thread.sleep(5000);
+			Thread.sleep(1000);
 		}
 		if (ExportType.isDisplayed() & ExportType.isEnabled()) {
 			wait.until(ExpectedConditions.visibilityOf(ExportType));
-			action.moveToElement(ExportType).moveToElement(SelectPDF).click().perform();
-			Thread.sleep(5000);
+			action.moveToElement(ExportType).pause(1000).moveToElement(SelectPDF).click().perform();
+			Thread.sleep(2000);
 
 		}
 
@@ -1193,10 +1183,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
 				.toString();
 		System.out.println(var);
-
-		waitForElement(hstryGrph, 30);
+		JSWaiter.waitJQueryAngular();
+		waitForElement(hstryGrph, 10);
 		scrollByElement(hstryGrph);
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth()) / 2 - start, end).click()
 				.perform();
 		String initialtooltipvalue = driver.findElement(By.cssSelector(elemnt)).getText();
@@ -1227,10 +1217,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
 				.toString();
 		System.out.println(var);
-
-		waitForElement(hstryGrph, 30);
+		JSWaiter.waitJQueryAngular();
+		waitForElement(hstryGrph, 10);
 		scrollByElement(hstryGrph);
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth()) / 2 - start, end).click()
 				.perform();
 		String finaltooltipvalue = driver.findElement(By.cssSelector(elemnt)).getText();
@@ -1253,9 +1243,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	 */
 	public int getNumberofDays(int start, int end, String elemnt, int start1, int end1) throws Exception {
 		Date init = verifyinitialHistoryGraph(start, end, elemnt);
-		Thread.sleep(5000);
 		Date enddate = verifyfinalHistorygraph(start1, end1, elemnt);
-		Thread.sleep(5000);
 		String var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
 				.toString();
 		SimpleDateFormat formats = new SimpleDateFormat(var);
@@ -1271,7 +1259,6 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				.toString();
 		Date latest = formats.parse(Yesterday);
 		System.out.println(latest);
-		Thread.sleep(5000);
 		Assert.assertEquals(enddate, latest);
 		long difference = Math.abs(init.getTime() - enddate.getTime());
 		long differenceDates = difference / (24 * 60 * 60 * 1000);
@@ -1467,9 +1454,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	public int getNumberofDays() throws Exception {
 		int diff = 0;
 		Date init = getCurrentfromDate();
-		Thread.sleep(5000);
 		Date enddate = getCurrenttoDate();
-		Thread.sleep(5000);
 		long difference = Math.abs(init.getTime() - enddate.getTime());
 		long differenceDates = difference / (24 * 60 * 60 * 1000);
 		diff = (int) (long) differenceDates;
@@ -1505,11 +1490,6 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			scrollByElement(Top);
 			if (Top.isDisplayed() && Top.isEnabled()) {
 				clickelement(Top);
-				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 				boolean x = IsVisible(Top);
 				System.out.println(x);
 				if (x = true) {
@@ -1680,7 +1660,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	public int overviewLocation(WebElement layout, WebElement loc) {
 		waitForElement(layout, 10);
 		scrollByElement(layout);
-		waitForElement(loc, 10);
+		waitForElement(loc, 5);
 		scrollByElement(loc);
 		int location = Integer.parseInt(loc.getText());
 		return location;
@@ -1705,7 +1685,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	public double overviewscore(WebElement layout, WebElement score) {
 		waitForElement(layout, 10);
 		scrollByElement(layout);
-		waitForElement(score, 10);
+		waitForElement(score, 5);
 		scrollByElement(score);
 		String sc = score.getText();
 		String s = sc.replace("%", "");
@@ -1916,7 +1896,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		try {
 			exportVATable(ExportBtn, ExportType);
 			Robot robot = new Robot();
-			robot.setAutoDelay(5000);
+			robot.setAutoDelay(2000);
 			robot.keyPress(KeyEvent.VK_ALT);
 			robot.keyPress(KeyEvent.VK_S);
 			robot.keyRelease(KeyEvent.VK_ALT);
@@ -1938,7 +1918,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				scrollByElement(entry);
 				select = new Select(results);
 				select.selectByVisibleText("10");
-				Thread.sleep(5000);
+				JSWaiter.waitJQueryAngular();
 				entryperPage = NumOfentriesinPage(entry);
 				System.out.println("The entries per page is :" + entryperPage);
 				soft.assertEquals(10, entryperPage);
@@ -1949,7 +1929,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				scrollByElement(entry);
 				select = new Select(results);
 				select.selectByVisibleText("25");
-				Thread.sleep(5000);
+				JSWaiter.waitJQueryAngular();
 				entryperPage = NumOfentriesinPage(entry);
 				System.out.println("The entries per page is :" + entryperPage);
 				soft.assertEquals(25, entryperPage);
@@ -1960,7 +1940,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				scrollByElement(entry);
 				select = new Select(results);
 				select.selectByVisibleText("50");
-				Thread.sleep(5000);
+				JSWaiter.waitJQueryAngular();
 				entryperPage = NumOfentriesinPage(entry);
 				System.out.println("The entries per page is :" + entryperPage);
 				soft.assertEquals(50, entryperPage);
@@ -1971,7 +1951,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				scrollByElement(entry);
 				select = new Select(results);
 				select.selectByVisibleText("100");
-				Thread.sleep(5000);
+				JSWaiter.waitJQueryAngular();
 				entryperPage = NumOfentriesinPage(entry);
 				System.out.println("The entries per page is :" + entryperPage);
 				soft.assertEquals(100, entryperPage);
@@ -1980,7 +1960,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			}
 			select = new Select(results);
 			select.selectByVisibleText("10");
-			Thread.sleep(3000);
+			JSWaiter.waitJQueryAngular();
 		} else {
 			System.out.println("No data");
 		}
@@ -1996,7 +1976,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			clickelement(GoTo);
 			GoTo.sendKeys("2");
 			GoTo.sendKeys(Keys.ENTER);
-			Thread.sleep(5000);
+			JSWaiter.waitJQueryAngular();
 			String classname = driver.findElement(By.xpath("(//*[@class='pagination'])//li[3]")).getAttribute("class");
 			System.out.println("The class name is :" + classname);
 			Assert.assertEquals(classname, "paginate_button active");
@@ -2010,28 +1990,15 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		waitForElement(PageTitle1, 10);
 		String Title = PageTitle1.getText();
 		System.out.println("Page Title is : " + Title);
-		waitForElement(PageTitletext, 10);
 		String TitleText = PageTitletext.getText();
 		System.out.println("The title text  is :" + TitleText);
 		Assert.assertEquals(Tit, Title);
 		Assert.assertEquals(titText, TitleText);
 	}
 
-	public void reporthighlight(WebElement ele, WebElement ele1) {
-		waitForElement(ele1, 10);
-		String mainmenu = ele1.getAttribute("class");
-		System.out.println("The mainmenu is :" + mainmenu);
-		Assert.assertEquals(mainmenu, "on_off_root active");
-		waitForElement(ele, 10);
-		String text = ele.getAttribute("class");
-		System.out.println("The class name is :" + text);
-		Assert.assertEquals(text, "active");
-	}
-
 	public void navigateKPI(WebElement ele, WebElement ele1, String title) throws InterruptedException {
 		waitForElement(ele, 10);
 		scrollByElement(ele);
-	//	clickelement(ele);
 		action.moveToElement(ele).click().build().perform();
 		try {
 			clickwalkme();
@@ -2075,7 +2042,8 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 
 	public void TableSorting(WebElement ele, String ele1, WebElement entry, List<WebElement> tablerow, WebElement table)
 			throws InterruptedException {
-		waitForElement(table, 40);
+		JSWaiter.waitJQueryAngular();
+		waitForElement(table, 10);
 		String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
 		int page = Integer.parseInt(n);
 		System.out.println("\n" + page);
@@ -2127,9 +2095,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
 				.toString();
 		System.out.println(var);
-		waitForElement(hstryGrph, 30);
+		JSWaiter.waitJQueryAngular();
+		waitForElement(hstryGrph, 10);
 		scrollByElement(hstryGrph);
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth() / 2) - 1, 0).click().perform();
 		tooltipvalue = grphtooltipDate.getText();
 		System.out.println("\n Reading tooltipdata ********** \n");
@@ -2150,7 +2119,8 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		var = ((JavascriptExecutor) driver).executeScript("return window.dateFormat.shortTemplate.PlainHtml")
 				.toString();
 		System.out.println(var);
-		waitForElement(hstryGrph, 30);
+		JSWaiter.waitJQueryAngular();
+		waitForElement(hstryGrph, 10);
 		scrollByElement(hstryGrph);
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth() / 2) - 1, 0).click().perform();
@@ -2229,6 +2199,24 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		} else {
 			System.out.println("List are not equal");
 		}
+	}
+	
+	public String timeStamp() {
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
+		String formattedDate = sdf.format(date).replace("/", "").replace(":", "").trim();
+		System.out.println("Timestamp is :" + formattedDate);
+		return formattedDate;
+	}
+	
+	
+	public void VerifyStatusCode(String Url) throws ClientProtocolException, IOException {
+		CloseableHttpClient httpClient = HttpClients.createDefault();
+		HttpGet httpget = new HttpGet(Url); //http get request
+		CloseableHttpResponse closebaleHttpResponse =  httpClient.execute(httpget); //hit the GET URL
+		int statusCode = closebaleHttpResponse.getStatusLine().getStatusCode();
+		System.out.println("Status Code--->"+ statusCode);
+		Assert.assertEquals(statusCode, 200, "Status code is not 200");
 	}
 
 }

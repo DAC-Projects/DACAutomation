@@ -45,7 +45,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * Test to get dashboard scores
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@SuppressWarnings("static-access")
 	@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
 	public void GetKPIValues() throws Exception {
@@ -57,13 +57,13 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		System.out.println(location);
 		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
-	}*/
+	}
 
 	/**
 	 * Test to navigate to Visibility Page
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 2, groups = { "smoke" }, description = "Test for navigating to Visibility page")
 	public void navigateToVisibilityPage() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
@@ -78,7 +78,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		foundlistingVendors = data1.verifyfoundSitevendors();
 		System.out.println(foundlistingVendors);
 		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
-	}*/
+	}
 
 	/**
 	 * Test to navigate to Accuracy Page
@@ -93,14 +93,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Accuracy page from Dashboard", "yes");
 	}
 
-	@Test(priority = 5, description = "Test to verify highlight of report")
-	public void VerifyAccuracyHighlight() throws Exception {
-		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-		data.Accuracyhighlight();
-		addEvidence(CurrentState.getDriver(), "Test to verify report highlight", "yes");
-	}
-	
-	@Test(priority = 6, groups = { "smoke" }, description = "Test for verify title and description")
+	@Test(priority = 5, groups = { "smoke" }, description = "Test for verify title and description")
 	public void verifyText() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.VerifyTitleText1("Accuracy Report",
@@ -112,7 +105,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * Test to get SiteTable data
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	// Test to compare vendors in the application in Visibility Page
 	@Test(priority = 6, groups = { "smoke" }, description = "Verify Site Vendors List")
 	public void comparevendorsListnverifySitevendors() throws Exception {
@@ -120,25 +113,24 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		ArrayList<String> accuracyvendors = data.verifyAccuracySitevendors();
 		Assert.assertEquals(accuracyvendors, foundlistingVendors);
 		addEvidence(CurrentState.getDriver(), "Site Vendors in Content Analysis site vendors ", "yes");
-	}*/
+	}
 
 	/**
 	 * Test to Compare KPI Values with Report
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 
 	@Test(priority = 7, groups = { "smoke" }, description = "Test for compare KPI Values")
 	public void ovrviewlocscorecompare() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-		Thread.sleep(5000);
 		int ovrvwloc = data.overviewlocation();
 		Assert.assertEquals(location, ovrvwloc);
 		double ovrvwscr = data.overviewscore();
 		Assert.assertEquals(score, ovrvwscr);
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Visibility page");
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
-	}*/
+	}
 
 	@SuppressWarnings("unused")
 	@Test(priority = 9, enabled = true, dataProvider = "testData",description = "Test for manual date selection" )
@@ -285,7 +277,6 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	public void verifyOverviewReportnTooltipAccuracy() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.verifyHistoryGraph1();
-		//data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
 		addEvidence(CurrentState.getDriver(), "Tooltip values verified from Overview Accuracy report", "yes");
 		data.comparegraphoverviewscore();
 		addEvidence(CurrentState.getDriver(), "Test to compare overview score and graph score", "yes");
@@ -314,17 +305,88 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	public void numberofentriesnExporttableAccuracy() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.verifysitelinkdata(soft);
-		// data.compareexporttableDatannumberofentries(data.verifysitelinkdata(),
-		// data.getExporttableData());
 		addEvidence(CurrentState.getDriver(),
 				"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
 	}
 	
-	@Test(priority = 17, description = "Test to verify filter data is in order")
-	public void verifyFilterDataOrder() throws Exception {
+	/**
+	 * Test to verify inaccuracy and ignored checkbox
+	 * 
+	 * @throws Exception
+	 */
+	@Test(priority = 17, groups = { "smoke" }, description = "Test for verifying site link data in Accuracy page")
+	public void verifycheckbox() throws Exception {
+		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+		data.showinaccuracy();
+		data.showignored();
+		addEvidence(CurrentState.getDriver(),
+				"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
+		soft.assertAll();
+	}
+	
+	@Test(priority = 18, groups = { "smoke" }, description = "Test for verifying sitetable in Visibility page")
+	public void verifyTableHeaders() throws Exception {
+		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+		data.verifyAllTab();
+		addEvidence(CurrentState.getDriver(), "Data of All Sites Section ", "yes");
+		Thread.sleep(1000);
+		data.verifyNameTab();
+		addEvidence(CurrentState.getDriver(), "Data of Search Engine Sites", "yes");
+		Thread.sleep(1000);
+		data.verifyAddressTab();
+		addEvidence(CurrentState.getDriver(), "Data of Directory Sites", "yes");
+		Thread.sleep(1000);
+		data.verifyPHNOTab();
+		addEvidence(CurrentState.getDriver(), "Data of Social Sites Tab", "yes");
+		soft.assertAll();
+	}
+	
+	/**
+	 * Test to verify Top Button
+	 * 
+	 * @throws Exception
+	 */
+	@Test(priority = 19, groups = { "smoke" }, description = "Verify Top Button")
+	public void GetTopBtn() throws Exception {
+		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+		data.TopButton();
+		addEvidence(CurrentState.getDriver(), "Top Button click verification", "yes");
+	}
+	
+	@Parameters({"Filter"})
+	@Test(priority = 20, description = "Test to verify location details")
+	public void VerifyLocationDetailsLocationTab(int Filter) throws Exception {
+		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Location = wb.getCellValue(Filter, wb.seacrh_pattern("Location", 0).get(0).intValue());
+		System.out.println("The Location selected is :" +Location);
+		if(!Location.equals("null")) {
+			data.verifyLocationFilterAddress(Location);
+		}else {
+			System.out.println("No location selected");
+		}
+	}
+	
+	@Parameters({"Filter"})
+	@Test(priority = 21, description = "Test to verify location details of vendors sites")
+	public void VerifySiteLocationTab(int Filter) throws Exception {
+		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Location = wb.getCellValue(Filter, wb.seacrh_pattern("Location", 0).get(0).intValue());
+		System.out.println("The Location selected is :" +Location);
+		if(!Location.equals("null")) {
+			data.verifyLocationFilterSiteAddress(Location);
+		}else {
+			System.out.println("No location selected");
+		}
+	}
+	
+	@Parameters({"Filter"})
+	@Test(priority = 22, description = "Test to verify filter data is in order")
+	public void verifyFilterDataOrder(int Filter) throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
-		String Country1 = wb1.getCellValue(1, wb1.seacrh_pattern("Country", 0).get(0).intValue());
+		String Country1 = wb1.getCellValue(Filter, wb1.seacrh_pattern("Country", 0).get(0).intValue());
 		if(Country1.equals("null")) {
 			CurrentState.getDriver().navigate().refresh();
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "FilterOrder");
@@ -338,24 +400,8 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 			System.out.println("The group is not empty");
 		}
 	}
-
-/*	@Test(priority = 17, groups = { "smoke" }, description = "Test for verifying sitetable in Visibility page")
-	public void verifyTableHeaders() throws Exception {
-		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-		data.verifyAllTab();
-		addEvidence(CurrentState.getDriver(), "Data of All Sites Section ", "yes");
-		Thread.sleep(5000);
-		data.verifyNameTab();
-		addEvidence(CurrentState.getDriver(), "Data of Search Engine Sites", "yes");
-		Thread.sleep(5000);
-		data.verifyAddressTab();
-		addEvidence(CurrentState.getDriver(), "Data of Directory Sites", "yes");
-		Thread.sleep(5000);
-		data.verifyPHNOTab();
-		addEvidence(CurrentState.getDriver(), "Data of Social Sites Tab", "yes");
-	}
 	
-	@Test(priority = 18, description = "Test to verify name ignore inaccuracy")
+	/*@Test(priority = 18, description = "Test to verify name ignore inaccuracy")
 	public void verifyNameInaccuracy() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.verifyupdateinaccuracyname();
@@ -374,33 +420,11 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.verifyupdateinaccuracyphone();
 		addEvidence(CurrentState.getDriver(), "Test to verify phone inaccuracy", "yes");
-	}
-*/
-	/**
-	 * Test to verify inaccuracy and ignored checkbox
-	 * 
-	 * @throws Exception
-	 */
-	@Test(priority = 21, groups = { "smoke" }, description = "Test for verifying site link data in Accuracy page")
-	public void verifycheckbox() throws Exception {
-		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-		data.showinaccuracy();
-		data.showignored();
-		addEvidence(CurrentState.getDriver(),
-				"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
-	}
+	}*/
 
-	/**
-	 * Test to verify Top Button
-	 * 
-	 * @throws Exception
-	 */
-	@Test(priority = 22, groups = { "smoke" }, description = "Verify Top Button")
-	public void GetTopBtn() throws Exception {
-		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-		data.TopButton();
-		addEvidence(CurrentState.getDriver(), "Top Button click verification", "yes");
-	}
+	
+
+	
 
 	@SuppressWarnings("finally")
 	@DataProvider
@@ -442,32 +466,8 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		}
 	}
 	
-	/*@Test(priority = 23, description = "Test to verify location details")
-	public void VerifyLocationDetailsLocationTab() throws Exception {
-		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
-		String Location = wb.getCellValue(1, wb.seacrh_pattern("Location", 0).get(0).intValue());
-		System.out.println("The Location selected is :" +Location);
-		if(!Location.equals("null")) {
-			data.verifyLocationFilterAddress(Location);
-		}else {
-			System.out.println("No location selected");
-		}
-	}
 	
-	@Test(priority = 24, description = "Test to verify location details of vendors sites")
-	public void VerifySiteLocationTab() throws Exception {
-		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
-		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
-		String Location = wb.getCellValue(1, wb.seacrh_pattern("Location", 0).get(0).intValue());
-		System.out.println("The Location selected is :" +Location);
-		if(!Location.equals("null")) {
-			data.verifyLocationFilterSiteAddress(Location);
-		}else {
-			System.out.println("No location selected");
-		}
-	}
-*/
+
 	/**
 	 * // Test for compare number of rows from export table and table data in
 	 *

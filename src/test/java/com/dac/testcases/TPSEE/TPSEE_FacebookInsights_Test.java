@@ -12,6 +12,7 @@ import com.dac.main.POM_TPSEE.TPSEE_FacebookInsights_Page;
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
+import resources.JSWaiter;
 
 public class TPSEE_FacebookInsights_Test extends BaseClass {
 
@@ -31,24 +32,18 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		np.navigateToFacebookInsights();
 		CurrentState.getLogger().log(Status.PASS, "Navigated Successfully to Facebook Page");
 		addEvidence(CurrentState.getDriver(), "Navigation to Facebook Page", "yes");
-		Thread.sleep(5000);
+		JSWaiter.waitJQueryAngular();
+		Thread.sleep(2000);
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		data.clickDone();
 	}
 
-	@Test(priority = 2, description = "Test to verify highlight of report")
-	public void VerifyFacebookHighlight() throws Exception {
-		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
-		data.Facebookhighlight();
-		addEvidence(CurrentState.getDriver(), "Test to verify report highlight", "yes");
-	}
-	
 	/**
 	 * Test to verify Title and Title Text
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 3, description = "Test to verify title")
+	@Test(priority = 2, description = "Test to verify title")
 	public void verifyTitleText() throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		data.VerifyFacebookTitleText("Facebook Insights",
@@ -62,7 +57,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@Parameters({ "Filter" })
-	@Test(priority = 5, description = "Test to apply filters")
+	@Test(priority = 3, description = "Test to apply filters")
 	public void verifyFilteringReportsFacebook(int Filter) throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		try {
@@ -90,7 +85,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	/**
 	 * verification of date
 	 */
-	@Test(priority = 6, description = "Test to verify graph")
+	@Test(priority = 4, description = "Test to verify graph")
 	public void verifyGraphncompareDate() {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		boolean datavalidation = data.IsDataAvailable();
@@ -108,7 +103,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 4, description = "Test to verify highcharts")
+	@Test(priority = 5, description = "Test to verify highcharts")
 	public void gethighchartsdate() throws Exception {
 		boolean datavalidation = data.IsDataAvailable();
 		if (!datavalidation == true) {
@@ -173,7 +168,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * @param to_year
 	 * @throws Exception
 	 */
-	@Test(priority = 7, enabled = true, dataProvider = "testData")
+	@Test(priority = 6, enabled = true, dataProvider = "testData")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
@@ -194,7 +189,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	/**
 	 * Test to verify Pie Chart Tooltip Data
 	 */
-	@Test(priority = 8, description = "Test to verify Pie chart")
+	@Test(priority = 7, description = "Test to verify Pie chart")
 	public void VerifyPieChartData() {
 		boolean datavalidation = data.IsDataAvailable();
 		if (!datavalidation == true) {
@@ -208,7 +203,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 9, description = "Test to verify Export")
+	@Test(priority = 8, description = "Test to verify Export")
 	public void Export() throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		boolean datavalidation = data.IsDataAvailable();
@@ -233,7 +228,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 10, description = "Test to compare UI and XL")
+	@Test(priority = 9, description = "Test to compare UI and XL")
 	public void CompareUIXLData() throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		boolean datavalidation = data.IsDataAvailable();
@@ -271,7 +266,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		}
 	}
 	
-	@Test(priority = 11, description = "Test to verify filter data is in order")
+	@Test(priority = 10, description = "Test to verify filter data is in order")
 	public void verifyFilterDataOrderBingFacebook() throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");

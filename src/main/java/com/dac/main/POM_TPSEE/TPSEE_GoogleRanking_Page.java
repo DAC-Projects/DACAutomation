@@ -37,6 +37,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
+	static String time_stamp;
 
 	
 	public TPSEE_GoogleRanking_Page(WebDriver driver) {
@@ -150,10 +151,10 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 	@FindBy(css = "div.highcharts-label.highcharts-tooltip-box.highcharts-color-none")
 	private WebElement grphtooltip;
 
-	@FindBy(xpath = "(//*[@class='highcharts-label highcharts-tooltip-box highcharts-color-none']//*[name()='text']//*[name()='tspan'])[3]")
+	@FindBy(xpath = "(//*[@class='highcharts-label highcharts-tooltip-box highcharts-color-none']//span[@class='tooltip-score'])")
 	private WebElement GRScore;
 
-	@FindBy(xpath = "(//*[@class='highcharts-label highcharts-tooltip-box highcharts-color-none']//*[name()='text']//*[name()='tspan'])[2]")
+	@FindBy(xpath = "(//*[@class='highcharts-label highcharts-tooltip-box highcharts-color-none']//span[@class='tooltip-locations'])")
 	private WebElement GRLoc;
 
 	@FindBy(xpath = "//*[@id='google_ranking_report']")
@@ -193,10 +194,11 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 		if (GrKeyword == null || GrKeyword.equalsIgnoreCase("null"))
 			GrKeyword = "";
 		try {
-			waitForElement(acckeypanel, 25);
+			JSWaiter.waitJQueryAngular();
+			waitForElement(acckeypanel, 5);
 			scrollByElement(acckeypanel);
 			waitUntilLoad(driver);
-			waitForElement(accountkeyword, 20);
+			waitForElement(accountkeyword, 5);
 			scrollByElement(accountkeyword);
 			boolean verifyclass = verifykeyword();
 			if (verifyclass == false) {
@@ -204,7 +206,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 					if (!AccKey.equals("null")) {
 						if (removeacckey.isDisplayed()) {
 							clickelement(removeacckey);
-							waitForElement(accountkeyword, 20);
+							waitForElement(accountkeyword, 5);
 							AccountKeyword = acckeypanel
 									.findElement(By.xpath("(//div[contains(@class,'selectize-input items')][1]//input)[1]"));
 							AccountKeyword.sendKeys(AccKey);
@@ -213,12 +215,12 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 							System.out.println("No keywords");
 						}
 					}
-					waitForElement(GroupKeypanel, 25);
+					waitForElement(GroupKeypanel, 5);
 					scrollByElement(Group);
 					waitUntilLoad(driver);
 					if (!GrKey.equals("None")) {
 						clickelement(GroupKeypanel);
-						waitForElement(Group, 20);
+						waitForElement(Group, 5);
 						Select select = new Select(Group);
 						select.selectByVisibleText(GrKey);
 						/*GroupKey = Group.findElement(By.xpath("//div[@data-value='" + GrKey + "']"));
@@ -296,7 +298,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 
 	public List<Map<String, String>> RankingDataTable() throws InterruptedException {
 		JSWaiter.waitJQueryAngular();
-		waitForElement(RankingTable, 40);
+		waitForElement(RankingTable, 5);
 		if (driver.findElement(By.className("dataTables_info")).isDisplayed()) {
 			// getting into progressbar found listing
 			System.out.println("\n reading table data********************* \n");
@@ -382,8 +384,10 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 		JSWaiter.waitJQueryAngular();
 		exportVATable(Export, Export_csv);
 		Thread.sleep(10000);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + GoogleRankingExportCSV));
-		Thread.sleep(5000);
+		time_stamp = timeStamp();
+		System.out.println("The timestamp is : " +time_stamp);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + GoogleRankingExportCSV));
+		Thread.sleep(2000);
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
 	}
 
@@ -398,15 +402,17 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 		JSWaiter.waitJQueryAngular();
 		exportVATable(Export, Export_xlsx);
 		Thread.sleep(10000);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + GoogleRankingExportXLSX));
-		Thread.sleep(5000);
+		time_stamp = timeStamp();
+		System.out.println("The timestamp is : " +time_stamp);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + GoogleRankingExportXLSX));
+		Thread.sleep(2000);
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
 	}
 
 	public List<Map<String, String>> getRankingDataTableExport() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		GRDataTableExportXLSX();
-		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser() + GoogleRankingExportXLSX),
+		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser() + time_stamp + GoogleRankingExportXLSX),
 				"Google_Ranking").getExcelTable();
 		List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
@@ -476,7 +482,8 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 		JSWaiter.waitJQueryAngular();
 		if (SaveKeyword.isDisplayed()) {
 			clickelement(SaveKeyword);
-			Thread.sleep(3000);
+			JSWaiter.waitJQueryAngular();
+			Thread.sleep(2000);
 		}
 
 	}
@@ -497,23 +504,14 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 
 	public double GRScore()
 			throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
-		waitForElement(hstryGrph, 30);
+		JSWaiter.waitJQueryAngular();
+		waitForElement(hstryGrph, 5);
 		scrollByElement(hstryGrph);
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth()) / 2 - 2, 0).click().perform();
-		String tooltipvalue = GRScore.getText();
-		System.out.println("\n Reading tooltipdata ********** \n");
-		System.out.println("\n tooltipvalue is \n" + tooltipvalue);
-		String Score = tooltipvalue.substring(tooltipvalue.lastIndexOf(":") + 1);
-		double score;
-		if (Score.contains(">")) {
-			Score = Score.replace(">", "");
-			Score = Score.trim();
-			score = Double.parseDouble(Score);
-		} else {
-			score = Double.parseDouble(Score);
-		}
-		System.out.println(score);
+		String tooltipvalue = GRScore.getText(); 
+		
+		double score = Double.parseDouble(tooltipvalue);
 		return score;
 	}
 	
@@ -543,9 +541,10 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 
 	public int GRLoc()
 			throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
-		waitForElement(hstryGrph, 30);
+		JSWaiter.waitJQueryAngular();
+		waitForElement(hstryGrph, 5);
 		scrollByElement(hstryGrph);
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth()) / 2 - 2, 0).click().perform();
 		String tooltipvalue = GRLoc.getText();
 		System.out.println("\n Reading tooltipdata ********** \n");
@@ -559,9 +558,10 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 	 * @return History graph value read
 	 */
 	public List<Map<String, String>> verifyGRHistoryGraph() {
-		waitForElement(hstryGrph, 30);
+		JSWaiter.waitJQueryAngular();
+		waitForElement(hstryGrph, 5);
 		scrollByElement(hstryGrph);
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth() / 2) - 2, 0).click().perform();
 		tooltipvalue = grphtooltip.getText();
 		System.out.println("\n Reading tooltipdata ********** \n");
@@ -580,10 +580,11 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 	}
 
 	public void VerifyGRText() {
-		waitForElement(Title, 10);
+		JSWaiter.waitJQueryAngular();
+		waitForElement(Title, 5);
 		String Titl = Title.getText();
 		System.out.println("Page Title is : " + Titl);
-		waitForElement(TitleText, 10);
+		waitForElement(TitleText, 2);
 		String TitleTxt = TitleText.getText();
 		System.out.println("The title text for GR Report is :" + TitleTxt);
 		Assert.assertEquals("Google Ranking Report", Titl);
@@ -592,19 +593,17 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 				TitleTxt);
 	}
 
-	public void GoogleRankinghighlight() {
-		reporthighlight(GRPage, GRSec);
-	}
-
 	public void resultperpage(SoftAssert soft) throws InterruptedException {
 		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
-		Thread.sleep(3000);
+		JSWaiter.waitJQueryAngular();
+		Thread.sleep(2000);
 		ResultsperPage(soft, entiresText, Resultperpage);
 	}
 
 	public void GoTo() throws InterruptedException {
 		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
-		Thread.sleep(3000);
+		JSWaiter.waitJQueryAngular();
+		Thread.sleep(2000);
 		waitForElement(gotopage, 10);
 		scrollByElement(gotopage);
 		GoTopage(gotopage);

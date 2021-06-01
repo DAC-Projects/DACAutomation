@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -36,6 +35,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
+	static String time_stamp;
 
 	/**
 	 * Navigation to Visibility Page
@@ -291,7 +291,9 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		JSWaiter.waitJQueryAngular();
 		exportVA(exportBtn, csvexport, exportdate, date, export);
 		Thread.sleep(15000);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + VisibilityExportCSV));
+		time_stamp = timeStamp();
+		System.out.println("The timestamp is : " +time_stamp);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + VisibilityExportCSV));
 	}
 
 	/**
@@ -306,9 +308,11 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 			throws InterruptedException, FileNotFoundException, IOException, ExecutionException {
 		JSWaiter.waitJQueryAngular();
 		exportVA(exportBtn, XLSXExport, exportdate, date, export);
-		Thread.sleep(15000);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + VisibilityExportXLSX));
-		Workbook wb = new XSSFWorkbook(Exportpath + (CurrentState.getBrowser()+VisibilityExportXLSX));
+		Thread.sleep(10000);
+		time_stamp = timeStamp();
+		System.out.println("The timestamp is : " +time_stamp);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + VisibilityExportXLSX));
+		Workbook wb = new XSSFWorkbook(Exportpath + (CurrentState.getBrowser()+ time_stamp + VisibilityExportXLSX));
 		Sheet sh = wb.getSheetAt(0);
 		Row row = sh.getRow(0);
 		int Last_row = sh.getLastRowNum();
@@ -330,8 +334,10 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 			throws InterruptedException, FileNotFoundException, IOException, ExecutionException {
 		JSWaiter.waitJQueryAngular();
 		exportasPDFCurrentDate(exportBtn, pdfexport, currentpdf, pdfclick);
-		Thread.sleep(15000);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + VisibilityExportPdf));
+		Thread.sleep(10000);
+		time_stamp = timeStamp();
+		System.out.println("The timestamp is : " +time_stamp);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + VisibilityExportPdf));
 		verifyfileextension();
 		clickelement(close);
 	}
@@ -346,15 +352,16 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	public void exporthistoryvisibilityrptPDF() throws FileNotFoundException, InterruptedException, IOException {
 		JSWaiter.waitJQueryAngular();
 		exporthistrybtn(exportBtn, pdfexport, historypdf);
-		//exportasPDFHistory(exportBtn, pdfexport, historypdf, hstrybtn, pdfclick);
 
 	}
 
 	public void hstrypdfexport() throws FileNotFoundException, InterruptedException, IOException {
 		JSWaiter.waitJQueryAngular();
-		exportasPDFHistory(hstrybtn, pdfclick);
+		exportasPDFHistory(hstrybtn, pdfclick); 
 		Thread.sleep(15000);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + VisibilityExportHistoryPdf));
+		time_stamp = timeStamp();
+		System.out.println("The timestamp is : " +time_stamp);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + VisibilityExportHistoryPdf));
 		verifyfileextension();
 		clickelement(close);
 		}
@@ -366,7 +373,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 */
 	public List<Map<String, String>> getOverviewReport() {
 		JSWaiter.waitJQueryAngular();
-		waitForElement(overall, 40);
+		waitForElement(overall, 5);
 		System.out.println("\n Reading overall ********** \n");
 		Map<String, String> kMap;
 		List<Map<String, String>> ovrwRprtData = new ArrayList<Map<String, String>>();
@@ -406,7 +413,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		JSWaiter.waitJQueryAngular();
 		exportvisibilityrptXLSX();
 		Thread.sleep(5000);
-		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser() + VisibilityExportXLSX), "Sheet0")
+		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser() + time_stamp + VisibilityExportXLSX), "Sheet0")
 				.getExcelTable();
 		List<Map<String, String>> exportData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
@@ -445,7 +452,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	@SuppressWarnings("unused")
 	public void DataTablefound(SoftAssert soft) throws Exception {
 		JSWaiter.waitJQueryAngular();
-		waitForElement(siteTable, 40);
+		waitForElement(siteTable, 5);
 		int size = progressfound.size();
 		int newsize;
 		if (size > 3) {
@@ -455,7 +462,6 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		}
 		System.out.println("The size is :" + size);
 		for (int k = 1; k <= newsize; k++) {
-			Thread.sleep(3000);
 			WebElement ele = driver.findElement(By.xpath("(//*[contains(@class, 'progress-bar') ])[" + k + "]"));
 			scrollByElement(ele);
 			ele.click();
@@ -465,17 +471,16 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 			System.out.println("The string entry is : " +pentry);
 			int proentry = Integer.parseInt(pentry);
 			System.out.println("The progress bar total number is : " +proentry);
-			waitForElement(progressdata, 40);
+			waitForElement(progressdata, 10);
 			scrollByElement(progressdata);
-			Thread.sleep(5000);
 			if (driver.findElement(By.className("dataTables_info")).isDisplayed()) {
 				System.out.println("\n reading progress bar data div ********************* \n");
-				waitForElement(progresstable, 50);
+				waitForElement(progresstable, 5);
 				scrollByElement(progresstable);
 				System.out.println("\n reading progress bar data table ******************* \n");
-				waitForElement(totalentries, 50);
+				waitForElement(totalentries, 10);
 				JSWaiter.waitJQueryAngular();
-				waitForElement(progresstablevalue, 50);
+				waitForElement(progresstablevalue, 5);
 				String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
 				int page = Integer.parseInt(n);
 				System.out.println("\n" + page);
@@ -537,11 +542,11 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 				int XLSize = TableExport.size();
 				System.out.println("Excel File size is :" + XLSize);
 				if (UISize == XLSize) {
-					for (int i = 0; i <= UISize; i++) {
-						//assertTrue(tableCellValues.get(i).equals(TableExport.get(i)));
+					for (int i = 0; i <= UISize - 1; i++) {
+						assertTrue(tableCellValues.contains(TableExport));
 					}
 				}
-				deletefile();
+				//deletefile();
 				tableCellValues.clear();
 			} else if (driver.findElement(By.className("dataTables_empty")).isDisplayed()) {
 				try {
@@ -552,7 +557,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 			}
 		}
 		GoTo();
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		resultperpage(soft);
 	}
 	
@@ -590,7 +595,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	@SuppressWarnings("unused")
 	public void DataTableNotfound(SoftAssert soft) throws Exception {
 		JSWaiter.waitJQueryAngular();
-		waitForElement(siteTable, 40);
+		waitForElement(siteTable, 5);
 		int size = progressNotfound.size();
 		int newsize;
 		if (size > 3) {
@@ -603,7 +608,6 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		System.out.println("The final size is :" +newsize);
 		for (int k = 1; k <= newsize; k++) {
 			try {
-				Thread.sleep(5000);
 				WebElement ele = driver.findElement(By.xpath("(//*[contains(@class , 'not-bar' )])[" + k + "]"));
 				scrollByElement(ele);
 				action.doubleClick(ele).build().perform();
@@ -613,17 +617,18 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 				System.out.println("The string entry is : " +pentry);
 				int proentry = Integer.parseInt(pentry);
 				System.out.println("The progress bar entry is :" +proentry);
-				waitForElement(progressdata, 40);
+				waitForElement(progressdata, 5);
 				scrollByElement(progressdata);
 				if (driver.findElement(By.className("dataTables_info")).isDisplayed()) {
 					System.out.println("\n reading progress bar data div ********************* \n");
 					JSWaiter.waitJQueryAngular();
-					waitForElement(progresstable, 50);
+					waitForElement(progresstable, 5);
 					scrollByElement(progresstable);
 					System.out.println("\n reading progress bar data table ******************* \n");
 					Thread.sleep(5000);
-					waitForElement(totalentries, 50);
-					waitForElement(progresstablevalue, 50);
+					waitForElement(totalentries, 5);
+					JSWaiter.waitJQueryAngular();
+					waitForElement(progresstablevalue, 5);
 					String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
 					int page = Integer.parseInt(n);
 					System.out.println("\n" + page);
@@ -686,11 +691,11 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 					int XLSize = TableExport.size();
 					System.out.println("Excel File size is :" + XLSize);
 					if (UISize == XLSize) {
-						for (int i = 0; i <= UISize; i++) {
-						//	assertTrue(tableCellValues.get(i).equals(TableExport.get(i)));
+						for (int i = 0; i <= UISize - 1; i++) {
+							assertTrue(tableCellValues.contains(TableExport));
 						}
 					}
-					deletefile();
+					//deletefile();
 					tableCellValues.clear();
 				} else if (driver.findElement(By.className("dataTables_empty")).isDisplayed()) {
 					try {
@@ -704,7 +709,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 			}
 		}
 		GoTo();
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		resultperpage(soft);
 	}
 
@@ -717,11 +722,12 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 */
 	public void exporttablefoundCSV() throws FileNotFoundException, IOException, InterruptedException {
 		JSWaiter.waitJQueryAngular();
-		waitForElement(progressdata, 40);
+		waitForElement(progressdata, 5);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 		exportVATable(exporttable, ExporttableCSV);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + VisibilityExporttableFoundCSV));
-		Thread.sleep(5000);
+		time_stamp = timeStamp();
+		System.out.println("The timestamp is : " +time_stamp);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + VisibilityExporttableFoundCSV));
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
 	}
 
@@ -734,11 +740,12 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 */
 	public void exporttablefoundXLSX() throws FileNotFoundException, IOException, InterruptedException {
 		JSWaiter.waitJQueryAngular();
-		waitForElement(progressdata, 40);
+		waitForElement(progressdata, 5);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 		exportVATable(exporttable, ExporttableXLSX);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + VisibilityExporttableFoundXLSX));
-		Thread.sleep(5000);
+		time_stamp = timeStamp();
+		System.out.println("The timestamp is : " +time_stamp);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + VisibilityExporttableFoundXLSX));
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
 	}
 
@@ -752,7 +759,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	public List<Map<String, String>> getExporttableDataFound() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		exporttablefoundXLSX();
-		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser() + VisibilityExporttableFoundXLSX),
+		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser() + time_stamp + VisibilityExporttableFoundXLSX),
 				"Visibility_Report").getExcelTable();
 		List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
@@ -777,11 +784,12 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 */
 	public void exporttableNotfoundCSV() throws FileNotFoundException, IOException, InterruptedException {
 		JSWaiter.waitJQueryAngular();
-		waitForElement(progressdata, 40);
+		waitForElement(progressdata, 5);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 		exportVATable(exporttable, ExporttableCSV);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + VisibilityExporttableNotFoundCSV));
-		Thread.sleep(5000);
+		time_stamp = timeStamp();
+		System.out.println("The timestamp is : " +time_stamp);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + VisibilityExporttableNotFoundCSV));
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
 
 	}
@@ -795,11 +803,12 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 */
 	public void exporttableNotfoundXLSX() throws FileNotFoundException, IOException, InterruptedException {
 		JSWaiter.waitJQueryAngular();
-		waitForElement(progressdata, 40);
+		waitForElement(progressdata, 5);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 		exportVATable(exporttable, ExporttableXLSX);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + VisibilityExporttableNotFoundXLSX));
-		Thread.sleep(5000);
+		time_stamp = timeStamp();
+		System.out.println("The timestamp is : " +time_stamp);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + VisibilityExporttableNotFoundXLSX));
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
 
 	}
@@ -816,7 +825,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		JSWaiter.waitJQueryAngular();
 		exporttableNotfoundXLSX();
 		String[][] table = new ExcelHandler(
-				Exportpath + (CurrentState.getBrowser() + VisibilityExporttableNotFoundXLSX), "Visibility_Report")
+				Exportpath + (CurrentState.getBrowser() + time_stamp + VisibilityExporttableNotFoundXLSX), "Visibility_Report")
 						.getExcelTable();
 		List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
@@ -910,7 +919,17 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 
 		ArrayList<String> XLsite = GetSiteDataUsingColName("./data/VendorList.xlsx", "All Sites");
 		ArrayList<String> UIsite = verifySitevendors();
-		Assert.assertEquals(XLsite, UIsite, "Matches");
+		int UIsize = UIsite.size();
+		int XLsize = XLsite.size();
+		if(UIsize == XLsize) {
+			for(int i = 0; i <=UIsize - 1; i++) {
+				String UIsitename = UIsite.get(i);
+				System.out.println("The UI site name is :" +UIsitename);
+				soft.assertTrue(XLsite.contains(UIsitename), "XLSite doesn't contains" +UIsitename);
+			}
+		}else {
+			soft.fail("The size of array is not equal");
+		}
 
 	}
 
@@ -927,7 +946,17 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		Thread.sleep(5000);
 		ArrayList<String> XLsite = GetSiteDataUsingColName("./data/VendorList.xlsx", "Search Engine Sites");
 		ArrayList<String> UIsite = verifySitevendors();
-		Assert.assertEquals(XLsite, UIsite, "Matches");
+		int UIsize = UIsite.size();
+		int XLsize = XLsite.size();
+		if(UIsize == XLsize) {
+			for(int i = 0; i <=UIsize - 1; i++) {
+				String UIsitename = UIsite.get(i);
+				System.out.println("The UI site name is :" +UIsitename);
+				soft.assertTrue(XLsite.contains(UIsitename), "XLSite doesn't contains" +UIsitename);
+			}
+		}else {
+			soft.fail("The size of array is not equal");
+		}
 	}
 
 	/**
@@ -936,14 +965,23 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * @throws Exception
 	 */
 	public void verifyDirectorySites() throws Exception {
-		waitForElement(DirectorySites, 10);
+		waitForElement(DirectorySites, 5);
 		scrollByElement(DirectorySites);
-		Thread.sleep(5000);
 		clickelement(DirectorySites);
-		Thread.sleep(5000);
+		JSWaiter.waitJQueryAngular();
 		ArrayList<String> XLsite = GetSiteDataUsingColName("./data/VendorList.xlsx", "Directory Sites");
 		ArrayList<String> UIsite = verifySitevendors();
-		Assert.assertEquals(XLsite, UIsite, "Matches");
+		int UIsize = UIsite.size();
+		int XLsize = XLsite.size();
+		if(UIsize == XLsize) {
+			for(int i = 0; i <=UIsize - 1; i++) {
+				String UIsitename = UIsite.get(i);
+				System.out.println("The UI site name is :" +UIsitename);
+				soft.assertTrue(XLsite.contains(UIsitename), "XLSite doesn't contains" +UIsitename);
+			}
+		}else {
+			soft.fail("The size of array is not equal");
+		}
 	}
 
 	/**
@@ -952,15 +990,23 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * @throws Exception
 	 */
 	public void verifySocialSites() throws Exception {
-		waitForElement(SocialSites, 10);
+		waitForElement(SocialSites, 5);
 		scrollByElement(SocialSites);
-		Thread.sleep(5000);
 		clickelement(SocialSites);
-		Thread.sleep(5000);
+		JSWaiter.waitJQueryAngular();
 		ArrayList<String> XLsite = GetSiteDataUsingColName("./data/VendorList.xlsx", "Social Sites");
 		ArrayList<String> UIsite = verifySitevendors();
-		Assert.assertEquals(XLsite, UIsite, "Matches");
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		int UIsize = UIsite.size();
+		int XLsize = XLsite.size();
+		if(UIsize == XLsize) {
+			for(int i = 0; i <=UIsize - 1; i++) {
+				String UIsitename = UIsite.get(i);
+				System.out.println("The UI site name is :" +UIsitename);
+				soft.assertTrue(XLsite.contains(UIsitename), "XLSite doesn't contains" +UIsitename);
+			}
+		}else {
+			soft.fail("The size of array is not equal");
+		}
 		clickelement(AllSites);
 	}
 
@@ -999,23 +1045,19 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 			}
 		}
 	}
-	
-	public void visibilityhightlight() {
-		reporthighlight(Report,ReportSection);		
-	}
 
 	public void resultperpage(SoftAssert soft) throws InterruptedException {
 		WebElement ele =driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])"));
 		scrollByElement(ele);
 		ele.click();
-		Thread.sleep(3000);
+		JSWaiter.waitJQueryAngular();
 		ResultsperPage(soft, EntryText, Resultperpage);
 	}
 	
 	public void GoTo() throws InterruptedException {
 		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
-		Thread.sleep(3000);
-		waitForElement(GotoPage, 10);
+		JSWaiter.waitJQueryAngular();
+		waitForElement(GotoPage, 5);
 		scrollByElement(GotoPage);
 		GoTopage(GotoPage);
 	}

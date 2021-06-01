@@ -3,6 +3,7 @@ package com.dac.testcases.TPSEE;
 import java.util.List;
 import java.util.Map;
 
+import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -30,7 +31,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * Test to get dashboard scores
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
 	public void GetKPIValues() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
@@ -38,7 +39,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		System.out.println(location);
 		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
-	}*/
+	}
 
 	@Test(priority = 2, groups = { "smoke" }, description = "Test for navigating to All Locations page")
 	public void navigateToAllLocationsPage() throws Exception {
@@ -50,14 +51,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		// Assert.assertFalse( "sample error", true);
 	}
 	
-	@Test(priority = 3, description = "Test to verify report highlight")
-	public void VerifyLocationHighlight() throws Exception {
-		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
-		data.Locationhighlight();
-		addEvidence(CurrentState.getDriver(), "Test to verify report highlight", "yes");
-	}
-
-	@Test(priority = 4, groups = { "smoke" }, description = "Test for verify title and description")
+	@Test(priority = 3, groups = { "smoke" }, description = "Test for verify title and description")
 	public void verifyText() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.VerifyLocationsTitleText("Locations",
@@ -70,7 +64,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * Test To get overall score and compare with dashboard values
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 4, groups = { "smoke" }, description = "Test for compare KPI Values")
 	public void ovrviewlocscorecompare() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
@@ -80,7 +74,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		Assert.assertEquals(loc, location);
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Visibility page");
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
-	}*/
+	}
 
 	@Parameters({ "Filter" })
 	@Test(priority = 5, groups = { "smoke" }, description = "Verify All Locations page loads after filter applied")
@@ -133,17 +127,18 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	@Test(priority = 9, description = "Test to results per page")
 	public void verifyResultperPage() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
-			data.resultperpage(soft);	
-			addEvidence(CurrentState.getDriver(), "Test to verify Results per page", "yes");
-			Thread.sleep(5000);		
-			soft.assertAll();
+		data.resultperpage(soft);	
+		addEvidence(CurrentState.getDriver(), "Test to verify Results per page", "yes");
+		Thread.sleep(5000);		
+		soft.assertAll();
 	}
 	
+	@Parameters({ "Filter" })
 	@Test(priority = 10, description = "Test to verify filter data is in order")
-	public void verifyFilterDataOrder() throws Exception {
+	public void verifyFilterDataOrder(String Filter) throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
-		String Country1 = wb1.getCellValue(1, wb1.seacrh_pattern("Country", 0).get(0).intValue());
+		String Country1 = wb1.getCellValue(Integer.parseInt(Filter), wb1.seacrh_pattern("Country", 0).get(0).intValue());
 		if(Country1.equals("null")) {
 			CurrentState.getDriver().navigate().refresh();
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "FilterOrder");

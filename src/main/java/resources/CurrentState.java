@@ -20,7 +20,7 @@ public class CurrentState {
   private static ThreadLocal<ExtentTest> logger = new ThreadLocal<ExtentTest>();
   private static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
   @SuppressWarnings("rawtypes")
-private static ThreadLocal<List> evidenceList =new ThreadLocal<List>();
+  private static ThreadLocal<List> evidenceList =new ThreadLocal<List>();
 
   /**
    * This method used to get the logger for setted logger, execute in specific driver
@@ -33,7 +33,7 @@ private static ThreadLocal<List> evidenceList =new ThreadLocal<List>();
    * This method used to get the setted evidence list, execute in specific driver
    * for each browser as a local identifier		*/
   @SuppressWarnings("rawtypes")
-public static List getEvidenceList() {
+  public static List getEvidenceList() {
     return evidenceList.get();
   }
 
@@ -41,7 +41,7 @@ public static List getEvidenceList() {
    * This method used to "set the list of evidence" of execution steps to execute in specific driver
    * for each browser as a local identifier	to add the steps in creating test evidences for each test class	*/
   @SuppressWarnings("rawtypes")
-public static void setEvidenceList(List evidencelist) {
+  public static void setEvidenceList(List evidencelist) {
     CurrentState.evidenceList.set(evidencelist) ;
     
   }

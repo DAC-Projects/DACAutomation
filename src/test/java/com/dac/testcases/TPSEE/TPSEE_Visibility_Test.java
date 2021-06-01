@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -13,7 +14,6 @@ import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
-import com.dac.main.POM_TPSEE.TPSEE_ContentAnalysis_Page;
 import com.dac.main.POM_TPSEE.TPSEE_Visibility_Page;
 
 import resources.BaseClass;
@@ -44,18 +44,18 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * Test to get dashboard scores
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
 	public void GetKPIValues() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-		Thread.sleep(50000);
+		Thread.sleep(20000);
 		score = data.getVisibilityscore();
 		System.out.println(score);
 		location = data.getVisibilityLoc();
 		System.out.println(location);
 		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
-	}*/
+	}
 
 	/**
 	 * Test to navigate to Visibility Page
@@ -70,13 +70,6 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
 	}
 	
-	@Test(priority = 3, description = "Test to verify report highlighted")
-	public void VerifyReportHighlight() throws Exception {
-		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-		data.visibilityhightlight();
-		addEvidence(CurrentState.getDriver(), "Test to verify report highlighted", "yes");
-	}
-
 	@Test(priority = 3, groups = { "smoke" }, description = "Test for verifying title and description of report")
 	public void verifyText() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -113,7 +106,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * Test To get overall score and compare with dashboard values
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 4, groups = { "smoke" }, description = "Test for compare KPI Values")
 	public void ovrviewlocscorecompare() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -124,7 +117,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		Assert.assertEquals(score, ovrvwscr);
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Visibility page");
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
-	}*/
+	}
 
 	/**
 	 * Test to verify zoom functionality
@@ -183,11 +176,11 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		}
 	}
 
-/*	*//**
+	/**
 	 * Test for SiteTable data in Visibility Page
 	 * 
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 7, groups = { "smoke" }, description = "Test for verifying sitetable in Visibility page")
 	public void verifySiteTable() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -199,7 +192,8 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Data of Directory Sites", "yes");
 		data.verifySocialSites();
 		addEvidence(CurrentState.getDriver(), "Data of Social Sites Tab", "yes");
-	}*/
+		soft.assertAll();
+	}
 
 	/**
 	 * Test to apply filters
@@ -305,7 +299,6 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	public void verifyOverviewReportnTooltipVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.verifyHistoryGraph1();
-		//data.compareReportnGraph(data.verifyHistoryGraph(), data.getOverviewReport());
 		addEvidence(CurrentState.getDriver(), "Test to verify date in graph", "yes");
 	}
 	
@@ -326,7 +319,6 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	public void numberofentriesnExporttableVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.DataTablefound(soft);
-		// data.compareexporttableDatannumberofentries(data.DataTablefound(),data.getExporttableDataFound());
 		addEvidence(CurrentState.getDriver(),
 				"Site level scores in Visibility site table  and overview visibility export found matching", "yes");
 		data.exporttablefoundCSV();
@@ -398,7 +390,6 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	public void numberofentriesnExporttableNotFoundVisibility() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.DataTableNotfound(soft);
-		// data.compareexporttableDatannumberofentriesNotFound(data.DataTableNotfound(),data.getExporttableDataNotFound());
 		addEvidence(CurrentState.getDriver(),
 				"Site level scores in Visibility site table  and overview visibility export found matching", "yes");
 		data.exporttableNotfoundCSV();
@@ -488,11 +479,12 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		}
 	}
 	
+	@Parameters({ "Filter" })
 	@Test(priority = 30, description = "Test to verify location details")
-	public void VerifyLocationDetailsLocationTab() throws Exception {
+	public void VerifyLocationDetailsLocationTab(int Filter) throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
-		String Location = wb.getCellValue(1, wb.seacrh_pattern("Location", 0).get(0).intValue());
+		String Location = wb.getCellValue(Filter, wb.seacrh_pattern("Location", 0).get(0).intValue());
 		System.out.println("The Location selected is :" +Location);
 		if(!Location.equals("null")) {
 			data.verifyLocationFilterAddress(Location);
@@ -501,11 +493,12 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		}
 	}
 	
+	@Parameters({ "Filter" })
 	@Test(priority = 31, description = "Test to verify location details of vendors sites")
-	public void VerifySiteLocationTab() throws Exception {
+	public void VerifySiteLocationTab(int Filter) throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
-		String Location = wb.getCellValue(1, wb.seacrh_pattern("Location", 0).get(0).intValue());
+		String Location = wb.getCellValue(Filter, wb.seacrh_pattern("Location", 0).get(0).intValue());
 		System.out.println("The Location selected is :" +Location);
 		if(!Location.equals("null")) {
 			data.verifyLocationFilterSiteAddress(Location);
@@ -514,11 +507,12 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		}
 	}
 	
+	@Parameters({ "Filter" })
 	@Test(priority = 32, description = "Test to verify filter data is in order")
-	public void verifyFilterDataOrder() throws Exception {
+	public void verifyFilterDataOrder(int Filter) throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
-		String Country1 = wb1.getCellValue(1, wb1.seacrh_pattern("Country", 0).get(0).intValue());
+		String Country1 = wb1.getCellValue(Filter, wb1.seacrh_pattern("Country", 0).get(0).intValue());
 		if(Country1.equals("null")) {
 			CurrentState.getDriver().navigate().refresh();
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "FilterOrder");

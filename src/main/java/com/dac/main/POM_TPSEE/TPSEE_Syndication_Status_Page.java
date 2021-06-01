@@ -325,10 +325,6 @@ public class TPSEE_Syndication_Status_Page extends TPSEE_abstractMethods {
 		}
 	}
 	
-	public void Syndicationhighlight() {
-		reporthighlight(SyndicationPage, SyndicationSec);
-	}
-	
 	public void resultperpage(SoftAssert soft) throws InterruptedException {
 		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
 		Thread.sleep(3000);

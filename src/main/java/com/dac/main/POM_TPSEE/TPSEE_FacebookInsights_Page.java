@@ -21,6 +21,7 @@ import org.testng.asserts.SoftAssert;
 
 import resources.BaseClass;
 import resources.CurrentState;
+import resources.JSWaiter;
 
 public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 
@@ -37,6 +38,7 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 
 		return null;
 	}
+	
 
 	/*-----------------------------------Locators---------------------------------------------------*/
 	@FindBy(xpath = "//*[@id='page-content']//h2")
@@ -188,11 +190,12 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 	 * @param titText
 	 */
 	public void VerifyFacebookTitleText(String Tit, String titText) {
+		JSWaiter.waitJQueryAngular();
 		SoftAssert soft = new SoftAssert();
-		waitForElement(PageTitle, 10);
+		waitForElement(PageTitle, 5);
 		String Title = PageTitle.getText();
 		System.out.println("Page Title is : " + Title);
-		waitForElement(PageTitletext, 10);
+		waitForElement(PageTitletext, 5);
 		String TitleText = PageTitletext.getText();
 		System.out.println("The title text  is :" + TitleText);
 		Assert.assertEquals(Tit, Title);
@@ -208,7 +211,7 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 	 * @return
 	 */
 	public int getNumber(WebElement elename, WebElement eleNum) {
-		waitForElement(elename, 10);
+		waitForElement(elename, 5);
 		String Text = elename.getText();
 		System.out.println("The Text is :" + Text);
 		String TxtNum = eleNum.getText();
@@ -232,6 +235,7 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 	 * @throws Exception
 	 */
 	public String getPiechart(WebElement ele) throws Exception {
+		JSWaiter.waitJQueryAngular();
 		scrollByElement(PieChart);
 		action.moveToElement(ele).build().perform();
 		BaseClass.addEvidence(CurrentState.getDriver(), "To get text from Pie Chart", "yes");
@@ -520,9 +524,10 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 				.toString();
 		System.out.println(var);
 		Date endtDate = null;
-		waitForElement(GraphLoc, 30);
+		JSWaiter.waitJQueryAngular();
+		waitForElement(GraphLoc, 5);
 		scrollByElement(GraphLoc);
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		action.moveToElement(GraphLoc).moveByOffset((GraphLoc.getSize().getWidth()) / 2 - 2, 0).click().perform();
 		String finaltooltipvalue = Graphs.getText();
 		System.out.println("\n Reading tooltipdata ********** \n");
@@ -598,9 +603,5 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 			System.out.println("No Data Available");
 		}
 
-	}
-	
-	public void Facebookhighlight() {
-		reporthighlight(FacebookPage, FacebookSec);
 	}
 }

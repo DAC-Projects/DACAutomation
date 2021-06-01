@@ -34,13 +34,6 @@ public class TPSEE_Syndication_Status_LPAD extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "To Navigate to Syndication Report Page", "yes");
 	}
 	
-	@Test(priority = 2, description = "Test to verify highlight of report")
-	public void VerifyDataSyndicationHighlight() throws Exception {
-		data = new TPSEE_Syndication_Status_Page(CurrentState.getDriver());
-		data.Syndicationhighlight();
-		addEvidence(CurrentState.getDriver(), "Test to verify report highlight", "yes");
-	}
-
 	/**
 	 * Test to verify Title and Title text
 	 * 

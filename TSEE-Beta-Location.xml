@@ -10,12 +10,14 @@
 		<parameter name = "browser" value = "chrome"/>
 		<parameter name = "Filter" value = "1"/>
 			<classes>
-				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />  
 				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />						
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />	
+				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />					
 			</classes>
 	</test>
 	
@@ -23,12 +25,14 @@
 		<parameter name = "browser" value = "chrome"/>
 		<parameter name = "Filter" value = "2"/>
 			<classes>
-				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
 				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />						
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />	
+				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />  					
 			</classes>
 	</test>
 	
@@ -36,12 +40,14 @@
 		<parameter name = "browser" value = "chrome"/>
 		<parameter name = "Filter" value = "3"/>
 			<classes>
-				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
-				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />						
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />	
+				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />  
+				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />	 					
 			</classes>
 	</test>
 	
@@ -49,12 +55,14 @@
 		<parameter name = "browser" value = "chrome"/>
 		<parameter name = "Filter" value = "4"/>
 			<classes>
-				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
-				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />						
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />	
+				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />  
+				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />				
 			</classes>
 	</test> 
 	
@@ -62,12 +70,14 @@
 		<parameter name = "browser" value = "chrome"/>
 		<parameter name = "Filter" value = "5"/>
 			<classes>
-				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />	
+				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />  
 				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />						
+				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />							
 			</classes>
 	</test>
 	
@@ -75,12 +85,14 @@
 		<parameter name = "browser" value = "chrome"/>
 		<parameter name = "Filter" value = "6"/>
 			<classes>
-				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />	
+				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" /> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />  
 				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />						
+				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />					
 			</classes>
 	</test>
 	

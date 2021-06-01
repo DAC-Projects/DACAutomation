@@ -226,9 +226,10 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	public void verifyCustomerActionsGraph() {
 
 		// display tool tip
-		waitForElement(Custgraph, 30);
+		JSWaiter.waitJQueryAngular();
+		waitForElement(Custgraph, 5);
 		scrollByElement(Custgraph);
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		action.moveToElement(Custgraph).moveByOffset((Custgraph.getSize().getWidth() / 2) - 2, 0).click().perform();
 
 		// read the tooltip variables
@@ -240,9 +241,10 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	public void verifyWhereListingGraph() {
 
 		// display tool tip
-		waitForElement(WhereListinggraph, 30);
+		JSWaiter.waitJQueryAngular();
+		waitForElement(WhereListinggraph, 5);
 		scrollByElement(WhereListinggraph);
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		action.moveToElement(WhereListinggraph).moveByOffset((WhereListinggraph.getSize().getWidth() / 2) - 2, 0)
 				.click().perform();
 
@@ -255,9 +257,10 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	public void verifyPhotoViewGraph() {
 
 		// display tool tip
-		waitForElement(PhViewsgraph, 30);
+		JSWaiter.waitJQueryAngular();
+		waitForElement(PhViewsgraph, 5);
 		scrollByElement(PhViewsgraph);
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		action.moveToElement(PhViewsgraph).moveByOffset((PhViewsgraph.getSize().getWidth() / 2) - 2, 0).click()
 				.perform();
 
@@ -270,9 +273,10 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	public void verifyPhotoQtyGraph() {
 
 		// display tool tip
-		waitForElement(PhQtygraph, 30);
+		JSWaiter.waitJQueryAngular();
+		waitForElement(PhQtygraph, 5);
 		scrollByElement(PhQtygraph);
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		action.moveToElement(PhQtygraph).moveByOffset((PhQtygraph.getSize().getWidth() / 2) - 2, 0).click().perform();
 
 		// read the tooltip variables
@@ -284,9 +288,10 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	public void verifyHowListingGraph() {
 
 		// display tool tip
-		waitForElement(HowlistingFoundgraph, 30);
+		JSWaiter.waitJQueryAngular();
+		waitForElement(HowlistingFoundgraph, 5);
 		scrollByElement(HowlistingFoundgraph);
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		action.moveToElement(HowlistingFoundgraph).moveByOffset((HowlistingFoundgraph.getSize().getWidth() / 2) - 2, 0)
 				.click().perform();
 
@@ -371,7 +376,7 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	public void CustomerAction() {
 		try {
 			JSWaiter.waitJQueryAngular();
-			waitForElement(CustomerActions, 20);
+			waitForElement(CustomerActions, 5);
 			scrollByElement(CustomerActions);
 			WebElement WebVisits = driver.findElement(By.xpath("//span[@id='customerWebsite']"));
 			WebElement ReqDirectory = driver.findElement(By.xpath("//span[@id='customerDirections']"));
@@ -389,12 +394,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 		JSWaiter.waitJQueryAngular();
 		try {
-			waitForElement(WhereListing, 20);
+			waitForElement(WhereListing, 5);
 			scrollByElement(WhereListing);
 			WebElement Search = driver.findElement(By.xpath("//span[@id='whereSearch']"));
 			WebElement Maps = driver.findElement(By.xpath("//span[@id='whereMaps']"));
 			int Total = GetUIText2(Search, Maps);
-			waitForElement(TotalViews, 20);
+			waitForElement(TotalViews, 5);
 			scrollByElement(TotalViews);
 			String NumofViews = TotalViews.getText();
 			int i = convertint(NumofViews);
@@ -410,13 +415,13 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 		JSWaiter.waitJQueryAngular();
 		try {
-			waitForElement(HowListing, 20);
+			waitForElement(HowListing, 5);
 			scrollByElement(HowListing);
 			WebElement Discovery = driver.findElement(By.xpath("//span[@id='howDiscovery']"));
 			WebElement Direct = driver.findElement(By.xpath("//span[@id='howDirect']"));
 			WebElement Branded = driver.findElement(By.xpath("//span[@id='howBranded']"));
 			int actual = GetUIText(Discovery, Direct, Branded);
-			waitForElement(TotalSearch, 20);
+			waitForElement(TotalSearch, 5);
 			scrollByElement(TotalSearch);
 			String NumofSearch = TotalSearch.getText();
 			int i = convertint(NumofSearch);
@@ -431,14 +436,14 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	public void PhotoViews() {
 
 		JSWaiter.waitJQueryAngular();
-		waitForElement(PhotoViews, 20);
+		waitForElement(PhotoViews, 5);
 		scrollByElement(PhotoViews);
-		waitForElement(Owner, 20);
+		waitForElement(Owner, 5);
 		scrollByElement(Owner);
 		WebElement OwnerView = driver.findElement(By.xpath("//span[@id='photoViewsOwner']"));
 		WebElement CustView = driver.findElement(By.xpath("//span[@id='photoViewsCustomer']"));
 		int actual = GetUIText2(OwnerView, CustView);
-		waitForElement(TotalPhViews, 20);
+		waitForElement(TotalPhViews, 5);
 		scrollByElement(TotalPhViews);
 		String NumofPhViews = TotalPhViews.getText();
 		int i = convertint(NumofPhViews);
@@ -450,16 +455,16 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 		try {
 			JSWaiter.waitJQueryAngular();
-			waitForElement(CustomerActions, 20);
+			waitForElement(CustomerActions, 5);
 			scrollByElement(CustomerActions);
 			WebElement ReqDirectory = driver.findElement(By.xpath("//span[@id='customerDirections']"));
 			WebElement PhCalls = driver.findElement(By.xpath("//span[@id='customerPhonecalls']"));
-			waitForElement(WebsiteVisits, 10);
+			waitForElement(WebsiteVisits, 5);
 			scrollByElement(WebsiteVisits);
 			if (WebsiteVisits.isDisplayed() && WebsiteVisits.isEnabled()) {
 				clickelement(WebsiteVisits);
 				int actual = GetUIText2(ReqDirectory, PhCalls);
-				waitForElement(TotalActions, 20);
+				waitForElement(TotalActions, 5);
 				scrollByElement(TotalActions);
 				String TotalAction = TotalActions.getText();
 				int i = convertint(TotalAction);
@@ -477,16 +482,16 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 		try {
 			JSWaiter.waitJQueryAngular();
-			waitForElement(CustomerActions, 20);
+			waitForElement(CustomerActions, 5);
 			scrollByElement(CustomerActions);
 			WebElement WebVisits = driver.findElement(By.xpath("//span[@id='customerWebsite']"));
 			WebElement PhCalls = driver.findElement(By.xpath("//span[@id='customerPhonecalls']"));
-			waitForElement(RequestDir, 10);
+			waitForElement(RequestDir, 5);
 			scrollByElement(RequestDir);
 			if (RequestDir.isDisplayed() && RequestDir.isEnabled()) {
 				clickelement(RequestDir);
 				int actual = GetUIText2(WebVisits, PhCalls);
-				waitForElement(TotalActions, 20);
+				waitForElement(TotalActions, 5);
 				scrollByElement(TotalActions);
 				String TotalAction = TotalActions.getText();
 				int i = convertint(TotalAction);
@@ -504,16 +509,16 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 		try {
 			JSWaiter.waitJQueryAngular();
-			waitForElement(CustomerActions, 20);
+			waitForElement(CustomerActions, 5);
 			scrollByElement(CustomerActions);
 			WebElement WebVisits = driver.findElement(By.xpath("//span[@id='customerWebsite']"));
 			WebElement ReqDirectory = driver.findElement(By.xpath("//span[@id='customerDirections']"));
-			waitForElement(PhoneCalls, 10);
+			waitForElement(PhoneCalls, 5);
 			scrollByElement(PhoneCalls);
 			if (PhoneCalls.isDisplayed() && PhoneCalls.isEnabled()) {
 				clickelement(PhoneCalls);
 				int actual = GetUIText2(WebVisits, ReqDirectory);
-				waitForElement(TotalActions, 20);
+				waitForElement(TotalActions, 5);
 				scrollByElement(TotalActions);
 				String TotalAction = TotalActions.getText();
 				int i = convertint(TotalAction);
@@ -531,15 +536,15 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 		JSWaiter.waitJQueryAngular();
 		try {
-			waitForElement(WhereListing, 20);
+			waitForElement(WhereListing, 5);
 			scrollByElement(WhereListing);
 			WebElement Maps = driver.findElement(By.xpath("//span[@id='whereMaps']"));
-			waitForElement(SearchFound, 10);
+			waitForElement(SearchFound, 5);
 			scrollByElement(SearchFound);
 			if (SearchFound.isDisplayed() && SearchFound.isEnabled()) {
 				clickelement(SearchFound);
 				int Total = GetUIText3(Maps);
-				waitForElement(TotalViews, 20);
+				waitForElement(TotalViews, 5);
 				scrollByElement(TotalViews);
 				String NumofViews = TotalViews.getText();
 				int i = convertint(NumofViews);
@@ -557,15 +562,15 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 		JSWaiter.waitJQueryAngular();
 		try {
-			waitForElement(WhereListing, 20);
+			waitForElement(WhereListing, 5);
 			scrollByElement(WhereListing);
 			WebElement Search = driver.findElement(By.xpath("//span[@id='whereSearch']"));
-			waitForElement(SearchFound, 10);
+			waitForElement(SearchFound, 5);
 			scrollByElement(SearchFound);
 			if (MapFound.isDisplayed() && MapFound.isEnabled()) {
 				clickelement(MapFound);
 				int Total = GetUIText3(Search);
-				waitForElement(TotalViews, 20);
+				waitForElement(TotalViews, 5);
 				scrollByElement(TotalViews);
 				String NumofViews = TotalViews.getText();
 				int i = convertint(NumofViews);
@@ -585,15 +590,15 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 		JSWaiter.waitJQueryAngular();
 		try {
-			waitForElement(HowListing, 20);
+			waitForElement(HowListing, 5);
 			scrollByElement(HowListing);
 			WebElement Direct = driver.findElement(By.xpath("//span[@id='howDirect']"));
 			WebElement Branded = driver.findElement(By.xpath("//span[@id='howBranded']"));
-			waitForElement(Dis, 10);
+			waitForElement(Dis, 5);
 			if (Dis.isDisplayed() && Dis.isEnabled()) {
 				clickelement(Dis);
 				int actual = GetUIText2(Direct, Branded);
-				waitForElement(TotalSearch, 20);
+				waitForElement(TotalSearch, 5);
 				scrollByElement(TotalSearch);
 				String NumofSearch = TotalSearch.getText();
 				int i = convertint(NumofSearch);
@@ -611,7 +616,7 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 		JSWaiter.waitJQueryAngular();
 		try {
-			waitForElement(HowListing, 20);
+			waitForElement(HowListing, 5);
 			scrollByElement(HowListing);
 			WebElement Discovery = driver.findElement(By.xpath("//span[@id='howDiscovery']"));
 			WebElement Branded = driver.findElement(By.xpath("//span[@id='howBranded']"));
@@ -619,7 +624,7 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 				scrollByElement(Dir);
 				clickelement(Dir);
 				int actual = GetUIText2(Discovery, Branded);
-				waitForElement(TotalSearch, 20);
+				waitForElement(TotalSearch, 5);
 				scrollByElement(TotalSearch);
 				String NumofSearch = TotalSearch.getText();
 				int i = convertint(NumofSearch);
@@ -637,15 +642,15 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 
 		JSWaiter.waitJQueryAngular();
 		try {
-			waitForElement(HowListing, 20);
+			waitForElement(HowListing, 5);
 			scrollByElement(HowListing);
 			WebElement Discovery = driver.findElement(By.xpath("//span[@id='howDiscovery']"));
 			WebElement Direct = driver.findElement(By.xpath("//span[@id='howDirect']"));
-			waitForElement(Dir, 10);
+			waitForElement(Dir, 5);
 			if (Brand.isDisplayed() && Brand.isEnabled()) {
 				clickelement(Brand);
 				int actual = GetUIText2(Discovery, Direct);
-				waitForElement(TotalSearch, 20);
+				waitForElement(TotalSearch, 5);
 				scrollByElement(TotalSearch);
 				String NumofSearch = TotalSearch.getText();
 				int i = convertint(NumofSearch);
@@ -661,15 +666,15 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	public void OwnerPhotoViews() {
 
 		JSWaiter.waitJQueryAngular();
-		waitForElement(PhotoViews, 20);
+		waitForElement(PhotoViews, 5);
 		scrollByElement(PhotoViews);
-		waitForElement(Owner, 20);
+		waitForElement(Owner, 5);
 		scrollByElement(Owner);
 		WebElement CustView = driver.findElement(By.xpath("//span[@id='photoViewsCustomer']"));
 		if (Phowner.isDisplayed() && Phowner.isEnabled()) {
 			clickelement(Phowner);
 			int actual = GetUIText3(CustView);
-			waitForElement(TotalPhViews, 20);
+			waitForElement(TotalPhViews, 5);
 			scrollByElement(TotalPhViews);
 			String NumofPhViews = TotalPhViews.getText();
 			int i = convertint(NumofPhViews);
@@ -682,15 +687,15 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	public void CustomerPhotoViews() {
 
 		JSWaiter.waitJQueryAngular();
-		waitForElement(PhotoViews, 20);
+		waitForElement(PhotoViews, 5);
 		scrollByElement(PhotoViews);
-		waitForElement(Owner, 20);
+		waitForElement(Owner, 5);
 		scrollByElement(Owner);
 		WebElement OwnerView = driver.findElement(By.xpath("//span[@id='photoViewsOwner']"));
 		if (PhCust.isDisplayed() && PhCust.isEnabled()) {
 			clickelement(PhCust);
 			int actual = GetUIText3(OwnerView);
-			waitForElement(TotalPhViews, 20);
+			waitForElement(TotalPhViews, 5);
 			scrollByElement(TotalPhViews);
 			String NumofPhViews = TotalPhViews.getText();
 			int i = convertint(NumofPhViews);
@@ -701,7 +706,7 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	}
 
 	public void CompareUIXLWebActions(String filename) throws Exception {
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		int x = GetDataUsingColName(filename, "Website Actions");
 		WebElement WebActions = driver.findElement(By.xpath("//span[@id='customerWebsite']"));
 		int total = GetUIText3(WebActions);
@@ -832,12 +837,12 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	}
 
 	public void VerifyGMBTitleText(String Tit, String titText) {
-
+		JSWaiter.waitJQueryAngular();
 		SoftAssert soft = new SoftAssert();
-		waitForElement(PageTitle, 10);
+		waitForElement(PageTitle, 5);
 		String Title = PageTitle.getText();
 		System.out.println("Page Title is : " + Title);
-		waitForElement(PageTitletext, 10);
+		waitForElement(PageTitletext, 2);
 		String TitleText = PageTitletext.getText();
 		System.out.println("The title text  is :" + TitleText);
 		Assert.assertEquals(Tit, Title);
@@ -846,7 +851,8 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	}
 
 	public void GetHoverText(String Tet, WebElement e) {
-		waitForElement(e, 10);
+		JSWaiter.waitJQueryAngular();
+		waitForElement(e, 5);
 		scrollByElement(e);
 		action.moveToElement(e).build().perform();
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -987,9 +993,4 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 			e.printStackTrace();
 		}
 	}
-
-	public void GMBhighlight() {
-		reporthighlight(GMBPage, GMBSec);
-	}
-	
 }

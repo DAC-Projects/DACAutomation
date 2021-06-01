@@ -50,11 +50,11 @@ public class ExtentTestNGITestListener
 
   private static ExtentReports extent = ExtentManager.getInstance();
   @SuppressWarnings("rawtypes")
-private static ThreadLocal parentTest = new ThreadLocal();
+  private static ThreadLocal parentTest = new ThreadLocal();
   @SuppressWarnings("rawtypes")
-private static ThreadLocal test = new ThreadLocal();
+  private static ThreadLocal test = new ThreadLocal();
   @SuppressWarnings({ "unchecked", "rawtypes" })
-private static ThreadLocal<ArrayList<JasperPrint>> printList =new ThreadLocal();
+  private static ThreadLocal<ArrayList<JasperPrint>> printList =new ThreadLocal();
   
   
     
@@ -140,6 +140,7 @@ private static ThreadLocal<ArrayList<JasperPrint>> printList =new ThreadLocal();
   @SuppressWarnings("unchecked")
 @Override
   public synchronized void onTestStart(ITestResult result) {
+	
     ExtentTest child = ((ExtentTest) parentTest.get()).createNode(getTestname(result));
     child.assignCategory(
         "Tests_executed_in_" + CurrentState.getBrowser() + "_browser");
@@ -267,7 +268,7 @@ private static ThreadLocal<ArrayList<JasperPrint>> printList =new ThreadLocal();
    * @see org.testng.ITestListener#onFinish(org.testng.ITestContext)	*/
   @Override
   public synchronized void onFinish(ITestContext context) { 
-    extent.flush();
+	  extent.flush();
     if (CurrentState.getDriver() != null) {
       CurrentState.getDriver().quit();
     }
@@ -351,7 +352,7 @@ private static ThreadLocal<ArrayList<JasperPrint>> printList =new ThreadLocal();
   @SuppressWarnings({ "unused", "deprecation" })
 public WebDriver openBrowser(String browser) throws IOException {
 	  WebDriverWait wait;
-    WebDriver driver = null;
+	  WebDriver driver = null;
 
     File file = new File(".\\downloads");
     if (!file.exists())
@@ -463,5 +464,6 @@ public WebDriver openBrowser(String browser) throws IOException {
   @Override
   public void onFinish(ISuite suite) {
 	  System.out.println("Finish Suite Name : "+ suite.getName());
+	  
   }
 }

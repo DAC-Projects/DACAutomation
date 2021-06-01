@@ -366,7 +366,7 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 									.getText();
 							System.out.println("The celText is :" + celtext);
 							if (celtext.contains(LocNum)) {
-								Date todaysDate = getTodaysDate();
+								Date todaysDate = getTodaysDate(); 
 								System.out.println("Today's Date is :" + todaysDate);
 								String date = driver.findElement(By.xpath("(//*[@id='duplicate-table']/tbody/tr["
 										+ (row + 1)
@@ -776,10 +776,6 @@ public class TPSEE_DuplicateManagement_Page extends TPSEE_abstractMethods {
 		Date todaydate = formats.parse(today);
 		System.out.println(todaydate);
 		return todaydate;
-	}
-	
-	public void Duphighlight() {
-		reporthighlight(DupPage, DupSec);
 	}
 	
 	public void resultperpage(SoftAssert soft) throws InterruptedException {

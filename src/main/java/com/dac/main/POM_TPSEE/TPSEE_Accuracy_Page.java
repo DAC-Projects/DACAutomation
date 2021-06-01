@@ -38,6 +38,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
+	static String time_stamp;
 
 
 	String xpathCompetitors = "//*[@id='divBars']";
@@ -123,16 +124,16 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "//div[@id='divBars']")
 	private WebElement overviewlayout;
 
-	@FindBy(xpath = "//*[@id='all']")
+	@FindBy(xpath = "//*[@id='all']//a")
 	private WebElement Alltab;
 
-	@FindBy(xpath = "//*[@id='name']")
+	@FindBy(xpath = "//*[@id='name']//a")
 	private WebElement Nametab;
 
-	@FindBy(xpath = "//*[@id='address']")
+	@FindBy(xpath = "//*[@id='address']//a")
 	private WebElement Addresstab;
 
-	@FindBy(xpath = "//*[@id='phone']")
+	@FindBy(xpath = "//*[@id='phone']//a")
 	private WebElement PHNumtab;
 	
 	@FindBy(xpath = "//*[@id='accuracy_report']")
@@ -144,7 +145,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	@FindBy(xpath = "//select[@name='inaccuracy_results_length']")
 	private WebElement Resultperpage;
 	
-	@FindBy(xpath = "//input[contains(@class,'page-input form-control form-control-sm'])")
+	@FindBy(xpath = "//input[contains(@class,'page-input form-control form-control-sm')]")
 	private WebElement gotopage;
 	
 	@FindBy(xpath = "//div[@id='inaccuracy_results_info']")
@@ -255,7 +256,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	@Override
 	public List<Map<String, String>> getOverviewReport() {
 		JSWaiter.waitJQueryAngular();
-		waitForElement(overall, 40);
+		waitForElement(overall, 5);
 		scrollByElement(overall);
 		Map<String, String> kMap;
 		List<Map<String, String>> ovrwRprtData = new ArrayList<Map<String, String>>();
@@ -281,8 +282,10 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	public void exportaccuracyrptCSV() throws InterruptedException, FileNotFoundException, IOException, ExecutionException{
 		JSWaiter.waitJQueryAngular();
 		exportVA(exportBtn, csvexport, exportdate,  date, export);
-		Thread.sleep(10000);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExportCSV));
+		Thread.sleep(5000);
+		time_stamp = timeStamp();
+		System.out.println("The timestamp is : " +time_stamp);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + AccuracyExportCSV));
 	}
 
 	/**
@@ -295,8 +298,10 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	public void exportaccuracyrptXLSX() throws InterruptedException, FileNotFoundException, IOException, ExecutionException{
 		JSWaiter.waitJQueryAngular();
 		exportVA(exportBtn, XLSXExport, exportdate,  date, export);
-		Thread.sleep(10000);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+VisibilityExportXLSX));
+		Thread.sleep(5000);
+		time_stamp = timeStamp();
+		System.out.println("The timestamp is : " +time_stamp);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + AccuracyExportXLSX));
 	}	
 
 	/**
@@ -307,10 +312,10 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	public List<Map<String, String>> getExportData() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		exportaccuracyrptXLSX();
-		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+AccuracyExportXLSX), "Sheet0").getExcelTable();
+		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser() + time_stamp + AccuracyExportXLSX), "Sheet0").getExcelTable();
 		List<Map<String, String>> exportData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
-		Workbook wb = new XSSFWorkbook(Exportpath + (CurrentState.getBrowser()+AccuracyExportXLSX));
+		Workbook wb = new XSSFWorkbook(Exportpath + (CurrentState.getBrowser()+ time_stamp + AccuracyExportXLSX));
 		Sheet sh = wb.getSheetAt(0);
 		Row row = sh.getRow(0);
 		int Last_row = sh.getLastRowNum();
@@ -339,8 +344,8 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	public void verifysitelinkdata(SoftAssert soft) throws Exception{
 		String data = null;
 		JSWaiter.waitJQueryAngular();
-		waitForElement(accuracysite, 40);
-		waitForElement(siteshow, 40);
+		waitForElement(accuracysite, 5);
+		waitForElement(siteshow, 1);
 		scrollByElement(siteshow);
 		int size = (sitelink.size())/2;
 		int newsize;
@@ -356,15 +361,15 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 			scrollByElement(ele);
 			ele.click();
 			System.out.println("Vendor Clicked");
-			waitForElement(tableresult,40);
+			waitForElement(tableresult,5);
 			scrollByElement(tableresult);
 			System.out.println("\n reading data div ********************* \n");
-			waitForElement(tableresultset,50);
+			waitForElement(tableresultset,5);
 			scrollByElement(tableresultset);
 			System.out.println("\n reading progress bar data table ******************* \n");
 			JSWaiter.waitJQueryAngular();
-			waitForElement(totalentries,50);
-			waitForElement(tableresultset,50);
+			waitForElement(totalentries,5);
+			waitForElement(tableresultset,5);
 			if(driver.findElement(By.className("dataTables_info")).isDisplayed()) {
 				String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
 				int page = Integer.parseInt(n);
@@ -416,7 +421,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 					Assert.assertTrue(entiresText.contains(""+count+""), "Table Data count matches with total enties count");
 					scrollByElement(tableresult);
 					System.out.println("UI Table Values :" +tableCellValues);
-					List<Map<String, String>> TableExport = getExporttableData();
+					List<Map<String, String>> TableExport = getExporttableData(); 
 					System.out.println("Excel File Values :" +TableExport);
 					int UISize = tableCellValues.size();
 					System.out.println("UI Table size is :" +UISize);
@@ -425,9 +430,10 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 					if(UISize == XLSize) {
 						for(int i = 0; i<=UISize; i++) {							
 							//assertTrue(tableCellValues.get(i).equals(TableExport.get(i)));
+							assertTrue(tableCellValues.contains(TableExport));
 						}
 					}
-					deletefile();
+					//deletefile();
 					tableCellValues.clear();
 					scrollByElement(siteshow);
 				}else {
@@ -446,7 +452,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 				}
 			}
 		GoTo();
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		resultperpage(soft);
 	}
 	
@@ -488,7 +494,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 					}
 					scrollByElement(UpdateInaccuracyBtn);
 					clickelement(UpdateInaccuracyBtn);
-					Thread.sleep(5000);
+					Thread.sleep(2000);
 					wait.until(ExpectedConditions.visibilityOf(UpdateSuccessBtn));
 					clickelement(UpdateSuccessBtn);
 				}
@@ -533,14 +539,16 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	 */
 	public void exporttableAccuracyXLSX() throws FileNotFoundException, IOException, InterruptedException {
 		JSWaiter.waitJQueryAngular();
-		waitForElement(tableresult, 40);
+		waitForElement(tableresult, 5);
 		WebElement TableTitle = driver.findElement(By.xpath("//*[@id='inaccuracy_table_title']"));
 		String s = TableTitle.toString();
 		scrollByElement(TableTitle);
 		if(!s.equalsIgnoreCase("Yelp")) {
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
 			exportVATable(tablebtn, ExporttableXLSX);
-			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+AccuracyExporttableXLSX));
+			time_stamp = timeStamp();
+			System.out.println("The timestamp is : " +time_stamp);
+			renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser()+ time_stamp + AccuracyExporttableXLSX));
 			Thread.sleep(5000);
 			CurrentState.getLogger().info("downloaded file name: "+getLastModifiedFile("./downloads"));
 
@@ -558,7 +566,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	public List<Map<String, String>> getExporttableData() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		exporttableAccuracyXLSX();
-		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser()+AccuracyExporttableXLSX), "Accuracy_Report").getExcelTable();
+		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser() + time_stamp + AccuracyExporttableXLSX), "Accuracy_Report").getExcelTable();
 		List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
 		for (int col = 1; col < colSize; col++) {
@@ -576,28 +584,30 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	 * Method to verify inaccuracy checkbox
 	 */
 	public void showinaccuracy() {
-		waitForElement(InAccuracychkBox, 15);
+		waitForElement(InAccuracychkBox, 5);
+		//wait.until(ExpectedConditions.visibilityOf(InAccuracychkBox));
 		scrollByElement(InAccuracychkBox);
+		//action.moveToElement(InAccuracychkBox).click().perform();
 		clickelement(InAccuracychkBox);
 		String var = ((JavascriptExecutor)driver).executeScript("return document.getElementById('toggle-inaccuracies').checked").toString();
 		System.out.println(var);
 		boolean app = Boolean.parseBoolean(var);
 		boolean out = true;
-		Assert.assertEquals(app, out , "Matches");
+		soft.assertEquals(app, out , "Matches");
 	}
 
 	/**
 	 * Method to verify ignored checkbox
 	 */
 	public void showignored() {
-		waitForElement(IgnoredchkBox, 10);
+		waitForElement(IgnoredchkBox, 5);
 		scrollByElement(IgnoredchkBox);
 		clickelement(IgnoredchkBox);
 		String var = ((JavascriptExecutor)driver).executeScript("return document.getElementById('toggle_overridden').checked").toString();
 		System.out.println(var);
 		boolean app = Boolean.parseBoolean(var);
 		boolean out = true;
-		Assert.assertEquals(app, out , "Matches");
+		soft.assertEquals(app, out , "Matches");
 	}
 
 
@@ -623,7 +633,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	 */
 	public ArrayList<String> verifyHeader() {
 		JSWaiter.waitJQueryAngular();
-		waitForElement(tableresult, 40);
+		waitForElement(tableresult, 5);
 		scrollByElement(tableresult);
 		ArrayList<String> TableHeader = new ArrayList<String>();
 		List<WebElement> elements = driver.findElements(By.xpath("//*[@id='inaccuracy_results']//th"));
@@ -648,11 +658,17 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	 * @throws Exception
 	 */
 	public void verifyAllTab() throws Exception{	
-		waitForElement(Alltab, 10);
+		waitForElement(Alltab, 5);
 		scrollByElement(Alltab);
 		ArrayList<String> XLData = GetSiteDataUsingColName("./data/InaccuracyTabs.xlsx", "ALL");
 		ArrayList<String> UIsite = verifyHeader();
-		Assert.assertEquals(XLData, UIsite, "Matches");			
+		int UIsize = UIsite.size();
+		int XLsize = XLData.size();
+		if(UIsize == XLsize) {
+			for(int i = 0; i <= UIsize -1; i++) {
+				soft.assertTrue(UIsite.get(i).equals(XLData.get(i)), "The header from XL is : " +XLData.get(i) + "and the header from UI is : " +UIsite.get(i) );
+			}
+		}		
 	}
 
 	/**
@@ -660,12 +676,18 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	 * @throws Exception
 	 */
 	public void verifyNameTab() throws Exception{		
-		waitForElement(Nametab, 10);
+		waitForElement(Nametab, 5);
 		scrollByElement(Nametab);
 		clickelement(Nametab);
 		ArrayList<String> XLData = GetSiteDataUsingColName("./data/InaccuracyTabs.xlsx", "NAME");
 		ArrayList<String> UIData = verifyHeader();
-		Assert.assertEquals(XLData, UIData, "Matches");			
+		int UIsize = UIData.size();
+		int XLsize = XLData.size();
+		if(UIsize == XLsize) {
+			for(int i = 0; i <= UIsize -1; i++) {
+				soft.assertTrue(UIData.get(i).equals(XLData.get(i)), "The header from XL is : " +XLData.get(i) + "and the header from UI is : " +UIData.get(i) );
+			}
+		}				
 	}
 
 	/**
@@ -673,12 +695,18 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	 * @throws Exception
 	 */
 	public void verifyAddressTab() throws Exception{
-		waitForElement(Addresstab, 10);
+		waitForElement(Addresstab, 5);
 		scrollByElement(Addresstab);
 		clickelement(Addresstab);
 		ArrayList<String> XLData = GetSiteDataUsingColName("./data/InaccuracyTabs.xlsx", "ADDRESS");
 		ArrayList<String> UIData = verifyHeader();
-		Assert.assertEquals(XLData, UIData, "Matches");			
+		int UIsize = UIData.size();
+		int XLsize = XLData.size();
+		if(UIsize == XLsize) {
+			for(int i = 0; i <= UIsize -1; i++) {
+				soft.assertTrue(UIData.get(i).equals(XLData.get(i)), "The header from XL is : " +XLData.get(i) + "and the header from UI is : " +UIData.get(i) );
+			}
+		}			
 	}
 
 	/**
@@ -686,12 +714,18 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 	 * @throws Exception
 	 */
 	public void verifyPHNOTab() throws Exception{
-		waitForElement(PHNumtab, 10);
+		waitForElement(PHNumtab, 5);
 		scrollByElement(PHNumtab);
 		clickelement(PHNumtab);
 		ArrayList<String> XLData = GetSiteDataUsingColName("./data/InaccuracyTabs.xlsx", "PH NUM");
 		ArrayList<String> UIData = verifyHeader();
-		Assert.assertEquals(XLData, UIData, "Matches");			
+		int UIsize = UIData.size();
+		int XLsize = XLData.size();
+		if(UIsize == XLsize) {
+			for(int i = 0; i <= UIsize -1; i++) {
+				soft.assertTrue(UIData.get(i).equals(XLData.get(i)), "The header from XL is : " +XLData.get(i) + "and the header from UI is : " +UIData.get(i) );
+			}
+		}				
 	}
 
 	/*//Comparision of UI and Excel
@@ -1032,9 +1066,6 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods{
 		return vendor;
 	}
 
-	public void Accuracyhighlight() {
-		reporthighlight(AccuracyPage, AccuracySec);
-	}
 	
 	public void resultperpage(SoftAssert soft) throws InterruptedException {
 		boolean ret = IsDataAvailable();

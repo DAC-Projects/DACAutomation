@@ -221,6 +221,30 @@ public abstract class BaseClass {
 		case "ReviewsBetaLocationFilter":
 			return IAutoconst.neuralTuringTechAccount;
 			
+		case "ReviewsStagingGlobalFilter":
+			return IAutoconst.neuralTuringTechAccountStaging;
+			
+		case "ReviewsStagingGroupFilter":
+			return IAutoconst.neuralTuringTechAccountStaging;
+			
+		case "ReviewsStagingCountryFilter":
+			return IAutoconst.neuralTuringTechAccountStaging;
+			
+		case "ReviewsStagingStateFilter":
+			return IAutoconst.neuralTuringTechAccountStaging;
+			
+		case "ReviewsStagingCityFilter":
+			return IAutoconst.neuralTuringTechAccountStaging;
+			
+		case "ReviewsStagingLocationFilter":
+			return IAutoconst.neuralTuringTechAccountStaging;
+			
+		case "ResponseManagementApproverStaging" :
+			return IAutoconst.neuralTuringTechAccountStaging;
+			
+		case "ResponseManagementCreatorStaging" :
+			return IAutoconst.neuralTuringTechAccountResponseStaging;
+			
 		/*case "ReviewsStaging":
 			return IAutoconst.neuralturingtechStaging;*/
 		// IAutoconst.Fit4LessAccount;
@@ -244,6 +268,7 @@ public abstract class BaseClass {
 
 		case "Social Automation":
 			return IAutoconst.SocialAutomationAccount;
+			
 		case "Social Automation Creator":
 			return IAutoconst.SocialAutomationAccountCreator;
 			

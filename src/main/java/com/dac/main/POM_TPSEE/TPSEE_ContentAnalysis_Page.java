@@ -1,7 +1,5 @@
 package com.dac.main.POM_TPSEE;
 
-import static org.testng.Assert.assertTrue;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -35,6 +33,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 	WebDriver driver;
 	Actions action;
 	WebDriverWait wait;
+	static String time_stamp;
 
 	// Navigating to TPSEE Content_Analysis page
 	public TPSEE_ContentAnalysis_Page(WebDriver driver) {
@@ -167,7 +166,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 	@Override
 	public List<Map<String, String>> getOverviewReport() {
 		JSWaiter.waitJQueryAngular();
-		waitForElement(Progress, 40);
+		waitForElement(Progress, 5);
 		System.out.println("\n Reading overall ********** \n");
 		Map<String, String> kMap;
 
@@ -192,8 +191,10 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 	public void ContentAnalysisExportCSV() throws FileNotFoundException, IOException, InterruptedException {
 		JSWaiter.waitJQueryAngular();
 		exportVATable(export1, export1_csv);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + ContentAnalysisExportCSV));
-		Thread.sleep(5000);
+		time_stamp = timeStamp();
+		System.out.println("The timestamp is : " +time_stamp);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + ContentAnalysisExportCSV));
+		Thread.sleep(2000);
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
 	}
 
@@ -207,8 +208,10 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 	public void ContentAnalysisExportXLSX() throws FileNotFoundException, IOException, InterruptedException {
 		JSWaiter.waitJQueryAngular();
 		exportVATable(export1, export1_xlsx);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + ContentAnalysisExportXLSX));
-		Thread.sleep(5000);
+		time_stamp = timeStamp();
+		System.out.println("The timestamp is : " +time_stamp);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + ContentAnalysisExportXLSX));
+		Thread.sleep(2000);
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
 	}
 
@@ -230,7 +233,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 	public List<Map<String, String>> getExportData() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		ContentAnalysisExportXLSX();
-		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser() + ContentAnalysisExportXLSX),
+		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser() + time_stamp + ContentAnalysisExportXLSX),
 				"ContentAnalysis_Report").getExcelTable();
 		List<Map<String, String>> exportData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
@@ -330,9 +333,9 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 		Assert.assertEquals(overallscore, graphscore);
 	}
 
-	public void SitelLinkData(SoftAssert soft) throws Exception { 
+	public void SitelLinkData() throws Exception { 
 		JSWaiter.waitJQueryAngular();
-		waitForElement(contentsiteTable, 40);
+		waitForElement(contentsiteTable, 5);
 		scrollByElement(contentsiteTable);
 		int size = SiteLink.size();
 		int newsize;
@@ -346,18 +349,18 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 			driver.findElement(By.xpath("(//*[@class='logo-img img-responsive sourceImg'])[" + k + "]")).click();
 
 			System.out.println("\n Link clicked \n");
-			waitForElement(SiteLinkTable, 40);
+			waitForElement(SiteLinkTable, 5);
 			scrollByElement(SiteLinkTable);
 			System.out.println("\n reading table data********************* \n");
 			JSWaiter.waitJQueryAngular();
-			waitForElement(Tableresults, 50);
+			waitForElement(Tableresults, 5);
 			scrollByElement(Tableresults);
 			System.out.println("\n reading data table ******************* \n");
 			if (driver.findElement(By.className("dataTables_info")).isDisplayed()) {
 				wait.until(
 						ExpectedConditions.visibilityOfElementLocated(By.xpath("//table[@id='incomplete_results']")));
 				JSWaiter.waitJQueryAngular();
-				waitForElement(Tableresults, 50);
+				waitForElement(Tableresults, 3);
 				String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
 				int page = Integer.parseInt(n);
 				System.out.println("\n" + page);
@@ -437,7 +440,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 							 soft.assertTrue(tableCellValues.get(i).equals(TableExport.get(i)));
 						}
 					}
-					deletefile();
+					//deletefile();
 					tableCellValues.clear();
 					scrollByElement(contentsiteTable);
 				} else {
@@ -479,8 +482,10 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 	public void ContentAnalysisSiteExportCSV() throws FileNotFoundException, IOException, InterruptedException {
 		JSWaiter.waitJQueryAngular();
 		exportVATable(TableExport, TableExport_csv);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + ContentAnalysisSiteExportCSV));
-		Thread.sleep(5000);
+		time_stamp = timeStamp();
+		System.out.println("The timestamp is : " +time_stamp);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + ContentAnalysisSiteExportCSV));
+		Thread.sleep(2000);
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
 	}
 
@@ -494,15 +499,17 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 	public void ContentAnalysisSiteExportXLSX() throws FileNotFoundException, IOException, InterruptedException {
 		JSWaiter.waitJQueryAngular();
 		exportVATable(TableExport, TableExport_xlsx);
-		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + ContentAnalysisSiteExportXLSX));
-		Thread.sleep(5000);
+		time_stamp = timeStamp();
+		System.out.println("The timestamp is : " +time_stamp);
+		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + ContentAnalysisSiteExportXLSX));
+		Thread.sleep(2000);
 		CurrentState.getLogger().info("downloaded file name: " + getLastModifiedFile("./downloads"));
 	}
 
 	public List<Map<String, String>> getSiteLinkExporttableData() throws Exception {
 		JSWaiter.waitJQueryAngular();
 		ContentAnalysisSiteExportXLSX();
-		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser() + ContentAnalysisSiteExportXLSX),
+		String[][] table = new ExcelHandler(Exportpath + (CurrentState.getBrowser() + time_stamp + ContentAnalysisSiteExportXLSX),
 				"Content_Analysis").getExcelTable();
 		List<Map<String, String>> exporttableData = new ArrayList<Map<String, String>>();
 		int colSize = table[0].length;
@@ -557,7 +564,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 	// To get Vendors List displaying in the application
 	public List<Map<String, String>> verifyAnalysisSitevendors() {
 		JSWaiter.waitJQueryAngular();
-		waitForElement(vendorslist, 40);
+		waitForElement(vendorslist, 5);
 		scrollByElement(vendorslist);
 		Map<String, String> kMap;
 		List<Map<String, String>> Vendors = new ArrayList<Map<String, String>>();
@@ -596,7 +603,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 
 	public double CAScore()
 			throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
-		waitForElement(hstryGrph, 30);
+		waitForElement(hstryGrph, 5);
 		scrollByElement(hstryGrph);
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth()) / 2 - 2, 0).click().perform();
@@ -612,7 +619,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 
 	public int CALoc()
 			throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
-		waitForElement(hstryGrph, 30);
+		waitForElement(hstryGrph, 5);
 		scrollByElement(hstryGrph);
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth()) / 2 - 2, 0).click().perform();
@@ -626,14 +633,10 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 		return numberoflocations;
 	}
 	
-	public void ContentAnalysishighlight() {
-		reporthighlight(ContentAnalysisPage, ContentAnalysisSec);
-	}
-	
 	public void resultperpage(SoftAssert soft) throws InterruptedException {
 		if (driver.findElement(By.className("dataTables_info")).isDisplayed()) {
 		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		ResultsperPage(soft, entiresText, Resultperpage);
 		}else {
 			System.out.println("No Data Available");
@@ -643,7 +646,7 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 	public void GoTo() throws InterruptedException {
 		if (driver.findElement(By.className("dataTables_info")).isDisplayed()) {
 		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		waitForElement(gotopage, 10);
 		scrollByElement(gotopage);
 		GoTopage(gotopage);

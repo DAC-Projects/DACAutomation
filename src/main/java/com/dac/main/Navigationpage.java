@@ -29,7 +29,7 @@ public class Navigationpage extends BasePage {
 
 		super(driver);
 		this.driver = driver;
-		wait = new WebDriverWait(driver, 55);
+		wait = new WebDriverWait(driver, 20);
 		action = new Actions(driver);
 		PageFactory.initElements(driver, this);
 
@@ -92,6 +92,12 @@ public class Navigationpage extends BasePage {
 	
 	@FindBy(xpath = "//a[@href='/Dashboard/SyndicationStatus']/span")
 	private WebElement DataSyndication;
+	
+	@FindBy(xpath = "//a[@href='/Dashboard/LocalRankPlus/']")
+	private WebElement LocalRankPlus; 
+	
+	@FindBy(xpath = "(//a[@href='/Dashboard/ReportSiteOrder/']//span)")
+	private WebElement SiteOrder;
 
 	// ------------------------- SA and RRM -------------------------------------
 
@@ -311,6 +317,24 @@ public class Navigationpage extends BasePage {
 	 */
 	public void navigateToAllLocations() {
 		clickelement(AllLocations);
+		System.out.println("Waiting for page to load********");
+		waitUntilLoad(driver);
+		try {
+			clickwalkme();
+		} catch (Exception e) {
+			System.out.println("No Walkme Displayed");
+		}
+		try {
+			clickNotificationPopUp();
+		} catch (Exception e) {
+			System.out.println("No Notification PopUp displayed");
+		}
+	}
+	
+	public void navigateToSiteOrder() {
+		action.moveToElement(Settings).perform();
+		waitForElement(SiteOrder, 10);
+		action.moveToElement(SiteOrder).click().perform();
 		System.out.println("Waiting for page to load********");
 		waitUntilLoad(driver);
 		try {
@@ -563,6 +587,26 @@ public class Navigationpage extends BasePage {
 			clickNotificationPopUp();
 		} catch (Exception e) {
 			System.out.println("No Notification PopUp displayed");
+		}
+	}
+	
+	
+	/**
+	 * To Navigate to Local Rank Plus page
+	 */
+	public void navigateTPSEE_LocalRankPlus() { 
+		clickelement(LocalRankPlus);
+		System.out.println("Waiting for page to load**********");
+		waitUntilLoad(driver);
+		try {
+			clickwalkme();
+		} catch (Exception e) {
+			System.out.println("");
+		}
+		try {
+			clickNotificationPopUp();
+		} catch (Exception e) {
+			System.out.println("");
 		}
 	}
 	// -----CA
