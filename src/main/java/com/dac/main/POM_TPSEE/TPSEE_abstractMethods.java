@@ -25,7 +25,6 @@ import java.util.regex.Pattern;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.Header;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.poi.ss.usermodel.Cell;
@@ -2267,24 +2266,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	public void verifyLocationFilterSiteAddress(String text) {
 		waitForElement(Site_Location_Address, 5);
 		scrollByElement(Site_Location_Address);
-		List<WebElement> Site_Loc_Add = driver
-				.findElements(By.xpath("(//div[@id='singleLocationReport']//div[@class='item-content'])"));
-		int size = Site_Loc_Add.size();
-		System.out.println("The size of the list is : " + size);
-		List<WebElement> Site_Details = driver
-				.findElements(By.xpath("(//div[@id='singleLocationReport']//span[@class='item-name'])"));
-		for (int i = 1; i <= size; i++) {
-			String Site = driver
-					.findElement(By.xpath("(//div[@id='singleLocationReport']//span[@class='item-name'])[" + i + "]"))
-					.getText();
-			System.out.println("The vendor site is : " + Site);
-			String Loc_Details = driver
-					.findElement(By.xpath("(//div[@id='singleLocationReport']//div[@class='item-content'])[" + i + "]"))
-					.getText();
-			System.out.println("The Location details : " + Loc_Details);
-			soft.assertTrue(Loc_Details.contains(text), "The Vendor site is " + Site + "and Location Details is "
+		String Loc_Details = driver
+					.findElement(By.xpath("//div[@class='location-address']"))
+					.getText().trim();
+		System.out.println("The Location details : " + Loc_Details);
+		soft.assertTrue(Loc_Details.equals(text), "Location Details is "
 					+ Loc_Details + "The Location details from the location filter is : " + text);
-		}
 		soft.assertAll();
 	}
 

@@ -1099,7 +1099,7 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 				if ((cell.getCellType() == Cell.CELL_TYPE_STRING)) {
 					String cellValue1 = cell.getStringCellValue().toString();
 					System.out.println("Cell VAlue is :" + cellValue1);
-					if (!cellValue1.contains("N/A")) {
+					if (!(cellValue1.contains("N/A"))) {
 						double cellValue = Double.parseDouble(cellValue1);
 						System.out.println(cellValue);
 						score.add(cellValue);
@@ -1113,16 +1113,23 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 		}
 		int sizeOfList = score.size();
 		System.out.println("Size of List is :" + sizeOfList);
+		if(sizeOfList > 0) {
 		for (int i = 0; i <= sizeOfList - 1; i++) {
 			sum = sum + score.get(i);
 		}
 		System.out.println("Total sum is :" + sum);
 		average = sum / sizeOfList;
+		System.out.println("The averagre is : " +average);
+		System.out.println("The size of the list is : " +sizeOfList);
 		BigDecimal bd = BigDecimal.valueOf(average);
 		bd = bd.setScale(1, RoundingMode.HALF_UP);
 		finalaverage = bd.doubleValue();
 		System.out.println("Final Average Score:" + finalaverage);
 		return finalaverage;
+		}else {
+			finalaverage = 0.0;
+			return finalaverage;
+		}
 	}
 	
 	/**
