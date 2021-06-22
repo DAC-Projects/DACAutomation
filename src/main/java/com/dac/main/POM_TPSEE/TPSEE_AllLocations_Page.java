@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -143,6 +144,9 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 	private WebElement Phonehead;
 
 	private String Phone = "(//table[@id='locationTable']//tbody//td[7])";
+	
+	@FindBy(xpath = "//input[@id='locationSearch']")
+	private WebElement Searchbox;
 
 	/*-------------------------Pagination-----------------------*/
 
@@ -464,4 +468,21 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 	public void verifyPhone() throws InterruptedException {
 		TableSorting(Phonehead, Phone, entiresText, LocationTableRow, LocationTable);
 	}
+	
+	public void SearchwithKeywords(String Keyword) throws InterruptedException {
+		scrollByElement(Searchbox);
+		clickelement(Searchbox);
+		Searchbox.sendKeys(Keyword);
+		Searchbox.sendKeys(Keys.ENTER);
+		JSWaiter.waitJQueryAngular();
+		Thread.sleep(3000);
+	}
+	
+	public void ClearSearchText() throws InterruptedException {
+		scrollByElement(Searchbox);
+		Searchbox.clear();
+		JSWaiter.waitJQueryAngular();
+		Thread.sleep(3000);
+	}
+	
 }

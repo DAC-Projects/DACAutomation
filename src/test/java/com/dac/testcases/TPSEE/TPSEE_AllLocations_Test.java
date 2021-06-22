@@ -32,13 +32,21 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
+	@Parameters({ "Filter" })
 	@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
-	public void GetKPIValues() throws Exception {
+	public void GetKPIValues(int Filter) throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		location = data.getLocations();
 		System.out.println(location);
 		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 
 	/**
@@ -59,13 +67,20 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * test to verify title and title text
 	 * @throws Exception
 	 */
+	@Parameters({ "Filter" })
 	@Test(priority = 3, groups = { "smoke" }, description = "Test for verify title and description")
-	public void verifyText() throws Exception {
+	public void verifyText(int Filter) throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		data.VerifyLocationsTitleText("Locations",
 				"This is where all the locations currently associated to your account are listed. Read Manual");
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
-
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 
 	/**
@@ -73,15 +88,23 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
+	@Parameters({ "Filter" })
 	@Test(priority = 4, groups = { "smoke" }, description = "Test for compare KPI Values")
-	public void ovrviewlocscorecompare() throws Exception {
+	public void ovrviewlocscorecompare(int Filter) throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		Thread.sleep(5000);
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		int loc = data.numberoflocation();
 		System.out.println(loc);
 		Assert.assertEquals(loc, location);
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Visibility page");
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 
 	/**
@@ -142,24 +165,40 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * test to verify goto page
 	 * @throws Exception
 	 */
+	@Parameters({"Filter"})
 	@Test(priority = 8, description = "Test to GoTo Page verification")
-	public void verifyGotoPage() throws Exception {
+	public void verifyGotoPage(int Filter) throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		data.GoTo();
 		addEvidence(CurrentState.getDriver(), "Test to verify GoTo Page", "yes");
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 	
 	/**
 	 * test to verify results per page
 	 * @throws Exception
 	 */
+	@Parameters({"Filter"})
 	@Test(priority = 9, description = "Test to results per page")
-	public void verifyResultperPage() throws Exception {
+	public void verifyResultperPage(int Filter) throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		data.resultperpage(soft);	
 		addEvidence(CurrentState.getDriver(), "Test to verify Results per page", "yes");
 		Thread.sleep(5000);		
 		soft.assertAll();
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 	
 	/**
@@ -185,6 +224,265 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		}else {
 			System.out.println("The group is not empty");
 		}
+	}
+	
+	@Parameters("Filter")
+	@Test(priority = 11, description = "Test to search using location number")
+	public void verifySearchByLocationNum(String Filter) throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx" , "Location_Page_Search");
+		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
+		String Country1 = wb1.getCellValue(Integer.parseInt(Filter), wb1.seacrh_pattern("Country", 0).get(0).intValue());
+		if(Country1.equals("null")) {
+		for(int i = 1; i <= wb.getRowCount(); i++) {
+		String LocationNumber = wb.getCellValue(i, wb.seacrh_pattern("Search By Location", 0).get(0).intValue());
+		System.out.println("The location number selected is : " +LocationNumber);
+		data.SearchwithKeywords(LocationNumber);
+		addEvidence(CurrentState.getDriver(), "Test to search using location number", "yes");
+		}
+		}else {
+			System.out.println("The group is not empty");
+		}
+	}
+	
+	/**
+	 * test to compare UI and XL data
+	 * @throws Exception
+	 */
+	@Test(priority = 12, description = "Test for Location export and export verification for location nummber search", dependsOnMethods = "verifySearchByLocationNum")
+	public void verifyTableDataoExportLocNum() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.compareExprttoAnalysisSiteLinkData(data.LocationDataTable(), data.getLocationDataTableExport());
+		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
+	}	
+	
+	@Test(priority = 13, description = "Test to clear search box", dependsOnMethods = "verifyTableDataoExportLocNum")
+	public void clearsearchLocNum() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.ClearSearchText();
+		addEvidence(CurrentState.getDriver(), "Test to clear data from searchbox", "yes");
+	}
+	
+	@Parameters("Filter")
+	@Test(priority = 14, description = "Test to search using name")
+	public void verifySearchByName(String Filter) throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx" , "Location_Page_Search");
+		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
+		String Country1 = wb1.getCellValue(Integer.parseInt(Filter), wb1.seacrh_pattern("Country", 0).get(0).intValue());
+		if(Country1.equals("null")) {
+		for(int i = 1; i <= wb.getRowCount(); i++) {
+		String LocationNumber = wb.getCellValue(i, wb.seacrh_pattern("Search By Name", 0).get(0).intValue());
+		System.out.println("The location number selected is : " +LocationNumber);
+		data.SearchwithKeywords(LocationNumber);
+		addEvidence(CurrentState.getDriver(), "Test to search using name", "yes");
+		}
+		}else {
+			System.out.println("The group is not empty");
+		}
+	}
+	
+	/**
+	 * test to compare UI and XL data
+	 * @throws Exception
+	 */
+	@Test(priority = 15, description = "Test for Location export and export verification for location nummber search", dependsOnMethods = "verifySearchByName")
+	public void verifyTableDataoExportName() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.compareExprttoAnalysisSiteLinkData(data.LocationDataTable(), data.getLocationDataTableExport());
+		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
+	}	
+	
+	@Test(priority = 16, description = "Test to clear search box", dependsOnMethods = "verifyTableDataoExportName")
+	public void clearsearchName() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.ClearSearchText();
+		addEvidence(CurrentState.getDriver(), "Test to clear data from searchbox", "yes");
+	}
+	
+	@Parameters("Filter")
+	@Test(priority = 17, description = "Test to search using name")
+	public void verifySearchByAddress(String Filter) throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx" , "Location_Page_Search");
+		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
+		String Country1 = wb1.getCellValue(Integer.parseInt(Filter), wb1.seacrh_pattern("Country", 0).get(0).intValue());
+		if(Country1.equals("null")) {
+		for(int i = 1; i <= wb.getRowCount(); i++) {
+		String LocationNumber = wb.getCellValue(i, wb.seacrh_pattern("Search By Address", 0).get(0).intValue());
+		System.out.println("The location number selected is : " +LocationNumber);
+		data.SearchwithKeywords(LocationNumber);
+		addEvidence(CurrentState.getDriver(), "Test to search using Address", "yes");
+		}
+		}else {
+			System.out.println("The group is not empty");
+		}
+	}
+	
+	/**
+	 * test to compare UI and XL data
+	 * @throws Exception
+	 */
+	@Test(priority = 18, description = "Test for Location export and export verification for location nummber search", dependsOnMethods = "verifySearchByAddress")
+	public void verifyTableDataoExportAddress() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.compareExprttoAnalysisSiteLinkData(data.LocationDataTable(), data.getLocationDataTableExport());
+		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
+	}	
+	
+	@Test(priority = 19, description = "Test to clear search box", dependsOnMethods = "verifyTableDataoExportAddress")
+	public void clearsearchNameAddress() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.ClearSearchText();
+		addEvidence(CurrentState.getDriver(), "Test to clear data from searchbox", "yes");
+	}
+	
+	@Parameters("Filter")
+	@Test(priority = 20, description = "Test to search using name")
+	public void verifySearchByCity(String Filter) throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx" , "Location_Page_Search");
+		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
+		String Country1 = wb1.getCellValue(Integer.parseInt(Filter), wb1.seacrh_pattern("Country", 0).get(0).intValue());
+		if(Country1.equals("null")) {
+		for(int i = 1; i <= wb.getRowCount(); i++) {
+		String LocationNumber = wb.getCellValue(i, wb.seacrh_pattern("Search By City", 0).get(0).intValue());
+		System.out.println("The location number selected is : " +LocationNumber);
+		data.SearchwithKeywords(LocationNumber);
+		addEvidence(CurrentState.getDriver(), "Test to search using City", "yes");
+		}
+		}else {
+			System.out.println("The group is not empty");
+		}
+	}
+	
+	/**
+	 * test to compare UI and XL data
+	 * @throws Exception
+	 */
+	@Test(priority = 21, description = "Test for Location export and export verification for city search", dependsOnMethods = "verifySearchByCity")
+	public void verifyTableDataoExportCity() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.compareExprttoAnalysisSiteLinkData(data.LocationDataTable(), data.getLocationDataTableExport());
+		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
+	}	
+	
+	@Test(priority = 22, description = "Test to clear search box", dependsOnMethods = "verifyTableDataoExportCity")
+	public void clearsearchNameCity() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.ClearSearchText();
+		addEvidence(CurrentState.getDriver(), "Test to clear data from searchbox", "yes");
+	}
+	
+	@Parameters("Filter")
+	@Test(priority = 23, description = "Test to search using name")
+	public void verifySearchByState(String Filter) throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx" , "Location_Page_Search");
+		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
+		String Country1 = wb1.getCellValue(Integer.parseInt(Filter), wb1.seacrh_pattern("Country", 0).get(0).intValue());
+		if(Country1.equals("null")) {
+		for(int i = 1; i <= wb.getRowCount(); i++) {
+		String LocationNumber = wb.getCellValue(i, wb.seacrh_pattern("Search By State", 0).get(0).intValue());
+		System.out.println("The location number selected is : " +LocationNumber);
+		data.SearchwithKeywords(LocationNumber);
+		addEvidence(CurrentState.getDriver(), "Test to search using Address", "yes");
+		}
+		}else {
+			System.out.println("The group is not empty");
+		}
+	}
+	
+	/**
+	 * test to compare UI and XL data
+	 * @throws Exception
+	 */
+	@Test(priority = 24, description = "Test for Location export and export verification for location nummber search", dependsOnMethods = "verifySearchByState")
+	public void verifyTableDataoExportState() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.compareExprttoAnalysisSiteLinkData(data.LocationDataTable(), data.getLocationDataTableExport());
+		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
+	}	
+	
+	@Test(priority = 25, description = "Test to clear search box", dependsOnMethods = "verifyTableDataoExportState")
+	public void clearsearchNameState() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.ClearSearchText();
+		addEvidence(CurrentState.getDriver(), "Test to clear data from searchbox", "yes");
+	}
+	
+	@Parameters("Filter")
+	@Test(priority = 26, description = "Test to search using Postal Code")
+	public void verifySearchByPostCode(String Filter) throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx" , "Location_Page_Search");
+		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
+		String Country1 = wb1.getCellValue(Integer.parseInt(Filter), wb1.seacrh_pattern("Country", 0).get(0).intValue());
+		if(Country1.equals("null")) {
+		for(int i = 1; i <= wb.getRowCount(); i++) {
+		String LocationNumber = wb.getCellValue(i, wb.seacrh_pattern("Search By Postal Code", 0).get(0).intValue());
+		System.out.println("The location number selected is : " +LocationNumber);
+		data.SearchwithKeywords(LocationNumber);
+		addEvidence(CurrentState.getDriver(), "Test to search using Post Code", "yes");
+		}
+		}else {
+			System.out.println("The group is not empty");
+		}
+	}
+	
+	/**
+	 * test to compare UI and XL data
+	 * @throws Exception
+	 */
+	@Test(priority = 27, description = "Test for Location export and export verification for location nummber search", dependsOnMethods = "verifySearchByPostCode")
+	public void verifyTableDataoExportPostCode() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.compareExprttoAnalysisSiteLinkData(data.LocationDataTable(), data.getLocationDataTableExport());
+		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
+	}	
+	
+	@Test(priority = 28, description = "Test to clear search box", dependsOnMethods = "verifyTableDataoExportPostCode")
+	public void clearsearchNamePostCode() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.ClearSearchText();
+		addEvidence(CurrentState.getDriver(), "Test to clear data from searchbox", "yes");
+	}
+	
+	@Parameters("Filter")
+	@Test(priority = 29, description = "Test to search using Phone Number")
+	public void verifySearchByPhone(String Filter) throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx" , "Location_Page_Search");
+		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
+		String Country1 = wb1.getCellValue(Integer.parseInt(Filter), wb1.seacrh_pattern("Country", 0).get(0).intValue());
+		if(Country1.equals("null")) {
+		for(int i = 1; i <= wb.getRowCount(); i++) {
+		String LocationNumber = wb.getCellValue(i, wb.seacrh_pattern("Search By Phone", 0).get(0).intValue());
+		System.out.println("The location number selected is : " +LocationNumber);
+		data.SearchwithKeywords(LocationNumber);
+		addEvidence(CurrentState.getDriver(), "Test to search using Address", "yes");
+		}
+		}else {
+			System.out.println("The group is not empty");
+		}
+	}
+	
+	/**
+	 * test to compare UI and XL data
+	 * @throws Exception
+	 */
+	@Test(priority = 30, description = "Test for Location export and export verification for location nummber search", dependsOnMethods = "verifySearchByPhone")
+	public void verifyTableDataoExportPhone() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.compareExprttoAnalysisSiteLinkData(data.LocationDataTable(), data.getLocationDataTableExport());
+		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
+	}	
+	
+	@Test(priority = 31, description = "Test to clear search box", dependsOnMethods = "verifyTableDataoExportPhone")
+	public void clearsearchNamePhone() throws Exception {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.ClearSearchText();
+		addEvidence(CurrentState.getDriver(), "Test to clear data from searchbox", "yes");
 	}
 	
 /*	@Test(priority = 10, description = "Test to sort data and verify")
