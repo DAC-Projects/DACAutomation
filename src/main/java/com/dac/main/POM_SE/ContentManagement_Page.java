@@ -770,11 +770,11 @@ public class ContentManagement_Page extends BasePage {
 							assertFalse(flag, "Reject Button is not displayed");
 							assertTrue(driver
 									.findElement(By.xpath(
-											"(//a[@class='btn btn-xs btn-default btn-block link-edit'])[" + row + "]"))
+											"(//a[@class='btn btn-outline-primary btn-xs btn-block btn-icon link-edit'])[" + row + "]"))
 									.isDisplayed());
 							System.out.println("Edit Link is displayed");
 							assertTrue(driver.findElement(By.xpath(
-									"(//button[@class='btn btn-xs btn-danger btn-block btn-delete'])[" + row + "]"))
+									"(//button[@class='btn btn-outline-primary btn-xs btn-block btn-icon btn-delete'])[" + row + "]"))
 									.isDisplayed());
 							System.out.println("Delete Button is displayed");
 
@@ -1595,16 +1595,18 @@ public class ContentManagement_Page extends BasePage {
 	
 	public int NumOfentries(WebElement entry) {
 		waitForElement(entry, 10);
+		int finalvalue;
 		if(entry.isDisplayed()) {
 		String entiresText = entry.getText();
 		System.out.println("The total entries in a table is :" + entiresText);
 		String result = entiresText.substring(entiresText.indexOf("(") + 3, entiresText.indexOf(")") - 7).trim();
-		int finalvalue = Integer.parseInt(result);
+		finalvalue = Integer.parseInt(result);
 		System.out.println("The number of entries is : " +finalvalue);
-		return finalvalue;
 		}else {
 			System.out.println("No Data available");
-			return 0;
-		}		
+			finalvalue = 0;
+			
+		}	
+		return finalvalue;
 	}
 }

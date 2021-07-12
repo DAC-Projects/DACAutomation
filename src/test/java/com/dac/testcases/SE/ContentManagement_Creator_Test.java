@@ -29,7 +29,7 @@ public class ContentManagement_Creator_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Content Management page from Dashboard", "yes");
 	}
 
-	@Test(priority = 2)
+		@Test(priority = 2)
 	public void verifyText() throws Exception {
 		data = new ContentManagement_Page(CurrentState.getDriver());
 		data.VerifyTitleText();
