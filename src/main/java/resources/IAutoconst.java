@@ -56,7 +56,7 @@ public interface IAutoconst {
 	String[] OssingtonBetaCreator = {baseUrl + "ossington-terminus-beta", "rpillai@dacgroup.com"}; // Ossington Beta Creator
 	String[] SocialdeepFieldAccount = {baseUrl+"deepfield-software-incorporated-beta","vijayata_201989@yahoo.com"};
 	String[] SocialAutomationAccount = {baseUrl+"social-beings-beta","rohit.watson@gmail.com"};
-	String[] SocialAutomationAccountCreator = {baseUrl+"social-beings-beta","vrohitmenon@gmail.com"};
+	String[] SocialAutomationAccountCreator = {baseUrl+"social-beings-beta","sanjeevkanna.b@gmail.com"};
 	String userLocale = "IN";
 	/*----------------LPAD Variables----------------*/
     String LPADUrlBeta="https://dac-map-beta.azurewebsites.net/";
