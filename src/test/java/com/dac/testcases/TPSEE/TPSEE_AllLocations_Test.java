@@ -224,6 +224,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		}else {
 			System.out.println("The group is not empty");
 		}
+		CurrentState.getDriver().navigate().refresh();
 	}
 	
 	@Parameters("Filter")
@@ -256,7 +257,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}	
 	
-	@Test(priority = 13, description = "Test to clear search box", dependsOnMethods = "verifyTableDataoExportLocNum")
+	@Test(priority = 13, description = "Test to clear search box")
 	public void clearsearchLocNum() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.ClearSearchText();
@@ -293,7 +294,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}	
 	
-	@Test(priority = 16, description = "Test to clear search box", dependsOnMethods = "verifyTableDataoExportName")
+	@Test(priority = 16, description = "Test to clear search box")
 	public void clearsearchName() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.ClearSearchText();
@@ -330,7 +331,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}	
 	
-	@Test(priority = 19, description = "Test to clear search box", dependsOnMethods = "verifyTableDataoExportAddress")
+	@Test(priority = 19, description = "Test to clear search box")
 	public void clearsearchNameAddress() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.ClearSearchText();
@@ -367,7 +368,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}	
 	
-	@Test(priority = 22, description = "Test to clear search box", dependsOnMethods = "verifyTableDataoExportCity")
+	@Test(priority = 22, description = "Test to clear search box")
 	public void clearsearchNameCity() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.ClearSearchText();
@@ -404,7 +405,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}	
 	
-	@Test(priority = 25, description = "Test to clear search box", dependsOnMethods = "verifyTableDataoExportState")
+	@Test(priority = 25, description = "Test to clear search box")
 	public void clearsearchNameState() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.ClearSearchText();
@@ -441,7 +442,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}	
 	
-	@Test(priority = 28, description = "Test to clear search box", dependsOnMethods = "verifyTableDataoExportPostCode")
+	@Test(priority = 28, description = "Test to clear search box")
 	public void clearsearchNamePostCode() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.ClearSearchText();
@@ -478,7 +479,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}	
 	
-	@Test(priority = 31, description = "Test to clear search box", dependsOnMethods = "verifyTableDataoExportPhone")
+	@Test(priority = 31, description = "Test to clear search box")
 	public void clearsearchNamePhone() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.ClearSearchText();

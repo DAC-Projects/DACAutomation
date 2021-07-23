@@ -86,23 +86,39 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to verify title and title text
 	 * @throws Exception
 	 */
+	@Parameters({ "Filter" })
 	@Test(priority = 2, groups = {"smoke" }, description = "Test for verifying title and description of report")
-	public void verifyText() throws Exception {
+	public void verifyText(int Filter) throws Exception {
 		data = new TPSEE_GMB(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		data.VerifyGMBTitleText("Google My Business",
 				"This report provides insights into the number of views, clicks and actions that occured for each of your locations on Google over time. This information is obtained from Google and is updated daily. Read Manual");
 
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 
 	/**
 	 * test to verify mouse hover text
 	 * @throws Exception
 	 */
+	@Parameters({ "Filter" })
 	@Test(priority = 3, groups = { "smoke" }, description = "Test for verify hover text")
-	public void verifyHoverText() throws Exception {
+	public void verifyHoverText(int Filter) throws Exception {
 		data = new TPSEE_GMB(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		data.verifyMouseHoverText();
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 
 	/**
@@ -197,6 +213,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
 			data = new TPSEE_GMB(CurrentState.getDriver());
+			data.deletefile();
 			data.exportcsvGMB();
 			addEvidence(CurrentState.getDriver(), "Verifying CSV export functionality ", "yes");
 		} else {

@@ -145,7 +145,7 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 
 	private String Phone = "(//table[@id='locationTable']//tbody//td[7])";
 	
-	@FindBy(xpath = "//input[@id='locationSearch']")
+	@FindBy(xpath = "//input[@id='searchBox1']")
 	private WebElement Searchbox;
 
 	/*-------------------------Pagination-----------------------*/

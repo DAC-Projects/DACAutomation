@@ -9,7 +9,7 @@ import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
 
-public class Quick_Responses_Approver_Test extends BaseClass {
+public class Quick_Responses_Approver_EditandDeleteQuickResponse_Test extends BaseClass {
 	
 	Navigationpage np;
 	Quick_Responses data;
@@ -21,18 +21,24 @@ public class Quick_Responses_Approver_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Test to navigate to Response Management Page", "yes");
 	}
 	
-	@Test(priority = 2, dependsOnMethods= {"NavigateToResponseManagement"}, description = "Test to Add Quick Response")
-	public void AddQuickResponse() throws Exception {
+	@Test(priority = 2, description = "Test to Edit quick Response")
+	public void EditQuickResposnes() throws Exception {
+		data = new Quick_Responses(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Quick Response");
 		wb.deleteEmptyRows();
-		String Reviews = wb.getCellValue(1, wb.seacrh_pattern("Quick Response Review", 0).get(0).intValue());
-		System.out.println("The Review added is : " +Reviews);
 		String group = wb.getCellValue(1, wb.seacrh_pattern("Group", 0).get(0).intValue());
 		System.out.println("The Group is : " +group);
-		String quickResponse = wb.getCellValue(1, wb.seacrh_pattern("AddResponse", 0).get(0).intValue());
-		System.out.println("The quick response to be added is : " +quickResponse);
-		data = new Quick_Responses(CurrentState.getDriver());
-		data.AddOwnerQuickResponse(Reviews , group , quickResponse);
+		data.EditQuickResponses(group);
+		CurrentState.getDriver().navigate().refresh();
 	}
 
+	@Test(priority = 3, description = "Test to delete quick response")
+	public void DeleteQuickResponses() throws Exception {
+		data = new Quick_Responses(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Reviews.xlsx", "Quick Response");
+		wb.deleteEmptyRows();
+		String group = wb.getCellValue(1, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group is : " +group);
+		data.DeleteQuickResponse(group);
+	}
 }

@@ -45,16 +45,24 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
+	@Parameters({"Filter"})
 	@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
-	public void GetKPIValues() throws Exception {
+	public void GetKPIValues(int Filter) throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		Thread.sleep(20000);
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		score = data.getVisibilityscore();
 		System.out.println(score);
 		location = data.getVisibilityLoc();
 		System.out.println(location);
 		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 
 	/**
@@ -74,12 +82,20 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * test to verify title and title text
 	 * @throws Exception
 	 */
+	@Parameters({"Filter"})
 	@Test(priority = 3, groups = { "smoke" }, description = "Test for verifying title and description of report")
-	public void verifyText() throws Exception {
+	public void verifyText(int Filter) throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		data.VerifyTitleText1("Visibility Report",
 				"This report identifies the visibility of a location by site, across the sites that are being monitored. Read Manual");
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 
 	/**
@@ -121,16 +137,24 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
+	@Parameters({"Filter"})
 	@Test(priority = 4, groups = { "smoke" }, description = "Test for compare KPI Values")
-	public void ovrviewlocscorecompare() throws Exception {
+	public void ovrviewlocscorecompare(int Filter) throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		Thread.sleep(5000);
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		int ovrvwloc = data.overviewlocation();
 		Assert.assertEquals(location, ovrvwloc);
 		double ovrvwscr = data.overviewscore();
 		Assert.assertEquals(score, ovrvwscr);
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Visibility page");
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 
 	/**
@@ -195,9 +219,14 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
+	@Parameters({"Filter"})
 	@Test(priority = 7, groups = { "smoke" }, description = "Test for verifying sitetable in Visibility page")
-	public void verifySiteTable() throws Exception {
+	public void verifySiteTable(int Filter) throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		data.verifyAllsites();
 		addEvidence(CurrentState.getDriver(), "Data of All Sites Section ", "yes");
 		data.verifySearchEngineSites();
@@ -207,6 +236,9 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		data.verifySocialSites();
 		addEvidence(CurrentState.getDriver(), "Data of Social Sites Tab", "yes");
 		soft.assertAll();
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 
 	/**

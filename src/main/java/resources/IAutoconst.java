@@ -52,6 +52,7 @@ public interface IAutoconst {
 	String[] neuralTuringTechAccountStaging = {baseUrlStaging + "neural-turing-tech" , "lzimerman@dacgroup.com"}; // Reviews Staging Approver
 	String[] neuralTuringTechAccountResponseStaging = {baseUrlStaging + "neural-turing-tech" , "rpillai@dacgroup.com"}; // Reviews Staging creator
 	String[] neuralResponseBeta = {baseUrl+"neural-turing-tech-beta","amahadev@dacgroup.com"}; // Response Management
+	String[] neuralResponseBetaPoster = {baseUrl+"neural-turing-tech-beta","rpillai1357@dacgroup.com"}; // Poster
 	String[] OssingtonBeta = {baseUrl + "ossington-terminus-beta", "lzimerman@dacgroup.com"}; // Ossington Beta
 	String[] OssingtonBetaCreator = {baseUrl + "ossington-terminus-beta", "rpillai@dacgroup.com"}; // Ossington Beta Creator
 	String[] SocialdeepFieldAccount = {baseUrl+"deepfield-software-incorporated-beta","vijayata_201989@yahoo.com"};

@@ -38,6 +38,8 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 
 		return null;
 	}
+	
+	static int UIWeb = 0, UIReqDir = 0, UIPhCalls = 0;
 
 	/*-----------------------------------Locators---------------------------------------------------*/
 	@FindBy(xpath = "//*[@id='page-content']//h2")
@@ -303,6 +305,7 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 	 * @return
 	 */
 	public boolean IsDataAvailable() {
+		JSWaiter.waitJQueryAngular();
 		if (DataAvailability.getText().equals("There is currently not enough data")) {
 			return true;
 		} else {
@@ -391,7 +394,7 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 		boolean datavalidation = IsDataAvailable();
 		if (!datavalidation == true) {
 
-			int UIWeb = 0, UIReqDir = 0, UIPhCalls = 0;
+			//int UIWeb = 0, UIReqDir = 0, UIPhCalls = 0; 
 			try {
 				UIWeb = WebsiteVists();
 				System.out.println("Web Visits :" + UIWeb);
@@ -440,8 +443,15 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 	 */
 	public int WebsiteVists() {
 		boolean datavalidatation = IsDataAvailable();
+		int UIWebvisits;
 		if (!datavalidatation == true) {
-			int UIWebvisits = Integer.parseInt(WebVisits.getText());
+			String a = WebVisits.getText();
+			if(a.contains(",")) {
+			a = a.replace(",", "").trim();
+			UIWebvisits = Integer.parseInt(a);
+			}else {
+				UIWebvisits = Integer.parseInt(a);
+			}			
 			System.out.println("Websites Visits are :" + UIWebvisits);
 			return UIWebvisits;
 		} else {
@@ -457,8 +467,15 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 	 */
 	public int RequestDir() {
 		boolean datavalidatation = IsDataAvailable();
+		int Reqdir;
 		if (!datavalidatation == true) {
-			int Reqdir = Integer.parseInt(ReqDir.getText());
+			String a = ReqDir.getText();
+			if(a.contains(",")) {
+			a = a.replace(",", "").trim();
+			Reqdir = Integer.parseInt(a);
+			}else {
+			Reqdir = Integer.parseInt(a);
+			}
 			System.out.println("Request directories are :" + Reqdir);
 			return Reqdir;
 		} else {
@@ -474,8 +491,15 @@ public class TPSEE_FacebookInsights_Page extends TPSEE_abstractMethods {
 	 */
 	public int PhCalls() {
 		boolean datavalidatation = IsDataAvailable();
+		int Phcall;
 		if (!datavalidatation == true) {
-			int Phcall = Integer.parseInt(PhCalls.getText());
+			String a = PhCalls.getText();
+			if(a.contains(",")) {
+				a = a.replace(",", "").trim();
+				Phcall = Integer.parseInt(a);
+			}else {
+				Phcall = Integer.parseInt(a);
+			}			
 			System.out.println("Number of Ph Calls are :" + Phcall);
 			return Phcall;
 		} else {

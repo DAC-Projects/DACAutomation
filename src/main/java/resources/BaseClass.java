@@ -258,6 +258,9 @@ public abstract class BaseClass {
 			return IAutoconst.neuralTuringTechAccount;
 			//return IAutoconst.OssingtonBeta;
 			
+		case "ResponseManagementPoster" :
+			return IAutoconst.neuralResponseBetaPoster;
+			
 			case "DRS" :
 				return IAutoconst.DRSClient;
 			case "DRS1" :

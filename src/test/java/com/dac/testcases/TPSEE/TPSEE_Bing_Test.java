@@ -86,21 +86,38 @@ public class TPSEE_Bing_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@Test(priority = 2, groups = { "smoke" }, description = "Test for verify title and description")
-	public void verifyText() throws Exception {
+	@Parameters({ "Filter" })
+	public void verifyText(int Filter) throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		data.VerifyTitleText1("Bing Places for Business",
 				"This report provides insights into the weekly number of impressions that occurred for each of your location(s) on Bing over time. This information is obtained from Bing and is on average two weeks behind. Read Manual");
 
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 
 	/**
 	 * test to verify mouse hover text
+	 * @throws Exception 
 	 */
+	@Parameters({ "Filter" })
 	@Test(priority = 3, groups = { "smoke" }, description = "Test for verify hover text")
-	public void verifyHoverText() {
+	public void verifyHoverText(int Filter) throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		data.GetHoverText("Total Impressions based on the selected weekly range. ");
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 
 
@@ -156,6 +173,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 	@Test(priority = 6, groups = { "smoke" }, description = "Verify Site Vendors List")
 	public void BingCSVExport() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
+		data.deletefile();
 		data.exportCSVBing();
 		addEvidence(CurrentState.getDriver(), "Verifying export functionality ", "yes");
 	}

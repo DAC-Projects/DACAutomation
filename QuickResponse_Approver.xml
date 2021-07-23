@@ -7,7 +7,11 @@
 	<test name="ResponseManagementApprover">
 		<parameter name="browser" value="chrome" />		
 		<classes>	
-			<class name = "com.dac.testcases.SA.Quick_Responses_Approver_Test"/>
+			<class name = "com.dac.testcases.SA.Quick_Responses_Approver_CreateandVerifyResponse_Test"/> 
+			<class name = "com.dac.testcases.SA.Quick_Responses_Approver_EditandVerify"/>
+			<class name = "com.dac.testcases.SA.Quick_Responses_Approver_UseExistingResponse_Test"/>
+			<class name = "com.dac.testcases.SA.Quick_Responses_Approver_EditandDeleteQuickResponse_Test"/>
+			<class name = "com.dac.testcases.SA.Quick_Responses_Approver_CopyandTransfer_Test"/>
 		</classes>
 	</test>
 </suite>

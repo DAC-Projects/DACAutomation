@@ -42,12 +42,20 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
+	@Parameters({ "Filter" })
 	@Test(priority = 2, description = "Test to verify title")
-	public void verifyTitleText() throws Exception {
+	public void verifyTitleText(int Filter) throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		data.VerifyFacebookTitleText("Facebook Insights",
 				"The below report outlines key performance indicators on Facebook for your locations such as page impressions, post engagements, actions, check-in’s and fans. This data is updated daily. Read Manual");
 		addEvidence(CurrentState.getDriver(), "To Verify Title and Title Text", "yes");
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 
 	/**
@@ -56,7 +64,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@Parameters({ "Filter" })
-	@Test(priority = 3, description = "Test to apply filters")
+	@Test(priority = 5, description = "Test to apply filters")
 	public void verifyFilteringReportsFacebook(int Filter) throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		try {
@@ -84,7 +92,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	/**
 	 * verification of date
 	 */
-	@Test(priority = 4, description = "Test to verify graph")
+	@Test(priority = 6, description = "Test to verify graph")
 	public void verifyGraphncompareDate() {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		boolean datavalidation = data.IsDataAvailable();
@@ -102,7 +110,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 5, description = "Test to verify highcharts")
+	@Test(priority = 3, description = "Test to verify highcharts")
 	public void gethighchartsdate() throws Exception {
 		boolean datavalidation = data.IsDataAvailable();
 		if (!datavalidation == true) {
@@ -167,7 +175,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 * @param to_year
 	 * @throws Exception
 	 */
-	@Test(priority = 6, enabled = true, dataProvider = "testData")
+	@Test(priority = 4, enabled = true, dataProvider = "testData")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
@@ -180,7 +188,6 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 				data.selectCalender_ToDate(grphtoDate, (int) (Double.parseDouble(to_day)), to_month,
 						(int) (Double.parseDouble(to_year)));
 				addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
-				CurrentState.getDriver().navigate().refresh();
 			}
 		}
 	}
@@ -276,7 +283,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		String Country1 = wb1.getCellValue(1, wb1.seacrh_pattern("Country", 0).get(0).intValue());
 		if(Country1.equals("null")) {
 			CurrentState.getDriver().navigate().refresh();
-			//data.clickDone();
+			data.clickDone();
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "FilterOrderFacebook");
 		wb.deleteEmptyRows();
 		String Group = wb.getCellValue(1, wb.seacrh_pattern("Group", 0).get(0).intValue());

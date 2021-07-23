@@ -527,13 +527,19 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 	public double GRScore()
 			throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
 		JSWaiter.waitJQueryAngular();
+		double score;
 		waitForElement(hstryGrph, 5);
 		scrollByElement(hstryGrph);
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth()) / 2 - 2, 0).click().perform();
 		String tooltipvalue = GRScore.getText();
-
-		double score = Double.parseDouble(tooltipvalue);
+		if(tooltipvalue.contains(">")) {
+			tooltipvalue = tooltipvalue.replace(">", "");
+			tooltipvalue = tooltipvalue.trim();
+			score = Double.parseDouble(tooltipvalue);
+		} else {
+		score = Double.parseDouble(tooltipvalue);
+		}
 		return score;
 	}
 

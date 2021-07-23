@@ -39,17 +39,25 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
+	@Parameters({ "Filter" })
 	@SuppressWarnings("static-access")
 	@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
-	public void GetKPIValues() throws Exception {
+	public void GetKPIValues(int Filter) throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
 		Thread.sleep(10000);
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		score = data.getGRScore();
 		System.out.println(score);
 		location = data.getGRLoc();
 		System.out.println(location);
 		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 
 	/**
@@ -68,20 +76,33 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	 * test to verify title and title text
 	 * @throws Exception
 	 */
+	@Parameters({ "Filter" })
 	@Test(priority = 3, groups = {"smoke" }, description = "Test for verifying title and description of report")
-	public void verifytitle() throws Exception {
+	public void verifytitle(int Filter) throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		data.VerifyGRText();
 		addEvidence(CurrentState.getDriver(), "verification f title", "yes");
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 
 	/**
 	 * test to compare KPI and Report score and data
 	 * @throws Exception
 	 */
+	@Parameters({ "Filter" })
 	@Test(priority = 4, groups = { "smoke" }, description = "Test for navigating to ContentAnalysis page")
-	public void Verifyscorenloc() throws Exception {
+	public void Verifyscorenloc(int Filter) throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		double GRscore = data.GRScore();
 		soft.assertEquals(GRscore, score);
 		int GRLoc = data.GRLoc();
@@ -89,6 +110,9 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 		soft.assertAll();
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Accuracy page");
 		addEvidence(CurrentState.getDriver(), "Navigate to ContentAnalysis page from Dashboard", "yes");
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 
 	/**
@@ -224,9 +248,14 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	 * test to apply keywords
 	 * @throws Exception
 	 */
+	@Parameters({ "Filter" })
 	@Test(priority = 7, groups = { "smoke" }, description = "Add Account Level and Group Level Keyword")
-	public void verifyApplyKeywords() throws Exception {
+	public void verifyApplyKeywords(int Filter) throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
+		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb1.getCellValue(Filter, wb1.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		try {
 			ExcelHandler wb = new ExcelHandler("./data/GroupAndAccountKeywords.xlsx", "AccountLevelKeywords");
 			wb.deleteEmptyRows();
@@ -247,6 +276,9 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		}else {
+			System.out.println("The group selected is : " +Group);
 		}
 	}
 
@@ -340,24 +372,39 @@ public class TPSEE_GoogleRanking_Test extends BaseClass {
 	
 	/**
 	 * test to goto page 
-	 * @throws InterruptedException
+	 * @throws Exception 
 	 */
+	@Parameters({"Filter"})
 	@Test(priority = 14, description ="Test to verify GoTo page")
-	public void GOTO() throws InterruptedException {
+	public void GOTO(int Filter) throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		data.GoTo();
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 	
 	/**
 	 * test to verify results per page
-	 * @throws InterruptedException
+	 * @throws Exception 
 	 */
+	@Parameters({"Filter"})
 	@Test(priority = 15, description = "Test to verify Resultsperpage")
-	public void ResultsperPage() throws InterruptedException {
+	public void ResultsperPage(int Filter) throws Exception {
 		data = new TPSEE_GoogleRanking_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		data.resultperpage(soft);
 		soft.assertAll();
-		
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 
 	/**

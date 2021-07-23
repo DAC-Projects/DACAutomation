@@ -466,44 +466,7 @@ public class Response_Management extends SA_Abstarct_Methods {
 		}
 	}
 
-	/**
-	 * To add Response and verify status of response created
-	 * 
-	 * @throws Exception
-	 */
-	public void AddResponse() throws Exception {
-		waitForElement(AdvancedLink, 10);
-		clickelement(AdvancedLink);
-		clickelement(TagInput);
-		TagInput.sendKeys("Avi");
-		TagInput.sendKeys(Keys.ENTER);
-		JSWaiter.waitJQueryAngular();
-		WebElement AddLink = driver.findElement(By.xpath("(//a[@class='add-owner-response-btn enabled'])"));
-		scrollByElement(AddLink);
-		JavascriptExecutor executor = (JavascriptExecutor) driver;
-		executor.executeScript("arguments[0].click();", AddLink);
-		// clickelement(AddLink);
-		Thread.sleep(5000);
-		waitForElement(EnterResponseText, 10);
-		clickelement(EnterResponseText);
-		if (EnterResponseText.isDisplayed()) {
-			EnterResponseText.sendKeys("Thanks for your Review!! Automated Response");
-			clickelement(ResponseSubmit);
-			Thread.sleep(5000);
-			clickelement(ResponseConfirm);
-			Thread.sleep(5000);
-			scrollByElement(driver.findElement(By.xpath("//div[@class='card card-draft response-padding ']")));
-			BaseClass.addEvidence(CurrentState.getDriver(), "Test to add response and verify status	", "yes");
-			String status = ResponseStatus.getText();
-			System.out.println("The status is : " + status);
-			soft.assertEquals(status, "Pending Approval");
-		} else {
-			System.out.println("No text field found");
-			soft.fail("Failed to create response");
-		}
-		soft.assertAll();
-	}
-
+	
 	public void clickManageLink(String ResponseSelected) {
 		boolean dataavailable = DataAvailable();
 		boolean x = true;
@@ -579,7 +542,7 @@ public class Response_Management extends SA_Abstarct_Methods {
 								By.xpath("(//div[@id='Review']//a[contains(text(),'Add Owner Response')])[" + i + "]"));
 						clickelement(AddLink);
 						Thread.sleep(5000);
-						boolean b = BadReview();
+						boolean b = BadReview(); 
 						if (b == false) {
 							time_Stamp = timeStamp();
 							System.out.println("The time stamp is : " + time_Stamp);
@@ -793,7 +756,7 @@ public class Response_Management extends SA_Abstarct_Methods {
 		}
 	}
 	
-	public void verifyresponse(String Responsetxt) {
+	public void verifyresponse(String Responsetxt) { 
 		boolean a = false;
 		try {
 			int lastpage = Integer.parseInt(
@@ -1252,7 +1215,7 @@ Outer :			try {
 							WebElement ele = driver.findElement(By.xpath("(//div[@class='review-content'])["+ i +"]"));
 							if(ele.isDisplayed()) {
 								scrollByElement(ele);
-								Review = ele.getText();
+								Review = ele.getText(); 
 								System.out.println("The Review selected is : " +Review);
 								try{
 									if((driver.findElement(

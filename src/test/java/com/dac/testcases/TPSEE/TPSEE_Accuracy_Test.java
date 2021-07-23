@@ -45,17 +45,25 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
+	@Parameters({ "Filter" })
 	@SuppressWarnings("static-access")
 	@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
-	public void GetKPIValues() throws Exception {
+	public void GetKPIValues(int Filter) throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		Thread.sleep(10000);
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		score = data.getAccuracyscore();
 		System.out.println(score);
 		location = data.getAccuracyLoc();
 		System.out.println(location);
 		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 
 	/**
@@ -63,15 +71,23 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
+	@Parameters({ "Filter" })
 	@Test(priority = 2, groups = { "smoke" }, description = "Test for navigating to Visibility page")
-	public void navigateToVisibilityPage() throws Exception {
+	public void navigateToVisibilityPage(int Filter) throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		np.navigateTPSEE_Visibility();
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Visibility page");
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 
-	@Test(priority = 3, groups = { "smoke" }, description = "Test for export file as CSV")
+	@Test(priority = 3, groups = { "smoke" }, description = "Test for export file as CSV", dependsOnMethods = "navigateToVisibilityPage")
 	public void verifyFoundVendors() throws Exception {
 		data1 = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		foundlistingVendors = data1.verifyfoundSitevendors();
@@ -92,12 +108,20 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Accuracy page from Dashboard", "yes");
 	}
 
+	@Parameters({ "Filter" })
 	@Test(priority = 5, groups = { "smoke" }, description = "Test for verify title and description")
-	public void verifyText() throws Exception {
+	public void verifyText(int Filter) throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		data.VerifyTitleText1("Accuracy Report",
 				"This report identifies the accuracy of a location by field, across the sites that are being monitored. Read Manual");
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 
 	/**
@@ -106,7 +130,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	// Test to compare vendors in the application in Visibility Page
-	@Test(priority = 6, groups = { "smoke" }, description = "Verify Site Vendors List")
+	@Test(priority = 6, groups = { "smoke" }, description = "Verify Site Vendors List", dependsOnMethods = "verifyFoundVendors")
 	public void comparevendorsListnverifySitevendors() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		ArrayList<String> accuracyvendors = data.verifyAccuracySitevendors();
@@ -119,16 +143,23 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-
+	@Parameters({ "Filter" })
 	@Test(priority = 7, groups = { "smoke" }, description = "Test for compare KPI Values")
-	public void ovrviewlocscorecompare() throws Exception {
+	public void ovrviewlocscorecompare(int Filter) throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		int ovrvwloc = data.overviewlocation();
 		Assert.assertEquals(location, ovrvwloc);
 		double ovrvwscr = data.overviewscore();
 		Assert.assertEquals(score, ovrvwscr);
 		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Visibility page");
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
+		}else {
+			System.out.println("The Group selected is : " +Group);
+		}
 	}
 
 	/**
@@ -142,11 +173,12 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * @param to_year
 	 * @throws Exception
 	 */
+	
 	@SuppressWarnings("unused")
 	@Test(priority = 9, enabled = true, dataProvider = "testData", description = "Test for manual date selection")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
-
+		
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		if (!(from_day.equals("null")) | !(to_day.equals("null"))) {
 			data.selectCalender_FromDate(grphfromDate, (int) (Double.parseDouble(from_day)), from_month,
@@ -171,6 +203,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
+	@Parameters({ "Filter" })
 	@Test(priority = 10, groups = { "smoke" }, description = "Verify Zoom Functionality")
 	public void gethighchartsdate() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
@@ -419,8 +452,8 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	public void verifyFilterDataOrder(int Filter) throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
-		String Country1 = wb1.getCellValue(Filter, wb1.seacrh_pattern("Country", 0).get(0).intValue());
-		if (Country1.equals("null")) {
+		String Group1 = wb1.getCellValue(Filter, wb1.seacrh_pattern("Group", 0).get(0).intValue());
+		if (Group1.equals("None")) {
 			CurrentState.getDriver().navigate().refresh();
 			ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "FilterOrder");
 			wb.deleteEmptyRows();

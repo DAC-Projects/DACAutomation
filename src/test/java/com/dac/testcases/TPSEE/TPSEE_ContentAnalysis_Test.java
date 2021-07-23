@@ -1,11 +1,8 @@
 package com.dac.testcases.TPSEE;
 
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -38,18 +35,26 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	 * Test to get dashboard scores
 	 * 
 	 * @throws Exception
-	 */
+	 *//*
+	@Parameters({ "Filter" })
 	@Test(priority = 1, groups = { "smoke" }, description = "Test for getting KPI Values")
-	public void GetKPIValues() throws Exception {
+	public void GetKPIValues(int Filter) throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		Thread.sleep(10000);
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		score = data.getContentscore();
 		System.out.println(score);
 		location = data.getContentLoc();
 		System.out.println(location);
 		CurrentState.getLogger().log(Status.PASS, "KPI Scores");
 		addEvidence(CurrentState.getDriver(), "Get KPI Score", "yes");
-	}
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
+	}*/
 
 	/**
 	 * test to navigate to content analysis
@@ -59,7 +64,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	public void navigateToContentAnalysisPage() throws Exception {
 		np = new Navigationpage(CurrentState.getDriver());
 		np.navigateToContentAnalysis();
-		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Accuracy page");
+		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE ContentAnalysis page");
 		addEvidence(CurrentState.getDriver(), "Navigate to ContentAnalysis page from Dashboard", "yes");
 	}
 	
@@ -67,35 +72,51 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	 * test to verify title and title text
 	 * @throws Exception
 	 */
+	@Parameters({ "Filter" })
 	@Test(priority = 3, groups = { "smoke" }, description = "Test for verifying title and description of report")
-	public void verifyText() throws Exception {
+	public void verifyText(int Filter) throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		data.VerifyTitleText("Content Analysis Report",
 				"This report identifies how complete your listings' primary data is across the sites that are being monitored. Read Manual");
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
 	}
 
 	/**
 	 * test to compare KPI and report score
 	 * @throws Exception
-	 */
+	 *//*
+	@Parameters({ "Filter" })
 	@Test(priority = 4, groups = { "smoke" }, description = "Test for navigating to ContentAnalysis page")
-	public void Verifyscorenloc() throws Exception {
+	public void Verifyscorenloc(int Filter) throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
+		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
+		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
+		System.out.println("The Group selected is : " +Group);
+		if(Group.equalsIgnoreCase("None")) {
 		double CAscore = data.CAScore();
 		soft.assertEquals(CAscore, score);
 		int CALoc = data.CALoc();
 		soft.assertEquals(CALoc, location);
 		soft.assertAll();
-		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Accuracy page");
+		CurrentState.getLogger().log(Status.PASS, "Navigated successfully to TransparenSEE Content Analysis page");
 		addEvidence(CurrentState.getDriver(), "Navigate to ContentAnalysis page from Dashboard", "yes");
-	}
+		}else {
+			System.out.println("The group selected is : " +Group);
+		}
+	}*/
 
 
 	/**
 	 * test for zoom functionality
 	 * @throws Exception
-	 */
+	 *//*
 	@Test(priority = 5, groups = { "smoke" }, description = "Verify Zoom Functionality")
 	public void gethighchartsdate() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
@@ -145,7 +166,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	/**
 	 * test to set calendar date
@@ -157,7 +178,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	 * @param to_year
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unused")
+	/*@SuppressWarnings("unused")
 	@Test(priority = 6, enabled = true, dataProvider = "testData",description = "Verify manual date selection")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
@@ -179,7 +200,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 			// Assert.assertEquals(togrph, tocal);
 			addEvidence(CurrentState.getDriver(), "SetCalendarDate", "Yes");
 		}
-	}
+	}*/
 
 	/**
 	 * test to apply filter
@@ -230,26 +251,26 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	 * to verify history graph
 	 * @throws Exception
 	 */
-	@Test(priority = 9, groups = { "smoke" }, description = "Test to verify latest date in graph")
+	/*@Test(priority = 9, groups = { "smoke" }, description = "Test to verify latest date in graph")
 	public void verifyOverviewReportnTooltipContentAnalysis() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		data.verifyHistoryGraph1();
 		addEvidence(CurrentState.getDriver(), "Test to verify latest date in graph", "yes");
-	}
+	}*/
 	
 	/**
 	 * compare overview and graph score
 	 * @throws Exception
 	 */
-	@Test(priority = 10, description = "Test to compare ToolTip Value and Overall Analysis Score")
+	/*@Test(priority = 10, description = "Test to compare ToolTip Value and Overall Analysis Score")
 	public void comparegrphnovrscore() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		data.compareovrviewngraphscore();
 		addEvidence(CurrentState.getDriver(), "Tooltip values verified from Overview Content Analysis report", "yes");
-	}
+	}*/
 	
 	
-	@SuppressWarnings("finally")
+	/*@SuppressWarnings("finally")
 	@DataProvider
 	public String[][] testData() {
 		String[][] data = null, data1 = null;
@@ -287,7 +308,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		} finally {
 			return data;
 		}
-	}
+	}*/
 
 
 	/**
