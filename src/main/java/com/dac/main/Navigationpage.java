@@ -866,9 +866,11 @@ public class Navigationpage extends BasePage {
 
 	/**
 	 * To Click on Cancel Walkme Snippet
+	 * @throws InterruptedException 
 	 */
-	public void clickwalkme() {
+	public void clickwalkme() throws InterruptedException {
 		JSWaiter.waitJQueryAngular();
+		Thread.sleep(5000);
 		if (WalkMeCancel.isDisplayed()) {
 			clickelement(WalkMeCancel);
 		} else {
@@ -878,9 +880,11 @@ public class Navigationpage extends BasePage {
 
 	/**
 	 * To Click on Okay Notification PopUp
+	 * @throws InterruptedException 
 	 */
-	public void clickNotificationPopUp() {
+	public void clickNotificationPopUp() throws InterruptedException {
 		JSWaiter.waitJQueryAngular();
+		Thread.sleep(5000);
 		if (NotificationPopUp.isDisplayed()) {
 			clickelement(NotificationPopUp);
 		} else {
