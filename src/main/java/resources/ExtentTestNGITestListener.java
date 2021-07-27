@@ -363,7 +363,7 @@ public WebDriver openBrowser(String browser) throws IOException {
     if (browser.equalsIgnoreCase("Chrome")) {
 
 
-    	WebDriverManager.chromedriver().version("90.0.4430.24").setup(); 
+    	WebDriverManager.chromedriver().version("92.0.4515.43").setup(); 
 
 
   //  WebDriverManager.getInstance(DriverManagerType.CHROME).setup();

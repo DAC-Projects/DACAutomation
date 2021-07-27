@@ -26,7 +26,7 @@
 			</classes>
 	</test>
 	
-	<!-- <test name = "TransparenSEEBetaClientGroup" >
+	<test name = "TransparenSEEBetaClientGroup" >
 		<parameter name = "browser" value = "chrome"/>
 		<parameter name = "Filter" value = "2"/>
 			<classes>
@@ -99,7 +99,7 @@
 				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />	 
 			</classes>
-	</test> -->
+	</test>
 	
 	<!-- <test name = "TransparenSeeBetaDup" >
 		<parameter name = "browser" value = "chrome"/>
