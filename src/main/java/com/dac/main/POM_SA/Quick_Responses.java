@@ -175,8 +175,9 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 														+ "]/..//a[contains(text(),'Add Owner Response')]/..//button[@class='btn btn-primary submit-btn'])[1]"));
 										clickelement(SubmitBtn);
 										clickelement(SuccessBtn);
-										ReviewId = driver
-												.findElement(By.xpath("(//div[@id='responseContainer'])[" + row + "]"))
+										ReviewId = driver.findElement(By.xpath(
+												"((//div[contains(@class,'reviews-middle-column')]//div[@class='review-content']))["
+														+ row + "]//following-sibling::div[@id='responseContainer']"))
 												.getAttribute("data-reviewid");
 										System.out.println("The Reviews Id is : " + ReviewId);
 										break Outer;
@@ -242,6 +243,11 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		return formattedDate;
 	}
 
+	/**
+	 * To verify response added
+	 * 
+	 * @param Response
+	 */
 	public void verifyResponse(String Response) {
 		boolean a = false;
 		waitForElement(ReviewTable, 5);
@@ -287,6 +293,11 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		soft.assertAll();
 	}
 
+	/**
+	 * To delete added response approver
+	 * 
+	 * @param Response
+	 */
 	public void DeleteResponseApprover(String Response) {
 		boolean a = false;
 		waitForElement(ReviewTable, 5);
@@ -342,6 +353,9 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		soft.assertAll();
 	}
 
+	/**
+	 * to verify response deleted
+	 */
 	public void verifyDeletedResponseApprover() {
 		boolean a = false;
 		waitForElement(ReviewTable, 5);
@@ -357,7 +371,7 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 			if (paginationNext.isDisplayed()) {
 				for (int i = 1; i <= lastpage; i++) {
 					List<WebElement> ResponseContent = driver
-							.findElements(By.xpath("(//div[@id='responseContainer']//div[@class='response-text'])"));
+							.findElements(By.xpath("(//div[@id='responseContainer'])"));
 					int size = ResponseContent.size();
 					for (int row = 1; row <= size; row++) {
 						WebElement ele = driver.findElement(By.xpath("(//div[@id='responseContainer'])[" + row + "]"));
@@ -366,7 +380,7 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 						System.out.println("The Review Id for Response added : " + ReviewId);
 						if (ReviewId.equals(RevId)) {
 							WebElement AddLink = driver.findElement(By.xpath("((//div[@id='responseContainer'])[" + row
-									+ "]//div//a[contains(text(),'Add Owner Response')])"));
+									+ "]//a[contains(text(),'Add Owner Response')])"));
 							scrollByElement(AddLink);
 							BaseClass.addEvidence(driver, "Test to verify the response is deleted", "yes");
 							soft.assertTrue(AddLink.isDisplayed(), "The Link is not displayed");
@@ -391,6 +405,11 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		soft.assertAll();
 	}
 
+	/**
+	 * To edit added response and verify the same as approver
+	 * 
+	 * @param Response
+	 */
 	public void EditandVerifyResponseApprover(String Response) {
 		boolean a = false;
 		waitForElement(ReviewTable, 5);
@@ -418,13 +437,13 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 									By.xpath("(//div[@id='responseContainer']//div[@class='response-text'])[" + row
 											+ "]/..//div[@class='delete-edit-container']//a[@title = 'Edit']"));
 							clickelement(EditBtn);
-							WebElement textbox = driver.findElement(By.xpath("(//div[@id='responseContainer'])[" + row
-									+ "]//textarea[@placeholder='Enter response here']"));
+							WebElement textbox = driver
+									.findElement(By.xpath("(//textarea[@data-reviewobjid='" + ReviewId + "'])"));
 							scrollByElement(textbox);
 							clickelement(textbox);
 							textbox.sendKeys(" Edited");
-							WebElement EditSubmit = driver.findElement(
-									By.xpath("(//div[@id='responseContainer'])[" + row + "]//button[@id='editbtn']"));
+							WebElement EditSubmit = driver
+									.findElement(By.xpath("//button[@data-reviewobjid='" + ReviewId + "']"));
 							clickelement(EditSubmit);
 							WebElement submitconfirm = driver.findElement(By.xpath("//button[contains(text(),'Yes')]"));
 							clickelement(submitconfirm);
@@ -459,6 +478,11 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		soft.assertAll();
 	}
 
+	/**
+	 * to add response using existing responses
+	 * 
+	 * @param Group
+	 */
 	public void AddResponseusingexisting(String Group) {
 		boolean a = false;
 		waitForElement(ReviewTable, 5);
@@ -492,22 +516,24 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 									Thread.sleep(5000);
 									boolean b = BadReview();
 									if (b == false) {
-										WebElement dropdown = driver.findElement(By.xpath("(//select[@id = 'quickResponse-dropdown-location-groups'])["+ row +"]"));
+										WebElement dropdown = driver.findElement(
+												By.xpath("(//select[@id = 'quickResponse-dropdown-location-groups'])["
+														+ row + "]"));
 										Select select = new Select(dropdown);
 										select.selectByVisibleText(Group);
 										Thread.sleep(3000);
 										List<WebElement> ExistingQuickRespose = driver
-												.findElements(By.xpath("((//div[@id='responseContainer'])[" + row
-														+ "])//span[contains(@class,'paginationListActive')]"));
+												.findElements(By.xpath("((//div[@class='review-content'])[" + row
+														+ "]/..//following-sibling::span[contains(@class,'paginationListActive')])"));
 										int sizeofEle = ExistingQuickRespose.size();
 										System.out.println(":The size of the element is : " + sizeofEle);
 										BaseClass.addEvidence(driver, "Test to check if quick response is available",
 												"yes");
-										if (sizeofEle > 1) {
+										if (sizeofEle > 0) {
 											WebElement ResponseTobeSelected = driver
-													.findElement(By.xpath("(((//div[@id='responseContainer'])[" + row
-															+ "])//span[contains(@class,'paginationListActive')])[2]"));
-											scrollByElement(ResponseTobeSelected);
+													.findElement(By.xpath("((//div[@class='review-content'])[" + row
+															+ "]/..//following-sibling::span[contains(@class,'paginationListActive')])[1]"));
+											// scrollByElement(ResponseTobeSelected);
 											clickelement(ResponseTobeSelected);
 											BaseClass.addEvidence(driver, "Test to add existing response", "yes");
 											WebElement SubmitBtn = driver.findElement(By.xpath(
@@ -517,8 +543,8 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 											clickelement(SubmitBtn);
 											clickelement(SuccessBtn);
 											ReviewId = driver
-													.findElement(
-															By.xpath("(//div[@id='responseContainer'])[" + row + "]"))
+													.findElement(By.xpath("(//div[@class='review-content'])[" + row
+															+ "]/following-sibling::div[@id='responseContainer']"))
 													.getAttribute("data-reviewid");
 											System.out.println("The Reviews Id is : " + ReviewId);
 											BaseClass.addEvidence(driver, "Test to add existing response", "yes");
@@ -555,6 +581,9 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		}
 	}
 
+	/**
+	 * to delete existing response as approver
+	 */
 	public void DeleteExistingResponseApprover() {
 		boolean a = false;
 		waitForElement(ReviewTable, 5);
@@ -573,13 +602,17 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 							.findElements(By.xpath("(//div[@id='responseContainer']//div[@class='response-text'])"));
 					int size = ResponseContent.size();
 					for (int row = 1; row <= size; row++) {
-						WebElement ele = driver.findElement(By.xpath("(//div[@id='responseContainer'])[" + row + "]"));
-						String ReviewResponseId = ele.getAttribute("data-reviewid");
+						System.out.println("The row number is : " + row);
+						WebElement ele = driver
+								.findElement(By.xpath("(//div[@id='responseContainer']//div[@class='response-text'])["
+										+ row + "]/../../..//div[@class='owner-responses rrm']"));
+						String ReviewResponseId = ele.getAttribute("data-reviewobjid");
+						System.out.println("The Review Id is : " + ReviewResponseId);
 						if (ReviewResponseId.equals(ReviewId)) {
 							BaseClass.addEvidence(driver, "Test to delete response added", "yes");
 							WebElement DeleteBtn = driver.findElement(
 									By.xpath("(//div[@id='responseContainer']//div[@class='response-text'])[" + row
-											+ "]/..//div[@class='delete-edit-container']//a[@title = 'Delete']"));
+											+ "]//preceding-sibling::div//div[@class='delete-edit-container']//a[@title='Delete']"));
 							scrollByElement(DeleteBtn);
 							clickelement(DeleteBtn);
 							BaseClass.addEvidence(driver, "Test to delete confirmation", "yes");
@@ -609,6 +642,11 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		soft.assertAll();
 	}
 
+	/**
+	 * to edit response > quick response
+	 * 
+	 * @param Group
+	 */
 	public void EditQuickResponses(String Group) {
 		boolean a = false;
 		waitForElement(ReviewTable, 5);
@@ -625,12 +663,14 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 				for (int i = 1; i <= lastpage; i++) {
 					List<WebElement> ReviewContent = driver.findElements(By.xpath("(//div[@class='review-content'])"));
 					int size = ReviewContent.size();
+					System.out.println("The total number of rows is : " + size);
 					for (int row = 1; row <= size; row++) {
 						WebElement ele = driver.findElement(By.xpath("(//div[@class='review-content'])[" + row + "]"));
 						if (ele.isDisplayed()) {
 							scrollByElement(ele);
 							Review = ele.getText();
 							System.out.println("The Review selected is : " + Review);
+							System.out.println("The row number is : " + row);
 							try {
 								if ((driver.findElement(By.xpath("((//div[@class='review-content'])[" + row + "]"
 										+ "//following-sibling::div//a[contains(@class,'add-owner-response-btn')])")))
@@ -659,11 +699,13 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 										scrollByElement(EditBtn);
 										clickelement(EditBtn);
 										WebElement Edittxt = driver
-												.findElement(By.xpath("(//textarea[@id = 'edittext'])[" + row + "]"));
+												.findElement(By.xpath("((//div[@class='review-content'])[" + row
+														+ "]//following-sibling::div//textarea[@id='edittext'])"));
 										clickelement(Edittxt);
 										Edittxt.sendKeys(time_Stamp);
-										WebElement SaveBtn = driver.findElement(By.xpath(
-												"(//button[@id = 'edit-precanned-response-submit-btn'])[" + row + "]"));
+										WebElement SaveBtn = driver
+												.findElement(By.xpath("((//div[@class='review-content'])[" + row
+														+ "]//following-sibling::div//button[@id = 'edit-precanned-response-submit-btn'])"));
 										clickelement(SaveBtn);
 										String txt = driver
 												.findElement(By.xpath(
@@ -673,7 +715,8 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 										BaseClass.addEvidence(driver, "Test to edit quickresposne", "yes");
 										soft.assertTrue(txt.contains(time_Stamp), "The added content does not exist");
 										WebElement CloseBtn = driver
-												.findElement(By.xpath("//button[contains(text(), 'Close')]"));
+												.findElement(By.xpath("((//div[@class='review-content'])[" + row
+														+ "]//following-sibling::div//button[contains(text(), 'Close')])[1]"));
 										clickelement(CloseBtn);
 										a = true;
 										break Outer;
@@ -707,6 +750,11 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		soft.assertAll();
 	}
 
+	/**
+	 * to delete response > quick response
+	 * 
+	 * @param Group
+	 */
 	public void DeleteQuickResponse(String Group) {
 		boolean a = false;
 		waitForElement(ReviewTable, 5);
@@ -750,8 +798,10 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 												"//ul[@id='select2-quickResponseGroup-results']//li[contains(text(),'"
 														+ Group + "')]"))
 												.click();
-										WebElement quickresponses = driver.findElement(
-												By.xpath("(//div[@class='precanned-count-info'])[" + row + "]"));
+										Thread.sleep(3000);
+										WebElement quickresponses = driver
+												.findElement(By.xpath("((//div[@class='review-content'])[" + row
+														+ "]//following-sibling::div//button[contains(text(), 'Close')])[1]/../..//div[@class='precanned-count-info']"));
 										int sizebeforedelete = Integer
 												.parseInt(quickresponses.getAttribute("data-count"));
 										System.out.println("The size of the quick responses before deleting is : "
@@ -769,6 +819,7 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 												"//ul[@id='select2-quickResponseGroup-results']//li[contains(text(),'"
 														+ Group + "')]"))
 												.click();
+										Thread.sleep(3000);
 										int sizeafterdeleting = Integer
 												.parseInt(quickresponses.getAttribute("data-count"));
 										System.out.println("The size of the quick responses after deleting is : "
@@ -776,7 +827,8 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 										BaseClass.addEvidence(driver, "Test to delete quick response", "yes");
 										soft.assertEquals(sizeafterdeleting, sizebeforedelete - 1);
 										WebElement CloseBtn = driver
-												.findElement(By.xpath("//button[contains(text(), 'Close')]"));
+												.findElement(By.xpath("((//div[@class='review-content'])[" + row
+														+ "]//following-sibling::div//button[contains(text(), 'Close')])[1]"));
 										clickelement(CloseBtn);
 										a = true;
 										break Outer;
@@ -810,6 +862,12 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		soft.assertAll();
 	}
 
+	/**
+	 * to copy quick responses to and from group
+	 * 
+	 * @param GrouptobeCopied
+	 * @param GrouptobeCopiedfrom
+	 */
 	public void CopyQuickResponses(String GrouptobeCopied, String GrouptobeCopiedfrom) {
 		boolean a = false;
 		waitForElement(ReviewTable, 5);
@@ -824,26 +882,25 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		Outer: try {
 			if (paginationNext.isDisplayed()) {
 				for (int i = 1; i <= lastpage; i++) {
-					List<WebElement> AddLinkBtn = driver
-							.findElements(By.xpath("(//a[contains(@class,'add-owner-response-btn')])"));
+					List<WebElement> AddLinkBtn = driver.findElements(By.xpath("(//div[@class='review-content'])"));
 					int size = AddLinkBtn.size();
 					for (int row = 1; row <= size; row++) {
-						WebElement ele = driver
-								.findElement(By.xpath("(//a[contains(@class,'add-owner-response-btn')])[" + row + "]"));
+						WebElement ele = driver.findElement(By.xpath("(//div[@class='review-content'])[" + row + "]"));
 						if (ele.isDisplayed()) {
 							scrollByElement(ele);
 							try {
 								if ((driver.findElement(By.xpath("((//div[@class='review-content'])[" + row + "]"
 										+ "//following-sibling::div//a[contains(@class,'add-owner-response-btn')])")))
 												.isDisplayed()) {
-									clickelement(driver.findElement(
-											By.xpath("(//a[contains(@class,'add-owner-response-btn')])[" + row + "]")));
+									clickelement(driver.findElement(By.xpath("((//div[@class='review-content'])[" + row
+											+ "]"
+											+ "//following-sibling::div//a[contains(@class,'add-owner-response-btn')])")));
 									Thread.sleep(5000);
 									boolean b = BadReview();
 									if (b == false) {
-										WebElement ManageLink = driver.findElement(
-												By.xpath("(//a[contains(@class,'add-owner-response-btn')])[" + row
-														+ "]/..//a[contains(text(),'Manage')]"));
+										WebElement ManageLink = driver
+												.findElement(By.xpath("(//div[@class='review-content'])[" + row
+														+ "]//following-sibling::div//a[@id='use-saved-response-btn']"));
 										action.moveToElement(ManageLink).click().build().perform();
 										// clickelement(ManageLink);
 										JSWaiter.waitJQueryAngular();
@@ -852,14 +909,16 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 												"//ul[@id='select2-quickResponseGroup-results']//li[contains(text(),'"
 														+ GrouptobeCopied + "')]"))
 												.click();
-										WebElement quickresponses = driver.findElement(
-												By.xpath("(//div[@class='precanned-count-info'])[" + row + "]"));
+										WebElement quickresponses = driver
+												.findElement(By.xpath("((//div[@class='review-content'])[" + row
+														+ "]//following-sibling::div//button[contains(text(), 'Close')])[1]/../..//div[@class='precanned-count-info']"));
 										sizeofresponsestobecopiedGroup = Integer
 												.parseInt(quickresponses.getAttribute("data-count"));
 										System.out.println(
-												"The size after copying is : " + sizeofresponsestobecopiedGroup);
+												"The size before copying is : " + sizeofresponsestobecopiedGroup);
 										BaseClass.addEvidence(driver, "Test to copy response", "yes");
 										clickelement(GroupSelect);
+										Thread.sleep(3000);
 										driver.findElement(By.xpath(
 												"//ul[@id='select2-quickResponseGroup-results']//li[contains(text(),'"
 														+ GrouptobeCopiedfrom + "')]"))
@@ -868,8 +927,9 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 												.parseInt(quickresponses.getAttribute("data-count"));
 										System.out.println("The size of group response from group is : "
 												+ sizeofresponsestobecopiedfromGroup);
-										WebElement CopyResponseBtn = driver.findElement(
-												By.xpath("(//button[@id='copyQuickResponses'])[" + row + "]"));
+										WebElement CopyResponseBtn = driver
+												.findElement(By.xpath("(//div[@class='review-content'])[" + row
+														+ "]//following-sibling::div//button[@id='copyQuickResponses']"));
 										clickelement(CopyResponseBtn);
 										WebElement FromGroup = driver
 												.findElement(By.xpath("//span[@id='select2-fromGroup-container']"));
@@ -883,7 +943,8 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 												.click();
 										// clickelement(from);
 										// FromSearchbox.sendKeys(GrouptobeCopiedfrom);
-										System.out.println("Entered group name to be copied from");
+										System.out.println(
+												"Entered group name to be copied from : " + GrouptobeCopiedfrom);
 										Thread.sleep(5000);
 										WebElement ToGroup = driver
 												.findElement(By.xpath("(//span[@id='select2-toGroup-container'])"));
@@ -897,7 +958,7 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 												.click();
 										// clickelement(To);
 										// ToSearchbox.sendKeys(GrouptobeCopied);
-										System.out.println("Entered group name to be copied");
+										System.out.println("Entered group name to be copied : " + GrouptobeCopied);
 										WebElement CopyBtn = driver.findElement(By
 												.xpath("(//input[@id='copy-responses-radio-item-copy'])[" + row + "]"));
 										clickelement(CopyBtn);
@@ -906,7 +967,8 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 										clickelement(SaveBtn);
 										JSWaiter.waitJQueryAngular();
 										WebElement CloseBtn = driver
-												.findElement(By.xpath("//button[contains(text(), 'Close')]"));
+												.findElement(By.xpath("((//div[@class='review-content'])[" + row
+														+ "]//following-sibling::div//button[@id='copyQuickResponses']/..//button[contains(text(),'Close')])"));
 										clickelement(CloseBtn);
 										driver.navigate().refresh();
 										a = true;
@@ -941,6 +1003,12 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		soft.assertAll();
 	}
 
+	/**
+	 * to transfer quick responses to and from quick responses
+	 * 
+	 * @param GrouptobeCopied
+	 * @param GrouptobeCopiedfrom
+	 */
 	public void TransferQuickResponses(String GrouptobeCopied, String GrouptobeCopiedfrom) {
 		boolean a = false;
 		waitForElement(ReviewTable, 5);
@@ -955,26 +1023,25 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		Outer: try {
 			if (paginationNext.isDisplayed()) {
 				for (int i = 1; i <= lastpage; i++) {
-					List<WebElement> AddLinkBtn = driver
-							.findElements(By.xpath("(//a[contains(@class,'add-owner-response-btn')])"));
+					List<WebElement> AddLinkBtn = driver.findElements(By.xpath("(//div[@class='review-content'])"));
 					int size = AddLinkBtn.size();
 					for (int row = 1; row <= size; row++) {
-						WebElement ele = driver
-								.findElement(By.xpath("(//a[contains(@class,'add-owner-response-btn')])[" + row + "]"));
+						WebElement ele = driver.findElement(By.xpath("(//div[@class='review-content'])[" + row + "]"));
 						if (ele.isDisplayed()) {
 							scrollByElement(ele);
 							try {
 								if ((driver.findElement(By.xpath("((//div[@class='review-content'])[" + row + "]"
 										+ "//following-sibling::div//a[contains(@class,'add-owner-response-btn')])")))
 												.isDisplayed()) {
-									clickelement(driver.findElement(
-											By.xpath("(//a[contains(@class,'add-owner-response-btn')])[" + row + "]")));
+									clickelement(driver.findElement(By.xpath("((//div[@class='review-content'])[" + row
+											+ "]"
+											+ "//following-sibling::div//a[contains(@class,'add-owner-response-btn')])")));
 									Thread.sleep(5000);
 									boolean b = BadReview();
 									if (b == false) {
-										WebElement ManageLink = driver.findElement(
-												By.xpath("(//a[contains(@class,'add-owner-response-btn')])[" + row
-														+ "]/..//a[contains(text(),'Manage')]"));
+										WebElement ManageLink = driver
+												.findElement(By.xpath("(//div[@class='review-content'])[" + row
+														+ "]//following-sibling::div//a[@id='use-saved-response-btn']"));
 										action.moveToElement(ManageLink).click().build().perform();
 										// clickelement(ManageLink);
 										JSWaiter.waitJQueryAngular();
@@ -1039,7 +1106,8 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 										clickelement(SaveBtn);
 										JSWaiter.waitJQueryAngular();
 										WebElement CloseBtn = driver
-												.findElement(By.xpath("//button[contains(text(), 'Close')]"));
+												.findElement(By.xpath("((//div[@class='review-content'])[" + row
+														+ "]//following-sibling::div//button[@id='copyQuickResponses']/..//button[contains(text(),'Close')])"));
 										clickelement(CloseBtn);
 										driver.navigate().refresh();
 										a = true;
@@ -1074,6 +1142,12 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		soft.assertAll();
 	}
 
+	/**
+	 * to verify copy and transfered responses > quick response
+	 * 
+	 * @param GrouptobeCopied
+	 * @param GrouptobeCopiedfrom
+	 */
 	public void verifyCopyOrTransferToGroup(String GrouptobeCopied, String GrouptobeCopiedfrom) {
 		boolean a = false;
 		waitForElement(ReviewTable, 5);
@@ -1088,44 +1162,64 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		Outer: try {
 			if (paginationNext.isDisplayed()) {
 				for (int i = 1; i <= lastpage; i++) {
-					List<WebElement> AddLinkBtn = driver
-							.findElements(By.xpath("(//a[contains(@class,'add-owner-response-btn')])"));
+					List<WebElement> AddLinkBtn = driver.findElements(By.xpath("(//div[@class='review-content'])"));
 					int size = AddLinkBtn.size();
 					for (int row = 1; row <= size; row++) {
-						WebElement ele = driver
-								.findElement(By.xpath("(//a[contains(@class,'add-owner-response-btn')])[" + row + "]"));
+						WebElement ele = driver.findElement(By.xpath("(//div[@class='review-content'])[" + row + "]"));
 						if (ele.isDisplayed()) {
-							clickelement(driver.findElement(
-									By.xpath("(//a[contains(@class,'add-owner-response-btn')])[" + row + "]")));
-							Thread.sleep(5000);
-							WebElement ManageLink1 = driver
-									.findElement(By.xpath("(//a[contains(@class,'add-owner-response-btn')])[" + row
-											+ "]/..//a[contains(text(),'Manage')]"));
-							action.moveToElement(ManageLink1).click().build().perform();
-							clickelement(GroupSelect);
-							Thread.sleep(4000);
-							driver.findElement(
-									By.xpath("//ul[@id='select2-quickResponseGroup-results']//li[contains(text(),'"
-											+ GrouptobeCopied + "')]"))
-									.click();
-							WebElement quickresponses = driver
-									.findElement(By.xpath("(//div[@class='precanned-count-info'])[" + row + "]"));
-							String sizeafter = quickresponses.getAttribute("data-count");
-							sizeofresponsestobecopiedGroupaftercopying = Integer.parseInt(sizeafter);
-							System.out.println(
-									"The size after copying is : " + sizeofresponsestobecopiedGroupaftercopying);
-							BaseClass.addEvidence(driver, "Test to copy response", "yes");
-							soft.assertEquals(sizeofresponsestobecopiedGroupaftercopying,
-									sizeofresponsestobecopiedGroup + sizeofresponsestobecopiedfromGroup,
-									"The count is not equal");
-							Thread.sleep(3000);
+							try {
+								if ((driver.findElement(By.xpath("((//div[@class='review-content'])[" + row + "]"
+										+ "//following-sibling::div//a[contains(@class,'add-owner-response-btn')])")))
+												.isDisplayed()) {
+									clickelement(driver.findElement(By.xpath("((//div[@class='review-content'])[" + row
+											+ "]"
+											+ "//following-sibling::div//a[contains(@class,'add-owner-response-btn')])")));
+									Thread.sleep(5000);
+									boolean b = BadReview();
+									if (b == false) {
+										WebElement ManageLink = driver
+												.findElement(By.xpath("(//div[@class='review-content'])[" + row
+														+ "]//following-sibling::div//a[@id='use-saved-response-btn']"));
+										action.moveToElement(ManageLink).click().build().perform();
+										// clickelement(ManageLink);
+										JSWaiter.waitJQueryAngular();
+										clickelement(GroupSelect);
+										Thread.sleep(2000);
+										driver.findElement(By.xpath(
+												"//ul[@id='select2-quickResponseGroup-results']//li[contains(text(),'"
+														+ GrouptobeCopied + "')]"))
+												.click();
+										Thread.sleep(2000);
+										WebElement quickresponses = driver
+												.findElement(By.xpath("((//div[@class='review-content'])[" + row
+														+ "]//following-sibling::div//button[contains(text(), 'Close')])[1]/../..//div[@class='precanned-count-info']"));
+										String sizeafter = quickresponses.getAttribute("data-count");
+										sizeofresponsestobecopiedGroupaftercopying = Integer.parseInt(sizeafter);
+										System.out.println("The size after copying is : "
+												+ sizeofresponsestobecopiedGroupaftercopying);
+										BaseClass.addEvidence(driver, "Test to copy response", "yes");
+										soft.assertEquals(sizeofresponsestobecopiedGroupaftercopying,
+												sizeofresponsestobecopiedGroup + sizeofresponsestobecopiedfromGroup,
+												"The count is not equal");
+										Thread.sleep(3000);
+										WebElement CloseBtn = driver
+												.findElement(By.xpath("((//div[@class='review-content'])[" + row
+														+ "]//following-sibling::div//button[@id='copyQuickResponses']/..//button[contains(text(),'Close')])"));
+										clickelement(CloseBtn);
+										Thread.sleep(3000);
+										driver.navigate().refresh();
+										a = true;
+										break Outer;
+									} else {
+										System.out.println("Oh No! It's a bad review!");
+									}
+								} else {
+									System.out.println("No add link button displayed");
+								}
 
-							WebElement CloseBtn = driver.findElement(By.xpath("//button[contains(text(), 'Close')]"));
-							clickelement(CloseBtn);
-							Thread.sleep(3000);
-							driver.navigate().refresh();
-							a = true;
-							break Outer;
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 						} else {
 							System.out.println("Element is not displayed");
 						}
@@ -1146,6 +1240,12 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		soft.assertAll();
 	}
 
+	/**
+	 * verify transfered response > quick responses
+	 * 
+	 * @param GrouptobeCopied
+	 * @param GrouptobeCopiedfrom
+	 */
 	public void verifyTransferFromGroup(String GrouptobeCopied, String GrouptobeCopiedfrom) {
 		boolean a = false;
 		waitForElement(ReviewTable, 5);
@@ -1160,36 +1260,57 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		Outer: try {
 			if (paginationNext.isDisplayed()) {
 				for (int i = 1; i <= lastpage; i++) {
-					List<WebElement> AddLinkBtn = driver
-							.findElements(By.xpath("(//a[contains(@class,'add-owner-response-btn')])"));
+					List<WebElement> AddLinkBtn = driver.findElements(By.xpath("(//div[@class='review-content'])"));
 					int size = AddLinkBtn.size();
 					for (int row = 1; row <= size; row++) {
-						WebElement ele = driver
-								.findElement(By.xpath("(//a[contains(@class,'add-owner-response-btn')])[" + row + "]"));
+						WebElement ele = driver.findElement(By.xpath("(//div[@class='review-content'])[" + row + "]"));
 						if (ele.isDisplayed()) {
-							clickelement(driver.findElement(
-									By.xpath("(//a[contains(@class,'add-owner-response-btn')])[" + row + "]")));
-							Thread.sleep(5000);
-							WebElement ManageLink1 = driver
-									.findElement(By.xpath("(//a[contains(@class,'add-owner-response-btn')])[" + row
-											+ "]/..//a[contains(text(),'Manage')]"));
-							action.moveToElement(ManageLink1).click().build().perform();
-							clickelement(GroupSelect);
-							Thread.sleep(4000);
-							driver.findElement(
-									By.xpath("//ul[@id='select2-quickResponseGroup-results']//li[contains(text(),'"
-											+ GrouptobeCopiedfrom + "')]"))
-									.click();
-							WebElement quickresponses = driver
-									.findElement(By.xpath("(//div[@class='precanned-count-info'])[" + row + "]"));
-							String sizeafterfromgroup = quickresponses.getAttribute("data-count");
-							sizeofResponse = Integer.parseInt(sizeafterfromgroup);
-							System.out.println("The size from group after transfer is : " + sizeofResponse);
-							soft.assertEquals(sizeofResponse, 0, "Failed due to issue in count");
-							WebElement CloseBtn = driver.findElement(By.xpath("//button[contains(text(), 'Close')]"));
-							clickelement(CloseBtn);
-							a = true;
-							break Outer;
+							try {
+								if ((driver.findElement(By.xpath("((//div[@class='review-content'])[" + row + "]"
+										+ "//following-sibling::div//a[contains(@class,'add-owner-response-btn')])")))
+												.isDisplayed()) {
+									clickelement(driver.findElement(By.xpath("((//div[@class='review-content'])[" + row
+											+ "]"
+											+ "//following-sibling::div//a[contains(@class,'add-owner-response-btn')])")));
+									Thread.sleep(5000);
+									boolean b = BadReview();
+									if (b == false) {
+										WebElement ManageLink = driver
+												.findElement(By.xpath("(//div[@class='review-content'])[" + row
+														+ "]//following-sibling::div//a[@id='use-saved-response-btn']"));
+										action.moveToElement(ManageLink).click().build().perform();
+										// clickelement(ManageLink);
+										JSWaiter.waitJQueryAngular();
+										clickelement(GroupSelect);
+										Thread.sleep(4000);
+										driver.findElement(By.xpath(
+												"//ul[@id='select2-quickResponseGroup-results']//li[contains(text(),'"
+														+ GrouptobeCopiedfrom + "')]"))
+												.click();
+										WebElement quickresponses = driver
+												.findElement(By.xpath("((//div[@class='review-content'])[" + row
+														+ "]//following-sibling::div//button[contains(text(), 'Close')])[1]/../..//div[@class='precanned-count-info']"));
+										String sizeafterfromgroup = quickresponses.getAttribute("data-count");
+										sizeofResponse = Integer.parseInt(sizeafterfromgroup);
+										System.out.println("The size from group after transfer is : " + sizeofResponse);
+										soft.assertEquals(sizeofResponse, 0, "Failed due to issue in count");
+										WebElement CloseBtn = driver
+												.findElement(By.xpath("((//div[@class='review-content'])[" + row
+														+ "]//following-sibling::div//button[@id='copyQuickResponses']/..//button[contains(text(),'Close')])"));
+										clickelement(CloseBtn);
+										a = true;
+										break Outer;
+									} else {
+										System.out.println("Oh No! It's a bad review!");
+									}
+								} else {
+									System.out.println("No add link button displayed");
+								}
+
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+
 						} else {
 							System.out.println("Element is not displayed");
 						}
@@ -1210,6 +1331,12 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		soft.assertAll();
 	}
 
+	/**
+	 * to click on viewall and select the response
+	 * 
+	 * @param Groupname
+	 * @param QuickResponse
+	 */
 	public void clickonViewAllandSelectResponse(String Groupname, String QuickResponse) {
 		boolean a = false;
 		waitForElement(ReviewTable, 5);
@@ -1224,62 +1351,74 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		Outer: try {
 			if (paginationNext.isDisplayed()) {
 				for (int i = 1; i <= lastpage; i++) {
-					List<WebElement> AddLinkBtn = driver
-							.findElements(By.xpath("(//a[contains(@class,'add-owner-response-btn')])"));
+					List<WebElement> AddLinkBtn = driver.findElements(By.xpath("(//div[@class='review-content'])"));
 					int size = AddLinkBtn.size();
 					for (int row = 1; row <= size; row++) {
-						WebElement ele = driver
-								.findElement(By.xpath("(//a[contains(@class,'add-owner-response-btn')])[" + row + "]"));
+						WebElement ele = driver.findElement(By.xpath("(//div[@class='review-content'])[" + row + "]"));
 						if (ele.isDisplayed()) {
-							clickelement(driver.findElement(
-									By.xpath("(//a[contains(@class,'add-owner-response-btn')])[" + row + "]")));
-							Thread.sleep(5000);
-							WebElement ViewAll = driver
-									.findElement(By.xpath("(//a[contains(@class,'add-owner-response-btn')])[" + row
-											+ "]/..//a[@id='use-saved-response-btn']"));
-							action.moveToElement(ViewAll).click().build().perform();
-							clickelement(GroupSelect);
-							Thread.sleep(4000);
-							driver.findElement(
-									By.xpath("//ul[@id='select2-quickResponseGroup-results']//li[contains(text(),'"
-											+ Groupname + "')]"))
-									.click();
-							WebElement quickresponses = driver
-									.findElement(By.xpath("(//div[@class='precanned-count-info'])[" + row + "]"));
-							String sizeofgroup = quickresponses.getAttribute("data-count");
-							sizeofResponse = Integer.parseInt(sizeofgroup);
-							System.out.println("The size from group after transfer is : " + sizeofResponse);
-							if (!(sizeofResponse == 0)) {
-								WebElement SelectResponse = driver.findElement(By.xpath(
-										"//div[@class='radioSelection responseListContent']//span[@class='radioResponseContent' and contains(.,'"
-												+ QuickResponse + "')]"));
-								clickelement(SelectResponse);
-								WebElement UseResponseBtn = driver.findElement(By.xpath(
-										"((//div[contains(@class,'reviews-middle-column')]//div[@class='review-content'])["
-												+ row
-												+ "]/..//a[contains(text(),'Add Owner Response')]/..//button[@id='use-precanned-response-btn'])[1]"));
-								clickelement(UseResponseBtn);
-								BaseClass.addEvidence(driver, "Test to add created response", "yes");
-								WebElement SubmitBtn = driver.findElement(By.xpath(
-										"((//div[contains(@class,'reviews-middle-column')]//div[@class='review-content'])["
-												+ row
-												+ "]/..//a[contains(text(),'Add Owner Response')]/..//button[@class='btn btn-primary submit-btn'])[1]"));
-								clickelement(SubmitBtn);
-								clickelement(SuccessBtn);
-								WebElement res = driver
-										.findElement(By.xpath("(//div[@id='responseContainer'])[" + row + "]"));
-								ReviewId = res.getAttribute("data-reviewid");
-								System.out.println("The id is : " + ReviewId);
+							try {
+								if ((driver.findElement(By.xpath("((//div[@class='review-content'])[" + row + "]"
+										+ "//following-sibling::div//a[contains(@class,'add-owner-response-btn')])")))
+												.isDisplayed()) {
+									clickelement(driver.findElement(By.xpath("((//div[@class='review-content'])[" + row
+											+ "]"
+											+ "//following-sibling::div//a[contains(@class,'add-owner-response-btn')])")));
+									Thread.sleep(5000);
+									boolean b = BadReview();
+									if (b == false) {
+										Thread.sleep(5000);
+										WebElement ViewAll = driver.findElement(By.xpath(
+												"((//div[@class='review-content'])[" + row + "]//following-sibling::"
+														+ "div//a[contains(@class,'add-owner-response-btn')]/..//a[@id='use-saved-response-btn'])"));
+										action.moveToElement(ViewAll).click().build().perform();
+										clickelement(GroupSelect);
+										Thread.sleep(4000);
+										driver.findElement(By.xpath(
+												"//ul[@id='select2-quickResponseGroup-results']//li[contains(text(),'"
+														+ Groupname + "')]"))
+												.click();
+										WebElement quickresponses = driver
+												.findElement(By.xpath("((//div[@class='review-content'])[" + row
+														+ "]//following-sibling::div//button[contains(text(), 'Close')])[1]/../..//div[@class='precanned-count-info']"));
+										String sizeofgroup = quickresponses.getAttribute("data-count");
+										sizeofResponse = Integer.parseInt(sizeofgroup);
+										System.out.println("The size from group after transfer is : " + sizeofResponse);
+										if (!(sizeofResponse == 0)) {
+											WebElement SelectResponse = driver.findElement(By.xpath(
+													"//div[@class='radioSelection responseListContent']//span[@class='radioResponseContent' and contains(.,'"
+															+ QuickResponse + "')]"));
+											clickelement(SelectResponse);
+											WebElement UseResponseBtn = driver
+													.findElement(By.xpath("((//div[@class='review-content'])[" + row
+															+ "]/..//a[contains(text(),'Add Owner Response')]/..//button[@id='use-precanned-response-btn'])[1]"));
+											clickelement(UseResponseBtn);
+											BaseClass.addEvidence(driver, "Test to add created response", "yes");
+											WebElement SubmitBtn = driver
+													.findElement(By.xpath("((//div[@class='review-content'])[" + row
+															+ "]/..//a[contains(text(),'Add Owner Response')]/..//button[@class='btn btn-primary submit-btn'])[1]"));
+											clickelement(SubmitBtn);
+											clickelement(SuccessBtn);
+											WebElement res = driver.findElement(
+													By.xpath("(//div[@id='responseContainer'])[" + row + "]"));
+											ReviewId = res.getAttribute("data-reviewid");
+											System.out.println("The id is : " + ReviewId);
 
-							} else {
-								System.out.println("No Response available to select");
-								soft.fail("No Response available to select");
+										} else {
+											System.out.println("No Response available to select");
+											soft.fail("No Response available to select");
+										}
+										a = true;
+										break Outer;
+									} else {
+										System.out.println("Oh No! It's a bad review!");
+									}
+								} else {
+									System.out.println("No add link button displayed");
+								}
+
+							} catch (Exception e) {
+								e.printStackTrace();
 							}
-
-							a = true;
-							break Outer;
-						} else {
-							System.out.println("Element is not displayed");
 						}
 					}
 					if (paginationNext.isEnabled()) {
@@ -1288,6 +1427,7 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 						JSWaiter.waitJQueryAngular();
 					}
 				}
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1298,6 +1438,11 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		soft.assertAll();
 	}
 
+	/**
+	 * to verify status of the response added
+	 * 
+	 * @param ResponseAdded
+	 */
 	public void verifyResponseStatus(String ResponseAdded) {
 		boolean a = false;
 		waitForElement(ReviewTable, 5);
@@ -1352,6 +1497,11 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		soft.assertAll();
 	}
 
+	/**
+	 * to edit responses
+	 * 
+	 * @param ResponseSelected
+	 */
 	public void EditResponse(String ResponseSelected) {
 		boolean a = false;
 		time_Stamp = timeStamp();
@@ -1430,6 +1580,12 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		Thread.sleep(3000);
 	}
 
+	/**
+	 * to delete added response
+	 * 
+	 * @param Responsetxt
+	 * @throws InterruptedException
+	 */
 	public void DeleteResponse(String Responsetxt) throws InterruptedException {
 		int numberofentriesbeforeDelete = NumOfentriesinPage(Entry);
 		System.out.println("The Number of entries is : " + numberofentriesbeforeDelete);
@@ -1483,6 +1639,11 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		}
 	}
 
+	/**
+	 * to verify response deleted
+	 * 
+	 * @throws Exception
+	 */
 	public void verifyDeletedResponse() throws Exception {
 
 		boolean dataavailable = DataAvailable();
@@ -1534,7 +1695,11 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 			return false;
 		}
 	}
-	
+
+	/**
+	 * to verify response status
+	 */
+	@SuppressWarnings("unused")
 	public void verifyResponseAddedUsingButtonStatus() {
 		boolean a = false;
 		waitForElement(ReviewTable, 5);
@@ -1550,31 +1715,37 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 			if (paginationNext.isDisplayed()) {
 				for (int i = 1; i <= lastpage; i++) {
 					List<WebElement> ResponseLocator = driver
-							.findElements(By.xpath("(//div[@class='card card-draft response-padding ']//p)"));
+							.findElements(By.xpath("(//div[@class='review-content'])"));
 					int size = ResponseLocator.size();
 					for (int row = 1; row <= size; row++) {
-						WebElement ele = driver.findElement(
-								By.xpath("(//div[@class='card card-draft response-padding ']//p)[" + row + "]"));
-						if (ele.isDisplayed()) {							
-								WebElement Status = driver.findElement(By.xpath(
-										"(//div[@class='card card-draft response-padding ']//h5//span)[" + row + "]"));
+						WebElement ele = driver.findElement(By.xpath("(//div[@class='review-content'])[" + row + "]"));
+						if (ele.isDisplayed()) {
+
+							WebElement bx = driver.findElement(By.xpath("(//div[@class='review-content'])[" + row
+									+ "]/following-sibling::div[@id='responseContainer']"));
+							String RevId = bx.getAttribute("data-reviewid");
+							if (RevId.equals(ReviewId)) {
+								WebElement Status = driver.findElement(By.xpath("(//div[@class='review-content'])["
+										+ row + "]/following-sibling::div[@id='responseContainer']//h5//span"));
 								scrollByElement(Status);
 								String Statustxt = Status.getText();
 								System.out.println("The status is : " + Statustxt);
 								BaseClass.addEvidence(driver, "Test to verify response status", "yes");
 								soft.assertEquals(Statustxt, "Pending Approval");
 							}
-							a = true;
-							break Outer;
-						} 
-					}
-					if (paginationNext.isEnabled()) {
-						scrollByElement(paginationNext);
-						paginationNext.click();
-						JSWaiter.waitJQueryAngular();
+
+						}
+						a = true;
+						break Outer;
 					}
 				}
-			
+				if (paginationNext.isEnabled()) {
+					scrollByElement(paginationNext);
+					paginationNext.click();
+					JSWaiter.waitJQueryAngular();
+				}
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1584,7 +1755,12 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		soft.assertAll();
 	}
 
-	
+	/**
+	 * to click on view all and select response as Poster
+	 * 
+	 * @param Groupname
+	 * @param QuickResponse
+	 */
 	public void clickonViewAllandSelectResponsePoster(String Groupname, String QuickResponse) {
 		boolean a = false;
 		waitForElement(ReviewTable, 5);
@@ -1599,67 +1775,78 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		Outer: try {
 			if (paginationNext.isDisplayed()) {
 				for (int i = 1; i <= lastpage; i++) {
-					List<WebElement> AddLinkBtn = driver
-							.findElements(By.xpath("(//a[contains(@class,'add-owner-response-btn')])"));
+					List<WebElement> AddLinkBtn = driver.findElements(By.xpath("(//div[@class='review-content'])"));
 					int size = AddLinkBtn.size();
 					for (int row = 1; row <= size; row++) {
-						WebElement ele = driver
-								.findElement(By.xpath("(//a[contains(@class,'add-owner-response-btn')])[" + row + "]"));
-						if (ele.isDisplayed()) {
-							clickelement(driver.findElement(
-									By.xpath("(//a[contains(@class,'add-owner-response-btn')])[" + row + "]")));
-							Thread.sleep(5000);
-							JavascriptExecutor js = (JavascriptExecutor) driver;
-							String jsreturn = js.executeScript("return document.querySelector('#comment').disabled").toString();
-							System.out.println("The value is : " +jsreturn);
-							boolean b = Boolean.valueOf(jsreturn);
-							soft.assertEquals(b, true, "Textbox is enabled");
-							WebElement ViewAll = driver
-									.findElement(By.xpath("(//a[contains(@class,'add-owner-response-btn')])[" + row
-											+ "]/..//a[@id='use-saved-response-btn']"));
-							action.moveToElement(ViewAll).click().build().perform();
-							clickelement(GroupSelect);
-							Thread.sleep(4000);
-							driver.findElement(
-									By.xpath("//ul[@id='select2-quickResponseGroup-results']//li[contains(text(),'"
-											+ Groupname + "')]"))
-									.click();
-							WebElement quickresponses = driver
-									.findElement(By.xpath("(//div[@class='precanned-count-info'])[" + row + "]"));
-							String sizeofgroup = quickresponses.getAttribute("data-count");
-							sizeofResponse = Integer.parseInt(sizeofgroup);
-							System.out.println("The size from group after transfer is : " + sizeofResponse);
-							if (!(sizeofResponse == 0)) {
-								WebElement SelectResponse = driver.findElement(By.xpath(
-										"//div[@class='radioSelection responseListContent']//span[@class='radioResponseContent' and contains(.,'"
-												+ QuickResponse + "')]"));
-								clickelement(SelectResponse);
-								WebElement UseResponseBtn = driver.findElement(By.xpath(
-										"((//div[contains(@class,'reviews-middle-column')]//div[@class='review-content'])["
-												+ row
-												+ "]/..//a[contains(text(),'Add Owner Response')]/..//button[@id='use-precanned-response-btn'])[1]"));
-								clickelement(UseResponseBtn);
-								BaseClass.addEvidence(driver, "Test to add created response", "yes");
-								WebElement SubmitBtn = driver.findElement(By.xpath(
-										"((//div[contains(@class,'reviews-middle-column')]//div[@class='review-content'])["
-												+ row
-												+ "]/..//a[contains(text(),'Add Owner Response')]/..//button[@class='btn btn-primary submit-btn'])[1]"));
-								clickelement(SubmitBtn);
-								clickelement(SuccessBtn);
-								WebElement res = driver
-										.findElement(By.xpath("(//div[@id='responseContainer'])[" + row + "]"));
-								ReviewId = res.getAttribute("data-reviewid");
-								System.out.println("The id is : " + ReviewId);
+						WebElement ele = driver.findElement(By.xpath("(//div[@class='review-content'])[" + row + "]"));
+						try {
+							if (ele.isDisplayed()) {
+								clickelement(driver.findElement((By.xpath("((//div[@class='review-content'])[" + row
+										+ "]"
+										+ "//following-sibling::div//a[contains(@class,'add-owner-response-btn')])"))));
+								Thread.sleep(5000);
+								boolean b = BadReview();
+								if (b == false) {
+									JavascriptExecutor js = (JavascriptExecutor) driver;
+									String jsreturn = js
+											.executeScript("return document.querySelector('#comment').disabled")
+											.toString();
+									System.out.println("The value is : " + jsreturn);
+									boolean c = Boolean.valueOf(jsreturn);
+									soft.assertEquals(c, true, "Textbox is enabled");
+									WebElement ViewAll = driver.findElement(By
+											.xpath("((//div[@class='review-content'])[" + row + "]//following-sibling::"
+													+ "div//a[contains(@class,'add-owner-response-btn')]/..//a[@id='use-saved-response-btn'])"));
+									action.moveToElement(ViewAll).click().build().perform();
+									clickelement(GroupSelect);
+									Thread.sleep(4000);
+									driver.findElement(By.xpath(
+											"//ul[@id='select2-quickResponseGroup-results']//li[contains(text(),'"
+													+ Groupname + "')]"))
+											.click();
+									WebElement quickresponses = driver
+											.findElement(By.xpath("((//div[@class='review-content'])[" + row
+													+ "]//following-sibling::div//button[contains(text(), 'Close')])[1]/../..//div[@class='precanned-count-info']"));
+									String sizeofgroup = quickresponses.getAttribute("data-count");
+									sizeofResponse = Integer.parseInt(sizeofgroup);
+									System.out.println("The size from group after transfer is : " + sizeofResponse);
+									if (!(sizeofResponse == 0)) {
+										WebElement SelectResponse = driver.findElement(By.xpath(
+												"//div[@class='radioSelection responseListContent']//span[@class='radioResponseContent' and contains(.,'"
+														+ QuickResponse + "')]"));
+										clickelement(SelectResponse);
+										WebElement UseResponseBtn = driver.findElement(By.xpath(
+												"((//div[contains(@class,'reviews-middle-column')]//div[@class='review-content'])["
+														+ row
+														+ "]/..//a[contains(text(),'Add Owner Response')]/..//button[@id='use-precanned-response-btn'])[1]"));
+										clickelement(UseResponseBtn);
+										BaseClass.addEvidence(driver, "Test to add created response", "yes");
+										WebElement SubmitBtn = driver.findElement(By.xpath(
+												"((//div[contains(@class,'reviews-middle-column')]//div[@class='review-content'])["
+														+ row
+														+ "]/..//a[contains(text(),'Add Owner Response')]/..//button[@class='btn btn-primary submit-btn'])[1]"));
+										clickelement(SubmitBtn);
+										clickelement(SuccessBtn);
+										WebElement res = driver
+												.findElement(By.xpath("(//div[@id='responseContainer'])[" + row + "]"));
+										ReviewId = res.getAttribute("data-reviewid");
+										System.out.println("The id is : " + ReviewId);
 
+									} else {
+										System.out.println("No Response available to select");
+										soft.fail("No Response available to select");
+									}
+
+									a = true;
+									break Outer;
+								} else {
+									System.out.println("Bad Review!");
+								}
 							} else {
-								System.out.println("No Response available to select");
-								soft.fail("No Response available to select");
+								System.out.println("Element is not displayed");
 							}
-
-							a = true;
-							break Outer;
-						} else {
-							System.out.println("Element is not displayed");
+						} catch (Exception e) {
+							e.printStackTrace();
 						}
 					}
 					if (paginationNext.isEnabled()) {
@@ -1677,7 +1864,12 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		}
 		soft.assertAll();
 	}
-	
+
+	/**
+	 * To add response using existing response > Poster
+	 * 
+	 * @param Group
+	 */
 	public void AddResponseusingexistingPoster(String Group) {
 		boolean a = false;
 		waitForElement(ReviewTable, 5);
@@ -1712,11 +1904,15 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 									boolean b = BadReview();
 									if (b == false) {
 										JavascriptExecutor js = (JavascriptExecutor) driver;
-										String jsreturn = js.executeScript("return document.querySelector('#comment').disabled").toString();
-										System.out.println("The value is : " +jsreturn);
+										String jsreturn = js
+												.executeScript("return document.querySelector('#comment').disabled")
+												.toString();
+										System.out.println("The value is : " + jsreturn);
 										boolean c = Boolean.valueOf(jsreturn);
 										soft.assertEquals(c, true, "Textbox is enabled");
-										WebElement dropdown = driver.findElement(By.xpath("(//select[@id = 'quickResponse-dropdown-location-groups'])["+ row +"]"));
+										WebElement dropdown = driver.findElement(
+												By.xpath("(//select[@id = 'quickResponse-dropdown-location-groups'])["
+														+ row + "]"));
 										Select select = new Select(dropdown);
 										select.selectByVisibleText(Group);
 										Thread.sleep(3000);
@@ -1778,7 +1974,12 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 			Assert.fail("No Response found");
 		}
 	}
-	
+
+	/**
+	 * to verify response status as poster
+	 * 
+	 * @param ResponseAdded
+	 */
 	public void verifyResponseStatusPoster(String ResponseAdded) {
 		boolean a = false;
 		waitForElement(ReviewTable, 5);
@@ -1803,8 +2004,8 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 							String Response = ele.getText();
 							System.out.println("The Response is : " + Response);
 							if (Response.equals(ResponseAdded)) {
-								WebElement Status = driver.findElement(By.xpath(
-										"(//span[@class='status-text completed'])[" + row + "]"));
+								WebElement Status = driver
+										.findElement(By.xpath("(//span[@class='status-text completed'])[" + row + "]"));
 								scrollByElement(Status);
 								String Statustxt = Status.getText();
 								System.out.println("The status is : " + Statustxt);
@@ -1832,59 +2033,44 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 		}
 		soft.assertAll();
 	}
-	
-	/*public void EditResponsePoster(String ResponseAdded) {
-		
-		boolean a = false;
-		waitForElement(ReviewTable, 5);
-		scrollByElement(ReviewTable);
-		int numberofentries = NumOfentriesinPage(Entry);
-		System.out.println("The number of entries :" + numberofentries);
-		int lastpage = Integer
-				.parseInt(driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText());
-		System.out.println("Last Page Number is :" + lastpage);
-		waitForElement(paginationPrev, 10);
-		clickelement(paginationPrev);
-		Outer: try {
-			if (paginationNext.isDisplayed()) {
-				for (int i = 1; i <= lastpage; i++) {
-					List<WebElement> ResponseLocator = driver
-							.findElements(By.xpath("(//div[@class='card card-draft response-padding ']//p)"));
-					int size = ResponseLocator.size();
-					for (int row = 1; row <= size; row++) {
-						WebElement ele = driver.findElement(
-								By.xpath("(//div[@class='card card-draft response-padding ']//p)[" + row + "]"));
-						if (ele.isDisplayed()) {
-							String Response = ele.getText();
-							System.out.println("The Response is : " + Response);
-							if (Response.equals(ResponseAdded)) {
-								WebElement EditBtn = driver.findElement(By.xpath("(//div[@class='delete-edit-container']//a[@data-original-title='Edit'])["+ row +"]"));
-								clickelement(EditBtn);
-								write code to edit the response added
-							}
-							a = true;
-							break Outer;
-						} else {
-							System.out.println("Element is not displayed");
-						}
-					}
-					if (paginationNext.isEnabled()) {
-						scrollByElement(paginationNext);
-						paginationNext.click();
-						JSWaiter.waitJQueryAngular();
-					}
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		if (a == false) {
-			soft.fail();
-		}
-		soft.assertAll();
-		
-	}*/
-	
+
+	/*
+	 * public void EditResponsePoster(String ResponseAdded) {
+	 * 
+	 * boolean a = false; waitForElement(ReviewTable, 5);
+	 * scrollByElement(ReviewTable); int numberofentries =
+	 * NumOfentriesinPage(Entry); System.out.println("The number of entries :" +
+	 * numberofentries); int lastpage = Integer
+	 * .parseInt(driver.findElement(By.xpath(
+	 * "(//*[@class='pagination']//a)[last()-1]")).getText());
+	 * System.out.println("Last Page Number is :" + lastpage);
+	 * waitForElement(paginationPrev, 10); clickelement(paginationPrev); Outer: try
+	 * { if (paginationNext.isDisplayed()) { for (int i = 1; i <= lastpage; i++) {
+	 * List<WebElement> ResponseLocator = driver .findElements(By.
+	 * xpath("(//div[@class='card card-draft response-padding ']//p)")); int size =
+	 * ResponseLocator.size(); for (int row = 1; row <= size; row++) { WebElement
+	 * ele = driver.findElement(
+	 * By.xpath("(//div[@class='card card-draft response-padding ']//p)[" + row +
+	 * "]")); if (ele.isDisplayed()) { String Response = ele.getText();
+	 * System.out.println("The Response is : " + Response); if
+	 * (Response.equals(ResponseAdded)) { WebElement EditBtn =
+	 * driver.findElement(By.xpath(
+	 * "(//div[@class='delete-edit-container']//a[@data-original-title='Edit'])["+
+	 * row +"]")); clickelement(EditBtn); write code to edit the response added } a
+	 * = true; break Outer; } else { System.out.println("Element is not displayed");
+	 * } } if (paginationNext.isEnabled()) { scrollByElement(paginationNext);
+	 * paginationNext.click(); JSWaiter.waitJQueryAngular(); } } } } catch
+	 * (Exception e) { e.printStackTrace(); } if (a == false) { soft.fail(); }
+	 * soft.assertAll();
+	 * 
+	 * }
+	 */
+
+	/**
+	 * to delete response as poster
+	 * 
+	 * @param ResponseAdded
+	 */
 	public void DeleteResponsePoster(String ResponseAdded) {
 		boolean a = false;
 		waitForElement(ReviewTable, 5);
@@ -1909,11 +2095,14 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 							String Response = ele.getText();
 							System.out.println("The Response is : " + Response);
 							if (Response.equals(ResponseAdded)) {
-								WebElement DeleteBtn = driver.findElement(By.xpath("(//div[@class='delete-edit-container']//a[@title='Delete'])["+ row +"]"));
+								WebElement DeleteBtn = driver.findElement(By.xpath(
+										"(//div[@class='delete-edit-container']//a[@title='Delete'])[" + row + "]"));
 								clickelement(DeleteBtn);
-								WebElement ConfirnDelete = driver.findElement(By.xpath("//button[contains(text(),'Yes')]"));
+								WebElement ConfirnDelete = driver
+										.findElement(By.xpath("//button[contains(text(),'Yes')]"));
 								clickelement(ConfirnDelete);
-								WebElement SubmittedForm = driver.findElement(By.xpath("//button[contains(text(),'Ok')]"));
+								WebElement SubmittedForm = driver
+										.findElement(By.xpath("//button[contains(text(),'Ok')]"));
 								clickelement(SubmittedForm);
 							}
 							a = true;

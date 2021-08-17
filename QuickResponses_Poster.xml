@@ -8,7 +8,7 @@
 		<parameter name="browser" value="chrome" />		
 		<classes>			
 			<class name = "com.dac.testcases.SA.QuickResponses_Poster_ViewAll_AddResponse"/> 
-			<!-- <class name = "com.dac.testcases.SA.QuickResponses_Poster_SelectUsingButton"/>  -->
+			<class name = "com.dac.testcases.SA.QuickResponses_Poster_SelectUsingButton"/> 
 		</classes>
 	</test>
 </suite>

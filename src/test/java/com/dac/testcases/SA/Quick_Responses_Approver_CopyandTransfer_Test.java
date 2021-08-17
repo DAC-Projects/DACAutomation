@@ -31,8 +31,9 @@ public class Quick_Responses_Approver_CopyandTransfer_Test extends BaseClass {
 		String GrouptobeCopiedfrom = wb.getCellValue(1, wb.seacrh_pattern("Group", 0).get(0).intValue());
 		System.out.println("The group response to be copied from : " +GrouptobeCopiedfrom);
 		data.CopyQuickResponses(GrouptobeCopied, GrouptobeCopiedfrom);
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		data.verifyCopyOrTransferToGroup(GrouptobeCopied, GrouptobeCopiedfrom);
+		
 	}
 	
 	@Test(priority = 3, description = "Test to transfer quick response from one group to another")

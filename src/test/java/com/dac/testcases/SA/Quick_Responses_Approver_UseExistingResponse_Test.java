@@ -30,6 +30,7 @@ public class Quick_Responses_Approver_UseExistingResponse_Test extends BaseClass
 		System.out.println("The quick response to be added is : " +group);
 		data = new Quick_Responses(CurrentState.getDriver());
 		data.AddResponseusingexisting(group);
+		CurrentState.getDriver().navigate().refresh();
 	}
 	
 	@Test(priority = 3, description = "Test to delete Response added")
