@@ -648,12 +648,13 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 	 * @param soft
 	 * @throws InterruptedException
 	 */
-	public void resultperpage(SoftAssert soft) throws InterruptedException {
+	public void resultperpage(SoftAssert soft) throws InterruptedException { 
 		driver.findElement(By.xpath("(//*[@class='pagination']//a[contains(text(),'1')])")).click();
 		JSWaiter.waitJQueryAngular();
 		Thread.sleep(2000);
 		ResultsperPage(soft, entiresText, Resultperpage);
 	}
+	
 
 	/**
 	 * to verify goto page

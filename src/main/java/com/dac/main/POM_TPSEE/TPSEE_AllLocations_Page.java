@@ -205,11 +205,11 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 				List<WebElement> rows_table = LocationTableRow; // To locate rows of table.
 				int rows_count = rows_table.size(); // To calculate no of rows In table.
 				count = count + rows_count;
-				Map<String, String> kMap = new HashMap<String, String>();
+				Map<String, String> kMap = new HashMap<String, String>(); 
 				for (int row = 0; row < rows_count; row++) {
 					List<WebElement> Columns_row = rows_table.get(row).findElements(By.tagName("td")); // To locate
 					// columns(cells)
-					// of that
+					// of that 
 					// specific row.
 					int columns_count = Columns_row.size(); // To calculate no of columns (cells). In that specific row.
 					// System.out.println("Number of cells In Row " + noOfRows + " are " +
@@ -484,5 +484,56 @@ public class TPSEE_AllLocations_Page extends TPSEE_abstractMethods {
 		JSWaiter.waitJQueryAngular();
 		Thread.sleep(3000);
 	}
+	
+	public void VerifySearchCriteria(String text, String headertext) throws InterruptedException {
+		boolean a = false;
+		JSWaiter.waitJQueryAngular();
+		waitForElement(LocationTable, 5);
+		System.out.println("\n reading table data********************* \n");
+		String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
+		int page = Integer.parseInt(n);
+		System.out.println("\n" + page);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("col-md-4")));
+		String entiresText = driver.findElement(By.className("col-md-4")).getText();
+		entiresText = entiresText.substring(entiresText.indexOf("("));
+		int count = 0;
+	Outer:	if (paginationNext.isDisplayed()) {
+			for (int i = 1; i <= page; i++) {
+				scrollByElement(LocationTableHeader);
+				List<WebElement> rows_table = LocationTableRow; // To locate rows of table.
+				int rows_count = rows_table.size(); // To calculate no of rows In table.
+				count = count + rows_count;
+				for (int row = 0; row <= rows_count; row++) { 
+					List<WebElement> Columns_row = rows_table.get(row).findElements(By.tagName("td"));
+					int columns_count = Columns_row.size();
+					for (int column = 0; column < columns_count; column++) {
+						List<WebElement> headerTableRow = LocationTableHeader.findElements(By.tagName("th"));
+						String headerText = headerTableRow.get(column).getText(), celtext = "";
+						if(headerText.equalsIgnoreCase(headertext)) {
+							celtext = driver
+									.findElement(By
+											.xpath("(//table[@id='locationTable']//tbody//tr//td["+ (column+1) +"])[" + (row + 1) + "]"))
+									.getText();
+							System.out.println("The row data is : " +celtext);
+							soft.assertTrue(celtext.contains(text), "Doesn't contains text");
+							a = true;
+							break Outer;
+						}							
+					}					
+				} if (paginationNext.isEnabled()) {
+					JSWaiter.waitJQueryAngular();
+					scrollByElement(paginationNext);
+					paginationNext.click();
+					Thread.sleep(4000);
+				}
+			}
+		}
+		if(a == false) {
+			soft.fail("Doesnot contain the text selected");
+		}
+		soft.assertAll();
+	}
+	
+	
 	
 }

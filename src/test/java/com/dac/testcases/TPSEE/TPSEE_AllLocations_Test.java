@@ -3,6 +3,8 @@ package com.dac.testcases.TPSEE;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -63,7 +65,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		// Assert.assertFalse( "sample error", true);
 	}
 	
-	/**
+/*	*//**
 	 * test to verify title and title text
 	 * @throws Exception
 	 */
@@ -236,9 +238,11 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		String Country1 = wb1.getCellValue(Integer.parseInt(Filter), wb1.seacrh_pattern("Country", 0).get(0).intValue());
 		if(Country1.equals("null")) {
 		for(int i = 1; i <= wb.getRowCount(); i++) {
-		String LocationNumber = wb.getCellValue(i, wb.seacrh_pattern("Search By Location", 0).get(0).intValue());
-		System.out.println("The location number selected is : " +LocationNumber);
+		String LocationNumber = wb.getCellValue(i, wb.seacrh_pattern("Location Number", 0).get(0).intValue());
+		String headertext = "Location Number";
 		data.SearchwithKeywords(LocationNumber);
+		Thread.sleep(3000);
+		data.VerifySearchCriteria(LocationNumber, headertext);
 		addEvidence(CurrentState.getDriver(), "Test to search using location number", "yes");
 		}
 		}else {
@@ -273,9 +277,12 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		String Country1 = wb1.getCellValue(Integer.parseInt(Filter), wb1.seacrh_pattern("Country", 0).get(0).intValue());
 		if(Country1.equals("null")) {
 		for(int i = 1; i <= wb.getRowCount(); i++) {
-		String LocationNumber = wb.getCellValue(i, wb.seacrh_pattern("Search By Name", 0).get(0).intValue());
-		System.out.println("The location number selected is : " +LocationNumber);
-		data.SearchwithKeywords(LocationNumber);
+		String Name = wb.getCellValue(i, wb.seacrh_pattern("Name", 0).get(0).intValue());
+		System.out.println("The location number selected is : " +Name);
+		String headertext = "Name";
+		data.SearchwithKeywords(Name);
+		Thread.sleep(3000);
+		data.VerifySearchCriteria(Name, headertext);
 		addEvidence(CurrentState.getDriver(), "Test to search using name", "yes");
 		}
 		}else {
@@ -310,10 +317,13 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		String Country1 = wb1.getCellValue(Integer.parseInt(Filter), wb1.seacrh_pattern("Country", 0).get(0).intValue());
 		if(Country1.equals("null")) {
 		for(int i = 1; i <= wb.getRowCount(); i++) {
-		String LocationNumber = wb.getCellValue(i, wb.seacrh_pattern("Search By Address", 0).get(0).intValue());
-		System.out.println("The location number selected is : " +LocationNumber);
-		data.SearchwithKeywords(LocationNumber);
+		String Address = wb.getCellValue(i, wb.seacrh_pattern("Address", 0).get(0).intValue());
+		System.out.println("The location number selected is : " +Address);
+		String headertext = "Address";
+		data.SearchwithKeywords(Address);
 		addEvidence(CurrentState.getDriver(), "Test to search using Address", "yes");
+		Thread.sleep(3000);
+		data.VerifySearchCriteria(Address, headertext);
 		}
 		}else {
 			System.out.println("The group is not empty");
@@ -347,10 +357,13 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		String Country1 = wb1.getCellValue(Integer.parseInt(Filter), wb1.seacrh_pattern("Country", 0).get(0).intValue());
 		if(Country1.equals("null")) {
 		for(int i = 1; i <= wb.getRowCount(); i++) {
-		String LocationNumber = wb.getCellValue(i, wb.seacrh_pattern("Search By City", 0).get(0).intValue());
-		System.out.println("The location number selected is : " +LocationNumber);
-		data.SearchwithKeywords(LocationNumber);
+		String City = wb.getCellValue(i, wb.seacrh_pattern("City", 0).get(0).intValue());
+		System.out.println("The location number selected is : " +City);
+		String headertext = "City";
+		data.SearchwithKeywords(City);
 		addEvidence(CurrentState.getDriver(), "Test to search using City", "yes");
+		Thread.sleep(3000);
+		data.VerifySearchCriteria(City, headertext);
 		}
 		}else {
 			System.out.println("The group is not empty");
@@ -384,10 +397,13 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		String Country1 = wb1.getCellValue(Integer.parseInt(Filter), wb1.seacrh_pattern("Country", 0).get(0).intValue());
 		if(Country1.equals("null")) {
 		for(int i = 1; i <= wb.getRowCount(); i++) {
-		String LocationNumber = wb.getCellValue(i, wb.seacrh_pattern("Search By State", 0).get(0).intValue());
-		System.out.println("The location number selected is : " +LocationNumber);
-		data.SearchwithKeywords(LocationNumber);
+		String State = wb.getCellValue(i, wb.seacrh_pattern("St/Prov/Region", 0).get(0).intValue());
+		System.out.println("The location number selected is : " +State);
+		String headertext = "St/Prov/Region";
+		data.SearchwithKeywords(State);
 		addEvidence(CurrentState.getDriver(), "Test to search using Address", "yes");
+		Thread.sleep(3000);
+		data.VerifySearchCriteria(State, headertext);
 		}
 		}else {
 			System.out.println("The group is not empty");
@@ -421,10 +437,13 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		String Country1 = wb1.getCellValue(Integer.parseInt(Filter), wb1.seacrh_pattern("Country", 0).get(0).intValue());
 		if(Country1.equals("null")) {
 		for(int i = 1; i <= wb.getRowCount(); i++) {
-		String LocationNumber = wb.getCellValue(i, wb.seacrh_pattern("Search By Postal Code", 0).get(0).intValue());
-		System.out.println("The location number selected is : " +LocationNumber);
-		data.SearchwithKeywords(LocationNumber);
+		String PostCode = wb.getCellValue(i, wb.seacrh_pattern("Postal Code", 0).get(0).intValue());
+		System.out.println("The location number selected is : " +PostCode);
+		String headertext = "Postal Code";
+		data.SearchwithKeywords(PostCode);
 		addEvidence(CurrentState.getDriver(), "Test to search using Post Code", "yes");
+		Thread.sleep(3000);
+		data.VerifySearchCriteria(PostCode, headertext);
 		}
 		}else {
 			System.out.println("The group is not empty");
@@ -458,10 +477,13 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 		String Country1 = wb1.getCellValue(Integer.parseInt(Filter), wb1.seacrh_pattern("Country", 0).get(0).intValue());
 		if(Country1.equals("null")) {
 		for(int i = 1; i <= wb.getRowCount(); i++) {
-		String LocationNumber = wb.getCellValue(i, wb.seacrh_pattern("Search By Phone", 0).get(0).intValue());
-		System.out.println("The location number selected is : " +LocationNumber);
-		data.SearchwithKeywords(LocationNumber);
+		String Phone = wb.getCellValue(i, wb.seacrh_pattern("Phone", 0).get(0).intValue());
+		System.out.println("The location number selected is : " +Phone);
+		String headertext = "Phone";
+		data.SearchwithKeywords(Phone);
 		addEvidence(CurrentState.getDriver(), "Test to search using Address", "yes");
+		Thread.sleep(3000);
+		data.VerifySearchCriteria(Phone, headertext);
 		}
 		}else {
 			System.out.println("The group is not empty");

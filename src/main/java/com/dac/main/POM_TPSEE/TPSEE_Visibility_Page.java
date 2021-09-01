@@ -286,7 +286,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * @throws ExecutionException
 	 */
 	public void exportvisibilityrptCSV()
-			throws InterruptedException, FileNotFoundException, IOException, ExecutionException {
+			throws InterruptedException, FileNotFoundException, IOException, ExecutionException { 
 		JSWaiter.waitJQueryAngular();
 		exportVA(exportBtn, csvexport, exportdate, date, export);
 		Thread.sleep(15000);
@@ -305,7 +305,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 */
 	@SuppressWarnings({ "unused", "resource" })
 	public void exportvisibilityrptXLSX()
-			throws InterruptedException, FileNotFoundException, IOException, ExecutionException {
+			throws InterruptedException, FileNotFoundException, IOException, ExecutionException { 
 		JSWaiter.waitJQueryAngular();
 		exportVA(exportBtn, XLSXExport, exportdate, date, export);
 		Thread.sleep(10000);
@@ -331,7 +331,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * @throws ExecutionException
 	 */
 	public void exportcurrentvisibilityrptPDF()
-			throws InterruptedException, FileNotFoundException, IOException, ExecutionException {
+			throws InterruptedException, FileNotFoundException, IOException, ExecutionException { 
 		JSWaiter.waitJQueryAngular();
 		exportasPDFCurrentDate(exportBtn, pdfexport, currentpdf, pdfclick);
 		Thread.sleep(10000);
@@ -339,6 +339,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		System.out.println("The timestamp is : " + time_stamp);
 		renamefile(getLastModifiedFile(Exportpath), (CurrentState.getBrowser() + time_stamp + VisibilityExportPdf));
 		verifyfileextension();
+		waitForElement(close, 20);
 		clickelement(close);
 	}
 
@@ -349,14 +350,14 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	public void exporthistoryvisibilityrptPDF() throws FileNotFoundException, InterruptedException, IOException {
+	public void exporthistoryvisibilityrptPDF() throws FileNotFoundException, InterruptedException, IOException { 
 		JSWaiter.waitJQueryAngular();
 		exporthistrybtn(exportBtn, pdfexport, historypdf);
 
 	}
 
-	public void hstrypdfexport() throws FileNotFoundException, InterruptedException, IOException {
-		JSWaiter.waitJQueryAngular();
+	public void hstrypdfexport() throws FileNotFoundException, InterruptedException, IOException { 
+		JSWaiter.waitJQueryAngular(); 
 		exportasPDFHistory(hstrybtn, pdfclick);
 		Thread.sleep(15000);
 		time_stamp = timeStamp();

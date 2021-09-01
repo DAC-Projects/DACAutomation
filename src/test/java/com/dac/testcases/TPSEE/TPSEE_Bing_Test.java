@@ -132,7 +132,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		try {
 			int count = 1;
-			ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Bing");
+			ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
 			wb.deleteEmptyRows();
 			TPSEE_Bing_Page s = new TPSEE_Bing_Page(CurrentState.getDriver());
 				System.out.println("*******************  Scenarios : " + count + "Starts ****************************");
@@ -354,7 +354,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 	@Test(priority = 11, description = "Test to verify filter data is in order")
 	public void verifyFilterDataOrderBingFacebook() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
-		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "Bing");
+		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
 		String Country1 = wb1.getCellValue(1, wb1.seacrh_pattern("Country", 0).get(0).intValue());
 		if(Country1.equals("null")) {
 			CurrentState.getDriver().navigate().refresh();

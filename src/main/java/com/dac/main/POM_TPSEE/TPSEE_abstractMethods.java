@@ -1049,15 +1049,15 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	public void exportVA(WebElement ExportDropdown, WebElement ExportType, WebElement DatePicker, WebElement SelectDate,
 			WebElement ExportBtn) throws InterruptedException, FileNotFoundException, IOException {
 		JSWaiter.waitJQueryAngular();
-		waitForElement(ExportDropdown, 10);
+		waitForElement(ExportDropdown, 20);
 		clickelement(ExportDropdown);
-		waitForElement(ExportType, 10);
+		waitForElement(ExportType, 20);
 		clickelement(ExportType);
-		waitForElement(DatePicker, 10);
+		waitForElement(DatePicker, 20);
 		clickelement(DatePicker);
-		waitForElement(SelectDate, 10);
+		waitForElement(SelectDate, 20);
 		clickelement(SelectDate);
-		waitForElement(ExportBtn, 10);
+		waitForElement(ExportBtn, 20);
 		clickelement(ExportBtn);
 	}
 
@@ -1135,6 +1135,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			WebElement LinkClick) throws InterruptedException, FileNotFoundException, IOException {
 		JSWaiter.waitJQueryAngular();
 		if (ExportBtn.isDisplayed() & ExportBtn.isEnabled()) {
+			waitForElement(ExportBtn, 20);
 			scrollByElement(ExportBtn);
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			// action.moveToElement(ExportBtn).click().perform();
@@ -1142,6 +1143,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			Thread.sleep(20000);
 		}
 		if (LinkClick.isDisplayed() & LinkClick.isEnabled()) {
+			waitForElement(LinkClick, 20);
 			scrollByElement(LinkClick);
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			action.moveToElement(LinkClick).click().perform();
@@ -1163,15 +1165,15 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			throws InterruptedException, FileNotFoundException, IOException {
 
 		if (ExportDropdown.isDisplayed() & ExportDropdown.isEnabled()) {
-			scrollByElement(ExportDropdown);
 			wait.until(ExpectedConditions.visibilityOf(ExportDropdown));
+			scrollByElement(ExportDropdown);
 			action.moveToElement(ExportDropdown).click().perform();
-			Thread.sleep(1000);
+			Thread.sleep(5000);
 		}
 		if (ExportType.isDisplayed() & ExportType.isEnabled()) {
 			wait.until(ExpectedConditions.visibilityOf(ExportType));
 			action.moveToElement(ExportType).pause(1000).moveToElement(SelectPDF).click().perform();
-			Thread.sleep(2000);
+			Thread.sleep(5000);
 
 		}
 

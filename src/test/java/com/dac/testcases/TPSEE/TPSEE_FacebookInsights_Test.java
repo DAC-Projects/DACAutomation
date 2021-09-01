@@ -69,7 +69,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		try {
 			int count = 1;
-			ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "Facebook");
+			ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
 			wb.deleteEmptyRows();
 			TPSEE_FacebookInsights_Page s = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 				System.out.println("*******************  Scenarios : " + count + "Starts ****************************");

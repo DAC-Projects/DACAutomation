@@ -11,32 +11,135 @@
 		<parameter name = "Filter" value = "1"/>
 			<classes>
 			 	<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" /> 	 
-				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" /> 
-				<class name="com.dac.testcases.TPSEE.TPSEE_KPINavigation_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" >
+				<methods>
+				<exclude name = "VerifyLocationDetailsLocationTab"/>
+				<exclude name = "VerifySiteLocationTab"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" >
+				<methods>
+				<exclude name = "VerifyLocationDetailsLocationTab"/>
+				<exclude name = "VerifySiteLocationTab"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" >
+				<methods>
+				<exclude name = "VerifyLocationDetailsLocationTab"/>
+				<exclude name = "VerifySiteLocationTab"/>
+				</methods>
+				</class> 	 
+				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
 				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" /> 
-				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />   	 
+				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />	 
 				<class name = "com.dac.testcases.TPSEE.Left_Hand_Navigation_Test" /> 	
 				<class name = "com.dac.testcases.TPSEE.TPSEE_Site_Order_Test" />   
-				<class name = "com.dac.testcases.TPSEE.TPSEE_Settings_Mousehover_Test"/>
+				<class name = "com.dac.testcases.TPSEE.TPSEE_Settings_Mousehover_Test"/>    
+				<class name = "com.dac.testcases.TPSEE.TPSEE_LanguageList_Verification_Test" />
+				<class name="com.dac.testcases.TPSEE.TPSEE_KPINavigation_Test" />
 			</classes>
 	</test>
 	
-	<!-- <test name = "TransparenSEEBetaClientGroup" >
+	<test name = "TransparenSEEBetaClientGroup" >
 		<parameter name = "browser" value = "chrome"/>
 		<parameter name = "Filter" value = "2"/>
 			<classes>
-				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />	
-				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" /> 
-				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />  	 
+			 	<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" >
+				<methods>
+				<exclude name = "GetKPIValues"/>
+				<exclude name = "verifyText"/>
+				<exclude name = "ovrviewlocscorecompare"/>
+				<exclude name = "verifyGotoPage"/>
+				<exclude name = "verifyResultperPage"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				<exclude name = "verifySearchByLocationNum"/>
+				<exclude name = "verifyTableDataoExportLocNum"/>
+				<exclude name = "clearsearchLocNum"/>
+				<exclude name = "verifySearchByName"/>
+				<exclude name = "verifyTableDataoExportName"/>
+				<exclude name = "clearsearchName"/>
+				<exclude name = "verifySearchByAddress"/>
+				<exclude name = "verifyTableDataoExportAddress"/>
+				<exclude name = "clearsearchNameAddress"/>
+				<exclude name = "verifySearchByCity"/>
+				<exclude name = "verifyTableDataoExportCity"/>
+				<exclude name = "clearsearchNameCity"/>
+				<exclude name = "verifySearchByState"/>
+				<exclude name = "verifyTableDataoExportState"/>
+				<exclude name = "clearsearchNameState"/>
+				<exclude name = "verifySearchByPostCode"/>
+				<exclude name = "verifyTableDataoExportPostCode"/>
+				<exclude name = "verifySearchByPhone"/>
+				<exclude name = "verifyTableDataoExportPhone"/>
+				<exclude name = "clearsearchNamePhone"/>
+				</methods>
+				</class> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" >
+				<methods>
+				<exclude name = "GetKPIValues"/>
+				<exclude name = "verifyText"/>
+				<exclude name = "SetCalendarDate"/>
+				<exclude name = "ovrviewlocscorecompare"/>
+				<exclude name = "gethighchartsdate"/>
+				<exclude name = "verifySiteTable"/>
+				<exclude name = "VerifyLocationDetailsLocationTab"/>
+				<exclude name = "VerifySiteLocationTab"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" >
+				<methods>
+				<exclude name = "GetKPIValues"/>
+				<exclude name = "navigateToVisibilityPage"/>
+				<exclude name = "verifyFoundVendors"/>
+				<exclude name = "verifyText"/>
+				<exclude name = "comparevendorsListnverifySitevendors"/>
+				<exclude name = "ovrviewlocscorecompare"/>
+				<exclude name = "SetCalendarDate"/>
+				<exclude name = "gethighchartsdate"/>
+				<exclude name = "VerifyLocationDetailsLocationTab"/>
+				<exclude name = "VerifySiteLocationTab"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" >
+				<methods>
+				<exclude name = "verifyText"/>
+				<exclude name = "VerifyLocationDetailsLocationTab"/>
+				<exclude name = "VerifySiteLocationTab"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class> 	 
+				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" >
+				<methods>
+				<exclude name = "GetKPIValues"/>
+				<exclude name = "verifytitle"/>
+				<exclude name = "Verifyscorenloc"/>
+				<exclude name = "gethighchartsdate"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" >
+				<methods>
+				<exclude name = "verifyText"/>
+				<exclude name = "verifyHoverText"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" >
+				<methods>
+				<exclude name = "verifyTitleText"/>
+				<exclude name = "verifyFilterDataOrderBingFacebook"/>
+				</methods>
+				</class> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" >
+				<methods>
+				<exclude name = "verifyText"/>
+				<exclude name = "verifyHoverText"/>
+				<exclude name = "verifyFilterDataOrderBingFacebook"/>
+				</methods>
+				</class>
 			</classes>
 	</test>
 	
@@ -44,14 +147,101 @@
 		<parameter name = "browser" value = "chrome"/>
 		<parameter name = "Filter" value = "3"/>
 			<classes>
-				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />	  
-				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" /> 
-				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />  
-				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />	 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" >
+				<methods>
+				<exclude name = "GetKPIValues"/>
+				<exclude name = "navigateToVisibilityPage"/>
+				<exclude name = "verifyFoundVendors"/>
+				<exclude name = "verifyText"/>
+				<exclude name = "comparevendorsListnverifySitevendors"/>
+				<exclude name = "ovrviewlocscorecompare"/>
+				<exclude name = "SetCalendarDate"/>
+				<exclude name = "gethighchartsdate"/>
+				<exclude name = "VerifyLocationDetailsLocationTab"/>
+				<exclude name = "VerifySiteLocationTab"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" >
+				<methods>
+				<exclude name = "verifyText"/>
+				<exclude name = "VerifyLocationDetailsLocationTab"/>
+				<exclude name = "VerifySiteLocationTab"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" >
+				<methods>
+				<exclude name = "GetKPIValues"/>
+				<exclude name = "verifytitle"/>
+				<exclude name = "Verifyscorenloc"/>
+				<exclude name = "gethighchartsdate"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" >
+				<methods>
+				<exclude name = "verifyText"/>
+				<exclude name = "verifyHoverText"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" >
+				<methods>
+				<exclude name = "verifyTitleText"/>
+				<exclude name = "verifyFilterDataOrderBingFacebook"/>
+				</methods>
+				</class> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" >
+				<methods>
+				<exclude name = "verifyText"/>
+				<exclude name = "verifyHoverText"/>
+				<exclude name = "verifyFilterDataOrderBingFacebook"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" >
+				<methods>
+				<exclude name = "GetKPIValues"/>
+				<exclude name = "verifyText"/>
+				<exclude name = "ovrviewlocscorecompare"/>
+				<exclude name = "verifyGotoPage"/>
+				<exclude name = "verifyResultperPage"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				<exclude name = "verifySearchByLocationNum"/>
+				<exclude name = "verifyTableDataoExportLocNum"/>
+				<exclude name = "clearsearchLocNum"/>
+				<exclude name = "verifySearchByName"/>
+				<exclude name = "verifyTableDataoExportName"/>
+				<exclude name = "clearsearchName"/>
+				<exclude name = "verifySearchByAddress"/>
+				<exclude name = "verifyTableDataoExportAddress"/>
+				<exclude name = "clearsearchNameAddress"/>
+				<exclude name = "verifySearchByCity"/>
+				<exclude name = "verifyTableDataoExportCity"/>
+				<exclude name = "clearsearchNameCity"/>
+				<exclude name = "verifySearchByState"/>
+				<exclude name = "verifyTableDataoExportState"/>
+				<exclude name = "clearsearchNameState"/>
+				<exclude name = "verifySearchByPostCode"/>
+				<exclude name = "verifyTableDataoExportPostCode"/>
+				<exclude name = "verifySearchByPhone"/>
+				<exclude name = "verifyTableDataoExportPhone"/>
+				<exclude name = "clearsearchNamePhone"/>
+				</methods>
+				</class>  
+				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" >
+				<methods>
+				<exclude name = "GetKPIValues"/>
+				<exclude name = "verifyText"/>
+				<exclude name = "SetCalendarDate"/>
+				<exclude name = "ovrviewlocscorecompare"/>
+				<exclude name = "gethighchartsdate"/>
+				<exclude name = "verifySiteTable"/>
+				<exclude name = "VerifyLocationDetailsLocationTab"/>
+				<exclude name = "VerifySiteLocationTab"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>	 
 			</classes>
 	</test>
 	
@@ -59,14 +249,101 @@
 		<parameter name = "browser" value = "chrome"/>
 		<parameter name = "Filter" value = "4"/>
 			<classes>
-				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />	
-				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" /> 
-				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />  
-				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />	 
+				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" >
+				<methods>
+				<exclude name = "verifyText"/>
+				<exclude name = "VerifyLocationDetailsLocationTab"/>
+				<exclude name = "VerifySiteLocationTab"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" >
+				<methods>
+				<exclude name = "GetKPIValues"/>
+				<exclude name = "verifytitle"/>
+				<exclude name = "Verifyscorenloc"/>
+				<exclude name = "gethighchartsdate"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" >
+				<methods>
+				<exclude name = "verifyText"/>
+				<exclude name = "verifyHoverText"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" >
+				<methods>
+				<exclude name = "verifyTitleText"/>
+				<exclude name = "verifyFilterDataOrderBingFacebook"/>
+				</methods>
+				</class> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" >
+				<methods>
+				<exclude name = "verifyText"/>
+				<exclude name = "verifyHoverText"/>
+				<exclude name = "verifyFilterDataOrderBingFacebook"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" >
+				<methods>
+				<exclude name = "GetKPIValues"/>
+				<exclude name = "verifyText"/>
+				<exclude name = "ovrviewlocscorecompare"/>
+				<exclude name = "verifyGotoPage"/>
+				<exclude name = "verifyResultperPage"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				<exclude name = "verifySearchByLocationNum"/>
+				<exclude name = "verifyTableDataoExportLocNum"/>
+				<exclude name = "clearsearchLocNum"/>
+				<exclude name = "verifySearchByName"/>
+				<exclude name = "verifyTableDataoExportName"/>
+				<exclude name = "clearsearchName"/>
+				<exclude name = "verifySearchByAddress"/>
+				<exclude name = "verifyTableDataoExportAddress"/>
+				<exclude name = "clearsearchNameAddress"/>
+				<exclude name = "verifySearchByCity"/>
+				<exclude name = "verifyTableDataoExportCity"/>
+				<exclude name = "clearsearchNameCity"/>
+				<exclude name = "verifySearchByState"/>
+				<exclude name = "verifyTableDataoExportState"/>
+				<exclude name = "clearsearchNameState"/>
+				<exclude name = "verifySearchByPostCode"/>
+				<exclude name = "verifyTableDataoExportPostCode"/>
+				<exclude name = "verifySearchByPhone"/>
+				<exclude name = "verifyTableDataoExportPhone"/>
+				<exclude name = "clearsearchNamePhone"/>
+				</methods>
+				</class>  
+				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" >
+				<methods>
+				<exclude name = "GetKPIValues"/>
+				<exclude name = "verifyText"/>
+				<exclude name = "SetCalendarDate"/>
+				<exclude name = "ovrviewlocscorecompare"/>
+				<exclude name = "gethighchartsdate"/>
+				<exclude name = "verifySiteTable"/>
+				<exclude name = "VerifyLocationDetailsLocationTab"/>
+				<exclude name = "VerifySiteLocationTab"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>	 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" >
+				<methods>
+				<exclude name = "GetKPIValues"/>
+				<exclude name = "navigateToVisibilityPage"/>
+				<exclude name = "verifyFoundVendors"/>
+				<exclude name = "verifyText"/>
+				<exclude name = "comparevendorsListnverifySitevendors"/>
+				<exclude name = "ovrviewlocscorecompare"/>
+				<exclude name = "SetCalendarDate"/>
+				<exclude name = "gethighchartsdate"/>
+				<exclude name = "VerifyLocationDetailsLocationTab"/>
+				<exclude name = "VerifySiteLocationTab"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>	 
 			</classes>
 	</test>
 	
@@ -74,14 +351,101 @@
 		<parameter name = "browser" value = "chrome"/>
 		<parameter name = "Filter" value = "5"/>
 			<classes>
-				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />	
-				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" /> 
-				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />  
-				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />	 
+				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" >
+				<methods>
+				<exclude name = "GetKPIValues"/>
+				<exclude name = "verifytitle"/>
+				<exclude name = "Verifyscorenloc"/>
+				<exclude name = "gethighchartsdate"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" >
+				<methods>
+				<exclude name = "verifyText"/>
+				<exclude name = "verifyHoverText"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" >
+				<methods>
+				<exclude name = "verifyTitleText"/>
+				<exclude name = "verifyFilterDataOrderBingFacebook"/>
+				</methods>
+				</class> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" >
+				<methods>
+				<exclude name = "verifyText"/>
+				<exclude name = "verifyHoverText"/>
+				<exclude name = "verifyFilterDataOrderBingFacebook"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" >
+				<methods>
+				<exclude name = "GetKPIValues"/>
+				<exclude name = "verifyText"/>
+				<exclude name = "ovrviewlocscorecompare"/>
+				<exclude name = "verifyGotoPage"/>
+				<exclude name = "verifyResultperPage"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				<exclude name = "verifySearchByLocationNum"/>
+				<exclude name = "verifyTableDataoExportLocNum"/>
+				<exclude name = "clearsearchLocNum"/>
+				<exclude name = "verifySearchByName"/>
+				<exclude name = "verifyTableDataoExportName"/>
+				<exclude name = "clearsearchName"/>
+				<exclude name = "verifySearchByAddress"/>
+				<exclude name = "verifyTableDataoExportAddress"/>
+				<exclude name = "clearsearchNameAddress"/>
+				<exclude name = "verifySearchByCity"/>
+				<exclude name = "verifyTableDataoExportCity"/>
+				<exclude name = "clearsearchNameCity"/>
+				<exclude name = "verifySearchByState"/>
+				<exclude name = "verifyTableDataoExportState"/>
+				<exclude name = "clearsearchNameState"/>
+				<exclude name = "verifySearchByPostCode"/>
+				<exclude name = "verifyTableDataoExportPostCode"/>
+				<exclude name = "verifySearchByPhone"/>
+				<exclude name = "verifyTableDataoExportPhone"/>
+				<exclude name = "clearsearchNamePhone"/>
+				</methods>
+				</class>  
+				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" >
+				<methods>
+				<exclude name = "GetKPIValues"/>
+				<exclude name = "verifyText"/>
+				<exclude name = "SetCalendarDate"/>
+				<exclude name = "ovrviewlocscorecompare"/>
+				<exclude name = "gethighchartsdate"/>
+				<exclude name = "verifySiteTable"/>
+				<exclude name = "VerifyLocationDetailsLocationTab"/>
+				<exclude name = "VerifySiteLocationTab"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>	 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" >
+				<methods>
+				<exclude name = "GetKPIValues"/>
+				<exclude name = "navigateToVisibilityPage"/>
+				<exclude name = "verifyFoundVendors"/>
+				<exclude name = "verifyText"/>
+				<exclude name = "comparevendorsListnverifySitevendors"/>
+				<exclude name = "ovrviewlocscorecompare"/>
+				<exclude name = "SetCalendarDate"/>
+				<exclude name = "gethighchartsdate"/>
+				<exclude name = "VerifyLocationDetailsLocationTab"/>
+				<exclude name = "VerifySiteLocationTab"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" >
+				<methods>
+				<exclude name = "verifyText"/>
+				<exclude name = "VerifyLocationDetailsLocationTab"/>
+				<exclude name = "VerifySiteLocationTab"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class> 
 			</classes>
 	</test> 
 	
@@ -89,16 +453,97 @@
 		<parameter name = "browser" value = "chrome"/>
 		<parameter name = "Filter" value = "6"/>
 			<classes>
-				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />	
-				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" /> 
-				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" />  
-				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" />
-				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />	 
+				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" >
+				<methods>
+				<exclude name = "verifyText"/>
+				<exclude name = "verifyHoverText"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" >
+				<methods>
+				<exclude name = "verifyTitleText"/>
+				<exclude name = "verifyFilterDataOrderBingFacebook"/>
+				</methods>
+				</class> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" >
+				<methods>
+				<exclude name = "verifyText"/>
+				<exclude name = "verifyHoverText"/>
+				<exclude name = "verifyFilterDataOrderBingFacebook"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" >
+				<methods>
+				<exclude name = "GetKPIValues"/>
+				<exclude name = "verifyText"/>
+				<exclude name = "ovrviewlocscorecompare"/>
+				<exclude name = "verifyGotoPage"/>
+				<exclude name = "verifyResultperPage"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				<exclude name = "verifySearchByLocationNum"/>
+				<exclude name = "verifyTableDataoExportLocNum"/>
+				<exclude name = "clearsearchLocNum"/>
+				<exclude name = "verifySearchByName"/>
+				<exclude name = "verifyTableDataoExportName"/>
+				<exclude name = "clearsearchName"/>
+				<exclude name = "verifySearchByAddress"/>
+				<exclude name = "verifyTableDataoExportAddress"/>
+				<exclude name = "clearsearchNameAddress"/>
+				<exclude name = "verifySearchByCity"/>
+				<exclude name = "verifyTableDataoExportCity"/>
+				<exclude name = "clearsearchNameCity"/>
+				<exclude name = "verifySearchByState"/>
+				<exclude name = "verifyTableDataoExportState"/>
+				<exclude name = "clearsearchNameState"/>
+				<exclude name = "verifySearchByPostCode"/>
+				<exclude name = "verifyTableDataoExportPostCode"/>
+				<exclude name = "verifySearchByPhone"/>
+				<exclude name = "verifyTableDataoExportPhone"/>
+				<exclude name = "clearsearchNamePhone"/>
+				</methods>
+				</class>  
+				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" >
+				<methods>
+				<exclude name = "GetKPIValues"/>
+				<exclude name = "verifyText"/>
+				<exclude name = "SetCalendarDate"/>
+				<exclude name = "ovrviewlocscorecompare"/>
+				<exclude name = "gethighchartsdate"/>
+				<exclude name = "verifySiteTable"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>	 
+				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" >
+				<methods>
+				<exclude name = "GetKPIValues"/>
+				<exclude name = "navigateToVisibilityPage"/>
+				<exclude name = "verifyFoundVendors"/>
+				<exclude name = "verifyText"/>
+				<exclude name = "comparevendorsListnverifySitevendors"/>
+				<exclude name = "ovrviewlocscorecompare"/>
+				<exclude name = "SetCalendarDate"/>
+				<exclude name = "gethighchartsdate"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>
+				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" >
+				<methods>
+				<exclude name = "verifyText"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class> 
+				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" >
+				<methods>
+				<exclude name = "GetKPIValues"/>
+				<exclude name = "verifytitle"/>
+				<exclude name = "Verifyscorenloc"/>
+				<exclude name = "gethighchartsdate"/>
+				<exclude name = "verifyFilterDataOrder"/>
+				</methods>
+				</class>	 
 			</classes>
-	</test> -->
+	</test>
 	
 	<!-- <test name = "TransparenSeeBetaDup" >
 		<parameter name = "browser" value = "chrome"/>
