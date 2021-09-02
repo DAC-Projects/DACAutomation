@@ -70,6 +70,7 @@
 				<exclude name = "clearsearchNameState"/>
 				<exclude name = "verifySearchByPostCode"/>
 				<exclude name = "verifyTableDataoExportPostCode"/>
+				<exclude name = "clearsearchNamePostCode"/>
 				<exclude name = "verifySearchByPhone"/>
 				<exclude name = "verifyTableDataoExportPhone"/>
 				<exclude name = "clearsearchNamePhone"/>
@@ -224,6 +225,7 @@
 				<exclude name = "clearsearchNameState"/>
 				<exclude name = "verifySearchByPostCode"/>
 				<exclude name = "verifyTableDataoExportPostCode"/>
+				<exclude name = "clearsearchNamePostCode"/>
 				<exclude name = "verifySearchByPhone"/>
 				<exclude name = "verifyTableDataoExportPhone"/>
 				<exclude name = "clearsearchNamePhone"/>
@@ -311,6 +313,7 @@
 				<exclude name = "clearsearchNameState"/>
 				<exclude name = "verifySearchByPostCode"/>
 				<exclude name = "verifyTableDataoExportPostCode"/>
+				<exclude name = "clearsearchNamePostCode"/>
 				<exclude name = "verifySearchByPhone"/>
 				<exclude name = "verifyTableDataoExportPhone"/>
 				<exclude name = "clearsearchNamePhone"/>
@@ -405,6 +408,7 @@
 				<exclude name = "clearsearchNameState"/>
 				<exclude name = "verifySearchByPostCode"/>
 				<exclude name = "verifyTableDataoExportPostCode"/>
+				<exclude name = "clearsearchNamePostCode"/>
 				<exclude name = "verifySearchByPhone"/>
 				<exclude name = "verifyTableDataoExportPhone"/>
 				<exclude name = "clearsearchNamePhone"/>
@@ -498,6 +502,7 @@
 				<exclude name = "clearsearchNameState"/>
 				<exclude name = "verifySearchByPostCode"/>
 				<exclude name = "verifyTableDataoExportPostCode"/>
+				<exclude name = "clearsearchNamePostCode"/>
 				<exclude name = "verifySearchByPhone"/>
 				<exclude name = "verifyTableDataoExportPhone"/>
 				<exclude name = "clearsearchNamePhone"/>
