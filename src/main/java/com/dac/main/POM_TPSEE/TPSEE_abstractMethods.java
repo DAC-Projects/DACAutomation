@@ -309,6 +309,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				waitForElement(group, 5);
 				clickelement(group);
 				waitUntilLoad(driver);
+				JSWaiter.waitJQueryAngular();
 			}
 			if (!CountryCode.equals("All Countries")) {
 				clickelement(LAVFilterCountry);
@@ -320,6 +321,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				waitForElement(country, 5);
 				clickelement(country);
 				waitUntilLoad(driver);
+				JSWaiter.waitJQueryAngular();
 			}
 			if (!State.equals("All States")) {
 				clickelement(LAVFilterState);
@@ -330,6 +332,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				waitForElement(state, 5);
 				clickelement(state);
 				waitUntilLoad(driver);
+				JSWaiter.waitJQueryAngular();
 			}
 			if (!City.equals("All Cities")) {
 				clickelement(LAVFilterCity);
@@ -340,6 +343,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				waitForElement(city, 5);
 				clickelement(city);
 				waitUntilLoad(driver);
+				JSWaiter.waitJQueryAngular();
 			}
 			if (!Location.equals("All Locations")) {
 				clickelement(LAVFilterlocation);
@@ -351,6 +355,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				Thread.sleep(1000);
 				clickelement(location);
 				waitUntilLoad(driver);
+				JSWaiter.waitJQueryAngular();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

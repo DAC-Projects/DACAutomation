@@ -230,7 +230,7 @@
 				<exclude name = "verifyTableDataoExportPhone"/>
 				<exclude name = "clearsearchNamePhone"/>
 				</methods>
-				</class>  
+				</class>
 				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" >
 				<methods>
 				<exclude name = "GetKPIValues"/>
@@ -267,7 +267,7 @@
 				<exclude name = "gethighchartsdate"/>
 				<exclude name = "verifyFilterDataOrder"/>
 				</methods>
-				</class>
+				</class>  
 				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" >
 				<methods>
 				<exclude name = "verifyText"/>
@@ -318,7 +318,7 @@
 				<exclude name = "verifyTableDataoExportPhone"/>
 				<exclude name = "clearsearchNamePhone"/>
 				</methods>
-				</class>  
+				</class> 
 				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" >
 				<methods>
 				<exclude name = "GetKPIValues"/>
@@ -331,7 +331,7 @@
 				<exclude name = "VerifySiteLocationTab"/>
 				<exclude name = "verifyFilterDataOrder"/>
 				</methods>
-				</class>	 
+				</class>	  
 				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" >
 				<methods>
 				<exclude name = "GetKPIValues"/>
@@ -362,7 +362,7 @@
 				<exclude name = "gethighchartsdate"/>
 				<exclude name = "verifyFilterDataOrder"/>
 				</methods>
-				</class>
+				</class>   
 				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" >
 				<methods>
 				<exclude name = "verifyText"/>
@@ -370,7 +370,7 @@
 				<exclude name = "verifyFilterDataOrder"/>
 				</methods>
 				</class>
-				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" >
+				 <class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" >
 				<methods>
 				<exclude name = "verifyTitleText"/>
 				<exclude name = "verifyFilterDataOrderBingFacebook"/>
@@ -413,7 +413,7 @@
 				<exclude name = "verifyTableDataoExportPhone"/>
 				<exclude name = "clearsearchNamePhone"/>
 				</methods>
-				</class>  
+				</class>
 				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" >
 				<methods>
 				<exclude name = "GetKPIValues"/>
@@ -426,7 +426,7 @@
 				<exclude name = "VerifySiteLocationTab"/>
 				<exclude name = "verifyFilterDataOrder"/>
 				</methods>
-				</class>	 
+				</class>	   
 				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" >
 				<methods>
 				<exclude name = "GetKPIValues"/>

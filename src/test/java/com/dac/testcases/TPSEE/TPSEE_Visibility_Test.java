@@ -553,7 +553,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	 * @param Filter
 	 * @throws Exception
 	 */
-	@Parameters({ "Filter" })
+	/*@Parameters({ "Filter" })
 	@Test(priority = 31, description = "Test to verify location details of vendors sites")
 	public void VerifySiteLocationTab(int Filter) throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
@@ -565,7 +565,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		}else {
 			System.out.println("No location selected");
 		}
-	}
+	}*/
 	
 	/**
 	 * test to verify filter data order
