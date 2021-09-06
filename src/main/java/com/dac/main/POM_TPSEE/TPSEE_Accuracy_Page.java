@@ -1027,6 +1027,47 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods {
 		}
 		return vendor;
 	}
+	
+	/**
+	 * Method to verify accuracy percentage
+	 */
+	public void verifyPercentageAccuracy() {
+		JSWaiter.waitJQueryAngular();
+		waitForElement(vendorslist, 5);
+		scrollByElement(vendorslist);
+		List<WebElement> AccuracyPercentage = driver.findElements(By.xpath("//div[@id='allSitesScores']//a[contains(@class,'load-table')]/../..//div[@class='big-number']"));
+		int size = AccuracyPercentage.size();
+		for(int i = 1; i <= size; i++) {
+			WebElement accuper = driver.findElement(By.xpath("(//div[@id='allSitesScores']//a[contains(@class,'load-table')]/../..//div[@class='big-number'])["+ i +"]"));
+			String percentage = accuper.getText();
+			percentage = percentage.replace("%", " ").trim();
+			double per = Double.parseDouble(percentage);
+			soft.assertTrue((per <= 100.00), "Percentage is greater than 100");
+			soft.assertTrue((per >= 0.00), "Percentage is lesser than 0");
+			soft.assertAll();
+		}
+	}
+	
+	
+	/**
+	 * Method to verify Inaccuracy Percentage
+	 */
+	public void verifyPercentageInaccuracy() {
+		JSWaiter.waitJQueryAngular();
+		waitForElement(vendorslist, 5);
+		scrollByElement(vendorslist);
+		List<WebElement> InAccuracyPercentage = driver.findElements(By.xpath("(//div[@id='allSitesScores']//a[contains(@class,'load-table')]/../..//div[@class='small-number'])"));
+		int size = InAccuracyPercentage.size();
+		for(int i = 1; i <= size; i++) {
+			WebElement accuper = driver.findElement(By.xpath("(//div[@id='allSitesScores']//a[contains(@class,'load-table')]/../..//div[@class='small-number'])["+ i +"]"));
+			String percentage = accuper.getText();
+			percentage = percentage.replace("% inaccuracies", " ").trim();
+			double per = Double.parseDouble(percentage);
+			soft.assertTrue((per <= 100.00), "Percentage is greater than 100");
+			soft.assertTrue((per >= 0.00), "Percentage is lesser than 0");
+			soft.assertAll();
+		}
+	}
 
 	/**
 	 * to verify results per page

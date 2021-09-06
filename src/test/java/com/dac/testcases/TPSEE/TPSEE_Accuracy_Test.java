@@ -285,13 +285,21 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test(priority = 12, description = "Test to verify percentage of accuracy and inaccuracy scores")
+	public void VerifyPercentage() throws InterruptedException {
+		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+		data.verifyPercentageAccuracy();
+		Thread.sleep(3000);
+		data.verifyPercentageInaccuracy();
+	}
 
 	/**
 	 * Test to export as overall CSV Accuracy Report
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 12, groups = { "smoke" }, description = "Test for export file as CSV")
+	@Test(priority = 13, groups = { "smoke" }, description = "Test for export file as CSV")
 	public void verifyExportAccuracyCSV() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.exportaccuracyrptCSV();
@@ -303,7 +311,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 13, groups = { "smoke" }, description = "Test for export file as XLSX")
+	@Test(priority = 14, groups = { "smoke" }, description = "Test for export file as XLSX")
 	public void verifyOverviewReportnExportAccuracyXLSX() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.exportaccuracyrptXLSX();
@@ -316,7 +324,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * @throws Exception
 	 */
 
-	@Test(priority = 14, groups = { "smoke" }, description = "Test for overview report and tooltip data")
+	@Test(priority = 15, groups = { "smoke" }, description = "Test for overview report and tooltip data")
 	public void verifyOverviewReportnTooltipAccuracy() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.verifyHistoryGraph1();
@@ -330,7 +338,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 15, groups = { "smoke" }, description = "Test for verifying site data in Accuracy page")
+	@Test(priority = 16, groups = { "smoke" }, description = "Test for verifying site data in Accuracy page")
 	public void verifySiteTablenExportAccuracy() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.verifyaccuracySitetable();
@@ -344,7 +352,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 16, groups = { "smoke" }, description = "Test for verifying site link data in Accuracy page")
+	@Test(priority = 17, groups = { "smoke" }, description = "Test for verifying site link data in Accuracy page")
 	public void numberofentriesnExporttableAccuracy() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.verifysitelinkdata(soft);
@@ -357,7 +365,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 17, groups = { "smoke" }, description = "Test for verifying site link data in Accuracy page")
+	@Test(priority = 18, groups = { "smoke" }, description = "Test for verifying site link data in Accuracy page")
 	public void verifycheckbox() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.showinaccuracy();
@@ -372,7 +380,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 18, groups = { "smoke" }, description = "Test for verifying sitetable in Visibility page")
+	@Test(priority = 19, groups = { "smoke" }, description = "Test for verifying sitetable in Visibility page")
 	public void verifyTableHeaders() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.verifyAllTab();
@@ -394,7 +402,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 19, groups = { "smoke" }, description = "Verify Top Button")
+	@Test(priority = 20, groups = { "smoke" }, description = "Verify Top Button")
 	public void GetTopBtn() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.TopButton();
@@ -408,7 +416,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@Parameters({ "Filter" })
-	@Test(priority = 20, description = "Test to verify location details")
+	@Test(priority = 21, description = "Test to verify location details")
 	public void VerifyLocationDetailsLocationTab(int Filter) throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
