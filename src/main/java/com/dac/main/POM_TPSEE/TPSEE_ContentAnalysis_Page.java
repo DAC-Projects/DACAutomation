@@ -637,4 +637,44 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 			}
 		}
 	}
+	
+	public void completepercentage() {
+		double percentage;
+		JSWaiter.waitJQueryAngular();
+		waitForElement(contentsiteTable, 5);
+		scrollByElement(contentsiteTable);
+		List<WebElement> Completetableper = driver.findElements(By.xpath("//div[@class = 'easy-pie-chart percentage easyPieChart']//span[@class='percent']"));
+		int size = Completetableper.size();
+		for(int i = 1; i <= size; i++) {
+			WebElement percent = driver.findElement(By.xpath("(//div[@class = 'easy-pie-chart percentage easyPieChart']//span[@class='percent'])["+ i +"]"));
+			String text = percent.getText();
+			text = text.replace("%", " ").trim();
+			percentage = Double.parseDouble(text);
+			System.out.println("The percentage is : " +percentage);
+			soft.assertTrue(percentage <= 100.00, "percentage is greater than 100");
+			soft.assertTrue(percentage >= 0.00, "percentage is less than 0");
+		}
+		soft.assertAll();
+	}
+	
+	public void Incomlpetepercentage() {
+		double percentage;
+		JSWaiter.waitJQueryAngular();
+		waitForElement(contentsiteTable, 5);
+		scrollByElement(contentsiteTable);
+		List<WebElement> Completetableper = driver.findElements(By.xpath("//div[@class = 'easy-pie-chart percentage easyPieChart']/../..//div[@class = 'inline position-relative']"));
+		int size = Completetableper.size();
+		for(int i = 1; i <= size; i++) {
+			WebElement percent = driver.findElement(By.xpath("(//div[@class = 'easy-pie-chart percentage easyPieChart']/../..//div[@class = 'inline position-relative'])["+ i +"]"));
+			String text = percent.getText();
+			text = text.replace("(", " ").trim();
+			text = text.replace(")", " ").trim();
+			text = text.replace("% incomplete", " ").trim();
+			percentage = Double.parseDouble(text);
+			System.out.println("The percentage is : " +percentage);
+			soft.assertTrue(percentage <= 100.00, "percentage is greater than 100");
+			soft.assertTrue(percentage >= 0.00, "percentage is less than 0");
+		}
+		soft.assertAll();
+	}
 }

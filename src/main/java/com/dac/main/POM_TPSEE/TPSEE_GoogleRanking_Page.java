@@ -4,6 +4,8 @@ import static org.testng.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -540,7 +542,10 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 		} else {
 		score = Double.parseDouble(tooltipvalue);
 		}
-		return score;
+		BigDecimal bd = BigDecimal.valueOf(score);
+		bd = bd.setScale(1, RoundingMode.HALF_UP);
+		double finalGRscore = bd.doubleValue();
+		return finalGRscore;
 	}
 
 	/**
@@ -561,7 +566,10 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 			overallscore = Double.parseDouble(ovrscr);
 		}
 		System.out.println("The overall score is : " + overallscore);
-		return overallscore;
+		BigDecimal bd = BigDecimal.valueOf(overallscore);
+		bd = bd.setScale(1, RoundingMode.HALF_UP);
+		double finalGRscore = bd.doubleValue();
+		return finalGRscore;
 	}
 
 	/**

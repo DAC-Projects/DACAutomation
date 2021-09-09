@@ -310,17 +310,26 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		}
 	}*/
 
+	
+	@Test(priority = 11)
+	public void VerifyPercentage() {
+		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
+		data.completepercentage();
+		data.Incomlpetepercentage();
+	}
 
 	/**
 	 * compare UI and Xl data
 	 * @throws Exception
 	 */
-	@Test(priority = 11, groups = { "smoke" }, description = "Test for overview export and export verification")
+	@Test(priority = 12, groups = { "smoke" }, description = "Test for overview export and export verification")
 	public void verifyTableDataoExport() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		data.SitelLinkData();
 		addEvidence(CurrentState.getDriver(), "Verified overview export for Accuracy report", "yes");
 	}
+	
+	
 
 
 	/**
@@ -328,7 +337,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 12, groups = { "smoke" }, description = "Verify Top Button")
+	@Test(priority = 13, groups = { "smoke" }, description = "Verify Top Button")
 	public void GetTopBtn() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		data.TopButton();
@@ -341,7 +350,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@Parameters({"Filter"})
-	@Test(priority = 13, description = "Test to verify location details")
+	@Test(priority = 14, description = "Test to verify location details")
 	public void VerifyLocationDetailsLocationTab(int Filter) throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");

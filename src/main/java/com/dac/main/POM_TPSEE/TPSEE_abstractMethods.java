@@ -559,6 +559,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				waitForElement(group, 5);
 				clickelement(group);
 				waitUntilLoad(driver);
+				JSWaiter.waitJQueryAngular();
 			}
 			if (!CountryCode.equals("All Countries")) {
 				clickelement(FilterCountry);
@@ -569,6 +570,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				waitForElement(country, 5);
 				clickelement(country);
 				waitUntilLoad(driver);
+				JSWaiter.waitJQueryAngular();
 			}
 			if (!State.equals("All States")) {
 				clickelement(FilterState);
@@ -579,6 +581,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				waitForElement(state, 5);
 				clickelement(state);
 				waitUntilLoad(driver);
+				JSWaiter.waitJQueryAngular();
 			}
 			if (!City.equals("All Cities")) {
 				clickelement(FilterCity);
@@ -588,6 +591,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				waitForElement(city, 5);
 				clickelement(city);
 				waitUntilLoad(driver);
+				JSWaiter.waitJQueryAngular();
 			}
 			if (!Location.equals("All Locations")) {
 				clickelement(Filterlocation);
@@ -597,6 +601,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 				waitForElement(location, 5);
 				clickelement(location);
 				waitUntilLoad(driver);
+				JSWaiter.waitJQueryAngular();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1722,11 +1727,12 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		String sc = score.getText();
 		String s = sc.replace("%", "");
 		double scores = Double.parseDouble(s);
-		/*
-		 * BigDecimal bd = BigDecimal.valueOf(scores); bd = bd.setScale(1,
-		 * RoundingMode.HALF_UP); double finaloverviewscore = bd.doubleValue();
-		 */
-		return scores;
+		
+		  BigDecimal bd = BigDecimal.valueOf(scores); bd = bd.setScale(1,
+		  RoundingMode.HALF_UP); 
+		  double finaloverviewscore = bd.doubleValue();
+		 
+		return finaloverviewscore;
 
 	}
 
@@ -2247,7 +2253,10 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			scorevalue = Double.parseDouble(tooltipvalue);
 		}
 		System.out.println("The graphscorevalue is : " + scorevalue);
-		return scorevalue;
+		 BigDecimal bd = BigDecimal.valueOf(scorevalue); bd = bd.setScale(1,
+				  RoundingMode.HALF_UP); 
+				  double finaloverviewscore = bd.doubleValue();
+		return finaloverviewscore;
 	}
 
 	/**
