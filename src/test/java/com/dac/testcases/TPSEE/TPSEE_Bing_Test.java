@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_Bing_Page;
+import com.dac.main.POM_TPSEE.TPSEE_FacebookInsights_Page;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -119,15 +120,21 @@ public class TPSEE_Bing_Test extends BaseClass {
 			System.out.println("The group selected is : " +Group);
 		}
 	}
+	
+	@Test(priority = 4, description = "Test to verify the read manual pdf")
+	public void ReadManualPdf() throws InterruptedException {
+		data = new TPSEE_Bing_Page(CurrentState.getDriver());
+		data.verifyContentInPDf("Bing Places for Business", "To set a filter, follow the steps below:" , "A. Group Name" , "Bing_Manual.pdf");
+	}
 
-
-	/**
+/*
+	*//**
 	 * test to apply filters
 	 * @param Filter
 	 * @throws Exception
 	 */
 	@Parameters({ "Filter" })
-	@Test(priority = 4, groups = { "smoke" }, description = "Verify Bing page loads after filter applied")
+	@Test(priority = 5, groups = { "smoke" }, description = "Verify Bing page loads after filter applied")
 	public void verifyFilteringReportsBing(int Filter) throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		try {
@@ -158,7 +165,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 	 * test tpo get history graph data
 	 * @throws Exception
 	 */
-	@Test(priority = 5, groups = { "smoke" }, description = "Test to get ToolTip Value Score")
+	@Test(priority = 6, groups = { "smoke" }, description = "Test to get ToolTip Value Score")
 	public void verifyTooltipBing() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		data.verifyBingHistoryGraph();
@@ -170,7 +177,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 	 * test to export as CSV
 	 * @throws Exception
 	 */
-	@Test(priority = 6, groups = { "smoke" }, description = "Verify Site Vendors List")
+	@Test(priority = 7, groups = { "smoke" }, description = "Verify Site Vendors List")
 	public void BingCSVExport() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		data.deletefile();
@@ -182,7 +189,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 	 * test to export as XLSX
 	 * @throws Exception
 	 */
-	@Test(priority = 7, groups = { "smoke" }, description = "Verify Site Vendors List")
+	@Test(priority = 8, groups = { "smoke" }, description = "Verify Site Vendors List")
 	public void BingExport() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		data.exportXLSXBing(BingXLSX);
@@ -194,7 +201,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 8, groups = { "smoke" }, description = "Verify Impressions")	
+	@Test(priority = 9, groups = { "smoke" }, description = "Verify Impressions")	
 	public void VerifyTotalImpressionUIExport() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		data.compareUInExportImpressions(chromepath, IEpath, FFpath);
@@ -206,7 +213,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 	 * test to verify zoom functionality
 	 * @throws Exception
 	 */
-	@Test(priority = 9, groups = { "smoke" }, description = "Verify Zoom Functionality")
+	@Test(priority = 10, groups = { "smoke" }, description = "Verify Zoom Functionality")
 	public void gethighchartsdate() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		String Isdataavailable = data.validdata();
@@ -314,7 +321,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unused")
-	@Test(priority = 10, dataProvider = "testData",description = "Verify manual date Selection")
+	@Test(priority = 11, dataProvider = "testData",description = "Verify manual date Selection")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 
@@ -351,7 +358,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 	 * test to verify filter data order
 	 * @throws Exception
 	 */
-	@Test(priority = 11, description = "Test to verify filter data is in order")
+	@Test(priority = 12, description = "Test to verify filter data is in order")
 	public void verifyFilterDataOrderBingFacebook() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");

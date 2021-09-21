@@ -2,14 +2,22 @@ package com.dac.main.POM_TPSEE;
 
 import static org.testng.Assert.assertTrue;
 
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -105,6 +113,21 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "//div[@id='exportAsyncMessage']//a[@class='close icon-remove icon-color-info']")
 	private WebElement close;
+
+	@FindBy(xpath = "//a[contains(text(),'Update Listing URL')]")
+	private WebElement ListingUrl;
+
+	@FindBy(xpath = "//button[contains(text(),'Accept')]")
+	private WebElement ListingAccept;
+
+	@FindBy(xpath = "//button[contains(text(),'Reject')]")
+	private WebElement ListingReject;
+
+	@FindBy(xpath = "//input[@id='newUrl']")
+	private WebElement EnterNewListingUrl;
+
+	@FindBy(xpath = "//button[contains(text(),'Submit')]")
+	private WebElement SubmitListingUrl; 						
 
 	/*----------------------locators to export pdf for period of time-------------------------*/
 
@@ -1073,5 +1096,204 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 		waitForElement(GotoPage, 5);
 		scrollByElement(GotoPage);
 		GoTopage(GotoPage);
+	}
+
+
+	public void verifyListingUrl() throws Exception {
+
+		if(ListingUrl.isDisplayed()) {
+			clickelement(ListingUrl);
+			JSWaiter.waitJQueryAngular();
+			BaseClass.addEvidence(driver, "Test to verify Listing URL", "yes");
+			try{
+				WebElement ele = driver.findElement(By.xpath("//*[@id = 'modal-body']//h4"));
+				if(ele.isDisplayed()) {
+					String text = ele.getText();
+					System.out.println("The text is : " +text);
+					if(text.equalsIgnoreCase("Possible Listing URL(s)")) {				
+						soft.assertTrue(ListingAccept.isDisplayed(), "Listing accept button is not displayed");
+						soft.assertTrue(ListingReject.isDisplayed(), "Listing reject butoon is not displayed");
+						soft.assertTrue(EnterNewListingUrl.isDisplayed(), "Text box is not displayed");
+						soft.assertTrue(SubmitListingUrl.isDisplayed(), "Listing submit button is not displayed");
+						driver.findElement(By.xpath("//input[@id='newUrl']/../../..//button[@class='close']")).click();
+					} else if(text.equalsIgnoreCase("Accepted Listing URL")) {
+						soft.assertTrue(ListingReject.isDisplayed(), "Listing reject butoon is not displayed");
+						soft.assertTrue(EnterNewListingUrl.isDisplayed(), "Text box is not displayed");
+						soft.assertTrue(SubmitListingUrl.isDisplayed(), "Listing submit button is not displayed");
+						driver.findElement(By.xpath("//input[@id='newUrl']/../../..//button[@class='close']")).click();
+					}
+				}
+			}catch(Exception e) {
+				soft.assertTrue(EnterNewListingUrl.isDisplayed(), "Text box is not displayed");
+				soft.assertTrue(SubmitListingUrl.isDisplayed(), "Listing submit button is not displayed");
+				driver.findElement(By.xpath("//input[@id='newUrl']/../../..//button[@class='close']")).click();
+			}
+			
+		} else {
+			System.out.println("No Listing URL displayed");
+		}
+		soft.assertAll();
+	}
+
+	public void WebsiteLink() {
+		try {
+		WebElement ele = driver.findElement(By.xpath("//*[@id='PrimaryWebAddress']"));
+		if(ele.isDisplayed()) {
+			String number = ele.getAttribute("data-sortcol");
+			System.out.println("The number is : " +number);
+			int num = Integer.parseInt(number);
+			WebElement Link = driver.findElement(By.xpath("(//td["+ num +"]//a)"));
+			String Linktxt = Link.getAttribute("href");
+			String winHandleBefore = driver.getWindowHandle();
+			clickelement(Link);
+			JSWaiter.waitJQueryAngular();
+			BaseClass.addEvidence(driver, "Test to veify the link opened", "yes");
+			for (String winHandle : driver.getWindowHandles()) {
+				driver.switchTo().window(winHandle);
+			}
+			String NewLink = driver.getCurrentUrl();
+			System.out.println("The new link is : " +NewLink);
+			soft.assertEquals(NewLink, Linktxt);
+			driver.close();
+			driver.switchTo().window(winHandleBefore);
+		}else {
+			System.out.println("The link is not displayed");
+		}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		soft.assertAll();		
+	}
+
+	//Need some details 
+	public void ListingLink() {
+		List<WebElement> ele = driver.findElements(By.xpath("//table//thead//th"));
+		int size = ele.size();
+		System.out.println("The size of the element is : " +size);
+		try {
+			WebElement ele1 = driver.findElement(By.xpath("(//table//tbody//tr//td["+ size +"]//a[1])"));
+			if(ele1.isDisplayed()) {
+				String Linktxt = ele1.getAttribute("href");
+				System.out.println("The link is : " +Linktxt);
+				String winHandleBefore = driver.getWindowHandle();
+				clickelement(ele1);
+				JSWaiter.waitJQueryAngular();
+				BaseClass.addEvidence(driver, "Test to veify the listing link opened", "yes");
+				for (String winHandle : driver.getWindowHandles()) {
+					driver.switchTo().window(winHandle);
+				}
+				String NewLink = driver.getCurrentUrl();
+				System.out.println("The new link is : " +NewLink);
+				soft.assertEquals(NewLink, Linktxt);
+				driver.close();
+				driver.switchTo().window(winHandleBefore);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		soft.assertAll();
+	}
+	
+	public void verifyVisibilityContentInPDf() throws Exception { 
+		// specify the url of the pdf file
+		String winHandleBefore = driver.getWindowHandle(); 
+		String filename = CurrentState.getBrowser() + time_stamp + VisibilityExportPdf;
+		File file = new File(filename);
+		String path = file.getAbsolutePath();
+		path = path.replace(filename, "");
+		path = path + "downloads/" +filename;
+		System.out.println(path);
+		String url = "file:" + path;
+		System.out.println("The url is : " +url);
+		Robot r = new Robot();                          
+		r.keyPress(KeyEvent.VK_CONTROL); 
+		r.keyPress(KeyEvent.VK_T); 
+		r.keyRelease(KeyEvent.VK_CONTROL); 
+		r.keyRelease(KeyEvent.VK_T);  
+		Thread.sleep(5000);
+		for (String winHandle : driver.getWindowHandles()) {
+			driver.switchTo().window(winHandle);
+		}
+		driver.get(url);
+		Thread.sleep(30000);
+		String pdfContent = readPdfContent(url);
+		System.out.println("Thee pdf content is : " + pdfContent);
+		BaseClass.addEvidence(driver, "Test to verify content in pdf", "yes");
+		soft.assertTrue(pdfContent.contains("Visibility Report"));
+		soft.assertTrue(pdfContent.contains("This report identifies the visibility of a location by site, across the sites that are being monitored."));
+		soft.assertTrue(pdfContent.contains("Overall Visibility Score"));
+		soft.assertTrue(pdfContent.contains("Date of Score"));
+		soft.assertTrue(pdfContent.contains("Number of Locations"));
+		soft.assertTrue(pdfContent.contains("Search Engine Sites"));
+		soft.assertTrue(pdfContent.contains("Social Sites"));
+		soft.assertTrue(pdfContent.contains("Directory Sites"));
+		soft.assertTrue(pdfContent.contains("Found Listings"));
+		soft.assertTrue(pdfContent.contains("Not Found Listings"));
+		driver.close();
+		driver.switchTo().window(winHandleBefore);
+		soft.assertAll();
+
+	}
+
+	public String readVisibilityPdfContent(String url) throws IOException {
+
+		URL pdfUrl = new URL(url);
+		InputStream in = pdfUrl.openStream();
+		BufferedInputStream bf = new BufferedInputStream(in);
+		PDDocument doc = PDDocument.load(bf);
+		int numberOfPages = getPageCount(doc);
+		System.out.println("The total number of pages " + numberOfPages);
+		String content = new PDFTextStripper().getText(doc);
+		doc.close();
+
+		return content;
+	}
+
+	public static int getVisibilityPageCount(PDDocument doc) {
+		// get the total number of pages in the pdf document
+		int pageCount = doc.getNumberOfPages();
+		return pageCount;
+
+	}
+	
+	public void verifyVisibilityContentInPDfDateRange() throws Exception { 
+		// specify the url of the pdf file
+		String winHandleBefore = driver.getWindowHandle(); 
+		String filename = CurrentState.getBrowser() + time_stamp + VisibilityExportHistoryPdf;
+		File file = new File(filename);
+		String path = file.getAbsolutePath();
+		path = path.replace(filename, "");
+		path = path + "downloads/" +filename;
+		System.out.println(path);
+		String url = "file:" + path;
+		System.out.println("The url is : " +url);
+		Robot r = new Robot();                          
+		r.keyPress(KeyEvent.VK_CONTROL); 
+		r.keyPress(KeyEvent.VK_T); 
+		r.keyRelease(KeyEvent.VK_CONTROL); 
+		r.keyRelease(KeyEvent.VK_T);  
+		Thread.sleep(5000);
+		for (String winHandle : driver.getWindowHandles()) {
+			driver.switchTo().window(winHandle);
+		}
+		driver.get(url);
+		Thread.sleep(30000);
+		String pdfContent = readPdfContent(url);
+		System.out.println("Thee pdf content is : " + pdfContent);
+		BaseClass.addEvidence(driver, "Test to verify content in pdf", "yes");
+		soft.assertTrue(pdfContent.contains("Visibility Report"));
+		soft.assertTrue(pdfContent.contains("This report identifies the visibility of a location by site, across the sites that are being monitored."));
+		soft.assertTrue(pdfContent.contains("Average Visibility Score"));
+		soft.assertTrue(pdfContent.contains("From"));
+		soft.assertTrue(pdfContent.contains("To"));
+		soft.assertTrue(pdfContent.contains("Average Number of Locations"));
+		soft.assertTrue(pdfContent.contains("Search Engine Sites"));
+		soft.assertTrue(pdfContent.contains("Social Sites"));
+		soft.assertTrue(pdfContent.contains("Directory Sites"));
+		soft.assertTrue(pdfContent.contains("Found Listings"));
+		soft.assertTrue(pdfContent.contains("Not Found Listings"));
+		driver.close();
+		driver.switchTo().window(winHandleBefore);
+		soft.assertAll();
 	}
 }

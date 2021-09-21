@@ -677,4 +677,25 @@ public class TPSEE_ContentAnalysis_Page extends TPSEE_abstractMethods {
 		}
 		soft.assertAll();
 	}
+	
+	public void VerifyLink() {
+		try {
+			WebElement Link = driver.findElement(By.xpath("//a[contains(text(), 'Link')]"));
+			String Linktxt = Link.getAttribute("href");
+			String winHandleBefore = driver.getWindowHandle();
+			clickelement(Link);
+			JSWaiter.waitJQueryAngular();
+			BaseClass.addEvidence(driver, "Test to veify the link opened", "yes");
+			for (String winHandle : driver.getWindowHandles()) {
+				driver.switchTo().window(winHandle);
+			}
+			String NewLink = driver.getCurrentUrl();
+			System.out.println("The new link is : " +NewLink);
+			soft.assertEquals(NewLink, Linktxt);
+			driver.close();
+			driver.switchTo().window(winHandleBefore);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

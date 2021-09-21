@@ -13,6 +13,7 @@ import org.testng.asserts.SoftAssert;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_AllLocations_Page;
+import com.dac.main.POM_TPSEE.TPSEE_FacebookInsights_Page;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -84,6 +85,12 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 			System.out.println("The group selected is : " +Group);
 		}
 	}
+	
+	@Test(priority = 4, description = "Test to verify the read manual pdf")
+	public void ReadManualPdf() throws InterruptedException {
+		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
+		data.verifyContentInPDf("All locations", "To set a filter, follow the steps below:" , "A. Location Filters" , "All_Locations_Manual.pdf");
+	}
 
 	/**
 	 * Test To get overall score and compare with dashboard values
@@ -91,7 +98,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@Parameters({ "Filter" })
-	@Test(priority = 4, groups = { "smoke" }, description = "Test for compare KPI Values")
+	@Test(priority = 5, groups = { "smoke" }, description = "Test for compare KPI Values")
 	public void ovrviewlocscorecompare(int Filter) throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		Thread.sleep(5000);
@@ -115,7 +122,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@Parameters({ "Filter" })
-	@Test(priority = 5, groups = { "smoke" }, description = "Verify All Locations page loads after filter applied")
+	@Test(priority = 6, groups = { "smoke" }, description = "Verify All Locations page loads after filter applied")
 	public void verifyFilteringReportsnavigateToAllLocations(int Filter) throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		try {
@@ -145,7 +152,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * test to export as CSV
 	 * @throws Exception
 	 */
-	@Test(priority = 6, description = "Export as csv")
+	@Test(priority = 7, description = "Export as csv")
 	public void exportascsv() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.LocationDataTableExportCSV();
@@ -156,7 +163,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 7, description = "Test for Location export and export verification")
+	@Test(priority = 8, description = "Test for Location export and export verification")
 	public void verifyTableDataoExport() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.compareExprttoAnalysisSiteLinkData(data.LocationDataTable(), data.getLocationDataTableExport());
@@ -168,7 +175,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@Parameters({"Filter"})
-	@Test(priority = 8, description = "Test to GoTo Page verification")
+	@Test(priority = 9, description = "Test to GoTo Page verification")
 	public void verifyGotoPage(int Filter) throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
@@ -187,7 +194,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@Parameters({"Filter"})
-	@Test(priority = 9, description = "Test to results per page")
+	@Test(priority = 10, description = "Test to results per page")
 	public void verifyResultperPage(int Filter) throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
@@ -209,7 +216,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@Parameters({ "Filter" })
-	@Test(priority = 10, description = "Test to verify filter data is in order")
+	@Test(priority = 11, description = "Test to verify filter data is in order")
 	public void verifyFilterDataOrder(String Filter) throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");
@@ -230,7 +237,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	}
 	
 	@Parameters("Filter")
-	@Test(priority = 11, description = "Test to search using location number")
+	@Test(priority = 12, description = "Test to search using location number")
 	public void verifySearchByLocationNum(String Filter) throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx" , "Location_Page_Search");
@@ -254,14 +261,14 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 12, description = "Test for Location export and export verification for location nummber search", dependsOnMethods = "verifySearchByLocationNum")
+	@Test(priority = 13, description = "Test for Location export and export verification for location nummber search", dependsOnMethods = "verifySearchByLocationNum")
 	public void verifyTableDataoExportLocNum() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.compareExprttoAnalysisSiteLinkData(data.LocationDataTable(), data.getLocationDataTableExport());
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}	
 	
-	@Test(priority = 13, description = "Test to clear search box")
+	@Test(priority = 14, description = "Test to clear search box")
 	public void clearsearchLocNum() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.ClearSearchText();
@@ -269,7 +276,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	}
 	
 	@Parameters("Filter")
-	@Test(priority = 14, description = "Test to search using name")
+	@Test(priority = 15, description = "Test to search using name")
 	public void verifySearchByName(String Filter) throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx" , "Location_Page_Search");
@@ -294,14 +301,14 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 15, description = "Test for Location export and export verification for location nummber search", dependsOnMethods = "verifySearchByName")
+	@Test(priority = 16, description = "Test for Location export and export verification for location nummber search", dependsOnMethods = "verifySearchByName")
 	public void verifyTableDataoExportName() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.compareExprttoAnalysisSiteLinkData(data.LocationDataTable(), data.getLocationDataTableExport());
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}	
 	
-	@Test(priority = 16, description = "Test to clear search box")
+	@Test(priority = 17, description = "Test to clear search box")
 	public void clearsearchName() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.ClearSearchText();
@@ -309,7 +316,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	}
 	
 	@Parameters("Filter")
-	@Test(priority = 17, description = "Test to search using name")
+	@Test(priority = 18, description = "Test to search using name")
 	public void verifySearchByAddress(String Filter) throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx" , "Location_Page_Search");
@@ -334,14 +341,14 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 18, description = "Test for Location export and export verification for location nummber search", dependsOnMethods = "verifySearchByAddress")
+	@Test(priority = 19, description = "Test for Location export and export verification for location nummber search", dependsOnMethods = "verifySearchByAddress")
 	public void verifyTableDataoExportAddress() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.compareExprttoAnalysisSiteLinkData(data.LocationDataTable(), data.getLocationDataTableExport());
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}	
 	
-	@Test(priority = 19, description = "Test to clear search box")
+	@Test(priority = 20, description = "Test to clear search box")
 	public void clearsearchNameAddress() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.ClearSearchText();
@@ -349,7 +356,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	}
 	
 	@Parameters("Filter")
-	@Test(priority = 20, description = "Test to search using name")
+	@Test(priority = 21, description = "Test to search using name")
 	public void verifySearchByCity(String Filter) throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx" , "Location_Page_Search");
@@ -374,14 +381,14 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 21, description = "Test for Location export and export verification for city search", dependsOnMethods = "verifySearchByCity")
+	@Test(priority = 22, description = "Test for Location export and export verification for city search", dependsOnMethods = "verifySearchByCity")
 	public void verifyTableDataoExportCity() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.compareExprttoAnalysisSiteLinkData(data.LocationDataTable(), data.getLocationDataTableExport());
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}	
 	
-	@Test(priority = 22, description = "Test to clear search box")
+	@Test(priority = 23, description = "Test to clear search box")
 	public void clearsearchNameCity() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.ClearSearchText();
@@ -389,7 +396,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	}
 	
 	@Parameters("Filter")
-	@Test(priority = 23, description = "Test to search using name")
+	@Test(priority = 24, description = "Test to search using name")
 	public void verifySearchByState(String Filter) throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx" , "Location_Page_Search");
@@ -414,14 +421,14 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 24, description = "Test for Location export and export verification for location nummber search", dependsOnMethods = "verifySearchByState")
+	@Test(priority = 25, description = "Test for Location export and export verification for location nummber search", dependsOnMethods = "verifySearchByState")
 	public void verifyTableDataoExportState() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.compareExprttoAnalysisSiteLinkData(data.LocationDataTable(), data.getLocationDataTableExport());
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}	
 	
-	@Test(priority = 25, description = "Test to clear search box")
+	@Test(priority = 26, description = "Test to clear search box")
 	public void clearsearchNameState() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.ClearSearchText();
@@ -429,7 +436,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	}
 	
 	@Parameters("Filter")
-	@Test(priority = 26, description = "Test to search using Postal Code")
+	@Test(priority = 27, description = "Test to search using Postal Code")
 	public void verifySearchByPostCode(String Filter) throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx" , "Location_Page_Search");
@@ -454,14 +461,14 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 27, description = "Test for Location export and export verification for location nummber search", dependsOnMethods = "verifySearchByPostCode")
+	@Test(priority = 28, description = "Test for Location export and export verification for location nummber search", dependsOnMethods = "verifySearchByPostCode")
 	public void verifyTableDataoExportPostCode() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.compareExprttoAnalysisSiteLinkData(data.LocationDataTable(), data.getLocationDataTableExport());
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}	
 	
-	@Test(priority = 28, description = "Test to clear search box")
+	@Test(priority = 29, description = "Test to clear search box")
 	public void clearsearchNamePostCode() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.ClearSearchText();
@@ -469,7 +476,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	}
 	
 	@Parameters("Filter")
-	@Test(priority = 29, description = "Test to search using Phone Number")
+	@Test(priority = 30, description = "Test to search using Phone Number")
 	public void verifySearchByPhone(String Filter) throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx" , "Location_Page_Search");
@@ -494,21 +501,21 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 30, description = "Test for Location export and export verification for location nummber search", dependsOnMethods = "verifySearchByPhone")
+	@Test(priority = 31, description = "Test for Location export and export verification for location nummber search", dependsOnMethods = "verifySearchByPhone")
 	public void verifyTableDataoExportPhone() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.compareExprttoAnalysisSiteLinkData(data.LocationDataTable(), data.getLocationDataTableExport());
 		addEvidence(CurrentState.getDriver(), "Verified Location export for All Locations", "yes");
 	}	
 	
-	@Test(priority = 31, description = "Test to clear search box")
+	@Test(priority = 32, description = "Test to clear search box")
 	public void clearsearchNamePhone() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.ClearSearchText();
 		addEvidence(CurrentState.getDriver(), "Test to clear data from searchbox", "yes");
 	}
 	
-/*	@Test(priority = 10, description = "Test to sort data and verify")
+	/*@Test(priority = 10, description = "Test to sort data and verify")
 	public void verifySortedLocationNumber() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.verifyLocationNumber();

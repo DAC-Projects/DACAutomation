@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_GMB;
+import com.dac.main.POM_TPSEE.TPSEE_Visibility_Page;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -90,17 +91,12 @@ public class TPSEE_GMB_Test extends BaseClass {
 	@Test(priority = 2, groups = {"smoke" }, description = "Test for verifying title and description of report")
 	public void verifyText(int Filter) throws Exception {
 		data = new TPSEE_GMB(CurrentState.getDriver());
-		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
-		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
-		System.out.println("The Group selected is : " +Group);
-		if(Group.equalsIgnoreCase("None")) {
+		
 		data.VerifyGMBTitleText("Google My Business",
 				"This report provides insights into the number of views, clicks and actions that occured for each of your locations on Google over time. This information is obtained from Google and is updated daily. Read Manual");
 
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
-		}else {
-			System.out.println("The group selected is : " +Group);
-		}
+		
 	}
 
 	/**
@@ -120,6 +116,12 @@ public class TPSEE_GMB_Test extends BaseClass {
 			System.out.println("The group selected is : " +Group);
 		}
 	}
+	
+	@Test(priority = 4, description = "Test to verify the read manual pdf")
+	public void ReadManualPdf() throws InterruptedException {
+		data = new TPSEE_GMB(CurrentState.getDriver());
+		data.verifyContentInPDf("Google My Business" , "To set a filter, follow the steps below:" , "A. Location Filters" , "GMB_Manual.pdf");
+	}
 
 	/**
 	 * test to apply filter
@@ -127,7 +129,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@Parameters({ "Filter" })
-	@Test(priority = 4, groups = { "smoke" }, description = "Verify GMB page loads after filter applied")
+	@Test(priority =5, groups = { "smoke" }, description = "Verify GMB page loads after filter applied")
 	public void verifyFilteringReportsGMB(int Filter) throws Exception {
 		data = new TPSEE_GMB(CurrentState.getDriver());
 		try {
@@ -156,7 +158,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to get graph data
 	 * @throws Exception
 	 */
-	@Test(priority = 5, groups = { "smoke" }, description = "Verify ToolTip Value ")
+	@Test(priority = 6, groups = { "smoke" }, description = "Verify ToolTip Value ")
 	public void verifyTooltip() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -208,7 +210,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to export as CSV
 	 * @throws Exception
 	 */
-	@Test(priority = 6, groups = { "smoke" }, description = "Verify CSV Export")
+	@Test(priority = 7, groups = { "smoke" }, description = "Verify CSV Export")
 	public void GMBExportasCSV() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -225,7 +227,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to export as XLSX
 	 * @throws Exception
 	 */
-	@Test(priority = 7, groups = { "smoke" }, description = "Verify XLSX Export")
+	@Test(priority = 8, groups = { "smoke" }, description = "Verify XLSX Export")
 	public void GMBExportasXLSX() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -241,7 +243,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 8, groups = { "smoke" }, description = "UI and XL comparision for WebActions")
+	@Test(priority = 9, groups = { "smoke" }, description = "UI and XL comparision for WebActions")
 	public void UIXLCompareofWebActions() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -257,7 +259,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 9, groups = { "smoke" }, description = "UI and XL comparision for Request Directory")
+	@Test(priority = 10, groups = { "smoke" }, description = "UI and XL comparision for Request Directory")
 	public void UIXLCompareofReqDirActions() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -273,7 +275,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 10, groups = { "smoke" }, description = "UI and XL comparision for Phone Calls")
+	@Test(priority = 11, groups = { "smoke" }, description = "UI and XL comparision for Phone Calls")
 	public void UIXLCompareofPhCalls() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -289,7 +291,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 11, groups = { "smoke" }, description = "UI and XL comparision for Total Actions")
+	@Test(priority = 12, groups = { "smoke" }, description = "UI and XL comparision for Total Actions")
 	public void UIXLCompareofTotalActions() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -305,7 +307,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI data
 	 * @throws Exception
 	 */
-	@Test(priority = 12, groups = { "smoke" }, description = "Verify Customer Action UI")
+	@Test(priority = 13, groups = { "smoke" }, description = "Verify Customer Action UI")
 	public void VerifyCustomerActionUI() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -321,7 +323,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI data
 	 * @throws Exception
 	 */
-	@Test(priority = 13, groups = { "smoke" }, description = "Verify Customer Web Action UI")
+	@Test(priority = 14, groups = { "smoke" }, description = "Verify Customer Web Action UI")
 	public void VerifyCustomerActionUIWebVisits() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -337,7 +339,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI data
 	 * @throws Exception
 	 */
-	@Test(priority = 14, groups = { "smoke" }, description = "Verify Customer Req Direct Action UI")
+	@Test(priority = 15, groups = { "smoke" }, description = "Verify Customer Req Direct Action UI")
 	public void VerifyCustomerActionUIReqDirectory() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -353,7 +355,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI data
 	 * @throws Exception
 	 */
-	@Test(priority = 15, groups = { "smoke" }, description = "Verify Customer Phone Action UI")
+	@Test(priority = 16, groups = { "smoke" }, description = "Verify Customer Phone Action UI")
 	public void VerifyCustomerActionUIPhCalls() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -369,7 +371,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI data
 	 * @throws Exception
 	 */
-	@Test(priority = 16, groups = { "smoke" }, description = "Verify Where Listing found UI")
+	@Test(priority = 17, groups = { "smoke" }, description = "Verify Where Listing found UI")
 	public void VerifyWhereListingUI() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -385,7 +387,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI data
 	 * @throws Exception
 	 */
-	@Test(priority = 17, groups = { "smoke" }, description = "Verify Where Listing Search found UI")
+	@Test(priority = 18, groups = { "smoke" }, description = "Verify Where Listing Search found UI")
 	public void VerifyWhereListingUISearch() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -401,7 +403,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI data
 	 * @throws Exception
 	 */
-	@Test(priority = 18, groups = { "smoke" }, description = "Verify Where Listing Map found UI")
+	@Test(priority = 19, groups = { "smoke" }, description = "Verify Where Listing Map found UI")
 	public void VerifyWhereListingUIMaps() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -417,7 +419,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 19, groups = { "smoke" }, description = "UI and XL comparision for Where Search Listing")
+	@Test(priority = 20, groups = { "smoke" }, description = "UI and XL comparision for Where Search Listing")
 	public void UIXLCompareofWhereSearch() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -433,7 +435,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 20, groups = { "smoke" }, description = "UI and XL comparision for Where Map Listing")
+	@Test(priority = 21, groups = { "smoke" }, description = "UI and XL comparision for Where Map Listing")
 	public void UIXLCompareofWhereMap() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -449,7 +451,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 21, groups = { "smoke" }, description = "UI and XL comparision for Where Total View Listing")
+	@Test(priority = 22, groups = { "smoke" }, description = "UI and XL comparision for Where Total View Listing")
 	public void UIXLCompareofWhereTotalViews() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -465,7 +467,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI data
 	 * @throws Exception
 	 */
-	@Test(priority = 22, groups = { "smoke" }, description = "Verify How Listing found UI")
+	@Test(priority = 23, groups = { "smoke" }, description = "Verify How Listing found UI")
 	public void VerifyHowListingUI() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -481,7 +483,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI data
 	 * @throws Exception
 	 */
-	@Test(priority = 23, groups = { "smoke" }, description = "Verify How Listing Discovery found UI")
+	@Test(priority = 24, groups = { "smoke" }, description = "Verify How Listing Discovery found UI")
 	public void VerifyHowListingUIDiscovery() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -497,7 +499,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI data
 	 * @throws Exception
 	 */
-	@Test(priority = 24, groups = { "smoke" }, description = "Verify How Listing Directory found UI")
+	@Test(priority = 25, groups = { "smoke" }, description = "Verify How Listing Directory found UI")
 	public void VerifyHowListingUIDirect() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -513,7 +515,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI data
 	 * @throws Exception
 	 */
-	@Test(priority = 25, groups = { "smoke" }, description = "Verify How Brand found UI")
+	@Test(priority = 26, groups = { "smoke" }, description = "Verify How Brand found UI")
 	public void VerifyHowListingUIBrand() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -529,7 +531,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI data
 	 * @throws Exception
 	 */
-	@Test(priority = 26, groups = { "smoke" }, description = "Verify Photo Views UI")
+	@Test(priority = 27, groups = { "smoke" }, description = "Verify Photo Views UI")
 	public void VerifyPhotoViewsUI() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -545,7 +547,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 27, groups = { "smoke" }, description = "UI and XL comparision for How Discovery Listing")
+	@Test(priority = 28, groups = { "smoke" }, description = "UI and XL comparision for How Discovery Listing")
 	public void UIXLCompareofDiscovery() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -561,7 +563,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 28, groups = { "smoke" }, description = "UI and XL comparision for How Direct Listing")
+	@Test(priority = 29, groups = { "smoke" }, description = "UI and XL comparision for How Direct Listing")
 	public void UIXLCompareofDirect() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -577,7 +579,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 29, groups = { "smoke" }, description = "UI and XL comparision for How Brand Listing")
+	@Test(priority = 30, groups = { "smoke" }, description = "UI and XL comparision for How Brand Listing")
 	public void UIXLCompareofBranded() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -593,7 +595,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 30, groups = { "smoke" }, description = "UI and XL comparision for How total Listing")
+	@Test(priority = 31, groups = { "smoke" }, description = "UI and XL comparision for How total Listing")
 	public void UIXLCompareofTotalSearch() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -609,7 +611,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI data
 	 * @throws Exception
 	 */
-	@Test(priority = 31, groups = { "smoke" }, description = "Verify Owner Photo Views UI")
+	@Test(priority = 32, groups = { "smoke" }, description = "Verify Owner Photo Views UI")
 	public void VerifyPhotoViewsUIOwner() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -625,7 +627,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI data
 	 * @throws Exception
 	 */
-	@Test(priority = 32, groups = { "smoke" }, description = "Verify Customer Photo Views UI")
+	@Test(priority = 33, groups = { "smoke" }, description = "Verify Customer Photo Views UI")
 	public void VerifyPhotoViewsUICustomer() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -641,7 +643,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 33, groups = { "smoke" }, description = "UI and XL comparision for Owner Photo Views")
+	@Test(priority = 34, groups = { "smoke" }, description = "UI and XL comparision for Owner Photo Views")
 	public void UIXLCompareofOwnerPhView() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -657,7 +659,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 34, groups = { "smoke" }, description = "UI and XL comparision for Customer Photo Views")
+	@Test(priority = 35, groups = { "smoke" }, description = "UI and XL comparision for Customer Photo Views")
 	public void UIXLCompareofCustPhView() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -673,7 +675,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to compare UI and XL data
 	 * @throws Exception
 	 */
-	@Test(priority = 35, groups = { "smoke" }, description = "UI and XL comparision for Total Photo Views")
+	@Test(priority = 36, groups = { "smoke" }, description = "UI and XL comparision for Total Photo Views")
 	public void UIXLCompareofTotPhView() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -689,7 +691,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * test to verify zoom functionality
 	 * @throws Exception
 	 */
-	@Test(priority = 36, groups = { "smoke" }, description = "Verify Zoom Functionality")
+	@Test(priority = 37, groups = { "smoke" }, description = "Verify Zoom Functionality")
 	public void gethighchartsdate() throws Exception {
 		String UIdat = data.IsDataAvailable();
 		if (!UIdat.equals("There is currently not enough data from Google to display this report")) {
@@ -806,7 +808,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unused")
-	@Test(priority = 37, enabled = true, dataProvider = "testData", description = "Test for Manual date selection")
+	@Test(priority = 38, enabled = true, dataProvider = "testData", description = "Test for Manual date selection")
 	public void SetCalendarDate(String from_day, String from_month, String from_year, String to_day, String to_month,
 			String to_year) throws Exception {
 		String UIdat = data.IsDataAvailable();
@@ -839,7 +841,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@Parameters({"Filter"})
-	@Test(priority = 38, description = "Test to verify filter data is in order")
+	@Test(priority = 39, description = "Test to verify filter data is in order")
 	public void verifyFilterDataOrder(int Filter) throws Exception {
 		data = new TPSEE_GMB(CurrentState.getDriver());
 		np = new Navigationpage(CurrentState.getDriver());

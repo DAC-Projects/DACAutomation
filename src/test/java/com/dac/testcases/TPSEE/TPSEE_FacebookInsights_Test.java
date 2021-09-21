@@ -8,6 +8,8 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_FacebookInsights_Page;
+import com.dac.main.POM_TPSEE.TPSEE_Visibility_Page;
+
 import resources.BaseClass;
 import resources.CurrentState;
 import resources.ExcelHandler;
@@ -46,17 +48,20 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	@Test(priority = 2, description = "Test to verify title")
 	public void verifyTitleText(int Filter) throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
-		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
-		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
-		System.out.println("The Group selected is : " +Group);
-		if(Group.equalsIgnoreCase("None")) {
+		
 		data.VerifyFacebookTitleText("Facebook Insights",
 				"The below report outlines key performance indicators on Facebook for your locations such as page impressions, post engagements, actions, check-in’s and fans. This data is updated daily. Read Manual");
 		addEvidence(CurrentState.getDriver(), "To Verify Title and Title Text", "yes");
-		}else {
-			System.out.println("The group selected is : " +Group);
-		}
+		
 	}
+	
+	@Test(priority = 3, description = "Test to verify the read manual pdf")
+	public void ReadManualPdf() throws InterruptedException {
+		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
+		data.verifyContentInPDf("Facebook Insights", "To set a filter, follow the steps below:" , "A. Location Filters" , "Facebook_Manual.pdf");
+	}
+	
+	
 
 	/**
 	 * Test to Apply Filters

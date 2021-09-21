@@ -174,6 +174,21 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods {
 
 	String PhoneIgnore = "(//table//td[@class='display-phone incorrect-style']//button[contains(@class,'btn-xs btn-info ignore')])";
 
+	@FindBy(xpath = "//a[@data-original-title = 'Update Listing URL']")
+	private WebElement ListingUrl;
+
+	@FindBy(xpath = "//button[contains(text(),'Accept')]")
+	private WebElement ListingAccept;
+
+	@FindBy(xpath = "//button[contains(text(),'Reject')]")
+	private WebElement ListingReject;
+
+	@FindBy(xpath = "//input[@id='newUrl']")
+	private WebElement EnterNewListingUrl;
+
+	@FindBy(xpath = "//button[contains(text(),'Submit')]")
+	private WebElement SubmitListingUrl;
+
 	/*-------------------------Pagination-----------------------*/
 	@FindBy(xpath = "(//*[@class='pagination']//a)")
 	private List<WebElement> pagination;
@@ -365,20 +380,20 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods {
 							Map<String, String> kMap = new HashMap<String, String>();
 							for (int row = 0; row < rows_count; row++) {
 								List<WebElement> Columns_row = rows_table.get(row).findElements(By.tagName("td")); // To
-																													// locate
-																													// columns(cells)
-																													// of
-																													// that
-																													// specific
-																													// row.
+								// locate
+								// columns(cells)
+								// of
+								// that
+								// specific
+								// row.
 								int columns_count = Columns_row.size(); // To calculate no of columns (cells). In that
-																		// specific row.
+								// specific row.
 
 								// System.out.println("Number of cells In Row " + noOfRows + " are " +
 								// columns_count);
 								for (int column = 0; column < columns_count; column++) { // Loop will execute till the
-																							// last cell of that
-																							// specific row.
+									// last cell of that
+									// specific row.
 									List<WebElement> headerTableRow = titlehead.findElements(By.tagName("th"));
 									String headerText = headerTableRow.get(column).getText(), celtext = "";
 									if (column == 1 & row < rows_count) {
@@ -1027,7 +1042,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods {
 		}
 		return vendor;
 	}
-	
+
 	/**
 	 * Method to verify accuracy percentage
 	 */
@@ -1035,10 +1050,13 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods {
 		JSWaiter.waitJQueryAngular();
 		waitForElement(vendorslist, 5);
 		scrollByElement(vendorslist);
-		List<WebElement> AccuracyPercentage = driver.findElements(By.xpath("//div[@id='allSitesScores']//a[contains(@class,'load-table')]/../..//div[@class='big-number']"));
+		List<WebElement> AccuracyPercentage = driver.findElements(By.xpath(
+				"//div[@id='allSitesScores']//a[contains(@class,'load-table')]/../..//div[@class='big-number']"));
 		int size = AccuracyPercentage.size();
-		for(int i = 1; i <= size; i++) {
-			WebElement accuper = driver.findElement(By.xpath("(//div[@id='allSitesScores']//a[contains(@class,'load-table')]/../..//div[@class='big-number'])["+ i +"]"));
+		for (int i = 1; i <= size; i++) {
+			WebElement accuper = driver.findElement(By.xpath(
+					"(//div[@id='allSitesScores']//a[contains(@class,'load-table')]/../..//div[@class='big-number'])["
+							+ i + "]"));
 			String percentage = accuper.getText();
 			percentage = percentage.replace("%", " ").trim();
 			double per = Double.parseDouble(percentage);
@@ -1047,8 +1065,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods {
 			soft.assertAll();
 		}
 	}
-	
-	
+
 	/**
 	 * Method to verify Inaccuracy Percentage
 	 */
@@ -1056,10 +1073,13 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods {
 		JSWaiter.waitJQueryAngular();
 		waitForElement(vendorslist, 5);
 		scrollByElement(vendorslist);
-		List<WebElement> InAccuracyPercentage = driver.findElements(By.xpath("(//div[@id='allSitesScores']//a[contains(@class,'load-table')]/../..//div[@class='small-number'])"));
+		List<WebElement> InAccuracyPercentage = driver.findElements(By.xpath(
+				"(//div[@id='allSitesScores']//a[contains(@class,'load-table')]/../..//div[@class='small-number'])"));
 		int size = InAccuracyPercentage.size();
-		for(int i = 1; i <= size; i++) {
-			WebElement accuper = driver.findElement(By.xpath("(//div[@id='allSitesScores']//a[contains(@class,'load-table')]/../..//div[@class='small-number'])["+ i +"]"));
+		for (int i = 1; i <= size; i++) {
+			WebElement accuper = driver.findElement(By.xpath(
+					"(//div[@id='allSitesScores']//a[contains(@class,'load-table')]/../..//div[@class='small-number'])["
+							+ i + "]"));
 			String percentage = accuper.getText();
 			percentage = percentage.replace("% inaccuracies", " ").trim();
 			double per = Double.parseDouble(percentage);
@@ -1134,5 +1154,44 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods {
 		double grphscore = verifygrphscore();
 		System.out.println("The graphscore is : " + grphscore);
 		Assert.assertEquals(ovrviewscore, grphscore);
+	}
+
+	public void verifyListingUrl() throws Exception {
+		if (driver.findElement(By.className("dataTables_info")).isDisplayed()) {
+			if (ListingUrl.isDisplayed()) {
+				clickelement(ListingUrl);
+				JSWaiter.waitJQueryAngular();
+				BaseClass.addEvidence(driver, "Test to verify Listing URL", "yes");
+				soft.assertTrue(ListingAccept.isDisplayed(), "Listing accept button is not displayed");
+				soft.assertTrue(ListingReject.isDisplayed(), "Listing reject butoon is not displayed");
+				soft.assertTrue(EnterNewListingUrl.isDisplayed(), "Text box is not displayed");
+				soft.assertTrue(SubmitListingUrl.isDisplayed(), "Listing submit button is not displayed");
+				driver.findElement(By.xpath("//input[@id='newUrl']/../../..//button[@class='close']")).click();
+			}
+		} else {
+			System.out.println("No Data Available");
+		}
+		soft.assertAll();
+	}
+	
+	public void verifyWebsiteLink() {
+		try {
+			WebElement Link = driver.findElement(By.xpath("//a[@data-original-title = 'Link']"));
+			String Linktxt = Link.getAttribute("href");
+			String winHandleBefore = driver.getWindowHandle();
+			clickelement(Link);
+			JSWaiter.waitJQueryAngular();
+			BaseClass.addEvidence(driver, "Test to veify the link opened", "yes");
+			for (String winHandle : driver.getWindowHandles()) {
+				driver.switchTo().window(winHandle);
+			}
+			String NewLink = driver.getCurrentUrl();
+			System.out.println("The new link is : " +NewLink);
+			soft.assertEquals(NewLink, Linktxt);
+			driver.close();
+			driver.switchTo().window(winHandleBefore);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -9,6 +9,7 @@ import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
+import com.dac.main.POM_TPSEE.TPSEE_Accuracy_Page;
 import com.dac.main.POM_TPSEE.TPSEE_ContentAnalysis_Page;
 
 import resources.BaseClass;
@@ -86,6 +87,12 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		}else {
 			System.out.println("The group selected is : " +Group);
 		}
+	}
+	
+	@Test(priority = 6, description = "Test to verify the read manual pdf")
+	public void ReadManualPdf() throws InterruptedException {
+		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
+		data.verifyContentInPDf("Content Analysis Report" , "To view this report, select Content Analysis under Local Reports on the left navigation." , "Location Filters" , "Content_Analysis_Manual.pdf");
 	}
 
 	/**
@@ -238,13 +245,13 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	/**
 	 * Compare UI and XL data
 	 * @throws Exception
-	 */
+	 *//*
 	@Test(priority = 8, groups = { "smoke" }, description = "Test for overview export and export verification")
 	public void verifyOverviewReportnExportContentAnalysis() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		data.compareExprttoAnalysisSiteData(data.getExportData(), data.AnalysisSiteData());
 		addEvidence(CurrentState.getDriver(), "Verified overview export for Accuracy report", "yes");
-	}
+	}*/
 
 
 	/**
@@ -329,6 +336,12 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Verified overview export for Accuracy report", "yes");
 	}
 	
+	@Test(priority = 13, dependsOnMethods = "verifyTableDataoExport")
+	public void VerifyWebsiteLink() {
+		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
+		data.VerifyLink();
+	}
+	
 	
 
 
@@ -337,7 +350,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 13, groups = { "smoke" }, description = "Verify Top Button")
+	@Test(priority = 14, groups = { "smoke" }, description = "Verify Top Button")
 	public void GetTopBtn() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		data.TopButton();
@@ -350,7 +363,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@Parameters({"Filter"})
-	@Test(priority = 14, description = "Test to verify location details")
+	@Test(priority = 15, description = "Test to verify location details")
 	public void VerifyLocationDetailsLocationTab(int Filter) throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
@@ -388,7 +401,7 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@Parameters({"Filter"})
-	@Test(priority = 15, description = "Test to verify filter data is in order")
+	@Test(priority = 16, description = "Test to verify filter data is in order")
 	public void verifyFilterDataOrder(int Filter) throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx" , "TPSEE");

@@ -3,12 +3,16 @@ package com.dac.main.POM_TPSEE;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,6 +31,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -1202,6 +1208,8 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		Assert.assertEquals("pdf", extension);
 
 	}
+	
+	
 
 	/**
 	 * Get the initial point and date of the graph
@@ -2349,6 +2357,64 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		int statusCode = closebaleHttpResponse.getStatusLine().getStatusCode();
 		System.out.println("Status Code--->" + statusCode);
 		Assert.assertEquals(statusCode, 200, "Status code is not 200");
+	}
+	
+	
+	public void clickReadManual() throws InterruptedException {
+		WebElement ele = driver.findElement(By.xpath("//a[contains(text(), 'Read Manual')]"));
+		ele.click();
+		Thread.sleep(3000);
+	}
+	
+	public void verifyContentInPDf(String text, String text1, String imgtext, String ReportName) throws InterruptedException {
+		
+		String winHandleBefore = driver.getWindowHandle();
+		clickReadManual();
+		for (String winHandle : driver.getWindowHandles()) {
+			driver.switchTo().window(winHandle);
+		}
+		//specify the url of the pdf file
+		String url =driver.getCurrentUrl();
+		soft.assertTrue(url.contains(ReportName), "Url doesn't contain");
+		Thread.sleep(30000);
+		try {
+			String pdfContent = readPdfContent(url);
+			System.out.println("Thee pdf content is : " +pdfContent);
+			soft.assertTrue(pdfContent.contains(text), "Doesn't contain report name");
+			soft.assertTrue(pdfContent.contains(text1), "doesn't contain report description");
+			soft.assertTrue(pdfContent.contains(imgtext), "doesn't contain image text");
+			driver.close();
+			driver.switchTo().window(winHandleBefore);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		soft.assertAll();
+	}
+	
+	
+	
+	
+	public String readPdfContent(String url) throws IOException {
+		
+		URL pdfUrl = new URL(url);
+		InputStream in = pdfUrl.openStream();
+		BufferedInputStream bf = new BufferedInputStream(in);
+		PDDocument doc = PDDocument.load(bf);
+		int numberOfPages = getPageCount(doc);
+		System.out.println("The total number of pages "+numberOfPages);
+		String content = new PDFTextStripper().getText(doc);
+		doc.close();
+		//soft.assertEquals(numberOfPages, 6);
+		return content;
+}
+	
+	public static int getPageCount(PDDocument doc) {
+		//get the total number of pages in the pdf document
+		int pageCount = doc.getNumberOfPages();
+		return pageCount;
+		
 	}
 
 }

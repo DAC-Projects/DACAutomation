@@ -15,18 +15,26 @@
 				<methods>
 				<exclude name = "VerifyLocationDetailsLocationTab"/>
 				<exclude name = "VerifySiteLocationTab"/>
+				<exclude name = "VerifyUpdateListingURL"/>
+				<exclude name = "verifyNotFoundListingUrl" />
+				<exclude name = "verifyWebSitesLink"/>
+				<exclude name = "VerifyNotFoundWebsiteLink"/>
+				<exclude name = "verifyListingLink"/>
 				</methods>
 				</class>
 				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" >
 				<methods>
 				<exclude name = "VerifyLocationDetailsLocationTab"/>
 				<exclude name = "VerifySiteLocationTab"/>
+				<exclude name = "verifyListingURL"/>
+				<exclude name = "verifyLink"/>
 				</methods>
 				</class>
 				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" >
 				<methods>
 				<exclude name = "VerifyLocationDetailsLocationTab"/>
 				<exclude name = "VerifySiteLocationTab"/>
+				<exclude name = "VerifyWebsiteLink"/>
 				</methods>
 				</class> 	 
 				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
@@ -49,6 +57,7 @@
 				<methods>
 				<exclude name = "GetKPIValues"/>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "ovrviewlocscorecompare"/>
 				<exclude name = "verifyGotoPage"/>
 				<exclude name = "verifyResultperPage"/>
@@ -80,6 +89,7 @@
 				<methods>
 				<exclude name = "GetKPIValues"/>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "SetCalendarDate"/>
 				<exclude name = "ovrviewlocscorecompare"/>
 				<exclude name = "gethighchartsdate"/>
@@ -87,6 +97,11 @@
 				<exclude name = "VerifyLocationDetailsLocationTab"/>
 				<exclude name = "VerifySiteLocationTab"/>
 				<exclude name = "verifyFilterDataOrder"/>
+				<exclude name = "VerifyUpdateListingURL"/>
+				<exclude name = "verifyNotFoundListingUrl" />
+				<exclude name = "verifyWebSitesLink"/>
+				<exclude name = "VerifyNotFoundWebsiteLink"/>
+				<exclude name = "verifyListingLink"/>
 				</methods>
 				</class>
 				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" >
@@ -95,6 +110,7 @@
 				<exclude name = "navigateToVisibilityPage"/>
 				<exclude name = "verifyFoundVendors"/>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "comparevendorsListnverifySitevendors"/>
 				<exclude name = "ovrviewlocscorecompare"/>
 				<exclude name = "SetCalendarDate"/>
@@ -102,14 +118,18 @@
 				<exclude name = "VerifyLocationDetailsLocationTab"/>
 				<exclude name = "VerifySiteLocationTab"/>
 				<exclude name = "verifyFilterDataOrder"/>
+				<exclude name = "verifyListingURL"/>
+				<exclude name = "verifyLink"/>
 				</methods>
 				</class>
 				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" >
 				<methods>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "VerifyLocationDetailsLocationTab"/>
 				<exclude name = "VerifySiteLocationTab"/>
 				<exclude name = "verifyFilterDataOrder"/>
+				<exclude name = "VerifyWebsiteLink"/>
 				</methods>
 				</class> 	 
 				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" >
@@ -124,6 +144,7 @@
 				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" >
 				<methods>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "verifyHoverText"/>
 				<exclude name = "verifyFilterDataOrder"/>
 				</methods>
@@ -131,12 +152,14 @@
 				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" >
 				<methods>
 				<exclude name = "verifyTitleText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "verifyFilterDataOrderBingFacebook"/>
 				</methods>
 				</class> 
 				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" >
 				<methods>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "verifyHoverText"/>
 				<exclude name = "verifyFilterDataOrderBingFacebook"/>
 				</methods>
@@ -154,6 +177,7 @@
 				<exclude name = "navigateToVisibilityPage"/>
 				<exclude name = "verifyFoundVendors"/>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "comparevendorsListnverifySitevendors"/>
 				<exclude name = "ovrviewlocscorecompare"/>
 				<exclude name = "SetCalendarDate"/>
@@ -161,14 +185,19 @@
 				<exclude name = "VerifyLocationDetailsLocationTab"/>
 				<exclude name = "VerifySiteLocationTab"/>
 				<exclude name = "verifyFilterDataOrder"/>
+				<exclude name = "verifyListingURL"/>
+				<exclude name = "verifyNotFoundListingUrl" />
+				<exclude name = "verifyLink"/>
 				</methods>
 				</class>
 				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" >
 				<methods>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "VerifyLocationDetailsLocationTab"/>
 				<exclude name = "VerifySiteLocationTab"/>
 				<exclude name = "verifyFilterDataOrder"/>
+				<exclude name = "VerifyWebsiteLink"/>
 				</methods>
 				</class>
 				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" >
@@ -183,6 +212,7 @@
 				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" >
 				<methods>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "verifyHoverText"/>
 				<exclude name = "verifyFilterDataOrder"/>
 				</methods>
@@ -190,12 +220,14 @@
 				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" >
 				<methods>
 				<exclude name = "verifyTitleText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "verifyFilterDataOrderBingFacebook"/>
 				</methods>
 				</class> 
 				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" >
 				<methods>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "verifyHoverText"/>
 				<exclude name = "verifyFilterDataOrderBingFacebook"/>
 				</methods>
@@ -204,6 +236,7 @@
 				<methods>
 				<exclude name = "GetKPIValues"/>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "ovrviewlocscorecompare"/>
 				<exclude name = "verifyGotoPage"/>
 				<exclude name = "verifyResultperPage"/>
@@ -235,6 +268,7 @@
 				<methods>
 				<exclude name = "GetKPIValues"/>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "SetCalendarDate"/>
 				<exclude name = "ovrviewlocscorecompare"/>
 				<exclude name = "gethighchartsdate"/>
@@ -242,6 +276,11 @@
 				<exclude name = "VerifyLocationDetailsLocationTab"/>
 				<exclude name = "VerifySiteLocationTab"/>
 				<exclude name = "verifyFilterDataOrder"/>
+				<exclude name = "VerifyUpdateListingURL"/>
+				<exclude name = "verifyNotFoundListingUrl" />
+				<exclude name = "verifyWebSitesLink"/>
+				<exclude name = "VerifyNotFoundWebsiteLink"/>
+				<exclude name = "verifyListingLink"/>
 				</methods>
 				</class>	 
 			</classes>
@@ -254,9 +293,11 @@
 				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" >
 				<methods>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "VerifyLocationDetailsLocationTab"/>
 				<exclude name = "VerifySiteLocationTab"/>
 				<exclude name = "verifyFilterDataOrder"/>
+				<exclude name = "VerifyWebsiteLink"/>
 				</methods>
 				</class>
 				<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" >
@@ -271,6 +312,7 @@
 				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" >
 				<methods>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "verifyHoverText"/>
 				<exclude name = "verifyFilterDataOrder"/>
 				</methods>
@@ -278,12 +320,14 @@
 				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" >
 				<methods>
 				<exclude name = "verifyTitleText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "verifyFilterDataOrderBingFacebook"/>
 				</methods>
 				</class> 
 				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" >
 				<methods>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "verifyHoverText"/>
 				<exclude name = "verifyFilterDataOrderBingFacebook"/>
 				</methods>
@@ -292,6 +336,7 @@
 				<methods>
 				<exclude name = "GetKPIValues"/>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "ovrviewlocscorecompare"/>
 				<exclude name = "verifyGotoPage"/>
 				<exclude name = "verifyResultperPage"/>
@@ -323,6 +368,7 @@
 				<methods>
 				<exclude name = "GetKPIValues"/>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "SetCalendarDate"/>
 				<exclude name = "ovrviewlocscorecompare"/>
 				<exclude name = "gethighchartsdate"/>
@@ -330,6 +376,11 @@
 				<exclude name = "VerifyLocationDetailsLocationTab"/>
 				<exclude name = "VerifySiteLocationTab"/>
 				<exclude name = "verifyFilterDataOrder"/>
+				<exclude name = "VerifyUpdateListingURL"/>
+				<exclude name = "verifyNotFoundListingUrl" />
+				<exclude name = "verifyWebSitesLink"/>
+				<exclude name = "VerifyNotFoundWebsiteLink"/>
+				<exclude name = "verifyListingLink"/>
 				</methods>
 				</class>	  
 				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" >
@@ -338,6 +389,7 @@
 				<exclude name = "navigateToVisibilityPage"/>
 				<exclude name = "verifyFoundVendors"/>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "comparevendorsListnverifySitevendors"/>
 				<exclude name = "ovrviewlocscorecompare"/>
 				<exclude name = "SetCalendarDate"/>
@@ -345,6 +397,8 @@
 				<exclude name = "VerifyLocationDetailsLocationTab"/>
 				<exclude name = "VerifySiteLocationTab"/>
 				<exclude name = "verifyFilterDataOrder"/>
+				<exclude name = "verifyListingURL"/>
+				<exclude name = "verifyLink"/>
 				</methods>
 				</class>	 
 			</classes>
@@ -366,6 +420,7 @@
 				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" >
 				<methods>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "verifyHoverText"/>
 				<exclude name = "verifyFilterDataOrder"/>
 				</methods>
@@ -373,12 +428,14 @@
 				 <class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" >
 				<methods>
 				<exclude name = "verifyTitleText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "verifyFilterDataOrderBingFacebook"/>
 				</methods>
 				</class> 
 				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" >
 				<methods>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "verifyHoverText"/>
 				<exclude name = "verifyFilterDataOrderBingFacebook"/>
 				</methods>
@@ -387,6 +444,7 @@
 				<methods>
 				<exclude name = "GetKPIValues"/>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "ovrviewlocscorecompare"/>
 				<exclude name = "verifyGotoPage"/>
 				<exclude name = "verifyResultperPage"/>
@@ -418,6 +476,7 @@
 				<methods>
 				<exclude name = "GetKPIValues"/>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "SetCalendarDate"/>
 				<exclude name = "ovrviewlocscorecompare"/>
 				<exclude name = "gethighchartsdate"/>
@@ -425,6 +484,11 @@
 				<exclude name = "VerifyLocationDetailsLocationTab"/>
 				<exclude name = "VerifySiteLocationTab"/>
 				<exclude name = "verifyFilterDataOrder"/>
+				<exclude name = "VerifyUpdateListingURL"/>
+				<exclude name = "verifyNotFoundListingUrl" />
+				<exclude name = "verifyWebSitesLink"/>
+				<exclude name = "VerifyNotFoundWebsiteLink"/>
+				<exclude name = "verifyListingLink"/>
 				</methods>
 				</class>	   
 				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" >
@@ -433,6 +497,7 @@
 				<exclude name = "navigateToVisibilityPage"/>
 				<exclude name = "verifyFoundVendors"/>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "comparevendorsListnverifySitevendors"/>
 				<exclude name = "ovrviewlocscorecompare"/>
 				<exclude name = "SetCalendarDate"/>
@@ -440,14 +505,18 @@
 				<exclude name = "VerifyLocationDetailsLocationTab"/>
 				<exclude name = "VerifySiteLocationTab"/>
 				<exclude name = "verifyFilterDataOrder"/>
+				<exclude name = "verifyListingURL"/>
+				<exclude name = "verifyLink"/>
 				</methods>
 				</class>
 				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" >
 				<methods>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "VerifyLocationDetailsLocationTab"/>
 				<exclude name = "VerifySiteLocationTab"/>
 				<exclude name = "verifyFilterDataOrder"/>
+				<exclude name = "VerifyWebsiteLink"/>
 				</methods>
 				</class> 
 			</classes>
@@ -457,9 +526,10 @@
 		<parameter name = "browser" value = "chrome"/>
 		<parameter name = "Filter" value = "6"/>
 			<classes>
-				<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" >
+			<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" >
 				<methods>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "verifyHoverText"/>
 				<exclude name = "verifyFilterDataOrder"/>
 				</methods>
@@ -467,12 +537,14 @@
 				<class name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" >
 				<methods>
 				<exclude name = "verifyTitleText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "verifyFilterDataOrderBingFacebook"/>
 				</methods>
-				</class> 
+				</class>
 				<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" >
 				<methods>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "verifyHoverText"/>
 				<exclude name = "verifyFilterDataOrderBingFacebook"/>
 				</methods>
@@ -481,6 +553,7 @@
 				<methods>
 				<exclude name = "GetKPIValues"/>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "ovrviewlocscorecompare"/>
 				<exclude name = "verifyGotoPage"/>
 				<exclude name = "verifyResultperPage"/>
@@ -507,24 +580,26 @@
 				<exclude name = "verifyTableDataoExportPhone"/>
 				<exclude name = "clearsearchNamePhone"/>
 				</methods>
-				</class>  
+				</class> 
 				<class name="com.dac.testcases.TPSEE.TPSEE_Visibility_Test" >
 				<methods>
 				<exclude name = "GetKPIValues"/>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "SetCalendarDate"/>
 				<exclude name = "ovrviewlocscorecompare"/>
 				<exclude name = "gethighchartsdate"/>
 				<exclude name = "verifySiteTable"/>
 				<exclude name = "verifyFilterDataOrder"/>
 				</methods>
-				</class>	 
-				<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" >
+				</class>
+						<class name="com.dac.testcases.TPSEE.TPSEE_Accuracy_Test" >
 				<methods>
 				<exclude name = "GetKPIValues"/>
 				<exclude name = "navigateToVisibilityPage"/>
 				<exclude name = "verifyFoundVendors"/>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "comparevendorsListnverifySitevendors"/>
 				<exclude name = "ovrviewlocscorecompare"/>
 				<exclude name = "SetCalendarDate"/>
@@ -535,6 +610,7 @@
 				<class name="com.dac.testcases.TPSEE.TPSEE_ContentAnalysis_Test" >
 				<methods>
 				<exclude name = "verifyText"/>
+				<exclude name = "ReadManualPdf"/>
 				<exclude name = "verifyFilterDataOrder"/>
 				</methods>
 				</class> 

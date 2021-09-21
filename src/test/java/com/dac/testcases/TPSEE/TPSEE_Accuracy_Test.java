@@ -123,6 +123,12 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 			System.out.println("The group selected is : " +Group);
 		}
 	}
+	
+	@Test(priority = 6, description = "Test to verify the read manual pdf")
+	public void ReadManualPdf() throws InterruptedException {
+		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+		data.verifyContentInPDf("Accuracy report" , "To view this report, select Accuracy under Local Reports on the left navigation." , "A. Location Filters" , "Accuracy_Manual.pdf");
+	}
 
 	/**
 	 * Test to get SiteTable data
@@ -130,7 +136,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	// Test to compare vendors in the application in Visibility Page
-	@Test(priority = 6, groups = { "smoke" }, description = "Verify Site Vendors List", dependsOnMethods = "verifyFoundVendors")
+	@Test(priority = 7, groups = { "smoke" }, description = "Verify Site Vendors List", dependsOnMethods = "verifyFoundVendors")
 	public void comparevendorsListnverifySitevendors() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		ArrayList<String> accuracyvendors = data.verifyAccuracySitevendors();
@@ -144,7 +150,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@Parameters({ "Filter" })
-	@Test(priority = 7, groups = { "smoke" }, description = "Test for compare KPI Values")
+	@Test(priority = 8, groups = { "smoke" }, description = "Test for compare KPI Values")
 	public void ovrviewlocscorecompare(int Filter) throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
@@ -359,13 +365,25 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(),
 				"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");
 	}
+	
+	@Test(priority = 18, dependsOnMethods = {"numberofentriesnExporttableAccuracy"})
+	public void verifyListingURL() throws Exception {
+		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+		data.verifyListingUrl();
+	}
+	
+	@Test(priority = 19, dependsOnMethods = {"numberofentriesnExporttableAccuracy"})
+	public void verifyLink() {
+		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
+		data.verifyWebsiteLink();
+	}
 
 	/**
 	 * Test to verify inaccuracy and ignored checkbox
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 18, groups = { "smoke" }, description = "Test for verifying site link data in Accuracy page")
+	@Test(priority = 19, groups = { "smoke" }, description = "Test for verifying site link data in Accuracy page")
 	public void verifycheckbox() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.showinaccuracy();
@@ -380,7 +398,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 19, groups = { "smoke" }, description = "Test for verifying sitetable in Visibility page")
+	@Test(priority = 20, groups = { "smoke" }, description = "Test for verifying sitetable in Visibility page")
 	public void verifyTableHeaders() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.verifyAllTab();
@@ -402,7 +420,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(priority = 20, groups = { "smoke" }, description = "Verify Top Button")
+	@Test(priority = 21, groups = { "smoke" }, description = "Verify Top Button")
 	public void GetTopBtn() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.TopButton();
@@ -416,7 +434,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * @throws Exception
 	 */
 	@Parameters({ "Filter" })
-	@Test(priority = 21, description = "Test to verify location details")
+	@Test(priority = 22, description = "Test to verify location details")
 	public void VerifyLocationDetailsLocationTab(int Filter) throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
@@ -434,8 +452,8 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	 * 
 	 * @param Filter
 	 * @throws Exception
-	 */
-	/*@Parameters({ "Filter" })
+	 *//*
+	@Parameters({ "Filter" })
 	@Test(priority = 21, description = "Test to verify location details of vendors sites")
 	public void VerifySiteLocationTab(int Filter) throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
@@ -447,16 +465,16 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 		} else {
 			System.out.println("No location selected");
 		}
-	}*/
+	}
 
-	/**
+	*//**
 	 * test to verify filter data order
 	 * 
 	 * @param Filter
 	 * @throws Exception
 	 */
 	@Parameters({ "Filter" })
-	@Test(priority = 22, description = "Test to verify filter data is in order")
+	@Test(priority = 23, description = "Test to verify filter data is in order")
 	public void verifyFilterDataOrder(int Filter) throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		ExcelHandler wb1 = new ExcelHandler("./data/Filter.xlsx", "TPSEE");

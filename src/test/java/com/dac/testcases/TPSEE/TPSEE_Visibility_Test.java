@@ -14,6 +14,7 @@ import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
+import com.dac.main.POM_TPSEE.TPSEERepository;
 import com.dac.main.POM_TPSEE.TPSEE_Visibility_Page;
 
 import resources.BaseClass;
@@ -78,7 +79,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigate to Visibility page from Dashboard", "yes");
 	}
 	
-	/**
+/*	*//**
 	 * test to verify title and title text
 	 * @throws Exception
 	 */
@@ -86,18 +87,21 @@ public class TPSEE_Visibility_Test extends BaseClass {
 	@Test(priority = 3, groups = { "smoke" }, description = "Test for verifying title and description of report")
 	public void verifyText(int Filter) throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
-		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "TPSEE");
-		String Group = wb.getCellValue(Filter, wb.seacrh_pattern("Group", 0).get(0).intValue());
-		System.out.println("The Group selected is : " +Group);
-		if(Group.equalsIgnoreCase("None")) {
+		
 		data.VerifyTitleText1("Visibility Report",
 				"This report identifies the visibility of a location by site, across the sites that are being monitored. Read Manual");
 		addEvidence(CurrentState.getDriver(), "Verify Text", "yes");
-		}else {
-			System.out.println("The group selected is : " +Group);
-		}
+		
 	}
 
+	
+	@Test(priority = 4, description = "Test to verify the read manual pdf")
+	public void ReadManualPdf() throws InterruptedException {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.verifyContentInPDf("Visibility Report" , "The visibility report is the basis for all the other reports." , "A. Location Filters" , "Visibility_Manual.pdf");
+	}
+	
+	
 	/**
 	 * test to set calendar date
 	 * @param from_day
@@ -311,7 +315,10 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.exportcurrentvisibilityrptPDF();
 		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
+		data.verifyVisibilityContentInPDf();
 	}
+	
+	
 
 	/**
 	 * Test to export a file as PDF of applied date
@@ -333,6 +340,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		Thread.sleep(5000);
 		data.hstrypdfexport();
 		addEvidence(CurrentState.getDriver(), "Verified overview export for visibility report", "yes");
+		data.verifyVisibilityContentInPDfDateRange();
 	}
 
 	/**
@@ -374,6 +382,24 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		data.exporttablefoundCSV();
 		soft.assertAll();
 		addEvidence(CurrentState.getDriver(), "Test to verify GoTo and Results Per Page", "yes");
+	}
+	
+	@Test(priority = 16, dependsOnMethods = {"numberofentriesnExporttableVisibility"})
+	public void VerifyUpdateListingURL() throws Exception {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.verifyListingUrl();
+	}
+	
+	@Test(priority = 17, description = "Test to verify link is working", dependsOnMethods = {"numberofentriesnExporttableVisibility"})
+	public void verifyWebSitesLink() {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.WebsiteLink();
+	}
+	
+	@Test(priority = 18, description = "Test to verify listing link", dependsOnMethods = {"numberofentriesnExporttableVisibility"})
+	public void verifyListingLink() {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.ListingLink();
 	}
 	
 	/*@Test(priority = 16, description = "Test to verify sorting data of name column")
@@ -445,6 +471,18 @@ public class TPSEE_Visibility_Test extends BaseClass {
 		data.exporttableNotfoundCSV();
 		soft.assertAll();
 		addEvidence(CurrentState.getDriver(), "Test to verify GoTo and Results Per Page", "yes");
+	}
+	
+	@Test(priority = 24, dependsOnMethods = {"numberofentriesnExporttableNotFoundVisibility"})
+	public void verifyNotFoundListingUrl() throws Exception {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.verifyListingUrl();
+	}
+	
+	@Test(priority = 25, description = "Test to verify Link")
+	public void VerifyNotFoundWebsiteLink() {
+		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
+		data.WebsiteLink();
 	}
 	
 /*	@Test(priority = 24, description = "Test to verify sorting data of name column")
