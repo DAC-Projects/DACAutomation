@@ -387,6 +387,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	public void verifycheckbox() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.showinaccuracy();
+		data.verifyinaccuracycolor();
 		data.showignored();
 		addEvidence(CurrentState.getDriver(),
 				"Site level scores in Accuracy site table  and overview Accuracy export found matching", "yes");

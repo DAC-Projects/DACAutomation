@@ -15,6 +15,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -328,7 +329,7 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods {
 	 */
 
 	@SuppressWarnings({ "unused", "unlikely-arg-type" })
-	public void verifysitelinkdata(SoftAssert soft) throws Exception {
+	public void verifysitelinkdata(SoftAssert soft) throws Exception { 
 		String data = null;
 		JSWaiter.waitJQueryAngular();
 		waitForElement(accuracysite, 5);
@@ -1193,5 +1194,93 @@ public class TPSEE_Accuracy_Page extends TPSEE_abstractMethods {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void verifyinaccuracycolor() throws InterruptedException {
+		JSWaiter.waitJQueryAngular();
+		waitForElement(tableresult, 5);
+		scrollByElement(tableresult);
+		System.out.println("\n reading data div ********************* \n");
+		waitForElement(tableresultset, 5);
+		scrollByElement(tableresultset);
+		System.out.println("\n reading progress bar data table ******************* \n");
+		JSWaiter.waitJQueryAngular();
+		waitForElement(totalentries, 5);
+		waitForElement(tableresultset, 5);
+		if (driver.findElement(By.className("dataTables_info")).isDisplayed()) {
+			String n = driver.findElement(By.xpath("(//*[@class='pagination']//a)[last()-1]")).getText();
+			int page = Integer.parseInt(n);
+			System.out.println("\n" + page);
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("dataTables_info")));
+			String entiresText = driver.findElement(By.className("dataTables_info")).getText();
+			entiresText = entiresText.substring(entiresText.indexOf("("));
+			WebElement TableTitle = driver
+					.findElement(By.xpath("(//*[@id='inaccuracy_table_title']//div//span)[1]"));
+			String s = TableTitle.getText();
+			System.out.println("The Vendor is :" + s);
+			scrollByElement(TableTitle);
+			if (!s.equalsIgnoreCase("Yelp")) {
+				int count = 0;
+				if (paginationNext.isDisplayed()) {
+					for (int i = 1; i <= page; i++) {
+						scrollByElement(TableTitle);
+						List<WebElement> rows_table = reviewTableRow; // To locate rows of table.
+						int rows_count = rows_table.size(); // To calculate no of rows In table.
+						count = count + rows_count;
+						for (int row = 1; row < rows_count; row++) {
+						try {
+							WebElement DisplayNameInaccuracy = driver.findElement(By.xpath("(//tr//td[@class='display-address incorrect-style'])["+ row +"]"));
+							WebElement DisplayAddressInaccuracy = driver.findElement(By.xpath("(//tr//td[@class='display-address incorrect-style'])["+ row +"]"));
+							WebElement DisplayPhoneInaccuracy = driver.findElement(By.xpath("(//tr//td[@class='display-phone incorrect-style'])["+ row +"]"));
+								if(DisplayNameInaccuracy.isDisplayed()) {
+									WebElement DName = driver.findElement(By.xpath("(//tr//td[@class='display-name incorrect-style'])["+ row +"]//div[@class='parsed-cell']"));
+									String color = DName.getCssValue("color");
+									System.out.println("The color is : " +color);
+									String colorcode = Color.fromString(color).asHex();
+									System.out.println("The color code is : " +colorcode);
+									soft.assertEquals(colorcode, "#fc314d");
+								}else {
+									System.out.println("No inaccuracy displayed");
+								}
+								
+								if(DisplayAddressInaccuracy.isDisplayed()) {
+									WebElement DAddress = driver.findElement(By.xpath("(//tr//td[@class='display-address incorrect-style'])["+ row +"]//div[@class='parsed-cell']"));
+									String color = DAddress.getCssValue("color");
+									System.out.println("The color is : " +color);
+									String colorcode = Color.fromString(color).asHex();
+									System.out.println("The color code is : " +colorcode);
+									soft.assertEquals(colorcode, "#fc314d");
+								}else {
+									System.out.println("No inaccuracy displayed");
+								}
+								
+								if(DisplayPhoneInaccuracy.isDisplayed()) {
+									WebElement DPhone = driver.findElement(By.xpath("(//tr//td[@class='display-phone incorrect-style'])["+ row +"]//div[@class='parsed-cell']"));
+									String color = DPhone.getCssValue("color");
+									System.out.println("The color is : " +color);
+									String colorcode = Color.fromString(color).asHex();
+									System.out.println("The color code is : " +colorcode);
+									soft.assertEquals(colorcode, "#fc314d");
+								}else {
+									System.out.println("No inaccuracy displayed");
+								}
+								
+							}catch(Exception e) {
+								e.printStackTrace();
+							}							
+						}if (paginationNext.isEnabled()) {
+							scrollByElement(paginationNext);
+							paginationNext.click();
+							Thread.sleep(4000);
+						}
+					}
+				}
+			}else {
+				System.out.println("It's Yelp!");
+			}
+		}else {
+			System.out.println("No data available");
+		}
+		soft.assertAll();
 	}
 }

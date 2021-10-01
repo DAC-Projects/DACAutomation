@@ -8,7 +8,6 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_FacebookInsights_Page;
-import com.dac.main.POM_TPSEE.TPSEE_Visibility_Page;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -35,8 +34,8 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Navigation to Facebook Page", "yes");
 		JSWaiter.waitJQueryAngular();
 		Thread.sleep(2000);
-		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
-		data.clickDone();
+		/*data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
+		data.clickDone();*/
 	}
 
 	/**
@@ -117,9 +116,9 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	 */
 	@Test(priority = 3, description = "Test to verify highcharts")
 	public void gethighchartsdate() throws Exception {
+		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		boolean datavalidation = data.IsDataAvailable();
 		if (!datavalidation == true) {
-		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		try {
 			try {
 				String OneMonth = "1m";
@@ -288,7 +287,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		String Country1 = wb1.getCellValue(1, wb1.seacrh_pattern("Country", 0).get(0).intValue());
 		if(Country1.equals("null")) {
 			CurrentState.getDriver().navigate().refresh();
-			data.clickDone();
+		//	data.clickDone();
 		ExcelHandler wb = new ExcelHandler("./data/Filter.xlsx", "FilterOrderFacebook");
 		wb.deleteEmptyRows();
 		String Group = wb.getCellValue(1, wb.seacrh_pattern("Group", 0).get(0).intValue());
