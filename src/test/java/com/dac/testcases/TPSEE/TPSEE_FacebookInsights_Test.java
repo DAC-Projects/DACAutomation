@@ -55,7 +55,7 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 	}
 	
 	@Test(priority = 3, description = "Test to verify the read manual pdf")
-	public void ReadManualPdf() throws InterruptedException {
+	public void ReadManualPdf() throws Exception {
 		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		data.verifyContentInPDf("Facebook Insights", "To set a filter, follow the steps below:" , "A. Location Filters" , "Facebook_Manual.pdf");
 	}

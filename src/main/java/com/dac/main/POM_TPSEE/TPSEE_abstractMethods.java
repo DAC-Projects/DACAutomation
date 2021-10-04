@@ -2366,7 +2366,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		Thread.sleep(3000);
 	}
 	
-	public void verifyContentInPDf(String text, String text1, String imgtext, String ReportName) throws InterruptedException {
+	public void verifyContentInPDf(String text, String text1, String imgtext, String ReportName) throws Exception {
 		
 		String winHandleBefore = driver.getWindowHandle();
 		clickReadManual();
@@ -2383,6 +2383,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 			soft.assertTrue(pdfContent.contains(text), "Doesn't contain report name");
 			soft.assertTrue(pdfContent.contains(text1), "doesn't contain report description");
 			soft.assertTrue(pdfContent.contains(imgtext), "doesn't contain image text");
+			BaseClass.addEvidence(CurrentState.getDriver(), "Test to verify pdf", "yes");
 			driver.close();
 			driver.switchTo().window(winHandleBefore);
 		} catch (MalformedURLException e) {

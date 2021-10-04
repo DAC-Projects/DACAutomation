@@ -3,8 +3,6 @@ package com.dac.testcases.TPSEE;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -13,7 +11,6 @@ import org.testng.asserts.SoftAssert;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_AllLocations_Page;
-import com.dac.main.POM_TPSEE.TPSEE_FacebookInsights_Page;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -87,7 +84,7 @@ public class TPSEE_AllLocations_Test extends BaseClass {
 	}
 	
 	@Test(priority = 4, description = "Test to verify the read manual pdf")
-	public void ReadManualPdf() throws InterruptedException {
+	public void ReadManualPdf() throws Exception {
 		data = new TPSEE_AllLocations_Page(CurrentState.getDriver());
 		data.verifyContentInPDf("All locations", "To set a filter, follow the steps below:" , "A. Location Filters" , "All_Locations_Manual.pdf");
 	}

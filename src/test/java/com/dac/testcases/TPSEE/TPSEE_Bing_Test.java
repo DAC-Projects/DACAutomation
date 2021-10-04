@@ -11,7 +11,6 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_Bing_Page;
-import com.dac.main.POM_TPSEE.TPSEE_FacebookInsights_Page;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -122,7 +121,7 @@ public class TPSEE_Bing_Test extends BaseClass {
 	}
 	
 	@Test(priority = 4, description = "Test to verify the read manual pdf")
-	public void ReadManualPdf() throws InterruptedException {
+	public void ReadManualPdf() throws Exception {
 		data = new TPSEE_Bing_Page(CurrentState.getDriver());
 		data.verifyContentInPDf("Bing Places for Business", "To set a filter, follow the steps below:" , "A. Group Name" , "Bing_Manual.pdf");
 	}

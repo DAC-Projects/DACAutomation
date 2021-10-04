@@ -125,7 +125,7 @@ public class TPSEE_Accuracy_Test extends BaseClass {
 	}
 	
 	@Test(priority = 6, description = "Test to verify the read manual pdf")
-	public void ReadManualPdf() throws InterruptedException {
+	public void ReadManualPdf() throws Exception {
 		data = new TPSEE_Accuracy_Page(CurrentState.getDriver());
 		data.verifyContentInPDf("Accuracy report" , "To view this report, select Accuracy under Local Reports on the left navigation." , "A. Location Filters" , "Accuracy_Manual.pdf");
 	}

@@ -36,6 +36,10 @@ public class Navigationpage extends BasePage {
 	}
 
 	// -------------------------------- TSEE ------------------------------
+	
+	@FindBy(xpath = "//a[@href='/Dashboard/Maximizer']/span")
+	private WebElement Maximizer;
+	
 	@FindBy(xpath = "//a[@href='/Dashboard/AllLocations/']/span")
 	private WebElement AllLocations;
 
@@ -233,6 +237,24 @@ public class Navigationpage extends BasePage {
 			clickNotificationPopUp();
 		} catch (Exception e) {
 			System.out.println("");
+		}
+	}
+	
+	/**
+	 * Navigation to Maximizer Page
+	 */
+	public void navigateToMaximizer() {
+		clickelement(Maximizer);
+		waitUntilLoad(driver);
+		try {
+			clickwalkme();
+		}catch(Exception e) {
+			System.out.println("No Walkme displayed");
+		}
+		try {
+			clickNotificationPopUp();
+		} catch (Exception e) {
+			System.out.println("No Notification Popup displayed");
 		}
 	}
 

@@ -14,7 +14,6 @@ import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
-import com.dac.main.POM_TPSEE.TPSEERepository;
 import com.dac.main.POM_TPSEE.TPSEE_Visibility_Page;
 
 import resources.BaseClass;
@@ -96,7 +95,7 @@ public class TPSEE_Visibility_Test extends BaseClass {
 
 	
 	@Test(priority = 4, description = "Test to verify the read manual pdf")
-	public void ReadManualPdf() throws InterruptedException {
+	public void ReadManualPdf() throws Exception {
 		data = new TPSEE_Visibility_Page(CurrentState.getDriver());
 		data.verifyContentInPDf("Visibility Report" , "The visibility report is the basis for all the other reports." , "A. Location Filters" , "Visibility_Manual.pdf");
 	}

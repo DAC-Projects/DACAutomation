@@ -11,7 +11,6 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.dac.main.Navigationpage;
 import com.dac.main.POM_TPSEE.TPSEE_GMB;
-import com.dac.main.POM_TPSEE.TPSEE_Visibility_Page;
 
 import resources.BaseClass;
 import resources.CurrentState;
@@ -118,7 +117,7 @@ public class TPSEE_GMB_Test extends BaseClass {
 	}
 	
 	@Test(priority = 4, description = "Test to verify the read manual pdf")
-	public void ReadManualPdf() throws InterruptedException {
+	public void ReadManualPdf() throws Exception {
 		data = new TPSEE_GMB(CurrentState.getDriver());
 		data.verifyContentInPDf("Google My Business" , "To set a filter, follow the steps below:" , "A. Location Filters" , "GMB_Manual.pdf");
 	}
