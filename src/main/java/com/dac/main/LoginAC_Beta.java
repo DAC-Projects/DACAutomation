@@ -57,10 +57,10 @@ public class LoginAC_Beta {
 	
 	
 	public void clickDashboardLink() {
-		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(Dashboard));
-		Dashboard.sendKeys(Keys.CONTROL, Keys.ENTER);
-		/*new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(Staging));
-		Staging.sendKeys(Keys.CONTROL, Keys.ENTER);	*/
+		/*new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(Dashboard));
+		Dashboard.sendKeys(Keys.CONTROL, Keys.ENTER);*/
+		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(Staging));
+		Staging.sendKeys(Keys.CONTROL, Keys.ENTER);	
 		}		
 		
 	

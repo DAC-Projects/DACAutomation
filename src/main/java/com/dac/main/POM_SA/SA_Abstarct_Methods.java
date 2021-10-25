@@ -1,12 +1,16 @@
 package com.dac.main.POM_SA;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -20,6 +24,8 @@ import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -42,6 +48,7 @@ import org.testng.asserts.SoftAssert;
 import com.dac.main.BasePage;
 
 import resources.BaseClass;
+import resources.CurrentState;
 import resources.FileHandler;
 import resources.JSWaiter;
 import resources.formatConvert;
@@ -1156,5 +1163,63 @@ public abstract class SA_Abstarct_Methods extends BasePage implements SA_Reposit
 			ExportBtn.click();
 			Thread.sleep(5000);
 		}
+	}
+	
+	public void clickReadManual() throws InterruptedException {
+		WebElement ele = driver.findElement(By.xpath("//a[contains(text(), 'Read Manual')]"));
+		ele.click();
+		Thread.sleep(3000);
+	}
+	
+	public void verifyContentInPDf(String text, String text1, String imgtext, String ReportName) throws Exception {
+		
+		String winHandleBefore = driver.getWindowHandle();
+		clickReadManual();
+		for (String winHandle : driver.getWindowHandles()) {
+			driver.switchTo().window(winHandle);
+		}
+		//specify the url of the pdf file
+		String url =driver.getCurrentUrl();
+		soft.assertTrue(url.contains(ReportName), "Url doesn't contain");
+		Thread.sleep(30000);
+		try {
+			String pdfContent = readPdfContent(url);
+			System.out.println("Thee pdf content is : " +pdfContent);
+			soft.assertTrue(pdfContent.contains(text), "Doesn't contain report name");
+			soft.assertTrue(pdfContent.contains(text1), "doesn't contain report description");
+			soft.assertTrue(pdfContent.contains(imgtext), "doesn't contain image text");
+			BaseClass.addEvidence(CurrentState.getDriver(), "Test to verify pdf", "yes");
+			driver.close();
+			driver.switchTo().window(winHandleBefore);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		soft.assertAll();
+	}
+	
+	
+	
+	
+	public String readPdfContent(String url) throws IOException {
+		
+		URL pdfUrl = new URL(url);
+		InputStream in = pdfUrl.openStream();
+		BufferedInputStream bf = new BufferedInputStream(in);
+		PDDocument doc = PDDocument.load(bf);
+		int numberOfPages = getPageCount(doc);
+		System.out.println("The total number of pages "+numberOfPages);
+		String content = new PDFTextStripper().getText(doc);
+		doc.close();
+		//soft.assertEquals(numberOfPages, 6);
+		return content;
+}
+	
+	public static int getPageCount(PDDocument doc) {
+		//get the total number of pages in the pdf document
+		int pageCount = doc.getNumberOfPages();
+		return pageCount;
+		
 	}
 }

@@ -523,7 +523,7 @@ public class TPSEE_Visibility_Page extends TPSEE_abstractMethods {
 				if (paginationNext.isDisplayed()) {
 					for (int i = 1; i <= page; i++) { // Loop will execute till the all the row of table completes.
 						scrollByElement(TableTitle);
-						List<WebElement> rows_table = VisibityTableRow; // To locate rows of table.
+						List<WebElement> rows_table = VisibityTableRow; // To locate rows of table. 
 						int rows_count = rows_table.size(); // To calculate no of rows In table.
 						count = count + rows_count;
 						Map<String, String> kMap = new HashMap<String, String>();

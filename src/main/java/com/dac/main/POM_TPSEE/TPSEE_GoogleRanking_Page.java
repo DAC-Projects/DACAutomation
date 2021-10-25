@@ -596,7 +596,7 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 	public int GRLoc()
 			throws ParseException, bsh.ParseException, FileNotFoundException, IOException, InterruptedException {
 		JSWaiter.waitJQueryAngular();
-		waitForElement(hstryGrph, 5);
+		/*waitForElement(hstryGrph, 5);
 		scrollByElement(hstryGrph);
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		action.moveToElement(hstryGrph).moveByOffset((hstryGrph.getSize().getWidth()) / 2 - 2, 0).click().perform();
@@ -604,7 +604,16 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 		System.out.println("\n Reading tooltipdata ********** \n");
 		System.out.println("\n tooltipvalue is \n" + tooltipvalue);
 		int numberoflocations = Integer.parseInt(tooltipvalue.substring(tooltipvalue.lastIndexOf(":") + 1));
-		System.out.println(numberoflocations);
+		System.out.println(numberoflocations);*/
+		WebElement GRLoc = driver.findElement(By.xpath("//span[@id = 'grLatestLocationCount']"));
+		String GRLocText = GRLoc.getText();
+		System.out.println("The location text is : " +GRLocText);
+		GRLocText = GRLocText.replace("across", "");
+		System.out.println("The location text is : " +GRLocText);
+		GRLocText = GRLocText.replace("locations", "");
+		System.out.println("The location text is : " +GRLocText);
+		int numberoflocations = Integer.parseInt(GRLocText.trim());
+		System.out.println("The number of locations are : " +numberoflocations);
 		return numberoflocations;
 	}
 
@@ -677,4 +686,5 @@ public class TPSEE_GoogleRanking_Page extends TPSEE_abstractMethods {
 		scrollByElement(gotopage);
 		GoTopage(gotopage);
 	}
+	
 }
