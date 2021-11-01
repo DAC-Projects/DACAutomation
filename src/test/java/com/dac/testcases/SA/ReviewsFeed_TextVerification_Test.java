@@ -37,10 +37,16 @@ public class ReviewsFeed_TextVerification_Test extends BaseClass {
 				"The Review Feed lists all reviews that have been collected across the sites that are being monitored.");
 		addEvidence(CurrentState.getDriver(), "Test to verify title and title text", "yes");
 	}
-	*/
+	
 	@Test(priority = 4, description = "Test to verify Notice text")
 	public void VerifyNoticeText() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.verifyNotice();
+	}*/
+	
+	@Test(priority = 5, description = "Test to verify read manual content")
+	public void VerifyReadManual() throws Exception {
+		data = new Reviews_Feed(CurrentState.getDriver());
+		data.verifyContentInPDf("Review Feed", "To set a filter, follow the steps below:", "A. Location Filters", "Review_Feed_Manual.pdf");
 	}
 }

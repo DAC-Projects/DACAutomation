@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.ClickAndHoldAction;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -23,6 +26,9 @@ public class TPSEE_Site_Order extends TPSEE_abstractMethods {
 
 	@FindBy(xpath = "(//div[@class='col-lg-2 bar-chart-column'])")
 	private WebElement site;
+	
+	@FindBy(xpath = "//*[@id = 'save']")
+	private WebElement Save;
 
 	public TPSEE_Site_Order(WebDriver driver) {
 		super(driver);
@@ -84,6 +90,14 @@ public class TPSEE_Site_Order extends TPSEE_abstractMethods {
 		System.out.println("Vendor List contains : " + VendorList);
 		return VendorList;
 
+	}
+	
+	public void VendorDragandDrop() {
+		WebElement Fromvendor = driver.findElement(By.xpath("//*[@id = 'Google']"));
+		WebElement Tovendor = driver.findElement(By.xpath("//*[@id = 'Bing']"));
+		Actions builder = new Actions(driver);
+		builder.clickAndHold(Fromvendor).pause(2000).moveToElement(Tovendor).release().build().perform();
+		clickelement(Save);
 	}
 
 }

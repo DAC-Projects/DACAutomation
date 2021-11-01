@@ -216,7 +216,7 @@ public class Navigationpage extends BasePage {
 	@FindBy(xpath = "//button//span[@class='walkme-custom-balloon-button-text' and contains(text(),'Cancel')]")
 	private WebElement WalkMeCancel;
 
-	@FindBy(xpath = "//span[@class= 'walkme-action-destroy-0 wm-close-link' and contains(text(),'Okay')]")
+	@FindBy(xpath = "//span[contains(@class, 'walkme-action-destroy-0 wm-close-link') and contains(text(),'Okay')]")
 	private WebElement NotificationPopUp;
 
 	/*--------------------------Walkme Snippet-----------------------------------*/

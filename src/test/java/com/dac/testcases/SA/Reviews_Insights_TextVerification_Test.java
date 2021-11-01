@@ -84,4 +84,10 @@ public class Reviews_Insights_TextVerification_Test extends BaseClass {
 		data = new Reviews_Insights(CurrentState.getDriver());
 		data.verifyLearntext();
 	}
+	
+	@Test(priority = 7, description = "Test to verify read manual content")
+	public void VerifyReadManual() throws Exception {
+		data = new Reviews_Insights(CurrentState.getDriver());
+		data.verifyContentInPDf("Review insights is broken out into three different sections outlined below:", "To set a filter, follow the steps below:", "A. Location/Time Filters", "Review_Insights_Manual.pdf");
+	}
 }

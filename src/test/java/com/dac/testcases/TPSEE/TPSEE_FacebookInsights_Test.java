@@ -33,8 +33,8 @@ public class TPSEE_FacebookInsights_Test extends BaseClass {
 		CurrentState.getLogger().log(Status.PASS, "Navigated Successfully to Facebook Page");
 		addEvidence(CurrentState.getDriver(), "Navigation to Facebook Page", "yes");
 		JSWaiter.waitJQueryAngular();
-		Thread.sleep(2000);
-		/*data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
+		/*Thread.sleep(2000);
+		data = new TPSEE_FacebookInsights_Page(CurrentState.getDriver());
 		data.clickDone();*/
 	}
 

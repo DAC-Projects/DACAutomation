@@ -47,58 +47,58 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	}
 	/*-------------------------------Locators-------------------------------------------------*/
 
-	@FindBy(xpath = "//*[@class='tooltip-info' and @data-varible='customerWebsite']")
+	@FindBy(xpath = "//li[@data-varible='customerWebsite']//*[@class='tooltip-info']")
 	private WebElement customerWebsite_MousehoverText;
 
-	@FindBy(xpath = "//*[@class='tooltip-info' and @data-varible='customerDirections']")
+	@FindBy(xpath = "//li[@data-varible='customerDirections']//*[@class='tooltip-info']")	
 	private WebElement customerDirections_MousehoverText;
 
-	@FindBy(xpath = "//*[@class='tooltip-info' and @data-varible='customerPhonecalls']")
+	@FindBy(xpath = "//li[@data-varible='customerPhonecalls']//*[@class='tooltip-info']")
 	private WebElement customerPhonecalls_MousehoverText;
 
-	@FindBy(xpath = "(//*[@class='big-stats tooltip-info'])[1]")
+	@FindBy(xpath = "(//*[@class='sr-only tooltip'])[1]") 
 	private WebElement TotalActionsMousehoverText;
 
 	// where listing found
 
-	@FindBy(xpath = "//*[@class='tooltip-info' and @data-varible='whereSearch']")
+	@FindBy(xpath = "//li[@data-varible='whereSearch']//*[@class='tooltip-info']")
 	private WebElement whereSearch_MousehoverText;
 
-	@FindBy(xpath = "//*[@class='tooltip-info' and @data-varible='whereMaps']")
+	@FindBy(xpath = "//li[@data-varible='whereMaps']//*[@class='tooltip-info']")
 	private WebElement whereMaps_MousehoverText;
 
-	@FindBy(xpath = "(//*[@class='big-stats tooltip-info'])[2]")
+	@FindBy(xpath = "(//*[@class='sr-only tooltip'])[2]") 
 	private WebElement Totalviews_MousehoverText;
 	// how listing found
 
-	@FindBy(xpath = "//*[@class='tooltip-info' and @data-varible='howDiscovery']")
+	@FindBy(xpath = "//li[@data-varible='howDiscovery']//*[@class='tooltip-info']")
 	private WebElement howDiscoveryMousehoverText;
 
-	@FindBy(xpath = "//*[@class='tooltip-info' and @data-varible='howDirect']")
+	@FindBy(xpath = "//li[@data-varible='howDirect']//*[@class='tooltip-info']")
 	private WebElement howDirect_MousehoverText;
 
-	@FindBy(xpath = "//*[@class='tooltip-info' and @data-varible='howBranded']")
+	@FindBy(xpath = "//li[@data-varible='howBranded']//*[@class='tooltip-info']")
 	private WebElement howBranded_MousehoverText;
 
-	@FindBy(xpath = "(//*[@class='big-stats tooltip-info'])[3]")
+	@FindBy(xpath = "(//*[@class='sr-only tooltip'])[3]") 
 	private WebElement TotalSearches_MousehoverText;
 	// photoview
 
-	@FindBy(xpath = "//*[@class='tooltip-info' and @data-varible='photoViewsOwner']")
+	@FindBy(xpath = "//li[@data-varible='photoViewsOwner']//*[@class='tooltip-info']")
 	private WebElement photoViewsOwner_MousehoverText;
 
-	@FindBy(xpath = "//*[@class='tooltip-info' and @data-varible='photoViewsCustomer']")
+	@FindBy(xpath = "//li[@data-varible='photoViewsCustomer']//*[@class='tooltip-info']")
 	private WebElement photoViewsCustomer_MousehoverText;
 
-	@FindBy(xpath = "(//*[@class='big-stats tooltip-info'])[4]")
+	@FindBy(xpath = "(//*[@class='sr-only tooltip'])[4]")
 	private WebElement photoviewtotalcount_MousehoverText;
 
 	// photo quantity
 
-	@FindBy(xpath = "//*[@class='tooltip-info' and @data-varible='photoCountOwner']")
+	@FindBy(xpath = "//li[@data-varible='photoCountOwner']//*[@class='tooltip-info']")
 	private WebElement photoCountOwner_MousehoverText;
 
-	@FindBy(xpath = "//*[@class='tooltip-info' and @data-varible='photoCountCustomer']")
+	@FindBy(xpath = "//li[@data-varible='photoCountCustomer']//*[@class='tooltip-info']")
 	private WebElement photoCountCustomer_MousehoverText;
 
 	@FindBy(xpath = "//*[@id='page-content']//h2")
@@ -188,22 +188,22 @@ public class TPSEE_GMB extends TPSEE_abstractMethods {
 	@FindBy(xpath = "//span[contains (text(),'Phone Calls')]")
 	private WebElement PhoneCalls;
 
-	@FindBy(xpath = "//span[contains(text(),'Search')]")
+	@FindBy(xpath = "(//span[contains(text(),'Search')])[2]")
 	private WebElement SearchFound;
 
-	@FindBy(xpath = "//span[contains(text(),'Map')]")
+	@FindBy(xpath = "(//span[contains(text(),'Map')])[2]")
 	private WebElement MapFound;
 
-	@FindBy(xpath = "//span[contains(text(),'Discovery')]")
+	@FindBy(xpath = "(//span[contains(text(),'Discovery')])[2]")
 	private WebElement Dis;
 
-	@FindBy(xpath = "(//span[contains(text(),'Direct')])[2]")
+	@FindBy(xpath = "(//span[contains(text(),'Direct')])[3]")
 	private WebElement Dir;
 
 	@FindBy(xpath = "//span[contains(text(),'Branded')]")
 	private WebElement Brand;
 
-	@FindBy(xpath = "(//span[contains(text(),'Owner')])[1]")
+	@FindBy(xpath = "//div[@id='photoViewsIndex']//span[@class='infobox-content'][contains(text(),'Owner')]")
 	private WebElement Phowner;
 
 	@FindBy(xpath = "//div[@id='photoViewsIndex']//span[@class='infobox-content'][contains(text(),'Customer')]")

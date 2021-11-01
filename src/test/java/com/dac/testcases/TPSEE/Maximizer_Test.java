@@ -64,9 +64,23 @@ public class Maximizer_Test extends BaseClass {
 		data.VerifyRecommendationCount();
 	}
 	
+	/**
+	 * Test to verify percentage
+	 */
 	@Test(priority = 6, description = "Test to verify percentage")
 	public void VerifyPercentage() {
 		data = new Maximizer_Page(CurrentState.getDriver());
 		data.verifyPercentageComplete();
+	}
+	
+	/**
+	 * Test to verify texts of the reco
+	 * @throws Exception
+	 */
+	@Test(priority = 7, description = "Test to verify Details, Impact and Benefits of Reco")
+	public void VerifyText() throws Exception {
+		data = new Maximizer_Page(CurrentState.getDriver());
+		data.getDatafromUIandverifywithXLdata();
+		addEvidence(CurrentState.getDriver(), "Test to verify text", "yes");
 	}
 }

@@ -69,5 +69,41 @@ public class TPSEE_Site_Order_Test extends BaseClass {
 		}
 		soft.assertAll();
 	}
+	
+	/**
+	 * test to navigate to site order page
+	 * @throws Exception
+	 */
+	@Test(priority = 5, description = "Test to navigate to Site Order")
+	public void NavigateTositeOrder() throws Exception {
+		np = new Navigationpage(CurrentState.getDriver());
+		np.navigateToSiteOrder();
+		addEvidence(CurrentState.getDriver(), "Test to navigate to Site Order", "yes");
+	}
+	
+	@Test(priority = 6, description = "Test to drag and drop vendors")
+	public void changeOrder() throws Exception {
+		data = new TPSEE_Site_Order(CurrentState.getDriver());
+		data.VendorDragandDrop();
+		addEvidence(CurrentState.getDriver(), "Test to change vendor order", "yes");
+	}
+	
+	@Test(priority = 7, description = "Test to verify site order")
+	public void verifySiteOrder() throws Exception {
+		data = new TPSEE_Site_Order(CurrentState.getDriver());
+		SiteList = data.getSiteList();
+		addEvidence(CurrentState.getDriver(), "Test to get site list", "yes");
+		Thread.sleep(3000);
+		NavigateToVisibilityReport();
+		Thread.sleep(2000);
+		VendorList = data.getVisibilitySite();
+		addEvidence(CurrentState.getDriver(), "Test to get visibility vendors", "yes");
+		if(SiteList.size() == VendorList.size()) {
+			for(int i = 0; i <= SiteList.size() - 1; i++) {
+				soft.assertEquals(SiteList.get(i), VendorList.get(i));
+			}
+		}
+		soft.assertAll();
+	}
 
 }
