@@ -48,4 +48,5 @@ public interface TPSEERepository {
 	String ReviewStreamExportXLSX = "ReviewStreamExportXLSX.xlsx";
 	String FacebookExportCSV = "FacebookExportCSV.csv";
 	String FacebookExportXLSX = "FacebookExportXLSX.xlsx";
+	String Maximizer_Location_Export = "MaximizerLocations.xlsx";
 }

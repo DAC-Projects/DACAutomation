@@ -1,0 +1,499 @@
+{
+    "HoursOfOperation": null,
+    "ID": "9a85edf8-dfa0-48f2-8da5-197c30e6122c",
+    "ResellerID": "544da616-517c-4752-bfd9-66d9277859ec",
+    "ExternalReseller": true,
+    "BusinessUnitID": "1",
+    "AccountID": "fe90e00f-a4aa-4d41-bae3-36da6f838777",
+    "LocationNumber": "9990308870",
+    "ClientRefID": "2006",
+    "ParentAccountID": null,
+    "KeyFields": {
+        "AutoDisplayPoint": "{\"Description\":null,\"DisplayMode\":null,\"Navigation\":0,\"Precision\":0,\"Type\":0,\"VerificationType\":3,\"Latitude\":43.602497,\"Longitude\":-70.304321,\"Heading\":null,\"Pitch\":null,\"Zoom\":null,\"Pin\":null}",
+        "AdPhone": "+18778854333",
+        "GoogleBusinessDescription": null,
+        "TextField1": "<i>test HTML</>",
+        "html_HTMLField1": "<ol> <li><strong><em>Here I am</em></strong></li> </ol> <ul> <li><strong><em>This is now</em></strong></li> <li><strong><em><a href=\"http://www.facebook.com\">http://www.facebook.com</a></em></strong></li> <li><a href=\"mailto:jmann@dacgroup.com?subject=Test&amp;body=This%20is%20a%20test%20of%20the%20emergency%20broadcast%20system.%20This%20is%20only%20a%20test.%20If%20this%20had%20been%20an%20actual%20emergency%2C%20you%20would%20have%20been%20instructed%20to%20tune%20to%20one%20of%20the%20broadcast%20stations%20in%20your%20area.\">jmann@dacgroup.com</a></li> </ul>",
+        "RadioField1": "Yes",
+        "CheckboxField1": "No",
+        "PictureField1": "http://res.cloudinary.com/cloudasset/image/upload/v1604692419/map/images/bm0zaypeb9ucrrok1jal.jpg",
+        "Google Preferred Photo": "Profile",
+        "Contractor License": "L234878-234234-234234BA",
+        "ReportGroup": "ABC123",
+        "NPINumber": "6546546546",
+        "PinMarker": "true",
+        "ChainName": null,
+        "Reference Code 2": "Ref2",
+        "primarylanguage": "fr-FR",
+        "AppleBusinessName": "Apple Business Name",
+        "gender": "male"
+    },
+    "OriginalJson": null,
+    "BusinessStatus": 0,
+    "BusinessStatusModified": "0001-01-01T00:00:00",
+    "BusinessName": {
+        "Name": "Casella Waste Systems",
+        "Type": null,
+        "ShortName": null,
+        "LongName": "Casella Waste Systems",
+        "Locale": 58,
+        "DisplayMode": null,
+        "Description": null,
+        "ShortDescription": "This is the short business description.",
+        "LongDescription": "This is the LONG LONG LONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONG business description."
+    },
+    "AlternateNames": [
+        {
+            "Name": "Alternate Name Jennifer",
+            "Type": null,
+            "ShortName": null,
+            "LongName": null,
+            "Locale": 58,
+            "DisplayMode": null,
+            "Description": null,
+            "ShortDescription": null,
+            "LongDescription": null
+        }
+    ],
+    "MainAddress": {
+        "StructuredAddress": false,
+        "Address": null,
+        "AddressNonStruct_Line1": "87 Pleasant Hill Road",
+        "AddressNonStruct_Line2": null,
+        "AddressNonStruct_Line3": null,
+        "AddressNonStruct_Line4": null,
+        "AddressNonStruct_Line5": null,
+        "Type": 0,
+        "Street": null,
+        "Suite": null,
+        "Neighborhood": null,
+        "Locality": "Scarborough",
+        "Region": "ME",
+        "RegionName": "Maine",
+        "RegionCode": "ME",
+        "PostalCode": "04074",
+        "CountryCode": "US",
+        "POBox": null,
+        "Address1": "87 Pleasant Hill Road",
+        "Address2": null,
+        "DisplayMode": {
+            "DisplayAllowed": true,
+            "Preferred": false,
+            "Priority": 0
+        },
+        "VerificationData": {
+            "VerificationMajorErrors": {},
+            "VerificationNonMajorErrors": {
+                "AS01": "The address is valid and deliverable according to official postal agencies."
+            },
+            "ValidateAddress": {
+                "Address1": "87 Pleasant Hill Rd",
+                "Address2": " ",
+                "Company": " ",
+                "City": "Scarborough",
+                "State": "ME",
+                "Zip": "04074",
+                "Plus4": "9306",
+                "Country": "US",
+                "Range": "87",
+                "StreetName": "Pleasant Hill",
+                "Suffix": "Rd",
+                "PreDirection": " ",
+                "PostDirection": " ",
+                "SuiteName": " ",
+                "SuiteNumber": " ",
+                "PMBName": " ",
+                "PMBNumber": " ",
+                "UName": " ",
+                "DPC": "87",
+                "DPCD": "2",
+                "CarrierRoute": "R116",
+                "AddKey": "04074930687",
+                "Congressiona": "01"
+            },
+            "VerificationEngine": "MelissaRequestUSCA",
+            "VerificationDate": "2019-01-16T15:46:01.7491771Z",
+            "Username": null
+        },
+        "RawData": "{\"StructuredAddress\":false,\"Address\":null,\"AddressNonStruct_Line1\":\"87 Pleasant Hill Road\",\"AddressNonStruct_Line2\":null,\"AddressNonStruct_Line3\":null,\"AddressNonStruct_Line4\":null,\"AddressNonStruct_Line5\":null,\"Type\":0,\"Street\":null,\"Suite\":null,\"Neighborhood\":null,\"Locality\":\"Scarborough\",\"Region\":\"ME\",\"RegionName\":null,\"RegionCode\":\"ME\",\"PostalCode\":\"04074\",\"CountryCode\":\"US\",\"POBox\":null,\"Address1\":\"87 Pleasant Hill Road\",\"Address2\":null,\"DisplayMode\":null,\"VerificationData\":null,\"RawData\":null}"
+    },
+    "DisplayPoint": {
+        "Description": null,
+        "DisplayMode": null,
+        "Navigation": 0,
+        "Precision": 0,
+        "Type": 0,
+        "VerificationType": 3,
+        "Latitude": 43.602497,
+        "Longitude": -70.304321,
+        "Heading": null,
+        "Pitch": null,
+        "Zoom": null,
+        "Pin": {
+            "type": "Point",
+            "coordinates": [
+                -71.304321,
+                43.602497
+            ]
+        }
+    },
+    "MainAddressVerified": {
+        "StructuredAddress": true,
+        "Address": null,
+        "AddressNonStruct_Line1": "87 Pleasant Hill Rd",
+        "AddressNonStruct_Line2": null,
+        "AddressNonStruct_Line3": null,
+        "AddressNonStruct_Line4": null,
+        "AddressNonStruct_Line5": null,
+        "Type": 0,
+        "Street": {
+            "Number": "87",
+            "Name": "Pleasant Hill",
+            "Type": "Rd",
+            "Direction": null
+        },
+        "Suite": null,
+        "Neighborhood": null,
+        "Locality": "Scarborough",
+        "Region": "ME",
+        "RegionName": "Maine",
+        "RegionCode": "ME",
+        "PostalCode": "04074",
+        "CountryCode": "US",
+        "POBox": null,
+        "Address1": "87 Pleasant Hill Rd ",
+        "Address2": "",
+        "DisplayMode": {
+            "DisplayAllowed": true,
+            "Preferred": false,
+            "Priority": 0
+        },
+        "VerificationData": {
+            "VerificationMajorErrors": {},
+            "VerificationNonMajorErrors": {
+                "AS01": "The address is valid and deliverable according to official postal agencies."
+            },
+            "ValidateAddress": {
+                "Address1": "87 Pleasant Hill Rd",
+                "Address2": " ",
+                "Company": " ",
+                "City": "Scarborough",
+                "State": "ME",
+                "Zip": "04074",
+                "Plus4": "9306",
+                "Country": "US",
+                "Range": "87",
+                "StreetName": "Pleasant Hill",
+                "Suffix": "Rd",
+                "PreDirection": " ",
+                "PostDirection": " ",
+                "SuiteName": " ",
+                "SuiteNumber": " ",
+                "PMBName": " ",
+                "PMBNumber": " ",
+                "UName": " ",
+                "DPC": "87",
+                "DPCD": "2",
+                "CarrierRoute": "R116",
+                "AddKey": "04074930687",
+                "Congressiona": "01"
+            },
+            "VerificationEngine": "MelissaRequestUSCA",
+            "VerificationDate": "2019-01-16T15:46:01.7491771Z",
+            "Username": null
+        },
+        "RawData": "{\"StructuredAddress\":false,\"Address\":null,\"AddressNonStruct_Line1\":\"87 Pleasant Hill Road\",\"AddressNonStruct_Line2\":null,\"AddressNonStruct_Line3\":null,\"AddressNonStruct_Line4\":null,\"AddressNonStruct_Line5\":null,\"Type\":0,\"Street\":null,\"Suite\":null,\"Neighborhood\":null,\"Locality\":\"Scarborough\",\"Region\":\"ME\",\"RegionName\":null,\"RegionCode\":\"ME\",\"PostalCode\":\"04074\",\"CountryCode\":\"US\",\"POBox\":null,\"Address1\":\"87 Pleasant Hill Road\",\"Address2\":null,\"DisplayMode\":null,\"VerificationData\":null,\"RawData\":null}"
+    },
+    "DisplayPointVerified": null,
+    "AdditionalAddresses": null,
+    "PhoneNumber": {
+        "DisplayMode": null,
+            "Number": "+18005454455",
+            "Type": 0,
+            "Name": "MAP",
+            "Description": null
+        },
+    "AlternatePhoneNumbers": [
+        {
+            "DisplayMode": null,
+            "Number": "+12074640049",
+            "Type": 0,
+            "Name": "MAP",
+            "Description": null
+        },
+        {
+            "DisplayMode": null,
+            "Number": "+18008789988",
+            "Type": 3,
+            "Name": "MAP",
+            "Description": null
+        },
+        {
+            "DisplayMode": null,
+            "Number": "+12074640050",
+            "Type": 1,
+            "Name": "MAP",
+            "Description": null
+        },
+        {
+            "DisplayMode": null,
+            "Number": "+12074640051",
+            "Type": 2,
+            "Name": "MAP",
+            "Description": null
+        }
+    ],
+    "HomePageURL": null,
+    "SocialMediaURLs": null,
+    "HoursOfOpStruct": null,
+    "Categories": [
+        {
+            "DisplayMode": null,
+            "Locale": 58,
+            "Name": "Garbage Collection Service",
+            "Type": "DAC Category",
+            "DisplayName": null,
+            "Priority": 1
+        },
+    ],
+    "EntryPoints": null,
+    "Chain": null,
+    "Description": null,
+    "Amenities": null,
+    "PaymentMethods": null,
+    "Status": 0,
+    "StatusModified": "0001-01-01T00:00:00",
+    "Verified": false,
+    "Valid": false,
+    "VersionCode": "637661218347889284-34",
+    "CreatedBy": "chappel.mann@gmail.com",
+    "Created": "2019-01-16T15:43:38.3245987Z",
+    "ModifiedBy": "chappel.mann@gmail.com",
+    "Modified": "2021-09-01T19:37:14.7889284Z",
+    "DataSource": "MAP",
+    "AdditionalAddressLines": null,
+    "MainContact": {
+        "Locale": 58,
+        "FullName": "Jennifer Mann",
+        "FirstName": "Jennifer",
+        "MiddleName": null,
+        "LastName": "Mann",
+        "Title": "President of Neurosurgery",
+        "EmailAddress": null
+    },
+    "PrimaryEmailAddress": "test@test.com",
+    "PhotoURLs": null,
+    "OtherURLs": null,
+    "Keywords_Specialties": [
+        {
+            "Locale": 58,
+            "Value": "Garbage Collection, Dumpster Rental, Roll Off Dumpster Rental, Trash Collection, Recycling Service, Trash Pickup, Waste Management Solutions"
+        }
+    ],
+    "Credentials_Certifications": [
+        {
+            "Locale": 58,
+            "Value": "Certification #0983494-002B"
+        }
+    ],
+    "Products": [
+        {
+            "Locale": 58,
+            "Value": "This and That, Prod1, Prod2"
+        }
+    ],
+    "Services": [
+        {
+            "Locale": 58,
+            "Value": "Garbage Collection, Dumpster Rental, Roll Off Dumpster Rental, Trash Collection, Recycling Service"
+        }
+    ],
+    "Brands": [
+        {
+            "Locale": 58,
+            "Value": "BrandA, BrandB, BrandB2"
+        }
+    ],
+    "Year_Founded": null,
+    "Professional_Associations": [
+        {
+            "Locale": 58,
+            "Value": "Pro1, Pro2, Pro3"
+        }
+    ],
+    "Tags": [
+        "Tag, you're it, again"
+    ],
+    "Employee_Size": "34534",
+    "AreasServed": [
+        "Here, and There, and Everywhere"
+    ],
+    "Languages": null,
+    "AlternateHomePageURL": null,
+    "VerificationSVCResults": null,
+    "IsMainAddressTransfered": true,
+    "CustomObjects": {
+        "BingAmenities": {
+            "Key": "BingAmenities",
+            "Name": "Options",
+            "Tag": "Bing",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Business center\",\"Internet access\",\"Swimming pool\"]"
+        },
+        "GoogleLabels": {
+            "Key": "GoogleLabels",
+            "Name": "Labels",
+            "Tag": "Google",
+            "Type": "System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "{\"0\":\"Fish\",\"1\":\"Cat\",\"2\":\"Dog\",\"3\":\"Bird\",\"4\":\"Jewel\",\"5\":\"Cottage\",\"6\":\"Boat\",\"9\":\"Label 10\"}"
+        },
+        "GoogleAttributes": null,
+        "ZomatoEstablishment": {
+            "Key": "ZomatoEstablishment",
+            "Name": "Labels",
+            "Tag": "Zomato",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Bar\",\"Casual Dining\"]"
+        },
+        "ZomatoCuisines": {
+            "Key": "ZomatoCuisines",
+            "Name": "Labels",
+            "Tag": "Zomato",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Amish\",\"Canadian\",\"Raw Meats\"]"
+        },
+        "ZomatoAmenities": {
+            "Key": "ZomatoAmenities",
+            "Name": "Labels",
+            "Tag": "Zomato",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"24 hours\",\"Above 18 Only\",\"Balcony\",\"Cigar Bar\",\"Free Parking\"]"
+        },
+        "TAAccommodationAmenities": {
+            "Key": "TAAccommodationAmenities",
+            "Name": "Options",
+            "Tag": "TripAdvisor",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Bar/Lounge\",\"Free Breakfast\"]"
+        },
+        "TAAccommodationTypes": {
+            "Key": "TAAccommodationTypes",
+            "Name": "Options",
+            "Tag": "TripAdvisor",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Bed and Breakfast\"]"
+        },
+        "TAAttractionAmenities": {
+            "Key": "TAAttractionAmenities",
+            "Name": "Options",
+            "Tag": "TripAdvisor",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Activities for young children\",\"Stairs/elevator\",\"Stroller parking\"]"
+        },
+        "TACuisines": {
+            "Key": "TACuisines",
+            "Name": "Options",
+            "Tag": "TripAdvisor",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Latvian\"]"
+        },
+        "TARestaurantFeatures": {
+            "Key": "TARestaurantFeatures",
+            "Name": "Options",
+            "Tag": "TripAdvisor",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Bar scene\",\"Brewpub\",\"Hotel Dining\",\"Theme\"]"
+        },
+        "TARestaurantTypes": {
+            "Key": "TARestaurantTypes",
+            "Name": "Options",
+            "Tag": "TripAdvisor",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Fast Food/Deli\"]"
+        },
+        "HERECuisineType": {
+            "Key": "HERECuisineType",
+            "Name": "Options",
+            "Tag": "HERE",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Afghani\"]"
+        },
+        "AppleAmenities": {
+            "Key": "AppleAmenities",
+            "Name": "Options",
+            "Tag": "Apple",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Airport Transportation\",\"Free Internet\"]"
+        },
+        "AccessHours": {
+            "Key": "AccessHours",
+            "Name": "Hours",
+            "Tag": "Google",
+            "Type": "WebAppEntity.HoursOfOperationObject, WebAppEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Value": "{\"Fr\":{\"Ranges\":[{\"EndTime\":\"08:00PM\",\"StartTime\":\"07:00AM\"}],\"State\":0,\"AdditionalInfo\":null},\"Mo\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Sa\":{\"Ranges\":[{\"EndTime\":\"08:00PM\",\"StartTime\":\"07:00AM\"}],\"State\":0,\"AdditionalInfo\":null},\"SpecialHours\":null,\"Su\":{\"Ranges\":[{\"EndTime\":\"08:00PM\",\"StartTime\":\"07:00AM\"}],\"State\":0,\"AdditionalInfo\":null},\"Th\":{\"Ranges\":[{\"EndTime\":\"08:00PM\",\"StartTime\":\"07:00AM\"}],\"State\":0,\"AdditionalInfo\":null},\"Tu\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"We\":{\"Ranges\":[{\"EndTime\":\"03:30PM\",\"StartTime\":\"07:00AM\"},{\"EndTime\":\"09:00PM\",\"StartTime\":\"05:00PM\"}],\"State\":0,\"AdditionalInfo\":null}}"
+        },
+        "BrunchHours": {
+            "Key": "BrunchHours",
+            "Name": "Hours",
+            "Tag": "Google",
+            "Type": "WebAppEntity.HoursOfOperationObject, WebAppEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Value": "{\"Fr\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"Mo\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"Sa\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"SpecialHours\":null,\"Su\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Th\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"Tu\":{\"Ranges\":[{\"EndTime\":\"12:00PM\",\"StartTime\":\"09:00AM\"},{\"EndTime\":\"05:30PM\",\"StartTime\":\"01:00PM\"}],\"State\":0,\"AdditionalInfo\":null},\"We\":{\"Ranges\":[{\"EndTime\":\"02:30PM\",\"StartTime\":\"12:00PM\"}],\"State\":0,\"AdditionalInfo\":null}}"
+        },
+        "DeliveryHours": {
+            "Key": "DeliveryHours",
+            "Name": "Hours",
+            "Tag": "Google",
+            "Type": "WebAppEntity.HoursOfOperationObject, WebAppEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Value": "{\"Fr\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"Mo\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Sa\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"SpecialHours\":null,\"Su\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"Th\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"Tu\":{\"Ranges\":[{\"EndTime\":\"11:45AM\",\"StartTime\":\"09:00AM\"},{\"EndTime\":\"09:30PM\",\"StartTime\":\"01:30PM\"}],\"State\":0,\"AdditionalInfo\":null},\"We\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null}}"
+        },
+        "DrivethroughHours": {
+            "Key": "DrivethroughHours",
+            "Name": "Hours",
+            "Tag": "Google",
+            "Type": "WebAppEntity.HoursOfOperationObject, WebAppEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Value": "{\"Fr\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Mo\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Sa\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"SpecialHours\":null,\"Su\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Th\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Tu\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"We\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null}}"
+        },
+        "HappyHours": {
+            "Key": "HappyHours",
+            "Name": "Hours",
+            "Tag": "Google",
+            "Type": "WebAppEntity.HoursOfOperationObject, WebAppEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Value": "{\"Fr\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Mo\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"Sa\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"SpecialHours\":null,\"Su\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"Th\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"Tu\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"We\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null}}"
+        },
+        "KitchenHours": {
+            "Key": "KitchenHours",
+            "Name": "Hours",
+            "Tag": "Google",
+            "Type": "WebAppEntity.HoursOfOperationObject, WebAppEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Value": "{\"Fr\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Mo\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"Sa\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"SpecialHours\":null,\"Su\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Th\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Tu\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"We\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null}}"
+        },
+        "OnlineOperatingHours": {
+            "Key": "OnlineOperatingHours",
+            "Name": "Hours",
+            "Tag": "Google",
+            "Type": "WebAppEntity.HoursOfOperationObject, WebAppEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Value": "{\"Fr\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Mo\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Sa\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"SpecialHours\":null,\"Su\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Th\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Tu\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"We\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null}}"
+        },
+        "PickupHours": {
+            "Key": "PickupHours",
+            "Name": "Hours",
+            "Tag": "Google",
+            "Type": "WebAppEntity.HoursOfOperationObject, WebAppEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Value": "{\"Fr\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Mo\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Sa\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"SpecialHours\":null,\"Su\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Th\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Tu\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"We\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null}}"
+        },
+        "SeniorHours": {
+            "Key": "SeniorHours",
+            "Name": "Hours",
+            "Tag": "Google",
+            "Type": "WebAppEntity.HoursOfOperationObject, WebAppEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Value": "{\"Fr\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Mo\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Sa\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"SpecialHours\":null,\"Su\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Th\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Tu\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"We\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null}}"
+        },
+        "TakeoutHours": {
+            "Key": "TakeoutHours",
+            "Name": "Hours",
+            "Tag": "Google",
+            "Type": "WebAppEntity.HoursOfOperationObject, WebAppEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Value": "{\"Fr\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Mo\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Sa\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"SpecialHours\":null,\"Su\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Th\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Tu\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"We\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null}}"
+        }
+    }
+}

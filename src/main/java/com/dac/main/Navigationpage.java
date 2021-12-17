@@ -40,6 +40,9 @@ public class Navigationpage extends BasePage {
 	@FindBy(xpath = "//a[@href='/Dashboard/Maximizer']/span")
 	private WebElement Maximizer;
 	
+	@FindBy(xpath = "//*[contains(text(),'Remind Me Later')]")
+	private WebElement Walkme;
+	
 	@FindBy(xpath = "//a[@href='/Dashboard/AllLocations/']/span")
 	private WebElement AllLocations;
 
@@ -242,10 +245,20 @@ public class Navigationpage extends BasePage {
 	
 	/**
 	 * Navigation to Maximizer Page
+	 * @throws InterruptedException 
 	 */
-	public void navigateToMaximizer() {
+	public void navigateToMaximizer() throws InterruptedException {
 		clickelement(Maximizer);
 		waitUntilLoad(driver);
+		Thread.sleep(4000);
+		try {
+			if(Walkme.isDisplayed()) {
+				Walkme.click();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 		try {
 			clickwalkme();
 		}catch(Exception e) {

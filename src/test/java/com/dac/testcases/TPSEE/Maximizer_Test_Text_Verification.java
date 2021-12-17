@@ -8,7 +8,7 @@ import com.dac.main.POM_TPSEE.Maximizer_Page;
 import resources.BaseClass;
 import resources.CurrentState;
 
-public class Maximizer_Test extends BaseClass {
+public class Maximizer_Test_Text_Verification extends BaseClass {
 	
 	Navigationpage np;
 	Maximizer_Page data;
@@ -23,7 +23,7 @@ public class Maximizer_Test extends BaseClass {
 		np.navigateToMaximizer();
 		addEvidence(CurrentState.getDriver(), "Test to navigate to Maximizer", "yes");
 	}
-
+	
 	/**
 	 * Test to verify title and title text
 	 * @throws Exception

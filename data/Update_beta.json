@@ -1,0 +1,1422 @@
+{
+"HoursOfOperation": "Closed|07:00AM-12:00PM,02:00PM-07:00PM|24Hrs|24Hrs|12:00PM-09:00PM|08:30AM-05:30PM|09:00AM-12:00PM,01:00PM-05:00PM",
+    "ID": "9a85edf8-dfa0-48f2-8da5-197c30e6122c",
+    "ResellerID": "544da616-517c-4752-bfd9-66d9277859ec",
+    "ExternalReseller": true,
+    "BusinessUnitID": "1",
+    "AccountID": "fe90e00f-a4aa-4d41-bae3-36da6f838777",
+    "LocationNumber": "9990308870",	
+    "ClientRefID": "2006",
+    "ParentAccountID": null,
+    "KeyFields": {
+        "AutoDisplayPoint": "{\"Description\":null,\"DisplayMode\":null,\"Navigation\":0,\"Precision\":0,\"Type\":0,\"VerificationType\":3,\"Latitude\":43.602497,\"Longitude\":-70.304321,\"Heading\":null,\"Pitch\":null,\"Zoom\":null,\"Pin\":null}",
+        "AdPhone": "+18778854333",
+        "GoogleBusinessDescription": "Google Description",
+        "TextField1": "<i>test HTML</>",
+        "html_HTMLField1": "<ol> <li><strong><em>Here I am</em></strong></li> </ol> <ul> <li><strong><em>This is now</em></strong></li> <li><strong><em><a href=\"http://www.facebook.com\">http://www.facebook.com</a></em></strong></li> <li><a href=\"mailto:jmann@dacgroup.com?subject=Test&amp;body=This%20is%20a%20test%20of%20the%20emergency%20broadcast%20system.%20This%20is%20only%20a%20test.%20If%20this%20had%20been%20an%20actual%20emergency%2C%20you%20would%20have%20been%20instructed%20to%20tune%20to%20one%20of%20the%20broadcast%20stations%20in%20your%20area.\">jmann@dacgroup.com</a></li> </ul>",
+        "RadioField1": "Yes",
+        "CheckboxField1": "No",
+        "PictureField1": "http://res.cloudinary.com/cloudasset/image/upload/v1604692419/map/images/bm0zaypeb9ucrrok1jal.jpg",
+        "Google Preferred Photo": "Profile",
+        "Contractor License": "L234878-234234-234234BA",
+        "ReportGroup": "ABC123",
+        "NPINumber": "6546546546",
+        "PinMarker": "true",
+        "ChainName": "Chain Test Name",
+        "Reference Code 2": "Ref2",
+        "primarylanguage": "fr-FR",
+        "AppleBusinessName": "Apple Business Name",
+        "gender": "male"
+    },
+    "OriginalJson": null,
+    "BusinessStatus": 0,
+    "BusinessStatusModified": "0001-01-01T00:00:00",
+    "BusinessName": {
+        "Name": "Casella Waste Systems",
+        "Type": null,
+        "ShortName": null,
+        "LongName": "Casella Waste Systems",
+        "Locale": 58,
+        "DisplayMode": null,
+        "Description": "This is the business description.",
+        "ShortDescription": "This is the short business description.",
+        "LongDescription": "This is the LONG LONG LONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONGLONG LONG business description."
+    },
+    "AlternateNames": [
+        {
+            "Name": "Alternate Name Jennifer",
+            "Type": null,
+            "ShortName": null,
+            "LongName": null,
+            "Locale": 58,
+            "DisplayMode": null,
+            "Description": null,
+            "ShortDescription": null,
+            "LongDescription": null
+        }
+    ],
+    "MainAddress": {
+        "StructuredAddress": false,
+        "Address": null,
+        "AddressNonStruct_Line1": "87 Pleasant Hill Road",
+        "AddressNonStruct_Line2": null,
+        "AddressNonStruct_Line3": null,
+        "AddressNonStruct_Line4": null,
+        "AddressNonStruct_Line5": null,
+        "Type": 0,
+        "Street": null,
+        "Suite": null,
+        "Neighborhood": null,
+        "Locality": "Scarborough",
+        "Region": "ME",
+        "RegionName": "Maine",
+        "RegionCode": "ME",
+        "PostalCode": "04074",
+        "CountryCode": "US",
+        "POBox": null,
+        "Address1": "87 Pleasant Hill Road",
+        "Address2": null,
+        "DisplayMode": {
+            "DisplayAllowed": true,
+            "Preferred": false,
+            "Priority": 0
+        },
+        "VerificationData": {
+            "VerificationMajorErrors": {},
+            "VerificationNonMajorErrors": {
+                "AS01": "The address is valid and deliverable according to official postal agencies."
+            },
+            "ValidateAddress": {
+                "Address1": "87 Pleasant Hill Rd",
+                "Address2": " ",
+                "Company": " ",
+                "City": "Scarborough",
+                "State": "ME",
+                "Zip": "04074",
+                "Plus4": "9306",
+                "Country": "US",
+                "Range": "87",
+                "StreetName": "Pleasant Hill",
+                "Suffix": "Rd",
+                "PreDirection": " ",
+                "PostDirection": " ",
+                "SuiteName": " ",
+                "SuiteNumber": " ",
+                "PMBName": " ",
+                "PMBNumber": " ",
+                "UName": " ",
+                "DPC": "87",
+                "DPCD": "2",
+                "CarrierRoute": "R116",
+                "AddKey": "04074930687",
+                "Congressiona": "01"
+            },
+            "VerificationEngine": "MelissaRequestUSCA",
+            "VerificationDate": "2019-01-16T15:46:01.7491771Z",
+            "Username": null
+        },
+        "RawData": "{\"StructuredAddress\":false,\"Address\":null,\"AddressNonStruct_Line1\":\"87 Pleasant Hill Road\",\"AddressNonStruct_Line2\":null,\"AddressNonStruct_Line3\":null,\"AddressNonStruct_Line4\":null,\"AddressNonStruct_Line5\":null,\"Type\":0,\"Street\":null,\"Suite\":null,\"Neighborhood\":null,\"Locality\":\"Scarborough\",\"Region\":\"ME\",\"RegionName\":null,\"RegionCode\":\"ME\",\"PostalCode\":\"04074\",\"CountryCode\":\"US\",\"POBox\":null,\"Address1\":\"87 Pleasant Hill Road\",\"Address2\":null,\"DisplayMode\":null,\"VerificationData\":null,\"RawData\":null}"
+    },
+    "DisplayPoint": {
+        "Description": null,
+        "DisplayMode": null,
+        "Navigation": 0,
+        "Precision": 0,
+        "Type": 0,
+        "VerificationType": 3,
+        "Latitude": 43.602497,
+        "Longitude": -70.304321,
+        "Heading": null,
+        "Pitch": null,
+        "Zoom": null,
+        "Pin": {
+            "type": "Point",
+            "coordinates": [
+                -71.304321,
+                43.602497
+            ]
+        }
+    },
+    "MainAddressVerified": {
+        "StructuredAddress": true,
+        "Address": null,
+        "AddressNonStruct_Line1": "87 Pleasant Hill Rd",
+        "AddressNonStruct_Line2": null,
+        "AddressNonStruct_Line3": null,
+        "AddressNonStruct_Line4": null,
+        "AddressNonStruct_Line5": null,
+        "Type": 0,
+        "Street": {
+            "Number": "87",
+            "Name": "Pleasant Hill",
+            "Type": "Rd",
+            "Direction": null
+        },
+        "Suite": null,
+        "Neighborhood": null,
+        "Locality": "Scarborough",
+        "Region": "ME",
+        "RegionName": "Maine",
+        "RegionCode": "ME",
+        "PostalCode": "04074",
+        "CountryCode": "US",
+        "POBox": null,
+        "Address1": "87 Pleasant Hill Rd ",
+        "Address2": "",
+        "DisplayMode": {
+            "DisplayAllowed": true,
+            "Preferred": false,
+            "Priority": 0
+        },
+        "VerificationData": {
+            "VerificationMajorErrors": {},
+            "VerificationNonMajorErrors": {
+                "AS01": "The address is valid and deliverable according to official postal agencies."
+            },
+            "ValidateAddress": {
+                "Address1": "87 Pleasant Hill Rd",
+                "Address2": " ",
+                "Company": " ",
+                "City": "Scarborough",
+                "State": "ME",
+                "Zip": "04074",
+                "Plus4": "9306",
+                "Country": "US",
+                "Range": "87",
+                "StreetName": "Pleasant Hill",
+                "Suffix": "Rd",
+                "PreDirection": " ",
+                "PostDirection": " ",
+                "SuiteName": " ",
+                "SuiteNumber": " ",
+                "PMBName": " ",
+                "PMBNumber": " ",
+                "UName": " ",
+                "DPC": "87",
+                "DPCD": "2",
+                "CarrierRoute": "R116",
+                "AddKey": "04074930687",
+                "Congressiona": "01"
+            },
+            "VerificationEngine": "MelissaRequestUSCA",
+            "VerificationDate": "2019-01-16T15:46:01.7491771Z",
+            "Username": null
+        },
+        "RawData": "{\"StructuredAddress\":false,\"Address\":null,\"AddressNonStruct_Line1\":\"87 Pleasant Hill Road\",\"AddressNonStruct_Line2\":null,\"AddressNonStruct_Line3\":null,\"AddressNonStruct_Line4\":null,\"AddressNonStruct_Line5\":null,\"Type\":0,\"Street\":null,\"Suite\":null,\"Neighborhood\":null,\"Locality\":\"Scarborough\",\"Region\":\"ME\",\"RegionName\":null,\"RegionCode\":\"ME\",\"PostalCode\":\"04074\",\"CountryCode\":\"US\",\"POBox\":null,\"Address1\":\"87 Pleasant Hill Road\",\"Address2\":null,\"DisplayMode\":null,\"VerificationData\":null,\"RawData\":null}"
+    },
+    "DisplayPointVerified": null,
+    "AdditionalAddresses": null,
+    "PhoneNumber": {
+        "DisplayMode": {
+            "DisplayAllowed": true,
+            "Preferred": false,
+            "Priority": 0
+        },
+        "Number": "+12074640049",
+        "Type": 0,
+        "Name": null,
+        "Description": null
+    },
+    "AlternatePhoneNumbers": [
+        {
+            "DisplayMode": null,
+            "Number": "+12074640049",
+            "Type": 0,
+            "Name": "MAP",
+            "Description": null
+        },
+        {
+            "DisplayMode": null,
+            "Number": "+18008789988",
+            "Type": 3,
+            "Name": "MAP",
+            "Description": null
+        },
+        {
+            "DisplayMode": null,
+            "Number": "+12074640050",
+            "Type": 1,
+            "Name": "MAP",
+            "Description": null
+        },
+        {
+            "DisplayMode": null,
+            "Number": "+12074640051",
+            "Type": 2,
+            "Name": "MAP",
+            "Description": null
+        }
+    ],
+    "HomePageURL": "http://testthis.com",
+    "SocialMediaURLs": [
+        {
+            "Id": null,
+            "URL": "https://test.com/Social",
+            "Name": "SocialNetworkURL",
+            "DisplayName": null,
+            "Description": null,
+            "Error": null
+        },
+        {
+            "Id": null,
+            "URL": "https://test.com/Twitter",
+            "Name": "TwitterURL",
+            "DisplayName": null,
+            "Description": null,
+            "Error": null
+        },
+        {
+            "Id": null,
+            "URL": "https://test.com/LinkedIN",
+            "Name": "LinkedInURL",
+            "DisplayName": null,
+            "Description": null,
+            "Error": null
+        },
+        {
+            "Id": null,
+            "URL": "https://test.com/Pint",
+            "Name": "PinterestURL",
+            "DisplayName": null,
+            "Description": null,
+            "Error": null
+        },
+        {
+            "Id": null,
+            "URL": "https://test.com/FB",
+            "Name": "FacebookURL",
+            "DisplayName": null,
+            "Description": null,
+            "Error": null
+        },
+        {
+            "Id": null,
+            "URL": "https://test.com/Insta",
+            "Name": "InstagramURL",
+            "DisplayName": null,
+            "Description": null,
+            "Error": null
+        },
+        {
+            "Id": null,
+            "URL": "https://test.com/Menu",
+            "Name": "MenuURL",
+            "DisplayName": null,
+            "Description": null,
+            "Error": null
+        }
+    ],
+    "HoursOfOpStruct": {
+        "Su": {
+            "Ranges": null,
+            "State": 1,
+            "AdditionalInfo": null
+        },
+        "Mo": {
+            "Ranges": [
+                {
+                    "StartTime": "07:00AM",
+                    "EndTime": "12:00PM"
+                },
+                {
+                    "StartTime": "02:00PM",
+                    "EndTime": "07:00PM"
+                }
+            ],
+            "State": 0,
+            "AdditionalInfo": null
+        },
+        "Tu": {
+            "Ranges": null,
+            "State": 2,
+            "AdditionalInfo": null
+        },
+        "We": {
+            "Ranges": null,
+            "State": 2,
+            "AdditionalInfo": null
+        },
+        "Th": {
+            "Ranges": [
+                {
+                    "StartTime": "12:00PM",
+                    "EndTime": "09:00PM"
+                }
+            ],
+            "State": 0,
+            "AdditionalInfo": null
+        },
+        "Fr": {
+            "Ranges": [
+                {
+                    "StartTime": "08:30AM",
+                    "EndTime": "05:30PM"
+                }
+            ],
+            "State": 0,
+            "AdditionalInfo": null
+        },
+        "Sa": {
+            "Ranges": [
+                {
+                    "StartTime": "09:00AM",
+                    "EndTime": "12:00PM"
+                },
+                {
+                    "StartTime": "01:00PM",
+                    "EndTime": "05:00PM"
+                }
+            ],
+            "State": 0,
+            "AdditionalInfo": null
+        },
+        "SpecialHours": [
+            {
+                "Date": "11-27-2022",
+                "Ranges": null,
+                "State": 2,
+                "AdditionalInfo": "24hours"
+            },
+            {
+                "Date": "12-03-2022",
+                "Ranges": null,
+                "State": 1,
+                "AdditionalInfo": "Closed"
+            },
+            {
+                "Date": "12-18-2022",
+                "Ranges": [
+                    {
+                        "StartTime": "08:15AM",
+                        "EndTime": "10:15AM"
+                    },
+                    {
+                        "StartTime": "12:15PM",
+                        "EndTime": "04:45PM"
+                    }
+                ],
+                "State": 0,
+                "AdditionalInfo": "Split"
+            }
+        ]
+    },
+    "Categories": [
+        {
+            "DisplayMode": null,
+            "Locale": 58,
+            "Name": "Garbage Collection Service",
+            "Type": "DAC Category",
+            "DisplayName": null,
+            "Priority": 1
+        },
+        {
+            "DisplayMode": null,
+            "Locale": 58,
+            "Name": "Waste Management Service",
+            "Type": "DAC Category",
+            "DisplayName": null,
+            "Priority": 2
+        },
+        {
+            "DisplayMode": null,
+            "Locale": 58,
+            "Name": "Garbage Dump Service",
+            "Type": "DAC Category",
+            "DisplayName": null,
+            "Priority": 3
+        },
+        {
+            "DisplayMode": null,
+            "Locale": 58,
+            "Name": "Garbage Dump",
+            "Type": "DAC Category",
+            "DisplayName": null,
+            "Priority": 4
+        },
+        {
+            "DisplayMode": null,
+            "Locale": 58,
+            "Name": "Recycling Center",
+            "Type": "DAC Category",
+            "DisplayName": null,
+            "Priority": 5
+        }
+    ],
+    "EntryPoints": null,
+    "Chain": null,
+    "Description": null,
+    "Amenities": [
+        {
+            "Locale": 58,
+            "Value": "ATM on Premises"
+        }
+    ],
+    "PaymentMethods": [
+        "A",
+        "AP",
+        "H",
+        "CO",
+        "CC",
+        "E",
+        "GC",
+        "IN",
+        "M",
+        "P",
+        "V"
+    ],
+    "Status": 0,
+    "StatusModified": "0001-01-01T00:00:00",
+    "Verified": false,
+    "Valid": false,
+    "VersionCode": "637661218347889284-34",
+    "CreatedBy": "chappel.mann@gmail.com",
+    "Created": "2019-01-16T15:43:38.3245987Z",
+    "ModifiedBy": "chappel.mann@gmail.com",
+    "Modified": "2021-09-01T19:37:14.7889284Z",
+    "DataSource": "MAP",
+    "AdditionalAddressLines": null,
+    "MainContact": {
+        "Locale": 58,
+        "FullName": "Jennifer Mann",
+        "FirstName": "Jennifer",
+        "MiddleName": null,
+        "LastName": "Mann",
+        "Title": "President of Neurosurgery",
+        "EmailAddress": null
+    },
+    "PrimaryEmailAddress": "test@test.com",
+    "PhotoURLs": [
+        {
+            "Id": null,
+            "Type": 2,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1528485317/YOQY9jCEeJbbaN47ILTEV9YGABkf4zrOyIMcY47RQagDc61.png",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1528485317/YOQY9jCEeJbbaN47ILTEV9YGABkf4zrOyIMcY47RQagDc61.png",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1528485317/YOQY9jCEeJbbaN47ILTEV9YGABkf4zrOyIMcY47RQagDc61.png",
+            "Name": "Logo",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 0,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1528485319/CYJlMJNIaV33Bs3cT436yuLYwuX4Kmc47AgkV47V2ii4Wk61.png",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1528485319/CYJlMJNIaV33Bs3cT436yuLYwuX4Kmc47AgkV47V2ii4Wk61.png",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1528485319/CYJlMJNIaV33Bs3cT436yuLYwuX4Kmc47AgkV47V2ii4Wk61.png",
+            "Name": "Photo 1",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 0,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1528485320/q3pUy3JIByOLKA3HCrWxXVFRxHgIUOcDkx4Jt47bmWvU61.png",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1528485320/q3pUy3JIByOLKA3HCrWxXVFRxHgIUOcDkx4Jt47bmWvU61.png",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1528485320/q3pUy3JIByOLKA3HCrWxXVFRxHgIUOcDkx4Jt47bmWvU61.png",
+            "Name": "Photo 2",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 0,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1528485321/eWyVlXBrIfC438E247UJWr66ZivM0LMy4KTot1pGJotQk61.png",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1528485321/eWyVlXBrIfC438E247UJWr66ZivM0LMy4KTot1pGJotQk61.png",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1528485321/eWyVlXBrIfC438E247UJWr66ZivM0LMy4KTot1pGJotQk61.png",
+            "Name": "Photo 3",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 0,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1528485322/RiB5t7VInNo7s1jaTJ431B472LqK6Cy9lSx4398ZSZIH9s61.png",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1528485322/RiB5t7VInNo7s1jaTJ431B472LqK6Cy9lSx4398ZSZIH9s61.png",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1528485322/RiB5t7VInNo7s1jaTJ431B472LqK6Cy9lSx4398ZSZIH9s61.png",
+            "Name": "Photo 4",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 0,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1528485324/TJ3EuqPX53ihO43hI26kFfKqWKTgcIkxoUZ6cP84bfn461.png",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1528485324/TJ3EuqPX53ihO43hI26kFfKqWKTgcIkxoUZ6cP84bfn461.png",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1528485324/TJ3EuqPX53ihO43hI26kFfKqWKTgcIkxoUZ6cP84bfn461.png",
+            "Name": "Photo 5",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 0,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691779/map/images/cilfvfvlvbmngzo1vwvy.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691779/map/images/cilfvfvlvbmngzo1vwvy.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691779/map/images/cilfvfvlvbmngzo1vwvy.jpg",
+            "Name": "Photo 6",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 0,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691784/map/images/fmq93hbsd9jhy6hkvtwx.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691784/map/images/fmq93hbsd9jhy6hkvtwx.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691784/map/images/fmq93hbsd9jhy6hkvtwx.jpg",
+            "Name": "Photo 7",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 0,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691790/map/images/t8aezjx2njubl0pwctxv.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691790/map/images/t8aezjx2njubl0pwctxv.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691790/map/images/t8aezjx2njubl0pwctxv.jpg",
+            "Name": "Photo 8",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 0,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691797/map/images/rcaqvw44ibaeqgl59h4l.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691797/map/images/rcaqvw44ibaeqgl59h4l.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691797/map/images/rcaqvw44ibaeqgl59h4l.jpg",
+            "Name": "Photo 9",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 0,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691803/map/images/avuwqz66eruweypv3dwn.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691803/map/images/avuwqz66eruweypv3dwn.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691803/map/images/avuwqz66eruweypv3dwn.jpg",
+            "Name": "Photo 10",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 4,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691823/map/images/r7o4yikco1kcmp7rauaz.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691823/map/images/r7o4yikco1kcmp7rauaz.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691823/map/images/r7o4yikco1kcmp7rauaz.jpg",
+            "Name": "Exterior Photo 1",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 4,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971646/map/images/zz9loocsvudvqr2xspix.png",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971646/map/images/zz9loocsvudvqr2xspix.png",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971646/map/images/zz9loocsvudvqr2xspix.png",
+            "Name": "Exterior Photo 2",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 4,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691836/map/images/mwfjqybbcuofqgqyiobg.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691836/map/images/mwfjqybbcuofqgqyiobg.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691836/map/images/mwfjqybbcuofqgqyiobg.jpg",
+            "Name": "Exterior Photo 3",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 4,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691842/map/images/j1nbg2ouaeqsrlspjrbk.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691842/map/images/j1nbg2ouaeqsrlspjrbk.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691842/map/images/j1nbg2ouaeqsrlspjrbk.jpg",
+            "Name": "Exterior Photo 4",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 4,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691848/map/images/tn2omt9qq7r7rvf95swn.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691848/map/images/tn2omt9qq7r7rvf95swn.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691848/map/images/tn2omt9qq7r7rvf95swn.jpg",
+            "Name": "Exterior Photo 5",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 5,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691867/map/images/jjawetllbvk8axxh9cxo.png",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691867/map/images/jjawetllbvk8axxh9cxo.png",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691867/map/images/jjawetllbvk8axxh9cxo.png",
+            "Name": "Interior Photo 1",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 5,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971668/map/images/dasrwtfdpmlldyw8pmk9.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971668/map/images/dasrwtfdpmlldyw8pmk9.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971668/map/images/dasrwtfdpmlldyw8pmk9.jpg",
+            "Name": "Interior Photo 2",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 5,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691884/map/images/kyoenz5mzlkgmzurvlax.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691884/map/images/kyoenz5mzlkgmzurvlax.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691884/map/images/kyoenz5mzlkgmzurvlax.jpg",
+            "Name": "Interior Photo 3",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 5,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971673/map/images/bkdygzon5nnonhga8pjs.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971673/map/images/bkdygzon5nnonhga8pjs.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971673/map/images/bkdygzon5nnonhga8pjs.jpg",
+            "Name": "Interior Photo 4",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 5,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691894/map/images/h8iyygpsx6aribz1mffs.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691894/map/images/h8iyygpsx6aribz1mffs.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691894/map/images/h8iyygpsx6aribz1mffs.jpg",
+            "Name": "Interior Photo 5",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 6,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691904/map/images/gqhsc1kcg6pvescbfv1f.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691904/map/images/gqhsc1kcg6pvescbfv1f.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691904/map/images/gqhsc1kcg6pvescbfv1f.jpg",
+            "Name": "Product Photo 1",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 6,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691910/map/images/xth0teqypqj6h9vr7clk.png",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691910/map/images/xth0teqypqj6h9vr7clk.png",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691910/map/images/xth0teqypqj6h9vr7clk.png",
+            "Name": "Product Photo 2",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 6,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971679/map/images/dnyqw3usedzsigfijvt7.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971679/map/images/dnyqw3usedzsigfijvt7.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971679/map/images/dnyqw3usedzsigfijvt7.jpg",
+            "Name": "Product Photo 3",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 6,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691916/map/images/w2trdvzvakqzvvvmjxkj.png",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691916/map/images/w2trdvzvakqzvvvmjxkj.png",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691916/map/images/w2trdvzvakqzvvvmjxkj.png",
+            "Name": "Product Photo 4",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 6,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971686/map/images/gqpaacpfj2zimrqiimel.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971686/map/images/gqpaacpfj2zimrqiimel.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971686/map/images/gqpaacpfj2zimrqiimel.jpg",
+            "Name": "Product Photo 5",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 7,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971695/map/images/fr0d25vjcy11xuuqonns.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971695/map/images/fr0d25vjcy11xuuqonns.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971695/map/images/fr0d25vjcy11xuuqonns.jpg",
+            "Name": "Photo at Work 1",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 7,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691936/map/images/uas0giksgwyv08ttzkpj.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691936/map/images/uas0giksgwyv08ttzkpj.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691936/map/images/uas0giksgwyv08ttzkpj.jpg",
+            "Name": "Photo at Work 2",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 7,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691942/map/images/xk5lhrlccbardxv6ypmg.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691942/map/images/xk5lhrlccbardxv6ypmg.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691942/map/images/xk5lhrlccbardxv6ypmg.jpg",
+            "Name": "Photo at Work 3",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 7,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691949/map/images/hdx6sjebl0s0klowcydp.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691949/map/images/hdx6sjebl0s0klowcydp.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691949/map/images/hdx6sjebl0s0klowcydp.jpg",
+            "Name": "Photo at Work 4",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 7,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971703/map/images/oe4wplvjke0ryvzz96v6.png",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971703/map/images/oe4wplvjke0ryvzz96v6.png",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971703/map/images/oe4wplvjke0ryvzz96v6.png",
+            "Name": "Photo at Work 5",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 8,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691956/map/images/qkgplblkt4xyw8klfemt.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691956/map/images/qkgplblkt4xyw8klfemt.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691956/map/images/qkgplblkt4xyw8klfemt.jpg",
+            "Name": "Food and Drink Photo 1",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 8,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971711/map/images/aas4zldse9qll6kslilo.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971711/map/images/aas4zldse9qll6kslilo.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971711/map/images/aas4zldse9qll6kslilo.jpg",
+            "Name": "Food and Drink Photo 2",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 8,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691970/map/images/oevyyoums74hkqlnijct.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691970/map/images/oevyyoums74hkqlnijct.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691970/map/images/oevyyoums74hkqlnijct.jpg",
+            "Name": "Food and Drink Photo 3",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 8,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971716/map/images/ip56abd3hzxjpigbuqc8.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971716/map/images/ip56abd3hzxjpigbuqc8.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971716/map/images/ip56abd3hzxjpigbuqc8.jpg",
+            "Name": "Food and Drink Photo 4",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 8,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691977/map/images/o9kypnnqwhzq6iydtduv.png",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691977/map/images/o9kypnnqwhzq6iydtduv.png",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691977/map/images/o9kypnnqwhzq6iydtduv.png",
+            "Name": "Food and Drink Photo 5",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 9,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691984/map/images/pybgwiizyikf7m6y8vxh.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691984/map/images/pybgwiizyikf7m6y8vxh.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691984/map/images/pybgwiizyikf7m6y8vxh.jpg",
+            "Name": "Common Area 1",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 9,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691989/map/images/xtw5qbw2dedzzytxneh1.png",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691989/map/images/xtw5qbw2dedzzytxneh1.png",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691989/map/images/xtw5qbw2dedzzytxneh1.png",
+            "Name": "Common Area 2",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 9,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971723/map/images/ehd2mcbgur4cjmyzk6yl.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971723/map/images/ehd2mcbgur4cjmyzk6yl.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971723/map/images/ehd2mcbgur4cjmyzk6yl.jpg",
+            "Name": "Common Area 3",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 9,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692000/map/images/b5yfwdy85qqhzguybeho.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692000/map/images/b5yfwdy85qqhzguybeho.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692000/map/images/b5yfwdy85qqhzguybeho.jpg",
+            "Name": "Common Area 4",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 9,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692009/map/images/pohuwnqncsn1rne9ydxx.png",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692009/map/images/pohuwnqncsn1rne9ydxx.png",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692009/map/images/pohuwnqncsn1rne9ydxx.png",
+            "Name": "Common Area 5",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 10,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692019/map/images/gjdn2ltmq3qic6k6fiea.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692019/map/images/gjdn2ltmq3qic6k6fiea.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692019/map/images/gjdn2ltmq3qic6k6fiea.jpg",
+            "Name": "Room 1",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 10,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971731/map/images/j3kpj3cfx1klxtloxz9y.png",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971731/map/images/j3kpj3cfx1klxtloxz9y.png",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971731/map/images/j3kpj3cfx1klxtloxz9y.png",
+            "Name": "Room 2",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 10,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971736/map/images/aq1pyookpedoa8axpuqp.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971736/map/images/aq1pyookpedoa8axpuqp.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971736/map/images/aq1pyookpedoa8axpuqp.jpg",
+            "Name": "Room 3",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 10,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692026/map/images/xnawlrvf0u58r7zgqhhm.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692026/map/images/xnawlrvf0u58r7zgqhhm.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692026/map/images/xnawlrvf0u58r7zgqhhm.jpg",
+            "Name": "Room 4",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 10,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971741/map/images/dng9upjn3ynhaiustzwe.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971741/map/images/dng9upjn3ynhaiustzwe.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971741/map/images/dng9upjn3ynhaiustzwe.jpg",
+            "Name": "Room 5",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 11,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692033/map/images/tuzhmhzfkd4we4fbfffg.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692033/map/images/tuzhmhzfkd4we4fbfffg.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692033/map/images/tuzhmhzfkd4we4fbfffg.jpg",
+            "Name": "Team Photo 1",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 11,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692041/map/images/x2kvxoqrfkrvwec7sdxl.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692041/map/images/x2kvxoqrfkrvwec7sdxl.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692041/map/images/x2kvxoqrfkrvwec7sdxl.jpg",
+            "Name": "Team Photo 2",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 11,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971748/map/images/z5qmc0ib0wjgcmdsq2ib.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971748/map/images/z5qmc0ib0wjgcmdsq2ib.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971748/map/images/z5qmc0ib0wjgcmdsq2ib.jpg",
+            "Name": "Team Photo 3",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 11,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971756/map/images/t506l70kppfmqzjbn8fe.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971756/map/images/t506l70kppfmqzjbn8fe.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971756/map/images/t506l70kppfmqzjbn8fe.jpg",
+            "Name": "Team Photo 4",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 11,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971774/map/images/qjdybbzqpswsaq71wigo.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971774/map/images/qjdybbzqpswsaq71wigo.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971774/map/images/qjdybbzqpswsaq71wigo.jpg",
+            "Name": "Team Photo 5",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 12,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692049/map/images/ldtump9sjxmzgwzwwmkb.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692049/map/images/ldtump9sjxmzgwzwwmkb.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692049/map/images/ldtump9sjxmzgwzwwmkb.jpg",
+            "Name": "Menu Photo 1",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 12,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971780/map/images/vqcfblhrh6rhe5heaoeb.png",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971780/map/images/vqcfblhrh6rhe5heaoeb.png",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971780/map/images/vqcfblhrh6rhe5heaoeb.png",
+            "Name": "Menu Photo 2",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 12,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971785/map/images/ktrrrb1j5ndxm6cuwn45.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971785/map/images/ktrrrb1j5ndxm6cuwn45.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971785/map/images/ktrrrb1j5ndxm6cuwn45.jpg",
+            "Name": "Menu Photo 3",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 12,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971795/map/images/moryj0iuzwkj3l6v1ffe.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971795/map/images/moryj0iuzwkj3l6v1ffe.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1621971795/map/images/moryj0iuzwkj3l6v1ffe.jpg",
+            "Name": "Menu Photo 4",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 12,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692056/map/images/vux93bd29wue91td1swh.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692056/map/images/vux93bd29wue91td1swh.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604692056/map/images/vux93bd29wue91td1swh.jpg",
+            "Name": "Menu Photo 5",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 1,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691807/map/images/vkjslje4uf0vs3tzopwm.gif",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691807/map/images/vkjslje4uf0vs3tzopwm.gif",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691807/map/images/vkjslje4uf0vs3tzopwm.gif",
+            "Name": "Google Cover Photo",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        },
+        {
+            "Id": null,
+            "Type": 0,
+            "URL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691813/map/images/odh3jtwjkc2izn8wsl5z.jpg",
+            "CloudinaryURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691813/map/images/odh3jtwjkc2izn8wsl5z.jpg",
+            "ThumbnailURL": "https://res.cloudinary.com/cloudasset/image/upload/v1604691813/map/images/odh3jtwjkc2izn8wsl5z.jpg",
+            "Name": "Google Profile Photo",
+            "Locale": 58,
+            "Description": "MAP",
+            "Error": null
+        }
+    ],
+    "AdditionalMediaURLs": [
+        {
+            "Id": null,
+            "URL": "https://test.com/Vid",
+            "Name": "VideoURL",
+            "DisplayName": null,
+            "Description": null,
+            "Error": null
+        },
+        {
+            "Id": null,
+            "URL": "https://test.com/Coupon",
+            "Name": "CouponURL",
+            "DisplayName": null,
+            "Description": null,
+            "Error": null
+        }
+    ],
+    "OtherURLs": [
+        {
+            "Id": null,
+            "URL": "https://test.com/Res",
+            "Name": "reservationsurl",
+            "DisplayName": null,
+            "Description": null,
+            "Error": null
+        },
+        {
+            "Id": null,
+            "URL": "https://test.com/Order",
+            "Name": "orderaheadurl",
+            "DisplayName": null,
+            "Description": null,
+            "Error": null
+        },
+        {
+            "Id": null,
+            "URL": "https://test.com/Appt",
+            "Name": "appointmenturl",
+            "DisplayName": null,
+            "Description": null,
+            "Error": null
+        },
+        {
+            "Id": null,
+            "URL": "https://test.com/Inventory",
+            "Name": "inventorysearchurl",
+            "DisplayName": null,
+            "Description": null,
+            "Error": null
+        },
+        {
+            "Id": null,
+            "URL": "https://test.com/Virtual",
+            "Name": "virtualcareurl",
+            "DisplayName": null,
+            "Description": null,
+            "Error": null
+        }
+    ],
+    "Keywords_Specialties": [
+        {
+            "Locale": 58,
+            "Value": "Garbage Collection, Dumpster Rental, Roll Off Dumpster Rental, Trash Collection, Recycling Service, Trash Pickup, Waste Management Solutions"
+        }
+    ],
+    "Credentials_Certifications": [
+        {
+            "Locale": 58,
+            "Value": "Certification #0983494-002B"
+        }
+    ],
+    "Products": [
+        {
+            "Locale": 58,
+            "Value": "This and That, Prod1, Prod2"
+        }
+    ],
+    "Services": [
+        {
+            "Locale": 58,
+            "Value": "Garbage Collection, Dumpster Rental, Roll Off Dumpster Rental, Trash Collection, Recycling Service"
+        }
+    ],
+    "Brands": [
+        {
+            "Locale": 58,
+            "Value": "BrandA, BrandB, BrandB2"
+        }
+    ],
+    "Year_Founded": {
+        "Locale": 58,
+        "Value": "19790508"
+    },
+    "Professional_Associations": [
+        {
+            "Locale": 58,
+            "Value": "Pro1, Pro2, Pro3"
+        }
+    ],
+    "Tags": [
+        "Tag, you're it, again"
+    ],
+    "Employee_Size": "34534",
+    "AreasServed": [
+        "Here, and There, and Everywhere"
+    ],
+    "Languages": [
+        "cs",
+        "en",
+        "ta"
+    ],
+    "AlternateHomePageURL": [
+        {
+            "Id": null,
+            "URL": "https://local.casella.com/location/hauling/scarborough-me-87-pleasant-hill-road",
+            "Name": null,
+            "DisplayName": null,
+            "Description": null,
+            "Error": null
+        }
+    ],
+    "VerificationSVCResults": null,
+    "IsMainAddressTransfered": true,
+    "CustomObjects": {
+        "BingAmenities": {
+            "Key": "BingAmenities",
+            "Name": "Options",
+            "Tag": "Bing",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Business center\",\"Internet access\",\"Swimming pool\"]"
+        },
+        "GoogleLabels": {
+            "Key": "GoogleLabels",
+            "Name": "Labels",
+            "Tag": "Google",
+            "Type": "System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "{\"0\":\"Fish\",\"1\":\"Cat\",\"2\":\"Dog\",\"3\":\"Bird\",\"4\":\"Jewel\",\"5\":\"Cottage\",\"6\":\"Boat\",\"9\":\"Label 10\"}"
+        },
+        "GoogleAttributes": {
+            "Key": "GoogleAttributes",
+            "Name": "Attributes",
+            "Tag": "Google",
+            "Type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "{\"has_wheelchair_accessible_elevator\":\"true\",\"free_parking\":\"false\"}"
+        },
+        "ZomatoEstablishment": {
+            "Key": "ZomatoEstablishment",
+            "Name": "Labels",
+            "Tag": "Zomato",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Bar\",\"Casual Dining\"]"
+        },
+        "ZomatoCuisines": {
+            "Key": "ZomatoCuisines",
+            "Name": "Labels",
+            "Tag": "Zomato",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Amish\",\"Canadian\",\"Raw Meats\"]"
+        },
+        "ZomatoAmenities": {
+            "Key": "ZomatoAmenities",
+            "Name": "Labels",
+            "Tag": "Zomato",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"24 hours\",\"Above 18 Only\",\"Balcony\",\"Cigar Bar\",\"Free Parking\"]"
+        },
+        "TAAccommodationAmenities": {
+            "Key": "TAAccommodationAmenities",
+            "Name": "Options",
+            "Tag": "TripAdvisor",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Bar/Lounge\",\"Free Breakfast\"]"
+        },
+        "TAAccommodationTypes": {
+            "Key": "TAAccommodationTypes",
+            "Name": "Options",
+            "Tag": "TripAdvisor",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Bed and Breakfast\"]"
+        },
+        "TAAttractionAmenities": {
+            "Key": "TAAttractionAmenities",
+            "Name": "Options",
+            "Tag": "TripAdvisor",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Activities for young children\",\"Stairs/elevator\",\"Stroller parking\"]"
+        },
+        "TACuisines": {
+            "Key": "TACuisines",
+            "Name": "Options",
+            "Tag": "TripAdvisor",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Latvian\"]"
+        },
+        "TARestaurantFeatures": {
+            "Key": "TARestaurantFeatures",
+            "Name": "Options",
+            "Tag": "TripAdvisor",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Bar scene\",\"Brewpub\",\"Hotel Dining\",\"Theme\"]"
+        },
+        "TARestaurantTypes": {
+            "Key": "TARestaurantTypes",
+            "Name": "Options",
+            "Tag": "TripAdvisor",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Fast Food/Deli\"]"
+        },
+        "HERECuisineType": {
+            "Key": "HERECuisineType",
+            "Name": "Options",
+            "Tag": "HERE",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Afghani\"]"
+        },
+        "AppleAmenities": {
+            "Key": "AppleAmenities",
+            "Name": "Options",
+            "Tag": "Apple",
+            "Type": "System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "Value": "[\"Airport Transportation\",\"Free Internet\"]"
+        },
+        "AccessHours": {
+            "Key": "AccessHours",
+            "Name": "Hours",
+            "Tag": "Google",
+            "Type": "WebAppEntity.HoursOfOperationObject, WebAppEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Value": "{\"Fr\":{\"Ranges\":[{\"EndTime\":\"08:00PM\",\"StartTime\":\"07:00AM\"}],\"State\":0,\"AdditionalInfo\":null},\"Mo\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Sa\":{\"Ranges\":[{\"EndTime\":\"08:00PM\",\"StartTime\":\"07:00AM\"}],\"State\":0,\"AdditionalInfo\":null},\"SpecialHours\":null,\"Su\":{\"Ranges\":[{\"EndTime\":\"08:00PM\",\"StartTime\":\"07:00AM\"}],\"State\":0,\"AdditionalInfo\":null},\"Th\":{\"Ranges\":[{\"EndTime\":\"08:00PM\",\"StartTime\":\"07:00AM\"}],\"State\":0,\"AdditionalInfo\":null},\"Tu\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"We\":{\"Ranges\":[{\"EndTime\":\"03:30PM\",\"StartTime\":\"07:00AM\"},{\"EndTime\":\"09:00PM\",\"StartTime\":\"05:00PM\"}],\"State\":0,\"AdditionalInfo\":null}}"
+        },
+        "BrunchHours": {
+            "Key": "BrunchHours",
+            "Name": "Hours",
+            "Tag": "Google",
+            "Type": "WebAppEntity.HoursOfOperationObject, WebAppEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Value": "{\"Fr\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"Mo\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"Sa\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"SpecialHours\":null,\"Su\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Th\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"Tu\":{\"Ranges\":[{\"EndTime\":\"12:00PM\",\"StartTime\":\"09:00AM\"},{\"EndTime\":\"05:30PM\",\"StartTime\":\"01:00PM\"}],\"State\":0,\"AdditionalInfo\":null},\"We\":{\"Ranges\":[{\"EndTime\":\"02:30PM\",\"StartTime\":\"12:00PM\"}],\"State\":0,\"AdditionalInfo\":null}}"
+        },
+        "DeliveryHours": {
+            "Key": "DeliveryHours",
+            "Name": "Hours",
+            "Tag": "Google",
+            "Type": "WebAppEntity.HoursOfOperationObject, WebAppEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Value": "{\"Fr\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"Mo\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Sa\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"SpecialHours\":null,\"Su\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"Th\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"Tu\":{\"Ranges\":[{\"EndTime\":\"11:45AM\",\"StartTime\":\"09:00AM\"},{\"EndTime\":\"09:30PM\",\"StartTime\":\"01:30PM\"}],\"State\":0,\"AdditionalInfo\":null},\"We\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null}}"
+        },
+        "DrivethroughHours": {
+            "Key": "DrivethroughHours",
+            "Name": "Hours",
+            "Tag": "Google",
+            "Type": "WebAppEntity.HoursOfOperationObject, WebAppEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Value": "{\"Fr\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Mo\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Sa\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"SpecialHours\":null,\"Su\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Th\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Tu\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"We\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null}}"
+        },
+        "HappyHours": {
+            "Key": "HappyHours",
+            "Name": "Hours",
+            "Tag": "Google",
+            "Type": "WebAppEntity.HoursOfOperationObject, WebAppEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Value": "{\"Fr\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Mo\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"Sa\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"SpecialHours\":null,\"Su\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"Th\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"Tu\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"We\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null}}"
+        },
+        "KitchenHours": {
+            "Key": "KitchenHours",
+            "Name": "Hours",
+            "Tag": "Google",
+            "Type": "WebAppEntity.HoursOfOperationObject, WebAppEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Value": "{\"Fr\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Mo\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"Sa\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"SpecialHours\":null,\"Su\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Th\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Tu\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null},\"We\":{\"Ranges\":null,\"State\":1,\"AdditionalInfo\":null}}"
+        },
+        "OnlineOperatingHours": {
+            "Key": "OnlineOperatingHours",
+            "Name": "Hours",
+            "Tag": "Google",
+            "Type": "WebAppEntity.HoursOfOperationObject, WebAppEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Value": "{\"Fr\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Mo\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Sa\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"SpecialHours\":null,\"Su\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Th\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Tu\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"We\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null}}"
+        },
+        "PickupHours": {
+            "Key": "PickupHours",
+            "Name": "Hours",
+            "Tag": "Google",
+            "Type": "WebAppEntity.HoursOfOperationObject, WebAppEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Value": "{\"Fr\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Mo\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Sa\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"SpecialHours\":null,\"Su\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Th\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Tu\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"We\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null}}"
+        },
+        "SeniorHours": {
+            "Key": "SeniorHours",
+            "Name": "Hours",
+            "Tag": "Google",
+            "Type": "WebAppEntity.HoursOfOperationObject, WebAppEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Value": "{\"Fr\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Mo\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Sa\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"SpecialHours\":null,\"Su\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Th\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Tu\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"We\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null}}"
+        },
+        "TakeoutHours": {
+            "Key": "TakeoutHours",
+            "Name": "Hours",
+            "Tag": "Google",
+            "Type": "WebAppEntity.HoursOfOperationObject, WebAppEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Value": "{\"Fr\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Mo\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Sa\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"SpecialHours\":null,\"Su\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Th\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"Tu\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null},\"We\":{\"Ranges\":null,\"State\":2,\"AdditionalInfo\":null}}"
+        }
+    }
+}

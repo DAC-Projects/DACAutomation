@@ -20,6 +20,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -1017,7 +1018,7 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 	 * @return
 	 * @throws Exception
 	 */
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings("deprecation") 
 	public ArrayList<String> GetSiteDataUsingColName(String PathofXL, String Col_Name) throws Exception {
 		FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
 		Workbook wb = new XSSFWorkbook(excelFilePath);
@@ -2417,5 +2418,24 @@ public abstract class TPSEE_abstractMethods extends BasePage implements TPSEERep
 		return pageCount;
 		
 	}
+	
+	/*public void autoSizeColumns(String PathofXL , String export) throws IOException { 
+		FileInputStream excelFilePath = new FileInputStream(new File(PathofXL)); // or specify the path directly
+		Workbook wb = new XSSFWorkbook(excelFilePath);
+        int numberOfSheets = wb.getNumberOfSheets();
+            Sheet sheet = wb.getSheetAt(0);
+            if (sheet.getPhysicalNumberOfRows() > 0) {
+                Row row = sheet.getRow(sheet.getFirstRowNum());
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+                    int columnIndex = cell.getColumnIndex();
+                    sheet.autoSizeColumn(columnIndex);
+                    int currentColumnWidth = sheet.getColumnWidth(columnIndex);
+                    sheet.setColumnWidth(columnIndex, (currentColumnWidth + 2500));
+                }
+            }
+        
+    }*/
 
 }
