@@ -200,15 +200,19 @@ public class Maximizer_Page extends TPSEE_abstractMethods {
 	 */
 	public String verifyPercentageComplete() {
 		
-		String perce = "";
+		
 		waitForElement(RecommendationPercentage, 4);
 
 		String Percent = PercentageComplete.getText();
 		System.out.println("The percentage completed is : " + Percent);
-
+		System.out.println("To do count is : " +ToDocount);
+		System.out.println("Completed Count is : " +Completedcount);
 		int percentcal = (ToDocount + Completedcount);
-
-		double Percentage = (Completedcount / percentcal) * 100;
+		System.out.println("Total to calculate percentage : " +percentcal);
+		double Percentage = (Double.valueOf(Completedcount) / Double.valueOf(percentcal));
+		System.out.println("Per : " +Percentage);
+		Percentage = Percentage * 100;
+		System.out.println("Calculated Percentage is : " +Percentage);
 		long percentage = Math.round(Percentage);
 		int percent = (int) percentage;
 
@@ -218,7 +222,7 @@ public class Maximizer_Page extends TPSEE_abstractMethods {
 
 		//Assert.assertEquals(Percent, finalpercentage);
 		
-		return perce;
+		return finalpercentage;
 	}
 
 	/**

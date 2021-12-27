@@ -16,7 +16,7 @@ import junit.framework.Assert;
 import resources.BaseClass;
 import resources.CurrentState;
 
-public class Maximizer_InProgress_to_Ignore_Test extends BaseClass {
+public class Maximizer_Ignore_to_InProgress_Complete_Test extends BaseClass {
 	
 	Navigationpage np;
 	Maximizer_Page data;
@@ -34,21 +34,21 @@ public class Maximizer_InProgress_to_Ignore_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Test to navigate to Maximizer", "yes");
 	}
 	
-	@Test(priority = 2, description = "Test to move reco from To_Do tab to In_Progress tab")
-	public void Move_Reco() throws Exception {
-		data = new Maximizer_Page(CurrentState.getDriver());
+	@Test(priority = 2, description = "Test to ignore recommendation")
+	public void Ignore_Recom() throws Exception {
+		data = new Maximizer_Page(CurrentState.getDriver());		
 		data.GetRecoTypeUsingColName("./data/Filter.xlsx", "Maximizer_LPAD_Reco", "Recommendation Type");
 		Thread.sleep(3000);
-		data.To_Do_to_InProgress_Reco();
+		data.Ignore_Reco();
+		
 	}
 	
-	@Test(priority = 3, description = "Test to ignore reco from In Progress to Ignore")
-	public void IgnoreRecofromInProgress() throws Exception {
+	@Test(priority = 3, description = "Test to move reco from ignore to in progress")
+	public void Move_Recoto_InProgress() throws Exception {
 		data = new Maximizer_Page(CurrentState.getDriver());
-		data.clickInProgressTab();
 		data.GetRecoTypeUsingColName("./data/Filter.xlsx", "Maximizer_LPAD_Reco", "Recommendation Type");
 		Thread.sleep(3000);
-		data.Ignore_Reco_In_Progress();
+		data.MoveRecotoInProgressfromIgnore();
 	}
 	
 	@Test(priority = 4, description = "Test to verify percentage")
@@ -66,7 +66,7 @@ public class Maximizer_InProgress_to_Ignore_Test extends BaseClass {
 	
 	@SuppressWarnings("deprecation")
 	@Test(priority = 5, description = "Trigger API to move recommendations to Completed")
-	public void postUpdatedetails() throws IOException, ParseException {		
+	public void postdetails() throws IOException, ParseException {		
 		String URI = "https://ldmbluebeta.azurewebsites.net/api/LocationSave";
 		String result = new String(Files.readAllBytes(Paths.get("./data/Update_beta.json")));
 		System.out.println(result);
@@ -149,4 +149,5 @@ public class Maximizer_InProgress_to_Ignore_Test extends BaseClass {
 		System.out.println("Percentage before post request : " +percentagebefore);
 		Assert.assertTrue(percentagebefore < percentageafter);
 	}
+
 }

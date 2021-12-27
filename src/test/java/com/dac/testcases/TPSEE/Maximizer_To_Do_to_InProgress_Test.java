@@ -12,6 +12,7 @@ import com.dac.main.POM_TPSEE.Maximizer_Page;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import junit.framework.Assert;
 import resources.BaseClass;
 import resources.CurrentState;
 
@@ -19,6 +20,8 @@ public class Maximizer_To_Do_to_InProgress_Test extends BaseClass {
 	
 	Navigationpage np;
 	Maximizer_Page data;
+	int percentagebefore;
+	int percentageafter;
 	
 	/**
 	 * Test to navigate to Maximizer Page
@@ -39,7 +42,21 @@ public class Maximizer_To_Do_to_InProgress_Test extends BaseClass {
 		data.To_Do_to_InProgress_Reco();
 	}
 	
-	@Test(priority = 3, description = "Trigger API to move recommendations to Completed")
+	@Test(priority = 3, description = "Test to verify percentage")
+	public void VerifyPercentagebeforePost() {
+		data = new Maximizer_Page(CurrentState.getDriver());
+		String percentagebeforetxt = data.verifyPercentageComplete();
+		if(percentagebeforetxt.contains("%")) {
+			percentagebeforetxt = percentagebeforetxt.replace("%", " ");
+			percentagebeforetxt = percentagebeforetxt.trim();
+			System.out.println("before test : " +percentagebeforetxt);
+			percentagebefore = Integer.parseInt(percentagebeforetxt);
+		}
+		System.out.println("Percentage before post request : " +percentagebefore);
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Test(priority = 4, description = "Trigger API to move recommendations to Completed")
 	public void postUpdatedetails() throws IOException, ParseException {		
 		String URI = "https://ldmbluebeta.azurewebsites.net/api/LocationSave";
 		String result = new String(Files.readAllBytes(Paths.get("./data/Update_beta.json")));
@@ -48,7 +65,7 @@ public class Maximizer_To_Do_to_InProgress_Test extends BaseClass {
 				.post(URI);
 	}
 	
-	@Test(priority = 4, description = "Test to verify that recos moved to Completed tab")
+	@Test(priority = 5, description = "Test to verify that recos moved to Completed tab")
 	public void VerifyCompletedTab() throws Exception {
 		data = new Maximizer_Page(CurrentState.getDriver());
 		CurrentState.getDriver().navigate().refresh();
@@ -59,7 +76,31 @@ public class Maximizer_To_Do_to_InProgress_Test extends BaseClass {
 		data.MoveRecotoCompletedTab();
 	}
 	
-	@Test(priority = 5, description = "Test to revert the changes done to reco")
+	/**
+	 * Test to verify Recommendation Count
+	 */
+	@Test(priority = 6, description = "Test to verify Recommendation count")
+	public void TotalRecommendationCountAfterPost() {
+		data = new Maximizer_Page(CurrentState.getDriver());
+		data.VerifyRecommendationCount();
+	}
+	
+	@Test(priority = 7, description = "Test to verify percentage")
+	public void VerifyPercentageAfterPost() {
+		data = new Maximizer_Page(CurrentState.getDriver());
+		String percentageaftertxt = data.verifyPercentageComplete();
+		if(percentageaftertxt.contains("%")) {
+			percentageaftertxt = percentageaftertxt.replace("%", " ");
+			percentageaftertxt = percentageaftertxt.trim();
+			percentageafter = Integer.parseInt(percentageaftertxt);
+		}
+		System.out.println("Percentage after post request : " +percentageafter);
+		System.out.println("Percentage before post request : " +percentagebefore);
+		Assert.assertTrue(percentageafter > percentagebefore);
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Test(priority = 8, description = "Test to revert the changes done to reco")
 	public void postRevertdetails() throws IOException, ParseException {		
 		String URI = "https://ldmbluebeta.azurewebsites.net/api/LocationSave";
 		String result = new String(Files.readAllBytes(Paths.get("./data/Revert_beta.json")));
@@ -68,7 +109,7 @@ public class Maximizer_To_Do_to_InProgress_Test extends BaseClass {
 				.post(URI);
 	}
 	
-	@Test(priority = 6, description = "Test to verify reverted changes in TODO Tab")
+	@Test(priority = 9, description = "Test to verify reverted changes in TODO Tab")
 	public void VerifyToDoTab() throws Exception {
 		data = new Maximizer_Page(CurrentState.getDriver());
 		CurrentState.getDriver().navigate().refresh();
@@ -76,6 +117,28 @@ public class Maximizer_To_Do_to_InProgress_Test extends BaseClass {
 		data.clickRemindLater();
 		data.GetRecoTypeUsingColName("./data/Filter.xlsx", "Maximizer_LPAD_Reco", "Recommendation Type");
 		data.MoveRecotoCompletedTab();
+	}
+	
+	/**
+	 * Test to verify Recommendation Count
+	 */
+	@Test(priority = 10, description = "Test to verify Recommendation count")
+	public void TotalRecommendationCountPostRevert() {
+		data = new Maximizer_Page(CurrentState.getDriver());
+		data.VerifyRecommendationCount();
+	}
+	
+	@Test(priority = 11, description = "Test to verify percentage")
+	public void VerifyPercentageafterPostRevert() {
+		data = new Maximizer_Page(CurrentState.getDriver());
+		String percentagebeforetxtrevert = data.verifyPercentageComplete();
+		if(percentagebeforetxtrevert.contains("%")) {
+			percentagebeforetxtrevert = percentagebeforetxtrevert.replace("%", " ");
+			percentagebeforetxtrevert = percentagebeforetxtrevert.trim();
+			percentagebefore = Integer.parseInt(percentagebeforetxtrevert);
+		}
+		System.out.println("Percentage before post request : " +percentagebefore);
+		Assert.assertTrue(percentagebefore < percentageafter);
 	}
 	
 }

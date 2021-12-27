@@ -8,7 +8,6 @@ import org.json.simple.parser.ParseException;
 import org.testng.annotations.Test;
 
 import com.dac.main.Navigationpage;
-import com.dac.main.POM_TPSEE.Maximizer_API;
 import com.dac.main.POM_TPSEE.Maximizer_Page;
 
 import io.restassured.RestAssured;
@@ -21,10 +20,8 @@ public class Maximizer_Ignore_Test extends BaseClass {
 	
 	Navigationpage np;
 	Maximizer_Page data;
-	Maximizer_API data1;
-	//static String result;
-	static int percentagebefore;
-	static int percentageafter;
+	int percentagebefore;
+	int percentageafter;
 	
 	/**
 	 * Test to navigate to Maximizer Page
@@ -49,7 +46,7 @@ public class Maximizer_Ignore_Test extends BaseClass {
 	
 	/**
 	 * Test to verify Recommendation Count
-	 *//*
+	 */
 	@Test(priority = 3, description = "Test to verify Recommendation count")
 	public void TotalRecommendationCount() {
 		data = new Maximizer_Page(CurrentState.getDriver());
@@ -61,12 +58,15 @@ public class Maximizer_Ignore_Test extends BaseClass {
 		data = new Maximizer_Page(CurrentState.getDriver());
 		String percentagebeforetxt = data.verifyPercentageComplete();
 		if(percentagebeforetxt.contains("%")) {
-			percentagebeforetxt.replace("%", "").trim();
+			percentagebeforetxt = percentagebeforetxt.replace("%", " ");
+			percentagebeforetxt = percentagebeforetxt.trim();
+			System.out.println("before test : " +percentagebeforetxt);
 			percentagebefore = Integer.parseInt(percentagebeforetxt);
 		}
 		System.out.println("Percentage before post request : " +percentagebefore);
-	}*/
+	}
 	
+	@SuppressWarnings("deprecation")
 	@Test(priority = 5, description = "Trigger API to move recommendations to Completed")
 	public void postdetails() throws IOException, ParseException {		
 		String URI = "https://ldmbluebeta.azurewebsites.net/api/LocationSave";
@@ -80,7 +80,7 @@ public class Maximizer_Ignore_Test extends BaseClass {
 	public void VerifyCompletedTab() throws Exception {
 		data = new Maximizer_Page(CurrentState.getDriver());
 		CurrentState.getDriver().navigate().refresh();
-		Thread.sleep(4000);
+		Thread.sleep(8000);
 		data.clickRemindLater();
 		data.clickCompletedTab();
 		data.GetRecoTypeUsingColName("./data/Filter.xlsx", "Maximizer_LPAD_Reco", "Recommendation Type");
@@ -89,7 +89,7 @@ public class Maximizer_Ignore_Test extends BaseClass {
 	
 	/**
 	 * Test to verify Recommendation Count
-	 *//*
+	 */
 	@Test(priority = 7, description = "Test to verify Recommendation count")
 	public void TotalRecommendationCountAfterPost() {
 		data = new Maximizer_Page(CurrentState.getDriver());
@@ -101,13 +101,16 @@ public class Maximizer_Ignore_Test extends BaseClass {
 		data = new Maximizer_Page(CurrentState.getDriver());
 		String percentageaftertxt = data.verifyPercentageComplete();
 		if(percentageaftertxt.contains("%")) {
-			percentageaftertxt.replace("%", "").trim();
+			percentageaftertxt = percentageaftertxt.replace("%", " ");
+			percentageaftertxt = percentageaftertxt.trim();
 			percentageafter = Integer.parseInt(percentageaftertxt);
 		}
-		System.out.println("Percentage before post request : " +percentageafter);
+		System.out.println("Percentage after post request : " +percentageafter);
+		System.out.println("Percentage before post request : " +percentagebefore);
 		Assert.assertTrue(percentageafter > percentagebefore);
-	}*/
+	}
 	
+	@SuppressWarnings("deprecation")
 	@Test(priority = 9, description = "Test to revert the changes done to reco")
 	public void postRevertdetails() throws IOException, ParseException {		
 		String URI = "https://ldmbluebeta.azurewebsites.net/api/LocationSave";
@@ -130,7 +133,7 @@ public class Maximizer_Ignore_Test extends BaseClass {
 	
 	/**
 	 * Test to verify Recommendation Count
-	 *//*
+	 */
 	@Test(priority = 11, description = "Test to verify Recommendation count")
 	public void TotalRecommendationCountPostRevert() {
 		data = new Maximizer_Page(CurrentState.getDriver());
@@ -142,11 +145,12 @@ public class Maximizer_Ignore_Test extends BaseClass {
 		data = new Maximizer_Page(CurrentState.getDriver());
 		String percentagebeforetxtrevert = data.verifyPercentageComplete();
 		if(percentagebeforetxtrevert.contains("%")) {
-			percentagebeforetxtrevert.replace("%", "").trim();
+			percentagebeforetxtrevert = percentagebeforetxtrevert.replace("%", " ");
+			percentagebeforetxtrevert = percentagebeforetxtrevert.trim();
 			percentagebefore = Integer.parseInt(percentagebeforetxtrevert);
 		}
 		System.out.println("Percentage before post request : " +percentagebefore);
 		Assert.assertTrue(percentagebefore < percentageafter);
-	}*/
+	}
 
 }

@@ -32,7 +32,7 @@ public class TPSEE_Language_List_Verification extends TPSEE_abstractMethods {
 		return null;
 	}
 	
-	@FindBy(xpath = "//div[@id = 'lang-flag']")
+	@FindBy(xpath = "//a[@id = 'lang-flag']")
 	private WebElement Language;
 	
 	/**
