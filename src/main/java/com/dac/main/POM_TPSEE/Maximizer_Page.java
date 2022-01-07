@@ -24,7 +24,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import resources.BaseClass;
-import resources.CurrentState;
 import resources.ExcelHandler;
 import resources.JSWaiter;
 
@@ -394,7 +393,7 @@ public class Maximizer_Page extends TPSEE_abstractMethods {
 								"(//table[@id = 'recommendationTable']//tbody//tr[@role = 'row'][" + row + "]//td[2])"))
 								.getText();
 						System.out.println("The recommendation type in UI is : " + RecoType);
-						BaseClass.addEvidence(driver, "Test to get Reco", "yes");
+						
 						for (int j = 0; j < LPADReco.size(); j++) {
 							if (LPADReco.get(j).equals(RecoType)) {
 								System.out.println("True : " + LPADReco.get(j));
@@ -415,6 +414,7 @@ public class Maximizer_Page extends TPSEE_abstractMethods {
 							}
 						}
 					}
+					BaseClass.addEvidence(driver, "Test to get Reco", "yes");
 					if (paginationNext.isEnabled()) {
 						scrollByElement(paginationNext);
 						paginationNext.click();
@@ -465,10 +465,11 @@ public class Maximizer_Page extends TPSEE_abstractMethods {
 						System.out.println("The ignored reco is : " + Ignored_Reco);
 						if (Ignored_Reco.equals(Reco_Type)) {
 							val = true;
-							BaseClass.addEvidence(driver, "To Verify Reco_Type in Ignored Tab", "yes");
+							
 							break Outer;
 						}
 					}
+					BaseClass.addEvidence(driver, "To Verify Reco_Type in Ignored Tab", "yes");
 					if (paginationNext.isEnabled()) {
 						scrollByElement(paginationNext);
 						paginationNext.click();
@@ -518,7 +519,7 @@ public class Maximizer_Page extends TPSEE_abstractMethods {
 								"(//table[@id = 'recommendationTable']//tbody//tr[@role = 'row'][" + row + "]//td[2])"))
 								.getText();
 						System.out.println("The recommendation type in UI is : " + RecoType);
-						BaseClass.addEvidence(driver, "Test to get Reco", "yes");
+					
 						for (int j = 0; j < LPADReco.size(); j++) {
 							if (LPADReco.get(j).equals(RecoType)) {
 								System.out.println("True : " + LPADReco.get(j));
@@ -530,22 +531,6 @@ public class Maximizer_Page extends TPSEE_abstractMethods {
 								WebElement Continue_Btn = driver
 										.findElement(By.xpath("//button[@id = 'continueButton']"));
 								clickelement(Continue_Btn);
-								WebElement Download_Locations_Btn = driver
-										.findElement(By.xpath("//button[@id = 'downloadButton']"));
-								clickelement(Download_Locations_Btn);
-								time_stamp = timeStamp();
-								System.out.println("The timestamp is : " + time_stamp);
-								Thread.sleep(4000);
-								convertExports(getLastModifiedFile(Exportpath),
-										(CurrentState.getBrowser() + time_stamp + Maximizer_Location_Export));
-								Thread.sleep(5000);
-								String path = Exportpath
-										+ (CurrentState.getBrowser() + time_stamp + Maximizer_Location_Export);
-								System.out.println("The path of the file is : " + path);
-								autoSizeColumns(path);
-								Thread.sleep(3000);
-								Locations = GetSiteDataUsingColName(path, "Location Number");
-								System.out.println("The locations are : " + Locations);
 								clickelement(Move_To_Progress);
 								JSWaiter.waitUntilJQueryReady();
 								InProgress_Reco_Verification();
@@ -553,6 +538,7 @@ public class Maximizer_Page extends TPSEE_abstractMethods {
 							}
 						}
 					}
+					BaseClass.addEvidence(driver, "Test to get Reco", "yes");
 					if (paginationNext.isEnabled()) {
 						scrollByElement(paginationNext);
 						paginationNext.click();
@@ -603,12 +589,13 @@ public class Maximizer_Page extends TPSEE_abstractMethods {
 								"(//table[@id = 'recommendationTable']//tbody//tr[@role = 'row'][" + row + "]//td[2])"))
 								.getText();
 						System.out.println("The recommendation type in UI is : " + In_Progress_RecoType);
-						BaseClass.addEvidence(driver, "Test to get Reco", "yes");
+						
 						if (RecoType.equals(In_Progress_RecoType)) {
 							b = true;
 							break Outer;
 						}
 					}
+					BaseClass.addEvidence(driver, "To Verify Reco_Type in Ignored Tab", "yes");
 					if (paginationNext.isEnabled()) {
 						scrollByElement(paginationNext);
 						paginationNext.click();
@@ -685,7 +672,6 @@ public class Maximizer_Page extends TPSEE_abstractMethods {
 								"(//table[@id = 'recommendationTable']//tbody//tr[@role = 'row'][" + row + "]//td[2])"))
 								.getText();
 						System.out.println("The recommendation type in UI is : " + RecoType);
-						BaseClass.addEvidence(driver, "Test to get Reco", "yes");
 						for (int j = 0; j < LPADReco.size(); j++) {
 							if (LPADReco.get(j).equals(RecoType)) {
 								System.out.println("True : " + LPADReco.get(j));
@@ -697,22 +683,6 @@ public class Maximizer_Page extends TPSEE_abstractMethods {
 								WebElement Continue_Btn = driver
 										.findElement(By.xpath("//button[@id = 'continueButton']"));
 								clickelement(Continue_Btn);
-								WebElement Download_Locations_Btn = driver
-										.findElement(By.xpath("//button[@id = 'downloadButton']"));
-								clickelement(Download_Locations_Btn);
-								time_stamp = timeStamp();
-								System.out.println("The timestamp is : " + time_stamp);
-								Thread.sleep(4000);
-								convertExports(getLastModifiedFile(Exportpath),
-										(CurrentState.getBrowser() + time_stamp + Maximizer_Location_Export));
-								Thread.sleep(5000);
-								String path = Exportpath
-										+ (CurrentState.getBrowser() + time_stamp + Maximizer_Location_Export);
-								System.out.println("The path of the file is : " + path);
-								autoSizeColumns(path);
-								Thread.sleep(3000);
-								Locations = GetSiteDataUsingColName(path, "Location Number");
-								System.out.println("The locations are : " + Locations);
 								clickelement(Move_To_Progress);
 								JSWaiter.waitUntilJQueryReady();
 								InProgress_Reco_Verification();
@@ -720,6 +690,7 @@ public class Maximizer_Page extends TPSEE_abstractMethods {
 							}
 						}
 					}
+					BaseClass.addEvidence(driver, "To Verify Reco_Type in Ignored Tab", "yes");
 					if (paginationNext.isEnabled()) {
 						scrollByElement(paginationNext);
 						paginationNext.click();
@@ -791,9 +762,10 @@ public class Maximizer_Page extends TPSEE_abstractMethods {
 										+ row + "]//td[2])")));
 						String Recos = driver.findElement(By.xpath("(//table[@id = 'recommendationTable']//tbody//tr[@role = 'row']["+ row +"]//td[2])")).getText();
 						RecoString.add(Recos);
-						BaseClass.addEvidence(driver, "Test to get Reco", "yes");
+						
 						
 					}
+					BaseClass.addEvidence(driver, "Test to get Reco", "yes");
 					if (paginationNext.isEnabled()) {
 						scrollByElement(paginationNext);
 						paginationNext.click();
@@ -848,7 +820,7 @@ public class Maximizer_Page extends TPSEE_abstractMethods {
 								"(//table[@id = 'recommendationTable']//tbody//tr[@role = 'row'][" + row + "]//td[2])"))
 								.getText();
 						System.out.println("The recommendation type in UI is : " + RecoType);
-						BaseClass.addEvidence(driver, "Test to get Reco", "yes");
+						
 						for (int j = 0; j < LPADReco.size(); j++) {
 							if (LPADReco.get(j).equals(RecoType)) {
 								System.out.println("True : " + LPADReco.get(j));
@@ -869,6 +841,7 @@ public class Maximizer_Page extends TPSEE_abstractMethods {
 							}
 						}
 					}
+					BaseClass.addEvidence(driver, "Test to get Reco", "yes");
 					if (paginationNext.isEnabled()) {
 						scrollByElement(paginationNext);
 						paginationNext.click();

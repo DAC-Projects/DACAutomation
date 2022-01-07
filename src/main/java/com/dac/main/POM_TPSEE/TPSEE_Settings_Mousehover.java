@@ -98,52 +98,133 @@ public class TPSEE_Settings_Mousehover extends TPSEE_abstractMethods {
 	 */
 	public void verifyMousehoverText() throws Exception {
 		action.moveToElement(SettingsIcon).click().build().perform();
-		action.moveToElement(Connections).perform();
-		text = Connectionstext.getAttribute("data-original-title");
-		BaseClass.addEvidence(CurrentState.getDriver(), "Test to verify mousehover text", "yes");
-		System.out.println("The text is : " + text);
-		soft.assertEquals(text, "Click here to manage your connections");
-		action.moveToElement(Brands).perform();
-		text = Brandstext.getAttribute("data-original-title");
-		BaseClass.addEvidence(CurrentState.getDriver(), "Test to verify mousehover text", "yes");
-		System.out.println("The text is : " + text);
-		soft.assertEquals(text, "Click here to manage your brands / others");
-		action.moveToElement(LocalRankPlus).perform();
-		text = LocalRankPlustext.getAttribute("data-original-title");
-		BaseClass.addEvidence(CurrentState.getDriver(), "Test to verify mousehover text", "yes");
-		System.out.println("The text is : " + text);
-		soft.assertTrue(text.contains("Click here to configure settings for your Local Rank"),
-				"does not contain " + text);
-		action.moveToElement(AllGroups).perform();
-		text = AllGroupstext.getAttribute("data-original-title");
-		BaseClass.addEvidence(CurrentState.getDriver(), "Test to verify mousehover text", "yes");
-		System.out.println("The text is : " + text);
-		soft.assertEquals(text, "Click here to view all groupings");
-		action.moveToElement(SiteOrder).perform();
-		text = SiteOrdertext.getAttribute("data-original-title");
-		BaseClass.addEvidence(CurrentState.getDriver(), "Test to verify mousehover text", "yes");
-		System.out.println("The text is : " + text);
-		soft.assertEquals(text, "Click here to change your Site Order");
-		action.moveToElement(ReviewNotification).perform();
-		text = ReviewNotificationtext.getAttribute("data-original-title");
-		BaseClass.addEvidence(CurrentState.getDriver(), "Test to verify mousehover text", "yes");
-		System.out.println("The text is : " + text);
-		soft.assertEquals(text, "Click here to set review notifications");
-		action.moveToElement(ESR).perform();
-		text = ESRtext.getAttribute("data-original-title");
-		BaseClass.addEvidence(CurrentState.getDriver(), "Test to verify mousehover text", "yes");
-		System.out.println("The text is : " + text);
-		soft.assertEquals(text, "Click here to set executive summary report frequency");
-		action.moveToElement(LocalReportScoreChange).perform();
-		text = LocalReportScoreChangetext.getAttribute("data-original-title");
-		BaseClass.addEvidence(CurrentState.getDriver(), "Test to verify mousehover text", "yes");
-		System.out.println("The text is : " + text);
-		soft.assertEquals(text, "Click here to set local reports score change notifications");
-		action.moveToElement(CustomerFeedBack).perform();
-		text = CustomerFeedBacktext.getAttribute("data-original-title");
-		BaseClass.addEvidence(CurrentState.getDriver(), "Test to verify mousehover text", "yes");
-		System.out.println("The text is : " + text);
-		soft.assertEquals(text, "Click here to set customer feedback notifications");
+		try {
+			if (Connections.isDisplayed()) {
+				action.moveToElement(Connections).perform();
+				text = Connectionstext.getAttribute("data-original-title");
+				BaseClass.addEvidence(CurrentState.getDriver(), "Test to verify mousehover text", "yes");
+				System.out.println("The text is : " + text);
+				soft.assertEquals(text, "Click here to manage your connections");
+			} else {
+				System.out.println("Connections not enabled");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Connections not enabled");
+		}
+		try {
+			if (Brands.isDisplayed()) {
+				action.moveToElement(Brands).perform();
+				text = Brandstext.getAttribute("data-original-title");
+				BaseClass.addEvidence(CurrentState.getDriver(), "Test to verify mousehover text", "yes");
+				System.out.println("The text is : " + text);
+				soft.assertEquals(text, "Click here to manage your brands / others");
+			} else {
+				System.out.println("Brands not enabled");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Brands not enabled");
+		}
+		try {
+			if (LocalRankPlus.isDisplayed()) {
+				action.moveToElement(LocalRankPlus).perform();
+				text = LocalRankPlustext.getAttribute("data-original-title");
+				BaseClass.addEvidence(CurrentState.getDriver(), "Test to verify mousehover text", "yes");
+				System.out.println("The text is : " + text);
+				soft.assertTrue(text.contains("Click here to configure settings for your Local Rank"),
+						"does not contain " + text);
+			} else {
+				System.out.println("LocalRankPlus id not anabled");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("LocalRankPlus id not anabled");
+		}
+		try {
+			if (AllGroups.isDisplayed()) {
+				action.moveToElement(AllGroups).perform();
+				text = AllGroupstext.getAttribute("data-original-title");
+				BaseClass.addEvidence(CurrentState.getDriver(), "Test to verify mousehover text", "yes");
+				System.out.println("The text is : " + text);
+				soft.assertEquals(text, "Click here to view all groupings");
+			} else {
+				System.out.println("All Groups not enabled");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("All Groups not enabled");
+		}
+		try {
+			if (SiteOrder.isDisplayed()) {
+				action.moveToElement(SiteOrder).perform();
+				text = SiteOrdertext.getAttribute("data-original-title");
+				BaseClass.addEvidence(CurrentState.getDriver(), "Test to verify mousehover text", "yes");
+				System.out.println("The text is : " + text);
+				soft.assertEquals(text, "Click here to change your Site Order");
+			} else {
+				System.out.println("Site Order not enabled");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Site Order not enabled");
+		}
+		try {
+			if (ReviewNotification.isDisplayed()) {
+				action.moveToElement(ReviewNotification).perform();
+				text = ReviewNotificationtext.getAttribute("data-original-title");
+				BaseClass.addEvidence(CurrentState.getDriver(), "Test to verify mousehover text", "yes");
+				System.out.println("The text is : " + text);
+				soft.assertEquals(text, "Click here to set review notifications");
+			} else {
+				System.out.println("RN not enabled");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("RN not enabled");
+		}
+		try {
+			if (ESR.isDisplayed()) {
+				action.moveToElement(ESR).perform();
+				text = ESRtext.getAttribute("data-original-title");
+				BaseClass.addEvidence(CurrentState.getDriver(), "Test to verify mousehover text", "yes");
+				System.out.println("The text is : " + text);
+				soft.assertEquals(text, "Click here to set executive summary report frequency");
+			} else {
+				System.out.println("ESR not enabled");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("ESR not enabled");
+		}
+		try {
+			if (LocalReportScoreChange.isDisplayed()) {
+				action.moveToElement(LocalReportScoreChange).perform();
+				text = LocalReportScoreChangetext.getAttribute("data-original-title");
+				BaseClass.addEvidence(CurrentState.getDriver(), "Test to verify mousehover text", "yes");
+				System.out.println("The text is : " + text);
+				soft.assertEquals(text, "Click here to set local reports score change notifications");
+			} else {
+				System.out.println("Local Reports Score Change not enabled");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Local Reports Score Change not enabled");
+		}
+		try {
+			if (CustomerFeedBack.isDisplayed()) {
+				action.moveToElement(CustomerFeedBack).perform();
+				text = CustomerFeedBacktext.getAttribute("data-original-title");
+				BaseClass.addEvidence(CurrentState.getDriver(), "Test to verify mousehover text", "yes");
+				System.out.println("The text is : " + text);
+				soft.assertEquals(text, "Click here to set customer feedback notifications");
+			} else {
+				System.out.println("Customer Feedback is not enabled");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Customer Feedback is not enabled");
+		}
 		soft.assertAll();
 	}
 

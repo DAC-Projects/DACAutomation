@@ -272,6 +272,7 @@ public class Quick_Responses extends SA_Abstarct_Methods {
 						if (ResponseAdded.contains(Response)) {
 							BaseClass.addEvidence(driver, "Test to verify response added", "yes");
 							soft.assertEquals(ResponseAdded, Response + time_Stamp);
+							//please add code to verify the status is in completed state
 							a = true;
 							break Outer;
 						}

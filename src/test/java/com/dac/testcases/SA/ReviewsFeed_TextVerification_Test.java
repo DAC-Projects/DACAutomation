@@ -23,7 +23,8 @@ public class ReviewsFeed_TextVerification_Test extends BaseClass {
 		addEvidence(CurrentState.getDriver(), "Test to navigate to Reviews Feed", "yes");*/
 	}
 
-	/*@Test(priority = 2, description = "Test to verify active state of the report")
+	
+	@Test(priority = 2, description = "Test to verify active state of the report")
 	public void verifyreportactivestate() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.Review_Feed_Highlight();
@@ -42,7 +43,7 @@ public class ReviewsFeed_TextVerification_Test extends BaseClass {
 	public void VerifyNoticeText() throws Exception {
 		data = new Reviews_Feed(CurrentState.getDriver());
 		data.verifyNotice();
-	}*/
+	}
 	
 	@Test(priority = 5, description = "Test to verify read manual content")
 	public void VerifyReadManual() throws Exception {

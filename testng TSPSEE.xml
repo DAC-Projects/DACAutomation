@@ -7,12 +7,14 @@
 	</listeners>
 
 
-	<test name="transparenSEEClientBeta" parallel="none"
-	group-by-instances="true">
+	<test name="transparenSEEClientBeta" >
 	<parameter name="browser" value="chrome" />
 	<classes>
-	
-	 <class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
+	<class name = "com.dac.testcases.TPSEE.Maximizer_Ignore_Test" />
+	<!-- <class name = "com.dac.testcases.TPSEE.Maximizer_InProgress_to_Ignore_Test" />
+	<class name="com.dac.testcases.TPSEE.Maximizer_To_Do_to_InProgress_Test" />
+	<class name = "com.dac.testcases.TPSEE.Maximizer_InProgress_to_Ignore_Test" />
+	<class name = "com.dac.testcases.TPSEE.Maximizer_Ignore_to_Complete_Test" /> -->
 	<!-- <class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test" /> 
 	<class name="com.dac.testcases.TPSEE.TPSEE_Visibility
 	_Test" />

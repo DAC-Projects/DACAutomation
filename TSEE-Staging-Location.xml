@@ -38,11 +38,11 @@
 					<exclude name="VerifyWebsiteLink" />
 				</methods>
 			</class>
-			<!-- <class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
+			<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test" />
 			<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test" />
 			<class
 				name="com.dac.testcases.TPSEE.TPSEE_FacebookInsights_Test" />
-			<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" /> -->
+			<class name="com.dac.testcases.TPSEE.TPSEE_Bing_Test" />
 		</classes>
 	</test>
 
@@ -130,7 +130,7 @@
 					<exclude name="VerifyWebsiteLink" />
 				</methods>
 			</class>
-			<!-- <class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test">
+			<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test">
 				<methods>
 					<exclude name="GetKPIValues" />
 					<exclude name="verifytitle" />
@@ -162,9 +162,9 @@
 					<exclude name="verifyHoverText" />
 					<exclude name="verifyFilterDataOrderBingFacebook" />
 				</methods>
-			</class> -->
+			</class>
 		</classes>
-	</test>
+	</test> 
 
 	<test name="TransparenSeeStagingLocationCountry">
 		<parameter name="browser" value="chrome" />
@@ -200,7 +200,7 @@
 					<exclude name="VerifyWebsiteLink" />
 				</methods>
 			</class>
-			<!-- <class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test">
+			<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test">
 				<methods>
 					<exclude name="GetKPIValues" />
 					<exclude name="verifytitle" />
@@ -232,7 +232,7 @@
 					<exclude name="verifyHoverText" />
 					<exclude name="verifyFilterDataOrderBingFacebook" />
 				</methods>
-			</class> -->
+			</class>
 			<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test">
 				<methods>
 					<exclude name="GetKPIValues" />
@@ -302,7 +302,7 @@
 					<exclude name="VerifyWebsiteLink" />
 				</methods>
 			</class>
-			<!-- <class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test">
+			<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test">
 				<methods>
 					<exclude name="GetKPIValues" />
 					<exclude name="verifytitle" />
@@ -334,7 +334,7 @@
 					<exclude name="verifyHoverText" />
 					<exclude name="verifyFilterDataOrderBingFacebook" />
 				</methods>
-			</class> -->
+			</class>
 			<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test">
 				<methods>
 					<exclude name="GetKPIValues" />
@@ -411,7 +411,7 @@
 		<parameter name="browser" value="chrome" />
 		<parameter name="Filter" value="5" />
 		<classes>
-			<!-- <class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test">
+			<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test">
 				<methods>
 					<exclude name="GetKPIValues" />
 					<exclude name="verifytitle" />
@@ -443,7 +443,7 @@
 					<exclude name="verifyHoverText" />
 					<exclude name="verifyFilterDataOrderBingFacebook" />
 				</methods>
-			</class> -->
+			</class>
 			<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test">
 				<methods>
 					<exclude name="GetKPIValues" />
@@ -530,7 +530,7 @@
 	<test name="TransparenSeeStagingLocationLoc">
 		<parameter name="browser" value="chrome" />
 		<parameter name="Filter" value="6" />
-		<cla<!-- sses>
+		<classes>
 			<class name="com.dac.testcases.TPSEE.TPSEE_GMB_Test">
 				<methods>
 					<exclude name="verifyText" />
@@ -554,7 +554,7 @@
 					<exclude name="verifyHoverText" />
 					<exclude name="verifyFilterDataOrderBingFacebook" />
 				</methods>
-			</class> -->
+			</class>
 			<class name="com.dac.testcases.TPSEE.TPSEE_AllLocations_Test">
 				<methods>
 					<exclude name="GetKPIValues" />
@@ -621,7 +621,7 @@
 					<exclude name="verifyFilterDataOrder" />
 				</methods>
 			</class>
-			<!-- <class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test">
+			<class name="com.dac.testcases.TPSEE.TPSEE_GoogleRanking_Test">
 				<methods>
 					<exclude name="GetKPIValues" />
 					<exclude name="verifytitle" />
@@ -629,7 +629,7 @@
 					<exclude name="gethighchartsdate" />
 					<exclude name="verifyFilterDataOrder" />
 				</methods>
-			</class> -->
+			</class>
 		</classes>
 	</test>
 </suite>

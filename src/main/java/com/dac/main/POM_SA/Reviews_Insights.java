@@ -436,6 +436,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	public String RNPSScore() throws Exception {
 		waitForElement(RNPSScore, 10);
 		scrollByElement(OverAllScore);
+		Thread.sleep(4000);
 		RNPSscore = RNPSScore.getText();
 		//BaseClass.addEvidence(driver, "Test to get RNPS Score and verify", "yes");
 		System.out.println("The String value of RNPS Score is :" + RNPSscore);
@@ -1091,7 +1092,7 @@ public class Reviews_Insights extends SA_Abstarct_Methods {
 	public void CompareRNPSScore() {
 		System.out.println("The Detractor score is : " + DeTractorScore);
 		System.out.println("The promoter score is : " + PromotorScore);
-		String RNPSCalc = null;
+		String RNPSCalc = "";
 		if(!(PromotorScore == 0.0) && !(DeTractorScore == 0.0)) {
 			double RNPSScoreCalculation = (PromotorScore - DeTractorScore) * 100;
 			System.out.println("The RNPS Score Calculation is : " +RNPSScoreCalculation);

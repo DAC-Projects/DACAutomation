@@ -244,13 +244,13 @@ public class TPSEE_ContentAnalysis_Test extends BaseClass {
 	/**
 	 * Compare UI and XL data
 	 * @throws Exception
-	 *//*
+	 */
 	@Test(priority = 8, groups = { "smoke" }, description = "Test for overview export and export verification")
 	public void verifyOverviewReportnExportContentAnalysis() throws Exception {
 		data = new TPSEE_ContentAnalysis_Page(CurrentState.getDriver());
 		data.compareExprttoAnalysisSiteData(data.getExportData(), data.AnalysisSiteData());
 		addEvidence(CurrentState.getDriver(), "Verified overview export for Accuracy report", "yes");
-	}*/
+	}
 
 
 	/**

@@ -357,7 +357,7 @@ public class Response_Management extends SA_Abstarct_Methods {
 			Outer: if (paginationNext.isDisplayed()) {
 				for (int i = 1; i <= lastpage; i++) {
 					for (int row = 1; row <= size; row++) {
-						int hstrycountbeforeEdit = getHistoryCount(ResponseSelected);
+						int hstrycountbeforeEdit = getHistoryCount(ResponseSelected); 
 						System.out.println("The history count before Editing the Response : " + hstrycountbeforeEdit);
 						String Response = driver
 								.findElement(By.xpath("(//*[contains(@class,'response-text')])[" + row + "]"))
@@ -385,7 +385,7 @@ public class Response_Management extends SA_Abstarct_Methods {
 							soft.assertTrue(Response.contains(ResponseSelected + "/+<b>"),
 									"Text doesn't contains + </b>");
 							JSWaiter.waitJQueryAngular();
-							Thread.sleep(6000);
+							Thread.sleep(6000); 
 							String Status = getHistoryStatus(ResponseSelected);
 							System.out.println("The Status is : " + Status);
 							JSWaiter.waitJQueryAngular();
@@ -1215,6 +1215,7 @@ Outer :			try {
 							WebElement ele = driver.findElement(By.xpath("(//div[@class='review-content'])["+ i +"]"));
 							if(ele.isDisplayed()) {
 								scrollByElement(ele);
+								//add a condition or select source so that you will add response only to google vendor
 								Review = ele.getText(); 
 								System.out.println("The Review selected is : " +Review);
 								try{
@@ -1222,7 +1223,7 @@ Outer :			try {
 											By.xpath("((//div[@class='review-content'])[" + i + "]//following-sibling::div//a[contains(@class,'add-owner-response-btn')])"))).isDisplayed()) {
 										clickelement(driver.findElement(
 												By.xpath("((//div[@class='review-content'])[" + i + "]//following-sibling::div//a[contains(@class,'add-owner-response-btn')])")));
-										Thread.sleep(5000);
+										Thread.sleep(5000); 
 										boolean b = BadReview();
 										if (b == false) {
 											time_Stamp = timeStamp();

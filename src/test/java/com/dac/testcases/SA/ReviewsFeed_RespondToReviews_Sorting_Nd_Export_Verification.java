@@ -31,7 +31,7 @@ public class ReviewsFeed_RespondToReviews_Sorting_Nd_Export_Verification extends
 		addEvidence(CurrentState.getDriver(), "Test to navigate to Response to Reviews Tab", "yes");
 	}
 	
-/*	@Test(priority = 3, description = "verify sorting of table by latest date")
+	@Test(priority = 3, description = "verify sorting of table by latest date")
 	public void verifyLatestDatesortbytable() throws Exception {
 		data = new Reviews_Feed_Response_To_Reviews(CurrentState.getDriver());
 		data.VerifySortByNewest();
@@ -71,7 +71,7 @@ public class ReviewsFeed_RespondToReviews_Sorting_Nd_Export_Verification extends
 	public void verifyLocationNameSort() throws Exception {
 		data = new Reviews_Feed_Response_To_Reviews(CurrentState.getDriver());
 		data.verifySortLocationName();
-	}*/
+	}
 	
 	@Test(priority = 10, description = "Test to Export Location Data")
 	public void ExportLocation() throws Exception {
