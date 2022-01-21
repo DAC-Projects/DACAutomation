@@ -21,7 +21,7 @@ import resources.CurrentState;
 public class Test_LoginToLPAD extends BaseClass {
 //	WebDriver driver;
 	
-@Test
+@Test()
   public void TC_Login_LPAD() throws Exception {
 //		GetColmunNumber number =new GetColmunNumber();
 		Page_LPADLogin loginPage=new Page_LPADLogin(CurrentState.getDriver());

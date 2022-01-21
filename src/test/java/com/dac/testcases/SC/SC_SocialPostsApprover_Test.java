@@ -17,21 +17,21 @@ public class SC_SocialPostsApprover_Test extends BaseClass {
 	List<String> reviewReportData;
 	String exportedData=null;
 	String comment=null;
-	String postmessage="Have a nice day";
+	String postmessage="just relax with a pizza";
 	String commentMessage="Test For Approver ";
 	String Publishing="*Publishing...*";
 	Navigationpage np;
 	SC_SocialPosts_Page postpage;
 	SC_ContentManagement_Page cm;
 	
-//	@Test(enabled = true)
-//	public void navigateToSocialPosts() throws Exception {
-//		Navigationpage np=new Navigationpage(CurrentState.getDriver());
-//		np.navigateToSC_Posts();
-//		//Thread.sleep(2000);
-//		addEvidence(CurrentState.getDriver(), "Navigated to Social Posts Page", "yes");
-//	}
-	@Test(enabled = true)
+	@Test(enabled = true,description = "TC: Navigate To Social Posts")
+	public void navigateToSocialPosts() throws Exception {
+		Navigationpage np=new Navigationpage(CurrentState.getDriver());
+		np.navigateToSC_Posts();
+		//Thread.sleep(2000);
+		addEvidence(CurrentState.getDriver(), "Navigated to Social Posts Page", "yes");
+	}
+	@Test(enabled = true,dependsOnMethods= {"navigateToSocialPosts"},description = "TC: addPost_VerifyComment_Published")
 	public void addPost_VerifyComment_Published() throws Exception {
 		
 		np=new Navigationpage(CurrentState.getDriver());
@@ -72,7 +72,7 @@ public class SC_SocialPostsApprover_Test extends BaseClass {
 	
 		
 	//Edit Post comment
-	@Test(enabled = true,dependsOnMethods= {"addPost_VerifyComment_Published"})
+	@Test(enabled = true,dependsOnMethods= {"addPost_VerifyComment_Published"}, description="TC : SC_SocialPosts_Page")
 	public void editPostComment_verfiy() throws Exception {
 		postpage=new SC_SocialPosts_Page(CurrentState.getDriver());
 		
@@ -101,17 +101,17 @@ public class SC_SocialPostsApprover_Test extends BaseClass {
 		//Verify the comment available in Published 
 		cm.verifyPublishedComments(comment);
 		Thread.sleep(2000);
-		addEvidence(CurrentState.getDriver(), "Comment Published", "yes");
+		addEvidence(CurrentState.getDriver(), "Comment Edited and Published", "yes");
 	}
 	
-//	//Delete Comment from post and Verify
-//	@Test(enabled = true,dependsOnMethods= {"editPostComment"})
-//	public void verifyIsCommentDeleted() throws Exception {
-//		SC_ContentManagement_Page cm=new SC_ContentManagement_Page(CurrentState.getDriver());
-//		cm.verifyDeleteComments(comment);
-////		Thread.sleep(2000);
-//		addEvidence(CurrentState.getDriver(), "Comment Deleted", "yes");
-//	}
+	//Delete Comment from post and Verify
+	@Test(enabled = true,dependsOnMethods= {"editPostComment_verfiy"}, description="TC : Delete Comment")
+	public void verifyIsCommentDeleted() throws Exception {
+		SC_ContentManagement_Page cm=new SC_ContentManagement_Page(CurrentState.getDriver());
+		cm.verifyDeleteComments(comment);
+//		Thread.sleep(2000);
+		addEvidence(CurrentState.getDriver(), "Comment Deleted", "yes");
+	}
 	/*	
 	
 	

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -71,6 +72,9 @@ public class SC_SocialPosts_Page extends BasePage{
 	
 	@FindBy(xpath="//button[text()='Ok']")
 	private WebElement okButton;
+	@FindBy(xpath="//button[text()='Yes']")
+	private WebElement yesButton;
+	
 	
 	
 	//div[contains(text(),'Sunset')]/..//div[@class='wrapper-add-comment']
@@ -160,16 +164,24 @@ public class SC_SocialPosts_Page extends BasePage{
 	
 	private String editComment(String oldComment) throws InterruptedException {
 
-		//div[.='test sajith 10002']/../..//a[.='Edit']
 		WebElement btnEdit=driver.findElement(By.xpath("//div[.='"+ oldComment+ "']/../..//a[.='Edit']"));
+//		WebElement btnEdit=driver.findElement(By.xpath("//*[@id='postTable']/tbody/tr[1]/td[3]/div/div[4]/div[2]/div[2]/div/div[1]/div[1]/ul/li[1]/a"));
+				//div[.='Test For Approver  20210503171442']/../../div[@class='edit-comment-message']//textarea
+//		Thread.sleep(3000);
 		scrollByElement(btnEdit);
 		Thread.sleep(2000);
 		clickelement(btnEdit);
+		WebElement txtMessage=driver.findElement(By.xpath("//div[.='"+ oldComment+ "']/../../div[@class='edit-comment-message']//textarea"));
+		WebElement btnSubmit=driver.findElement(By.xpath("//div[.='"+ oldComment +"']/../../div[@class='edit-comment-message']//button[2]"));
 		String newComment=oldComment+" Edited";
 		System.out.println(newComment);
-		commentArea.clear();
-		commentArea.sendKeys(newComment);
-		CommentSubmit();
+//		waitForElement(submitComment, 10);
+		txtMessage.clear();		
+		txtMessage.sendKeys(newComment);
+		clickelement(btnSubmit);
+//		CommentSubmit();
+		waitForElement(yesButton, 10);
+		clickelement(yesButton);
 		waitForElement(okButton, 10);
 		clickelement(okButton);
 		return newComment;
@@ -189,7 +201,8 @@ public class SC_SocialPosts_Page extends BasePage{
 		
 	}
 	
-	private boolean checkSubmit (String Message) {
+	private boolean checkSubmit (String Message) throws InterruptedException {
+		Thread.sleep(3000);
 		WebElement btnDelete=driver.findElement(By.xpath("//div[.='"+Message+"']/../..//a[.='Delete']"));
 		//div[.='Test For Approver  20210301213614']/../..//a[.='Delete']
 
@@ -204,6 +217,7 @@ public class SC_SocialPosts_Page extends BasePage{
 		int i=0;	
 		do {
 			refreshBrowser();
+			Thread.sleep(5000);
 			i++;
 			System.out.println(i);	
 			if(i>5) {

@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import resources.CurrentState;
+import resources.IAutoconst;
 
 public class LoginAC_Beta {
 	
@@ -55,13 +56,17 @@ public class LoginAC_Beta {
 	}
 	
 	public void clickDashboardLink() {
+		if(IAutoconst.environment.equalsIgnoreCase("BETA")) {
 //		For Beta
-		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(Dashboard));
-		Dashboard.sendKeys(Keys.CONTROL, Keys.ENTER);
-		
+			new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(Dashboard));
+			Dashboard.sendKeys(Keys.CONTROL, Keys.ENTER);
+		}else if(IAutoconst.environment.equalsIgnoreCase("STAGING")) {
 //		For Staging....
-//		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(Staging));
-//        Staging.sendKeys(Keys.CONTROL, Keys.ENTER);
+			new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(Staging));
+	        Staging.sendKeys(Keys.CONTROL, Keys.ENTER);
+		}
+
+	
 	}
 	
 	

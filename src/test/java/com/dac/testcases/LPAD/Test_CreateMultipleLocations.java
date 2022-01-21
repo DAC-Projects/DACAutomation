@@ -41,7 +41,7 @@ public class Test_CreateMultipleLocations extends BaseClass {
 	String basicInfoData[][],newLocationNumber="";
 	ExcelHandler newlocations,basic;
 	
-@Test()
+@Test(groups = { "smoke" }, description = "TC: Login to LPAD")
 public void TC_Login_LPAD() throws Exception {
 	Page_LPADLogin loginPage=new Page_LPADLogin(CurrentState.getDriver());
 	Page_LPADHome home=new Page_LPADHome(CurrentState.getDriver());
@@ -65,7 +65,7 @@ public void TC_Login_LPAD() throws Exception {
 }
 
 
-@Test(dependsOnMethods= {"TC_Login_LPAD"})
+@Test(dependsOnMethods= {"TC_Login_LPAD"}, description = "TC: Creating Location on LPAD")
 public void TC_EnterLocationData() throws Exception {
 	int colLocationNumber=21, colLocationName=22, ColLocationStatus=23;
 	String status="NEW",locationName="",latitude="",longitude="";
@@ -116,7 +116,7 @@ public void TC_EnterLocationData() throws Exception {
 //		home.create_LPAD_Evidence("Attributes", "Attributes Added");
 //		CurrentState.getLogger().log(Status.PASS, "Assign Attributes");
 //		addEvidence(CurrentState.getDriver(), "Attributes added", "yes");
-		//		tabs.updateLocation();
+//		tabs.updateLocation();
 //		Vendor_IDs = data.getCellValue(row, data.seacrh_pattern("Vendro_ID_Update", 0).get(0).intValue());
 		basic.setCellValue( i, basic.seacrh_pattern("LocationNumber", 0).get(0).intValue(), newLocationNumber);
 		basic.setCellValue( i, basic.seacrh_pattern("LocationName", 0).get(0).intValue(), locationName);

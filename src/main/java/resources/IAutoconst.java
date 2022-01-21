@@ -23,8 +23,8 @@ public interface IAutoconst {
 	 password="DAC@12345";
 
 	//account credentials
-//	String baseUrl="https://manage.dacgroup.com/accounts/";//Staging URL
-	String baseUrl="http://staging.manage.dacgroup.com:82/accounts/";
+	String baseUrl="https://manage.dacgroup.com/accounts/";//Staging URL
+//	String baseUrl="http://staging.manage.dacgroup.com:82/accounts/";
 	
 	String[] competitiveAnalysis = {baseUrl+"competitive-analysis-test-account-beta-1", "mobittah98@yahoo.ca"};
 	String[] deepfieldAccount = {baseUrl+"deepfield-software-incorporated-beta", "bmobit@dacgroup.com"};
@@ -34,25 +34,27 @@ public interface IAutoconst {
 //	String[] transparenSEE = {baseUrl+"international-account-beta-beta", "spillai@dacgroup.com","IN"};
 	
 	//beta
+//	String environment="BETA";//Enable this while executing BETA
 //	String[] transparenSEE = {baseUrl+"aurify-brands-test-beta", "jmohan@dacgroup.com"}; 
 //	String[] transparenSEE = {baseUrl+"fit4less-beta", "skanna@dacgroup.com"}; 
-	String[] transparenSEE = {baseUrl+"social-beings-beta", "rohit.watson@gmail.com"}; //SC Approver
+//	String[] transparenSEE = {baseUrl+"social-beings-beta", "rohit.watson@gmail.com"}; //SC Approver
 //	String[] transparenSEE = {baseUrl+"social-beings-beta", "vrohitmenon@gmail.com"}; //SC Creator
 	
-//	String[] transparenSEE = {baseUrl+"automation-test-account-tsee-beta","amahadev@dacgroup.com"};//Account Owner
-//	String[] transparenSEE = {baseUrl+"automation-test-account-tsee-beta","jmann@dacgroup.com"}; //Location Manager
+//	String[] transparenSEE = {baseUrl+"automation-test-account-tsee-beta","amahadev@dacgroup.com"};//TSEE Account Owner
+//	String[] transparenSEE = {baseUrl+"automation-test-account-tsee-beta","jmann@dacgroup.com"}; //TSEE Location Manager
 	
 	//Staging
-//	String[] transparenSEE = {baseUrl+"international-location-test-account","chappel.mann+stc@gmail.com"};//Account Owner
+	String environment="STAGING";//Enable this while executing STAGING
+	String[] transparenSEE = {baseUrl+"international-location-test-account","chappel.mann+stc@gmail.com"};//Account Owner
 //	String [] transparenSEE = {baseUrl +"international-location-test-account","chappel.mann+stl2@gmail.com"}; //- Location Manager
 	
 	String userLocale="IN";
 	String TSEE_url="https://transparensee-dashboard-beta.azurewebsites.net/";
 	/*----------------LPAD Variables----------------*/
 	String LPADUrlBeta="https://dac-map-beta.azurewebsites.net/";
-	String ResellerAdmin="csee_external_reseller";
+	String ResellerAdmin="cseetestreseller@gmail.com";
 	String ResellerPassword="111111";
-	String Reseller="Domain N";
+	String Reseller="DAC Group 2";
 	String LocationDataExcelPath="./data/LocationSampleData.xlsx";
 	String AddressFormatExcelPath="./data/AddressFormats.xlsx";
 	String LpadAccountName="SA Test DRS";

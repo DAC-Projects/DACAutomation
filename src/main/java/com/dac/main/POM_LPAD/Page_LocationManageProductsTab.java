@@ -27,7 +27,7 @@ public class Page_LocationManageProductsTab extends BasePage {
 	WebDriverWait wait;
 	JavascriptExecutor js;
 	String xcelInputData[][];
-	String LocatorDataSyndication="LPM|DataSyndication|1|1";//Locator for identify the Options Popup
+	String LocatorDataSyndication="LPM|DataSyndication|2|1";//Locator for identify the Options Popup
 	//LPM|DataSyndication|2|1- Internal
 	//LPM|DataSyndication|1|1- external
 	
@@ -63,13 +63,13 @@ public class Page_LocationManageProductsTab extends BasePage {
 	
 	
 	//This locators only working with "Domain N" only
-	@FindBy(xpath="//div[@prefix='LPM|DataSyndication|1|1']//a[contains(text(),'OK')]")
+	@FindBy(xpath="//div[@prefix='LPM|DataSyndication|2|1']//a[contains(text(),'OK')]")
 	private WebElement OKButtonOption;
 	
-	@FindBy(xpath="//div[@prefix='LPM|DataSyndication|1|1']//h4")
+	@FindBy(xpath="//div[@prefix='LPM|DataSyndication|2|1']//h4")
 	private WebElement OptionsHeading;
 	
-	@FindBy(xpath = "//div[@prefix='LPM|DataSyndication|1|1']//input[@type='checkbox']")
+	@FindBy(xpath = "//div[@prefix='LPM|DataSyndication|2|1']//input[@type='checkbox']")
 	private List<WebElement> allvendors;
 	
 	
@@ -99,7 +99,7 @@ public class Page_LocationManageProductsTab extends BasePage {
 		js = (JavascriptExecutor) driver;
 		wait=new WebDriverWait(driver, 30);
 		System.out.println("Clicking on Data Syndication");
-		js.executeScript("arguments[0].scrollIntoView(true);", ToggleSyndicationStatus);
+		js.executeScript("arguments[0].scrollIntoView(true);", CheckBoxDataSyndication);
 		js.executeScript("arguments[0].click();",CheckBoxDataSyndication);
 		Thread.sleep(2000);
 	}
@@ -125,7 +125,7 @@ public class Page_LocationManageProductsTab extends BasePage {
 //			js.executeScript("arguments[0].scrollIntoView(true);", ToggleBoxSE);
 //			js.executeScript("arguments[0].click();",CheckBoxLPM);
 //			Thread.sleep(2000);
-			enableSyndicationStatus();
+//			enableSyndicationStatus();
 			clickOnDS();
 //			System.out.println("Clicking on DS");
 //			js.executeScript("arguments[0].scrollIntoView(true);", ToggleSyndicationStatus);

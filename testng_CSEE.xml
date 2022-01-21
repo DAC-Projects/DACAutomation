@@ -7,7 +7,7 @@
 <listener class-name="resources.ExtentTestNGITestListener"></listener>
 </listeners>
 
-<test name="CovergenSEE">
+<test name="CovergenSEE/LPAD">
 <parameter name="browser" value="chrome"/>
 <parameter name="appName" value="LAPD"/>
  <classes>

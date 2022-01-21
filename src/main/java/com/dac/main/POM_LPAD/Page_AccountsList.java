@@ -40,6 +40,10 @@ public class Page_AccountsList extends BasePage {
 	@FindBy(xpath="//button[@id='btnTableSearch']")
 	private WebElement btnGo;
 	
+	//-----------Manage Account Icons--------------
+	
+	@FindBy(xpath="//button[@id='btnTableSearch']")
+	private WebElement btnBulkPFO;
 	//------------Account Filters----------------
 	@FindBy(xpath="//button[@class='btn-group open']")
 	private WebElement accountStatusFilter;
@@ -61,6 +65,7 @@ public class Page_AccountsList extends BasePage {
 	
 	@FindBy(xpath="//div[text()='Showing 1 to 1 of 1 entries']")
 	public WebElement accountSearchCountInfo;
+	
 	//---------------Message
 	@FindBy(xpath="//button[@data-bb-handler='OK']")
 	private WebElement btnOK;
@@ -94,6 +99,9 @@ public class Page_AccountsList extends BasePage {
 		wait.until(ExpectedConditions.visibilityOf(accountSearchCountInfo));
 		
 	}
-		
+	private void navigateToBulkPFOAssignment() {
+		// TODO Auto-generated method stub
+
+	}
 	
 }
