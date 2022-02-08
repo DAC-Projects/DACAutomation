@@ -26,7 +26,7 @@ import resources.IAutoconst;
 /**
  * Unit test for simple App.
  */
-public abstract class LaunchLPAD
+public abstract class LaunchLPAD1
 {
 	public static WebDriver driver;
 	public static String UserName, Password, url, LocationDataExcelPath, Browser, AddressFormatExcelPath,NewlocationNumber,Reseller;
@@ -49,9 +49,9 @@ public abstract class LaunchLPAD
     switch (Browser) {
      
 		case "Chrome":
-//			 WebDriverManager.chromedriver().version("80.0.3987.16").setup();
+			 WebDriverManager.chromedriver().version("98.0.4758.80").setup();
 			 driver=new ChromeDriver();
-	    	 System.setProperty("webdriver.chrome.driver", "./Driver/chromedriver.exe");
+//	    	 System.setProperty("webdriver.chrome.driver", "./Driver/chromedriver.exe");
 	    	
 	    	 break;
 		case "Firefox":

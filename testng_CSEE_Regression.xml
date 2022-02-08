@@ -7,19 +7,21 @@
 <listener class-name="resources.ExtentTestNGITestListener"></listener>
 </listeners>
 
-<test name="CovergenSEE/LPAD">
+<test name="CovergenSEE_LPAD">
 <parameter name="browser" value="chrome"/>
 <parameter name="appName" value="LAPD"/>
  <classes>
 
 
  
-<class name="com.dac.testcases.LPAD.Test_BulkPFOAssignment" /> 
 
+ <class name="com.dac.testcases.LPAD.Test_CreatePresetLocationValue" /> 
+ 
 <!-- 
+<class name="com.dac.testcases.LPAD.Test_BulkPFOAssignment" /> 
+<class name="com.dac.testcases.LPAD.Test_CreateAccount" />  
 <class name="com.dac.testcases.LPAD.Test_LoginToLPAD" /> 
 <class name="com.dac.testcases.LPAD.Test_ManageLocation" /> 
-<class name="com.dac.testcases.LPAD.Test_CreateAccount" />  
 <class name="com.dac.csee.Test_ImpersonateToTSEE" /> 
 <class name="com.dac.csee.LPAD_ImpersonateToTSEE_test" />
 <class name="com.dac.testcases.LPAD.Test_CreateLocation" /> 

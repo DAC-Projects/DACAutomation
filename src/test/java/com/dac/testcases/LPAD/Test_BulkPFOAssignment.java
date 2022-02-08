@@ -35,15 +35,15 @@ public class Test_BulkPFOAssignment extends BaseClass {
 		
 		login.LoginTOLPAD();
 		System.out.println("wait completes");
-		home.create_LPAD_Evidence("Login to LPAD", "Login to LPAD Successfully");
+//		home.create_LPAD_Evidence("Login to LPAD", "Login to LPAD Successfully");
 		
 		home.switchToDomain();
-		home.create_LPAD_Evidence("Switch Domain", "Switch Domain Successfully");
+//		home.create_LPAD_Evidence("Switch Domain", "Switch Domain Successfully");
 		
 		home=new Page_LPADHome(CurrentState.getDriver());
 		home.NavigateToAccounts();
 		System.out.println("Navigated to Accounts List >> Test Completed.....");
-		home.create_LPAD_Evidence("Navigated to Accounts List", "Navigate to Accounts Successfully");
+//		home.create_LPAD_Evidence("Navigated to Accounts List", "Navigate to Accounts Successfully");
 	}
 	
 @Test(dependsOnMethods="TC_NavigateToAccountsPage", description = "TC: Navigate to Accounts list")

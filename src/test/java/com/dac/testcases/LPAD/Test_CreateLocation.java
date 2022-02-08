@@ -17,8 +17,11 @@ import com.dac.main.POM_LPAD.Page_LocationManageProductsTab;
 import com.dac.main.POM_LPAD.Page_LocationNavigationTabList;
 import com.dac.main.POM_LPAD.Page_LocationsListPage;
 
+import resources.BaseClass;
+import resources.CurrentState;
 
-public class Test_CreateLocation extends LaunchLPAD {
+
+public class Test_CreateLocation extends BaseClass {
 	Page_LocationBasicInfoTab basicInfo;
 	Page_LocationBusinessInfoTab businessInfo;
 	Page_LocationNavigationTabList tabs;
@@ -40,7 +43,7 @@ public void readLocationData() {
 @Test(dependsOnMethods = "com.dac.testcases.LPAD.Test_LoginToLPAD.TC_Login_LPAD")
 public void TC_NavigateToLocationsPage() throws InterruptedException {
 	System.out.println("Step1: Navigate To Locations Page ");
-	Page_LPADHome home=new Page_LPADHome(driver);
+	Page_LPADHome home=new Page_LPADHome(CurrentState.getDriver());
 	home.NavigateToLocations();
 		  
 }
@@ -48,16 +51,16 @@ public void TC_NavigateToLocationsPage() throws InterruptedException {
 @Test(dependsOnMethods= {"TC_NavigateToLocationsPage"})
 public void TC_CreateLocations() {
 	System.out.println("Step2: Click on [Create Location] Button");
-	Page_LocationsListPage locations=new Page_LocationsListPage(driver);
+	Page_LocationsListPage locations=new Page_LocationsListPage(CurrentState.getDriver());
 	locations.NaviagteToCreateLocation();
 }
 
 @Test(dependsOnMethods= {"TC_CreateLocations"})
 public void TC_EnterBasicInfoData() throws Exception {
 	System.out.println("Step3: Enter Basic Info Tab Data");
-	basicInfo=new Page_LocationBasicInfoTab(driver);
-	js = (JavascriptExecutor) driver;
-	wait=new WebDriverWait(driver, 30);
+	basicInfo=new Page_LocationBasicInfoTab(CurrentState.getDriver());
+	js = (JavascriptExecutor) CurrentState.getDriver();
+	wait=new WebDriverWait(CurrentState.getDriver(), 30);
 	basicInfo.fillBasicInfoData(1);
 
 	System.out.println("Basic Info Data Insertion Completed.....");
@@ -65,10 +68,10 @@ public void TC_EnterBasicInfoData() throws Exception {
 @Test(dependsOnMethods= {"TC_EnterBasicInfoData"})
 public void TC_EnterBusinessInfoData() throws Exception {
 	System.out.println("Step4: Enter Business Info Tab Data");
-	businessInfo=new Page_LocationBusinessInfoTab(driver);
-	basicInfo=new Page_LocationBasicInfoTab(driver);
-	tabs=new Page_LocationNavigationTabList(driver);
-	wait=new WebDriverWait(driver, 30);
+	businessInfo=new Page_LocationBusinessInfoTab(CurrentState.getDriver());
+	basicInfo=new Page_LocationBasicInfoTab(CurrentState.getDriver());
+	tabs=new Page_LocationNavigationTabList(CurrentState.getDriver());
+	wait=new WebDriverWait(CurrentState.getDriver(), 30);
 	
 	tabs.navigateBusinessInfoTab();
 	Thread.sleep(1000);
@@ -80,8 +83,8 @@ public void TC_EnterBusinessInfoData() throws Exception {
 @Test(dependsOnMethods= {"TC_EnterBasicInfoData"})
 public void TC_EnterPFOData() throws Exception {
 	System.out.println("Step4: Enter PFO Data");
-	products=new Page_LocationManageProductsTab(driver);
-	wait=new WebDriverWait(driver, 30);
+	products=new Page_LocationManageProductsTab(CurrentState.getDriver());
+	wait=new WebDriverWait(CurrentState.getDriver(), 30);
 	tabs.navigateProductsTab();
 //	Thread.sleep(2000);
 //	products.clickOnDSOptions("NEW");
@@ -90,11 +93,11 @@ public void TC_EnterPFOData() throws Exception {
 @Test(dependsOnMethods= {"TC_EnterBusinessInfoData"})
 public void TC_SubmitLocation() throws Exception {
 
-	tabs=new Page_LocationNavigationTabList(driver);
-	basicInfo=new Page_LocationBasicInfoTab(driver);
+	tabs=new Page_LocationNavigationTabList(CurrentState.getDriver());
+	basicInfo=new Page_LocationBasicInfoTab(CurrentState.getDriver());
 	tabs.submitLocation();
 	tabs.navigateBasicInfoTab();
-	NewlocationNumber=basicInfo.getLocationNumber();
+	String NewlocationNumber=basicInfo.getLocationNumber();
 	System.out.println("Location Number is: "+NewlocationNumber);
 	System.out.println("Location Data Submission completed.....");
 	

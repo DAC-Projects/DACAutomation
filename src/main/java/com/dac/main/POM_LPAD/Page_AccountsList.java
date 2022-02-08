@@ -18,6 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.dac.main.BasePage;
 
 import resources.ExcelHandler;
+import resources.IAutoconst;
 import resources.Utilities;
 
 public class Page_AccountsList extends BasePage {
@@ -42,8 +43,36 @@ public class Page_AccountsList extends BasePage {
 	
 	//-----------Manage Account Icons--------------
 	
-	@FindBy(xpath="//button[@id='btnTableSearch']")
-	private WebElement btnBulkPFO;
+	@FindBy(xpath="//a[contains(@data-original-title,'Bulk Contact Upload')]")
+	private WebElement btnBulkContact;
+	
+	@FindBy(xpath="//a[contains(@data-original-title,'Preset Location Values')]")
+	private WebElement btnPresetLocation;
+	
+	@FindBy(xpath="//a[contains(@data-original-title,'LK Portal Setup')]")
+	private WebElement btnLKPortalSetup;
+	
+	@FindBy(xpath="//a[contains(@data-original-title,'Account Customize Branding')]")
+	private WebElement btnCustomizeBranding;
+	
+	@FindBy(xpath="//a[contains(@data-original-title,'Bulk PFO Assignment')]")
+	private WebElement btnBulkPfos;
+	
+	@FindBy(xpath="//a[contains(@data-original-title,'Manage Account PFOs')]")
+	private WebElement btnManageAccountPFO;
+	
+	@FindBy(xpath="//a[contains(@data-original-title,'Manage Account')]")
+	private WebElement btnEditAccount;
+	
+	@FindBy(xpath="//a[contains(@data-original-title,'Manage Tracking Tags')]")
+	private WebElement btnTrackingTag;
+	
+	@FindBy(xpath="//a[contains(@data-original-title,'Deactivate Account')]")
+	private WebElement btnDeactivateAccount;
+	
+	@FindBy(xpath="//a[contains(@data-original-title,'Delete Account')]")
+	private WebElement btnDeleteAccount;
+	
 	//------------Account Filters----------------
 	@FindBy(xpath="//button[@class='btn-group open']")
 	private WebElement accountStatusFilter;
@@ -78,8 +107,6 @@ public class Page_AccountsList extends BasePage {
 		actions = new Actions(driver);
 		driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
 		PageFactory.initElements(driver, this);
-		
-		
 	}
 	
 
@@ -87,7 +114,6 @@ public class Page_AccountsList extends BasePage {
 		wait=new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.elementToBeClickable(btnCreateAccount));
 		btnCreateAccount.click();
-	
 		
 	}
 	
@@ -99,9 +125,15 @@ public class Page_AccountsList extends BasePage {
 		wait.until(ExpectedConditions.visibilityOf(accountSearchCountInfo));
 		
 	}
-	private void navigateToBulkPFOAssignment() {
+	public void navigateToBulkPFOAssignment() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public void navigateToPresetLocationValues() {
+		wait=new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.elementToBeClickable(btnPresetLocation));
+		btnPresetLocation.click();
 	}
 	
 }

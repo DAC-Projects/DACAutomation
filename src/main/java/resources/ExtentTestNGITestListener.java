@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.ElementNotSelectableException;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
@@ -352,7 +353,8 @@ public class ExtentTestNGITestListener
 //    	WebDriverManager.chromedriver().version("87.0.4280.88").setup();
 //    	WebDriverManager.chromedriver().version("88.0.4324.96").setup();
 //    	WebDriverManager.chromedriver().version("91.0.4472.101").setup();
-    	WebDriverManager.chromedriver().version("96.0.4664.45").setup();
+//    	WebDriverManager.chromedriver().version("96.0.4664.45").setup();
+    	WebDriverManager.chromedriver().version("98.0.4758.80").setup();
     	
 
 //    WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
@@ -380,6 +382,9 @@ public class ExtentTestNGITestListener
     		cap.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
     		driver = new ChromeDriver(cap);    
     		driver.manage().window().maximize();
+    		
+//    		JavascriptExecutor executor = (JavascriptExecutor)driver;
+//    		executor.executeScript("document.body.style.zoom = '0.8'");
     //Send driver object to JSWaiter Class
       JSWaiter.setDriver(driver);
       //This is the default wait for Explicit Waits

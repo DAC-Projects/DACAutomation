@@ -50,13 +50,15 @@ public interface IAutoconst {
 	
 	String userLocale="IN";
 	String TSEE_url="https://transparensee-dashboard-beta.azurewebsites.net/";
+	
 	/*----------------LPAD Variables----------------*/
 	String LPADUrlBeta="https://dac-map-beta.azurewebsites.net/";
-	String ResellerAdmin="cseetestreseller@gmail.com";
+	String ResellerAdmin="AutomationResellerAdmin";
 	String ResellerPassword="111111";
 	String Reseller="DAC Group 2";
 	String LocationDataExcelPath="./data/LocationSampleData.xlsx";
 	String AddressFormatExcelPath="./data/AddressFormats.xlsx";
+	String PresetLocationDataPath="./data/PresetLocationData.xlsx";
 	String LpadAccountName="SA Test DRS";
 	String LpadContact="TestAcccountOwner4";
 			//smitha.internal.domain@dacgroup.com - Smitha's Internal Domain

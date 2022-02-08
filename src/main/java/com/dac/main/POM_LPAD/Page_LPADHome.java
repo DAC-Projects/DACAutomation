@@ -97,7 +97,8 @@ public class Page_LPADHome extends BasePage{
 		wait = new WebDriverWait(driver, 30);
 		driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
 		PageFactory.initElements(driver, this);
-		
+//		JavascriptExecutor js = (JavascriptExecutor) driver;
+//	    js.executeScript("document.body.style.zoom='80%'");
 	}
 	
 	public void NavigateToHome() {
@@ -215,10 +216,10 @@ public class Page_LPADHome extends BasePage{
 		br.append(inputText);
 		br.close();
 	}
-	public void create_LPAD_Evidence(String log, String msg) throws Exception {
-		
-		Thread.sleep(5000);
-		CurrentState.getLogger().log(Status.PASS, log);
-		BaseClass.addEvidence(CurrentState.getDriver(),msg, "yes");
-	}
+//	public void create_LPAD_Evidence(String log, String msg) throws Exception {
+//		
+//		Thread.sleep(5000);
+////		CurrentState.getLogger().log(Status.PASS, log);
+//		BaseClass.addEvidence(CurrentState.getDriver(),msg, "yes");
+//	}
 }

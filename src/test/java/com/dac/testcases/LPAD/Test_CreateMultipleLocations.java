@@ -50,18 +50,18 @@ public void TC_Login_LPAD() throws Exception {
 //	String pageTitle= loginPage.getTitle();
 	System.out.println("wait completes");
 	
-	home.create_LPAD_Evidence("Login to LPAD", "Login to LPAD Successfully");
+//	home.create_LPAD_Evidence("Login to LPAD", "Login to LPAD Successfully");
 		 
 //	TakesScreenshot
 //	Thread.sleep(2000);
-//	CurrentState.getLogger().log(Status.PASS, "Login to LPAD Successfully");
-//	addEvidence(CurrentState.getDriver(), "Login to LPAD", "yes");
+	CurrentState.getLogger().log(Status.PASS, "Login to LPAD Successfully");
+	addEvidence(CurrentState.getDriver(), "Login to LPAD", "yes");
 	
 	home.switchToDomain();
-	home.create_LPAD_Evidence("Switch Domain", "Switch Domain Successfully");
+//	home.create_LPAD_Evidence("Switch Domain", "Switch Domain Successfully");
 //	Thread.sleep(2000);
-//	CurrentState.getLogger().log(Status.PASS, "Switch Domain");
-//	addEvidence(CurrentState.getDriver(), "Switch Domain Successfully", "yes");
+	CurrentState.getLogger().log(Status.PASS, "Switch Domain");
+	addEvidence(CurrentState.getDriver(), "Switch Domain Successfully", "yes");
 }
 
 

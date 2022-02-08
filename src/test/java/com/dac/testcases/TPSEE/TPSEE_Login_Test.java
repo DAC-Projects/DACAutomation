@@ -5,13 +5,12 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
 import com.dac.main.POM_TPSEE.TPSEE_Login_Page;
-import com.dac.testcases.LPAD.LaunchLPAD;
 
 import resources.BaseClass;
 import resources.CurrentState;
 
 
-public class TPSEE_Login_Test extends LaunchLPAD{
+public class TPSEE_Login_Test extends BaseClass{
 	
 	
 	String UserName="TestAcccountOwner4";
@@ -21,7 +20,7 @@ public class TPSEE_Login_Test extends LaunchLPAD{
 	@Test
 	  public void TC_Login_TSEE() throws Exception {
 //			GetColmunNumber number =new GetColmunNumber();
-			TSEE_loginPage=new TPSEE_Login_Page(driver);
+			TSEE_loginPage=new TPSEE_Login_Page(CurrentState.getDriver());
 //			driver.get("https://transparensee-dashboard-beta.azurewebsites.net/");
 			TSEE_loginPage.TSEE_Login(UserName, Password);
 //		  String pageTitle= loginPage.getTitle();

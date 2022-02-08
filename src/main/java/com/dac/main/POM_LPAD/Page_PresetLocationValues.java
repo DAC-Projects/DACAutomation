@@ -29,7 +29,7 @@ public class Page_PresetLocationValues extends BasePage {
 	Select uiSelect; 
 	WebDriverWait wait;
 	JavascriptExecutor executor;
-	ExcelHandler accountData;
+	ExcelHandler presetData;
 	
 	//-----------Location Preset Values------------------
 	@FindBy(xpath="//select[@id='massupdate']")
@@ -43,6 +43,23 @@ public class Page_PresetLocationValues extends BasePage {
 	
 	@FindBy(xpath="//input[@id='export-preset-values']")
 	private WebElement btn_Export;
+	
+	//------------------Tabs------------
+	
+	@FindBy(xpath="//*[@id='liStep1']")
+	private WebElement tabBasicInfo;
+	
+	@FindBy(xpath="//*[@id='liStep2']")
+	private WebElement tabBusinessInfo;
+	
+	@FindBy(xpath="//*[@id='liStep3']")
+	private WebElement tabDetails;
+	
+	@FindBy(xpath="//*[@id='liStep4']")
+	private WebElement tabSitespcific;
+	
+	@FindBy(xpath="//*[@id='liStep5']")
+	private WebElement tabCustom;
 	
 	//------------------------------------------
 	
@@ -73,46 +90,66 @@ public class Page_PresetLocationValues extends BasePage {
 	@FindBy(xpath="//input[@id='ShortBusinessNameID']")
 	private WebElement txt_ShortBusinessName;
 	
+	@FindBy(xpath="//select[@id='LocationAddress']")
+	private WebElement select_Address1;
 	
-	@FindBy(xpath="//div[@id='s2id_select_PSAAccount']")
-	private WebElement btn_PSAAccount;
+	@FindBy(xpath="//select[@id='select_hideaddress']")
+	private WebElement select_HideAddress;
 	
-	@FindBy(xpath="//select[@id='select_countryName']")
-	private WebElement select_CountryName;
+	@FindBy(xpath="//select[@id='Address1']")
+	private WebElement select_Address2;
 	
-	@FindBy(xpath="//input[@id='txt_addressName']")
-	private WebElement txt_AddressLine1;
+	@FindBy(xpath="//select[@id='Address3']")
+	private WebElement select_Address3;
 	
-	@FindBy(xpath="//input[@id='txt_Unit']")
-	private WebElement txt_AddressLine2;
+	@FindBy(xpath="//select[@id='Address4']")
+	private WebElement select_Address4;
 	
-	@FindBy(xpath="//input[@id='Address3Val']")
-	private WebElement txt_AddressLine3;
+	@FindBy(xpath="//select[@id='Address5']")
+	private WebElement select_Address5;
 	
-	@FindBy(xpath="//input[@id='Address4Val']")
-	private WebElement txt_AddressLine4;
+	@FindBy(xpath="//select[@id='Neighborhood']")
+	private WebElement select_Neighborhood;
 	
-	@FindBy(xpath="//input[@id='Address5Val']")
-	private WebElement txt_AddressLine5;
+	@FindBy(xpath="//select[@id='City']")
+	private WebElement select_City;
 	
-	@FindBy(xpath="//input[@id='NeighborhoodVal']")
-	private WebElement txt_Neighborhood;
+	@FindBy(xpath="//select[@id='State']")
+	private WebElement select_State;
 	
-	@FindBy(xpath="//input[@id='txt_cityName']")
-	private WebElement txt_City;
+	@FindBy(xpath="//select[@id='ZipCode']")
+	private WebElement select_ZipCode;
 	
-	@FindBy(xpath="//select[@id='stateProvince']")
-	private WebElement select_StateProvince;
+	@FindBy(xpath="//select[@id='PhoneNumber']")
+	private WebElement select_PhoneNumber;
 	
-	@FindBy(xpath="//input[@id='txt_codeName']")
-	private WebElement txt_ZipCode;
+	@FindBy(xpath="//select[@id='select_hidephonenumber']")
+	private WebElement select_hidephonenumber;
 	
-	@FindBy(xpath="//input[@id='txt_phoneNumber']")
-	private WebElement txt_PhoneNumber;
+	@FindBy(xpath="//select[@id='PrimaryLanguage']")
+	private WebElement select_PrimaryLanguage;
 	
-	@FindBy(xpath="//input[@id='txt_website']")
-	private WebElement txt_Website;
+	@FindBy(xpath="//select[@id='PrimaryLanguageID']")
+	private WebElement select_PrimaryLanguageID;
 	
+	@FindBy(xpath="//select[@id='ReportGroup']")
+	private WebElement select_ReportGroup;
+	
+	@FindBy(xpath="//input[@id='ReportGroupID']")
+	private WebElement txt_ReportGroupID;
+	
+	@FindBy(xpath="//select[@id='LatAndLong']")
+	private WebElement select_LatAndLong;
+	
+	@FindBy(xpath="//select[@id='Pinmarker']")
+	private WebElement select_Pinmarker;
+		
+	@FindBy(xpath="//a[@id='preset-field-save']")
+	private WebElement btn_submit;
+	
+	
+	//**************//	
+		
 	@FindBy(xpath="//input[@id='txt_EndDateRise']")
 	private WebElement txt_StartDate;
 	
@@ -127,8 +164,7 @@ public class Page_PresetLocationValues extends BasePage {
 	
 	@FindBy(xpath="//a[@data-original-title='Permission Settings']")
 	private WebElement btn_PermissionSettings;
-	
-	
+		
 	//Popup Locator
 	@FindBy(xpath="//button[@data-bb-handler='OK']")
 	private WebElement btnOK;
@@ -144,89 +180,23 @@ public class Page_PresetLocationValues extends BasePage {
 		PageFactory.initElements(driver, this);
 	}
 	
+	
+	
 
-	private void setStatus(String status) {
-		uiSelect=new Select(select_Status);
-		uiSelect.selectByVisibleText(status);
-		wait = new WebDriverWait(driver, 30);
+
+	/************/
+	private void setTextBoxValue(String vaalue,WebElement textbox) {
+		textbox.clear();
+		textbox.sendKeys(vaalue);
 	}
 	
-	private void setAccountName(String acName) {
-		String time=Utilities.getCurrentTime();
-		int rn=Utilities.randomNumber();
-		System.out.println(rn);
-		acName=acName+rn+time;
-		txt_AccountName.sendKeys(acName);
+		
+	private void selectDropdownValue(String selValue, WebElement selEelement) {
+		uiSelect=new Select(selEelement);
+		uiSelect.selectByVisibleText(selValue);
 	}
 	
-	private void setOSAName(String name) {
-		txt_OSAName.clear();
-		txt_OSAName.sendKeys(name);
-	}
 	
-	private void setOSAEmail(String name) {
-		txt_OSAEmail.clear();
-		txt_OSAEmail.sendKeys(name);
-	}
-	
-	private void setOSACheck() {
-		String checked=check_OSA.getAttribute("checked");
-		System.out.println("Checked is "+ checked);
-		if (!checked.equals("true")) {
-			check_OSA.click();
-		}
-	}
-	private void setCountry(String country) {
-		uiSelect=new Select(select_CountryName);
-		uiSelect.selectByVisibleText(country);
-	}
-	
-	private void setAddressLine1(String add) {
-		txt_AddressLine1.sendKeys(add);
-	}
-	
-	private void setAddressLine2(String add) {
-		txt_AddressLine2.sendKeys(add);
-	}
-	private void setAddressLine3(String add) {
-		txt_AddressLine3.sendKeys(add);
-	}
-	private void setAddressLine4(String add) {
-		txt_AddressLine4.sendKeys(add);
-	}
-	private void setAddressLine5(String add) {
-		txt_AddressLine5.sendKeys(add);
-	}
-	
-	private void setNeighborhood(String location) {
-		txt_Neighborhood.sendKeys(location);
-	}
-	private void setCity(String location) {
-		txt_City.sendKeys(location);
-	}
-	
-	private void setState(String state) {
-		uiSelect=new Select(select_StateProvince);
-		uiSelect.selectByVisibleText(state);
-	}
-	
-	private void setZipCode(String zip) {
-		txt_ZipCode.sendKeys(zip);
-	}
-	private void setPhoneNumber(String phone) {
-		txt_PhoneNumber.sendKeys(phone);
-	}
-	
-	private void setWebSite(String site) {
-		txt_Website.sendKeys(site);
-	}
-	private void setStartDate(String date) {
-		txt_StartDate.sendKeys(date);
-	}
-	
-	private void setEndDate(String date) {
-		txt_EndDate.sendKeys(date);
-	}
 	public void submitAccount() {
 		btn_Save.click();
 		wait=new WebDriverWait(driver, 30);
@@ -239,79 +209,23 @@ public class Page_PresetLocationValues extends BasePage {
 		}
 		btnOK.click();
 	}
-	public void setAccountData(int excelRow) throws Exception {
-		accountData = new ExcelHandler(IAutoconst.LocationDataExcelPath,"AccountInfo");
-		String [][] inputData=accountData.getExcelTable();
+	
+	public void setPresettDataBasicInfo() throws Exception {
+		presetData = new ExcelHandler(IAutoconst.PresetLocationDataPath,"PresetLocationData");
+//		String [][] inputData=presetData.getExcelTable();
+		int excelRow=1;
+		String BusinessName  	= presetData.getCellValue(excelRow, presetData.seacrh_pattern("Business Name", 0).get(0).intValue());
+		String ShortBusinessName  	= presetData.getCellValue(excelRow, presetData.seacrh_pattern("Short Business Name", 0).get(0).intValue());
+		String ReportGroup  	= presetData.getCellValue(excelRow, presetData.seacrh_pattern("Report Group", 0).get(0).intValue());
 		
-		String strStatus=inputData[excelRow][0];String strAccountName=inputData[excelRow][1]; 
-		String strOSAName =inputData[excelRow][2];String strOSAEmail =inputData[excelRow][3];
-		String strBusinessUnit=inputData[excelRow][4]; String strParentAccount=inputData[excelRow][5];
-		String strMappingAccount=inputData[excelRow][6]; String strCountry=inputData[excelRow][7];
-		
-		String strAddressLine1=inputData[excelRow][8]; String strAddressLine2=inputData[excelRow][9];
-		String strAddressLine3=inputData[excelRow][10]; String strAddressLine4=inputData[excelRow][11];
-		String strAddressLine5=inputData[excelRow][12]; String strNeighborhood=inputData[excelRow][13];
-		
-		String strCity=inputData[excelRow][14]; String strState=inputData[excelRow][15];
-		String strZipcode=inputData[excelRow][16]; String strMainBusinessPhoneNumber=inputData[excelRow][17];
-		String strWebsite=inputData[excelRow][18]; String strStartDate=inputData[excelRow][19]; 
-		String strEndDate=inputData[excelRow][20]; 
-		
-		System.out.println(strStatus);				System.out.println(strAccountName);
-		System.out.println(strOSAName);				System.out.println(strOSAEmail);
-		System.out.println(strBusinessUnit);		System.out.println(strParentAccount);
-		System.out.println(strMappingAccount);		System.out.println(strCountry);
-		System.out.println(strAddressLine1);		System.out.println(strAddressLine2);
-		System.out.println(strAddressLine3);		System.out.println(strAddressLine4);
-		System.out.println(strAddressLine5);		System.out.println(strNeighborhood);
-		System.out.println(strCity);				System.out.println(strState);
-		System.out.println(strZipcode);				System.out.println(strMainBusinessPhoneNumber);
-		System.out.println(strWebsite);				System.out.println(strStartDate);
-		System.out.println(strEndDate);
-		
-		setAccountName(strAccountName);
-		if(!strOSAName.equals(null)) {
-			setOSAName(strOSAName);
-		}
-		if(!strOSAEmail.equals(null)) {
-			setOSAEmail(strOSAEmail);
-			
-			setOSACheck();
-		}
-		
-		setCountry(strCountry);
-		wait=new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.visibilityOf(txt_AddressLine1));
-		setAddressLine1(strAddressLine1);
-		
-		
-		if(txt_AddressLine2.isDisplayed()) {
-			setAddressLine2(strAddressLine2);
-		}
-		if(txt_AddressLine3.isDisplayed()) {
-			setAddressLine3(strAddressLine3);
-		}
-		if(txt_AddressLine4.isDisplayed()){
-			setAddressLine4(strAddressLine4);
-		}
-		if(txt_AddressLine5.isDisplayed()) {
-			setAddressLine5(strAddressLine5);
-		}
-		if(txt_Neighborhood.isDisplayed()) {
-			setNeighborhood(strNeighborhood);
-		}
-		
-		setCity(strCity);
-		
-		if(select_StateProvince.isDisplayed()) {
-			setState(strState);
-		}
-		if(txt_ZipCode.isDisplayed()) {
-			setZipCode(strZipcode);
-		}
-		setPhoneNumber(strMainBusinessPhoneNumber);
-		
+		System.out.println(BusinessName);
+				
+		setTextBoxValue(BusinessName, txt_BusinessName);	
+		setTextBoxValue(ShortBusinessName, txt_ShortBusinessName);	
+		setTextBoxValue(ShortBusinessName, txt_ShortBusinessName);	
+		setTextBoxValue(ReportGroup, txt_ReportGroupID);	
 	}
+	/*
 	public String getAccountName() throws InterruptedException {
 		wait=new WebDriverWait(driver, 50);
 		wait.until(ExpectedConditions.elementToBeClickable(txt_AccountName));
@@ -320,8 +234,6 @@ public class Page_PresetLocationValues extends BasePage {
 		String name=txt_AccountName.getAttribute("value");
 //		System.out.println(name);
 		return name;
-	}
-	enum option {
-		UPDATE_Allowed , Hide, ViewOnly
-	}
+	}*/
+
 }

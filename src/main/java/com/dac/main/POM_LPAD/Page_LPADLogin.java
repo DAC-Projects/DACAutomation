@@ -2,6 +2,8 @@ package com.dac.main.POM_LPAD;
 
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -69,6 +71,7 @@ public class Page_LPADLogin extends BasePage
 	public  void LoginTOLPAD() throws InterruptedException {
 		Thread.sleep(10000);
 		driver.get(IAutoconst.LPADUrlBeta);
+		
 		setUserName(IAutoconst.ResellerAdmin);
 		System.out.println(IAutoconst.ResellerAdmin);
 		setPassword(IAutoconst.ResellerPassword);
